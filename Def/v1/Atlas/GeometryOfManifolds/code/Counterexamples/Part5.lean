@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.AdvancedKahler
-import Class.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part11
-import Instance.v1.Atlas.GeometryOfManifolds.code.Counterexamples.Part2
+module
+
+public import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.AdvancedKahler
+public import Class.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part11
+public import Instance.v1.Atlas.GeometryOfManifolds.code.Counterexamples.Part2
+
+@[expose] public section
+
 set_option autoImplicit false
 
 open DifferentialFormSpace

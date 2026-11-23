@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/FineNumber.lean -/
+module
 
-
-import Def.Combinatorics.FineNumber
-import Theorem.Finset.FineNumber
-import Mathlib.Tactic
+public import Def.Combinatorics.FineNumber
+public import Theorem.Finset.FineNumber
+public import Mathlib.Tactic
 open MetaMathlibExt
 
+public section
 
 example (n : Nat) :
     fineNumber n = (1 / ((n : ℚ) + 1)) * ∑ i ∈ Finset.range (n + 1),

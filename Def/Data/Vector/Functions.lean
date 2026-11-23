@@ -1,7 +1,12 @@
-import Def.Data.Vector.Basic.Part2
-import Instance.Data.Vector.Vector
-import Instance.Analysis.SpecialFunctions.Exponential
-import Def.Analysis.SpecialFunctions.Trigonometric.Part2
+module
+
+public import Def.Data.Vector.Basic.Part2
+public import Instance.Data.Vector.Vector
+public import Instance.Analysis.SpecialFunctions.Exponential
+public import Def.Analysis.SpecialFunctions.Trigonometric.Part2
+
+@[expose] public section
+
 open Vector
 
 

@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/FieldTheory/Galois/Infinite.lean -/
+module
 
-
-import Theorem.Rat.Galois.Infinite
+public import Theorem.Rat.Galois.Infinite
 set_option autoImplicit false
 
 open InfiniteGalois
+
+public section
 
 variable {k K : Type*} [Field k] [Field K] [Algebra k K] [IsGalois k K]
 

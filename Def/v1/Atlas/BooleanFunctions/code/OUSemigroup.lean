@@ -8,11 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.BooleanFunctions.code.GaussianSpace
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.GaussianSpace
-import Mathlib.Probability.Distributions.Gaussian.Fernique
-import Mathlib.MeasureTheory.Integral.Prod
+module
 
+public import Def.v1.Atlas.BooleanFunctions.code.GaussianSpace
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.GaussianSpace
+public import Mathlib.Probability.Distributions.Gaussian.Fernique
+public import Mathlib.MeasureTheory.Integral.Prod
+
+@[expose] public section
 
 namespace GaussianSpace
 

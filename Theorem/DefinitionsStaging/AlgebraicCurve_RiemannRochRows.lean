@@ -1,7 +1,7 @@
 import Mathlib
 import Lemma.Definitions.Def_AlgebraicCurve_AdelicIndex
 import Lemma.Definitions.Def_AlgebraicCurve_CanonicalDivisor
-import Lemma.Scheme.IsCurveOver
+import Theorem.Scheme.IsCurveOver
 import Def.AlgebraicCurve_RiemannRochRows
 set_option autoImplicit false
 

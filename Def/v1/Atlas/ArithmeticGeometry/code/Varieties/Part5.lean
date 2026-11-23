@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.ArithmeticGeometry.code.AffineVarieties.Part5
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.AffineVarieties
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.AffineVarieties
 import Mathlib.Topology.Basic
 import Mathlib.Topology.Order
 import Mathlib.Algebra.MvPolynomial.Monad

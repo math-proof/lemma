@@ -1,6 +1,10 @@
-import Mathlib
-import Theorem.Polynomial.WeierstrassLevelCarrier
-import Structure.ModularCurve_WeierstrassLevelModuliDatum
+module
+
+public import Mathlib
+public import Theorem.Polynomial.WeierstrassLevelCarrier
+public import Structure.ModularCurve_WeierstrassLevelModuliDatum
+
+@[expose] public section
 
 set_option autoImplicit false
 

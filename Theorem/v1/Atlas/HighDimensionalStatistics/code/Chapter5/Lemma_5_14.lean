@@ -7,14 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Data.Fintype.EquivFin
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter5.ChernoffAnalyticHelpers
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.ChernoffAnalyticHelpers
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Lemma_5_14.Part2
+public import Mathlib.Data.Fintype.EquivFin
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter5.ChernoffAnalyticHelpers
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.ChernoffAnalyticHelpers
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Lemma_5_14.Part2
 open Finset Real
 
+public section
 
 noncomputable section
 

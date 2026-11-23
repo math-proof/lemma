@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/GeneralizedLucas.lean -/
+module
 
-
-import Def.NumberTheory.GeneralizedLucas
-import Theorem.Nat.GeneralizedLucas
+public import Def.NumberTheory.GeneralizedLucas
+public import Theorem.Nat.GeneralizedLucas
 open Finset
 
+public section
 
 /-- `k = 2` lower index `0` is `2` (classical Lucas start). -/
 example : Nat.kGeneralizedLucas 2 (by omega) 0 (by omega) = 2 :=

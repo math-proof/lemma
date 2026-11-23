@@ -1,6 +1,9 @@
 -- Carved from Lemma/Definitions/Def_NumberField_PlaceDecompositionAction.lean: instance decls only.
-import Mathlib
-import Lemma.Valuation.PlaceDecompositionAction
+module
+
+public import Mathlib
+public import Theorem.Valuation.PlaceDecompositionAction
+@[expose] public section
 
 set_option autoImplicit false
 

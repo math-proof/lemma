@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Ramanujan/Part1Ch3Entry10PoissonAsymptotic.lean -/
+module
 
+public import Def.Combinatorics.AssociatedStirlingSecond
+public import Theorem.Finset.AssociatedStirlingSecond
+public import Theorem.Nat.Ramanujan.Part1Ch3Entry10PoissonAsymptotic
+public import Def.NumberTheory.Ramanujan.Part1Ch3Entry10PoissonAsymptotic
 
-import Def.Combinatorics.AssociatedStirlingSecond
-import Theorem.Finset.AssociatedStirlingSecond
-import Lemma.Nat.Ramanujan.Part1Ch3Entry10PoissonAsymptotic
-import Def.NumberTheory.Ramanujan.Part1Ch3Entry10PoissonAsymptotic
-
+public section
 
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry10PoissonAsymptotic
 

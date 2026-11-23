@@ -10,9 +10,9 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.ArithmeticGeometry.code.HilbertSymbol.Part2
 import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertSymbol
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertFormulaOdd
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertFormulaOdd
 import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Hilbert2Adic
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Hilbert2AdicCore
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Hilbert2AdicCore
 import Def.v1.Atlas.ArithmeticGeometry.code.HilbertFormulaOdd
 import Def.v1.Atlas.ArithmeticGeometry.code.Hilbert2Adic
 import Def.v1.Atlas.ArithmeticGeometry.code.Hilbert2AdicCore.Part2

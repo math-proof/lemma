@@ -3,12 +3,14 @@
 /-
 Author: @toskua, Avocado
 -/
+module
 
-
-import Theorem.RingTheory.Polynomial.Eisenstein.AdjoinRoot
-import Theorem.Int.Polynomial.Eisenstein.AdjoinRoot
-import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Theorem.RingTheory.Polynomial.Eisenstein.AdjoinRoot
+public import Theorem.Int.Polynomial.Eisenstein.AdjoinRoot
+public import Mathlib.NumberTheory.Padics.PadicIntegers
 open Polynomial
+
+public section
 
 variable {A : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
 

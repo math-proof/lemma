@@ -8,17 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.TheoryOfComputation.code.GNFA
-import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.GNFA
-import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.RegularLanguages
-import Def.v1.Atlas.TheoryOfComputation.code.RegularLanguages
-import Mathlib.Computability.RegularExpressions
-import Mathlib.Computability.DFA
-import Mathlib.Computability.MyhillNerode
-import Mathlib.Data.Finite.Prod
-import Mathlib.Data.Set.Finite.Powerset
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Fintype.Option
+module
+
+public import Theorem.v1.Atlas.TheoryOfComputation.code.GNFA
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.GNFA
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.RegularLanguages
+public import Def.v1.Atlas.TheoryOfComputation.code.RegularLanguages
+public import Mathlib.Computability.RegularExpressions
+public import Mathlib.Computability.DFA
+public import Mathlib.Computability.MyhillNerode
+public import Mathlib.Data.Finite.Prod
+public import Mathlib.Data.Set.Finite.Powerset
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Fintype.Option
+
+@[expose] public section
+
 open Language Set
 
 

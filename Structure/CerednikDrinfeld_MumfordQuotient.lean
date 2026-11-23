@@ -4,7 +4,7 @@ public import Mathlib.FieldTheory.Fixed
 public import Mathlib.RingTheory.Localization.FractionRing
 public import Mathlib.RingTheory.Localization.Basic
 public import Mathlib.Algebra.Ring.Action.Group
-public import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
+public import Theorem.Scheme.AlgebraicCurveBaseChangeGalois
 public import Def.CerednikDrinfeld_MumfordVertexType
 
 set_option autoImplicit false

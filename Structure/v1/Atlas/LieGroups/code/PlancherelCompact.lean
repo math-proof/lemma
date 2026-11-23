@@ -13,7 +13,7 @@ module
 public import Mathlib
 public import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
 public import Theorem.Complex.IsStronglyContinuousToMonoidHom
-public import Lemma.Complex.IsKFinite0
+public import Theorem.Complex.IsKFinite0
 public import Theorem.Real.GetToMonoidHom.in.SmoothSubspace.of.In_SmoothSubspace
 public import Theorem.Real.IsSmoothVector0
 public import Theorem.Complex.Eq_Sum_Mul

@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Instance.v1.Atlas.TensorCategories.code.UnitSemisimplicity.TensorExactness
-import Lemma.Category.Atlas.v1.TensorCategories.code.UnitSemisimplicity.TensorExactness
+import Theorem.Category.Atlas.v1.TensorCategories.code.UnitSemisimplicity.TensorExactness
 open CategoryTheory MonoidalCategory Category CategoryTheory.Limits
 
 universe v u w

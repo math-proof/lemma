@@ -1,14 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/KlamkinVariant.lean -/
+module
 
-
-import Theorem.Real.SpecialFunctions.KlamkinVariant
-import Def.Analysis.SpecialFunctions.GaussHypergeometricSummationKlamkin
-import Theorem.Real.GaussHypergeometricSummationKlamkin
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Order
+public import Theorem.Real.SpecialFunctions.KlamkinVariant
+public import Def.Analysis.SpecialFunctions.GaussHypergeometricSummationKlamkin
+public import Theorem.Real.GaussHypergeometricSummationKlamkin
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Order
 open MetaMathlibExt
 
+public section
 
 example : HasSum (fun k : ℕ =>
     ordinaryHypergeometricCoefficient ((1 : ℕ) : ℝ) ((1 / 3 : ℝ) + 1)

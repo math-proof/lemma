@@ -5,8 +5,6 @@ import Theorem.Analysis.SpecialFunctions.Part1Ch7DirichletBeta
 open Ramanujan.Part1Ch7.DirichletBeta
 
 
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch7.DirichletBeta
-
 /--
 [Part1Ch7DirichletBeta](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch7DirichletBeta.lean)
 -/
@@ -17,9 +15,6 @@ private lemma betaCharOdd_eq :
 -- proof
   betaCharOdd
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch7.DirichletBeta
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch7.DirichletBeta
 
 /--
 [Part1Ch7DirichletBeta](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch7DirichletBeta.lean)
@@ -31,9 +26,6 @@ private lemma betaCharUnivFour_eq :
 -- proof
   betaCharUnivFour
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch7.DirichletBeta
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch7.DirichletBeta
 
 /--
 [Part1Ch7DirichletBeta](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch7DirichletBeta.lean)
@@ -45,9 +37,6 @@ private lemma betaCharSum_eq :
 -- proof
   betaCharSum
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch7.DirichletBeta
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch7.DirichletBeta
 
 /--
 [Part1Ch7DirichletBeta](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch7DirichletBeta.lean)
@@ -59,7 +48,6 @@ private lemma betaDirichletEntire_eq :
 -- proof
   betaDirichletEntire
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch7.DirichletBeta
 
 /--
 [Part1Ch7DirichletBeta](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch7DirichletBeta.lean)
@@ -103,4 +91,4 @@ private lemma beta_char3_eq :
 
 
 -- created on 2026-10-10
--- updated on 2026-10-26
+-- updated on 2026-11-22

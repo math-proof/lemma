@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section11
-public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section11
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section11
 public section
 
 open Set Topology EilenbergSteenrod Function

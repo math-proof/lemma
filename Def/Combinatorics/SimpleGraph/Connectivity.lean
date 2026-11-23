@@ -16,13 +16,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite
-import Mathlib.Combinatorics.SimpleGraph.Paths
-import Mathlib.Combinatorics.SimpleGraph.Walk.Counting
-import Theorem.Combinatorics.SimpleGraph.VertexConnectivity
-import Theorem.SimpleGraph.VertexConnectivity
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite
+public import Mathlib.Combinatorics.SimpleGraph.Paths
+public import Mathlib.Combinatorics.SimpleGraph.Walk.Counting
+public import Theorem.Combinatorics.SimpleGraph.VertexConnectivity
+public import Theorem.SimpleGraph.VertexConnectivity
+
+@[expose] public section
 
 namespace SimpleGraph
 

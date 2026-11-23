@@ -4,12 +4,7 @@
  */
 import { getMysqlConfig, getMysqlPool } from './fetchLemmaMysql.mjs';
 
-function dbUser(projectUser) {
-  const s = String(projectUser || 'lean');
-  return /^[a-zA-Z0-9_]+$/.test(s) ? s : 'lean';
-}
-
-function cteType(u) {
+function cteType() {
   return `_t_type as (
     select
         distinct type
@@ -19,12 +14,10 @@ function cteType(u) {
             JSON_EXTRACT(meta, '$.error'),
             '$[*]' columns(type text path '$.type')
         ) as jt
-    where
-        user = '${u}'
 )`;
 }
 
-function cteMatrix(u) {
+function cteMatrix() {
   return `_t_matrix as (
     select
         module,
@@ -35,8 +28,6 @@ function cteMatrix(u) {
             JSON_EXTRACT(meta, '$.error'),
             '$[*]' columns(type text path '$.type')
         ) as jt
-    where
-        user = '${u}'
 )`;
 }
 
@@ -46,10 +37,9 @@ function section(axiom) {
 }
 
 /**
- * @param {string} projectUser
  * @returns {Promise<{ state_count_pairs: { type: string, count: number }[], repertoire: Record<string, Record<string, string[]>> }>}
  */
-export async function buildSummaryPayload(projectUser) {
+export async function buildSummaryPayload() {
   const empty = {
     state_count_pairs: [{ type: 'total', count: 0 }],
     repertoire: /** @type {Record<string, Record<string, string[]>>} */ ({}),
@@ -59,15 +49,14 @@ export async function buildSummaryPayload(projectUser) {
     return empty;
   }
 
-  const u = dbUser(projectUser);
   const p = getMysqlPool();
   if (!p) {
     return empty;
   }
 
   try {
-    const tt = cteType(u);
-    const tm = cteMatrix(u);
+    const tt = cteType();
+    const tm = cteMatrix();
 
     const sqlRepertoire = `
 with ${tt}, ${tm}
@@ -117,8 +106,7 @@ group by
     }
 
     const [totalRows] = await p.query(
-      `select count(*) as c from lemma where user = ? and json_length(imports) > 0`,
-      [u]
+      `select count(*) as c from lemma where json_length(imports) > 0`
     );
     const total =
       Array.isArray(totalRows) && totalRows[0]

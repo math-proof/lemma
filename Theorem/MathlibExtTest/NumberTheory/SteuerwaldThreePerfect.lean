@@ -3,9 +3,11 @@
 /-
 # Tests for Pillai equations and Steuerwald's theorem
 -/
+module
 
-import Theorem.Nat.SteuerwaldThreePerfect
+public import Theorem.Nat.SteuerwaldThreePerfect
 
+public section
 
 example :
     (∀ a b : ℕ, (2 : ℤ) ^ a - 3 ^ b = -1 ↔

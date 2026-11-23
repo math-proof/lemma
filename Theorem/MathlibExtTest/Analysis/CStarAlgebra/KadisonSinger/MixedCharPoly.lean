@@ -1,13 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/CStarAlgebra/KadisonSinger/MixedCharPoly.lean -/
+module
 
-import Def.Analysis.CStarAlgebra.KadisonSinger.MixedCharPoly
-import Lemma.Real.CStarAlgebra.KadisonSinger.MixedCharPoly
+public import Def.Analysis.CStarAlgebra.KadisonSinger.MixedCharPoly
+public import Theorem.Real.CStarAlgebra.KadisonSinger.MixedCharPoly
 open scoped BigOperators
 
 open Matrix MvPolynomial
 
 open MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
+public section
 
 namespace MathlibExtTest.Analysis.CStarAlgebra.KadisonSinger.MixedCharPoly
 

@@ -1,7 +1,8 @@
 -- Carved from Lemma/Definitions/Def_ArtinL_Conductor.lean: instance decls only.
 import Mathlib
 import Instance.Mathlib_RingTheory_Valuation_LowerRamificationGroup
-import Lemma.Matrix.Conductor
+import Theorem.Matrix.Conductor
+import Def.Matrix_Conductor
 
 set_option autoImplicit false
 

@@ -8,11 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Def.v1.Atlas.ArithmeticGeometry.code.CurveTheory.Part10
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.CurveTheory
-import Instance.v1.Atlas.ArithmeticGeometry.code.FunctionFieldEquiv.Part3
+module
 
+public import Mathlib
+public import Def.v1.Atlas.ArithmeticGeometry.code.CurveTheory.Part10
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CurveTheory
+public import Instance.v1.Atlas.ArithmeticGeometry.code.FunctionFieldEquiv.Part3
+
+@[expose] public section
 
 noncomputable section
 

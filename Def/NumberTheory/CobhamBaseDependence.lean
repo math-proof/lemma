@@ -4,20 +4,23 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.Data.Set.Basic
-import Abbrev.Dynamics.EventuallyPeriodicSequence
-import Theorem.Set.EventuallyPeriodicSequence
-import Theorem.Nat.BaseRecognizable
-import Def.NumberTheory.BaseRecognizable
-import Mathlib.Algebra.Order.Field.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Data.Finset.Lattice.Fold
-import Mathlib.Data.Fintype.Pigeonhole
-import Mathlib.Data.Nat.Digits.Lemmas
-import Mathlib.Data.Set.Finite.Lattice
-import Mathlib.NumberTheory.DiophantineApproximation.Basic
-import Mathlib.Tactic
+module
 
+public import Mathlib.Data.Set.Basic
+public import Abbrev.Dynamics.EventuallyPeriodicSequence
+public import Theorem.Set.EventuallyPeriodicSequence
+public import Theorem.Nat.BaseRecognizable
+public import Def.NumberTheory.BaseRecognizable
+public import Mathlib.Algebra.Order.Field.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Data.Finset.Lattice.Fold
+public import Mathlib.Data.Fintype.Pigeonhole
+public import Mathlib.Data.Nat.Digits.Lemmas
+public import Mathlib.Data.Set.Finite.Lattice
+public import Mathlib.NumberTheory.DiophantineApproximation.Basic
+public import Mathlib.Tactic
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

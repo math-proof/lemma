@@ -1,16 +1,18 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/SumSquares/RepresentationCount.lean -/
+module
 
-
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Data.Matrix.Basic
-import Mathlib.Tactic.NormNum
-import Def.NumberTheory.SumSquares.RepresentationCount
-import Theorem.Nat.SumSquares.RepresentationCount
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Data.Matrix.Basic
+public import Mathlib.Tactic.NormNum
+public import Def.NumberTheory.SumSquares.RepresentationCount
+public import Theorem.Nat.SumSquares.RepresentationCount
 open SumSquares
 
 /-!
 # Tests for ordered signed sums of squares
 -/
+
+public section
 
 
 example : (![3, 4] : Fin 2 → ℤ) ∈ solutions 2 25 := by

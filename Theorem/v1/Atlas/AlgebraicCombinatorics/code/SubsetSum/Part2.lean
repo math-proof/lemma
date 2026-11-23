@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Instance.v1.Atlas.AlgebraicCombinatorics.code.YoungLattice.Part3
-import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungLattice
-import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungLatticeSperner
+import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungLattice
+import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungLatticeSperner
 import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.QBinomial
 import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.GroupActions
 import Def.v1.Atlas.AlgebraicCombinatorics.code.YoungLatticeSperner.Part3

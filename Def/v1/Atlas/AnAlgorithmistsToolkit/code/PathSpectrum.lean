@@ -8,14 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.LapMatrix
-import Mathlib.Combinatorics.SimpleGraph.Hasse
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Def.v1.Atlas.AnAlgorithmistsToolkit.code.GraphMatrices
-import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.GraphMatrices
-import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.SpectraCommonGraphs
-import Instance.v1.Atlas.AnAlgorithmistsToolkit.code.SpectraCommonGraphs
-import Instance.v1.Atlas.AnAlgorithmistsToolkit.code.PathSpectrum
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.LapMatrix
+public import Mathlib.Combinatorics.SimpleGraph.Hasse
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Def.v1.Atlas.AnAlgorithmistsToolkit.code.GraphMatrices
+public import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.GraphMatrices
+public import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.SpectraCommonGraphs
+public import Instance.v1.Atlas.AnAlgorithmistsToolkit.code.SpectraCommonGraphs
+public import Instance.v1.Atlas.AnAlgorithmistsToolkit.code.PathSpectrum
+
+@[expose] public section
+
 open Real SimpleGraph Matrix Finset
 
 

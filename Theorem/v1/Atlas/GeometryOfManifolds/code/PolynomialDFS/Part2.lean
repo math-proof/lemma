@@ -7,12 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.GeometryOfManifolds.code.DifferentialForms.Part2
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialForms
-import Instance.v1.Atlas.GeometryOfManifolds.code.PolynomialDFS.Part2
+public import Def.v1.Atlas.GeometryOfManifolds.code.DifferentialForms.Part2
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialForms
+public import Instance.v1.Atlas.GeometryOfManifolds.code.PolynomialDFS.Part2
 set_option autoImplicit false
 
+public section
 
 /-- The space of polynomial $0$-forms is nontrivial: $0 \ne 1$. -/
 theorem polyOmega_zero_nontrivial : (0 : PolyΩ 0) ≠ (1 : PolyΩ 0) :=

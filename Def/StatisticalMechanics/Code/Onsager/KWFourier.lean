@@ -8,11 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.KWMatrix
-import Theorem.StatisticalMechanics.Code.Onsager.BlockCirculant2D
-import Theorem.StatisticalMechanics.Code.Onsager.SymbolDet
+module
 
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.KWMatrix
+public import Theorem.StatisticalMechanics.Code.Onsager.BlockCirculant2D
+public import Theorem.StatisticalMechanics.Code.Onsager.SymbolDet
+
+@[expose] public section
 
 namespace StatMech.Onsager
 

@@ -1,8 +1,10 @@
-import Lemma.Scheme.OrderedAffineCoverCechOrdered
+module
+
+public import Theorem.Scheme.OrderedAffineCoverCechOrdered
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 universe u
 

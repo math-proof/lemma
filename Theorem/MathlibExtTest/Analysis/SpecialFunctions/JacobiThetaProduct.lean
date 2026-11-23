@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/JacobiThetaProduct.lean -/
+module
 
+public import Def.Analysis.SpecialFunctions.JacobiThetaProduct
+public import Theorem.Real.SpecialFunctions.JacobiThetaProduct
+public import Mathlib.Tactic.NormNum
 
-import Def.Analysis.SpecialFunctions.JacobiThetaProduct
-import Lemma.Real.SpecialFunctions.JacobiThetaProduct
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MetaMathlibExt.QPochhammer
 

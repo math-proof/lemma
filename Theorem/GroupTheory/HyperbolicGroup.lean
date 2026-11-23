@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/HyperbolicGroup.lean -/
+module
 
-import Mathlib.Geometry.Group.WordMetric
-import Mathlib.GroupTheory.Finiteness
-import Theorem.Topology.MetricSpace.GromovHyperbolic
-import Theorem.Set.MetricSpace.GromovHyperbolic
-import Def.GroupTheory.HyperbolicGroup
+public import Mathlib.Geometry.Group.WordMetric
+public import Mathlib.GroupTheory.Finiteness
+public import Theorem.Topology.MetricSpace.GromovHyperbolic
+public import Theorem.Set.MetricSpace.GromovHyperbolic
+public import Def.GroupTheory.HyperbolicGroup
+
 /-!
 # Hyperbolic groups
 
@@ -32,6 +34,8 @@ when some finite generating family's word metric is Gromov-hyperbolic
 
 hyperbolic group, word metric, geometric group theory
 -/
+
+public section
 
 
 /-! ### Examples -/

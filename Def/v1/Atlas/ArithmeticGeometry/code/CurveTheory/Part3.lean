@@ -8,12 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Def.v1.Atlas.ArithmeticGeometry.code.MorphismsCurves
-import Abbrev.v1.Atlas.ArithmeticGeometry.code.RegularLocalRings
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.RegularLocalRings
-import Structure.v1.Atlas.ArithmeticGeometry.code.CurveTheory.Part3
+module
 
+public import Mathlib
+public import Def.v1.Atlas.ArithmeticGeometry.code.MorphismsCurves
+public import Abbrev.v1.Atlas.ArithmeticGeometry.code.RegularLocalRings
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.RegularLocalRings
+public import Structure.v1.Atlas.ArithmeticGeometry.code.CurveTheory.Part3
+
+@[expose] public section
 
 noncomputable section
 

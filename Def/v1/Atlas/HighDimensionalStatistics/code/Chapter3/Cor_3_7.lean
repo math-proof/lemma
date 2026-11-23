@@ -8,14 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Setup
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_4
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_4
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_6
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Order.ConditionallyCompleteLattice.Basic
-import Mathlib.MeasureTheory.Measure.MeasureSpace
-import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+module
+
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Setup
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_4
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_4
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_6
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Order.ConditionallyCompleteLattice.Basic
+public import Mathlib.MeasureTheory.Measure.MeasureSpace
+public import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+
+@[expose] public section
+
 open Matrix MeasureTheory
 
 

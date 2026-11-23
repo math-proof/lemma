@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ArithmeticFunction/MorgadoRegularResidues.lean -/
 
-import Mathlib.Data.Nat.Totient
-import Def.NumberTheory.UnitaryDivisor.Part2
-import Theorem.Set.UnitaryDivisor
-import Mathlib.FieldTheory.Finite.Basic
+module
+
+public import Mathlib.Data.Nat.Totient
+public import Def.NumberTheory.UnitaryDivisor.Part2
+public import Theorem.Set.UnitaryDivisor
+public import Mathlib.FieldTheory.Finite.Basic
+
+@[expose] public section
+
 open scoped BigOperators
 
 

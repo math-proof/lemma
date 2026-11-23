@@ -11,8 +11,8 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.ArithmeticGeometry.code.WeilChatelet.Part2
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.WeilChatelet
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.JInvariant
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.WeilChatelet
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.JInvariant
 public import Def.v1.Atlas.ArithmeticGeometry.code.JInvariant.Part3
 public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 public import Instance.v1.Atlas.ArithmeticGeometry.code.TorsorIffJacobian

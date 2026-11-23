@@ -1,6 +1,7 @@
 -- Carved from Lemma/Definitions/Def_WeierstrassCurve_Generic.lean: instance decls only.
 import Mathlib
-import Lemma.WeierstrassCurve.Generic
+import Theorem.WeierstrassCurve.Generic
+import Def.WeierstrassCurve_Generic
 
 set_option autoImplicit false
 

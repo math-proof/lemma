@@ -7,12 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Theorem.StatisticalMechanics.Code.Inequalities.IncreasingEvent.Part2
-import Notation.StatisticalMechanics.Code.Foundations.StochasticDomination
+public import Theorem.StatisticalMechanics.Code.Inequalities.IncreasingEvent.Part2
+public import Notation.StatisticalMechanics.Code.Foundations.StochasticDomination
 open MeasureTheory
 
+public section
 
 namespace StatMech
 

@@ -7,14 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
-import Class.v1.Atlas.GeometryOfManifolds.code.HamiltonianVectorFields
+public import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
+public import Class.v1.Atlas.GeometryOfManifolds.code.HamiltonianVectorFields
 set_option autoImplicit false
 
 open DifferentialFormSpace
 
+public section
 
 /-- A Hamiltonian vector field preserves the symplectic form: $\mathcal{L}_{X_H} \omega = 0$. By
 Cartan's magic formula $\mathcal{L}_{X_H}\omega = \iota_{X_H} d\omega + d(\iota_{X_H}\omega)

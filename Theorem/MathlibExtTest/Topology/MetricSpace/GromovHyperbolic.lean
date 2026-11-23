@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Topology/MetricSpace/GromovHyperbolic.lean -/
+module
 
+public import Theorem.Topology.MetricSpace.GromovHyperbolic
+public import Theorem.Set.MetricSpace.GromovHyperbolic
 
-import Theorem.Topology.MetricSpace.GromovHyperbolic
-import Theorem.Set.MetricSpace.GromovHyperbolic
-
+public section
 
 /-- Regression test for the Gromov-product basepoint ordering: from the public
 `Metric.IsDeltaHyperbolic ℝ 0` hypothesis, the four-point inequality for the

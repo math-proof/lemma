@@ -4,7 +4,7 @@ All rights reserved.
 -/
 import Mathlib
 import Def.Combinatorics.Young.Definitions.Part8
-import Lemma.PowerSeries.InfiniteProducts2
+import Theorem.PowerSeries.InfiniteProducts2
 import Lemma.MvPolynomial.SymmetricDefinitions
 import Theorem.Combinatorics.Young.OmegaInvolution
 open MvPolynomial Finset BigOperators AlgebraicCombinatorics.SymmetricPolynomials

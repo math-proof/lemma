@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/LSeries/AbelContinuation.lean -/
+module
 
+public import Def.NumberTheory.LSeries.AbelContinuation
+public import Theorem.Nat.LSeries.AbelContinuation
 
-import Def.NumberTheory.LSeries.AbelContinuation
-import Theorem.Nat.LSeries.AbelContinuation
 /-!
 # Tests for the Abel continuation
 
@@ -14,6 +15,8 @@ at `1 < s.re` and agreement of the continuation with `LSeries` there. Every
 `LSeriesSummable` check below is absolute summability; no conditional
 convergence is claimed.
 -/
+
+public section
 
 
 namespace AbelContinuationTest

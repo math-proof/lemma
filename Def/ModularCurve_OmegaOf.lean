@@ -1,4 +1,4 @@
-import Lemma.HahnSeries.QAdicPlace
+import Theorem.HahnSeries.QAdicPlace
 import Instance.ModularCurve_ArithmeticGalois
 import Def.ModularCurve_QExpansionDiff
 import Theorem.NumberTheory.ModularCurve.ThetaCoeff

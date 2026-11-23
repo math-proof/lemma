@@ -4,10 +4,15 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Hamiltonian
-import Theorem.Combinatorics.SimpleGraph.VertexConnectivity
-import Theorem.SimpleGraph.VertexConnectivity
-import Theorem.SimpleGraph.HamiltonianCycle
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Hamiltonian
+public import Theorem.Combinatorics.SimpleGraph.VertexConnectivity
+public import Theorem.SimpleGraph.VertexConnectivity
+public import Theorem.SimpleGraph.HamiltonianCycle
+
+@[expose] public section
+
 /-!
 # Squares of simple graphs
 

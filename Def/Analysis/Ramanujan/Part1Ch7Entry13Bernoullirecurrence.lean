@@ -4,44 +4,49 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Basic.Complex.Basic
-import Mathlib.NumberTheory.LSeries.RiemannZeta
-import Mathlib.Order.Filter.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Topology.Basic
-import Def.Analysis.Ramanujan.Part1Ch7Entry13Bernoullipolyadd
-import Theorem.Real.Part1Ch7Entry13Bernoullipolyadd
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Analysis.Calculus.ContDiff.Basic
-import Mathlib.Analysis.SpecialFunctions.Complex.Log
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Complex
-import Mathlib.Data.Finset.Defs
-import Mathlib.Data.Finset.Range
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Data.Set.Defs
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.Order.Interval.Set.Defs
-import Mathlib.NumberTheory.Harmonic.ZetaAsymp
-import Mathlib.Tactic.Ring
-import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
-import Mathlib.Analysis.Calculus.MeanValue
-import Mathlib.Analysis.Calculus.ParametricIntervalIntegral
-import Mathlib.Analysis.Complex.CauchyIntegral
-import Mathlib.Analysis.Complex.Convex
-import Mathlib.Analysis.Complex.LocallyUniformLimit
-import Mathlib.Analysis.Complex.TaylorSeries
-import Mathlib.Analysis.Normed.Group.FunctionSeries
-import Mathlib.Analysis.PSeries
-import Mathlib.Analysis.PSeriesComplex
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Analysis.Analytic.Uniqueness
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-import Mathlib.Topology.Order.Compact
-import Mathlib.Topology.UniformSpace.LocallyUniformConvergence
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.NumberTheory.LSeries.RiemannZeta
+public import Mathlib.Order.Filter.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Topology.Basic
+public import Def.Analysis.Ramanujan.Part1Ch7Entry13Bernoullipolyadd
+public import Theorem.Real.Part1Ch7Entry13Bernoullipolyadd
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Analysis.Calculus.ContDiff.Basic
+public import Mathlib.Analysis.SpecialFunctions.Complex.Log
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Complex
+public import Mathlib.Data.Finset.Defs
+public import Mathlib.Data.Finset.Range
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.Data.Set.Defs
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.Order.Interval.Set.Defs
+public import Mathlib.NumberTheory.Harmonic.ZetaAsymp
+public import Mathlib.Tactic.Ring
+public import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
+public import Mathlib.Analysis.Calculus.MeanValue
+public import Mathlib.Analysis.Calculus.ParametricIntervalIntegral
+public import Mathlib.Analysis.Complex.CauchyIntegral
+public import Mathlib.Analysis.Complex.Convex
+public import Mathlib.Analysis.Complex.LocallyUniformLimit
+public import Mathlib.Analysis.Complex.TaylorSeries
+public import Mathlib.Analysis.Normed.Group.FunctionSeries
+public import Mathlib.Analysis.PSeries
+public import Mathlib.Analysis.PSeriesComplex
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Analysis.Analytic.Uniqueness
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+public import Mathlib.Topology.Order.Compact
+public import Mathlib.Topology.UniformSpace.LocallyUniformConvergence
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 7
 

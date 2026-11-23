@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Mathlib
 import Structure.v1.Atlas.TensorCategories.code.PivotalSpherical.Part3
 import Theorem.Category.Atlas.v1.TensorCategories.code.PivotalSpherical
-import Lemma.Category.Atlas.v1.TensorCategories.code.VecInstances
+import Theorem.Category.Atlas.v1.TensorCategories.code.VecInstances
 import Lemma.Category.Atlas.v1.TensorCategories.code.VecPivotalConcrete
 import Lemma.Category.Atlas.v1.TensorCategories.code.VecSphericalConcrete
 import Abbrev.v1.Atlas.TensorCategories.code.VecInstances.Part2

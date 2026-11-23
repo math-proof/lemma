@@ -11,8 +11,8 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Theorem.v1.Atlas.AlgebraicTopologyI.code.ConvexAcyclicity.Part2
-public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.ConvexAcyclicity
-public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section8
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.ConvexAcyclicity
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section8
 public import Instance.v1.Atlas.AlgebraicTopologyI.code.Section8.Part3
 public import Def.v1.Atlas.AlgebraicTopologyI.code.ModelChains
 

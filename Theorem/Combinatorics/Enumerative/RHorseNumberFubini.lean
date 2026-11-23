@@ -10,7 +10,7 @@ import Mathlib.SetTheory.Cardinal.Finite
 import Mathlib.Data.Rat.Defs
 import Def.Combinatorics.Enumerative.FubiniNumber
 import Theorem.Finset.Enumerative.FubiniNumber
-import Lemma.Finset.Enumerative.StirlingMatrices
+import Theorem.Finset.Enumerative.StirlingMatrices
 import Mathlib.Algebra.BigOperators.Group.Finset.Powerset
 import Mathlib.Data.Fintype.Powerset
 import Mathlib.Data.Finset.Sort

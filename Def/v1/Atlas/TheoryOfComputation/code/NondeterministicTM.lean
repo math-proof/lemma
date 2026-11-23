@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TheoryOfComputation.code.TuringMachines.Part4
-import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.TuringMachines
-import Structure.v1.Atlas.TheoryOfComputation.code.NondeterministicTM
+module
 
+public import Def.v1.Atlas.TheoryOfComputation.code.TuringMachines.Part4
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.TuringMachines
+public import Structure.v1.Atlas.TheoryOfComputation.code.NondeterministicTM
+
+@[expose] public section
 
 namespace TuringMachine
 

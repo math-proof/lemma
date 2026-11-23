@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/ListColoring.lean -/
+module
 
-
-import Def.Combinatorics.SimpleGraph.ListColoring
-import Theorem.SimpleGraph.ListColoring
+public import Def.Combinatorics.SimpleGraph.ListColoring
+public import Theorem.SimpleGraph.ListColoring
 open SimpleGraph
 
+public section
 
 /-- The one-vertex graph has choice number one, including the zero boundary. -/
 example : (⊥ : SimpleGraph (Fin 1)).IsChoiceNumber 1 := by

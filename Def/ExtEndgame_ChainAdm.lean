@@ -1,10 +1,14 @@
-import Mathlib
-import Def.GroupCohomology_SelmerAdm
-import Abbrev.DualSelmer_ExtConditions
-import Def.DualSelmer_ExtConditions
-import Def.ExtCitation_KummerBridge
-import Def.ExtCitation_AdmissibleExtension
-import Def.Stickelberger_Basic
+module
+
+public import Mathlib
+public import Def.GroupCohomology_SelmerAdm
+public import Abbrev.DualSelmer_ExtConditions
+public import Def.DualSelmer_ExtConditions
+public import Def.ExtCitation_KummerBridge
+public import Def.ExtCitation_AdmissibleExtension
+public import Def.Stickelberger_Basic
+
+@[expose] public section
 
 set_option autoImplicit false
 

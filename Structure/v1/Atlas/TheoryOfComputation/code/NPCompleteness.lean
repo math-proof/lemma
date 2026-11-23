@@ -14,7 +14,7 @@ public import Mathlib.Data.Set.Basic
 public import Mathlib.Data.Fintype.Basic
 public import Mathlib.Data.List.Nodup
 public import Def.v1.Atlas.TheoryOfComputation.code.Complexity.Part2
-public import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
 public import Structure.v1.Atlas.TheoryOfComputation.code.Tableau
 public import Theorem.v1.Atlas.TheoryOfComputation.code.NPCompleteness.Part3
 

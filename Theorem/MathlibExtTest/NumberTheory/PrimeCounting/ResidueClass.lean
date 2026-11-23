@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PrimeCounting/ResidueClass.lean -/
+module
 
+public import Def.NumberTheory.PrimeCounting.ResidueClass
+public import Theorem.Nat.PrimeCounting.ResidueClass
 
-import Def.NumberTheory.PrimeCounting.ResidueClass
-import Theorem.Nat.PrimeCounting.ResidueClass
-
+public section
 
 -- `X = 0` has no primes.
 example : Nat.primeCountingMod 0 3 1 = 0 := by decide

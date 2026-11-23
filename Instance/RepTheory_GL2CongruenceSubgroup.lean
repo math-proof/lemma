@@ -1,6 +1,7 @@
 -- Carved from Lemma/Definitions/Def_RepTheory_GL2CongruenceSubgroup.lean: instance decls only.
 import Mathlib
-import Lemma.Matrix.GL2CongruenceSubgroup
+import Theorem.Matrix.GL2CongruenceSubgroup
+import Def.FLTPrelim_GL2CongruenceSubgroup
 
 set_option autoImplicit false
 

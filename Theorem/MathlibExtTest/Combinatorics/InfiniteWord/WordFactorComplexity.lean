@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/InfiniteWord/WordFactorComplexity.lean -/
+module
 
-
-import Def.Combinatorics.InfiniteWord.WordFactorComplexity
-import Lemma.Finset.InfiniteWord.WordFactorComplexity
+public import Def.Combinatorics.InfiniteWord.WordFactorComplexity
+public import Theorem.Finset.InfiniteWord.WordFactorComplexity
 open MetaMathlibExt
 
+public section
 
 /-- Regression: a constant binary word has exactly one factor of each length. -/
 example : wordFactorComplexity (fun _ : ℕ => false) 2 = 1 := by

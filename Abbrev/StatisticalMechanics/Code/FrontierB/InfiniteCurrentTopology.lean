@@ -9,9 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Foundations.Ergodicity.Part2
-import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
-import Mathlib.MeasureTheory.Measure.FiniteMeasureProd
+module
+
+public import Theorem.StatisticalMechanics.Code.Foundations.Ergodicity.Part2
+public import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+public import Mathlib.MeasureTheory.Measure.FiniteMeasureProd
+@[expose] public section
+
 open Filter MeasureTheory Topology
 
 

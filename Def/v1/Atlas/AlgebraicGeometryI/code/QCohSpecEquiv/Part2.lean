@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Tilde
-import Instance.v1.Atlas.AlgebraicGeometryI.code.QCohSpecEquiv
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Tilde
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.QCohSpecEquiv
+
+@[expose] public section
+
 open AlgebraicGeometry CategoryTheory
 
 

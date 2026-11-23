@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Padics/Polynomial.lean -/
+module
 
-
-import Def.NumberTheory.Padics.Polynomial
-import Theorem.Polynomial.Padics.Polynomial
+public import Def.NumberTheory.Padics.Polynomial
+public import Theorem.Polynomial.Padics.Polynomial
 open Polynomial
 
+public section
 
 example :
     Polynomial.padicValuation 2 prime_two (C 12)

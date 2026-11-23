@@ -2,7 +2,8 @@
 import Mathlib
 import Instance.CuspForm_HeckeOperatorFormsGammaH
 import Instance.FLTPrelim_Modularity
-import Lemma.CuspForm.TwoCuspLattice
+import Theorem.CuspForm.TwoCuspLattice
+import Def.CuspForm_TwoCuspLattice
 
 set_option autoImplicit false
 

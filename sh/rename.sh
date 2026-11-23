@@ -78,30 +78,70 @@ update_axiom_module_row() {
 
   old_q=$(sql_quote "$old_mod")
   new_q=$(sql_quote "$new_mod")
-  user_q=$(sql_quote "$project_user")
   lemma_old_q=$(sql_quote "Lemma.$old_mod")
   lemma_new_q=$(sql_quote "Lemma.$new_mod")
+  merge=${3:-}
 
-  echo "MySQL axiom.lemma: user=$project_user module $old_mod -> $new_mod (login ${login_user:-passwordless}@$host)"
+  echo "MySQL axiom.lemma: module $old_mod -> $new_mod (login ${login_user:-passwordless}@$host)"
 
-  out=$("${mysql_env[@]}" mysql -h"$host" -P"$port" "${mysql_login[@]}" -D"$database" -N -e "
-UPDATE lemma SET module = ${new_q} WHERE user = ${user_q} AND module = ${old_q};
+  out=
+  if [ -n "$merge" ]; then
+    src_id=$("${mysql_env[@]}" mysql -h"$host" -P"$port" "${mysql_login[@]}" -D"$database" -N -e "SELECT id FROM lemma WHERE module = ${old_q}" 2>/dev/null || true)
+    dst_id=$("${mysql_env[@]}" mysql -h"$host" -P"$port" "${mysql_login[@]}" -D"$database" -N -e "SELECT id FROM lemma WHERE module = ${new_q}" 2>/dev/null || true)
+    src_id=$(printf '%s' "$src_id" | tr -d '\r')
+    dst_id=$(printf '%s' "$dst_id" | tr -d '\r')
+  fi
+
+  if [ -n "$merge" ] && [ -n "$src_id" ] && [ -n "$dst_id" ] && [ "$src_id" != "$dst_id" ]; then
+    # Sublemma merge into an existing parent: drop the source row and its postings.
+    # The destination keeps its id; run.mjs can refresh its fingerprint later if needed.
+    out=$("${mysql_env[@]}" mysql -h"$host" -P"$port" "${mysql_login[@]}" -D"$database" -N -e "
+DELETE FROM inverted WHERE id = ${src_id};
+SELECT ROW_COUNT();
+DELETE FROM lemma WHERE id = ${src_id};
 SELECT ROW_COUNT();
 UPDATE lemma SET imports = JSON_REPLACE(
   imports,
   JSON_UNQUOTE(JSON_SEARCH(imports, 'one', ${lemma_old_q})),
   ${lemma_new_q}
-) WHERE user = ${user_q} AND JSON_CONTAINS(imports, JSON_QUOTE(${lemma_old_q}));
+) WHERE JSON_CONTAINS(imports, JSON_QUOTE(${lemma_old_q}));
 SELECT ROW_COUNT();
 " 2>&1) || {
-    echo "warning: MySQL hierarchy update failed:" >&2
-    echo "$out" >&2
-    return 0
-  }
-
-  module_rows=$(printf '%s\n' "$out" | sed -n '1p')
-  import_rows=$(printf '%s\n' "$out" | sed -n '2p')
-  echo "MySQL rows affected: module=$module_rows imports=$import_rows"
+      echo "warning: MySQL hierarchy update failed:" >&2
+      echo "$out" >&2
+      return 0
+    }
+    inv_rows=$(printf '%s\n' "$out" | sed -n '1p')
+    module_rows=$(printf '%s\n' "$out" | sed -n '2p')
+    import_rows=$(printf '%s\n' "$out" | sed -n '3p')
+    echo "MySQL rows affected: inverted=$inv_rows deleted=$module_rows imports=$import_rows (merged into existing id=$dst_id)"
+  else
+    # Plain rename: UPDATE keeps lemma.id, so inverted postings stay valid unless
+    # the module moved in or out of an indexed section (refresh below).
+    out=$("${mysql_env[@]}" mysql -h"$host" -P"$port" "${mysql_login[@]}" -D"$database" -N -e "
+UPDATE lemma SET module = ${new_q} WHERE module = ${old_q};
+SELECT ROW_COUNT();
+UPDATE lemma SET imports = JSON_REPLACE(
+  imports,
+  JSON_UNQUOTE(JSON_SEARCH(imports, 'one', ${lemma_old_q})),
+  ${lemma_new_q}
+) WHERE JSON_CONTAINS(imports, JSON_QUOTE(${lemma_old_q}));
+SELECT ROW_COUNT();
+" 2>&1) || {
+      echo "warning: MySQL hierarchy update failed:" >&2
+      echo "$out" >&2
+      return 0
+    }
+    module_rows=$(printf '%s\n' "$out" | sed -n '1p')
+    import_rows=$(printf '%s\n' "$out" | sed -n '2p')
+    echo "MySQL rows affected: module=$module_rows imports=$import_rows"
+    _sh_dir=$(CDPATH= cd -- "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+    _repo_root=$(CDPATH= cd -- "$_sh_dir/.." && pwd)
+    if command -v node >/dev/null 2>&1 && [ -f "$_repo_root/mjs/leanInvertedIndex.mjs" ]; then
+      (CDPATH= cd -- "$_repo_root" && node mjs/leanInvertedIndex.mjs --refresh-module "$new_mod") || \
+        echo "warning: inverted refresh failed for $new_mod" >&2
+    fi
+  fi
 }
 
 
@@ -387,7 +427,11 @@ fi
 # Module path on disk / in imports is the real destination (parent module when merging a sublemma).
 # Matches Node renameLemma when new_ has no lowercase sublemma suffix; for sublemma merges,
 # Lean imports already point at real_dst, so hierarchy must follow real_dst (not the @path suffix).
-update_axiom_module_row "$src" "$real_dst"
+if [ -n "$sublemma" ]; then
+  update_axiom_module_row "$src" "$real_dst" merge
+else
+  update_axiom_module_row "$src" "$real_dst"
+fi
 
 note=
 if [ "$dst" != "$real_dst" ]; then

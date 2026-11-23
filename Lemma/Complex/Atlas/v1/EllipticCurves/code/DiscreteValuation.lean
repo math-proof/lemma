@@ -4,8 +4,6 @@ import Def.v1.Atlas.EllipticCurves.code.DiscreteValuation
 open DiscreteValuation
 
 
-namespace DiscreteValuation
-
 /--
 [isPrincipalIdealRing](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/DiscreteValuation.lean)
 -/
@@ -18,7 +16,7 @@ lemma isPrincipalIdealRing
 -- proof
   Valuation.valuationSubring_isPrincipalIdealRing v.val
 
-end DiscreteValuation
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-22

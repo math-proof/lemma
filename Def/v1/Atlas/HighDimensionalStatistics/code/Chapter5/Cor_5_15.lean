@@ -12,7 +12,7 @@ import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Def_5_1_5_2.Part3
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Thm_5_11.Part2
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Thm_5_11
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Lemma_5_14
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.InfoTheory
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.InfoTheory
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Thm_5_9
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Lemma_5_14.Part5
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.InfoTheory.Part3

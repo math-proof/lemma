@@ -1,4 +1,8 @@
-import Lemma.Finsupp.JZeroHeightForm
+module
+
+public import Theorem.Finsupp.JZeroHeightForm
+
+@[expose] public section
 
 noncomputable section
 

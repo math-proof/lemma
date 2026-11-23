@@ -1,14 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/AlgebraicGeometry/Curve/EffectiveParts.lean -/
+module
 
-
-import Def.AlgebraicGeometry.Curve.EffectiveParts
-import Theorem.Finsupp.DivZeros.eq.Max0
-import Theorem.Finsupp.DivPoles.eq.Max
-import Theorem.Finsupp.DivZeros.ge.Zero
-import Theorem.Finsupp.DivPoles.ge.Zero
-import Theorem.Finsupp.EqSubDivZerosDivPoles
+public import Def.AlgebraicGeometry.Curve.EffectiveParts
+public import Theorem.Finsupp.DivZeros.eq.Max0
+public import Theorem.Finsupp.DivPoles.eq.Max
+public import Theorem.Finsupp.DivZeros.ge.Zero
+public import Theorem.Finsupp.DivPoles.ge.Zero
+public import Theorem.Finsupp.EqSubDivZerosDivPoles
 open Finsupp
 
+public section
 
 namespace CurveDivisor
 

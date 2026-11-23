@@ -1,4 +1,4 @@
-import Lemma.LaurentSeries.HeckeOperator
+import Theorem.LaurentSeries.HeckeOperator
 import Lemma.AlgHom.DegeneracyTower
 
 set_option autoImplicit false

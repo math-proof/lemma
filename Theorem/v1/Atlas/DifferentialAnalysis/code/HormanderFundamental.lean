@@ -7,19 +7,21 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Analysis.Distribution.Support
-import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TemperedDistributions
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzPartition
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SmoothingOperators
-import Def.v1.Atlas.DifferentialAnalysis.code.TemperedDistributions
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzPartition
-import Def.v1.Atlas.DifferentialAnalysis.code.SmoothingOperators
+public import Mathlib.Analysis.Distribution.Support
+public import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TemperedDistributions
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzPartition
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SmoothingOperators
+public import Def.v1.Atlas.DifferentialAnalysis.code.TemperedDistributions
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzPartition
+public import Def.v1.Atlas.DifferentialAnalysis.code.SmoothingOperators
 open scoped SchwartzMap LineDeriv Pointwise Manifold
 open Distribution
 
+public section
 
 noncomputable section
 

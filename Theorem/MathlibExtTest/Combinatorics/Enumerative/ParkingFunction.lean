@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/ParkingFunction.lean -/
+module
 
-
-import Instance.Combinatorics.Enumerative.ParkingFunction
-import Theorem.Finset.Enumerative.ParkingFunction
+public import Instance.Combinatorics.Enumerative.ParkingFunction
+public import Theorem.Finset.Enumerative.ParkingFunction
 open MetaMathlibExt
 
+public section
 
 example (n : ℕ) (f : Fin n → Fin n) :
     IsParkingFunction n f ↔

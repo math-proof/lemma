@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/LucasSequence.lean -/
+module
 
+public import Def.NumberTheory.LucasSequence
+public import Theorem.Nat.LucasSequence
 
-import Def.NumberTheory.LucasSequence
-import Theorem.Nat.LucasSequence
-
+public section
 
 namespace MetaMathlibExt
 

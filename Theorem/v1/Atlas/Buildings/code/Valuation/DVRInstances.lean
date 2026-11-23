@@ -7,14 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Class.v1.Atlas.Buildings.code.Valuation.LatticesValuations
-import Theorem.Nat.IsInO
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib.Topology.MetricSpace.Ultra.Basic
-import Mathlib.Analysis.Normed.Group.Ultra
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Class.v1.Atlas.Buildings.code.Valuation.LatticesValuations
+public import Theorem.Nat.IsInO
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Mathlib.Topology.MetricSpace.Ultra.Basic
+public import Mathlib.Analysis.Normed.Group.Ultra
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 open DVRContext
+
+public section
 
 variable (p : ℕ) [Fact (Nat.Prime p)]
 

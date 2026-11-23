@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.TheoryOfComputation.code.Complexity.Part2
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity
+import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
+import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity
 import Def.v1.Atlas.TheoryOfComputation.code.SpaceComplexity.Part7
 open TuringMachine SpaceComplexity Direction
 

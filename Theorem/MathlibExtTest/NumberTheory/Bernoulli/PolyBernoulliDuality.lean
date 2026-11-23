@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Bernoulli/PolyBernoulliDuality.lean -/
+module
 
+public import Def.NumberTheory.Bernoulli.PolyBernoulliDuality
+public import Theorem.Nat.Bernoulli.PolyBernoulliDuality
+public import Mathlib.Tactic.NormNum
 
-import Def.NumberTheory.Bernoulli.PolyBernoulliDuality
-import Theorem.Nat.Bernoulli.PolyBernoulliDuality
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MetaMathlibExt
 

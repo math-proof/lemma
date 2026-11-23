@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ArithmeticFunction/DedekindPsi.lean -/
+module
 
-
-import Def.NumberTheory.ArithmeticFunction.DedekindPsi
-import Theorem.Nat.ArithmeticFunction.DedekindPsi
+public import Def.NumberTheory.ArithmeticFunction.DedekindPsi
+public import Theorem.Nat.ArithmeticFunction.DedekindPsi
 open ArithmeticFunction
 
+public section
 
 example : dedekindPsi 0 = 0 := by simp
 

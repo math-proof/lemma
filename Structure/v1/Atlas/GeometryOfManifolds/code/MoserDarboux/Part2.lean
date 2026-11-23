@@ -11,9 +11,9 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
-public import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticStandardBasis
-public import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.HamiltonianVectorFields
-public import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticEvenDim
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticStandardBasis
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.HamiltonianVectorFields
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticEvenDim
 public import Theorem.v1.Atlas.GeometryOfManifolds.code.SymplecticStandardBasis
 public import Def.v1.Atlas.GeometryOfManifolds.code.HamiltonianVectorFields.Part3
 public import Def.v1.Atlas.GeometryOfManifolds.code.MoserDarboux.Part2
@@ -61,4 +61,3 @@ structure HasMoserFlowData
       φ.pullback (φ_inv.pullback α) = α
   φ_inv_identity_on_X : ∀ {p : ℕ} (α : Ω_U₀ p),
       i_X_U₁.pullback (φ_inv.pullback α) = i_X_U₀.pullback α
-

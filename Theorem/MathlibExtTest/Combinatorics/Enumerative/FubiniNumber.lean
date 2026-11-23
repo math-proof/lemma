@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/FubiniNumber.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.FubiniNumber
+public import Theorem.Finset.Enumerative.FubiniNumber
 
-import Def.Combinatorics.Enumerative.FubiniNumber
-import Theorem.Finset.Enumerative.FubiniNumber
-
+public section
 
 namespace MetaMathlibExt
 

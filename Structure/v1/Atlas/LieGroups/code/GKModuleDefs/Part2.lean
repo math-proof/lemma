@@ -12,7 +12,7 @@ module
 
 public import Def.v1.Atlas.LieGroups.code.GKModule.Part2
 public import Def.v1.Atlas.LieGroups.code.Admissible.Part3
-public import Lemma.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
+public import Theorem.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
 public import Mathlib.Algebra.Lie.Semisimple.Defs
 public import Def.v1.Atlas.LieGroups.code.GKModuleDefs
 

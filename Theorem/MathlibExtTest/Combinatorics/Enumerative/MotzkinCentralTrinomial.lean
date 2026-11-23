@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/MotzkinCentralTrinomial.lean -/
+module
 
+public import Theorem.Finset.Enumerative.MotzkinCentralTrinomial
 
-import Theorem.Finset.Enumerative.MotzkinCentralTrinomial
-
+public section
 
 namespace MetaMathlibExt
 

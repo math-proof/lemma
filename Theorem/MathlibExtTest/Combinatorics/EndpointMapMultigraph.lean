@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/EndpointMapMultigraph.lean -/
+module
 
+public import Theorem.Combinatorics.EndpointMapMultigraph
+public import Theorem.Finset.EndpointMapMultigraph
 
-import Theorem.Combinatorics.EndpointMapMultigraph
-import Theorem.Finset.EndpointMapMultigraph
-
+public section
 
 namespace EndpointMapMultigraphTest
 

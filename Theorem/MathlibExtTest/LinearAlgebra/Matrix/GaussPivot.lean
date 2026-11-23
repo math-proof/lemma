@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/GaussPivot.lean -/
+module
 
-
-import Mathlib.Tactic.NormNum
-import Def.LinearAlgebra.Matrix.GaussPivot.Part2
-import Theorem.Matrix.GaussPivot
+public import Mathlib.Tactic.NormNum
+public import Def.LinearAlgebra.Matrix.GaussPivot.Part2
+public import Theorem.Matrix.GaussPivot
 open MathlibExt.LinearAlgebra.Matrix.GaussPivotWanted
 
+public section
 
 -- Swapping row `1` into row `0` supplies the missing pivot in the first column.
 example :

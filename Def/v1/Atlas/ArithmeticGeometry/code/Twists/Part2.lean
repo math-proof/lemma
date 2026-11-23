@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Mathlib.AlgebraicGeometry.Pullbacks
 import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 import Def.v1.Atlas.ArithmeticGeometry.code.JInvariant.Part3
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.JInvariant
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.JInvariant
 import Instance.v1.Atlas.ArithmeticGeometry.code.Twists
 open AlgebraicGeometry CategoryTheory Limits
 

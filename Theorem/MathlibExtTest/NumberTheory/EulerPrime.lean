@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/EulerPrime.lean -/
+module
 
-
-import Def.NumberTheory.EulerPrime
-import Theorem.Nat.EulerPrime
+public import Def.NumberTheory.EulerPrime
+public import Theorem.Nat.EulerPrime
 open MetaMathlibExt
 
+public section
 
 -- Boundary: the even perfect number 6 admits no Eulerian witness,
 -- since the form requires oddness.

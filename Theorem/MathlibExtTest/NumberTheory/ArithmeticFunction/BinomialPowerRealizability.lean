@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ArithmeticFunction/BinomialPowerRealizability.lean -/
+module
 
+public import Def.NumberTheory.ArithmeticFunction.BinomialPowerRealizability
+public import Theorem.Nat.ArithmeticFunction.BinomialPowerRealizability
 
-import Def.NumberTheory.ArithmeticFunction.BinomialPowerRealizability
-import Theorem.Nat.ArithmeticFunction.BinomialPowerRealizability
 /-!
 # Tests for binomial-power sequences
 
@@ -10,6 +11,8 @@ Value tests for `binomialPowerSeq` at Apéry (`r = s = 2`), central
 Delannoy (`r = s = 1`), and Franel (`s = 0`) parameters, plus the
 `n = 0` endpoint, `r`/`s` ordering, and zero exponents.
 -/
+
+public section
 
 
 namespace MetaMathlibExt

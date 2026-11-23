@@ -1,5 +1,9 @@
-import Mathlib
-import Instance.PDivisibleGroup_Basic
+module
+
+public import Mathlib
+public import Instance.PDivisibleGroup_Basic
+
+@[expose] public section
 
 set_option autoImplicit false
 

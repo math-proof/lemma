@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/NuLambdaPascalMatrix.lean -/
+module
 
+public import Mathlib.Tactic
+public import Def.LinearAlgebra.Matrix.NuLambdaPascalMatrix
+public import Theorem.Matrix.NuLambdaPascalMatrix
+public import Def.MathlibExtTest.LinearAlgebra.Matrix.NuLambdaPascalMatrix
 
-import Mathlib.Tactic
-import Def.LinearAlgebra.Matrix.NuLambdaPascalMatrix
-import Theorem.Matrix.NuLambdaPascalMatrix
-import Def.MathlibExtTest.LinearAlgebra.Matrix.NuLambdaPascalMatrix
-
+public section
 
 namespace MetaMathlibExt
 

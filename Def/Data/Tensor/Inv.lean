@@ -1,7 +1,10 @@
-import Instance.LinearAlgebra.Matrix.Dense
-import Def.Data.Tensor.Stack.Part2
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+module
 
+public import Instance.LinearAlgebra.Matrix.Dense
+public import Def.Data.Tensor.Stack.Part2
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+
+@[expose] public section
 
 /--
 matrix inverse: the adjugate divided by the determinant;

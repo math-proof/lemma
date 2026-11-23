@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/LegendreStirlingFirstKind.lean -/
 
-import Def.Combinatorics.Enumerative.JacobiStirlingFirstKind
-import Theorem.Finset.Enumerative.JacobiStirlingFirstKind
+module
 
+public import Def.Combinatorics.Enumerative.JacobiStirlingFirstKind
+public import Theorem.Finset.Enumerative.JacobiStirlingFirstKind
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

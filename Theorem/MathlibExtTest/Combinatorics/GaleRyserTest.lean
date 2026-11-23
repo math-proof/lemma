@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/GaleRyserTest.lean -/
+module
 
+public import Def.Combinatorics.GaleRyser
+public import Theorem.Finset.GaleRyser
 
-import Def.Combinatorics.GaleRyser
-import Theorem.Finset.GaleRyser
-
+public section
 
 namespace MetaMathlibExt
 

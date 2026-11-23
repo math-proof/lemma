@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.DifferentialAnalysis.code.SobolevDerivatives
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SobolevDerivatives
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevDerivatives
 open MeasureTheory SobolevSpace TemperedDistributions
 open scoped FourierTransform SchwartzMap
 

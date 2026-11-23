@@ -11,9 +11,9 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Abbrev.v1.Atlas.TensorCategories.code.CoalgebraBialgebra.Part4
-public import Lemma.Category.Atlas.v1.TensorCategories.code.CoalgebraBialgebra
-public import Lemma.Category.Atlas.v1.TensorCategories.code.HopfAlgebra
-public import Lemma.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
+public import Theorem.Category.Atlas.v1.TensorCategories.code.CoalgebraBialgebra
+public import Theorem.Category.Atlas.v1.TensorCategories.code.HopfAlgebra
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
 public import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part3
 public import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
 public import Mathlib.Algebra.Algebra.Operations

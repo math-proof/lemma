@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/FieldTheory/Finite/PermutationPolynomial.lean -/
+module
 
+public import Def.FieldTheory.Finite.PermutationPolynomial
+public import Theorem.Polynomial.Finite.PermutationPolynomial
+public import Mathlib.FieldTheory.Finite.Basic
+public import Instance.MathlibExtTest.FieldTheory.Finite.PermutationPolynomial
 
-import Def.FieldTheory.Finite.PermutationPolynomial
-import Theorem.Polynomial.Finite.PermutationPolynomial
-import Mathlib.FieldTheory.Finite.Basic
-import Instance.MathlibExtTest.FieldTheory.Finite.PermutationPolynomial
-
+public section
 
 /-- `X` is a permutation polynomial over `ZMod 5`. -/
 example : Polynomial.IsPermutationPolynomial (Polynomial.X : Polynomial (ZMod 5)) := by

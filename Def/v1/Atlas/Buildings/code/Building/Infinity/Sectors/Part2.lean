@@ -9,9 +9,9 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.Buildings.code.Building.AffineMetric.Part5
-import Lemma.Set.IsBoundedImage.of.IsBounded.IsSimilitude
+import Theorem.Set.IsBoundedImage.of.IsBounded.IsSimilitude
 import Theorem.Finset.AreOpposite.of.AreOpposite
-import Lemma.Finset.ImageRetractionMap.in.Faces.of.IsMaximal.In_Faces.In_Apartments
+import Theorem.Finset.ImageRetractionMap.in.Faces.of.IsMaximal.In_Faces.In_Apartments
 import Def.v1.Atlas.Buildings.code.Building.Spherical
 import Def.v1.Atlas.Buildings.code.Building.AptIsoFixesIntersection
 import Structure.v1.Atlas.Buildings.code.Building.Infinity.Sectors.Part2

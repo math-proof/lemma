@@ -11,8 +11,8 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Class.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part11
-public import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.AdvancedKahler
-public import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.HodgeTheory
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.AdvancedKahler
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.HodgeTheory
 public import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
 public import Def.v1.Atlas.GeometryOfManifolds.code.HodgeTheory.Part12
 public import Mathlib.Geometry.Manifold.MFDeriv.Basic

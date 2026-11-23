@@ -2,7 +2,8 @@
 import Mathlib
 import Def.AlgebraicGeometry_OModulePresheafHom
 import Instance.AlgebraicGeometry_ProjTwistDatum
-import Lemma.MvPolynomial.OModulePresheafFamilyFramesGradedModule
+import Theorem.MvPolynomial.OModulePresheafFamilyFramesGradedModule
+import Def.AlgebraicGeometry_OModulePresheafFamilyFramesGradedModule
 
 set_option autoImplicit false
 

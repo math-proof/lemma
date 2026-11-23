@@ -1,4 +1,4 @@
-import Lemma.Tensor.Length.eq.Get_0.of.GtLength_0
+import Theorem.Tensor.Length.eq.Get_0.of.GtLength_0
 import Notation.Data.Tensor.Permute
 open Tensor
 
@@ -16,8 +16,8 @@ private lemma main
     simp [List.rotate]
     grind
   ·
-    simp
-    omega
+    simpa using h
 
 
 -- created on 2026-04-08
+-- updated on 2026-11-22

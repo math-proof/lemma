@@ -1,7 +1,10 @@
-import Mathlib
-import Theorem.Analysis.Section_5_1.Part9
-import Abbrev.Analysis.Section_5_2
+module
 
+public import Mathlib
+public import Theorem.Analysis.Section_5_1.Part9
+public import Abbrev.Analysis.Section_5_2
+
+public section
 
 namespace Chapter5
 

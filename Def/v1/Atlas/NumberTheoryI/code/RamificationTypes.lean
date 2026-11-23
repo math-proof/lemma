@@ -9,9 +9,9 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Abbrev.v1.Atlas.NumberTheoryI.code.EisensteinRamified
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.EisensteinRamified
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Thm1023
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Cor1015
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.EisensteinRamified
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Thm1023
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor1015
 import Theorem.v1.Atlas.NumberTheoryI.code.Thm1023
 import Abbrev.v1.Atlas.NumberTheoryI.code.Cor1015
 import Mathlib.RingTheory.AdicCompletion.Algebra

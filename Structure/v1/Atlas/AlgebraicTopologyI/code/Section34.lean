@@ -11,9 +11,9 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.AlgebraicTopologyI.code.Section26.Part8
-public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
-public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section31
-public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section33
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section31
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section33
 public import Def.v1.Atlas.AlgebraicTopologyI.code.Section31.Part7
 public import Def.v1.Atlas.AlgebraicTopologyI.code.Section33.Part2
 public import Mathlib.Algebra.Colimit.Module

@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.LieGroups.code.HCBimoduleProjectives.Part2
-import Lemma.Fin.All_Eq.of.All_Eq.All_Eq_RightAction.All_Eq_RightAction.All_Any_Eq_Sum_RightAction
+import Theorem.Fin.All_Eq.of.All_Eq.All_Eq_RightAction.All_Eq_RightAction.All_Any_Eq_Sum_RightAction
 import Lemma.Finset.Zero.le.Form.of.In_PosRoots
 import Theorem.Representation.All_Bijective.All_AnyAndAll_Any.of.All_All_Any.All_Any_Eq.All_Eq.All_All_Eq.All_All_Eq.All_All_Any_And_Eq.All_All_Any_And_Eq.All_Prop.All_BijectiveFun.All.All.All_Any.All_Prop.All_Prop.All_Eq.All.All.All_Eq.All.All.All
 import Def.v1.Atlas.LieGroups.code.GrothendieckGroupO.Part4

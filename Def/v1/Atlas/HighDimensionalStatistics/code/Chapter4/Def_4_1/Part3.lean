@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_2
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_2
-import Structure.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Def_4_1.Part2
+module
+
+public import Mathlib
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_2
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_2
+public import Structure.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Def_4_1.Part2
+
+@[expose] public section
+
 open MeasureTheory Matrix Real Finset
 
 

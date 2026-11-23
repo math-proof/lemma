@@ -8,11 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
-import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
-import Def.v1.Atlas.AlgebraicGeometryI.code.NormalExtension
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NormalExtension
+module
 
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+public import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
+public import Def.v1.Atlas.AlgebraicGeometryI.code.NormalExtension
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NormalExtension
+
+@[expose] public section
 
 /-- Key technical step: if `x ∈ K` is locally regular at every height-one prime and
 `c · x` already lies in `A`, then `c · x²` also lies in `A`. Used inductively to bound

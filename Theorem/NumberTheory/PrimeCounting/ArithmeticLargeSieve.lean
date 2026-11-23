@@ -8,7 +8,7 @@ import Mathlib.Basic.Real.Basic
 import Mathlib.Data.Nat.Totient
 import Mathlib.NumberTheory.ArithmeticFunction.Moebius
 import Def.NumberTheory.PrimeCounting.WeightedLargeSieve
-import Lemma.Nat.PrimeCounting.WeightedLargeSieve
+import Theorem.Nat.PrimeCounting.WeightedLargeSieve
 import Mathlib.Analysis.Fourier.ZMod
 import Mathlib.Algebra.Order.Chebyshev
 import Mathlib.Tactic

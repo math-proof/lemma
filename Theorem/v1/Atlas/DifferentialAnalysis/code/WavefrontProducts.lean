@@ -7,11 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Structure.v1.Atlas.DifferentialAnalysis.code.WavefrontSet.Part3
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontSet
-import Def.v1.Atlas.DifferentialAnalysis.code.WavefrontProducts
+public import Structure.v1.Atlas.DifferentialAnalysis.code.WavefrontSet.Part3
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontSet
+public import Def.v1.Atlas.DifferentialAnalysis.code.WavefrontProducts
 
+public section
 
 noncomputable section
 

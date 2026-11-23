@@ -1,0 +1,31 @@
+module
+
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.InversionSet
+
+public section
+
+open Finset BigOperators CoxeterGroup
+
+
+/--
+[bilinInversions_nil](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/InversionSet.lean)
+-/
+@[path]
+public theorem main
+  [DecidableEq B]
+  [Fintype B]
+  {M : CoxeterMatrix B} :
+-- imply
+  bilinInversions M ([] : List B) = ∅ := by
+-- proof
+  simp only [bilinInversions, Finset.filter_eq_empty_iff]
+  intro s _
+  simp only [wordSigma_nil, not_lt]
+  have : e s s = 1 := by simp [e]
+  linarith
+
+
+-- created on 2026-10-23
+-- updated on 2026-10-26

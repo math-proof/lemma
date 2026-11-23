@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/MvPolynomial.lean -/
+module
 
-
-import Def.LinearAlgebra.Matrix.MvPolynomial
-import Theorem.Matrix.MvPolynomial
-import Mathlib.Basic.Complex.Basic
+public import Def.LinearAlgebra.Matrix.MvPolynomial
+public import Theorem.Matrix.MvPolynomial
+public import Mathlib.Basic.Complex.Basic
 open Matrix
 
+public section
 
 -- The rank-one determinant identity specializes to a nonzero one-dimensional update.
 example :

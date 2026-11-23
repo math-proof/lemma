@@ -1,0 +1,168 @@
+/-
+Copyright: the vendored blocks below are verbatim copies from Mathlib (Apache-2.0; see Mathlib's LICENSE),
+release v4.30.0 = leanprover-community/mathlib4 commit c5ea00351c28e24afc9f0f84379aa41082b1188f, with declarations
+RENAMED (suffix `Finsupp` / trailing prime) so they do not clash with Mathlib v4.33.0. Bodies are the Mathlib v4.30.0 text
+with its docstrings omitted, otherwise byte-identical unless a line is marked `-- [port]`.
+-/
+
+module
+
+public import Mathlib.RepresentationTheory.Rep.Basic
+public import Mathlib.Algebra.Group.End
+public import Mathlib.Algebra.GroupWithZero.Action.Basic
+public import Mathlib.Algebra.Ring.AddAut
+public import Mathlib.Algebra.Ring.Action.Submonoid
+public import Mathlib.NumberTheory.RamificationInertia.Galois
+public import Mathlib.RingTheory.Invariant.Galois
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Ring
+public import Notation.Algebra.Ring.Action.Submonoid
+public import Instance.Compat_Mathlib430
+
+@[expose] public section
+
+set_option autoImplicit false
+
+/-! ## Block A — Mathlib v4.30.0 Mathlib/RepresentationTheory/Basic.lean:391-419 (section MulAction), names suffixed `Finsupp` -/
+
+namespace Representation
+
+section MulAction
+
+variable (k : Type*) [Semiring k] (G : Type*) [Monoid G] (H : Type*) [MulAction G H]
+
+noncomputable def ofMulActionFinsupp : Representation k G (H →₀ k) where
+  toFun g := Finsupp.lmapDomain k k (g • ·)
+  map_one' := by
+    ext x y
+    simp
+  map_mul' x y := by
+    ext z w
+    simp [mul_smul]
+
+noncomputable abbrev leftRegularFinsupp := ofMulActionFinsupp k G G
+
+noncomputable abbrev diagonalFinsupp (n : ℕ) := ofMulActionFinsupp k G (Fin n → G)
+
+variable {k G H}
+
+end MulAction
+
+/-! ## Block B — Mathlib v4.30.0 Mathlib/RepresentationTheory/Basic.lean:472-483 (section Group) -/
+
+section Group
+
+variable {k G V : Type*} [Semiring k] [Group G] [AddCommMonoid V] [Module k V]
+  (ρ : Representation k G V)
+end Group
+
+section Bridge
+
+variable (k : Type*) [Semiring k] (G : Type*) [Monoid G] (H : Type*) [MulAction G H]
+
+noncomputable def ofMulActionFinsuppEquiv : (ofMulActionFinsupp k G H).Equiv (ofMulAction k G H) :=
+  Equiv.mk (MonoidAlgebra.coeffLinearEquiv k).symm fun g => by
+    rw [ofMulAction_def, ofMulActionFinsupp_def]
+    ext
+    simp
+
+end Bridge
+
+end Representation
+
+/-! ## Block C — Mathlib v4.30.0 Mathlib/RepresentationTheory/Rep/Basic.lean:336-346 and 404-412, names suffixed `Finsupp` -/
+
+namespace Rep
+
+open CategoryTheory
+
+universe w' u v
+
+variable {k : Type u} {G : Type v} [Ring k] [Monoid G]
+
+section
+
+variable (k G)
+
+noncomputable abbrev leftRegularFinsupp : Rep k G := -- [port] noncomputable
+  of <| Representation.ofMulActionFinsupp k G G
+
+noncomputable abbrev diagonalFinsupp (n : ℕ) : Rep k G := -- [port] noncomputable
+  of <| Representation.ofMulActionFinsupp k G (Fin n → G)
+
+noncomputable def ofMulActionFinsuppIso (H : Type w') [MulAction G H] :
+    of (Representation.ofMulActionFinsupp k G H) ≅ ofMulAction k G H :=
+  mkIso (Representation.ofMulActionFinsuppEquiv k G H)
+
+end
+
+noncomputable abbrev leftRegularHomFinsupp (A : Rep k G) (x : A) : leftRegularFinsupp k G ⟶ A := -- [port] noncomputable
+  Rep.ofHom ⟨Finsupp.lift A k G fun g ↦ A.ρ g x, fun g ↦ by ext; simp⟩
+
+end Rep
+
+/-! ## Block D — AddAut: Mathlib v4.30.0 Mathlib/Algebra/Group/End.lean:746-801 (+ GroupWithZero/Action/Basic.lean:89-92 and :104-112, Ring/AddAut.lean:32), lemma names primed -/
+
+
+@[simps]
+def DistribMulAction.toAddAut' (G A : Type*) [Group G] [AddMonoid A] [DistribMulAction G A] :
+    G →* AddAut A where
+  toFun := DistribMulAction.toAddEquiv A
+  map_one' := AddEquiv.ext (one_smul _)
+  map_mul' _ _ := AddEquiv.ext (mul_smul _ _)
+
+@[simps! +simpRhs]
+def AddAut.mulLeft' {R : Type*} [Semiring R] : Rˣ →* AddAut R :=
+  DistribMulAction.toAddAut' _ _
+
+/-! ### Block D (continued) — Mathlib v4.30.0 Mathlib/Algebra/GroupWithZero/Action/Basic.lean:104-112: the tautological `DistribMulAction (AddAut A) A`
+(`AddAut.applyDistribMulAction`, its `smul_def` and `apply_faithfulSMul`), dropped in v4.33.0 together with the multiplicative structure;
+vendored with primed names on top of the Group instance above. -/
+
+
+/-! ## Block E — elliptic (divisibility) sequence predicates: Mathlib v4.30.0
+Mathlib/NumberTheory/EllipticDivisibilitySequence.lean:78-110 (verbatim; names primed). Vendored because Mathlib v4.33.0 (db584cd6,
+same file :286-295) RENAMED AND REDEFINED them (`IsEllipticSequence W := ∀ p q r, IsEllipticNet.rel W p q r 0 = 0`,
+`IsDvdSequence` over ℤ instead of ℕ) and kept the 4.30 names only as deprecated aliases of the NEW predicates. -/
+
+section IsEllDivSequence430
+
+universe u
+
+variable {R : Type u} [CommRing R]
+
+variable (W : ℤ → R)
+
+def IsEllSequence' : Prop :=
+  ∀ m n r : ℤ, W (m + n) * W (m - n) * W r ^ 2 =
+    W (m + r) * W (m - r) * W n ^ 2 - W (n + r) * W (n - r) * W m ^ 2
+
+def IsDivSequence' : Prop :=
+  ∀ m n : ℕ, m ∣ n → W m ∣ W n
+
+def IsEllDivSequence' : Prop :=
+  IsEllSequence' W ∧ IsDivSequence' W
+
+variable {W}
+
+end IsEllDivSequence430
+
+
+/-! ## Block G — ramification/inertia cardinality lemmas under the separability hypothesis (adapted from Mathlib v4.30.0,
+Mathlib/NumberTheory/RamificationInertia/Galois.lean; v4.33.0 restates them assuming PerfectField of the residue field). Theorems only,
+primed names; no definitions involved. -/
+
+namespace Ideal
+
+section inertia430
+
+variable {R S G : Type*} [CommRing R] [CommRing S] [Algebra R S] [Group G]
+  [MulSemiringAction G S] [IsGaloisGroup G R S] [Finite G]
+
+open scoped Pointwise
+
+
+end inertia430
+
+end Ideal

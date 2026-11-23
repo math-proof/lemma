@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.Buildings.code.ChamberComplex.Folding.Part3
 import Theorem.List.All.of.All.IsChain.Ne
-import Lemma.List.Any.of.Not.In_A.IsChainA
+import Theorem.List.Any.of.Not.In_A.IsChainA
 import Def.v1.Atlas.Buildings.code.Building.Convexity
 open scoped Classical
 

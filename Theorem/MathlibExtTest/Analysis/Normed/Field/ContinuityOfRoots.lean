@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Normed/Field/ContinuityOfRoots.lean -/
+module
 
+public import Theorem.Polynomial.Normed.Field.ContinuityOfRoots
+public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 
-import Theorem.Polynomial.Normed.Field.ContinuityOfRoots
-import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
-
+public section
 
 namespace Polynomial
 

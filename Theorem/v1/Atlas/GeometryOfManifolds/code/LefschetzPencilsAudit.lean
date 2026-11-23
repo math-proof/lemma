@@ -7,11 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Structure.v1.Atlas.GeometryOfManifolds.code.LefschetzPencils.Part7
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.LefschetzPencils
+public import Structure.v1.Atlas.GeometryOfManifolds.code.LefschetzPencils.Part7
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.LefschetzPencils
 set_option autoImplicit false
 
+public section
 
 #check @HasComplexCoords₂
 

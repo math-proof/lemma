@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.CombinatorialOptimization.code.Flow.ShortestAugPath
-public import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.ShortestAugPath
+public import Theorem.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.ShortestAugPath
 public import Def.v1.Atlas.CombinatorialOptimization.code.Flow.BottleneckEdge
 public section
 

@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/QuadraticForms/ThreeSquares.lean -/
+module
 
+public import Def.NumberTheory.QuadraticForms.ThreeSquares
+public import Theorem.Nat.QuadraticForms.ThreeSquares
 
-import Def.NumberTheory.QuadraticForms.ThreeSquares
-import Theorem.Nat.QuadraticForms.ThreeSquares
-
+public section
 
 namespace Nat
 

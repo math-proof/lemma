@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Fourier/Scaling.lean -/
+module
 
-
-import Theorem.Real.Fourier_UFnMul.eq.SMulFourier.of.Ne_0
-import Theorem.Real.Fourier_UFnMul.eq.SMulFourier.of.Gt_0
-import Theorem.Real.Fourier_Coe_UFnMul.eq.SMulFourier.of.Gt_0
+public import Theorem.Real.Fourier_UFnMul.eq.SMulFourier.of.Ne_0
+public import Theorem.Real.Fourier_UFnMul.eq.SMulFourier.of.Gt_0
+public import Theorem.Real.Fourier_Coe_UFnMul.eq.SMulFourier.of.Gt_0
 open scoped FourierTransform
 
+public section
 
 example {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
     (f : ℝ → E) (y : ℝ) : 𝓕 (fun x => f (1 * x)) y =

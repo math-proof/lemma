@@ -1,8 +1,10 @@
 module
 
 public import Structure.ModularCurve_ShimuraSubgroup
-public import Lemma.PowerSeries.ShimuraGenerator
-public import Lemma.Scheme.Correspondence
+public import Def.ModularCurve_ShimuraGenerator
+public import Theorem.PowerSeries.ShimuraGenerator
+public import Def.AlgebraicCurve_Correspondence
+public import Theorem.Scheme.Correspondence
 
 set_option autoImplicit false
 

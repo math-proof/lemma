@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/AlgebraicGeometry/CubicSurface.lean -/
+module
 
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Def.AlgebraicGeometry.CubicSurface.Part2
 
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Def.AlgebraicGeometry.CubicSurface.Part2
-
+public section
 
 namespace AlgebraicGeometry
 

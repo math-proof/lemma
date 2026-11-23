@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.Buildings.code.Building.Infinity.Sectors.Part3
-import Lemma.Fin.All_All_Any_And_InAndAll_In_Vertices
+import Theorem.Fin.All_All_Any_And_InAndAll_In_Vertices
 import Theorem.Finset.AgreeOnImage.of.AgreeOn
 import Def.v1.Atlas.Buildings.code.ChamberComplex.Uniqueness
 set_option linter.unusedSectionVars false

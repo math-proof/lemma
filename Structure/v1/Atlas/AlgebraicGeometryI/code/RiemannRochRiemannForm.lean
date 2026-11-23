@@ -11,9 +11,9 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochEulerCurves
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochEulerCurves
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannFormRR
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochEulerCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannFormRR
 public import Instance.v1.Atlas.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
 public import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannFormRR
 open CanonicalSheafCurves RiemannRochEulerCurves RiemannFormRR

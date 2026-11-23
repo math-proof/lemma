@@ -1,6 +1,6 @@
 import Def.AdelicDock_LocalEmbedding
 import Def.NumberField_TateGlobalZeta
-import Lemma.Set.HeckeEigenfunction
+import Theorem.Set.HeckeEigenfunction
 import Def.NumberField_IdeleBox
 
 set_option autoImplicit false

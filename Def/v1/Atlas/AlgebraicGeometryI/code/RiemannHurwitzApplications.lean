@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzDegree
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzDegree
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzDegree
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NormalExtension
 import Def.v1.Atlas.AlgebraicGeometryI.code.NormalExtension
 import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed

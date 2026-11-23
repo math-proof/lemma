@@ -1,12 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Topology/Algebra/ContinuousSemilinearRepresentation.lean -/
+module
 
+public import Class.Topology.Algebra.ContinuousSemilinearRepresentation
+public import Mathlib.Algebra.Module.PUnit
+public import Mathlib.Topology.Homeomorph.Lemmas
+public import Mathlib.Topology.Instances.Int
+public import Instance.MathlibExtTest.Topology.Algebra.ContinuousSemilinearRepresentation
 
-import Class.Topology.Algebra.ContinuousSemilinearRepresentation
-import Mathlib.Algebra.Module.PUnit
-import Mathlib.Topology.Homeomorph.Lemmas
-import Mathlib.Topology.Instances.Int
-import Instance.MathlibExtTest.Topology.Algebra.ContinuousSemilinearRepresentation
-
+public section
 
 example : IsContinuousSemilinearRepresentation PUnit Int Int where
   smul_distrib_smul := fun _ _ _ => by simp

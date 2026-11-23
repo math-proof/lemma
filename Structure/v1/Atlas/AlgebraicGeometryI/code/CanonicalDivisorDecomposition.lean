@@ -11,8 +11,8 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitz
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitz
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitz
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
 public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves.Part2
 public import Mathlib.RingTheory.DedekindDomain.Different
 public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalDivisorDecomposition

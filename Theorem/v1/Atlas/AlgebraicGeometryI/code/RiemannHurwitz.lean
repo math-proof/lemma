@@ -7,18 +7,20 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.NumberTheory.RamificationInertia.Basic
-import Mathlib.NumberTheory.RamificationInertia.Unramified
-import Mathlib.RingTheory.Discriminant
-import Mathlib.RingTheory.Algebraic.Integral
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.NakayamaApplications
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NakayamaApplications
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochGeneral
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.FiniteMorphismDimension
-import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochGeneral
-import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitz.Part2
+public import Mathlib.NumberTheory.RamificationInertia.Basic
+public import Mathlib.NumberTheory.RamificationInertia.Unramified
+public import Mathlib.RingTheory.Discriminant
+public import Mathlib.RingTheory.Algebraic.Integral
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.NakayamaApplications
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NakayamaApplications
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochGeneral
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.FiniteMorphismDimension
+public import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochGeneral
+public import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitz.Part2
 
+public section
 
 noncomputable section
 

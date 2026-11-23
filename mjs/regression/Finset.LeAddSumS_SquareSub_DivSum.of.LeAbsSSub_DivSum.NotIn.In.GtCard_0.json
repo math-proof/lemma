@@ -1,182 +1,728 @@
 {
   "lean": "(∑ x ∈ X ∪ {y'}, (a[x] - (∑ x ∈ X ∪ {y'}, a[x]) / ((X.card + 1 : ℕ) : ℝ))²) + (∑ y ∈ Y \\ {y'}, (a[y] - (∑ y ∈ Y \\ {y'}, a[y]) / ((Y.card - 1 : ℕ) : ℝ))²) ≤ (∑ x ∈ X, (a[x] - (∑ x ∈ X, a[x]) / (X.card : ℝ))²) + (∑ y ∈ Y, (a[y] - (∑ y ∈ Y, a[y]) / (Y.card : ℝ))²)",
   "regex": [
-    "Le(Add(Sum(Union_(Brace_))(Square(Sub(Get__)(Div(Sum(Union_(Brace_))(Get__))(Add(Card_)(1))))))(Sum(SDiff_(Brace_))(Square(Sub(Get__)(Div(Sum(SDiff_(Brace_))(Get__))(Sub(Card_)(1)))))))(Add(Sum_(Square(Sub(Get__)(Div(Sum_(Get__))(Card_)))))(Sum_(Square(Sub(Get__)(Div(Sum_(Get__))(Card_))))))",
+    "LeAddSSumS_(Square(Sub(Get__)(Div(Sum_(Get__))_)))",
     "LeAddS(Sum_(Square(Sub(Get__)(Div(Sum_(Get__))_))))(Sum_(Square(Sub(Get__)(Div(Sum_(Get__))_))))",
-    "Le(AddSumS_(Square(Sub(Get__)(Div(Sum_(Get__))_))))(Add(Sum_(Square(Sub(Get__)(Div(Sum_(Get__))(Card_)))))(Sum_(Square(Sub(Get__)(Div(Sum_(Get__))(Card_))))))",
-    "Le(Add(Sum(Union_(Brace_))(Square(Sub(Get__)(Div(Sum(Union_(Brace_))(Get__))(Add(Card_)(1))))))(Sum(SDiff_(Brace_))(Square(Sub(Get__)(Div(Sum(SDiff_(Brace_))(Get__))(Sub(Card_)(1)))))))(AddSumS_(Square(Sub(Get__)(Div(Sum_(Get__))(Card_)))))",
     "Le(AddSumS_(Square(Sub(Get__)(Div(Sum_(Get__))_))))(AddSumS_(Square(Sub(Get__)(Div(Sum_(Get__))(Card_)))))",
-    "LeAddSSumS_(Square(Sub(Get__)(Div(Sum_(Get__))_)))"
+    "Le(AddSumS_(Square(Sub(Get__)(Div(Sum_(Get__))_))))(Add(Sum_(Square(Sub(Get__)(Div(Sum_(Get__))(Card_)))))(Sum_(Square(Sub(Get__)(Div(Sum_(Get__))(Card_))))))",
+    "Le(Add(Sum_(Square(Sub(Get__)(Div(Sum_(Get__))(Add(Card_)(1))))))(Sum_(Square(Sub(Get__)(Div(Sum_(Get__))(Sub(Card_)(1)))))))(AddSumS_(Square(Sub(Get__)(Div(Sum_(Get__))(Card_)))))",
+    "Le(Add(Sum_(Square(Sub(Get__)(Div(Sum_(Get__))(Add(Card_)(1))))))(Sum_(Square(Sub(Get__)(Div(Sum_(Get__))(Sub(Card_)(1)))))))(Add(Sum_(Square(Sub(Get__)(Div(Sum_(Get__))(Card_)))))(Sum_(Square(Sub(Get__)(Div(Sum_(Get__))(Card_))))))"
   ],
   "suggestion": [
-    "LeAddSumUnion_Brace_SquareSubGet__DivSum__Add_1SumSDiff__SquareSub_DivSum__Sub__Add_Sum_SquareSub_DivSum__Card",
+    "LeAddSSumS_SquareSubGet__DivSum",
     "LeAddS_Sum_SquareSubGet__DivSum",
-    "LeAddSumS_SquareSubGet__Div__Add_Sum_SquareSub_DivSum__Card",
-    "LeAddSumUnion_Brace_SquareSubGet__DivSum__Add_1SumSDiff__SquareSub_DivSum__Sub__AddSumS_SquareSub_DivSum__Card",
     "LeAddSumS_SquareSubGet__Div__AddSumS_SquareSub_DivSum__Card",
-    "LeAddSSumS_SquareSubGet__DivSum"
+    "LeAddSumS_SquareSubGet__Div__Add_Sum_SquareSub_DivSum__Card",
+    "LeAddSum_SquareSubGet__DivSum__Add_1Sum_SquareSub_Div_Sub__AddSumS_SquareSub_Div_Card",
+    "LeAddSum_SquareSubGet__DivSum__Add_1Sum_SquareSub_Div_Sub__Add_Sum_SquareSub_Div_Card"
   ],
   "dag": [
     [
-      {"token":"Le"},
-      {"token":"Add"},
-      {"token":"Sum"},
-      {"token":"Union"},
-      {"token":"_"},
-      {"token":"Brace"},
-      {"group":[5,4]},
-      {"group":[3,4,6]},
-      {"token":"Square"},
-      {"token":"Sub"},
-      {"token":"Get"},
-      {"group":[10,4,4]},
-      {"token":"Div"},
-      {"group":[2,7,11]},
-      {"token":"Card"},
-      {"group":[14,4]},
-      {"token":"1"},
-      {"group":[16]},
-      {"group":[1,15,17]},
-      {"group":[12,13,18]},
-      {"group":[9,11,19]},
-      {"group":[8,20]},
-      {"group":[2,7,21]},
-      {"token":"SDiff"},
-      {"group":[23,4,6]},
-      {"group":[2,24,11]},
-      {"group":[9,15,17]},
-      {"group":[12,25,26]},
-      {"group":[9,11,27]},
-      {"group":[8,28]},
-      {"group":[2,24,29]},
-      {"group":[1,22,30]},
-      {"group":[2,4,11]},
-      {"group":[12,32,15]},
-      {"group":[9,11,33]},
-      {"group":[8,34]},
-      {"group":[2,4,35]},
-      {"group":[1,36,36]},
-      {"sequence":[0,31,37]}
+      {
+        "token": "LeAddSSumS"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Square"
+      },
+      {
+        "token": "Sub"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "group": [
+          4,
+          1,
+          1
+        ]
+      },
+      {
+        "token": "Div"
+      },
+      {
+        "token": "Sum"
+      },
+      {
+        "group": [
+          7,
+          1,
+          5
+        ]
+      },
+      {
+        "group": [
+          6,
+          8,
+          1
+        ]
+      },
+      {
+        "group": [
+          3,
+          5,
+          9
+        ]
+      },
+      {
+        "group": [
+          2,
+          10
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          1,
+          11
+        ]
+      }
     ],
     [
-      {"token":"LeAddS"},
-      {"token":"Sum"},
-      {"token":"_"},
-      {"token":"Square"},
-      {"token":"Sub"},
-      {"token":"Get"},
-      {"group":[5,2,2]},
-      {"token":"Div"},
-      {"group":[1,2,6]},
-      {"group":[7,8,2]},
-      {"group":[4,6,9]},
-      {"group":[3,10]},
-      {"group":[1,2,11]},
-      {"sequence":[0,12,12]}
+      {
+        "token": "LeAddS"
+      },
+      {
+        "token": "Sum"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Square"
+      },
+      {
+        "token": "Sub"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "group": [
+          5,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Div"
+      },
+      {
+        "group": [
+          1,
+          2,
+          6
+        ]
+      },
+      {
+        "group": [
+          7,
+          8,
+          2
+        ]
+      },
+      {
+        "group": [
+          4,
+          6,
+          9
+        ]
+      },
+      {
+        "group": [
+          3,
+          10
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          11
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          12,
+          12
+        ]
+      }
     ],
     [
-      {"token":"Le"},
-      {"token":"AddSumS"},
-      {"token":"_"},
-      {"token":"Square"},
-      {"token":"Sub"},
-      {"token":"Get"},
-      {"group":[5,2,2]},
-      {"token":"Div"},
-      {"token":"Sum"},
-      {"group":[8,2,6]},
-      {"group":[7,9,2]},
-      {"group":[4,6,10]},
-      {"group":[3,11]},
-      {"group":[1,2,12]},
-      {"token":"Add"},
-      {"token":"Card"},
-      {"group":[15,2]},
-      {"group":[7,9,16]},
-      {"group":[4,6,17]},
-      {"group":[3,18]},
-      {"group":[8,2,19]},
-      {"group":[14,20,20]},
-      {"sequence":[0,13,21]}
+      {
+        "token": "Le"
+      },
+      {
+        "token": "AddSumS"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Square"
+      },
+      {
+        "token": "Sub"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "group": [
+          5,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Div"
+      },
+      {
+        "token": "Sum"
+      },
+      {
+        "group": [
+          8,
+          2,
+          6
+        ]
+      },
+      {
+        "group": [
+          7,
+          9,
+          2
+        ]
+      },
+      {
+        "group": [
+          4,
+          6,
+          10
+        ]
+      },
+      {
+        "group": [
+          3,
+          11
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          12
+        ]
+      },
+      {
+        "token": "Card"
+      },
+      {
+        "group": [
+          14,
+          2
+        ]
+      },
+      {
+        "group": [
+          7,
+          9,
+          15
+        ]
+      },
+      {
+        "group": [
+          4,
+          6,
+          16
+        ]
+      },
+      {
+        "group": [
+          3,
+          17
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          18
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          13,
+          19
+        ]
+      }
     ],
     [
-      {"token":"Le"},
-      {"token":"Add"},
-      {"token":"Sum"},
-      {"token":"Union"},
-      {"token":"_"},
-      {"token":"Brace"},
-      {"group":[5,4]},
-      {"group":[3,4,6]},
-      {"token":"Square"},
-      {"token":"Sub"},
-      {"token":"Get"},
-      {"group":[10,4,4]},
-      {"token":"Div"},
-      {"group":[2,7,11]},
-      {"token":"Card"},
-      {"group":[14,4]},
-      {"token":"1"},
-      {"group":[16]},
-      {"group":[1,15,17]},
-      {"group":[12,13,18]},
-      {"group":[9,11,19]},
-      {"group":[8,20]},
-      {"group":[2,7,21]},
-      {"token":"SDiff"},
-      {"group":[23,4,6]},
-      {"group":[2,24,11]},
-      {"group":[9,15,17]},
-      {"group":[12,25,26]},
-      {"group":[9,11,27]},
-      {"group":[8,28]},
-      {"group":[2,24,29]},
-      {"group":[1,22,30]},
-      {"token":"AddSumS"},
-      {"group":[2,4,11]},
-      {"group":[12,33,15]},
-      {"group":[9,11,34]},
-      {"group":[8,35]},
-      {"group":[32,4,36]},
-      {"sequence":[0,31,37]}
+      {
+        "token": "Le"
+      },
+      {
+        "token": "AddSumS"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Square"
+      },
+      {
+        "token": "Sub"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "group": [
+          5,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Div"
+      },
+      {
+        "token": "Sum"
+      },
+      {
+        "group": [
+          8,
+          2,
+          6
+        ]
+      },
+      {
+        "group": [
+          7,
+          9,
+          2
+        ]
+      },
+      {
+        "group": [
+          4,
+          6,
+          10
+        ]
+      },
+      {
+        "group": [
+          3,
+          11
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          12
+        ]
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "Card"
+      },
+      {
+        "group": [
+          15,
+          2
+        ]
+      },
+      {
+        "group": [
+          7,
+          9,
+          16
+        ]
+      },
+      {
+        "group": [
+          4,
+          6,
+          17
+        ]
+      },
+      {
+        "group": [
+          3,
+          18
+        ]
+      },
+      {
+        "group": [
+          8,
+          2,
+          19
+        ]
+      },
+      {
+        "group": [
+          14,
+          20,
+          20
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          13,
+          21
+        ]
+      }
     ],
     [
-      {"token":"Le"},
-      {"token":"AddSumS"},
-      {"token":"_"},
-      {"token":"Square"},
-      {"token":"Sub"},
-      {"token":"Get"},
-      {"group":[5,2,2]},
-      {"token":"Div"},
-      {"token":"Sum"},
-      {"group":[8,2,6]},
-      {"group":[7,9,2]},
-      {"group":[4,6,10]},
-      {"group":[3,11]},
-      {"group":[1,2,12]},
-      {"token":"Card"},
-      {"group":[14,2]},
-      {"group":[7,9,15]},
-      {"group":[4,6,16]},
-      {"group":[3,17]},
-      {"group":[1,2,18]},
-      {"sequence":[0,13,19]}
+      {
+        "token": "Le"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "Sum"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Square"
+      },
+      {
+        "token": "Sub"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "group": [
+          6,
+          3,
+          3
+        ]
+      },
+      {
+        "token": "Div"
+      },
+      {
+        "group": [
+          2,
+          3,
+          7
+        ]
+      },
+      {
+        "token": "Card"
+      },
+      {
+        "group": [
+          10,
+          3
+        ]
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          12
+        ]
+      },
+      {
+        "group": [
+          1,
+          11,
+          13
+        ]
+      },
+      {
+        "group": [
+          8,
+          9,
+          14
+        ]
+      },
+      {
+        "group": [
+          5,
+          7,
+          15
+        ]
+      },
+      {
+        "group": [
+          4,
+          16
+        ]
+      },
+      {
+        "group": [
+          2,
+          3,
+          17
+        ]
+      },
+      {
+        "group": [
+          5,
+          11,
+          13
+        ]
+      },
+      {
+        "group": [
+          8,
+          9,
+          19
+        ]
+      },
+      {
+        "group": [
+          5,
+          7,
+          20
+        ]
+      },
+      {
+        "group": [
+          4,
+          21
+        ]
+      },
+      {
+        "group": [
+          2,
+          3,
+          22
+        ]
+      },
+      {
+        "group": [
+          1,
+          18,
+          23
+        ]
+      },
+      {
+        "token": "AddSumS"
+      },
+      {
+        "group": [
+          8,
+          9,
+          11
+        ]
+      },
+      {
+        "group": [
+          5,
+          7,
+          26
+        ]
+      },
+      {
+        "group": [
+          4,
+          27
+        ]
+      },
+      {
+        "group": [
+          25,
+          3,
+          28
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          24,
+          29
+        ]
+      }
     ],
     [
-      {"token":"LeAddSSumS"},
-      {"token":"_"},
-      {"token":"Square"},
-      {"token":"Sub"},
-      {"token":"Get"},
-      {"group":[4,1,1]},
-      {"token":"Div"},
-      {"token":"Sum"},
-      {"group":[7,1,5]},
-      {"group":[6,8,1]},
-      {"group":[3,5,9]},
-      {"group":[2,10]},
-      {"sequence":[0,1,11]}
+      {
+        "token": "Le"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "Sum"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Square"
+      },
+      {
+        "token": "Sub"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "group": [
+          6,
+          3,
+          3
+        ]
+      },
+      {
+        "token": "Div"
+      },
+      {
+        "group": [
+          2,
+          3,
+          7
+        ]
+      },
+      {
+        "token": "Card"
+      },
+      {
+        "group": [
+          10,
+          3
+        ]
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          12
+        ]
+      },
+      {
+        "group": [
+          1,
+          11,
+          13
+        ]
+      },
+      {
+        "group": [
+          8,
+          9,
+          14
+        ]
+      },
+      {
+        "group": [
+          5,
+          7,
+          15
+        ]
+      },
+      {
+        "group": [
+          4,
+          16
+        ]
+      },
+      {
+        "group": [
+          2,
+          3,
+          17
+        ]
+      },
+      {
+        "group": [
+          5,
+          11,
+          13
+        ]
+      },
+      {
+        "group": [
+          8,
+          9,
+          19
+        ]
+      },
+      {
+        "group": [
+          5,
+          7,
+          20
+        ]
+      },
+      {
+        "group": [
+          4,
+          21
+        ]
+      },
+      {
+        "group": [
+          2,
+          3,
+          22
+        ]
+      },
+      {
+        "group": [
+          1,
+          18,
+          23
+        ]
+      },
+      {
+        "group": [
+          8,
+          9,
+          11
+        ]
+      },
+      {
+        "group": [
+          5,
+          7,
+          25
+        ]
+      },
+      {
+        "group": [
+          4,
+          26
+        ]
+      },
+      {
+        "group": [
+          2,
+          3,
+          27
+        ]
+      },
+      {
+        "group": [
+          1,
+          28,
+          28
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          24,
+          29
+        ]
+      }
     ]
   ],
   "json": {
@@ -186,11 +732,16 @@
           {
             "Sum": [
               {
-                "Union": [
-                  "_",
+                "In": [
+                  "?0",
                   {
-                    "Brace": [
-                      "_"
+                    "Union": [
+                      "$1",
+                      {
+                        "Brace": [
+                          "$2"
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -201,8 +752,8 @@
                     "Sub": [
                       {
                         "Get": [
-                          "_",
-                          "_"
+                          "$3",
+                          "?0"
                         ]
                       },
                       {
@@ -210,19 +761,24 @@
                           {
                             "Sum": [
                               {
-                                "Union": [
-                                  "_",
+                                "In": [
+                                  "?0",
                                   {
-                                    "Brace": [
-                                      "_"
+                                    "Union": [
+                                      "$1",
+                                      {
+                                        "Brace": [
+                                          "$2"
+                                        ]
+                                      }
                                     ]
                                   }
                                 ]
                               },
                               {
                                 "Get": [
-                                  "_",
-                                  "_"
+                                  "$3",
+                                  "?0"
                                 ]
                               }
                             ]
@@ -231,7 +787,7 @@
                             "Add": [
                               {
                                 "Card": [
-                                  "_"
+                                  "$1"
                                 ]
                               },
                               "1"
@@ -248,11 +804,16 @@
           {
             "Sum": [
               {
-                "SDiff": [
-                  "_",
+                "In": [
+                  "?0",
                   {
-                    "Brace": [
-                      "_"
+                    "SDiff": [
+                      "$4",
+                      {
+                        "Brace": [
+                          "$2"
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -263,8 +824,8 @@
                     "Sub": [
                       {
                         "Get": [
-                          "_",
-                          "_"
+                          "$3",
+                          "?0"
                         ]
                       },
                       {
@@ -272,19 +833,24 @@
                           {
                             "Sum": [
                               {
-                                "SDiff": [
-                                  "_",
+                                "In": [
+                                  "?0",
                                   {
-                                    "Brace": [
-                                      "_"
+                                    "SDiff": [
+                                      "$4",
+                                      {
+                                        "Brace": [
+                                          "$2"
+                                        ]
+                                      }
                                     ]
                                   }
                                 ]
                               },
                               {
                                 "Get": [
-                                  "_",
-                                  "_"
+                                  "$3",
+                                  "?0"
                                 ]
                               }
                             ]
@@ -293,7 +859,7 @@
                             "Sub": [
                               {
                                 "Card": [
-                                  "_"
+                                  "$4"
                                 ]
                               },
                               "1"
@@ -313,33 +879,43 @@
         "Add": [
           {
             "Sum": [
-              "_",
+              {
+                "In": [
+                  "?0",
+                  "$1"
+                ]
+              },
               {
                 "Square": [
                   {
                     "Sub": [
                       {
                         "Get": [
-                          "_",
-                          "_"
+                          "$3",
+                          "?0"
                         ]
                       },
                       {
                         "Div": [
                           {
                             "Sum": [
-                              "_",
+                              {
+                                "In": [
+                                  "?0",
+                                  "$1"
+                                ]
+                              },
                               {
                                 "Get": [
-                                  "_",
-                                  "_"
+                                  "$3",
+                                  "?0"
                                 ]
                               }
                             ]
                           },
                           {
                             "Card": [
-                              "_"
+                              "$1"
                             ]
                           }
                         ]
@@ -352,33 +928,43 @@
           },
           {
             "Sum": [
-              "_",
+              {
+                "In": [
+                  "?0",
+                  "$4"
+                ]
+              },
               {
                 "Square": [
                   {
                     "Sub": [
                       {
                         "Get": [
-                          "_",
-                          "_"
+                          "$3",
+                          "?0"
                         ]
                       },
                       {
                         "Div": [
                           {
                             "Sum": [
-                              "_",
+                              {
+                                "In": [
+                                  "?0",
+                                  "$4"
+                                ]
+                              },
                               {
                                 "Get": [
-                                  "_",
-                                  "_"
+                                  "$3",
+                                  "?0"
                                 ]
                               }
                             ]
                           },
                           {
                             "Card": [
-                              "_"
+                              "$4"
                             ]
                           }
                         ]
@@ -392,5 +978,6 @@
         ]
       }
     ]
-  }
+  },
+  "fingerprint": "Le(Add(Sum(In(?0)(Union($1)(Brace($2))))(Square(Sub(Get($3)(?0))(Div(Sum(In(?0)(Union($1)(Brace($2))))(Get($3)(?0)))(Add(Card($1))(1))))))(Sum(In(?0)(SDiff($4)(Brace($2))))(Square(Sub(Get($3)(?0))(Div(Sum(In(?0)(SDiff($4)(Brace($2))))(Get($3)(?0)))(Sub(Card($4))(1)))))))(Add(Sum(In(?0)($1))(Square(Sub(Get($3)(?0))(Div(Sum(In(?0)($1))(Get($3)(?0)))(Card($1))))))(Sum(In(?0)($4))(Square(Sub(Get($3)(?0))(Div(Sum(In(?0)($4))(Get($3)(?0)))(Card($4)))))))"
 }

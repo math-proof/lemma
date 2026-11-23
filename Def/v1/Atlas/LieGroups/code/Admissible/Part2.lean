@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
 import Theorem.Complex.IsStronglyContinuousToMonoidHom
-import Lemma.Complex.IsKFinite0
+import Theorem.Complex.IsKFinite0
 import Theorem.Real.GetToMonoidHom.in.SmoothSubspace.of.In_SmoothSubspace
 import Theorem.Real.IsSmoothVector0
 import Theorem.Fin.Any_Eq_SMul.of.All_ToMonoidHom.IsIrreducible

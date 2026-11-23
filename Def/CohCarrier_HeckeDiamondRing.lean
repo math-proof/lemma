@@ -1,4 +1,4 @@
-import Lemma.ZMod.Inst
+import Theorem.ZMod.Inst
 import Abbrev.CohCarrier_HeckeDiamondRing
 
 set_option autoImplicit false

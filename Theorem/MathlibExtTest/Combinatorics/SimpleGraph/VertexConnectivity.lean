@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/VertexConnectivity.lean -/
+module
 
+public import Theorem.Combinatorics.SimpleGraph.VertexConnectivity
+public import Theorem.SimpleGraph.VertexConnectivity
 
-import Theorem.Combinatorics.SimpleGraph.VertexConnectivity
-import Theorem.SimpleGraph.VertexConnectivity
-
+public section
 
 example {V : Type*} [Fintype V] (G : SimpleGraph V) :
     ¬ SimpleGraph.IsVertexConnected (Fintype.card V) G :=

@@ -1,11 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/PiFieldQuotient.lean -/
 
 -- MathlibExtTest/RingTheory/PiFieldQuotient.lean
+module
 
-import Def.RingTheory.PiFieldQuotient
-import Theorem.Int.PiFieldQuotient
+public import Def.RingTheory.PiFieldQuotient
+public import Theorem.Int.PiFieldQuotient
 open PiFieldQuotient
 
+public section
 
 -- Restriction evaluates at the underlying index, definitionally.
 example (x : ∀ _ : Fin 2, ℚ) (s : ({0} : Finset (Fin 2))) :

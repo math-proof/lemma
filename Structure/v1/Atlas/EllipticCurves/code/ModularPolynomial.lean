@@ -24,7 +24,7 @@ public import Mathlib.Algebra.Polynomial.EraseLead
 public import Mathlib.Algebra.CharP.Defs
 public import Def.v1.Atlas.EllipticCurves.code.ModularCurves.Part3
 public import Theorem.Complex.Atlas.v1.EllipticCurves.code.ModularCurves
-public import Lemma.Complex.Atlas.v1.EllipticCurves.code.Uniformization
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Uniformization
 public import Def.v1.Atlas.EllipticCurves.code.Uniformization
 public import Def.v1.Atlas.EllipticCurves.code.ModularPolynomial
 open scoped MatrixGroups UpperHalfPlane

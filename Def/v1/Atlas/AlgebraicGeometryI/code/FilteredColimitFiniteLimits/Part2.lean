@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Limits.FilteredColimitCommutesFiniteLimit
-import Mathlib.CategoryTheory.Filtered.Basic
-import Instance.v1.Atlas.AlgebraicGeometryI.code.FilteredColimitFiniteLimits
+module
+
+public import Mathlib.CategoryTheory.Limits.FilteredColimitCommutesFiniteLimit
+public import Mathlib.CategoryTheory.Filtered.Basic
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.FilteredColimitFiniteLimits
+
+@[expose] public section
+
 open CategoryTheory CategoryTheory.Limits
 
 universe v₁ v₂ v u₁ u₂ u

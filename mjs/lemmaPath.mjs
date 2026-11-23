@@ -1340,6 +1340,11 @@ function expressionPathPart(node) {
   return { node: expr, token, patterns };
 }
 
+/** A usable path token: non-empty and not the `_` placeholder. */
+function isRealPathToken(token) {
+  return typeof token === "string" && token.length > 0 && token !== "_";
+}
+
 /** Suggest a dotted lemma path using the base and plural expression DAGs. */
 export function suggestExpressionPath(filePath, lemmaName, options = {}) {
   const { sig, section, givens } = readPathSignature(filePath, lemmaName, options);
@@ -1358,9 +1363,12 @@ export function suggestExpressionPath(filePath, lemmaName, options = {}) {
     ...expressionPathPart(typeNode),
   }));
   const imply = implyParts.map(({ flat, relation, left, right }) => {
-    const split = left?.token && right?.token ? [left.token, relation, right.token].join(".") : "";
-    const token = split && (!flat.token || split.length < flat.token.length)
-      ? split : flat.token;
+    // A binary relation is written infix only when both sides yield a real token;
+    // otherwise keep the flat (prefix) token.
+    const split = relation && isRealPathToken(left?.token) && isRealPathToken(right?.token)
+      ? [left.token, relation, right.token].join(".")
+      : "";
+    const token = split || flat.token;
     if (!token) throw new Error("Could not generate a path token for a conclusion");
     return token;
   }).join(".");
@@ -1373,6 +1381,43 @@ export function suggestExpressionPath(filePath, lemmaName, options = {}) {
     path: [section, imply, ...(givenTokens.length ? ["of", ...givenTokens] : [])].join("."),
     implyParts, givenParts,
   };
+}
+
+/**
+ * Parse a lemma file offline and return its conclusion as a `toJSON()` tree.
+ *
+ * Much cheaper than `suggestExpressionPath`: it skips the section bookkeeping
+ * (which is what makes a whole-tree scan slow) and is meant for building a
+ * structural search index, see `mjs/leanExprSearch.mjs`.
+ *
+ * @param {string} filePath - path to the `.lean` file (relative to the cwd or absolute).
+ * @param {string} [lemmaName] - pick this lemma instead of the main one.
+ * @param {{ file?: string, source?: string }} [options]
+ * @returns {object} the conclusion node's JSON tree.
+ */
+/** The AST node of a lemma conclusion (`lemma main` after `-- imply`). */
+export function conclusionNodeOf(filePath, lemmaName, options = {}) {
+  const abs = options.file ? path.resolve(options.file) : path.resolve(filePath);
+  const source = options.source != null
+    ? String(options.source).replace(/\r\n/g, "\n")
+    : fs.readFileSync(abs, "utf8").replace(/\r\n/g, "\n");
+  const ast = compileLemmaSource(source);
+  const lemma = extractLemma(ast, lemmaName);
+  if (!lemma) throw new Error("No Lean_lemma found");
+  const sig = extractSignature(lemma);
+  if (!sig) throw new Error("Could not find lemma signature");
+  const conclusion = conclusionNode(sig.colon);
+  if (!conclusion) throw new Error("Could not find the lemma conclusion");
+  return conclusion;
+}
+
+export function conclusionJson(filePath, lemmaName, options = {}) {
+  return conclusionNodeOf(filePath, lemmaName, options).toJSON();
+}
+
+/** Fingerprint tree: free leaves `$n`, binders De Bruijn `?n`. */
+export function conclusionSearchJson(filePath, lemmaName, options = {}) {
+  return conclusionNodeOf(filePath, lemmaName, options).toJSON({ leaves: new Map(), binders: [] });
 }
 
 function expressionPathSegments(candidate) {
@@ -1415,7 +1460,8 @@ export function checkExpressionPath(filePath, candidate, lemmaName, options = {}
   let index = 0;
   suggestion.implyParts.forEach(({ flat, relation, left, right }, i) => {
     const label = `Conclusion ${i + 1}`;
-    if (relation && EXPRESSION_RELATION_TOKENS.has(imply[index + 1])) {
+    const infix = isRealPathToken(left?.token) && isRealPathToken(right?.token);
+    if (relation && (infix || EXPRESSION_RELATION_TOKENS.has(imply[index + 1]))) {
       match(label + " LHS", imply[index++], left);
       const got = imply[index++];
       if (got !== relation) { ok = false; notes.push(`relation "${got}" ≠ "${relation}"`); }
@@ -1480,7 +1526,8 @@ export function checkProposedPath(filePath, candidate, lemmaName, options = {}) 
 
   suggestion.implyParts.forEach(({ flat, relation, left, right }, i) => {
     const label = `conclusion ${i + 1}`;
-    if (relation && EXPRESSION_RELATION_TOKENS.has(implySegments[index + 1])) {
+    const infix = isRealPathToken(left?.token) && isRealPathToken(right?.token);
+    if (relation && (infix || EXPRESSION_RELATION_TOKENS.has(implySegments[index + 1]))) {
       addRow(implySegments[index++], left, label + " LHS");
       index++; // the relation marker (`eq`, `is`, …) is not a row
       addRow(implySegments[index++], right, label + " RHS");

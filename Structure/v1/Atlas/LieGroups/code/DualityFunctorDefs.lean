@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.LieGroups.code.CompositionSeries
-public import Lemma.Int.StandardFiltrationMultiplicity.eq.DimHomProjectiveContragredientVerma
+public import Theorem.Int.StandardFiltrationMultiplicity.eq.DimHomProjectiveContragredientVerma
 
 
 public noncomputable section

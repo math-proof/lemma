@@ -1,7 +1,8 @@
 -- Carved from Lemma/Definitions/Def_GoodReductionJacobian_RelativeGroupLawAlgPointsV2.lean: instance decls only.
 import Mathlib
 import Instance.AlgebraicGeometry_RelativeGroupLawEndDegree
-import Lemma.Scheme.RelativeGroupLawAlgPointsV2
+import Theorem.Scheme.RelativeGroupLawAlgPointsV2
+import Def.GoodReductionJacobian_RelativeGroupLawAlgPointsV2
 
 set_option autoImplicit false
 

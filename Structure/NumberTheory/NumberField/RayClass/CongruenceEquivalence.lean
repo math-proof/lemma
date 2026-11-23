@@ -3,7 +3,7 @@
 module
 
 public import Def.NumberTheory.NumberField.RayClass.CongruenceSubgroup
-public import Lemma.Nat.NumberField.RayClass.CongruenceSubgroup
+public import Theorem.Nat.NumberField.RayClass.CongruenceSubgroup
 /-!
 # Congruence subgroup pair equivalence (N420 Definition 22.3)
 

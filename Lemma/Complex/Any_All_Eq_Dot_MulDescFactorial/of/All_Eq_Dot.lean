@@ -43,7 +43,7 @@ private lemma main
     h[t] = A ⬝ᵥ fun i => t.descFactorial e[i] * r[i] ^ (t - e[i]) := by
 -- proof
   classical
-  let E : LinearRecurrence ℂ := ⟨n, fun i => c[i]⟩
+  let E : LinearRecurrence ℂ := ⟨n, fun i => c.toFun i⟩
   let p : ℂ[X] := E.charPoly
   have hpdeg : p.natDegree = n := by
     simpa [p, E] using natDegree_eq_of_degree_eq_some E.charPoly_degree_eq_order
@@ -214,12 +214,12 @@ private lemma main
       omega
     have hzero : (Nat.iterate derivative e (X ^ m * p)).eval ρ = 0 := by
       simpa [IsRoot] using isRoot_iterate_derivative_of_lt_rootMultiplicity hmult
-    have hpX : p = X ^ n - ∑ i : Fin n, C c[i] * X ^ (i : ℕ) := by
+    have hpX : p = X ^ n - ∑ i : Fin n, C (c.toFun i) * X ^ (i : ℕ) := by
       simp only [p, LinearRecurrence.charPoly, E]
       simp_rw [← C_mul_X_pow_eq_monomial]
       simp
     have hq : X ^ m * p =
-        X ^ (m + n) - ∑ i : Fin n, C c[i] * X ^ (m + i) := by
+        X ^ (m + n) - ∑ i : Fin n, C (c.toFun i) * X ^ (m + i) := by
       rw [hpX, mul_sub, Finset.mul_sum]
       congr 1
       · rw [← pow_add]
@@ -228,7 +228,7 @@ private lemma main
         ring
     have hderiv : Nat.iterate derivative e (X ^ m * p) =
         C (((m + n).descFactorial e : ℂ)) * X ^ ((m + n) - e) -
-          ∑ i : Fin n, C c[i] *
+          ∑ i : Fin n, C (c.toFun i) *
             (C (((m + i).descFactorial e : ℂ)) * X ^ ((m + i) - e)) := by
       rw [hq, iterate_derivative_sub, iterate_derivative_sum]
       simp_rw [iterate_derivative_C_mul, iterate_derivative_X_pow_eq_C_mul]
@@ -276,3 +276,4 @@ private lemma main
 
 
 -- created on 2026-10-25
+-- updated on 2026-11-22

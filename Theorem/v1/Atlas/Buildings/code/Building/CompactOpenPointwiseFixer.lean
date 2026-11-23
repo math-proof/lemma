@@ -7,8 +7,9 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Structure.v1.Atlas.Buildings.code.Building.GroupApplicationsCh17
-import Theorem.Set.ConjSet.eq.Image
+public import Structure.v1.Atlas.Buildings.code.Building.GroupApplicationsCh17
+public import Theorem.Set.ConjSet.eq.Image
 
-
+public section

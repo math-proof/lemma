@@ -8,16 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.NakayamaApplications
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NakayamaApplications
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
-import Mathlib.RingTheory.Algebraic.Integral
-import Mathlib.FieldTheory.Separable
-import Mathlib.RingTheory.LocalRing.Quotient
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.NumberTheory.RamificationInertia.Basic
+module
 
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.NakayamaApplications
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NakayamaApplications
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
+public import Mathlib.RingTheory.Algebraic.Integral
+public import Mathlib.FieldTheory.Separable
+public import Mathlib.RingTheory.LocalRing.Quotient
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.NumberTheory.RamificationInertia.Basic
+
+@[expose] public section
 
 section FunctionField
 

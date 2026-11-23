@@ -50,7 +50,7 @@ public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 public import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
 public import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
 public import Theorem.v1.Atlas.NumberTheoryI.code.HenselFactorization
-public import Lemma.Nat.Atlas.v1.NumberTheoryI.code.HenselFactorization
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.HenselFactorization
 public import Class.v1.Atlas.NumberTheoryI.code.LocalExtensions
 
 

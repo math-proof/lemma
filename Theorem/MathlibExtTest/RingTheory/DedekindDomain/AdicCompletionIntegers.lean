@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/DedekindDomain/AdicCompletionIntegers.lean -/
+module
 
-
-import Mathlib.NumberTheory.Padics.HeightOneSpectrum
-import Theorem.RingTheory.DedekindDomain.AdicCompletionIntegers
-import Theorem.Int.DedekindDomain.AdicCompletionIntegers
+public import Mathlib.NumberTheory.Padics.HeightOneSpectrum
+public import Theorem.RingTheory.DedekindDomain.AdicCompletionIntegers
+public import Theorem.Int.DedekindDomain.AdicCompletionIntegers
 open IsDedekindDomain
 
+public section
 
 namespace MathlibExtTest.RingTheory.DedekindDomain.AdicCompletionIntegers
 

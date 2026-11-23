@@ -1,5 +1,10 @@
-import Mathlib
-import Class.Analysis.Misc.Probability.Part2
+module
+
+public import Mathlib
+public import Class.Analysis.Misc.Probability.Part2
+
+@[expose] public section
+
 /-! Some finite probability theory -/
 
 

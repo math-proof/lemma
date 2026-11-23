@@ -1,7 +1,10 @@
 -- Carved from Lemma/Definitions/Def_CerednikDrinfeld_HeckeTower.lean: instance decls only.
-import Lemma.Scheme.Correspondence
-import Instance.AlgebraicCurve_IsCurveOver
-import Abbrev.CerednikDrinfeld_HeckeTower
+module
+
+public import Theorem.Scheme.Correspondence
+public import Instance.AlgebraicCurve_IsCurveOver
+public import Abbrev.CerednikDrinfeld_HeckeTower
+@[expose] public section
 
 set_option autoImplicit false
 

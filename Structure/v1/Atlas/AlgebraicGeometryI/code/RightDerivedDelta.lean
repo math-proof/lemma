@@ -12,8 +12,8 @@ module
 
 public import Def.v1.Atlas.AlgebraicGeometryI.code.DerivedFunctorsDefs
 public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DerivedFunctorsDefs
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.EffaceableUniversal
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CechDerivedInstantiate
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.EffaceableUniversal
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CechDerivedInstantiate
 public import Def.v1.Atlas.AlgebraicGeometryI.code.EffaceableUniversal
 public import Def.v1.Atlas.AlgebraicGeometryI.code.CechDerivedInstantiate.Part2
 

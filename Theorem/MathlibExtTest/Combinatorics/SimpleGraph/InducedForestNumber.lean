@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/InducedForestNumber.lean -/
+module
 
+public import Def.Combinatorics.SimpleGraph.InducedForestNumber
+public import Theorem.SimpleGraph.InducedForestNumber
 
-import Def.Combinatorics.SimpleGraph.InducedForestNumber
-import Theorem.SimpleGraph.InducedForestNumber
-
+public section
 
 example (G : SimpleGraph (Fin 0)) : G.inducedForestNumber = 0 := by
   have hle : G.inducedForestNumber ≤ Fintype.card (Fin 0) :=

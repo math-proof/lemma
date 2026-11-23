@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Ideal.Cotangent
-import Mathlib.RingTheory.Derivation.Basic
-import Theorem.v1.Atlas.ArithmeticGeometry.code.CotangentLocal.Part2
+module
+
+public import Mathlib.RingTheory.Ideal.Cotangent
+public import Mathlib.RingTheory.Derivation.Basic
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.CotangentLocal.Part2
+
+@[expose] public section
+
 open IsLocalRing
 
 

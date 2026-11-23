@@ -1,5 +1,9 @@
-import Mathlib
-import Lemma.Ideal.IntegralClosure
+module
+
+public import Mathlib
+public import Theorem.Ideal.IntegralClosure
+@[expose] public section
+
 section
 
 variable (K : Type*) [Field K] [NumberField K]

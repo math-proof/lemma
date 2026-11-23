@@ -1,8 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Topology/Algebra/Group/OpenProfiniteCompletion.lean -/
 
+module
 
-import Def.Topology.Algebra.Group.OpenProfiniteCompletion.Part2
-import Theorem.Set.Algebra.Group.OpenProfiniteCompletion
+public import Def.Topology.Algebra.Group.OpenProfiniteCompletion.Part2
+public import Theorem.Set.Algebra.Group.OpenProfiniteCompletion
+
+@[expose] public section
+
 open ProfiniteGrp.OpenProfiniteCompletion
 
 universe u

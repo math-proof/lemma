@@ -115,10 +115,10 @@ private lemma abstract_match_on_finset_restricted
     rwa [hsum]
 
 /--
-[CompactlySupportedMeasureSpace.supported_in_compact](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/CompactMeasures.lean)
+[compactlySupportedMeasureSpace_supported_in_compact](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/CompactMeasures.lean)
 -/
 @[path]
-private lemma CompactlySupportedMeasureSpace.supported_in_compact
+private lemma compactlySupportedMeasureSpace_supported_in_compact
   {X : Type*}
   [TopologicalSpace X]
   [AddCommGroup MX]
@@ -425,4 +425,4 @@ private lemma boxtimes_extension_unique
 
 
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-22

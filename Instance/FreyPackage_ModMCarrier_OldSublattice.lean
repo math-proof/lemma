@@ -1,9 +1,12 @@
 -- Carved from Lemma/Definitions/Def_FreyPackage_ModMCarrier_OldSublattice.lean: instance decls only.
-import Mathlib
-import Def.FreyPackage_ModMCarrier_LatticeRed
-import Abbrev.FreyPackage_ModMCarrier_Rescale
-import Def.CuspForm_IntegralStructure
-import Lemma.ModularForm.AtkinLehnerDatum
+module
+
+public import Mathlib
+public import Def.FreyPackage_ModMCarrier_LatticeRed
+public import Abbrev.FreyPackage_ModMCarrier_Rescale
+public import Def.CuspForm_IntegralStructure
+public import Theorem.ModularForm.AtkinLehnerDatum
+@[expose] public section
 
 set_option autoImplicit false
 noncomputable section

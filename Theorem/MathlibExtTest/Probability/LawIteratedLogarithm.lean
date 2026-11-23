@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Probability/LawIteratedLogarithm.lean -/
+module
 
-
-import Def.Probability.LawIteratedLogarithm
-import Theorem.Measure.LawIteratedLogarithm
+public import Def.Probability.LawIteratedLogarithm
+public import Theorem.Measure.LawIteratedLogarithm
 open MeasureTheory ProbabilityTheory
 open scoped ProbabilityTheory
 
+public section
 
 namespace MathlibExtTest.Probability.LawIteratedLogarithm
 

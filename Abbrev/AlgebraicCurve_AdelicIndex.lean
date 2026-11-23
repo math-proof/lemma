@@ -1,10 +1,12 @@
-import Mathlib
-import Lemma.Submodule.Repartitions
-import Structure.AlgebraicCurve_AdelicIndex
+module
+
+public import Mathlib
+public import Theorem.Submodule.Repartitions
+public import Structure.AlgebraicCurve_AdelicIndex
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open IsDedekindDomain WithZero Module
 

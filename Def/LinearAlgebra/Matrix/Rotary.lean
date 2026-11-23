@@ -1,7 +1,6 @@
 module
 
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 
 @[expose] public section
 
@@ -52,11 +51,15 @@ Su et al. interleaved rotary matrix: planes are `(2t, 2t + 1)`.
 noncomputable def Matrix.rotary' {d : ℕ} (θ : Fin d → ℝ) : Matrix (Fin (d + d)) (Fin (d + d)) ℝ :=
   Matrix.rotaryOn (Matrix.ropeEven d) (Matrix.ropeOdd d) θ
 
-/--
-Integer power at a sign: `0 ↦ 1`, positive `↦ A`, negative `↦ A⁻¹`.
+namespace Function
 
-`Int.sign` only takes values in `{-1, 0, 1}`, which is the only use here.
--/
-noncomputable def Matrix.signPow {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) (s : ℤ) :
-    Matrix (Fin n) (Fin n) ℝ :=
-  if s = 0 then 1 else if 0 < s then A else A⁻¹
+/-- Field-notation form of `Matrix.rotary` on a plain row `θ : Fin d → ℝ`, so `θ[i].rotary`
+works when a matrix row is a plain function. -/
+noncomputable def rotary {d : ℕ} (θ : Fin d → ℝ) : Matrix (Fin (d + d)) (Fin (d + d)) ℝ :=
+  Matrix.rotary θ
+
+/-- Field-notation form of `Matrix.rotary'` on a plain row `θ : Fin d → ℝ`. -/
+noncomputable def rotary' {d : ℕ} (θ : Fin d → ℝ) : Matrix (Fin (d + d)) (Fin (d + d)) ℝ :=
+  Matrix.rotary' θ
+
+end Function

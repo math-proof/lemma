@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/AdjoinRoot/LocalMaximal.lean -/
+module
 
-
-import Mathlib.Algebra.Field.ZMod
-import Theorem.RingTheory.AdjoinRoot.LocalMaximal
-import Theorem.Polynomial.AdjoinRoot.LocalMaximal
+public import Mathlib.Algebra.Field.ZMod
+public import Theorem.RingTheory.AdjoinRoot.LocalMaximal
+public import Theorem.Polynomial.AdjoinRoot.LocalMaximal
 open Polynomial
+
+public section
 
 variable {A : Type*} [CommRing A] [IsLocalRing A]
 

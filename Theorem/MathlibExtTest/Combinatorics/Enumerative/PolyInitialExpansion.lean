@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/PolyInitialExpansion.lean -/
+module
 
+public import Mathlib.Data.Nat.Choose.Sum
+public import Theorem.Finset.Enumerative.PolyInitialExpansion
 
-import Mathlib.Data.Nat.Choose.Sum
-import Theorem.Finset.Enumerative.PolyInitialExpansion
-
+public section
 
 namespace MetaMathlibExt
 

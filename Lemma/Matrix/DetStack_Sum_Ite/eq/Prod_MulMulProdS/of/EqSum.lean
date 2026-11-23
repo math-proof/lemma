@@ -9,6 +9,7 @@ import Lemma.Matrix.MulOfMulPowOfPowNegChoose.eq.MulOfChooseSumOf
 import Lemma.Matrix.MulOfPowAddOfPowNegChoose.eq.Zero
 import Syntax.LinearAlgebra.Matrix.Notation
 import Theorem.Function
+open scoped Matrix
 open Matrix Finset Nat
 set_option maxHeartbeats 999999
 
@@ -57,7 +58,7 @@ private lemma main
 -- given
   (h : ∑ k, d[k] = m) :
 -- imply
-  ([i < m, j < m]
+  ([i < m][j < m]
     ∑ k : Fin n,
       if (i : ℕ) ∈ Finset.Ico (∑ t ∈ Finset.Iio k, d[t])
           (∑ t ∈ Finset.Iic k, d[t]) then
@@ -114,13 +115,13 @@ private lemma main
         simp
       rw [hset, Finset.sum_insert hnotin, Finset.sum_map]
       rfl
-    set M := [i < m, j < m]
+    set M := [i < m][j < m]
       ∑ k : Fin (n + 1),
         if (i : ℕ) ∈ Finset.Ico (off k) (off k + d[k]) then
           (j : R) ^ ((i : ℕ) - off k) * x[k] ^ (j : ℕ)
         else
           0 with hM
-    set M_rest := [i < (m - d0), j < (m - d0)]
+    set M_rest := [i < (m - d0)][j < (m - d0)]
       ∑ k : Fin n,
         if (i : ℕ) ∈ Finset.Ico (off' k) (off' k + d'[k]) then
           (j : R) ^ ((i : ℕ) - off' k) * x'[k] ^ (j : ℕ)
@@ -325,7 +326,7 @@ private lemma main
           omega
       have hσ (k : Fin n) (i : Fin d'[k]) : (σ ⟨k, i⟩ : ℕ) = off' k + (i : ℕ) := rfl
       set C : ∀ k : Fin n, Matrix (Fin d'[k]) (Fin d'[k]) R := fun k =>
-        [i < d'[k], j < d'[k]]
+        [i < d'[k]][j < d'[k]]
           ((i : ℕ).choose j : R) *
             ∑ h ∈ Finset.range (d0 + 1),
               (d0.choose h : R) * (-x0) ^ (d0 - h) * x'[k] ^ h *
@@ -471,7 +472,7 @@ private lemma main
       have hih := ih (x := x') (d := d') hsum'
       have hshape :
         M_rest =
-          ([i < (m - d0), j < (m - d0)]
+          ([i < (m - d0)][j < (m - d0)]
             ∑ k : Fin n,
               if (i : ℕ) ∈ Finset.Ico (∑ t ∈ Finset.Iio k, d'[t])
                   (∑ t ∈ Finset.Iic k, d'[t]) then
@@ -487,7 +488,7 @@ private lemma main
     rw [hM_rest_det] at hmain
     have hLHS :
       M.det =
-        ([i < m, j < m]
+        ([i < m][j < m]
           ∑ k : Fin (n + 1),
             if (i : ℕ) ∈ Finset.Ico (∑ t ∈ Finset.Iio k, d[t])
                 (∑ t ∈ Finset.Iic k, d[t]) then

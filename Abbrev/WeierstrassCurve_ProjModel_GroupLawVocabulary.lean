@@ -1,25 +1,27 @@
-import Structure.WeierstrassCurve_ProjModel
-import Mathlib.AlgebraicGeometry.EllipticCurve.Projective.Basic
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.Algebra.MvPolynomial.Rename
-import Mathlib.RingTheory.Ideal.Span
-import Mathlib.RingTheory.Polynomial.Basic
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.GradedAlgebra.Homogeneous.Ideal
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.RingTheory.TensorProduct.Basic
-import Mathlib.RingTheory.GradedAlgebra.HomogeneousLocalization
-import Mathlib.RingTheory.FiniteType
-import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Proper
-import Mathlib.AlgebraicGeometry.Cover.Open
-import Mathlib.AlgebraicGeometry.Gluing
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Mathlib.RingTheory.MvPolynomial.Ideal
-import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Functor
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.AlgebraicGeometry.EllipticCurve.Projective.Point
-import Lemma.WeierstrassCurve.ProjModel_AddFormulas
+module
+
+public import Structure.WeierstrassCurve_ProjModel
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Projective.Basic
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.Algebra.MvPolynomial.Rename
+public import Mathlib.RingTheory.Ideal.Span
+public import Mathlib.RingTheory.Polynomial.Basic
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.GradedAlgebra.Homogeneous.Ideal
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Mathlib.RingTheory.GradedAlgebra.HomogeneousLocalization
+public import Mathlib.RingTheory.FiniteType
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Proper
+public import Mathlib.AlgebraicGeometry.Cover.Open
+public import Mathlib.AlgebraicGeometry.Gluing
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Mathlib.RingTheory.MvPolynomial.Ideal
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Functor
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Projective.Point
+public import Theorem.WeierstrassCurve.ProjModel_AddFormulas
 
 set_option Elab.async false
 
@@ -28,7 +30,7 @@ set_option autoImplicit false
 set_option linter.unusedSimpArgs false
 set_option maxHeartbeats 6400000
 
-noncomputable section
+@[expose] public noncomputable section
 
 open MvPolynomial WeierstrassCurve
 

@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.EllipticCurves.code.TorsionEndomorphism.Part3
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.TorsionEndomorphism
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.TorsionEndomorphism
 import Mathlib.LinearAlgebra.Matrix.Trace
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.Data.ZMod.Basic

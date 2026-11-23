@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.Buildings.code.Building.AffineMetric.Part5
-public import Lemma.Set.IsBoundedImage.of.IsBounded.IsSimilitude
+public import Theorem.Set.IsBoundedImage.of.IsBounded.IsSimilitude
 public import Mathlib.Topology.MetricSpace.Basic
 public import Mathlib.Topology.UniformSpace.Cauchy
 public import Mathlib.Analysis.InnerProductSpace.Basic

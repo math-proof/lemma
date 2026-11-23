@@ -4,18 +4,21 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.Dynamics.BirkhoffSum.Basic
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.Probability.StrongLaw
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Separation.CompletelyRegular
-import Def.Dynamics.Ergodic.Birkhoff
-import Theorem.Set.Ergodic.Birkhoff
+module
 
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.Dynamics.BirkhoffSum.Basic
+public import Mathlib.Order.CompletePartialOrder
+public import Mathlib.Probability.StrongLaw
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Separation.CompletelyRegular
+public import Def.Dynamics.Ergodic.Birkhoff
+public import Theorem.Set.Ergodic.Birkhoff
+
+@[expose] public section
 
 section
 

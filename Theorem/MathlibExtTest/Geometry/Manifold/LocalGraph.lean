@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Geometry/Manifold/LocalGraph.lean -/
+module
 
-
-import Theorem.Geometry.Manifold.LocalGraph
-import Theorem.Set.Manifold.LocalGraph
+public import Theorem.Geometry.Manifold.LocalGraph
+public import Theorem.Set.Manifold.LocalGraph
 open MathlibExt.Geometry.Manifold.LocalGraphWanted
 open scoped Topology
 
+public section
 
 -- The public theorem makes each local level set a graph over the first coordinate.
 example

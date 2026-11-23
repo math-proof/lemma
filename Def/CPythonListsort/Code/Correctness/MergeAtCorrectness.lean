@@ -7,7 +7,7 @@ import Def.CPythonListsort.Code.Correctness.MergeHiCorrectness
 import Structure.CPythonListsort.Code.Correctness.MergeLoCorrectness
 import Def.CPythonListsort.Code.Correctness.PendingRunCorrectness
 import Lemma.List.Atlas.CPythonListsort.Code.Policy.MergeAtPreservation
-import Lemma.List.Atlas.CPythonListsort.Code.Policy.MergeTopPowerPreservation
+import Theorem.List.Atlas.CPythonListsort.Code.Policy.MergeTopPowerPreservation
 /-!
 # Functional correctness of `merge_at`
 

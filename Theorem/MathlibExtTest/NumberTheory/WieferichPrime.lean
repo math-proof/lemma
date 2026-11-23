@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/WieferichPrime.lean -/
+module
 
+public import Instance.NumberTheory.WieferichPrime
+public import Theorem.Nat.WieferichPrime
+public import Mathlib.Tactic.NormNum
 
-import Instance.NumberTheory.WieferichPrime
-import Theorem.Nat.WieferichPrime
-import Mathlib.Tactic.NormNum
-
+public section
 
 example : ¬Nat.IsWieferichPrime 2 := by
   norm_num [Nat.IsWieferichPrime]

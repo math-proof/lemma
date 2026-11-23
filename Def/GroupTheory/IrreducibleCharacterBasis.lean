@@ -4,15 +4,20 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.RepresentationTheory.Character
-import Mathlib.Algebra.Group.Conj
-import Mathlib.Data.Complex.Basic
-import Mathlib.Algebra.Module.Shrink
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
-import Mathlib.RepresentationTheory.FinGroupCharZero
-import Def.GroupTheory.ClassFunction.Part2
-import Theorem.Fin.IsClassFunctionCharacter
+module
+
+public import Mathlib.RepresentationTheory.Character
+public import Mathlib.Algebra.Group.Conj
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Algebra.Module.Shrink
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
+public import Mathlib.RepresentationTheory.FinGroupCharZero
+public import Def.GroupTheory.ClassFunction.Part2
+public import Theorem.Fin.IsClassFunctionCharacter
+
+@[expose] public section
+
 open CategoryTheory
 open scoped MonoidAlgebra
 open MathlibExt.GroupTheory.ClassFunctionWanted

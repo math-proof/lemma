@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.TensorCategories.code.SweedlerConcrete.Part4
-import Lemma.Category.Atlas.v1.TensorCategories.code.SweedlerConcrete
+import Theorem.Category.Atlas.v1.TensorCategories.code.SweedlerConcrete
 import Def.v1.Atlas.TensorCategories.code.HopfAlgebraExamples.Part2
 import Instance.v1.Atlas.TensorCategories.code.SweedlerHopfInstance.Part3
 set_option linter.unusedSimpArgs false

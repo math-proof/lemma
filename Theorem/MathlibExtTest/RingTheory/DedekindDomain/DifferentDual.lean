@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/DedekindDomain/DifferentDual.lean -/
+module
 
-
-import Theorem.Ideal.DedekindDomain.DifferentDual
+public import Theorem.Ideal.DedekindDomain.DifferentDual
 open scoped nonZeroDivisors
+
+public section
 
 variable (A K L B : Type*)
 variable [CommRing A] [CommRing B] [Field K] [Field L]

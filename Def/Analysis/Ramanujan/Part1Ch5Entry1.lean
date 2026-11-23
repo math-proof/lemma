@@ -4,8 +4,13 @@
 Author: @akiezun, Avocado
 -/
 
-import Def.Analysis.Ramanujan.Part1Ch5Entry1Euleriangf
-import Theorem.Real.Part1Ch5Entry1Euleriangf
+module
+
+public import Def.Analysis.Ramanujan.Part1Ch5Entry1Euleriangf
+public import Theorem.Real.Part1Ch5Entry1Euleriangf
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 5, Entry 1
 

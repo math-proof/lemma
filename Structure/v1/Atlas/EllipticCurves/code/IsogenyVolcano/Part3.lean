@@ -18,8 +18,8 @@ public import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
 public import Mathlib.Combinatorics.SimpleGraph.Finite
 public import Mathlib.Data.ZMod.Basic
 public import Def.v1.Atlas.EllipticCurves.code.RingClassField.Part3
-public import Lemma.Complex.Atlas.v1.EllipticCurves.code.RingClassField
-public import Lemma.Complex.Atlas.v1.EllipticCurves.code.HilbertClassPolynomial
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.RingClassField
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.HilbertClassPolynomial
 public import Def.v1.Atlas.EllipticCurves.code.HilbertClassPolynomial.Part2
 public import Def.v1.Atlas.EllipticCurves.code.IsogenyVolcano.Part4
 /-- A multigraph on vertex set `V`: each unordered pair `(v, w)` carries a

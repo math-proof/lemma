@@ -7,12 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.GeometryOfManifolds.code.DifferentialForms.Part2
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialForms
-import Def.v1.Atlas.GeometryOfManifolds.code.PolynomialDFS.Part2
+public import Def.v1.Atlas.GeometryOfManifolds.code.DifferentialForms.Part2
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialForms
+public import Def.v1.Atlas.GeometryOfManifolds.code.PolynomialDFS.Part2
 set_option autoImplicit false
 
+public section
 
 /-- Fundamental theorem of calculus for polynomials: $\frac{d}{dt} \int g(t)\, dt = g(t)$. -/
 lemma derivative_antideriv (g : Polynomial ℝ) :

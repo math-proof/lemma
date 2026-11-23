@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Notation.v1.Atlas.TheoryOfComputation.code.Reductions
 import Def.v1.Atlas.TheoryOfComputation.code.Decidability.Part13
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.Decidability
+import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.Decidability
 import Mathlib.Data.Set.Basic
 import Mathlib.Data.Fintype.Basic
 import Mathlib.Order.RelClasses

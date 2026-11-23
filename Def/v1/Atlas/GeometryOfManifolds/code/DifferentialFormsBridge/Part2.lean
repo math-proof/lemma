@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Instance.v1.Atlas.GeometryOfManifolds.code.DifferentialFormsBridge
+module
+
+public import Mathlib
+public import Instance.v1.Atlas.GeometryOfManifolds.code.DifferentialFormsBridge
+
+@[expose] public section
+
 open scoped Manifold
 
 

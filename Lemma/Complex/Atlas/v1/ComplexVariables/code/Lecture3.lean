@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-open Finset BigOperators Complex
+open Finset BigOperators Complex Polynomial
 open Complex
 open scoped Polynomial ComplexConjugate
 
@@ -19,8 +19,6 @@ lemma convexHull_finset_eq_convex_combinations
 open Complex
 open scoped Polynomial ComplexConjugate
 
-namespace Polynomial
-
 /--
 [gauss_lucas](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture3.lean)
 -/
@@ -34,7 +32,7 @@ lemma gauss_lucas
 -- proof
   rootSet_derivative_subset_convexHull_rootSet hP
 
-end Polynomial
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-22

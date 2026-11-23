@@ -1,6 +1,10 @@
-import Instance.AlgebraicGeometry_OrderedAffineCoverCech
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Mathlib.AlgebraicGeometry.Morphisms.Affine
+module
+
+public import Instance.AlgebraicGeometry_OrderedAffineCoverCech
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
+
+@[expose] public section
 
 set_option autoImplicit false
 

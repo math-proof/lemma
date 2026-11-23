@@ -1,6 +1,9 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_LevelOneComp.lean: instance decls only.
-import Mathlib
-import Instance.ModularCurve_JZeroSemistableSpecialization
+module
+
+public import Mathlib
+public import Instance.ModularCurve_JZeroSemistableSpecialization
+@[expose] public section
 
 set_option autoImplicit false
 

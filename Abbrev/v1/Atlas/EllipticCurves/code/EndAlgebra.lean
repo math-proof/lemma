@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Mathlib.RingTheory.TensorProduct.Basic
 import Mathlib.RingTheory.RingInvo
 import Def.v1.Atlas.EllipticCurves.code.TorsionEndomorphism.Part3
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.TorsionEndomorphism
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.TorsionEndomorphism
 import Def.v1.Atlas.EllipticCurves.code.EndAlgebra.Part2
 universe u
 

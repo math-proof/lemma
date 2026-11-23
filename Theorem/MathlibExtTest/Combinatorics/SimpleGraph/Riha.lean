@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/Riha.lean -/
+module
 
+public import Def.Combinatorics.SimpleGraph.Riha
+public import Theorem.SimpleGraph.Riha
 
-import Def.Combinatorics.SimpleGraph.Riha
-import Lemma.SimpleGraph.Riha
-
+public section
 
 namespace MathlibExtTest.Combinatorics.SimpleGraph.Riha
 

@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.Building.BruhatTitsFixedPoint.Part2
-import Theorem.Set.RadiusFrom.ge.Zero
-import Structure.v1.Atlas.Buildings.code.Building.CompactSubgroups.Part2
-import Structure.v1.Atlas.Buildings.code.BNPair.Generalized.Defs
+module
+
+public import Def.v1.Atlas.Buildings.code.Building.BruhatTitsFixedPoint.Part2
+public import Theorem.Set.RadiusFrom.ge.Zero
+public import Structure.v1.Atlas.Buildings.code.Building.CompactSubgroups.Part2
+public import Structure.v1.Atlas.Buildings.code.BNPair.Generalized.Defs
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 set_option linter.unusedSectionVars false

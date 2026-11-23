@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleGeneral
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleGeneral
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafDef
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.TwistSheaf
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TwistSheaf
 import Abbrev.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafDef.Part2
 import Def.v1.Atlas.AlgebraicGeometryI.code.TwistSheaf.Part2
 import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleProjective.Part3

@@ -3,11 +3,9 @@ import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.SpecialFunctions.Part1Ch8Entry12Qgammaintegers
 
 open MeasureTheory
-open Ramanujan.Part1Ch8.Entry12Qgammaintegers
 open scoped Interval
+open Ramanujan.Part1Ch8.Entry12Qgammaintegers hiding aux_denom chapter8UnitPow_eq_cpow aux_norm aux_kernel0 aux_kernel1 aux_kernel_ne aux_kernel_form aux_term aux_Fterm_eq aux_hasSum aux_zre aux_normF aux_bound_summable aux_bound_tsum aux_expand aux_intcpow aux_termintegral aux_memIoo aux_h01 aux_expansion_integrable aux_Fintegrable aux_hmeas aux_closedIntegrable aux_boundtsum_integrable aux_tsumF_integrable aux_kernel_intervalIntegrable ramanujan_part1_ch8_entry12_qgammaintegers_cpow ramanujan_part1_ch8_entry12_qgammaintegers
 
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [aux_denom](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -44,9 +42,6 @@ private lemma aux_denom (x : ℂ) (hx : 1 < x.re) (j : ℕ) :
     rw [Complex.add_re, Complex.one_re] at h2
     linarith
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [Part1Ch8Entry12Qgammaintegers](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -68,9 +63,6 @@ lemma chapter8UnitPow_eq_cpow
   congr 1
   ring
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [aux_norm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -83,9 +75,6 @@ private lemma aux_norm (x : ℂ) (hx : 1 < x.re) (u : ℝ) (hu : u ∈ Set.Ioo 0
   have hxpos : (0:ℝ) < x.re := by linarith
   exact Real.rpow_lt_one hu0.le hu1 hxpos
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [aux_kernel0](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -95,9 +84,6 @@ private lemma aux_kernel0 (x : ℂ) : chapter8Entry12Kernel x 0 = 0 := by
   unfold chapter8Entry12Kernel
   simp
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [aux_kernel1](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -107,9 +93,6 @@ private lemma aux_kernel1 (x : ℂ) : chapter8Entry12Kernel x 1 = 0 := by
   unfold chapter8Entry12Kernel
   simp
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [aux_kernel_ne](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -123,9 +106,6 @@ private lemma aux_kernel_ne (x : ℂ) (hx : 1 < x.re) (u : ℝ) (hu : u ∈ Set.
   rw [hq, norm_one] at hnorm
   exact lt_irrefl 1 hnorm
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [aux_kernel_form](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -140,9 +120,6 @@ private lemma aux_kernel_form (x : ℂ) (u : ℝ) (hu : 0 < u) (hu1 : u ≠ 1) :
   rw [ite_eq_right hu0, ite_eq_right hu1, chapter8UnitPow_eq_cpow (x - 2) u hu,
     chapter8UnitPow_eq_cpow x u hu]
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [aux_term](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -157,9 +134,6 @@ private lemma aux_term (x : ℂ) (u : ℝ) (hu : 0 < u) (j : ℕ) :
   push_cast
   ring
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [aux_Fterm_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -172,9 +146,6 @@ private lemma aux_Fterm_eq (x : ℂ) (u : ℝ) (hu : 0 < u) (j : ℕ) :
   unfold chapter8Fterm
   rw [← ht]
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [aux_hasSum](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -196,9 +167,6 @@ private lemma aux_hasSum (x : ℂ) (hx : 1 < x.re) (u : ℝ) (hu : u ∈ Set.Ioo
   rw [aux_Fterm_eq x u hu0 j]
   ring
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [aux_zre](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -212,9 +180,6 @@ private lemma aux_zre (x : ℂ) (j : ℕ) :
   push_cast
   ring
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [aux_normF](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -246,9 +211,6 @@ private lemma aux_normF (x : ℂ) (hx : 1 < x.re) (u : ℝ) (hu : u ∈ Set.Ioo 
       mul_le_mul_of_nonneg_right hle (sq_nonneg _)
     _ = u ^ (x.re - 2) * u ^ ((j : ℝ)) * (1 - u) ^ 2 := by ring
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [aux_bound_summable](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -270,9 +232,6 @@ private lemma aux_bound_summable (x : ℂ) (u : ℝ) (hu : u ∈ Set.Ioo 0 1) :
   rw [hfun]
   exact hgeom.mul_left _
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [aux_bound_tsum](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -295,9 +254,6 @@ private lemma aux_bound_tsum (x : ℂ) (u : ℝ) (hu : u ∈ Set.Ioo 0 1) :
     intro h; linarith
   field_simp
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [aux_expand](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -327,9 +283,6 @@ private lemma aux_expand (z : ℂ) (u : ℝ) (hu : u ≠ 0) :
     = (u:ℂ)^(z-2) - (u:ℂ)^(z-2) * (2 * (u:ℂ)) + (u:ℂ)^(z-2) * (u:ℂ)^(2:ℕ) := by ring
     _ = (u:ℂ)^(z-2) - 2 * (u:ℂ)^(z-1) + (u:ℂ)^z := by rw [e1', e2]
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [aux_intcpow](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -347,9 +300,6 @@ private lemma aux_intcpow (w : ℂ) (hw : -1 < w.re) :
     linarith [hw]
   rw [h1, h0, sub_zero]
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [aux_termintegral](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -424,9 +374,6 @@ private lemma aux_termintegral (x : ℂ) (hx : 1 < x.re) (j : ℕ) :
   unfold chapter8PhiTerm
   simp only [hz]
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [aux_memIoo](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -437,9 +384,6 @@ private lemma aux_memIoo (u : ℝ) (huI : u ∈ Ι (0 : ℝ) 1) (hu1 : u ≠ 1) 
   rw [Set.uIoc_of_le (by norm_num : (0:ℝ) ≤ 1)] at huI
   exact ⟨huI.1, lt_of_le_of_ne huI.2 hu1⟩
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [aux_h01](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -452,9 +396,6 @@ private lemma aux_h01 : ∀ᵐ u ∂(volume : Measure ℝ), u ≠ 0 ∧ u ≠ 1 
     rw [ae_iff]; simp
   filter_upwards [h0, h1] with u hu0 hu1 using ⟨hu0, hu1⟩
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [aux_expansion_integrable](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -489,9 +430,6 @@ private lemma aux_expansion_integrable (x : ℂ) (hx : 1 < x.re) (j : ℕ) :
     ((intervalIntegral.intervalIntegrable_cpow' h2).const_mul 2)).add
     (intervalIntegral.intervalIntegrable_cpow' h3)
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [aux_Fintegrable](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -506,9 +444,6 @@ private lemma aux_Fintegrable (x : ℂ) (hx : 1 < x.re) (j : ℕ) :
   unfold chapter8Fterm
   exact (aux_expand _ _ hu0).symm
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [aux_hmeas](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -518,9 +453,6 @@ private lemma aux_hmeas (x : ℂ) (hx : 1 < x.re) (j : ℕ) :
   AEStronglyMeasurable (chapter8Fterm x j) (volume.restrict (Ι (0:ℝ) 1)) :=
   Integrable.aestronglyMeasurable (intervalIntegrable_iff.mp (aux_Fintegrable x hx j))
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [aux_closedIntegrable](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -534,9 +466,6 @@ private lemma aux_closedIntegrable (x : ℂ) (hx : 1 < x.re) :
     (continuous_const.sub continuous_id).continuousOn
   exact hbase.mul_continuousOn hcont
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [aux_boundtsum_integrable](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -550,9 +479,6 @@ private lemma aux_boundtsum_integrable (x : ℂ) (hx : 1 < x.re) :
   intro huI
   exact (aux_bound_tsum x u (aux_memIoo u huI hu1)).symm
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [aux_tsumF_integrable](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -575,9 +501,6 @@ private lemma aux_tsumF_integrable (x : ℂ) (hx : 1 < x.re) :
         Summable.tsum_le_tsum (fun j => aux_normF x hx u hu j) hnorms
           (aux_bound_summable x u hu)
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [aux_kernel_intervalIntegrable](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -604,9 +527,6 @@ private lemma aux_kernel_intervalIntegrable (x : ℂ) (hx : 1 < x.re) :
   · have hu : u ∈ Set.Ioo 0 1 := ⟨huI.1, lt_of_le_of_ne huI.2 hu1⟩
     exact HasSum.tsum_eq (aux_hasSum x hx u hu)
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [Part1Ch8Entry12Qgammaintegers](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -665,9 +585,6 @@ lemma ramanujan_part1_ch8_entry12_qgammaintegers_cpow
     rw [htsum]
     ring
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
 
 /--
 [Part1Ch8Entry12Qgammaintegers](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch8Entry12Qgammaintegers.lean)
@@ -701,9 +618,7 @@ lemma ramanujan_part1_ch8_entry12_qgammaintegers
   rw [← chapter8UnitPow_eq_cpow x u hu.1] at hne
   rw [← chapter8UnitPow_eq_cpow x u hu.1, ← chapter8UnitPow_eq_cpow (x - 2) u hu.1] at hform
   exact ⟨hne, hform⟩
-end MathlibExt.Analysis.Ramanujan.Part1Ch8.Entry12Qgammaintegers
-
 
 
 -- created on 2026-10-10
--- updated on 2026-10-26
+-- updated on 2026-11-22

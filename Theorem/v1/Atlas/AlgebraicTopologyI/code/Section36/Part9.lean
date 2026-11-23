@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section34.Part3
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section34
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section34
 import Mathlib.AlgebraicTopology.SingularHomology.Basic
 import Mathlib.Algebra.Category.ModuleCat.Abelian
 import Mathlib.Algebra.Category.ModuleCat.Colimits

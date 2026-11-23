@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/Degeneracy.lean -/
+module
 
+public import Def.Combinatorics.SimpleGraph.Degeneracy
+public import Theorem.SimpleGraph.Degeneracy
 
-import Def.Combinatorics.SimpleGraph.Degeneracy
-import Theorem.SimpleGraph.Degeneracy
-
+public section
 
 namespace SimpleGraph
 

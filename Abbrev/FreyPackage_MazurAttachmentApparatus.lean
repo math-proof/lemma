@@ -1,16 +1,18 @@
-import Mathlib
-import Structure.FLTPrelim_FreyPackage
-import Def.FreyPackage_LevelRaising
-import Instance.FreyPackage_GaloisRep
-import Def.GaloisRep_GlobalUnramifiedAt
-import Lemma.MvPolynomial.HeckeModule
-import Def.ModularCurve_HeckeInputsAll
-import Structure.ModularCurve_MazurPrincipleCore
-import Structure.FreyPackage_MazurAttachmentApparatus
+module
+
+public import Mathlib
+public import Structure.FLTPrelim_FreyPackage
+public import Def.FreyPackage_LevelRaising
+public import Instance.FreyPackage_GaloisRep
+public import Def.GaloisRep_GlobalUnramifiedAt
+public import Theorem.MvPolynomial.HeckeModule
+public import Def.ModularCurve_HeckeInputsAll
+public import Structure.ModularCurve_MazurPrincipleCore
+public import Structure.FreyPackage_MazurAttachmentApparatus
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace FreyPackage
 

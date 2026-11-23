@@ -1,6 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Syntax.LinearAlgebra.Matrix.Notation
+open scoped Matrix
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
@@ -35,7 +36,7 @@ private lemma span_range_colAt_eq_top [Field k] {n : ℕ} (f : Fin n → ι → 
   simp only [hc] at this
   simpa using this
 
-private lemma exists_submatrix_det_ne_zero_of_linearIndependent [Field k] {n : ℕ} (f : Fin n → ι → k) (hf : LinearIndependent k f) : ∃ s : Fin n → ι, Function.Injective s ∧ ([l < n, j < n] f j (s l)).det ≠ 0 := by
+private lemma exists_submatrix_det_ne_zero_of_linearIndependent [Field k] {n : ℕ} (f : Fin n → ι → k) (hf : LinearIndependent k f) : ∃ s : Fin n → ι, Function.Injective s ∧ ([l < n][j < n] f j (s l)).det ≠ 0 := by
   classical
   obtain ⟨κ, a, ha, hspan, hli⟩ := exists_linearIndependent' k (colAt f)
   rw [span_range_colAt_eq_top f hf] at hspan
@@ -47,11 +48,11 @@ private lemma exists_submatrix_det_ne_zero_of_linearIndependent [Field k] {n : �
   convert h2 using 1
   rfl
 
-private lemma exists_submatrix_isUnit_det_of_linearIndependent_residue [CommRing A] [IsLocalRing A] {n : ℕ} (b : Fin n → ι → A) (hb : LinearIndependent (IsLocalRing.ResidueField A) (fun j i => IsLocalRing.residue A (b j i))) : ∃ s : Fin n → ι, Function.Injective s ∧ IsUnit ([l < n, j < n] b j (s l)).det := by
+private lemma exists_submatrix_isUnit_det_of_linearIndependent_residue [CommRing A] [IsLocalRing A] {n : ℕ} (b : Fin n → ι → A) (hb : LinearIndependent (IsLocalRing.ResidueField A) (fun j i => IsLocalRing.residue A (b j i))) : ∃ s : Fin n → ι, Function.Injective s ∧ IsUnit ([l < n][j < n] b j (s l)).det := by
   obtain ⟨s, hs, hdet⟩ := exists_submatrix_det_ne_zero_of_linearIndependent _ hb
   refine ⟨s, hs, ?_⟩
   refine (IsLocalRing.residue_ne_zero_iff_isUnit _).mp ?_
-  have hmap : IsLocalRing.residue A ([l < n, j < n] b j (s l)).det = ([l < n, j < n] IsLocalRing.residue A (b j (s l))).det := by
+  have hmap : IsLocalRing.residue A ([l < n][j < n] b j (s l)).det = ([l < n][j < n] IsLocalRing.residue A (b j (s l))).det := by
     rw [RingHom.map_det]
     rfl
   rw [hmap]
@@ -68,7 +69,7 @@ private lemma main
 -- given
   (hf : LinearIndependent k f) :
 -- imply
-  ∃ s : Fin n → ι, Function.Injective s ∧ ([l < n, j < n] f j (s l)).det ≠ 0 :=
+  ∃ s : Fin n → ι, Function.Injective s ∧ ([l < n][j < n] f j (s l)).det ≠ 0 :=
   exists_submatrix_det_ne_zero_of_linearIndependent f hf
 
 

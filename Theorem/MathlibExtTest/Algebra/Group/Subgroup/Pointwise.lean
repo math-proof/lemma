@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/Group/Subgroup/Pointwise.lean -/
+module
 
-
-import Theorem.Set.Closure.eq.N.of.Eq
-import Mathlib.Algebra.Group.Pointwise.Set.Basic
+public import Theorem.Set.Closure.eq.N.of.Eq
+public import Mathlib.Algebra.Group.Pointwise.Set.Basic
 open scoped Pointwise
 
+public section
 
 -- exponent zero: {1} is inverse-closed and its closure is the union of its powers
 example {G : Type*} [Group G] :

@@ -8,18 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Real.Basic
-import Mathlib.Data.Matrix.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.InnerProductSpace.GramSchmidtOrtho
-import Mathlib.Topology.MetricSpace.HausdorffDistance
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Data.Int.Interval
-import Mathlib.Data.Fintype.BigOperators
-import Structure.v1.Atlas.AnAlgorithmistsToolkit.code.Lattices
-import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.Lattices
+module
 
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Data.Matrix.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.InnerProductSpace.GramSchmidtOrtho
+public import Mathlib.Topology.MetricSpace.HausdorffDistance
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Data.Int.Interval
+public import Mathlib.Data.Fintype.BigOperators
+public import Structure.v1.Atlas.AnAlgorithmistsToolkit.code.Lattices
+public import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.Lattices
+
+@[expose] public section
 
 noncomputable section
 

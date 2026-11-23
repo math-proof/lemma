@@ -1,4 +1,8 @@
-import Def.NumberField_AdelicVolume
+module
+
+public import Def.NumberField_AdelicVolume
+
+@[expose] public section
 
 open MeasureTheory Set IsDedekindDomain NumberField Metric
 

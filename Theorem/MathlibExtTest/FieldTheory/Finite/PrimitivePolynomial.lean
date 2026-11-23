@@ -1,13 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/FieldTheory/Finite/PrimitivePolynomial.lean -/
+module
 
-
-import Def.FieldTheory.Finite.PrimitivePolynomial
-import Theorem.Polynomial.Finite.PrimitivePolynomial
-import Mathlib.FieldTheory.Finite.GaloisField
+public import Def.FieldTheory.Finite.PrimitivePolynomial
+public import Theorem.Polynomial.Finite.PrimitivePolynomial
+public import Mathlib.FieldTheory.Finite.GaloisField
 set_option autoImplicit false
 
 open scoped Polynomial
 
+public section
 
 namespace Polynomial
 

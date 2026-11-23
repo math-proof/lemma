@@ -3,16 +3,20 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
+module
 
-import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
-import Mathlib.NumberTheory.LucasLehmer
-import Instance.NumberTheory.LucasLehmerAcceptableSeed.Part2
+public import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
+public import Mathlib.NumberTheory.LucasLehmer
+public import Instance.NumberTheory.LucasLehmerAcceptableSeed.Part2
+
 /-!
 # The Lucas-Lehmer test with a general seed
 
 This file proves that the usual Lucas-Lehmer recurrence detects Mersenne primes when its
 initial seed satisfies the two classical Jacobi-symbol conditions.
 -/
+
+public section
 
 
 namespace MetaMathlibExt

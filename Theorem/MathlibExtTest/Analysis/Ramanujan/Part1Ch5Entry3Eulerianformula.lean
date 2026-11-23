@@ -2,7 +2,7 @@
 
 
 import Theorem.Analysis.Ramanujan.Part1Ch5Entry3Eulerianformula
-import Lemma.Real.Ramanujan.Part1Ch5Entry3Eulerianformula
+import Theorem.Real.Ramanujan.Part1Ch5Entry3Eulerianformula
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 5, Entry 3 (Eulerian formula) API checks
 

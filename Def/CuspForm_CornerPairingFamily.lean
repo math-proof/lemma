@@ -1,4 +1,4 @@
-import Lemma.ZMod.Inst
+import Theorem.ZMod.Inst
 import Lemma.UpperHalfPlane.PeriodMap
 
 set_option autoImplicit false

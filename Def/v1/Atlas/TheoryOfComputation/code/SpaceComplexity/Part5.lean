@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Mathlib.Computability.DFA
 import Mathlib.Data.Fintype.BigOperators
 import Def.v1.Atlas.TheoryOfComputation.code.Complexity.Part2
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
+import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
 import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.TuringMachines
 import Def.v1.Atlas.TheoryOfComputation.code.TuringMachines.Part4
 import Def.v1.Atlas.TheoryOfComputation.code.SharpSAT

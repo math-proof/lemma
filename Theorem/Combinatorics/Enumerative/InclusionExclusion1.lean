@@ -2,8 +2,10 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Instance.Combinatorics.Enumerative.InclusionExclusion1
+module
+
+public import Mathlib
+public import Instance.Combinatorics.Enumerative.InclusionExclusion1
 open Finset BigOperators Nat
 
 /-!
@@ -38,6 +40,8 @@ This is already available in Mathlib as `Finset.inclusion_exclusion_sum_inf_comp
 * Section `sec.sign.pie` of the Algebraic Combinatorics notes
 * Mathlib's `Mathlib.Combinatorics.Enumerative.InclusionExclusion`
 -/
+
+public section
 
 
 namespace AlgebraicCombinatorics.InclusionExclusion

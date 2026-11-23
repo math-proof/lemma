@@ -1,8 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Complex/NormalConvergence.lean -/
+module
 
-
-import Theorem.Real.Complex.NormalConvergence
-import Def.MathlibExtTest.Analysis.Complex.NormalConvergence
+public import Theorem.Real.Complex.NormalConvergence
+public import Def.MathlibExtTest.Analysis.Complex.NormalConvergence
 open Complex MeasureTheory Topology Set Filter
 
 /-!
@@ -12,6 +12,8 @@ Exercises the normal-convergence API on a concrete nonzero complex one-term
 series, including absolute, uniform, and locally uniform convergence and
 termwise differentiation.
 -/
+
+public section
 
 
 namespace N329Test

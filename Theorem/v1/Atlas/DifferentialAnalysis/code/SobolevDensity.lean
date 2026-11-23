@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.DifferentialAnalysis.code.FourierInversion.Part7
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.FourierInversion
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.FourierInversion
 open MeasureTheory SchwartzMap TemperedDistribution
 
 

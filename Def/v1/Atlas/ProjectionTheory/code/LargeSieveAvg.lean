@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.ProjectionTheory.code.LinnikLargeSieve
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.LinnikLargeSieve
+module
+
+public import Def.v1.Atlas.ProjectionTheory.code.LinnikLargeSieve
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.LinnikLargeSieve
+
+@[expose] public section
+
 open Finset Complex
 
 

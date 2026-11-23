@@ -1,13 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/FractionalIdeal/GroupAction.lean -/
+module
 
+public import Abbrev.RingTheory.FractionalIdeal.GroupAction
+public import Theorem.Int.FractionalIdeal.GroupAction
 
-import Abbrev.RingTheory.FractionalIdeal.GroupAction
-import Theorem.Int.FractionalIdeal.GroupAction
 /-!
 # Tests for group actions on fractional ideals
 
 Exercises the induced actions on fractional ideals over `ℤ`.
 -/
+
+public section
 
 
 noncomputable section

@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/ConductorResidue.lean -/
+module
 
+public import Mathlib.Data.ZMod.Basic
+public import Def.RingTheory.ConductorResidue
+public import Theorem.Ideal.ConductorResidue
 
-import Mathlib.Data.ZMod.Basic
-import Def.RingTheory.ConductorResidue
-import Theorem.Ideal.ConductorResidue
-
+public section
 
 noncomputable section
 

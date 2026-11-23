@@ -1,7 +1,7 @@
 module
 
 public import Mathlib
-public import Lemma.Scheme.ModulesSectionsTensor
+public import Theorem.Scheme.ModulesSectionsTensor
 public import Instance.AlgebraicGeometry_ModulesGlueOfCocycle
 
 public section

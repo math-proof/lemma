@@ -8,13 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.BooleanFunctions.code.EdgeExpansion
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.EdgeExpansion
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Influence
-import Def.v1.Atlas.BooleanFunctions.code.Influence
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Tactic.Ring
+module
 
+public import Def.v1.Atlas.BooleanFunctions.code.EdgeExpansion
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.EdgeExpansion
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Influence
+public import Def.v1.Atlas.BooleanFunctions.code.Influence
+public import Mathlib.Algebra.BigOperators.Field
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 namespace BooleanAnalysis
 

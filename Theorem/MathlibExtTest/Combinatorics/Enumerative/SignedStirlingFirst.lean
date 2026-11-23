@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/SignedStirlingFirst.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.SignedStirlingFirst
+public import Theorem.Finset.Enumerative.SignedStirlingFirst
 
-import Def.Combinatorics.Enumerative.SignedStirlingFirst
-import Theorem.Finset.Enumerative.SignedStirlingFirst
-
+public section
 
 namespace MetaMathlibExt
 

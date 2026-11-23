@@ -9,9 +9,9 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochEulerCurves
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochEulerCurves
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannFormRR
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochEulerCurves
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannFormRR
 import Instance.v1.Atlas.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
 import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannFormRR
 import Structure.v1.Atlas.AlgebraicGeometryI.code.RiemannRochRiemannForm

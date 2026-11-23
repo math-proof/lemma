@@ -20,7 +20,7 @@ public import Mathlib.RingTheory.Algebraic.Defs
 public import Mathlib.FieldTheory.Separable
 public import Mathlib.FieldTheory.PurelyInseparable.Basic
 public import Def.v1.Atlas.ArithmeticGeometry.code.EllipticCurves.Part7
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.EllipticCurves
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.EllipticCurves
 public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.PadicElliptic
 public import Mathlib.NumberTheory.Padics.PadicNumbers
 public import Mathlib.NumberTheory.Padics.PadicVal.Basic

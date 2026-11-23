@@ -4,20 +4,24 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.InformationTheory.Coding.UniquelyDecodable
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Def.InformationTheory.PrefixFree
-import Theorem.Real.PrefixFree
-import Lemma.Real.KraftMcMillan
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Algebra.Ring.IsFormallyReal
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.InformationTheory.Coding.KraftMcMillan
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Def.InformationTheory.KraftMcMillan
+module
+
+public import Mathlib.InformationTheory.Coding.UniquelyDecodable
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Def.InformationTheory.PrefixFree
+public import Theorem.Real.PrefixFree
+public import Theorem.Real.KraftMcMillan
+public import Mathlib.Algebra.BigOperators.Field
+public import Mathlib.Algebra.Ring.IsFormallyReal
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.InformationTheory.Coding.KraftMcMillan
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Def.InformationTheory.KraftMcMillan
+
+@[expose] public section
 
 
 section

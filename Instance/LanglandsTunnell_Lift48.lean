@@ -2,7 +2,8 @@
 import Def.LanglandsTunnell_ExplicitLift
 import Mathlib.Algebra.Group.Submonoid.Membership
 import Mathlib.LinearAlgebra.Matrix.Trace
-import Lemma.Matrix.Lift48
+import Theorem.Matrix.Lift48
+import Def.Matrix_Lift48
 
 set_option autoImplicit false
 

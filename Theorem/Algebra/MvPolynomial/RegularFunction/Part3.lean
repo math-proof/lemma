@@ -1,7 +1,10 @@
-import Mathlib.Algebra.MvPolynomial.Monad
-import Mathlib.Algebra.MvPolynomial.PDeriv
-import Mathlib.Data.Matrix.Basic
-import Def.Algebra.MvPolynomial.RegularFunction.Part3
+module
+
+public import Mathlib.Algebra.MvPolynomial.Monad
+public import Mathlib.Algebra.MvPolynomial.PDeriv
+public import Mathlib.Data.Matrix.Basic
+public import Def.Algebra.MvPolynomial.RegularFunction.Part3
+
 /-!
 # Regular functions between affine spaces
 
@@ -10,6 +13,8 @@ the variables `σ`, i.e. a vector valued polynomial function. This file provides
 the basic API: the Jacobian matrix, composition, the identity, and evaluation at
 a point.
 -/
+
+public section
 
 
 noncomputable section

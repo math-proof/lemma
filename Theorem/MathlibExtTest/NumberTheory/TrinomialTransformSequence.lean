@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/TrinomialTransformSequence.lean -/
+module
 
+public import Def.NumberTheory.TrinomialTransformSequence
+public import Theorem.Nat.TrinomialTransformSequence
+public import Mathlib.Algebra.Polynomial.Coeff
+public import Mathlib.Tactic.NormNum
 
-import Def.NumberTheory.TrinomialTransformSequence
-import Theorem.Nat.TrinomialTransformSequence
-import Mathlib.Algebra.Polynomial.Coeff
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MetaMathlibExt
 

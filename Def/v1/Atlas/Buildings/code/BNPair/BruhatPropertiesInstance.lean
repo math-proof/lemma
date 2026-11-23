@@ -21,7 +21,7 @@ import Theorem.v1.Atlas.Buildings.code.BNPair.CellInvProof
 import Theorem.v1.Atlas.Buildings.code.BNPair.CellDisjointProof
 import Theorem.v1.Atlas.Buildings.code.BNPair.CellMulParabolicProof
 import Theorem.v1.Atlas.Buildings.code.BNPair.CellMulFiniteProof.Part2
-import Lemma.Real.EqSigma.of.Ne
+import Theorem.Real.EqSigma.of.Ne
 import Theorem.v1.Atlas.Buildings.code.BNPair.SubgroupOverBProof
 import Def.v1.Atlas.Buildings.code.BNPair.NormalizerParabolicProof
 import Theorem.v1.Atlas.Buildings.code.BNPair.ConjugatorProof

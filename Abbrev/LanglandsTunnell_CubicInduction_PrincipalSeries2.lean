@@ -1,10 +1,12 @@
-import Lemma.Matrix.CubicInduction_PrincipalSeries3
+module
+
+public import Theorem.Matrix.CubicInduction_PrincipalSeries3
 
 set_option autoImplicit false
 
 open Matrix IsDedekindDomain NumberField NumberField.AdelicLevel LanglandsTunnell.TateLocal
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace LanglandsTunnell.CubicInduction
 

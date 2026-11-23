@@ -7,14 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
-import Mathlib.RingTheory.Ideal.Height
-import Mathlib.RingTheory.Spectrum.Maximal.Localization
-import Mathlib.RingTheory.Noetherian.Basic
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec21NormalExtension
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec21NormalExtension
+public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+public import Mathlib.RingTheory.Ideal.Height
+public import Mathlib.RingTheory.Spectrum.Maximal.Localization
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec21NormalExtension
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec21NormalExtension
 
+public section
 
 noncomputable section
 

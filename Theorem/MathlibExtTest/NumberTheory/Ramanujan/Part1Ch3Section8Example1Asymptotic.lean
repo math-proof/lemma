@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Ramanujan/Part1Ch3Section8Example1Asymptotic.lean -/
+module
 
+public import Def.NumberTheory.Ramanujan.Part1Ch3Section8Example1Asymptotic
+public import Theorem.Nat.Ramanujan.Part1Ch3Section8Example1Asymptotic
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
 
-import Def.NumberTheory.Ramanujan.Part1Ch3Section8Example1Asymptotic
-import Theorem.Nat.Ramanujan.Part1Ch3Section8Example1Asymptotic
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MathlibExtTest.NumberTheory.Ramanujan.Part1Ch3Section8Example1Asymptotic
 

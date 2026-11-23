@@ -7,14 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
-import Structure.v1.Atlas.GeometryOfManifolds.code.HodgeTheory.Part4
+public import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
+public import Structure.v1.Atlas.GeometryOfManifolds.code.HodgeTheory.Part4
 set_option autoImplicit false
 
 open DifferentialFormSpace
 
+public section
 
 /-- Restatement of $2\bar\square = \Delta$ on Kähler manifolds (given as a hypothesis here)
 in the form $\bar\square \alpha + \bar\square \alpha = \Delta \alpha$. -/

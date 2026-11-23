@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/InfiniteWord/SquareFreeWord.lean -/
+module
 
+public import Def.Combinatorics.InfiniteWord.SquareFreeWord.Part2
+public import Theorem.Finset.InfiniteWord.SquareFreeWord
 
-import Def.Combinatorics.InfiniteWord.SquareFreeWord.Part2
-import Theorem.Finset.InfiniteWord.SquareFreeWord
-
+public section
 
 namespace MetaMathlibExt
 

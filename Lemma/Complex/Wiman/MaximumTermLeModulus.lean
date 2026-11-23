@@ -5,8 +5,6 @@ open Set
 open Complex
 
 
-namespace Complex
-
 /--
 [wimanMaximumTerm_le_wimanMaximumModulus](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/MaximumTermLeModulus.lean)
 -/
@@ -40,9 +38,8 @@ lemma wimanMaximumTerm_le_wimanMaximumModulus
   apply (div_le_iff₀ hfac).2
   have hscaled := (le_div_iff₀ hrpow).1 hcauchy
   simpa only [mul_comm] using hscaled
-end Complex
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-22

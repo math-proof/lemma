@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/CFiniteSequence.lean -/
+module
 
+public import Def.NumberTheory.CFiniteSequence
+public import Theorem.Nat.CFiniteSequence
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Ring
 
-import Def.NumberTheory.CFiniteSequence
-import Theorem.Nat.CFiniteSequence
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
-
+public section
 
 namespace MetaMathlibExt
 

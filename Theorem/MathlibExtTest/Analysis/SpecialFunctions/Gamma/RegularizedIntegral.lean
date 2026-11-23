@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/Gamma/RegularizedIntegral.lean -/
+module
 
-
-import Theorem.Analysis.SpecialFunctions.Gamma.RegularizedIntegral
-import Theorem.Real.RegularizedIntegral
+public import Theorem.Analysis.SpecialFunctions.Gamma.RegularizedIntegral
+public import Theorem.Real.RegularizedIntegral
 open MeasureTheory Set
 
+public section
 
 example :
     (Real.eulerMascheroniConstant : ℂ) =

@@ -4,8 +4,6 @@ import Def.Analysis.Complex.Wiman.RadialMajorant
 open Complex
 
 
-namespace Complex
-
 /--
 [wimanTerm_nonneg](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/RadialMajorant.lean)
 -/
@@ -19,9 +17,6 @@ lemma wimanTerm_nonneg
 -- proof
 mul_nonneg (norm_nonneg _) (pow_nonneg (abs_nonneg r) _)
 
-end Complex
-
-namespace Complex
 
 /--
 [summable_wimanTerm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/RadialMajorant.lean)
@@ -55,9 +50,6 @@ lemma summable_wimanTerm
   rw [hcoeff, wimanTerm, norm_mul, norm_pow]
   simp only [Complex.norm_real, Real.norm_eq_abs, abs_abs]
 
-end Complex
-
-namespace Complex
 
 /--
 [wimanMajorant_nonneg](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/RadialMajorant.lean)
@@ -71,9 +63,6 @@ lemma wimanMajorant_nonneg
 -- proof
 tsum_nonneg fun n => wimanTerm_nonneg (f := f) (r := r) (n := n)
 
-end Complex
-
-namespace Complex
 
 /--
 [wimanTerm_le_wimanMajorant](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/RadialMajorant.lean)
@@ -90,9 +79,8 @@ lemma wimanTerm_le_wimanMajorant
 -- proof
   rw [wimanMajorant]
   exact (summable_wimanTerm (f := f) (r := r) hf).le_tsum n fun m _ => wimanTerm_nonneg (f := f) (r := r) (n := m)
-end Complex
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-22

@@ -4,19 +4,24 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Algebra.Polynomial.Derivative
-import Mathlib.Algebra.Polynomial.Taylor
-import Mathlib.Data.Complex.Basic
-import Def.Analysis.Ramanujan.Part1Ch5Entry1Euleriangf
-import Theorem.Real.Part1Ch5Entry1Euleriangf
-import Theorem.Complex.Part1Ch5Entry4
-import Def.Analysis.Ramanujan.Part1Ch5Entry4
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.SimpRw
+module
+
+public import Mathlib.Algebra.Polynomial.Derivative
+public import Mathlib.Algebra.Polynomial.Taylor
+public import Mathlib.Data.Complex.Basic
+public import Def.Analysis.Ramanujan.Part1Ch5Entry1Euleriangf
+public import Theorem.Real.Part1Ch5Entry1Euleriangf
+public import Theorem.Complex.Part1Ch5Entry4
+public import Def.Analysis.Ramanujan.Part1Ch5Entry4
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.SimpRw
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 5, Entry 3
 

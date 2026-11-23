@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section26.Part8
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
 import Mathlib.LinearAlgebra.Dual.Defs
 import Mathlib.Topology.Category.TopCat.Limits.Products
 import Mathlib.LinearAlgebra.TensorProduct.Basic

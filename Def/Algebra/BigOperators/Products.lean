@@ -1,8 +1,12 @@
-import Def.Data.Tensor.BandPart
-import Def.Data.Tensor.Eye
-import Instance.LinearAlgebra.Matrix.Matmul
-import Mathlib.Data.Matrix.Basic
-import Notation.Data.Dot
+module
+
+public import Def.Data.Tensor.BandPart
+public import Def.Data.Tensor.Eye
+public import Instance.LinearAlgebra.Matrix.Matmul
+public import Mathlib.Data.Matrix.Basic
+public import Notation.Data.Dot
+
+@[expose] public section
 
 /--
 `matProd f = f 0 ⬝ᵥ ⋯ ⬝ᵥ f (n - 1)`, and `matProd f = eye m` when `n = 0`.

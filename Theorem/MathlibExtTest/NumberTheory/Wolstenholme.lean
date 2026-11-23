@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Wolstenholme.lean -/
+module
 
-
-import Theorem.Nat.Wolstenholme
+public import Theorem.Nat.Wolstenholme
 open scoped BigOperators
 
+public section
 
 -- Exact-signature API check for Wolstenholme's theorem.
 example (p : ℕ) (hp : p.Prime) (h5 : 5 ≤ p) :

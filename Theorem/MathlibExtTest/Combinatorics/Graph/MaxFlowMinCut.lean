@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Graph/MaxFlowMinCut.lean -/
+module
 
+public import Def.Combinatorics.Graph.MaxFlowMinCut
+public import Theorem.Finset.Graph.MaxFlowMinCut
 
-import Def.Combinatorics.Graph.MaxFlowMinCut
-import Theorem.Finset.Graph.MaxFlowMinCut
-
+public section
 
 namespace MathlibExt.Combinatorics.Graph.MaxFlowMinCutWanted
 

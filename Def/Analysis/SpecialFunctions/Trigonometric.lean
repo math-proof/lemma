@@ -1,8 +1,13 @@
-import Mathlib.Tactic
-import Mathlib.Analysis.Complex.Trigonometric
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
-import Instance.Analysis.Real.Numbers
-import Class.Analysis.SpecialFunctions.Trigonometric
+module
+
+public import Mathlib.Tactic
+public import Mathlib.Analysis.Complex.Trigonometric
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
+public import Instance.Analysis.Real.Numbers
+public import Class.Analysis.SpecialFunctions.Trigonometric
+
+@[expose] public section
+
 export Real (cos sin arccos arcsin tan cot arctan)
 
 

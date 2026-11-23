@@ -5,8 +5,6 @@ open Filter Set
 open Complex
 
 
-namespace Complex
-
 /--
 [bddAbove_range_wimanTerm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/MaximumTermAttained.lean)
 -/
@@ -23,9 +21,6 @@ lemma bddAbove_range_wimanTerm
   rintro _ ⟨n, rfl⟩
   exact wimanTerm_le_wimanMajorant (f := f) (r := r) (n := n) hf
 
-end Complex
-
-namespace Complex
 
 /--
 [wimanTerm_le_wimanMaximumTerm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/MaximumTermAttained.lean)
@@ -43,9 +38,6 @@ lemma wimanTerm_le_wimanMaximumTerm
   rw [wimanMaximumTerm]
   exact le_csSup (bddAbove_range_wimanTerm (f := f) (r := r) hf) ⟨n, rfl⟩
 
-end Complex
-
-namespace Complex
 
 /--
 [wimanMaximumTerm_le_iff](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/MaximumTermAttained.lean)
@@ -68,9 +60,6 @@ lemma wimanMaximumTerm_le_iff
     rintro _ ⟨n, rfl⟩
     exact h n
 
-end Complex
-
-namespace Complex
 
 /--
 [exists_wimanTerm_eq_wimanMaximumTerm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/MaximumTermAttained.lean)
@@ -103,9 +92,8 @@ lemma exists_wimanTerm_eq_wimanMaximumTerm
     obtain ⟨n, hn⟩ := hcontinuous.exists_forall_ge' n₀ htail_cocompact
     refine ⟨n, (wimanTerm_le_wimanMaximumTerm (f := f) (r := r) (n := n) hf).antisymm ?_⟩
     exact (wimanMaximumTerm_le_iff (f := f) (r := r) (a := wimanTerm f r n) hf).2 hn
-end Complex
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-22

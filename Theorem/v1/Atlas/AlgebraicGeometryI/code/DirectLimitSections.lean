@@ -7,15 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Topology.Sheaves.Limits
-import Mathlib.Topology.Sheaves.Presheaf
-import Mathlib.Topology.NoetherianSpace
-import Mathlib.CategoryTheory.Filtered.Basic
-import Def.v1.Atlas.AlgebraicGeometryI.code.NoetherianColimit
-import Instance.v1.Atlas.AlgebraicGeometryI.code.DirectLimitSections
+public import Mathlib.Topology.Sheaves.Limits
+public import Mathlib.Topology.Sheaves.Presheaf
+public import Mathlib.Topology.NoetherianSpace
+public import Mathlib.CategoryTheory.Filtered.Basic
+public import Def.v1.Atlas.AlgebraicGeometryI.code.NoetherianColimit
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.DirectLimitSections
 open CategoryTheory CategoryTheory.Limits TopCat Opposite TopologicalSpace
 
+public section
 
 noncomputable section
 

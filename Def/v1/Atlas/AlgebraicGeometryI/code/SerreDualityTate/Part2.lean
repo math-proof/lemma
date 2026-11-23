@@ -9,12 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityLinear.Part4
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityLinear
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityCurves
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityLinear
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityCurves
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ResidueSum
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityGeneral
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityGeneral
 import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityCurves.Part2
 import Def.v1.Atlas.AlgebraicGeometryI.code.ResidueSum
 import Instance.v1.Atlas.AlgebraicGeometryI.code.SheafCohCurvesFiniteness

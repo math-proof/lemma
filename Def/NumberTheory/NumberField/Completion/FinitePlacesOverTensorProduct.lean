@@ -1,10 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FinitePlacesOverTensorProduct.lean -/
 
-import Mathlib.RingTheory.TensorProduct.Maps
-import Mathlib.Algebra.Algebra.Pi
-import Instance.NumberTheory.NumberField.Completion.FiniteLiesOverInstances
-import Instance.NumberTheory.NumberField.Completion.FinitePlacesOver
-import Instance.NumberTheory.NumberField.Completion.FinitePlacesOverTensorProduct
+module
+
+public import Mathlib.RingTheory.TensorProduct.Maps
+public import Mathlib.Algebra.Algebra.Pi
+public import Instance.NumberTheory.NumberField.Completion.FiniteLiesOverInstances
+public import Instance.NumberTheory.NumberField.Completion.FinitePlacesOver
+public import Instance.NumberTheory.NumberField.Completion.FinitePlacesOverTensorProduct
+
+@[expose] public section
+
 /-!
 # Finite-place completion tensor product maps
 

@@ -1,15 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Probability/Donsker.lean -/
+module
 
-
-import Def.Probability.Donsker.Part2
-import Lemma.Measure.Donsker
-import Mathlib.MeasureTheory.Constructions.BorelSpace.ContinuousMap
-import Mathlib.Probability.Moments.Variance
+public import Def.Probability.Donsker.Part2
+public import Theorem.Measure.Donsker
+public import Mathlib.MeasureTheory.Constructions.BorelSpace.ContinuousMap
+public import Mathlib.Probability.Moments.Variance
 open scoped BigOperators
 
 open MeasureTheory ProbabilityTheory
 open MathlibExt.Probability.DonskerWanted
 
+public section
 
 namespace MathlibExtTest.Probability.Donsker
 

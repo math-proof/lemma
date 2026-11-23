@@ -12,7 +12,7 @@ module
 
 public import Mathlib
 public import Def.v1.Atlas.ArithmeticGeometry.code.CurveTheory.Part10
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.CurveTheory
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CurveTheory
 
 
 public noncomputable section

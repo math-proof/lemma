@@ -1,7 +1,7 @@
 import Mathlib.Probability.ProbabilityMassFunction.Constructions
 import Def.Probability.Process.MarkovChainTrajectory.Part2
 import Lemma.Matrix.Any_And_Stationary.of.RowStochastic
-import Lemma.Matrix.Sum_Mul.eq.One.of.StochasticVec.RowStochastic
+import Theorem.Matrix.Sum_Mul.eq.One.of.StochasticVec.RowStochastic
 import Def.Dynamics.MarkovRewardProcess
 open MeasureTheory ProbabilityTheory Finset
 open scoped ENNReal Matrix

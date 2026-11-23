@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/CarmichaelNumber.lean -/
+module
 
+public import Def.NumberTheory.CarmichaelNumber
+public import Theorem.Nat.CarmichaelNumber
+public import Mathlib.Tactic.NormNum.Prime
 
-import Def.NumberTheory.CarmichaelNumber
-import Theorem.Nat.CarmichaelNumber
-import Mathlib.Tactic.NormNum.Prime
-
+public section
 
 private theorem isCarmichaelNumber_561 : Nat.IsCarmichaelNumber 561 := by
   have h561 : (1 : ℕ) < 561 := by norm_num

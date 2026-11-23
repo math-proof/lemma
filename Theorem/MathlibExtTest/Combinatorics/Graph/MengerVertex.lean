@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Graph/MengerVertex.lean -/
+module
 
+public import Def.Combinatorics.Graph.MengerVertex.Part2
+public import Theorem.Finset.Graph.MengerVertex
 
-import Def.Combinatorics.Graph.MengerVertex.Part2
-import Lemma.Finset.Graph.MengerVertex
-
+public section
 
 namespace MathlibExt.Combinatorics.SimpleGraph.MengerVertexWanted
 

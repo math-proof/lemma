@@ -3,7 +3,7 @@ import Mathlib
 import Instance.AlgebraicGeometry_RelativePicardFunctor
 import Lemma.Scheme.PolarisationRosati
 import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
-import Lemma.Scheme.SymmRootFunctor
+import Theorem.Scheme.SymmRootFunctor
 
 set_option autoImplicit false
 

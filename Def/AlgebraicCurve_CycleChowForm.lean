@@ -1,4 +1,8 @@
-import Def.AlgebraicCurve_ChordalProximity
+module
+
+public import Def.AlgebraicCurve_ChordalProximity
+
+@[expose] public section
 
 set_option autoImplicit false
 

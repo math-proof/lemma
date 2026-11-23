@@ -6,8 +6,14 @@ All rights reserved.
 Copyright (c) 2025 AlgebraicCombinatorics Contributors. All rights reserved.
 Authors:
 -/
-import Mathlib
-import Theorem.RingTheory.PowerSeries.InfiniteProducts2.Part2
+
+module
+
+public import Mathlib
+public import Theorem.RingTheory.PowerSeries.InfiniteProducts2.Part2
+
+@[expose] public section
+
 open scoped Polynomial
 open Finset PowerSeries
 

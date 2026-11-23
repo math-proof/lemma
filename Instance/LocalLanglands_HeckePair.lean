@@ -1,7 +1,11 @@
 -- Carved from Lemma/Definitions/Def_LocalLanglands_HeckePair.lean: instance decls only.
-import Mathlib
-import Instance.AbstractHeckeOperator
-import Lemma.Set.HeckeAlgebra
+module
+
+public import Mathlib
+public import Instance.AbstractHeckeOperator
+public import Theorem.Set.HeckeAlgebra
+public import Def.Set_HeckeAlgebra
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -4,11 +4,16 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Data.PNat.Defs
-import Mathlib.Data.Rat.Cast.Order
-import Mathlib.Order.Monotone.Basic
-import Mathlib.Tactic
-import Theorem.NumberTheory.Recurrences.GolombLikeSequence.Part2
+module
+
+public import Mathlib.Data.PNat.Defs
+public import Mathlib.Data.Rat.Cast.Order
+public import Mathlib.Order.Monotone.Basic
+public import Mathlib.Tactic
+public import Theorem.NumberTheory.Recurrences.GolombLikeSequence.Part2
+
+@[expose] public section
+
 /-!
 # Closed forms for Golomb-like sequences
 

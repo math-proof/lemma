@@ -9,8 +9,8 @@ public import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part29
 public import Def.Combinatorics.Young.OmegaInvolution.Part2
 public import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
 public import Def.Combinatorics.Young.LittlewoodRichardson.Part17
-public import Lemma.Matrix.LGV2
-public import Lemma.Partition.NPartition
+public import Theorem.Matrix.LGV2
+public import Theorem.Partition.NPartition
 public import Def.Combinatorics.Young.PieriJacobiTrudi.Part25
 public section
 

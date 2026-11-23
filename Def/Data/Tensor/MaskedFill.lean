@@ -1,5 +1,10 @@
-import Def.Data.Tensor.Stack.Part2
-import Theorem.List.EqCons_Tail.of.NeLength_0
+module
+
+public import Def.Data.Tensor.Stack.Part2
+public import Theorem.List.EqCons_Tail.of.NeLength_0
+
+@[expose] public section
+
 open List Tensor
 
 

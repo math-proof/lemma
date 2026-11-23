@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TensorCategories.code.PerronFrobeniusProof.Part2
-import Lemma.Category.Atlas.v1.TensorCategories.code.PerronFrobeniusProof
-import Mathlib.Analysis.Normed.Field.Basic
+module
+
+public import Def.v1.Atlas.TensorCategories.code.PerronFrobeniusProof.Part2
+public import Theorem.Category.Atlas.v1.TensorCategories.code.PerronFrobeniusProof
+public import Mathlib.Analysis.Normed.Field.Basic
+
+@[expose] public section
+
 open Matrix Finset BigOperators
 
 

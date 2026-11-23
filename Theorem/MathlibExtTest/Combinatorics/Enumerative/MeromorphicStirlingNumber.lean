@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/MeromorphicStirlingNumber.lean -/
+module
 
+public import Mathlib.Tactic.NormNum
+public import Def.Combinatorics.Enumerative.MeromorphicStirlingNumber
+public import Theorem.Finset.Enumerative.MeromorphicStirlingNumber
 
-import Mathlib.Tactic.NormNum
-import Def.Combinatorics.Enumerative.MeromorphicStirlingNumber
-import Theorem.Finset.Enumerative.MeromorphicStirlingNumber
-
+public section
 
 namespace MetaMathlibExt
 

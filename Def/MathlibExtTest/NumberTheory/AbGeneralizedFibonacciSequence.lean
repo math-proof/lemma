@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/AbGeneralizedFibonacciSequence.lean -/
 
+module
 
-import Structure.NumberTheory.AbGeneralizedFibonacciSequence
-import Theorem.Nat.AbGeneralizedFibonacciSequence
+public import Structure.NumberTheory.AbGeneralizedFibonacciSequence
+public import Theorem.Nat.AbGeneralizedFibonacciSequence
 
+@[expose] public section
 
 namespace MetaMathlibExt
 

@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/LSeries/Artin.lean -/
+module
 
+public import Def.NumberTheory.LSeries.Artin
+public import Theorem.Nat.LSeries.Artin
+public import Def.MathlibExtTest.NumberTheory.LSeries.Artin
 
-import Def.NumberTheory.LSeries.Artin
-import Theorem.Nat.LSeries.Artin
-import Def.MathlibExtTest.NumberTheory.LSeries.Artin
-
+public section
 
 namespace RepresentationTest
 

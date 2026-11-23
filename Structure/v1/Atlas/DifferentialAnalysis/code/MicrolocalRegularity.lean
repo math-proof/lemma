@@ -12,7 +12,7 @@ module
 
 public import Structure.v1.Atlas.DifferentialAnalysis.code.WavefrontSet.Part3
 public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontSet
-public import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.ConeSupportCorollary
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ConeSupportCorollary
 public import Theorem.v1.Atlas.DifferentialAnalysis.code.ConeSupportCorollary
 public import Def.v1.Atlas.DifferentialAnalysis.code.MicrolocalRegularity
 

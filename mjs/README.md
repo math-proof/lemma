@@ -5,8 +5,12 @@ Suggest `Lemma/` path from `lean.js` AST + README naming.
 Usage: `node mjs/lemmaPath.mjs [--json] <path-to.lean>`
 
 The command prints one dotted path from the expression DAGs. Each top-level
-conjunct gets its own path component. For a binary relation with two named
-sides, the infix form is used only when shorter than the flat form.
+conjunct gets its own path component. A conclusion that is a binary relation is
+written infix (`<Lhs>.eq.<Rhs>`, and likewise `<Lhs>.le.<Rhs>`,
+`<Lhs>.ne.<Rhs>`, `<Lhs>.is.<Rhs>`, … for every relation in the table below)
+only when both sides yield a real token; if either side is missing or is the
+`_` placeholder, or the conclusion is not a relation, the flat (prefix) token is
+used instead.
 
 Check a proposed dotted path or filename with
 `node mjs/lemmaPath.mjs --check <candidate-path> <path-to.lean>`. The command
@@ -41,7 +45,7 @@ procedures of lemmaPath.mjs, given a lean file:
 - the path tokens for its given assumptions, say, $givens, imploded with \`.\`
 - the path tokens for its imply conclusion, say $imply, considering the cases:
    - imply conclusion is conjunction, imply **must** be split into two or more parts with respective path tokens
-   - For the binary relationships documented below, use the infix form when it is shorter than the flat token.
+   - For the binary relationships documented below, always use the infix form; other conclusions use the flat token.
    - neither the case above, one single prefix path token must be suggested for thie imply conclusion
 - suggest a final file path : $section.$imply.of.$givens
 - given another suggested path, tell if the suggested path is consistent with its lean code , print its the report in a markdown match table

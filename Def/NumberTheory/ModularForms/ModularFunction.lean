@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ModularForms/ModularFunction.lean -/
 
-import Def.NumberTheory.ModularForms.MeromorphicAtCusps
-import Theorem.Nat.ModularForms.MeromorphicAtCusps
+module
+
+public import Def.NumberTheory.ModularForms.MeromorphicAtCusps
+public import Theorem.Nat.ModularForms.MeromorphicAtCusps
+
+@[expose] public section
+
 open scoped UpperHalfPlane MatrixGroups
 
 /-!

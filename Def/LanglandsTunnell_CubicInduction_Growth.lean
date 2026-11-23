@@ -1,5 +1,9 @@
-import Lemma.Matrix.CubicInduction_Carrier
-import Def.AutomorphicForm_TruncationOperator
+module
+
+public import Theorem.Matrix.CubicInduction_Carrier
+public import Def.AutomorphicForm_TruncationOperator
+
+@[expose] public section
 
 set_option autoImplicit false
 

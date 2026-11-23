@@ -11,10 +11,10 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.ArithmeticGeometry.code.ProjectiveVarieties.Part7
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.ProjectiveVarieties
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Varieties
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.VarietyAlgebraEquiv
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Theorem1324
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.ProjectiveVarieties
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Varieties
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.VarietyAlgebraEquiv
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Theorem1324
 public import Def.v1.Atlas.ArithmeticGeometry.code.Varieties.Part9
 public import Theorem.v1.Atlas.ArithmeticGeometry.code.VarietyAlgebraEquiv.Part2
 public import Theorem.v1.Atlas.ArithmeticGeometry.code.Theorem1324

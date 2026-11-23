@@ -4,19 +4,24 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
 
-import Mathlib.Algebra.MvPolynomial.PDeriv
-import Mathlib.Basic.Complex.Basic
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
-import Mathlib.LinearAlgebra.Matrix.SchurComplement
-import Def.Algebra.MvPolynomial.PDeriv
-import Theorem.MvPolynomial.PDeriv
-import Theorem.Matrix.MvPolynomial
-import Def.LinearAlgebra.Matrix.MvPolynomial
-import Mathlib.Algebra.CharZero.Infinite
-import Mathlib.Algebra.MvPolynomial.Funext
-import Mathlib.Algebra.Polynomial.Derivation
-import Mathlib.Algebra.Polynomial.Degree.SmallDegree
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+module
+
+public import Mathlib.Algebra.MvPolynomial.PDeriv
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
+public import Mathlib.LinearAlgebra.Matrix.SchurComplement
+public import Def.Algebra.MvPolynomial.PDeriv
+public import Theorem.MvPolynomial.PDeriv
+public import Theorem.Matrix.MvPolynomial
+public import Def.LinearAlgebra.Matrix.MvPolynomial
+public import Mathlib.Algebra.CharZero.Infinite
+public import Mathlib.Algebra.MvPolynomial.Funext
+public import Mathlib.Algebra.Polynomial.Derivation
+public import Mathlib.Algebra.Polynomial.Degree.SmallDegree
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+
+@[expose] public section
+
 open scoped BigOperators
 
 /-!

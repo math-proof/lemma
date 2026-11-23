@@ -11,9 +11,9 @@ LICENSE file in the root directory of this source tree.
 import Def.v1.Atlas.AlgebraicGeometryI.code.PicardProjective.Part7
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.PicardProjective
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.DivisorsPicard
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.PrincipalDivisorDegree
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PrincipalDivisorDegree
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutTheorem
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.LinearEquivDivisors
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.LinearEquivDivisors
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PowerSeriesUFD
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PicardGroup
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SmoothCurveDivisors

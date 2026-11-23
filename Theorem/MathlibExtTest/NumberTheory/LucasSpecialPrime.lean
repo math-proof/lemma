@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/LucasSpecialPrime.lean -/
+module
 
+public import Def.NumberTheory.LucasSpecialPrime
+public import Theorem.Nat.LucasSpecialPrime
+public import Mathlib.Tactic
 
-import Def.NumberTheory.LucasSpecialPrime
-import Theorem.Nat.LucasSpecialPrime
-import Mathlib.Tactic
-
+public section
 
 namespace MetaMathlibExt
 

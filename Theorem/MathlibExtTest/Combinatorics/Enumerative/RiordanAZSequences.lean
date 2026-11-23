@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/RiordanAZSequences.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.RiordanAZSequences
+public import Theorem.Finset.Enumerative.RiordanAZSequences
 
-import Def.Combinatorics.Enumerative.RiordanAZSequences
-import Theorem.Finset.Enumerative.RiordanAZSequences
-
+public section
 
 namespace MetaMathlibExt
 

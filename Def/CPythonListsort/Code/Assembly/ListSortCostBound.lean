@@ -4,7 +4,7 @@ import Def.CPythonListsort.Code.Assembly.AlphabeticCostBound.Part2
 import Def.CPythonListsort.Code.Assembly.ListSortCollapseCost
 import Structure.CPythonListsort.Code.Assembly.ListSortPolicyEndpoints
 import Theorem.List.Atlas.CPythonListsort.Code.Assembly.ListSortPolicyBridge
-import Lemma.List.Atlas.CPythonListsort.Code.Assembly.ListSortScanPolicy
+import Theorem.List.Atlas.CPythonListsort.Code.Assembly.ListSortScanPolicy
 import Inductive.CPythonListsort.Code.Assembly.ListSortScanReached
 import Structure.CPythonListsort.Code.Assembly.ListSortCostBound
 /-!

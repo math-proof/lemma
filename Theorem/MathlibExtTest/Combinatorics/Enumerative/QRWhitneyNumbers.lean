@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/QRWhitneyNumbers.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.QRWhitneyNumbers
+public import Theorem.Finset.Enumerative.QRWhitneyNumbers
+public import Mathlib.Tactic.NormNum
 
-import Def.Combinatorics.Enumerative.QRWhitneyNumbers
-import Theorem.Finset.Enumerative.QRWhitneyNumbers
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MetaMathlibExt.QRWhitney
 

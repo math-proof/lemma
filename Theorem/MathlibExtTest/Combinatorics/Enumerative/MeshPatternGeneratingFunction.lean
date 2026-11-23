@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/MeshPatternGeneratingFunction.lean -/
+module
 
+public import Mathlib.Algebra.Polynomial.Basic
+public import Theorem.Finset.Enumerative.MeshPatternGeneratingFunction
 
-import Mathlib.Algebra.Polynomial.Basic
-import Theorem.Finset.Enumerative.MeshPatternGeneratingFunction
-
+public section
 
 namespace MetaMathlibExt
 

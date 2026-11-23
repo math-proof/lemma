@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Def.FC.OpenQuantumProblem35_ame_9_10_open_solution
+module
+
+public import Mathlib
+public import Def.FC.OpenQuantumProblem35_ame_9_10_open_solution
+@[expose] public section
+
 open scoped BigOperators
 
 

@@ -14,8 +14,8 @@ import Mathlib.Analysis.InnerProductSpace.EuclideanDist
 import Mathlib.Analysis.Calculus.BumpFunction.InnerProduct
 import Mathlib.Analysis.Fourier.Convolution
 import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.HormanderFundamental
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.HormanderFundamental
 import Def.v1.Atlas.DifferentialAnalysis.code.HormanderFundamental
 import Abbrev.v1.Atlas.DifferentialAnalysis.code.WavefrontSet
 

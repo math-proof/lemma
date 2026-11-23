@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/DigitalBinomialTheorem.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.DigitalBinomialTheorem
+public import Theorem.Finset.Enumerative.DigitalBinomialTheorem
 
-import Def.Combinatorics.Enumerative.DigitalBinomialTheorem
-import Theorem.Finset.Enumerative.DigitalBinomialTheorem
-
+public section
 
 namespace MetaMathlibExt
 

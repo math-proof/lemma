@@ -8,14 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Order.Monotone.Basic
-import Mathlib.Data.Bool.Basic
-import Mathlib.Tactic
-import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Influence
-import Def.v1.Atlas.BooleanFunctions.code.Influence
+module
 
+public import Mathlib.Order.Monotone.Basic
+public import Mathlib.Data.Bool.Basic
+public import Mathlib.Tactic
+public import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Influence
+public import Def.v1.Atlas.BooleanFunctions.code.Influence
+
+@[expose] public section
 
 namespace BooleanFourier
 

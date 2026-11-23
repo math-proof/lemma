@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.MvPolynomial.Eval
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.Distribution.Support
-import Mathlib.Analysis.InnerProductSpace.EuclideanDist
-import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
+module
+
+public import Mathlib.Algebra.MvPolynomial.Eval
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Analysis.Distribution.Support
+public import Mathlib.Analysis.InnerProductSpace.EuclideanDist
+public import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
+
+@[expose] public section
+
 open scoped SchwartzMap
 open MvPolynomial SchwartzMap
 

@@ -1,6 +1,8 @@
-import Mathlib
-import Lemma.Submodule.ContinuousH2
-import Lemma.Rep.ContinuousH2Map
+module
+
+public import Mathlib
+public import Theorem.Submodule.ContinuousH2
+public import Theorem.Rep.ContinuousH2Map
 
 set_option autoImplicit false
 
@@ -8,7 +10,7 @@ universe u
 
 open CategoryTheory
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace groupCohomology
 

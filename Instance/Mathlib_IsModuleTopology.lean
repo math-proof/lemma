@@ -1,7 +1,10 @@
 -- Carved from Lemma/Definitions/Def_Mathlib_IsModuleTopology.lean: instance decls only.
-import Mathlib
-import Class.Mathlib_IsModuleTopology
-import Theorem.ContinuousMap.topologicalModule
+module
+
+public import Mathlib
+public import Class.Mathlib_IsModuleTopology
+public import Theorem.ContinuousMap.topologicalModule
+@[expose] public section
 
 section IsTopologicalModuleDep
 

@@ -2,7 +2,7 @@ import Mathlib.MeasureTheory.Measure.Prod
 import Mathlib.MeasureTheory.Measure.WithDensity
 import Mathlib.MeasureTheory.Measure.Decomposition.Lebesgue
 import Mathlib.MeasureTheory.MeasurableSpace.Constructions
-import Lemma.Random.All_Eq_DivProbS
+import Lemma.Random.All_EqProb_Cond__DivProbS.of.SinglePSpace
 import Initialize.Tactic.Attr.Basic
 open Random MeasureTheory
 
@@ -98,7 +98,7 @@ private lemma main
       ((Measure.ae_prod_iff_ae_ae hPms).mpr hzero)
   have hdiv : ∀ᵐ a ∂μ, ∀ᵐ b ∂ν,
       π.condProb (x, y) (a, b) = π.prob (x, y) (a, b) / π.prob y b :=
-    All_Eq_DivProbS hP
+    All_EqProb_Cond__DivProbS.of.SinglePSpace hP
   have hmp : Measurable (π.prob (x, y)) := by
     simpa [Measure.prob] using Measure.measurable_rnDeriv (π.map (x, y)) ReferenceMeasure.measure
   have hmy2 : Measurable (π.prob y) := by

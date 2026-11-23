@@ -3,10 +3,13 @@
 /-
 Author: Muse Code
 -/
+module
 
-import Def.RingTheory.DiscreteValuationRing.MaximalIdealGradedPiece
-import Lemma.Int.DiscreteValuationRing.MaximalIdealGradedPiece
+public import Def.RingTheory.DiscreteValuationRing.MaximalIdealGradedPiece
+public import Theorem.Int.DiscreteValuationRing.MaximalIdealGradedPiece
 open IsLocalRing IsDiscreteValuationRing
+
+public section
 
 variable (R : Type*) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
 

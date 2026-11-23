@@ -1,9 +1,9 @@
 import Mathlib
 import Instance.GroupCohomology_RelationModule
-import Lemma.Rep.RelationModuleRes
+import Theorem.Rep.RelationModuleRes
 import Abbrev.GroupCohomology_RepCokernel
 import Abbrev.GroupCohomology_RepImage
-import Lemma.Rep.RelationHomDefect
+import Theorem.Rep.RelationHomDefect
 
 set_option autoImplicit false
 

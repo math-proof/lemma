@@ -16,8 +16,8 @@ import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
 import Mathlib.Combinatorics.SimpleGraph.Finite
 import Mathlib.Data.ZMod.Basic
 import Def.v1.Atlas.EllipticCurves.code.RingClassField.Part3
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.RingClassField
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.HilbertClassPolynomial
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.RingClassField
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.HilbertClassPolynomial
 import Def.v1.Atlas.EllipticCurves.code.HilbertClassPolynomial.Part2
 /-- A multigraph on vertex set `V`: each unordered pair `(v, w)` carries a
 multiplicity `edgeMult v w : ℕ`, required to be symmetric in `v, w`. -/

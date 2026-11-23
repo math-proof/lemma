@@ -6,10 +6,12 @@ All rights reserved.
 Copyright (c) 2024 AlgebraicCombinatorics Contributors. All rights reserved.
 Authors: AlgebraicCombinatorics Contributors
 -/
-import Mathlib
-import Def.RingTheory.PowerSeries.Limits.Part2
-import Theorem.PowerSeries.Limits
-import Theorem.PowerSeries.XnEquivalence
+module
+
+public import Mathlib
+public import Def.RingTheory.PowerSeries.Limits.Part2
+public import Theorem.PowerSeries.Limits
+public import Theorem.PowerSeries.XnEquivalence
 open scoped Polynomial
 
 /-!
@@ -44,6 +46,8 @@ The detailed proofs cover:
 * Source: `AlgebraicCombinatorics/tex/Details/Limits.tex`
 * Main theorems: `AlgebraicCombinatorics/FPS/Limits.lean`
 -/
+
+public section
 
 
 namespace Seq

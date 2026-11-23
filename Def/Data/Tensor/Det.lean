@@ -1,7 +1,12 @@
-import Theorem.List.Take.eq.Cons_TakeTail.of.Gt_0.GtLength_0
-import Theorem.List.HeadD.eq.Get_0.of.GtLength_0
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Instance.LinearAlgebra.Matrix.Dense
+module
+
+public import Theorem.List.Take.eq.Cons_TakeTail.of.Gt_0.GtLength_0
+public import Theorem.List.HeadD.eq.Get_0.of.GtLength_0
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Instance.LinearAlgebra.Matrix.Dense
+
+@[expose] public section
+
 open List
 
 

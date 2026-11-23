@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicCombinatorics.code.SpernerProperty.Part2
-import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.SpernerProperty
+import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.SpernerProperty
 import Mathlib.Order.Cover
 import Mathlib.Order.Grade
 import Mathlib.Data.Nat.SuccPred

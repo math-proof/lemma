@@ -1,7 +1,10 @@
-import Def.AlgebraicCurve_ChordalProximity
-import Def.AlgebraicCurve_CycleChowForm
+module
+
+public import Def.AlgebraicCurve_ChordalProximity
+public import Def.AlgebraicCurve_CycleChowForm
 set_option autoImplicit false
 
+public section
 
 noncomputable section
 

@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/RStirlingFirstAlternatingExpansion.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.RStirlingFirstAlternatingExpansion
+public import Theorem.Finset.Enumerative.RStirlingFirstAlternatingExpansion
 
-import Def.Combinatorics.Enumerative.RStirlingFirstAlternatingExpansion
-import Theorem.Finset.Enumerative.RStirlingFirstAlternatingExpansion
-
+public section
 
 namespace MetaMathlibExt
 

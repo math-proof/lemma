@@ -1,6 +1,7 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ResolvedModelGlue.lean: instance decls only.
 import Mathlib
-import Lemma.Scheme.ResolvedModelGlue
+import Theorem.Scheme.ResolvedModelGlue
+import Def.AlgebraicGeometry_ResolvedModelGlue
 
 set_option autoImplicit false
 set_option maxHeartbeats 200000

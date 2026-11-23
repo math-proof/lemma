@@ -1,13 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Ramanujan/Part1Ch5Entry10bEuleriansymmetry.lean -/
+module
 
+public import Theorem.Analysis.SpecialFunctions.Part1Ch5Entry10bEuleriansymmetry.Part3
 
-import Theorem.Analysis.SpecialFunctions.Part1Ch5Entry10bEuleriansymmetry.Part3
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 5, Entry 10b API checks
 
 The first even Euler numbers, the defining recurrence at `m = 0`, and the Eulerian symmetry
 identity at `n = 0`, `n = 1` and `n = 2`.
 -/
+
+public section
 
 
 namespace MathlibExtTest.Analysis.Ramanujan.Part1Ch5Entry10bEuleriansymmetry

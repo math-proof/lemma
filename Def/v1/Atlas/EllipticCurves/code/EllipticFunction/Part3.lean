@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.EllipticCurves.code.Lattice.Part2
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.Lattice
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.Lattice
 import Theorem.Complex.Atlas.v1.EllipticCurves.code.ComplexAnalysis
 import Def.v1.Atlas.EllipticCurves.code.ComplexAnalysis.Part3
 import Mathlib.Analysis.Meromorphic.Basic

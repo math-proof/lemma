@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RepresentationTheory/Homological/TateCohomology/HerbrandQuotient.lean -/
+module
 
-
-import Def.RepresentationTheory.Homological.TateCohomology.HerbrandQuotient.Part2
-import Theorem.Int.TateCohomologyCard.eq.CardTateCohomology
+public import Def.RepresentationTheory.Homological.TateCohomology.HerbrandQuotient.Part2
+public import Theorem.Int.TateCohomologyCard.eq.CardTateCohomology
 open CategoryTheory TateCohomology
+
+public section
 
 universe u
 

@@ -7,13 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib
-import Def.v1.Atlas.ArithmeticGeometry.code.MorphismsCurves
-import Abbrev.v1.Atlas.ArithmeticGeometry.code.RegularLocalRings
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.RegularLocalRings
-import Instance.v1.Atlas.ArithmeticGeometry.code.CurveTheory.Part3
+public import Mathlib
+public import Def.v1.Atlas.ArithmeticGeometry.code.MorphismsCurves
+public import Abbrev.v1.Atlas.ArithmeticGeometry.code.RegularLocalRings
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.RegularLocalRings
+public import Instance.v1.Atlas.ArithmeticGeometry.code.CurveTheory.Part3
 
+public section
 
 noncomputable section
 

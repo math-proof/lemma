@@ -1,12 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MotzkinTriangle.lean -/
+module
 
-import Mathlib.RingTheory.PowerSeries.Binomial
-import Mathlib.RingTheory.PowerSeries.Inverse
-import Mathlib.RingTheory.PowerSeries.Substitution
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
-import Def.Combinatorics.Enumerative.MotzkinTriangle.Part3
+public import Mathlib.RingTheory.PowerSeries.Binomial
+public import Mathlib.RingTheory.PowerSeries.Inverse
+public import Mathlib.RingTheory.PowerSeries.Substitution
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Ring
+public import Def.Combinatorics.Enumerative.MotzkinTriangle.Part3
+
 /-!
 # The Motzkin triangle as a Riordan array
 
@@ -14,6 +16,8 @@ This file records the formal-power-series description of the Motzkin triangle fr
 Otmani, *The 2-Pascal Triangle and a Related Riordan Array*:
 <https://cs.uwaterloo.ca/journals/JIS/VOL28/Otmani/otmani10.tex>.
 -/
+
+public section
 
 
 namespace MetaMathlibExt

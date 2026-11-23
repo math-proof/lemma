@@ -7,11 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib
-import Def.v1.Atlas.ProjectionTheory.code.SzemerediTrotter
+public import Mathlib
+public import Def.v1.Atlas.ProjectionTheory.code.SzemerediTrotter
 open Finset Real
 
+public section
 
 noncomputable section
 

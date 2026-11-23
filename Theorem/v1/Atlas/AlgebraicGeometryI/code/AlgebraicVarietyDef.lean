@@ -7,7 +7,8 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Instance.v1.Atlas.AlgebraicGeometryI.code.Lec2AlgebraicVariety
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.Lec2AlgebraicVariety
 
-
+public section

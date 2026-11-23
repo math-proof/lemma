@@ -1,13 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Ramanujan/Part1Ch7DirichletBeta.lean -/
+module
 
+public import Theorem.Analysis.Ramanujan.Part1Ch7DirichletBeta
+public import Theorem.Complex.Part1Ch7DirichletBeta
 
-import Theorem.Analysis.Ramanujan.Part1Ch7DirichletBeta
-import Theorem.Complex.Part1Ch7DirichletBeta
 /-!
 # Shared Dirichlet beta API checks
 
 The four residue-class evaluations of the beta character and its vanishing sum.
 -/
+
+public section
 
 
 namespace MathlibExtTest.Analysis.Ramanujan.Part1Ch7DirichletBeta

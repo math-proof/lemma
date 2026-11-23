@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/MultipleBinomialTransform.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.MultipleBinomialTransform
 
-import Def.Combinatorics.Enumerative.MultipleBinomialTransform
-
+public section
 
 example (a : ℕ → ℤ) (n : ℕ) :
     MetaMathlibExt.multipleBinomialTransform 0 a n = a n :=

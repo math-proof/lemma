@@ -1,21 +1,25 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
+module
 
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.AlgebraicGeometry.EllipticCurve.Reduction
-import Mathlib.RingTheory.Valuation.RamificationGroup
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring
-import Mathlib.RingTheory.Valuation.LocalSubring
-import Def.AlgebraicGeometry.EllipticCurve.NeronOggShafarevich.Part2
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Reduction
+public import Mathlib.RingTheory.Valuation.RamificationGroup
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Ring
+public import Mathlib.RingTheory.Valuation.LocalSubring
+public import Def.AlgebraicGeometry.EllipticCurve.NeronOggShafarevich.Part2
+
 /-!
 # The easy direction of the Néron–Ogg–Shafarevich criterion
 
 This file proves that prime-to-residue-characteristic torsion of an elliptic curve with good
 reduction is fixed by inertia, using the elementary valuation filtration at the origin.
 -/
+
+public section
 
 
 namespace MetaMathlibExt

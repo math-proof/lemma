@@ -5,7 +5,7 @@ All rights reserved.
 import Mathlib
 import Def.Combinatorics.Young.SchurBasics.Part11
 import Def.Combinatorics.Young.PieriJacobiTrudi.Part32
-import Lemma.Partition.NPartition
+import Theorem.Partition.NPartition
 import Def.Combinatorics.Young.SSYTEquiv.Part2
 /-!
 # Equivalence Between SSYT Definitions

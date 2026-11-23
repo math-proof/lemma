@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/GenocchiBernoulli.lean -/
+module
 
+public import Theorem.Nat.GenocchiBernoulli
+public import Mathlib.Tactic.NormNum
 
-import Theorem.Nat.GenocchiBernoulli
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MetaMathlibExtTest
 

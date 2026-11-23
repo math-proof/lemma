@@ -16,7 +16,7 @@ import Mathlib.Probability.Moments.Basic
 import Mathlib.Analysis.SpecialFunctions.Log.Basic
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_6
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_6
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_6
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Cor_4_9
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Cor_4_9
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.EuclideanBridge

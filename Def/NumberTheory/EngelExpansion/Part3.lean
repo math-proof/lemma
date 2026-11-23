@@ -1,10 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/EngelExpansion.lean -/
 
-import Mathlib.Data.Finset.Basic
-import Mathlib.Data.Finset.Lattice.Fold
-import Mathlib.Data.Nat.Find
-import Mathlib.Order.Interval.Finset.Nat
-import Theorem.NumberTheory.EngelExpansion.Part2
+module
+
+public import Mathlib.Data.Finset.Basic
+public import Mathlib.Data.Finset.Lattice.Fold
+public import Mathlib.Data.Nat.Find
+public import Mathlib.Order.Interval.Finset.Nat
+public import Theorem.NumberTheory.EngelExpansion.Part2
+
+@[expose] public section
+
 /-!
 # Engel expansion trajectories
 

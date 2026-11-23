@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/Frobenius/ConjugacyClass.lean -/
+module
 
+public import Def.RingTheory.Frobenius.ConjugacyClass
+public import Theorem.Int.Frobenius.ConjugacyClass
 
-import Def.RingTheory.Frobenius.ConjugacyClass
-import Theorem.Int.Frobenius.ConjugacyClass
+public section
+
 variable {R S G : Type*} [CommRing R] [CommRing S] [Algebra R S]
   [Group G] [MulSemiringAction G S] [SMulCommClass G R S]
   [Finite G] [Algebra.IsInvariant R S G]

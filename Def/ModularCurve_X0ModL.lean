@@ -1,9 +1,13 @@
-import Mathlib
-import Def.ModularCurve_JqCoeff
-import Def.ModularCurve_LaurentCoeff
-import Class.AlgebraicCurve_DivisorClassGroup
-import Lemma.LaurentSeries.CoeffSemilinearAut
-import Lemma.HahnSeries.QAdicPlaceMod
+module
+
+public import Mathlib
+public import Def.ModularCurve_JqCoeff
+public import Def.ModularCurve_LaurentCoeff
+public import Class.AlgebraicCurve_DivisorClassGroup
+public import Theorem.LaurentSeries.CoeffSemilinearAut
+public import Theorem.HahnSeries.QAdicPlaceMod
+
+@[expose] public section
 
 set_option autoImplicit false
 

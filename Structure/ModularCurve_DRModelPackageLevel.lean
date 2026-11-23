@@ -8,7 +8,8 @@ public import Structure.AlgebraicCurve_CurveModel
 public import Instance.ModularCurve_GeometricBaseChange
 public import Instance.ModularCurve_ArithmeticGalois
 public import Def.ModularCurve_PlaceWidthChar
-public import Lemma.LaurentSeries.CoeffSemilinearAut
+public import Def.ModularCurve_CoeffSemilinearAut
+public import Theorem.LaurentSeries.CoeffSemilinearAut
 public import Structure.AlgebraicGeometry_NeronModelPropertyBundleCarrier
 
 set_option autoImplicit false

@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/HyperbolicGroup.lean -/
 
-import Mathlib.Geometry.Group.WordMetric
-import Mathlib.GroupTheory.Finiteness
-import Theorem.Topology.MetricSpace.GromovHyperbolic
-import Theorem.Set.MetricSpace.GromovHyperbolic
+module
+
+public import Mathlib.Geometry.Group.WordMetric
+public import Mathlib.GroupTheory.Finiteness
+public import Theorem.Topology.MetricSpace.GromovHyperbolic
+public import Theorem.Set.MetricSpace.GromovHyperbolic
+
+@[expose] public section
+
 /-!
 # Hyperbolic groups
 

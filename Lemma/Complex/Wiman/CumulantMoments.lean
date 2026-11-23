@@ -5,8 +5,6 @@ open MeasureTheory ProbabilityTheory
 open Complex
 
 
-namespace Complex
-
 /--
 [contDiff_two_wimanGrowth](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CumulantMoments.lean)
 -/
@@ -33,9 +31,6 @@ lemma contDiff_two_wimanGrowth
         (X := fun n : ℕ => (n : ℝ)) (μ := wimanCoefficientMeasure f))
   exact hAnalytic.contDiff
 
-end Complex
-
-namespace Complex
 
 /--
 [deriv_wimanGrowth_eq_expectation](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CumulantMoments.lean)
@@ -62,9 +57,6 @@ lemma deriv_wimanGrowth_eq_expectation
       (X := fun n : ℕ => (n : ℝ)) (μ := wimanCoefficientMeasure f) (t := x)
       (mem_interior_integrableExpSet_wimanCoefficientMeasure (f := f) (x := x) hf)).symm
 
-end Complex
-
-namespace Complex
 
 /--
 [iteratedDeriv_two_wimanGrowth_eq_variance](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CumulantMoments.lean)
@@ -92,9 +84,6 @@ lemma iteratedDeriv_two_wimanGrowth_eq_variance
       (X := fun n : ℕ => (n : ℝ)) (μ := wimanCoefficientMeasure f) (t := x)
       (mem_interior_integrableExpSet_wimanCoefficientMeasure (f := f) (x := x) hf)).symm
 
-end Complex
-
-namespace Complex
 
 /--
 [iteratedDeriv_two_wimanGrowth_nonneg](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CumulantMoments.lean)
@@ -111,9 +100,8 @@ lemma iteratedDeriv_two_wimanGrowth_nonneg
 -- proof
   rw [iteratedDeriv_two_wimanGrowth_eq_variance (f := f) (x := x) hf hne]
   exact ProbabilityTheory.variance_nonneg _ _
-end Complex
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-22

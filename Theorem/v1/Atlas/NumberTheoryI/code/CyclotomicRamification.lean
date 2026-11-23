@@ -17,7 +17,7 @@ import Mathlib.RingTheory.AdicCompletion.Basic
 import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
 import Mathlib.RingTheory.RootsOfUnity.Lemmas
 import Abbrev.v1.Atlas.NumberTheoryI.code.Cor1015
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Cor1015
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor1015
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.LocalExtensions
 import Theorem.Nat.Atlas.v1.NumberTheoryI.code.TracePairing
 import Theorem.v1.Atlas.NumberTheoryI.code.LocalExtensions.Part2

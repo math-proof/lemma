@@ -1,5 +1,9 @@
-import Mathlib
-import Lemma.Rep.RepPi
+module
+
+public import Mathlib
+public import Theorem.Rep.RepPi
+
+@[expose] public section
 
 set_option autoImplicit false
 

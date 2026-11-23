@@ -12,7 +12,7 @@ module
 
 public import Def.v1.Atlas.TheoryOfComputation.code.InteractiveProofs.Part2
 public import Def.v1.Atlas.TheoryOfComputation.code.Probabilistic.Part5
-public import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.Probabilistic
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.Probabilistic
 public import Mathlib.Tactic
 public import Def.v1.Atlas.TheoryOfComputation.code.GraphNonIsoIP
 

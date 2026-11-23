@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.NumberTheoryI.code.GlobalCFT.Part3
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GlobalCFT
-import Structure.v1.Atlas.NumberTheoryI.code.GlobalCFTMain
+module
 
+public import Structure.v1.Atlas.NumberTheoryI.code.GlobalCFT.Part3
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GlobalCFT
+public import Structure.v1.Atlas.NumberTheoryI.code.GlobalCFTMain
+
+@[expose] public section
 
 noncomputable section
 

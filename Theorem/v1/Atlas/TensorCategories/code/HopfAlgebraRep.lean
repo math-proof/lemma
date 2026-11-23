@@ -7,14 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part3
-import Lemma.Category.Atlas.v1.TensorCategories.code.HopfAlgebra
-import Mathlib.Algebra.Category.ModuleCat.Basic
-import Mathlib.RingTheory.TensorProduct.Basic
-import Abbrev.v1.Atlas.TensorCategories.code.HopfAlgebraRep
+public import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part3
+public import Theorem.Category.Atlas.v1.TensorCategories.code.HopfAlgebra
+public import Mathlib.Algebra.Category.ModuleCat.Basic
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Abbrev.v1.Atlas.TensorCategories.code.HopfAlgebraRep
 open CategoryTheory Coalgebra Bialgebra
 open scoped TensorProduct
+
+public section
 
 universe u
 

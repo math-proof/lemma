@@ -9,12 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves.Part2
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyP1
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRoch
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.TateCechInfra
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.DedekindCurve
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRoch
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TateCechInfra
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DedekindCurve
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.CohomologyP1.Part2
 import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRoch
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochCurves

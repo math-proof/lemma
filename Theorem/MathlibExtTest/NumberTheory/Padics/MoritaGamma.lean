@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Padics/MoritaGamma.lean -/
+module
 
+public import Def.NumberTheory.Padics.MoritaGamma
+public import Theorem.Nat.Padics.MoritaGamma
 
-import Def.NumberTheory.Padics.MoritaGamma
-import Theorem.Nat.Padics.MoritaGamma
-
+public section
 
 example (p n : ℕ) [Fact p.Prime] :
     MetaMathlibExt.moritaGammaNat p n =

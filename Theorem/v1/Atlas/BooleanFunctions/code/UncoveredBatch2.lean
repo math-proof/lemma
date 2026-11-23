@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.NoiseStability
 import Def.v1.Atlas.BooleanFunctions.code.Influence
 import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Influence
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Monotone
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Monotone
 import Theorem.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
 import Def.v1.Atlas.BooleanFunctions.code.Monotone
 import Def.v1.Atlas.BooleanFunctions.code.InfluenceFourier

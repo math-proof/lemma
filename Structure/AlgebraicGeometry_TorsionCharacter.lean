@@ -1,6 +1,6 @@
 module
 
-public import Lemma.Scheme.RelativeGroupLawKernel
+public import Theorem.Scheme.RelativeGroupLawKernel
 
 set_option autoImplicit false
 

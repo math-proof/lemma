@@ -8,14 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section1.Part3
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section1
-import Mathlib.Topology.Basic
-import Mathlib.Topology.Homotopy.Basic
-import Mathlib.Algebra.Exact
-import Mathlib.Algebra.DirectSum.Basic
-import Mathlib.Algebra.Module.Prod
-import Structure.v1.Atlas.AlgebraicTopologyI.code.Section11.Part4
+module
+
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section1.Part3
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section1
+public import Mathlib.Topology.Basic
+public import Mathlib.Topology.Homotopy.Basic
+public import Mathlib.Algebra.Exact
+public import Mathlib.Algebra.DirectSum.Basic
+public import Mathlib.Algebra.Module.Prod
+public import Structure.v1.Atlas.AlgebraicTopologyI.code.Section11.Part4
+
+@[expose] public section
+
 open Set Topology
 
 universe u

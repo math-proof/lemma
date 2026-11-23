@@ -1,9 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/FactorialRatio.lean -/
+module
 
-
-import Def.NumberTheory.FactorialRatio
-import Theorem.Nat.FactorialRatio
-
+public import Def.NumberTheory.FactorialRatio
+public import Theorem.Nat.FactorialRatio
 
 /-!
 # Tests for integral factorial ratios
@@ -12,6 +11,8 @@ Focused checks for `factorialProd` and `IsIntegralFactorialRatio`: equal
 singleton tuples, the `n = 0` boundary, and the central-binomial example
 `[(2)] / [(1), (1)]`.
 -/
+
+public section
 
 
 /-- Equal singleton tuples satisfy the predicate. -/

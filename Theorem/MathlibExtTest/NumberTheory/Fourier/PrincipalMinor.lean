@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Fourier/PrincipalMinor.lean -/
+module
 
+public import Def.NumberTheory.Fourier.PrincipalMinor
+public import Theorem.Nat.Fourier.PrincipalMinor
+public import Def.MathlibExtTest.NumberTheory.Fourier.PrincipalMinor
 
-import Def.NumberTheory.Fourier.PrincipalMinor
-import Theorem.Nat.Fourier.PrincipalMinor
-import Def.MathlibExtTest.NumberTheory.Fourier.PrincipalMinor
-
+public section
 
 namespace Fourier
 

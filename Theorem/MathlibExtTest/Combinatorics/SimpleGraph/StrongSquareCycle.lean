@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.SimpleGraph.StrongSquareCycle
-import Lemma.SimpleGraph.StrongSquareCycle
+import Theorem.SimpleGraph.StrongSquareCycle
 
 
 namespace MathlibExtTest.Combinatorics.SimpleGraph.StrongSquareCycle

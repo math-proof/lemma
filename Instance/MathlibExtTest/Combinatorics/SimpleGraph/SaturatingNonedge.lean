@@ -1,9 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/SaturatingNonedge.lean -/
 
 
-import Def.Combinatorics.SimpleGraph.SaturatingNonedge
-import Theorem.SimpleGraph.SaturatingNonedge
-import Mathlib.Tactic.FinCases
+module
+
+public import Def.Combinatorics.SimpleGraph.SaturatingNonedge
+public import Theorem.SimpleGraph.SaturatingNonedge
+public import Mathlib.Tactic.FinCases
+@[expose] public section
+
 open SimpleGraph
 
 /-!

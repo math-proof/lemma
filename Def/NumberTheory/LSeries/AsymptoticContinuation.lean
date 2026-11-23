@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/LSeries/AsymptoticContinuation.lean -/
 
-import Def.NumberTheory.LSeries.AbelContinuation
-import Theorem.Nat.LSeries.AbelContinuation
-import Mathlib.Analysis.Meromorphic.Order
-import Mathlib.NumberTheory.Harmonic.ZetaAsymp
+module
+
+public import Def.NumberTheory.LSeries.AbelContinuation
+public import Theorem.Nat.LSeries.AbelContinuation
+public import Mathlib.Analysis.Meromorphic.Order
+public import Mathlib.NumberTheory.Harmonic.ZetaAsymp
+
+@[expose] public section
+
 open Filter Asymptotics Topology
 
 

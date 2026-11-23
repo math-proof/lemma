@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Harmonic/Floor.lean -/
+module
 
-
-import Theorem.Real.Harmonic.Floor
+public import Theorem.Real.Harmonic.Floor
 open Asymptotics Filter Real Topology
 
+public section
 
 example :
     (fun x : ℝ => (harmonic ⌊x⌋₊ : ℝ) - Real.log x -

@@ -1,11 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PowerFree.lean -/
+module
 
+public import Def.NumberTheory.PowerFree
+public import Theorem.Nat.PowerFree
 
-import Def.NumberTheory.PowerFree
-import Theorem.Nat.PowerFree
 /-!
 # Examples for power-free natural numbers
 -/
+
+public section
 
 
 namespace Nat

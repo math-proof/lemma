@@ -7,12 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.AlgebraicGeometryI.code.AffinePushforwardCohomology.Part2
-import Mathlib.RingTheory.ClassGroup
-import Mathlib.RingTheory.Flat.Localization
+public import Def.v1.Atlas.AlgebraicGeometryI.code.AffinePushforwardCohomology.Part2
+public import Mathlib.RingTheory.ClassGroup
+public import Mathlib.RingTheory.Flat.Localization
 open AlgebraicGeometry CategoryTheory Limits
 open scoped nonZeroDivisors
+
+public section
 
 /-- Higher cohomology of a quasi-coherent sheaf on an affine scheme vanishes (Serre's
 vanishing theorem for affine schemes). -/

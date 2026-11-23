@@ -5,8 +5,8 @@ module
 public import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part5
 public import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
 public import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
-public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopLeftSafety
-public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopRightSafety
+public import Theorem.List.Atlas.CPythonListsort.Code.Assembly.GallopLeftSafety
+public import Theorem.List.Atlas.CPythonListsort.Code.Assembly.GallopRightSafety
 public import Def.CPythonListsort.Code.Assembly.MergeLoSafety
 /-!
 # `merge_lo` lockstep safety

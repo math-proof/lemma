@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Rat/Place.lean -/
+module
 
+public import Def.NumberTheory.Rat.Place.Part2
+public import Theorem.Rat.Place
 
-import Def.NumberTheory.Rat.Place.Part2
-import Lemma.Rat.Place
-
+public section
 
 namespace Rat.Place
 

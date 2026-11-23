@@ -1,24 +1,27 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/FultonMorrisPisanoFixedPoint.lean -/
 
-import Mathlib.Data.Nat.Fib.Basic
-import Mathlib.Data.Nat.ModEq
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Finset.Max
-import Mathlib.Data.Nat.Factorization.Basic
-import Mathlib.Data.Nat.Factorization.Induction
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.Data.Nat.PrimeFin
-import Mathlib.Data.ZMod.Basic
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.NumberTheory.LegendreSymbol.Basic
-import Mathlib.NumberTheory.Padics.PadicVal.Basic
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
-import Def.NumberTheory.Recurrences.FibonacciPrimeDivisibility
-import Theorem.Nat.Recurrences.FibonacciPrimeDivisibility
+module
 
+public import Mathlib.Data.Nat.Fib.Basic
+public import Mathlib.Data.Nat.ModEq
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Finset.Max
+public import Mathlib.Data.Nat.Factorization.Basic
+public import Mathlib.Data.Nat.Factorization.Induction
+public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.Data.Nat.PrimeFin
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.NumberTheory.LegendreSymbol.Basic
+public import Mathlib.NumberTheory.Padics.PadicVal.Basic
+public import Mathlib.Tactic.IntervalCases
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Ring
+public import Def.NumberTheory.Recurrences.FibonacciPrimeDivisibility
+public import Theorem.Nat.Recurrences.FibonacciPrimeDivisibility
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

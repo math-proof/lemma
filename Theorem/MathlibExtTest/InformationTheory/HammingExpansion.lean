@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/InformationTheory/HammingExpansion.lean -/
+module
 
+public import Def.InformationTheory.HammingExpansion
+public import Theorem.Real.HammingExpansion
 
-import Def.InformationTheory.HammingExpansion
-import Lemma.Real.HammingExpansion
-
+public section
 
 example (A : Finset (Fin 2 → Bool)) (x a : Fin 2 → Bool) (t : ℕ)
     (ha : a ∈ A) (h : hammingDist x a ≤ t) : x ∈ Hamming.expansion A t := by

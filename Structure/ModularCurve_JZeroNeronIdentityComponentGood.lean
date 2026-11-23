@@ -2,13 +2,15 @@ module
 
 public import Mathlib
 public import Structure.ModularCurve_JZeroNeronIdentityComponent
-public import Lemma.Finsupp.ReductionModL
+public import Def.ModularCurve_ReductionModL
+public import Theorem.Finsupp.ReductionModL
 public import Structure.JacJ1Iface
 public import Structure.AlgebraicGeometry_RelativeGroupLaw
 public import Theorem.Scheme.NeronModelEndomorphismExtension
 public import Def.ModularCurve_ReductionOfPointsAgreesModL
 public import Instance.ModularCurve_ArithmeticGalois
-public import Lemma.MvPolynomial.HeckeModule
+public import Def.ModularCurve_HeckeModule
+public import Theorem.MvPolynomial.HeckeModule
 public import Def.FLTPrelim_Ramification
 public import Def.GaloisRep_Flat
 

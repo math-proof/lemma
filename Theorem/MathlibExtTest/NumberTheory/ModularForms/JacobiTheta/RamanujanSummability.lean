@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ModularForms/JacobiTheta/RamanujanSummability.lean -/
+module
 
+public import Theorem.Nat.ModularForms.JacobiTheta.RamanujanSummability
 
-import Theorem.Nat.ModularForms.JacobiTheta.RamanujanSummability
-
+public section
 
 namespace MetaMathlibExt
 

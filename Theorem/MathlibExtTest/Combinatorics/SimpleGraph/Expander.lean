@@ -1,12 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/Expander.lean -/
+module
 
+public import Def.Combinatorics.SimpleGraph.Expander
+public import Theorem.SimpleGraph.Expander
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.NormNum
+public import Lean.Elab.Tactic.Omega
 
-import Def.Combinatorics.SimpleGraph.Expander
-import Theorem.SimpleGraph.Expander
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Lean.Elab.Tactic.Omega
-
+public section
 
 namespace SimpleGraph.ExpanderTest
 

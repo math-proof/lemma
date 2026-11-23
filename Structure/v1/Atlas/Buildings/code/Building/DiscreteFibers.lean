@@ -11,9 +11,9 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Theorem.v1.Atlas.Buildings.code.Building.UniqueRetraction
-public import Lemma.Equiv.Any_And_In_Faces.is.Image.in.FacesAndEqImage.of.IsMaximalToSimplicialComplexToChamberComplex.In_Faces.IsMaximalToSimplicialComplexToChamberComplex.In_Faces.In_Apartments.In_Apartments
-public import Lemma.Finset.Any_And_All_EqAndAll_IsMaximalAndAll_EqImageSOrAdjacentAndAll_Eq.of.IsMaximal.In_Apartments
-public import Lemma.Finset.ImageRetractionMap.in.Faces.of.IsMaximal.In_Faces.In_Apartments
+public import Theorem.Equiv.Any_And_In_Faces.is.Image.in.FacesAndEqImage.of.IsMaximalToSimplicialComplexToChamberComplex.In_Faces.IsMaximalToSimplicialComplexToChamberComplex.In_Faces.In_Apartments.In_Apartments
+public import Theorem.Finset.Any_And_All_EqAndAll_IsMaximalAndAll_EqImageSOrAdjacentAndAll_Eq.of.IsMaximal.In_Apartments
+public import Theorem.Finset.ImageRetractionMap.in.Faces.of.IsMaximal.In_Faces.In_Apartments
 public import Def.v1.Atlas.Buildings.code.AffineCoxeter.GeometricRealization.Part2
 public import Theorem.v1.Atlas.Buildings.code.Building.AptFoldingFromRetraction
 public import Def.v1.Atlas.Buildings.code.Building.AptIsoFixesIntersection

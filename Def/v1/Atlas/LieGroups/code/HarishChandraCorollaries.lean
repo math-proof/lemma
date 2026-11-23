@@ -8,7 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Instance.v1.Atlas.LieGroups.code.MaximalQuotients
+module
+
+public import Instance.v1.Atlas.LieGroups.code.MaximalQuotients
+
+@[expose] public section
+
 universe u_hc_bim
 
 

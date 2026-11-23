@@ -11,8 +11,8 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.LieGroups.code.ProjectiveFunctors.Part7
-public import Lemma.Int.IsDirectSummand
-public import Lemma.Finset.EqMul_Mul.of.In_SimpleReflections
+public import Theorem.Int.IsDirectSummand
+public import Theorem.Finset.EqMul_Mul.of.In_SimpleReflections
 public import Def.v1.Atlas.LieGroups.code.HeckeKL.Part9
 public import Def.v1.Atlas.LieGroups.code.GrothendieckGroupO.Part2
 set_option maxHeartbeats 1600000

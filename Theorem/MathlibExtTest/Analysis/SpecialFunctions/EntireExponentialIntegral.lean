@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/EntireExponentialIntegral.lean -/
+module
 
+public import Def.Analysis.SpecialFunctions.EntireExponentialIntegral
+public import Theorem.Complex.EntireExponentialIntegral
 
-import Def.Analysis.SpecialFunctions.EntireExponentialIntegral
-import Theorem.Complex.EntireExponentialIntegral
-
+public section
 
 namespace Complex
 

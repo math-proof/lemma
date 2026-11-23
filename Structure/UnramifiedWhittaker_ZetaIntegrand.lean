@@ -2,7 +2,8 @@ module
 
 public import Structure.AdelicDock_LocalEmbedding
 public import Def.NumberField_TateGlobalZeta
-public import Lemma.Set.HeckeEigenfunction
+public import Def.AutomorphicForm_HeckeEigenfunction
+public import Theorem.Set.HeckeEigenfunction
 public import Def.NumberField_IdeleBox
 public import Def.UnramifiedWhittaker_ZetaIntegrand
 

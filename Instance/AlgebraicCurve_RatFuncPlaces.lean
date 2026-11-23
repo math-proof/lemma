@@ -1,7 +1,10 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicCurve_RatFuncPlaces.lean: instance decls only.
-import Mathlib
-import Instance.AlgebraicCurve_DivisorClassGroup
-import Lemma.Ideal.RatFuncPlaces
+module
+
+public import Mathlib
+public import Instance.AlgebraicCurve_DivisorClassGroup
+public import Theorem.Ideal.RatFuncPlaces
+@[expose] public section
 
 set_option autoImplicit false
 

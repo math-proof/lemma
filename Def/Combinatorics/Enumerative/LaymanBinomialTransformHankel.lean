@@ -1,13 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/LaymanBinomialTransformHankel.lean -/
 
-import Def.Combinatorics.Enumerative.FallingKBinomialTransform
-import Theorem.Finset.Enumerative.FallingKBinomialTransform
-import Def.NumberTheory.HankelTransform
-import Mathlib.Data.Nat.Choose.Vandermonde
-import Mathlib.LinearAlgebra.Matrix.Block
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.Tactic.Ring
+module
 
+public import Def.Combinatorics.Enumerative.FallingKBinomialTransform
+public import Theorem.Finset.Enumerative.FallingKBinomialTransform
+public import Def.NumberTheory.HankelTransform
+public import Mathlib.Data.Nat.Choose.Vandermonde
+public import Mathlib.LinearAlgebra.Matrix.Block
+public import Mathlib.RingTheory.PowerSeries.Basic
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

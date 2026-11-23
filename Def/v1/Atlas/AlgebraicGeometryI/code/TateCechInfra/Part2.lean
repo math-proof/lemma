@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityTate.Part3
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityTate
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityAnnihilator
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityTate
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityAnnihilator
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.SerreDualityAnnihilator
 import Structure.v1.Atlas.AlgebraicGeometryI.code.TateCechInfra
 

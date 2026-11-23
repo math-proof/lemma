@@ -1,6 +1,7 @@
 -- Carved from Lemma/Definitions/Def_PresheafOfModules_InternalHom.lean: instance decls only.
 import Mathlib
-import Lemma.LinearMap.InternalHom
+import Theorem.LinearMap.InternalHom
+import Def.AlgebraicGeometry_InternalHom
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false

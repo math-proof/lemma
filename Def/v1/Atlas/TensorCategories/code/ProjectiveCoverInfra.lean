@@ -8,20 +8,25 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Homology.ShortComplex.ShortExact
-import Mathlib.CategoryTheory.Simple
-import Mathlib.CategoryTheory.Monoidal.Category
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Monoidal.Preadditive
-import Mathlib.CategoryTheory.Linear.Basic
-import Mathlib.CategoryTheory.Preadditive.Schur
-import Mathlib.CategoryTheory.Preadditive.Projective.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.LinearAlgebra.FiniteDimensional.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
-import Lemma.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
-import Instance.v1.Atlas.TensorCategories.code.ProjectiveCoverInfra
+module
+
+public import Mathlib.Algebra.Homology.ShortComplex.ShortExact
+public import Mathlib.CategoryTheory.Simple
+public import Mathlib.CategoryTheory.Monoidal.Category
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Monoidal.Preadditive
+public import Mathlib.CategoryTheory.Linear.Basic
+public import Mathlib.CategoryTheory.Preadditive.Schur
+public import Mathlib.CategoryTheory.Preadditive.Projective.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
+public import Instance.v1.Atlas.TensorCategories.code.ProjectiveCoverInfra
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open CategoryTheory MonoidalCategory Category Limits

@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/PolarDensity.lean -/
+module
 
-
-import Def.NumberTheory.NumberField.PolarDensity
-import Lemma.Set.NumberField.PolarDensity
+public import Def.NumberTheory.NumberField.PolarDensity
+public import Theorem.Set.NumberField.PolarDensity
 open Filter Topology NumberField IsDedekindDomain
 
+public section
 
 namespace NumberField.Set
 

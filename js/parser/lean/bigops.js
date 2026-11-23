@@ -11,7 +11,6 @@
  * call time, so the import graph follows the inheritance tree.
  */
 import { strStmt } from './utility.js';
-import { pathUniqKeepEmpty, pathStripTrailingHoles } from './pathChoices.js';
 import { LeanArgs } from './abstract.js';
 import { Lean, jsonHead } from './base.js';
 
@@ -288,26 +287,85 @@ export class LeanBigOperator extends LeanArgs {
             : bound;
     }
 
-    toJSON() {
+    /** Names bound by this operator (`k ∈ s`, `k : ℕ`, `x = x₀`, or a bare `k`). */
+    binderNames() {
+        let b = this.bound;
+        if (b instanceof L.LeanArgsSpaceSeparated) b = b.args[0];
+        if (b instanceof L.LeanParenthesis) b = b.arg;
+        if (b instanceof L.Lean_in || b instanceof L.LeanColon || b instanceof L.LeanEq) b = b.lhs;
+        if (b && typeof b.text === 'string' && b.text !== '') return [b.text];
+        return [];
+    }
+
+    /** Whether `bound` introduces a dummy for De Bruijn (`∏ k`, `∀ k`). Not `LeanRandomBigOp`. */
+    bindsVariable() {
+        return true;
+    }
+
+    pushBinderNames(ctx) {
+        if (!Array.isArray(ctx?.binders) || !this.bindsVariable()) return;
+        ctx.binders.push(...this.binderNames());
+    }
+
+    /** Domain slot of this binder, with the bound variable kept beside it (`k ∈ s`, `k : ℕ`). */
+    jsonBinderDomain(ctx) {
+        const bound = this.bound;
+        const useDB = Array.isArray(ctx?.binders);
+        if (bound instanceof L.Lean_in) {
+            if (useDB && this.bindsVariable()) {
+                const rhs = bound.rhs.toJSON(ctx);
+                this.pushBinderNames(ctx);
+                return { In: [bound.lhs.toJSON(ctx), rhs] };
+            }
+            return { In: [bound.lhs.toJSON(ctx), bound.rhs.toJSON(ctx)] };
+        }
+        if (bound instanceof L.LeanColon) {
+            if (useDB && this.bindsVariable()) {
+                const rhs = bound.rhs.toJSON(ctx);
+                this.pushBinderNames(ctx);
+                return { Colon: [bound.lhs.toJSON(ctx), rhs] };
+            }
+            return { Colon: [bound.lhs.toJSON(ctx), bound.rhs.toJSON(ctx)] };
+        }
+        if (bound instanceof L.LeanEq) {
+            if (useDB && this.bindsVariable()) {
+                const rhs = bound.rhs.toJSON(ctx);
+                this.pushBinderNames(ctx);
+                return { Eq: [bound.lhs.toJSON(ctx), rhs] };
+            }
+            return { Eq: [bound.lhs.toJSON(ctx), bound.rhs.toJSON(ctx)] };
+        }
+        if (useDB) this.pushBinderNames(ctx);
+        const domain = this.jsonDomain;
+        return domain ? domain.toJSON(ctx) : null;
+    }
+
+    toJSON(ctx = { leaves: new Map() }) {
         // Stacked big operators `∑ i ∈ s, ∑ j ∈ t, body` are a single operator
-        // whose domain is the conjunction of the binders, innermost first:
+        // whose domains are the conjunction of the binders, innermost first:
         // `∑ k ∈ Icc 1 n, ∑ d ∈ k.divisors, f` →
-        // `{"Sum":[{"And":[{"Divisors":[_]},{"Icc":["1",_]}]}, f]}`.
+        // `{"Sum":[{"And":[{"In":[_]},{"In":[...]}]}, body]}`.
         // Only direct nesting merges — `∑ i, (∑ j, f)²` keeps both heads.
         const domains = [];
         let node = this;
-        for (;;) {
-            const domain = node.jsonDomain;
-            if (domain) domains.push(domain.toJSON());
-            const scope = node.scope;
-            if (!(scope instanceof this.constructor)) {
-                const args = [];
-                if (domains.length > 1) args.push({ And: domains.reverse() });
-                else if (domains.length === 1) args.push(domains[0]);
-                if (scope) args.push(scope.toJSON());
-                return { [this.pathToken]: args };
+        const useDB = Array.isArray(ctx?.binders);
+        const depth = useDB ? ctx.binders.length : 0;
+        try {
+            for (;;) {
+                const domain = node.jsonBinderDomain(ctx);
+                if (domain) domains.push(domain);
+                const scope = node.scope;
+                if (!(scope instanceof this.constructor)) {
+                    const args = [];
+                    if (domains.length > 1) args.push({ And: domains.reverse() });
+                    else if (domains.length === 1) args.push(domains[0]);
+                    if (scope) args.push(scope.toJSON(ctx));
+                    return { [this.pathToken]: args };
+                }
+                node = scope;
             }
-            node = scope;
+        } finally {
+            if (useDB) ctx.binders.length = depth;
         }
     }
 
@@ -937,17 +995,16 @@ export class Lean_partial extends LeanBigOperator {
         return '\\left. ' + partial + ' \\right|_{{%s} = {%s}}';
     }
 
-    pathChoices(opts = {}) {
-        const kid = this.scope ?? this.bound;
-        const kids = kid?.pathChoices?.(opts) ?? [''];
-        const out = [''];
-        for (const k of kids) out.push(k ? 'Deriv' + k : 'Deriv_');
-        return pathUniqKeepEmpty(out);
+    /** `∂[x = x₀] f x` binds `x`; bare `∂[x] f x` and measure `∂μ` do not. */
+    bindsVariable() {
+        const b = this.bound;
+        return !!(this.scope && b instanceof L.LeanEq && b.lhs instanceof L.LeanToken);
     }
 }
 
 /**
- * `∇[θ] body` / `∇[θ = θ₀] body` (binder) and binder-free `∇ J` / `∇ J θ`.
+ * `∇[θ] body` / `∇[θ = θ₀] body` and binder-free `∇ J` / `∇ J θ`.
+ * Only `∇[θ = θ₀]` introduces a dummy; bare `∇[θ]` is a free reference, like `𝔼[x]`.
  * Bound+scope like lim/∂. Created via append like ∑/lim.
  */
 export class Lean_nabla extends LeanBigOperator {
@@ -1055,12 +1112,10 @@ export class Lean_nabla extends LeanBigOperator {
         return `\\left. ${nabla} \\right|_{{%s} = {%s}}`;
     }
 
-    pathChoices(opts = {}) {
-        const kid = this.scope ?? this.bound;
-        const kids = kid?.pathChoices?.(opts) ?? [''];
-        const out = [''];
-        for (const k of kids) out.push(k ? 'Grad' + k : 'Grad_');
-        return pathUniqKeepEmpty(out);
+    /** `∇[x = x₀] f x` binds `x`; bare `∇[x] f x` and binder-free `∇ J` do not. */
+    bindsVariable() {
+        const b = this.bound;
+        return !!(this.scope && b instanceof L.LeanEq && b.lhs instanceof L.LeanToken);
     }
 }
 
@@ -1073,6 +1128,11 @@ export class LeanRandomBigOp extends LeanBigOperator {
     static { this.register(); }
 
     static input_priority = 67;
+
+    /** Bracket arguments (`π` in `ℙ[π]`, the RV in `𝔼`/`𝕍𝕒𝕣`) are parameters, not dummies. */
+    bindsVariable() {
+        return false;
+    }
 
     /** @type {'paren'|'brace'} delimiter that closed the body */
     bodyDelim = 'paren';
@@ -1140,24 +1200,6 @@ export class LeanRandomBigOp extends LeanBigOperator {
         return 'Expect';
     }
 
-    pathChoices(opts = {}) {
-        const tok = this.pathToken;
-        const kids = this.scope?.pathChoices?.(opts) ?? [''];
-        const out = [''];
-        let sawBothHoles = false;
-        for (const k of kids) {
-            if (!k) {
-                if (!sawBothHoles) { out.push(`${tok}__`); sawBothHoles = true; }
-                continue;
-            }
-            // Binary bound hole + scope fill: Expect_Mul..., Prob_..., Var_...
-            out.push(`${tok}_` + k);
-        }
-        if (!sawBothHoles) out.push(`${tok}__`);
-        out.push(tok);
-        return pathUniqKeepEmpty(out);
-    }
-
     binderLatex(syntax) {
         const ix = this.bound;
         if (ix instanceof L.LeanColon) {
@@ -1172,7 +1214,7 @@ export class LeanRandomBigOp extends LeanBigOperator {
 
     latexArgs(syntax) {
         // Self-mark RV colors (node may sit outside ArgsSpaceSeparated after promote peel).
-        if (this instanceof Lean_Expect)
+        if (this instanceof Lean_Expect || this instanceof Lean_Var)
             L.LeanArgsSpaceSeparated.markOneExpectBinder(this, this.scope);
         else if (this instanceof Lean_Prob)
             L.LeanArgsSpaceSeparated.markProbBinderArgs(this.scope);
@@ -1250,18 +1292,6 @@ export class Lean_Prob extends LeanRandomBigOp {
         if (!this.scope) return '{{ℙ}}_{%s}';
         return '{{{ℙ}}_{%s}}\\ {%s}';
     }
-
-    /**
-     * Observation events path like RA `ℙ[π](x)`: Prob__ / Prob, not Prob_Eq.
-     * @param {object} [opts]
-     * @returns {string[]}
-     */
-    pathChoices(opts = {}) {
-        if (this.scope && L.LeanArgsSpaceSeparated.collectProbEventRVs(this.scope))
-            return pathUniqKeepEmpty(["", "Prob__", "Prob"]);
-        return super.pathChoices(opts);
-    }
-
 }
 
 export class Lean_Var extends LeanRandomBigOp {
@@ -1333,21 +1363,6 @@ export class LeanLimitsBigOp extends LeanBigOperator {
 
     get pathToken() {
         return 'Max';
-    }
-
-    pathChoices(opts = {}) {
-        const kid = this.scope ?? this.bound;
-        const kids = kid?.pathChoices?.(opts) ?? [''];
-        const tok = this.pathToken;
-        const out = [];
-        for (const k of kids) {
-            if (!k) continue;
-            const core = pathStripTrailingHoles(k);
-            if (!core) continue;
-            out.push(tok + core);
-        }
-        out.push(tok, '');
-        return pathUniqKeepEmpty(out);
     }
 
     binderLatex(syntax) {

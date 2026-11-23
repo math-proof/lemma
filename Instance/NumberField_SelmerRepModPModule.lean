@@ -2,8 +2,12 @@
 -- instance and this ZMod module instance are not in the same file.
 -- Registers `instModuleZModSelmer` from `selmerRepIntZModModule` in
 -- `Lemma.Rep.SelmerRepModP`. The lemma must not import this module (cycle).
-import Mathlib
-import Lemma.Rep.SelmerRepModP
+module
+
+public import Mathlib
+public import Theorem.Rep.SelmerRepModP
+public import Def.Rep_SelmerRepModP
+@[expose] public section
 
 set_option autoImplicit false
 

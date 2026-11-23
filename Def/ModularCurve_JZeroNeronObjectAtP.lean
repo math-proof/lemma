@@ -7,7 +7,7 @@ import Def.ModularCurve_JZeroNeronData
 import Lemma.Submodule.ToricDescentData
 import Def.GaloisRep_Flat
 import Def.FLTPrelim_Ramification
-import Lemma.Finset.SupersingularNodePlaces
+import Theorem.Finset.SupersingularNodePlaces
 import Structure.JacJ1Iface
 import Structure.ModularCurve_JZeroNeronObjectAtP
 import Abbrev.ModularCurve_JZeroNeronObjectAtP

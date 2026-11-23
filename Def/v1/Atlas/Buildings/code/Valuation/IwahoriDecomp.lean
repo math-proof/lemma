@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Class.v1.Atlas.Buildings.code.Valuation.LatticesValuations
-import Theorem.Nat.IsInO
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.FieldSimp
-import Class.v1.Atlas.Buildings.code.Valuation.IwahoriDecomp
+module
+
+public import Class.v1.Atlas.Buildings.code.Valuation.LatticesValuations
+public import Theorem.Nat.IsInO
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.FieldSimp
+public import Class.v1.Atlas.Buildings.code.Valuation.IwahoriDecomp
+
+@[expose] public section
+
 open Matrix
 
 

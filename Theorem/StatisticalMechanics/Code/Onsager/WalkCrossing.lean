@@ -7,13 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.BaseCase
+public import Theorem.StatisticalMechanics.Code.Onsager.NoDoubleWind
+public import Instance.StatisticalMechanics.Code.Onsager.WalkCrossing
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.BaseCase
-import Theorem.StatisticalMechanics.Code.Onsager.NoDoubleWind
-import Instance.StatisticalMechanics.Code.Onsager.WalkCrossing
-
+public section
 
 namespace StatMech.Onsager.WalkCrossing
 

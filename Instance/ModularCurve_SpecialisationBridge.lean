@@ -1,7 +1,7 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_SpecialisationBridge.lean: instance decls only.
-import Lemma.HahnSeries.SpecialisationVocab
+import Theorem.HahnSeries.SpecialisationVocab
 import Instance.ModularCurve_TatePoint
-import Lemma.HahnSeries.Monodromy
+import Theorem.HahnSeries.Monodromy
 import Def.WeierstrassCurve_VariableChangePointEquiv
 import Theorems.Thm_WeierstrassCurve_Affine_Point_vcInvFun_add
 import Theorems.Thm_ModularCurve_B3_goodModel_zero_spec
@@ -12,6 +12,7 @@ import Theorems.Thm_ModularCurve_B3_exists_variableChange_specialFibre_goodModel
 import Theorems.Thm_ModularCurve_B3_isElliptic_specialFibre_goodModel
 import Theorems.Thm_ModularCurve_B3_isElliptic_specialFibre
 import Theorems.Thm_ModularCurve_B3_exists_torsionBy_reduction_addEquiv
+import Def.ModularCurve_SpecialisationVocab
 
 set_option autoImplicit false
 

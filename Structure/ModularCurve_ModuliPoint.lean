@@ -2,7 +2,7 @@ module
 
 public import Mathlib
 public import Def.WeierstrassCurve_VariableChangePointEquiv
-public import Lemma.WeierstrassCurve.RatPointHom
+public import Theorem.WeierstrassCurve.RatPointHom
 
 public noncomputable section
 

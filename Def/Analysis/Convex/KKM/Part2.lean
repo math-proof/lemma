@@ -2,11 +2,17 @@
 -- Original KKM formalization by Adam Kiezun (`@akiezun`) in commit
 -- `d855ffa90ad200e1ae118101768bd192d0d3c59f`; `@toskua, Avocado` authored
 -- only the `Convexity.StdSimplex` representation migration.
-import Mathlib.Geometry.Convex.ConvexSpace.CompactSpaceStdSimplex
-import Mathlib.Topology.EMetricSpace.Basic
-import Mathlib.Topology.Sequences
-import Mathlib.Analysis.SpecificLimits.Basic
-import Instance.Analysis.Convex.KKM
+
+module
+
+public import Mathlib.Geometry.Convex.ConvexSpace.CompactSpaceStdSimplex
+public import Mathlib.Topology.EMetricSpace.Basic
+public import Mathlib.Topology.Sequences
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Instance.Analysis.Convex.KKM
+
+@[expose] public section
+
 /-!
 # Knaster-Kuratowski-Mazurkiewicz lemma
 

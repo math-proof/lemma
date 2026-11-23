@@ -11,7 +11,7 @@ public import Mathlib.GroupTheory.Perm.Cycle.Type
 public import Mathlib.Algebra.Polynomial.Taylor
 public import Mathlib.GroupTheory.Perm.Fin
 public import Def.Combinatorics.Enumerative.Stirling.Part4
-public import Lemma.Finset.Enumerative.Stirling
+public import Theorem.Finset.Enumerative.Stirling
 public import Instance.Combinatorics.Enumerative.ZagierCyclicPermutationProduct.Part2
 /-!
 # Products of two cyclic permutations

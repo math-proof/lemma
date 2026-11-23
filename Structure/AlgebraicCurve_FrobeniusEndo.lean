@@ -1,6 +1,6 @@
 module
 
-public import Lemma.Scheme.Correspondence
+public import Theorem.Scheme.Correspondence
 public import Mathlib.Algebra.CharP.Reduced
 
 set_option autoImplicit false

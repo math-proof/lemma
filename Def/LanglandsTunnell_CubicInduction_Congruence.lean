@@ -1,4 +1,8 @@
-import Lemma.Matrix.CubicInduction_Carrier
+module
+
+public import Theorem.Matrix.CubicInduction_Carrier
+
+@[expose] public section
 
 set_option autoImplicit false
 

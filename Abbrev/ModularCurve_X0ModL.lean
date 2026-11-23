@@ -1,14 +1,16 @@
-import Mathlib
-import Def.ModularCurve_JqCoeff
-import Def.ModularCurve_LaurentCoeff
-import Class.AlgebraicCurve_DivisorClassGroup
-import Lemma.LaurentSeries.CoeffSemilinearAut
-import Lemma.HahnSeries.QAdicPlaceMod
-import Def.ModularCurve_X0ModL
+module
+
+public import Mathlib
+public import Def.ModularCurve_JqCoeff
+public import Def.ModularCurve_LaurentCoeff
+public import Class.AlgebraicCurve_DivisorClassGroup
+public import Theorem.LaurentSeries.CoeffSemilinearAut
+public import Theorem.HahnSeries.QAdicPlaceMod
+public import Def.ModularCurve_X0ModL
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open HahnSeries IntermediateField AlgebraicCurve
 

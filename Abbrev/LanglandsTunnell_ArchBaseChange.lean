@@ -1,6 +1,8 @@
-import Def.LanglandsTunnell_ConverseData
+module
 
-noncomputable section
+public import Def.LanglandsTunnell_ConverseData
+
+@[expose] public noncomputable section
 
 namespace LanglandsTunnell
 

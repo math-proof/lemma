@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.AffineCoxeter.SemidirectProduct
-import Def.v1.Atlas.Buildings.code.Reflection.AffineWeylSemidirectMulEquiv.Part3
-import Theorem.v1.Atlas.Buildings.code.AffineCoxeter.TransitiveAlcovesHelper
-import Class.v1.Atlas.Buildings.code.AffineCoxeter.AffineWeylBook
+module
+
+public import Def.v1.Atlas.Buildings.code.AffineCoxeter.SemidirectProduct
+public import Def.v1.Atlas.Buildings.code.Reflection.AffineWeylSemidirectMulEquiv.Part3
+public import Theorem.v1.Atlas.Buildings.code.AffineCoxeter.TransitiveAlcovesHelper
+public import Class.v1.Atlas.Buildings.code.AffineCoxeter.AffineWeylBook
+
+@[expose] public section
+
 open scoped InnerProductSpace
 open Set
 

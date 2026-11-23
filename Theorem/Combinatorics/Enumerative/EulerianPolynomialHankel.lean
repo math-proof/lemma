@@ -3,21 +3,23 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
+module
 
-import Mathlib.Algebra.Polynomial.Basic
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.Algebra.Polynomial.Derivative
-import Mathlib.Algebra.Group.ForwardDiff
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum.BigOperators
-import Mathlib.Tactic.NormNum.NatFactorial
-import Mathlib.Tactic.Ring
-import Def.Combinatorics.Enumerative.HeilermannWeightedMotzkinDeterminant
-import Theorem.Finset.Enumerative.HeilermannWeightedMotzkinDeterminant
-import Def.Combinatorics.Enumerative.EulerianPolynomialHankel
+public import Mathlib.Algebra.Polynomial.Basic
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.Algebra.Polynomial.Derivative
+public import Mathlib.Algebra.Group.ForwardDiff
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.NormNum.BigOperators
+public import Mathlib.Tactic.NormNum.NatFactorial
+public import Mathlib.Tactic.Ring
+public import Def.Combinatorics.Enumerative.HeilermannWeightedMotzkinDeterminant
+public import Theorem.Finset.Enumerative.HeilermannWeightedMotzkinDeterminant
+public import Def.Combinatorics.Enumerative.EulerianPolynomialHankel
 
+public section
 
 section
 

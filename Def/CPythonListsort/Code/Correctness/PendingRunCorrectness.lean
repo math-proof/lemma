@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/PendingRunCorrectness.lean -/
 
-import Def.CPythonListsort.Code.Assembly.Order.Part4
-import Def.CPythonListsort.Code.Policy.PendingLayout
+module
+
+public import Def.CPythonListsort.Code.Assembly.Order.Part4
+public import Def.CPythonListsort.Code.Policy.PendingLayout
+
+@[expose] public section
+
 /-!
 # Pending-run correctness
 

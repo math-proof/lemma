@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Abbrev.v1.Atlas.TensorCategories.code.CoalgebraBialgebra.Part4
-import Lemma.Category.Atlas.v1.TensorCategories.code.CoalgebraBialgebra
-import Lemma.Category.Atlas.v1.TensorCategories.code.HopfAlgebra
-import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part3
-import Mathlib.LinearAlgebra.Contraction
+module
+
+public import Abbrev.v1.Atlas.TensorCategories.code.CoalgebraBialgebra.Part4
+public import Theorem.Category.Atlas.v1.TensorCategories.code.CoalgebraBialgebra
+public import Theorem.Category.Atlas.v1.TensorCategories.code.HopfAlgebra
+public import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part3
+public import Mathlib.LinearAlgebra.Contraction
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open scoped TensorProduct

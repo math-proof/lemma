@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FinitePlacesOverTensorProduct.lean -/
 
-import Mathlib.RingTheory.TensorProduct.Maps
-import Mathlib.Algebra.Algebra.Pi
-import Instance.NumberTheory.NumberField.Completion.FiniteLiesOverInstances
-import Instance.NumberTheory.NumberField.Completion.FinitePlacesOver
+module
+
+public import Mathlib.RingTheory.TensorProduct.Maps
+public import Mathlib.Algebra.Algebra.Pi
+public import Instance.NumberTheory.NumberField.Completion.FiniteLiesOverInstances
+public import Instance.NumberTheory.NumberField.Completion.FinitePlacesOver
 /-!
 # Finite-place completion tensor product maps
 
@@ -46,7 +48,7 @@ equivalence and does not alter the map. This module constructs the N265
 morphism; injectivity, surjectivity, finite étaleness, and the final
 `AlgEquiv` are deliberately left to later stages.
 -/
-
+@[expose] public section
 
 namespace IsDedekindDomain.HeightOneSpectrum.CompletionTensorProduct
 

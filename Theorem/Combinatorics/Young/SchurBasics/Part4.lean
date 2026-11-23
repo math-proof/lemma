@@ -6,7 +6,7 @@ import Mathlib
 import Def.Combinatorics.Young.LittlewoodRichardson.Part17
 import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
 import Instance.GroupTheory.Perm.Basics.Part2
-import Lemma.MvPolynomial.LittlewoodRichardson
+import Theorem.MvPolynomial.LittlewoodRichardson
 import Def.Combinatorics.Young.SchurBasics.Part7
 /-!
 # Schur Polynomials

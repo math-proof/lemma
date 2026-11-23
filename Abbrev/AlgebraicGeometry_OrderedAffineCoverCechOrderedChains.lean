@@ -1,11 +1,13 @@
-import Mathlib
-import Lemma.Scheme.OrderedAffineCoverCechCup
-import Lemma.Scheme.OrderedAffineCoverCochainPullback
-import Abbrev.AlgebraicGeometry_OrderedAffineCoverCechOrdered
+module
+
+public import Mathlib
+public import Theorem.Scheme.OrderedAffineCoverCechCup
+public import Theorem.Scheme.OrderedAffineCoverCochainPullback
+public import Abbrev.AlgebraicGeometry_OrderedAffineCoverCechOrdered
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 universe u
 

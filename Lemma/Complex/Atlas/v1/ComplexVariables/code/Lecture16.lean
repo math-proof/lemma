@@ -5,10 +5,10 @@ open Complex InnerProductSpace Laplacian Metric Real Set Topology Filter Measure
 
 
 /--
-[IsHarmonic.contDiffOn](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture16.lean)
+[isHarmonic_contDiffOn](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture16.lean)
 -/
 @[path]
-lemma IsHarmonic.contDiffOn
+lemma isHarmonic_contDiffOn
   {u : ℂ → ℝ}
   {Ω : Set ℂ}
 -- given
@@ -19,10 +19,10 @@ lemma IsHarmonic.contDiffOn
   HarmonicOnNhd.contDiffOn hu
 
 /--
-[IsHarmonic.harmonicAt](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture16.lean)
+[isHarmonic_harmonicAt](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture16.lean)
 -/
 @[path]
-lemma IsHarmonic.harmonicAt
+lemma isHarmonic_harmonicAt
   {u : ℂ → ℝ}
   {Ω : Set ℂ}
   {z : ℂ}
@@ -35,10 +35,10 @@ lemma IsHarmonic.harmonicAt
   hu z hz
 
 /--
-[IsHarmonic.mono](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture16.lean)
+[isHarmonic_mono](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture16.lean)
 -/
 @[path]
-lemma IsHarmonic.mono
+lemma isHarmonic_mono
   {u : ℂ → ℝ}
   {Ω₁ Ω₂ : Set ℂ}
 -- given
@@ -927,10 +927,10 @@ lemma schwarz_poisson
     fun z₀ hz₀ hcont ↦ schwarz_poisson_boundary U hU hUbd z₀ hz₀ hcont⟩
 
 /--
-[IsHarmonic.mean_value_property](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture16.lean)
+[isHarmonic_mean_value_property](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture16.lean)
 -/
 @[path]
-lemma IsHarmonic.mean_value_property
+lemma isHarmonic_mean_value_property
   {u : ℂ → ℝ}
   {Ω : Set ℂ}
   {z₀ : ℂ}
@@ -1560,3 +1560,4 @@ lemma harmonic_annulus_mean_value
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-22

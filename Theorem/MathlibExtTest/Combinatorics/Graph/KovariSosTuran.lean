@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Graph/KovariSosTuran.lean -/
+module
 
+public import Theorem.Finset.Graph.KovariSosTuran
 
-import Theorem.Finset.Graph.KovariSosTuran
-
+public section
 
 namespace MetaMathlibExt
 

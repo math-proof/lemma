@@ -8,38 +8,42 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
-import Mathlib.CategoryTheory.Monoidal.Linear
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Preadditive.Projective.Basic
-import Mathlib.CategoryTheory.Preadditive.Injective.Basic
-import Mathlib.CategoryTheory.Simple
-import Mathlib.CategoryTheory.Preadditive.Schur
-import Mathlib.CategoryTheory.Linear.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.Data.Real.Basic
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.RingTheory.Bialgebra.Basic
-import Mathlib.LinearAlgebra.TensorProduct.Basic
-import Mathlib.Algebra.Algebra.Bilinear
-import Mathlib.RingTheory.IntegralClosure.IsIntegral.Defs
-import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
-import Abbrev.v1.Atlas.TensorCategories.code.QuasiBialgebra
-import Mathlib.Algebra.Homology.ShortComplex.ShortExact
-import Mathlib.Algebra.Category.FGModuleCat.Basic
-import Mathlib.Algebra.Category.FGModuleCat.Abelian
-import Mathlib.CategoryTheory.Monoidal.Rigid.Braided
-import Mathlib.Algebra.Category.ModuleCat.Monoidal.Symmetric
-import Mathlib.Algebra.Category.ModuleCat.Projective
-import Mathlib.Algebra.Module.Projective
-import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
-import Theorem.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
-import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
-import Theorem.Category.Atlas.v1.TensorCategories.code.RegularObject
-import Abbrev.v1.Atlas.TensorCategories.code.QuasiTensorFunctor.Part5
-import Theorem.v1.Atlas.TensorCategories.code.SimpleObjectHelpers
-import Abbrev.v1.Atlas.TensorCategories.code.RegularObject.Part2
-import Abbrev.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part2
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+public import Mathlib.CategoryTheory.Monoidal.Linear
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Preadditive.Projective.Basic
+public import Mathlib.CategoryTheory.Preadditive.Injective.Basic
+public import Mathlib.CategoryTheory.Simple
+public import Mathlib.CategoryTheory.Preadditive.Schur
+public import Mathlib.CategoryTheory.Linear.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.RingTheory.Bialgebra.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Basic
+public import Mathlib.Algebra.Algebra.Bilinear
+public import Mathlib.RingTheory.IntegralClosure.IsIntegral.Defs
+public import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
+public import Abbrev.v1.Atlas.TensorCategories.code.QuasiBialgebra
+public import Mathlib.Algebra.Homology.ShortComplex.ShortExact
+public import Mathlib.Algebra.Category.FGModuleCat.Basic
+public import Mathlib.Algebra.Category.FGModuleCat.Abelian
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Braided
+public import Mathlib.Algebra.Category.ModuleCat.Monoidal.Symmetric
+public import Mathlib.Algebra.Category.ModuleCat.Projective
+public import Mathlib.Algebra.Module.Projective
+public import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
+public import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
+public import Theorem.Category.Atlas.v1.TensorCategories.code.RegularObject
+public import Abbrev.v1.Atlas.TensorCategories.code.QuasiTensorFunctor.Part5
+public import Theorem.v1.Atlas.TensorCategories.code.SimpleObjectHelpers
+public import Abbrev.v1.Atlas.TensorCategories.code.RegularObject.Part2
+public import Abbrev.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part2
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 

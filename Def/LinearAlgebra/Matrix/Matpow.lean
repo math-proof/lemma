@@ -1,8 +1,11 @@
-import Def.Algebra.BigOperators.Products
-import Def.Data.Tensor.Stack.Part2
-import Def.Data.Tensor.Inv
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+module
 
+public import Def.Algebra.BigOperators.Products
+public import Def.Data.Tensor.Stack.Part2
+public import Def.Data.Tensor.Inv
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+
+@[expose] public section
 
 /--
 [sympy.MatPow](https://github.com/sympy/sympy/blob/master/sympy/matrices/expressions/matpow.py)

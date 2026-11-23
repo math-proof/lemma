@@ -1,6 +1,10 @@
-import Mathlib
-import Theorem.Scheme.NeronModelPropertyBundleCarrier
-import Abbrev.AlgebraicGeometry_SplitTorusMu
+module
+
+public import Mathlib
+public import Theorem.Scheme.NeronModelPropertyBundleCarrier
+public import Abbrev.AlgebraicGeometry_SplitTorusMu
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,0 +1,502 @@
+{
+  "lean": "(([i < n] (R[i] *ᵥ Q[i])) * ([i < n] (R[i] *ᵥ K[i]))ᵀ / √(d + d : ℝ)).softmax * V",
+  "regex": [
+    "Mul(Softmax(Div(Mul(Stack_(MulGetS__))(T(Stack_(MulGetS__))))(Sqrt(Add__))))_",
+    "Mul(Softmax(Div(Mul(Stack_(Mul(Get__)(Get__)))(T(Stack_(MulGetS__))))(Sqrt(Add__))))_",
+    "Mul(Softmax(Div(Mul(Stack_(MulGetS__))(T(Stack_(Mul(Get__)(Get__)))))(Sqrt(Add__))))_",
+    "Mul(Softmax(Div(Mul(Stack_(Mul(Get__)(Get__)))(T(Stack_(Mul(Get__)(Get__)))))(Sqrt(Add__))))_"
+  ],
+  "suggestion": [
+    "MulSoftmaxDivMulStack_MulGetS__T_SqrtAdd",
+    "MulSoftmaxDivMulStack_Mul_Get__TStack_MulGetS__SqrtAdd",
+    "MulSoftmaxDivMulStack_MulGetS__TStack_Mul_Get__SqrtAdd",
+    "MulSoftmaxDivMulStack_Mul_Get__T_SqrtAdd"
+  ],
+  "dag": [
+    [
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "Softmax"
+      },
+      {
+        "token": "Div"
+      },
+      {
+        "token": "Stack"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "MulGetS"
+      },
+      {
+        "group": [
+          5,
+          4,
+          4
+        ]
+      },
+      {
+        "group": [
+          3,
+          4,
+          6
+        ]
+      },
+      {
+        "token": "T"
+      },
+      {
+        "group": [
+          8,
+          7
+        ]
+      },
+      {
+        "group": [
+          0,
+          7,
+          9
+        ]
+      },
+      {
+        "token": "Sqrt"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "group": [
+          12,
+          4,
+          4
+        ]
+      },
+      {
+        "group": [
+          11,
+          13
+        ]
+      },
+      {
+        "group": [
+          2,
+          10,
+          14
+        ]
+      },
+      {
+        "group": [
+          1,
+          15
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          16,
+          4
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "Softmax"
+      },
+      {
+        "token": "Div"
+      },
+      {
+        "token": "Stack"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "group": [
+          5,
+          4,
+          4
+        ]
+      },
+      {
+        "group": [
+          0,
+          6,
+          6
+        ]
+      },
+      {
+        "group": [
+          3,
+          4,
+          7
+        ]
+      },
+      {
+        "token": "T"
+      },
+      {
+        "token": "MulGetS"
+      },
+      {
+        "group": [
+          10,
+          4,
+          4
+        ]
+      },
+      {
+        "group": [
+          3,
+          4,
+          11
+        ]
+      },
+      {
+        "group": [
+          9,
+          12
+        ]
+      },
+      {
+        "group": [
+          0,
+          8,
+          13
+        ]
+      },
+      {
+        "token": "Sqrt"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "group": [
+          16,
+          4,
+          4
+        ]
+      },
+      {
+        "group": [
+          15,
+          17
+        ]
+      },
+      {
+        "group": [
+          2,
+          14,
+          18
+        ]
+      },
+      {
+        "group": [
+          1,
+          19
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          20,
+          4
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "Softmax"
+      },
+      {
+        "token": "Div"
+      },
+      {
+        "token": "Stack"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "MulGetS"
+      },
+      {
+        "group": [
+          5,
+          4,
+          4
+        ]
+      },
+      {
+        "group": [
+          3,
+          4,
+          6
+        ]
+      },
+      {
+        "token": "T"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "group": [
+          9,
+          4,
+          4
+        ]
+      },
+      {
+        "group": [
+          0,
+          10,
+          10
+        ]
+      },
+      {
+        "group": [
+          3,
+          4,
+          11
+        ]
+      },
+      {
+        "group": [
+          8,
+          12
+        ]
+      },
+      {
+        "group": [
+          0,
+          7,
+          13
+        ]
+      },
+      {
+        "token": "Sqrt"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "group": [
+          16,
+          4,
+          4
+        ]
+      },
+      {
+        "group": [
+          15,
+          17
+        ]
+      },
+      {
+        "group": [
+          2,
+          14,
+          18
+        ]
+      },
+      {
+        "group": [
+          1,
+          19
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          20,
+          4
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "Softmax"
+      },
+      {
+        "token": "Div"
+      },
+      {
+        "token": "Stack"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "group": [
+          5,
+          4,
+          4
+        ]
+      },
+      {
+        "group": [
+          0,
+          6,
+          6
+        ]
+      },
+      {
+        "group": [
+          3,
+          4,
+          7
+        ]
+      },
+      {
+        "token": "T"
+      },
+      {
+        "group": [
+          9,
+          8
+        ]
+      },
+      {
+        "group": [
+          0,
+          8,
+          10
+        ]
+      },
+      {
+        "token": "Sqrt"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "group": [
+          13,
+          4,
+          4
+        ]
+      },
+      {
+        "group": [
+          12,
+          14
+        ]
+      },
+      {
+        "group": [
+          2,
+          11,
+          15
+        ]
+      },
+      {
+        "group": [
+          1,
+          16
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          17,
+          4
+        ]
+      }
+    ]
+  ],
+  "json": {
+    "Mul": [
+      {
+        "Softmax": [
+          {
+            "Div": [
+              {
+                "Mul": [
+                  {
+                    "Stack": [
+                      "$1",
+                      {
+                        "Mul": [
+                          {
+                            "Get": [
+                              "$2",
+                              "$3"
+                            ]
+                          },
+                          {
+                            "Get": [
+                              "$4",
+                              "$3"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "T": [
+                      {
+                        "Stack": [
+                          "$1",
+                          {
+                            "Mul": [
+                              {
+                                "Get": [
+                                  "$2",
+                                  "$3"
+                                ]
+                              },
+                              {
+                                "Get": [
+                                  "$5",
+                                  "$3"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "Sqrt": [
+                  {
+                    "Add": [
+                      "$6",
+                      "$6"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "$7"
+    ]
+  },
+  "fingerprint": "Mul(Softmax(Div(Mul(Stack($1)(Mul(Get($2)($3))(Get($4)($3))))(T(Stack($1)(Mul(Get($2)($3))(Get($5)($3))))))(Sqrt(Add($6)($6)))))($7)"
+}

@@ -1,13 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/FractionalIdeal/Spectrum.lean -/
+module
 
-
-import Theorem.RingTheory.FractionalIdeal.Spectrum
-import Theorem.Int.FractionalIdeal.Spectrum
+public import Theorem.RingTheory.FractionalIdeal.Spectrum
+public import Theorem.Int.FractionalIdeal.Spectrum
 open scoped nonZeroDivisors Pointwise
 
 /-!
 # Tests for compatibility of fractional-ideal and prime-spectrum actions
 -/
+
+public section
 
 
 namespace N150Test

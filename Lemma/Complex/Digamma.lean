@@ -1,10 +1,10 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Def.Analysis.SpecialFunctions.Gamma.Digamma
 open scoped Real
 open Filter Finset Topology
+open Complex
 
-
-namespace Real
 
 /--
 [aux_log_one_add_bound](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -46,9 +46,6 @@ private lemma aux_log_one_add_bound {u : ℝ} (hu : |u| ≤ 1 / 2) :
   rw [abs_le]
   constructor <;> linarith
 
-end Real
-
-namespace Real
 
 /--
 [aux_log_diff_bound](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -88,9 +85,6 @@ private lemma aux_log_diff_bound {a h : ℝ} (ha : 0 < a) (hh : |h| ≤ a / 2) (
     rw [sq_abs]
   linarith [hstep, hfinal, hbound]
 
-end Real
-
-namespace Real
 
 /--
 [aux_E_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -111,9 +105,6 @@ private lemma aux_E_eq (x h : ℝ) (h0 : h ≠ 0) (N : ℕ) :
   field_simp
   ring
 
-end Real
-
-namespace Real
 
 /--
 [aux_sq_sum_bound](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -152,9 +143,6 @@ private lemma aux_sq_sum_bound (x : ℝ) (hx : 0 < x) (N : ℕ) :
   have := Finset.sum_le_sum hterm
   linarith
 
-end Real
-
-namespace Real
 
 /--
 [aux_E_D_bound](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -202,9 +190,6 @@ private lemma aux_E_D_bound (x h : ℝ) (hx : 0 < x) (hh : |h| ≤ x / 2) (h0 : 
     _ ≤ 2 * |h| * (1 / x ^ 2 + Real.pi ^ 2 / 6) := by
       apply mul_le_mul_of_nonneg_left (aux_sq_sum_bound x hx N) (by positivity)
 
-end Real
-
-namespace Real
 
 /--
 [aux_dist_tri](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -215,9 +200,6 @@ private lemma aux_dist_tri {a b c d : ℝ} : dist a d ≤ dist a b + dist b c + 
   have t2 := dist_triangle b c d
   linarith
 
-end Real
-
-namespace Real
 
 /--
 [aux_D_tendsto](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -334,9 +316,6 @@ private lemma aux_D_tendsto (x : ℝ) (hx : 0 < x) :
       _ = ε := by ring
   exact hfin
 
-end Real
-
-namespace Real
 
 /--
 [summable_one_div_add_nat_succ_sq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -352,9 +331,6 @@ lemma summable_one_div_add_nat_succ_sq : Summable (fun j : ℕ => 1 / ((j : ℝ)
     ring
   rwa [hcongr] at h
 
-end Real
-
-namespace Real
 
 /--
 [aux_harmonic_eq_sum](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -367,9 +343,6 @@ private lemma aux_harmonic_eq_sum (N : ℕ) :
   | succ n ih =>
     rw [harmonic_succ, ih, Finset.sum_range_succ]
 
-end Real
-
-namespace Real
 
 /--
 [aux_D_rewrite](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -393,9 +366,6 @@ private lemma aux_D_rewrite (x : ℝ) (N : ℕ) :
   push_cast
   ring_nf
 
-end Real
-
-namespace Real
 
 /--
 [aux_digamma_terms_summable](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -427,15 +397,12 @@ private lemma aux_digamma_terms_summable (x : ℝ) (hx : 0 < x) :
     simpa [div_eq_mul_inv] using h
   exact hmajor.of_norm_bounded hbound
 
-end Real
-
-namespace Real
 
 /--
 [Digamma](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
 -/
 @[path]
-lemma hasSum_digamma_series
+lemma real_hasSum_digamma_series
 -- given
   (x : ℝ)
   (hx : 0 < x) :
@@ -506,9 +473,6 @@ lemma hasSum_digamma_series
   rw [hfinal]
   exact hsum.hasSum
 
-end Real
-
-namespace Real
 
 /--
 [hasDerivAt_tsum_digamma_series](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -549,9 +513,6 @@ lemma hasDerivAt_tsum_digamma_series (y : ℝ) (hy : 0 < y) :
   exact hasDerivAt_tsum_of_isPreconnected hu isOpen_Ioi isPreconnected_Ioi hg hg'
     (Set.mem_Ioi.mpr one_pos) hg0 (Set.mem_Ioi.mpr hy)
 
-end Real
-
-namespace Real
 
 /--
 [deriv_deriv_log_Gamma_add_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -570,7 +531,7 @@ lemma deriv_deriv_log_Gamma_add_one (y : ℝ) (hy : 0 < y) :
     apply Filter.eventuallyEq_of_mem (Ioi_mem_nhds hy)
     intro z hz
     simp only [Set.mem_Ioi] at hz
-    have hser := (hasSum_digamma_series z hz).tsum_eq
+    have hser := (real_hasSum_digamma_series z hz).tsum_eq
     simp only [hSdef]
     exact hser
   have hH : HasDerivAt (fun z => deriv f (z + 1) + Real.eulerMascheroniConstant) D y :=
@@ -583,7 +544,7 @@ lemma deriv_deriv_log_Gamma_add_one (y : ℝ) (hy : 0 < y) :
       apply Filter.eventuallyEq_of_mem hSmem
       intro t ht
       simp only [Set.mem_Ioi] at ht
-      have hser := (hasSum_digamma_series (t - 1) (by linarith)).tsum_eq
+      have hser := (real_hasSum_digamma_series (t - 1) (by linarith)).tsum_eq
       have hcast : t - 1 + 1 = t := by ring
       rw [hcast] at hser
       have hSval : S (t - 1) = deriv f t + Real.eulerMascheroniConstant := by
@@ -608,9 +569,6 @@ lemma deriv_deriv_log_Gamma_add_one (y : ℝ) (hy : 0 < y) :
   have huniq := hH2.unique hH
   exact huniq
 
-end Real
-
-namespace Real
 
 /--
 [deriv_log_Gamma](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -627,10 +585,7 @@ lemma deriv_log_Gamma (u : ℝ) (hu : 0 < u) :
     linarith
   exact ((Real.differentiableAt_Gamma hU).hasDerivAt.log
     (Real.Gamma_ne_zero hU)).deriv
-end Real
 
-
-namespace Complex
 
 /--
 [Digamma](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -714,9 +669,6 @@ lemma analyticAt_Gamma
     exact (Complex.differentiableAt_Gamma s (hball s hs)).differentiableWithinAt
   exact DifferentiableOn.analyticAt hDiffOn (Metric.ball_mem_nhds _ hr)
 
-end Complex
-
-namespace Complex
 
 /--
 [Digamma](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -732,9 +684,6 @@ lemma analyticAt_digamma
   have hG := analyticAt_Gamma w hw
   exact (AnalyticAt.deriv hG).div hG (Complex.Gamma_ne_zero hw)
 
-end Complex
-
-namespace Complex
 
 /--
 [Digamma](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -771,9 +720,6 @@ lemma deriv_Gamma_ofReal
   have hC'' := hC'.congr_of_eventuallyEq heq.symm
   exact hC''.unique hR'
 
-end Complex
-
-namespace Complex
 
 /--
 [Digamma](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -834,9 +780,6 @@ lemma summable_norm_one_div_add_nat_succ_sq
   apply (summable_nat_add_iff (f := fun m : ℕ => (‖z + ((m + 1 : ℕ) : ℂ)‖ ^ 2)⁻¹) N).mp
   simpa using htail
 
-end Complex
-
-namespace Complex
 
 /--
 [helper_seriesDomain_open](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -847,9 +790,6 @@ private lemma helper_seriesDomain_open : IsOpen seriesDomain := by
   rw [heq]
   exact isOpen_Ioi.preimage Complex.continuous_re
 
-end Complex
-
-namespace Complex
 
 /--
 [helper_seriesDomain_convex](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -859,9 +799,6 @@ private lemma helper_seriesDomain_convex : Convex ℝ seriesDomain :=
   convex_halfSpace_gt
     (LinearMap.isLinearMap_of_compatibleSMul ℝ Complex.reLm) 1
 
-end Complex
-
-namespace Complex
 
 /--
 [helper_seriesDomain_preconn](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -870,9 +807,6 @@ namespace Complex
 private lemma helper_seriesDomain_preconn : IsPreconnected seriesDomain :=
   helper_seriesDomain_convex.isPreconnected
 
-end Complex
-
-namespace Complex
 
 /--
 [helper_seriesTerm_re](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -885,9 +819,6 @@ private lemma helper_seriesTerm_re (j : ℕ) (s : ℂ)
   have hs' : (1 : ℝ) < s.re := hs
   linarith
 
-end Complex
-
-namespace Complex
 
 /--
 [helper_seriesTerm_ne](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -904,9 +835,6 @@ private lemma helper_seriesTerm_ne (j : ℕ) (s : ℂ)
   rw [Complex.zero_re] at h0
   linarith
 
-end Complex
-
-namespace Complex
 
 /--
 [helper_seriesTerm_hasDeriv](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -933,9 +861,6 @@ private lemma helper_seriesTerm_hasDeriv (j : ℕ) (s : ℂ)
     ring
   rwa [hfun, ← hderiv]
 
-end Complex
-
-namespace Complex
 
 /--
 [helper_seriesDeriv_bound](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -952,9 +877,6 @@ private lemma helper_seriesDeriv_bound (j : ℕ) (s : ℂ)
   rw [norm_div, norm_one, norm_pow]
   exact one_div_le_one_div_of_le (by positivity) hsq
 
-end Complex
-
-namespace Complex
 
 /--
 [helper_series_summable_at_two](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -962,7 +884,7 @@ namespace Complex
 @[path]
 private lemma helper_series_summable_at_two :
   Summable (fun j : ℕ => digammaSeriesTerm j 2) := by
-  refine Summable.of_norm_bounded Real.summable_one_div_add_nat_succ_sq
+  refine Summable.of_norm_bounded summable_one_div_add_nat_succ_sq
     (fun j => ?_)
   have e1 : ((j : ℂ) + 1) = Complex.ofReal ((j : ℝ) + 1) := by
     simp [Complex.ofReal_add]
@@ -992,9 +914,6 @@ private lemma helper_series_summable_at_two :
         mul_le_mul_of_nonneg_left h2le (by positivity)
   exact one_div_le_one_div_of_le (by positivity) hle
 
-end Complex
-
-namespace Complex
 
 /--
 [helper_seriesFun_hasDeriv](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -1004,7 +923,7 @@ private lemma helper_seriesFun_hasDeriv (s : ℂ)
   (hs : s ∈ seriesDomain) :
   HasDerivAt digammaSeriesFun
     (∑' j : ℕ, (1 / ((j : ℂ) + s) ^ 2 : ℂ)) s :=
-  hasDerivAt_tsum_of_isPreconnected Real.summable_one_div_add_nat_succ_sq
+  hasDerivAt_tsum_of_isPreconnected summable_one_div_add_nat_succ_sq
     helper_seriesDomain_open helper_seriesDomain_preconn
     (fun j y hy => helper_seriesTerm_hasDeriv j y hy)
     (fun j y hy => helper_seriesDeriv_bound j y hy)
@@ -1015,9 +934,6 @@ private lemma helper_seriesFun_hasDeriv (s : ℂ)
       norm_num)
     helper_series_summable_at_two hs
 
-end Complex
-
-namespace Complex
 
 /--
 [helper_seriesFun_analytic](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -1030,9 +946,6 @@ private lemma helper_seriesFun_analytic :
       (helper_seriesFun_hasDeriv s hs).differentiableAt.differentiableWithinAt)
     helper_seriesDomain_open
 
-end Complex
-
-namespace Complex
 
 /--
 [helper_digammaFun_analytic](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -1048,11 +961,8 @@ private lemma helper_digammaFun_analytic :
     rw [Complex.neg_re, Complex.natCast_re] at h0
     have hm : (0 : ℝ) ≤ (m : ℝ) := Nat.cast_nonneg m
     linarith
-  exact (Complex.analyticAt_digamma s hw).add analyticAt_const
+  exact (analyticAt_digamma s hw).add analyticAt_const
 
-end Complex
-
-namespace Complex
 
 /--
 [helper_series_agree_real](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -1061,7 +971,7 @@ namespace Complex
 private lemma helper_series_agree_real (t : ℝ) (ht : 1 < t) :
   digammaFun (t : ℂ) = digammaSeriesFun (t : ℂ) := by
   have hx : (0 : ℝ) < t - 1 := by linarith
-  have hsum := Real.hasSum_digamma_series (t - 1) hx
+  have hsum := real_hasSum_digamma_series (t - 1) hx
   rw [sub_add_cancel] at hsum
   have htsum := hsum.tsum_eq
   have hcast : ((∑' j : ℕ,
@@ -1086,16 +996,14 @@ private lemma helper_series_agree_real (t : ℝ) (ht : 1 < t) :
     + Real.eulerMascheroniConstant : ℝ) : ℂ)
     = digammaFun (t : ℂ) := by
     have ht0 : (0 : ℝ) < t := by linarith
-    rw [Real.deriv_log_Gamma t ht0]
+    rw [deriv_log_Gamma t ht0]
     simp only [digammaFun, Complex.digamma_def, logDeriv_apply,
-      Complex.deriv_Gamma_ofReal t ht0, Complex.Gamma_ofReal,
-      Complex.ofReal_div, Complex.ofReal_add]
+      Complex.Gamma_ofReal, Complex.ofReal_div, Complex.ofReal_add]
+    rw [deriv_Gamma_ofReal t ht0]
   have htsumC := congrArg (fun r : ℝ => (r : ℂ)) htsum
-  rwa [hcast, hval] at htsumC
+  rw [hcast, hval] at htsumC
+  exact htsumC.symm
 
-end Complex
-
-namespace Complex
 
 /--
 [helper_series_freq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -1126,9 +1034,6 @@ private lemma helper_series_freq :
     rw [h2c]
     exact_mod_cast ne_of_gt ht2
 
-end Complex
-
-namespace Complex
 
 /--
 [helper_complex_digamma_series](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -1150,9 +1055,6 @@ private lemma helper_complex_digamma_series (s : ℂ)
   have h := heq hmem
   simpa [digammaFun] using h
 
-end Complex
-
-namespace Complex
 
 /--
 [Digamma](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -1204,12 +1106,9 @@ lemma summable_digammaSeriesTerm
       funext j
       ring
     rw [e]
-    exact Real.summable_one_div_add_nat_succ_sq.mul_left _
+    exact summable_one_div_add_nat_succ_sq.mul_left _
   exact Summable.of_norm_bounded hmaj hbound
 
-end Complex
-
-namespace Complex
 
 /--
 [hasSum_digamma_series](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Gamma/Digamma.lean)
@@ -1221,10 +1120,9 @@ lemma hasSum_digamma_series (s : ℂ) (hs : 1 < s.re) :
     (Complex.digamma s + (Real.eulerMascheroniConstant : ℂ)) := by
   have hsum := summable_digammaSeriesTerm s hs
   have heq := helper_complex_digamma_series s hs
-  rwa [heq]
-
-end Complex
+  rw [heq]
+  simpa [digammaSeriesFun] using hsum.hasSum
 
 
 -- created on 2026-10-11
--- updated on 2026-10-26
+-- updated on 2026-11-22

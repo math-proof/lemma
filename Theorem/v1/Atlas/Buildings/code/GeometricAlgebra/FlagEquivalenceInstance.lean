@@ -7,14 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Class.v1.Atlas.Buildings.code.GeometricAlgebra.FlagsParabolics.Part3
-import Lemma.Fin.EqLinearEquivToGLV_GlvToLinearEquiv
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.Projection
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Class.v1.Atlas.Buildings.code.GeometricAlgebra.FlagsParabolics.Part3
+public import Theorem.Fin.EqLinearEquivToGLV_GlvToLinearEquiv
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.Projection
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
 
+public section
 
 namespace GeometricAlgebra
 

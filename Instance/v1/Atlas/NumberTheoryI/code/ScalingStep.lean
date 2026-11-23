@@ -8,12 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Instance.v1.Atlas.NumberTheoryI.code.HenselLemmas
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.RingTheory.DiscreteValuationRing.TFAE
-import Mathlib.RingTheory.Polynomial.Content
-import Mathlib.RingTheory.Polynomial.GaussLemma
-import Mathlib.RingTheory.Localization.FractionRing
+module
+
+public import Instance.v1.Atlas.NumberTheoryI.code.HenselLemmas
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Mathlib.RingTheory.DiscreteValuationRing.TFAE
+public import Mathlib.RingTheory.Polynomial.Content
+public import Mathlib.RingTheory.Polynomial.GaussLemma
+public import Mathlib.RingTheory.Localization.FractionRing
+@[expose] public section
+
 open Polynomial IsLocalRing
 
 

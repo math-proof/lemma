@@ -1,6 +1,7 @@
 -- Carved from Lemma/Definitions/Def_IharaMennickeCarrier.lean: instance decls only.
 import Mathlib.GroupTheory.Subgroup.Simple
-import Lemma.Matrix.IharaMennickeCarrier
+import Theorem.Matrix.IharaMennickeCarrier
+import Def.Matrix_IharaMennickeCarrier
 
 open Matrix
 

@@ -4,18 +4,23 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Analysis.Meromorphic.Basic
-import Mathlib.NumberTheory.LSeries.ZMod
-import Theorem.Analysis.Ramanujan.Part1Ch7DirichletBeta
-import Theorem.Complex.Part1Ch7DirichletBeta
-import Mathlib.Analysis.Meromorphic.Complex
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.FunProp
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.SimpRw
+module
+
+public import Mathlib.Analysis.Meromorphic.Basic
+public import Mathlib.NumberTheory.LSeries.ZMod
+public import Theorem.Analysis.Ramanujan.Part1Ch7DirichletBeta
+public import Theorem.Complex.Part1Ch7DirichletBeta
+public import Mathlib.Analysis.Meromorphic.Complex
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.FunProp
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.SimpRw
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 7, Entry 18
 

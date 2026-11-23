@@ -1,7 +1,7 @@
 /**
  * Mirrors `php/request/count.php` + `php/request/lines.php` for the website home labels.
  *
- * - Theorem count: `select count(*) from lemma where user = ? and json_length(imports) > 0`
+ * - Theorem count: `select count(*) from lemma where json_length(imports) > 0`
  *   (`php/utility.php` `select_count`), not a raw `.lean` file count.
  * - Lines: non-empty lines in all `.lean` under the decl libraries and `Lemma/` except `*.echo.lean`
  *   (`php/request/lines.php` + `read_all_lean`).
@@ -18,13 +18,8 @@ const LINE_ROOTS = [
 ];
 const CACHE_TTL_MS = 5 * 60 * 1000;
 
-/** @type {Map<string, { data: { theoremCount: number, lineCount: number }, at: number }>} */
-const cacheByUser = new Map();
-
-function dbUser(projectUser) {
-  const s = String(projectUser || 'lean');
-  return /^[a-zA-Z0-9_]+$/.test(s) ? s : 'lean';
-}
+/** @type {{ data: { theoremCount: number, lineCount: number }, at: number } | null} */
+let cache = null;
 
 async function collectLeanFilesNoEcho(absDir) {
   /** @type {string[]} */
@@ -78,17 +73,14 @@ async function getLeanNonEmptyLinesTotal() {
 
 /**
  * Same as `php/utility.php` `select_count($user)` without type filter.
- * @param {string} projectUser
  */
-async function getTheoremCountMysql(projectUser) {
+async function getTheoremCountMysql() {
   if (!getMysqlConfig()) return 0;
   const pool = getMysqlPool();
   if (!pool) return 0;
-  const u = dbUser(projectUser);
   try {
     const [rows] = await pool.query(
-      'select count(*) as c from lemma where user = ? and json_length(imports) > 0',
-      [u]
+      'select count(*) as c from lemma where json_length(imports) > 0'
     );
     if (Array.isArray(rows) && rows[0]) {
       return Number(rows[0].c) || 0;
@@ -100,25 +92,22 @@ async function getTheoremCountMysql(projectUser) {
 }
 
 /**
- * @param {string} projectUser
  * @returns {Promise<{ theoremCount: number, lineCount: number }>}
  */
-export async function getRepoStats(projectUser) {
+export async function getRepoStats() {
   const [theoremCount, lineCount] = await Promise.all([
-    getTheoremCountMysql(projectUser),
+    getTheoremCountMysql(),
     getLeanNonEmptyLinesTotal(),
   ]);
   return { theoremCount, lineCount };
 }
 
-export async function getRepoStatsCached(projectUser) {
-  const key = dbUser(projectUser);
+export async function getRepoStatsCached() {
   const now = Date.now();
-  const hit = cacheByUser.get(key);
-  if (hit && now - hit.at < CACHE_TTL_MS) {
-    return hit.data;
+  if (cache && now - cache.at < CACHE_TTL_MS) {
+    return cache.data;
   }
-  const data = await getRepoStats(projectUser);
-  cacheByUser.set(key, { data, at: now });
+  const data = await getRepoStats();
+  cache = { data, at: now };
   return data;
 }

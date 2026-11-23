@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/MvPolynomial/RegularFunction.lean -/
+module
 
-
-import Theorem.Algebra.MvPolynomial.RegularFunction.Part3
-import Mathlib.Algebra.Algebra.Rat
-import Mathlib.Data.Real.Basic
+public import Theorem.Algebra.MvPolynomial.RegularFunction.Part3
+public import Mathlib.Algebra.Algebra.Rat
+public import Mathlib.Data.Real.Basic
 open MvPolynomial
 
+public section
 
 namespace MvPolynomial.RegularFunction
 

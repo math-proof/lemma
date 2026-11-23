@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/StirlingSecondAddition.lean -/
+module
 
+public import Theorem.Finset.Enumerative.StirlingSecondAddition
 
-import Theorem.Finset.Enumerative.StirlingSecondAddition
-
+public section
 
 namespace MetaMathlibExt
 

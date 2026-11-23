@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.LieGroups.code.GKModule.Part2
 import Def.v1.Atlas.LieGroups.code.Admissible.Part3
-import Lemma.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
+import Theorem.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
 import Mathlib.Algebra.Lie.Semisimple.Defs
 import Instance.v1.Atlas.LieGroups.code.GKModuleDefs
 

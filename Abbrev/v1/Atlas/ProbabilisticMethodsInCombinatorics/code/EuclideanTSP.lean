@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.SpaceFillingCurve
-import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.SpaceFillingCurve
+module
+
+public import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.SpaceFillingCurve
+public import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.SpaceFillingCurve
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open scoped Classical

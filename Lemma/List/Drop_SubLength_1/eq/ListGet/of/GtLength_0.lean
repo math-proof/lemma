@@ -1,5 +1,4 @@
-import Initialize.Tactic.Attr.Basic
-import Lemma.List.Drop.eq.Cons_Drop_Add_1.of.GtLength
+import Theorem.List.Drop.eq.Cons_Drop_Add_1.of.GtLength
 import Lemma.Nat.EqAddSub.of.Ge
 import Lemma.List.Drop.eq.Nil
 open List Nat
@@ -13,9 +12,10 @@ private lemma main
 -- imply
   s.drop (s.length - 1) = [s[s.length - 1]] := by
 -- proof
-  rw [Drop.eq.Cons_Drop_Add_1.of.GtLength (by simp_all)]
+  rw [Drop.eq.Cons_Drop_Add_1.of.GtLength (Nat.sub_lt h (by decide))]
   rw [EqAddSub.of.Ge (by linarith)]
   rw [Drop.eq.Nil]
 
 
 -- created on 2025-06-17
+-- updated on 2026-11-22

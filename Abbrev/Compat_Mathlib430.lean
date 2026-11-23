@@ -4,18 +4,22 @@ release v4.30.0 = leanprover-community/mathlib4 commit c5ea00351c28e24afc9f0f843
 RENAMED (suffix `Finsupp` / trailing prime) so they do not clash with Mathlib v4.33.0. Bodies are the Mathlib v4.30.0 text
 with its docstrings omitted, otherwise byte-identical unless a line is marked `-- [port]`.
 -/
-import Mathlib.RepresentationTheory.Rep.Basic
-import Mathlib.Algebra.Group.End
-import Mathlib.Algebra.GroupWithZero.Action.Basic
-import Mathlib.Algebra.Ring.AddAut
-import Mathlib.Algebra.Ring.Action.Submonoid
-import Mathlib.NumberTheory.RamificationInertia.Galois
-import Mathlib.RingTheory.Invariant.Galois
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring
-import Notation.Algebra.Ring.Action.Submonoid
-import Lemma.Ideal.Mathlib430
+module
+
+public import Mathlib.RepresentationTheory.Rep.Basic
+public import Mathlib.Algebra.Group.End
+public import Mathlib.Algebra.GroupWithZero.Action.Basic
+public import Mathlib.Algebra.Ring.AddAut
+public import Mathlib.Algebra.Ring.Action.Submonoid
+public import Mathlib.NumberTheory.RamificationInertia.Galois
+public import Mathlib.RingTheory.Invariant.Galois
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Ring
+public import Notation.Algebra.Ring.Action.Submonoid
+public import Theorem.Ideal.Mathlib430
+
+@[expose] public section
 
 set_option autoImplicit false
 

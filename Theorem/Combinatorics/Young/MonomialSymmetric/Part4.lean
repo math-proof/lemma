@@ -4,8 +4,8 @@ All rights reserved.
 -/
 import Mathlib
 import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
-import Lemma.LaurentSeries.LaurentSeries
-import Lemma.Partition.NPartition
+import Theorem.LaurentSeries.LaurentSeries
+import Theorem.Partition.NPartition
 import Def.Combinatorics.Young.MonomialSymmetric.Part2
 open scoped Polynomial
 open MvPolynomial Finset Equiv

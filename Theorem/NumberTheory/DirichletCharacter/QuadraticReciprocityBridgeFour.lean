@@ -1,6 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeFour.lean -/
+module
 
-import Theorem.Nat.DirichletCharacter.QuadraticReciprocityThreeOdd
+public import Theorem.Nat.DirichletCharacter.QuadraticReciprocityThreeOdd
+
 /-! Even-family reduction for the reciprocity bridge.
 
 At an odd `p` the factor `4` contributes nothing to the Jacobi symbol,
@@ -12,6 +14,8 @@ which has no public bridge lemma here; `quadraticDirichletCharacter` in
 `MathlibExt.NumberTheory.DirichletCharacter.QuadraticDirichletCharacter` closes that
 subcase and completes the assembly over `IsFundamentalDiscriminant`.
 -/
+
+public section
 
 
 namespace MetaMathlibExt

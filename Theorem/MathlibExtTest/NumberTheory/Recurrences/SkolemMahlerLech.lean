@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Recurrences/SkolemMahlerLech.lean -/
+module
 
+public import Theorem.Nat.Recurrences.SkolemMahlerLech
+public import Mathlib.Algebra.Field.Rat
+public import Mathlib.Data.Set.Finite.Basic
+public import Mathlib.Data.Set.Lattice.Bounded
 
-import Theorem.Nat.Recurrences.SkolemMahlerLech
-import Mathlib.Algebra.Field.Rat
-import Mathlib.Data.Set.Finite.Basic
-import Mathlib.Data.Set.Lattice.Bounded
-
+public section
 
 -- A Fibonacci-type rational recurrence has a structured zero set.
 example (u : ℕ → ℚ) (hrec : ∀ n, u (n + 2) = u n + u (n + 1)) :

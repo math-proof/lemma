@@ -1,10 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Poset/LinearExtension.lean -/
+module
 
-
-import Def.Combinatorics.Poset.LinearExtension
-import Theorem.Finset.Poset.LinearExtension
-import Mathlib.Tactic.FinCases
-import Mathlib.Data.Fintype.Card
+public import Def.Combinatorics.Poset.LinearExtension
+public import Theorem.Finset.Poset.LinearExtension
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Data.Fintype.Card
 open FinPoset
 
 /-!
@@ -13,6 +13,8 @@ open FinPoset
 Exercises the `FinPoset` API on the chain `Fin 3`: nonemptiness, the
 positive denominator, the membership characterization, and maximal elements.
 -/
+
+public section
 
 
 /-- Every finite poset has a linear extension, here the chain `Fin 3`. -/

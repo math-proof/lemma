@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOverDegreeBound.lean -/
+module
 
-import Instance.NumberTheory.NumberField.Completion.FiniteLiesOverInstances
-import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
-import Mathlib.Topology.Algebra.Module.FiniteDimension
+public import Instance.NumberTheory.NumberField.Completion.FiniteLiesOverInstances
+public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+public import Mathlib.Topology.Algebra.Module.FiniteDimension
+
 /-!
 # Local degree bound under finite-place completion
 
@@ -54,6 +56,8 @@ Scope: this module proves only the local/global degree inequality, a
 dimension input toward N234; it does not identify completions with local
 fields or prove any tensor-product equivalence.
 -/
+
+public section
 
 
 namespace IsDedekindDomain.HeightOneSpectrum

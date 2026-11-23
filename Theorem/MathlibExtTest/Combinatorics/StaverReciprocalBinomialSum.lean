@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/StaverReciprocalBinomialSum.lean -/
+module
 
-
-import Theorem.Finset.StaverReciprocalBinomialSum
-import Mathlib.Tactic.NormNum
+public import Theorem.Finset.StaverReciprocalBinomialSum
+public import Mathlib.Tactic.NormNum
 open MetaMathlibExt
 
+public section
 
 /-- Generic API: the promoted theorem fires at every `n` with the exact
 Wanted statement shape. -/

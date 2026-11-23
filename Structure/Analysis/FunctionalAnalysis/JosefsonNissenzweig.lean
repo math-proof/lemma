@@ -17,7 +17,7 @@ public import Mathlib.Tactic.NormNum
 public import Mathlib.Topology.Algebra.InfiniteSum.Real
 public import Mathlib.Topology.ContinuousMap.Bounded.Normed
 public import Theorem.Analysis.FunctionalAnalysis.BanachLimit.Part5
-public import Lemma.Filter.Any_And_Eq_1AndAll_EqAndAll_Eq
+public import Theorem.Filter.Any_And_Eq_1AndAll_EqAndAll_Eq
 public import Theorem.Set.Any_All_Any_All_LtNormSubOrHasUniformL1LowerBound.of.IsBounded_Range
 public import Theorem.Analysis.FunctionalAnalysis.RosenthalL1.Part13
 public import Def.Analysis.FunctionalAnalysis.JosefsonNissenzweig

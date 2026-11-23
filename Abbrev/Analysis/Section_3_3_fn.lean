@@ -1,7 +1,11 @@
-import Abbrev.Analysis.Section_3_3.Part2
-import Lemma.Nat.P333a.Unique
-import Lemma.Set.P333c.Unique
-import Lemma.Nat.P335.Unique
+module
+
+public import Abbrev.Analysis.Section_3_3.Part2
+public import Theorem.Nat.P333a.Unique
+public import Theorem.Set.P333c.Unique
+public import Theorem.Nat.P335.Unique
+
+@[expose] public section
 
 
 namespace Chapter3

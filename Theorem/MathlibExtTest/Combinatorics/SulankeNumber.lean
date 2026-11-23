@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SulankeNumber.lean -/
+module
 
-
-import Def.Combinatorics.SulankeNumber
-import Theorem.Finset.SulankeNumber
-import Mathlib.Tactic
+public import Def.Combinatorics.SulankeNumber
+public import Theorem.Finset.SulankeNumber
+public import Mathlib.Tactic
 open MetaMathlibExt
 
+public section
 
 example : sulankeB 0 0 = 1 := rfl
 

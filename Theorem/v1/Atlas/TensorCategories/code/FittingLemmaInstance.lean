@@ -7,17 +7,20 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Class.v1.Atlas.TensorCategories.code.FittingLemmaLocalEnd
-import Theorem.Category.Atlas.v1.TensorCategories.code.FittingLemmaLocalEnd
-import Theorem.Category.Atlas.v1.TensorCategories.code.FittingAlgebraLocalRing
-import Theorem.v1.Atlas.TensorCategories.code.FittingAlgebraLocalRing
-import Mathlib.CategoryTheory.Idempotents.Basic
-import Mathlib.CategoryTheory.Preadditive.Biproducts
+public import Class.v1.Atlas.TensorCategories.code.FittingLemmaLocalEnd
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FittingLemmaLocalEnd
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FittingAlgebraLocalRing
+public import Theorem.v1.Atlas.TensorCategories.code.FittingAlgebraLocalRing
+public import Mathlib.CategoryTheory.Idempotents.Basic
+public import Mathlib.CategoryTheory.Preadditive.Biproducts
 set_option autoImplicit false
 set_option maxHeartbeats 800000
 
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Idempotents
+
+public section
 
 universe v u w
 

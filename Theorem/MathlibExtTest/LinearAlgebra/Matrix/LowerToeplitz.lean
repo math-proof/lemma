@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/LowerToeplitz.lean -/
+module
 
+public import Mathlib.Tactic.NormNum
+public import Def.LinearAlgebra.Matrix.LowerToeplitz
+public import Theorem.Matrix.LowerToeplitz
+public import Def.MathlibExtTest.LinearAlgebra.Matrix.LowerToeplitz
 
-import Mathlib.Tactic.NormNum
-import Def.LinearAlgebra.Matrix.LowerToeplitz
-import Theorem.Matrix.LowerToeplitz
-import Def.MathlibExtTest.LinearAlgebra.Matrix.LowerToeplitz
-
+public section
 
 /-- Below-diagonal entry over `ℕ`: `(2, 0)` reads `testSeqN (2 - 0) = 3`. -/
 example : Matrix.lowerToeplitz testSeqN 2 0 = 3 := by

@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NormalNumber.lean -/
+module
 
-
-import Def.NumberTheory.NormalNumber
-import Theorem.Nat.NormalNumber
+public import Def.NumberTheory.NormalNumber
+public import Theorem.Nat.NormalNumber
 open MetaMathlibExt.NormalNumber
 
+public section
 
 example (b n : ℕ) (x : ℝ) : digitSeq b x n = ⌊(b : ℝ) ^ (n + 1) * Int.fract x⌋₊ % b :=
   rfl

@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/BaseRecognizable.lean -/
+module
 
+public import Def.NumberTheory.BaseRecognizable
+public import Theorem.Nat.BaseRecognizable
 
-import Def.NumberTheory.BaseRecognizable
-import Theorem.Nat.BaseRecognizable
-
+public section
 
 namespace MetaMathlibExt
 

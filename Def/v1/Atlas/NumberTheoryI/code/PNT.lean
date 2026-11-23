@@ -8,17 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.NumberTheory.Chebyshev
-import Mathlib.NumberTheory.LSeries.RiemannZeta
-import Mathlib.NumberTheory.LSeries.Nonvanishing
-import Mathlib.Analysis.Complex.RemovableSingularity
-import Mathlib.Analysis.Meromorphic.Basic
-import Mathlib.Analysis.Calculus.ParametricIntegral
-import Mathlib.MeasureTheory.Integral.ExpDecay
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.RiemannZeta
-import Abbrev.v1.Atlas.NumberTheoryI.code.Lem168
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Lem168
+module
+
+public import Mathlib.NumberTheory.Chebyshev
+public import Mathlib.NumberTheory.LSeries.RiemannZeta
+public import Mathlib.NumberTheory.LSeries.Nonvanishing
+public import Mathlib.Analysis.Complex.RemovableSingularity
+public import Mathlib.Analysis.Meromorphic.Basic
+public import Mathlib.Analysis.Calculus.ParametricIntegral
+public import Mathlib.MeasureTheory.Integral.ExpDecay
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.RiemannZeta
+public import Abbrev.v1.Atlas.NumberTheoryI.code.Lem168
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Lem168
+
+@[expose] public section
+
 open Chebyshev Asymptotics Filter Topology MeasureTheory Finset
 open Nat (primeCounting)
 open Real (log exp)

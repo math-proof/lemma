@@ -7,12 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.CombinatorialOptimization.code.Flow.FlowCutBound.Part2
-import Theorem.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.FlowCutBound
-import Def.v1.Atlas.CombinatorialOptimization.code.Flow.ResidualGraph
+public import Def.v1.Atlas.CombinatorialOptimization.code.Flow.FlowCutBound.Part2
+public import Theorem.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.FlowCutBound
+public import Def.v1.Atlas.CombinatorialOptimization.code.Flow.ResidualGraph
 open Finset BigOperators
 
+public section
 
 namespace NetworkFlow
 

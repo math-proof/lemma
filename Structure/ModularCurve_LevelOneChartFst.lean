@@ -3,9 +3,11 @@ module
 public import Mathlib
 public import Structure.ModularCurve_LevelOneProlongationPair
 public import Structure.AlgebraicCurve_SemistableCharts
-public import Lemma.Finsupp.SpecializeModuli
+public import Def.ModularCurve_SpecializeModuli
+public import Theorem.Finsupp.SpecializeModuli
 public import Def.ModularCurve_SupersingularModuli
-public import Lemma.Finset.SupersingularNodePlaces
+public import Def.ModularCurve_SupersingularNodePlaces
+public import Theorem.Finset.SupersingularNodePlaces
 
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 400000

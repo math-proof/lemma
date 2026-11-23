@@ -8,10 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.SemidirectExistence
-import Lemma.Fin.IsCompl
-import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.SemidirectExistenceInstance
+module
 
+public import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.SemidirectExistence
+public import Theorem.Fin.IsCompl
+public import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.SemidirectExistenceInstance
+@[expose] public section
 
 namespace GeometricAlgebra
 

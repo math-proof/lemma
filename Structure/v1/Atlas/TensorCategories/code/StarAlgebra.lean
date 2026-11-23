@@ -11,8 +11,8 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Theorem.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
-public import Lemma.Category.Atlas.v1.TensorCategories.code.GrothendieckRing
-public import Lemma.Category.Atlas.v1.TensorCategories.code.BasedRings
+public import Theorem.Category.Atlas.v1.TensorCategories.code.GrothendieckRing
+public import Theorem.Category.Atlas.v1.TensorCategories.code.BasedRings
 public import Abbrev.v1.Atlas.TensorCategories.code.BasedRings
 public import Mathlib.Data.Complex.Basic
 public import Mathlib.Algebra.Star.Basic

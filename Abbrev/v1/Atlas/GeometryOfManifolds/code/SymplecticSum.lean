@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.GeometryOfManifolds.code.LefschetzPencils.Part7
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.LefschetzPencils
+module
+
+public import Structure.v1.Atlas.GeometryOfManifolds.code.LefschetzPencils.Part7
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.LefschetzPencils
+@[expose] public section
+
 set_option autoImplicit false
 
 open DifferentialFormSpace

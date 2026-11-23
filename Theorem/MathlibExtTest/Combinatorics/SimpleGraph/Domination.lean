@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/Domination.lean -/
+module
 
+public import Def.Combinatorics.SimpleGraph.Domination
+public import Theorem.SimpleGraph.Domination
 
-import Def.Combinatorics.SimpleGraph.Domination
-import Theorem.SimpleGraph.Domination
-
+public section
 
 namespace SimpleGraph
 

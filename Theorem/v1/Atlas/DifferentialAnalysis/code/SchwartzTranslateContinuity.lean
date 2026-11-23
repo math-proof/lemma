@@ -7,15 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
-import Mathlib.Analysis.Calculus.MeanValue
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzTranslation
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzTranslation
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
+public import Mathlib.Analysis.Calculus.MeanValue
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzTranslation
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzTranslation
 open scoped SchwartzMap Topology
 open Metric Filter
 
+public section
 
 noncomputable section
 

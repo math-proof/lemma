@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section32.Part2
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section32
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section32
 import Mathlib.Analysis.Convex.Contractible
 import Structure.v1.Atlas.AlgebraicTopologyI.code.Lemma32_4
 open Set Function

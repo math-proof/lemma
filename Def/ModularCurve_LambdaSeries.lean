@@ -1,6 +1,10 @@
-import Mathlib
-import Theorem.HahnSeries.X0
-import Def.ModularCurve_KroneckerTransport
+module
+
+public import Mathlib
+public import Theorem.HahnSeries.X0
+public import Def.ModularCurve_KroneckerTransport
+
+@[expose] public section
 
 set_option autoImplicit false
 

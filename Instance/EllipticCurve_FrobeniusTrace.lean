@@ -1,8 +1,11 @@
 -- Carved from Lemma/Definitions/Def_EllipticCurve_FrobeniusTrace.lean: instance decls only.
-import Mathlib.LinearAlgebra.Trace
-import Mathlib.RingTheory.Valuation.RamificationGroup
-import Instance.FLTPrelim_GaloisRep
-import Def.FLTPrelim_Ramification
+module
+
+public import Mathlib.LinearAlgebra.Trace
+public import Mathlib.RingTheory.Valuation.RamificationGroup
+public import Instance.FLTPrelim_GaloisRep
+public import Def.FLTPrelim_Ramification
+@[expose] public section
 
 noncomputable section
 

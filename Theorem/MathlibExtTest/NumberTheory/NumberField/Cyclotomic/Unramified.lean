@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/Cyclotomic/Unramified.lean -/
+module
 
-
-import Lemma.Rat.NumberField.Cyclotomic.Unramified
-import Mathlib.Tactic.NormNum
+public import Theorem.Rat.NumberField.Cyclotomic.Unramified
+public import Mathlib.Tactic.NormNum
 open scoped NumberField
 
+public section
 
 namespace MathlibExtTest.NumberTheory.CyclotomicUnramified
 

@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/WardGeneralizedBinomial.lean -/
+module
 
+public import Mathlib.Tactic.NormNum
+public import Def.Combinatorics.Enumerative.WardGeneralizedBinomial
+public import Theorem.Finset.Enumerative.WardGeneralizedBinomial
 
-import Mathlib.Tactic.NormNum
-import Def.Combinatorics.Enumerative.WardGeneralizedBinomial
-import Theorem.Finset.Enumerative.WardGeneralizedBinomial
-
+public section
 
 namespace MetaMathlibExt
 

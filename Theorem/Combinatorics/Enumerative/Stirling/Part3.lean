@@ -3,17 +3,21 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
+module
 
-import Mathlib.Combinatorics.Enumerative.Stirling
-import Mathlib.GroupTheory.Perm.Cycle.Type
-import Mathlib.GroupTheory.Perm.Fin
-import Def.Combinatorics.Enumerative.Stirling.Part3
+public import Mathlib.Combinatorics.Enumerative.Stirling
+public import Mathlib.GroupTheory.Perm.Cycle.Type
+public import Mathlib.GroupTheory.Perm.Fin
+public import Def.Combinatorics.Enumerative.Stirling.Part3
+
 /-!
 # Permutations and unsigned Stirling numbers
 
 This file identifies unsigned Stirling numbers of the first kind with permutations having a
 prescribed number of cycles, counting fixed points as cycles.
 -/
+
+public section
 
 
 namespace MetaMathlibExt

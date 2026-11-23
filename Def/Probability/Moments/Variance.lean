@@ -1,8 +1,13 @@
-import Mathlib.Probability.Independence.Integration
-import Syntax.Probability.Expectation.Elab
-import Theorem.Function
-import Instance.Probability.Moments.Variance
-import Instance.Probability.SymbolicProbability
+module
+
+public import Mathlib.Probability.Independence.Integration
+public import Syntax.Probability.Expectation.Elab
+public import Theorem.Function
+public import Instance.Probability.Moments.Variance
+public import Instance.Probability.SymbolicProbability
+
+@[expose] public section
+
 open MeasureTheory
 
 

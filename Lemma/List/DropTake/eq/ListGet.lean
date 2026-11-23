@@ -1,5 +1,5 @@
 import Initialize.Tactic.Attr.Basic
-import Lemma.List.DropTake.eq.ListGet.of.GtLength
+import Theorem.List.DropTake.eq.ListGet.of.GtLength
 open List
 
 
@@ -15,3 +15,4 @@ private lemma main
 
 
 -- created on 2025-10-27
+-- updated on 2026-11-22

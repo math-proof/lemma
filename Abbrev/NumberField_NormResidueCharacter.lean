@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Ideal.NormClass
+import Theorem.Ideal.NormClass
 import Def.NumberField_RayCharacterData
 
 set_option autoImplicit false

@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
-public import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticEvenDim
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticEvenDim
 public section
 
 open Module FiniteDimensional

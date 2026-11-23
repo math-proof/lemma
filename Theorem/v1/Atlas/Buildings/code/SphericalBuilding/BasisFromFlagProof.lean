@@ -7,14 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnFlagToFrame
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.Data.List.Pairwise
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnFlagToFrame
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.Data.List.Pairwise
 
+public section
 
 namespace GLnBuilding
 

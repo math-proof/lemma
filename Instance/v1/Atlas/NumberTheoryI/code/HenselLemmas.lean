@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Def.v1.Atlas.NumberTheoryI.code.HenselDefs
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.HenselDefs
+module
+
+public import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Def.v1.Atlas.NumberTheoryI.code.HenselDefs
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.HenselDefs
+@[expose] public section
+
 open Polynomial IsLocalRing Ring
 
 

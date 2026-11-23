@@ -7,12 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialDualSubgraphSum.Part3
+public import Structure.StatisticalMechanics.Code.FrontierA.IsoradialRibbonBoundaryParity
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialDualSubgraphSum.Part3
-import Structure.StatisticalMechanics.Code.FrontierA.IsoradialRibbonBoundaryParity
-
+public section
 
 namespace StatMech.FrontierA
 

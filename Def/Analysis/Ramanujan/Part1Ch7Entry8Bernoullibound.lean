@@ -4,12 +4,17 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.NumberTheory.BernoulliPolynomials
-import Mathlib.NumberTheory.LSeries.RiemannZeta
-import Def.Analysis.Ramanujan.Part1Ch7Phi
-import Mathlib.NumberTheory.LSeries.HurwitzZetaValues
-import Theorem.Analysis.Ramanujan.Part1Ch7Entry8
-import Theorem.Complex.Part1Ch7Entry8
+module
+
+public import Mathlib.NumberTheory.BernoulliPolynomials
+public import Mathlib.NumberTheory.LSeries.RiemannZeta
+public import Def.Analysis.Ramanujan.Part1Ch7Phi
+public import Mathlib.NumberTheory.LSeries.HurwitzZetaValues
+public import Theorem.Analysis.Ramanujan.Part1Ch7Entry8
+public import Theorem.Complex.Part1Ch7Entry8
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 7, Entry 8
 

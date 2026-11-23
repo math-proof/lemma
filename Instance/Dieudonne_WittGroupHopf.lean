@@ -1,7 +1,8 @@
 -- Carved from Lemma/Definitions/Def_Dieudonne_WittGroupHopf.lean: instance decls only.
 import Mathlib
 import Instance.Dieudonne_WittVectorHom
-import Lemma.AlgHom.WittGroupHopf
+import Theorem.AlgHom.WittGroupHopf
+import Def.AlgHom_WittGroupHopf
 
 set_option autoImplicit false
 

@@ -1,7 +1,10 @@
 -- Carved from Lemma/Definitions/Def_NumberField_ArchimedeanIdeleModule.lean: instance decls only.
-import Mathlib
-import Lemma.Rep.RepPi
-import Abbrev.NumberField_ArchimedeanIdeleModule
+module
+
+public import Mathlib
+public import Theorem.Rep.RepPi
+public import Abbrev.NumberField_ArchimedeanIdeleModule
+@[expose] public section
 
 set_option autoImplicit false
 

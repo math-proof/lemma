@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/LegendreStirlingFirstKind.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.LegendreStirlingFirstKind
+public import Theorem.Finset.Enumerative.LegendreStirlingFirstKind
+public import Mathlib.Tactic.NormNum
 
-import Def.Combinatorics.Enumerative.LegendreStirlingFirstKind
-import Lemma.Finset.Enumerative.LegendreStirlingFirstKind
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MetaMathlibExt
 

@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/MotzkinTriangle.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.MotzkinTriangle.Part5
+public import Theorem.Finset.Enumerative.MotzkinTriangle
+public import Mathlib.Tactic
 
-import Def.Combinatorics.Enumerative.MotzkinTriangle.Part5
-import Theorem.Finset.Enumerative.MotzkinTriangle
-import Mathlib.Tactic
-
+public section
 
 namespace MetaMathlibExt
 

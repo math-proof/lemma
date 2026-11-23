@@ -11,8 +11,8 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.ArithmeticGeometry.code.Varieties.Part9
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Varieties
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Morphisms
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Varieties
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Morphisms
 public import Def.v1.Atlas.ArithmeticGeometry.code.Morphisms.Part6
 public import Mathlib.Algebra.MvPolynomial.Rename
 public import Mathlib.Topology.NoetherianSpace

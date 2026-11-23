@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.LieGroups.code.SL2Representations.Part2
-public import Lemma.Complex.IsIsomorphicGK.of.IsIsomorphicGK.IsIsomorphicGK
+public import Theorem.Complex.IsIsomorphicGK.of.IsIsomorphicGK.IsIsomorphicGK
 
 
 public noncomputable section

@@ -1,6 +1,10 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_ArithmeticGalois.lean: instance decls only.
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Lemma.LaurentSeries.ArithmeticGalois
+module
+
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Theorem.LaurentSeries.ArithmeticGalois
+public import Def.ModularCurve_ArithmeticGalois
+@[expose] public section
 
 set_option autoImplicit false
 

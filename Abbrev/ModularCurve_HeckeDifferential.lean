@@ -1,12 +1,14 @@
-import Mathlib
-import Lemma.LaurentSeries.HeckeOperator
-import Def.AlgebraicCurve_DifferentialPushPull
-import Def.AlgebraicCurve_RegularDifferentials
-import Instance.ModularCurve_HeckeDifferential
+module
+
+public import Mathlib
+public import Theorem.LaurentSeries.HeckeOperator
+public import Def.AlgebraicCurve_DifferentialPushPull
+public import Def.AlgebraicCurve_RegularDifferentials
+public import Instance.ModularCurve_HeckeDifferential
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open HahnSeries KaehlerDifferential AlgebraicCurve
 

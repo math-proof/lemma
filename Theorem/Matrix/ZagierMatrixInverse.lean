@@ -3,6 +3,7 @@ module
 public import Mathlib
 public import Def.LinearAlgebra.Matrix.ZagierMatrixInverse
 public import Syntax.LinearAlgebra.Matrix.Notation
+open scoped Matrix
 
 public section
 
@@ -918,36 +919,36 @@ public theorem zagier_matrix_inverse
 -- given
   (hK : 1 < K) :
 -- imply
-  ([i < K - 1, j < K - 1] ((2 : ℚ) / (2 * (↑(i.val + 1) : ℚ) - 1) *
+  ([i < K - 1][j < K - 1] ((2 : ℚ) / (2 * (↑(i.val + 1) : ℚ) - 1) *
     ∑ n ∈ Finset.range (2 * K - 2 * (i.val + 1) + 1),
     (↑(Nat.choose (2 * (j.val + 1) - 1)
     (2 * K - 2 * (i.val + 1) - n + 1)) : ℚ) *
     (↑(Nat.choose (n + 2 * (i.val + 1) - 2) n) : ℚ) * bernoulli n) :
     Matrix (Fin (K - 1)) (Fin (K - 1)) ℚ)
     =
-    ([i < K - 1, j < K - 1] ((-2 : ℚ) / (2 * (↑(i.val + 1) : ℚ) - 1) *
+    ([i < K - 1][j < K - 1] ((-2 : ℚ) / (2 * (↑(i.val + 1) : ℚ) - 1) *
     ∑ n ∈ Finset.range (2 * K - 2 * (i.val + 1) + 1),
     (↑(Nat.choose (2 * K - 2 * (j.val + 1))
     (2 * K - 2 * (i.val + 1) - n + 1)) : ℚ) *
     (↑(Nat.choose (n + 2 * (i.val + 1) - 2) n) : ℚ) * bernoulli n) :
     Matrix (Fin (K - 1)) (Fin (K - 1)) ℚ)
-    ∧ ([i < K - 1, j < K - 1] ((↑(Nat.choose (2 * K - 2 * (j.val + 1)) (2 * (i.val + 1) - 1)) : ℚ) +
+    ∧ ([i < K - 1][j < K - 1] ((↑(Nat.choose (2 * K - 2 * (j.val + 1)) (2 * (i.val + 1) - 1)) : ℚ) +
     (↑(Nat.choose (2 * K - 2 * (j.val + 1)) (2 * K - 2 * (i.val + 1))) : ℚ)) :
     Matrix (Fin (K - 1)) (Fin (K - 1)) ℚ)
-    * ([i < K - 1, j < K - 1] ((2 : ℚ) / (2 * (↑(i.val + 1) : ℚ) - 1) *
+    * ([i < K - 1][j < K - 1] ((2 : ℚ) / (2 * (↑(i.val + 1) : ℚ) - 1) *
     ∑ n ∈ Finset.range (2 * K - 2 * (i.val + 1) + 1),
     (↑(Nat.choose (2 * (j.val + 1) - 1)
     (2 * K - 2 * (i.val + 1) - n + 1)) : ℚ) *
     (↑(Nat.choose (n + 2 * (i.val + 1) - 2) n) : ℚ) * bernoulli n) :
     Matrix (Fin (K - 1)) (Fin (K - 1)) ℚ)
     = 1
-    ∧ ([i < K - 1, j < K - 1] ((2 : ℚ) / (2 * (↑(i.val + 1) : ℚ) - 1) *
+    ∧ ([i < K - 1][j < K - 1] ((2 : ℚ) / (2 * (↑(i.val + 1) : ℚ) - 1) *
     ∑ n ∈ Finset.range (2 * K - 2 * (i.val + 1) + 1),
     (↑(Nat.choose (2 * (j.val + 1) - 1)
     (2 * K - 2 * (i.val + 1) - n + 1)) : ℚ) *
     (↑(Nat.choose (n + 2 * (i.val + 1) - 2) n) : ℚ) * bernoulli n) :
     Matrix (Fin (K - 1)) (Fin (K - 1)) ℚ)
-    * ([i < K - 1, j < K - 1] ((↑(Nat.choose (2 * K - 2 * (j.val + 1)) (2 * (i.val + 1) - 1)) : ℚ) +
+    * ([i < K - 1][j < K - 1] ((↑(Nat.choose (2 * K - 2 * (j.val + 1)) (2 * (i.val + 1) - 1)) : ℚ) +
     (↑(Nat.choose (2 * K - 2 * (j.val + 1)) (2 * K - 2 * (i.val + 1))) : ℚ)) :
     Matrix (Fin (K - 1)) (Fin (K - 1)) ℚ)
     = 1 := by

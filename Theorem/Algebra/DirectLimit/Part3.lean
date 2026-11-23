@@ -1,6 +1,9 @@
-import Mathlib
-import Def.Algebra.DirectLimit.Part2
+module
 
+public import Mathlib
+public import Def.Algebra.DirectLimit.Part2
+
+public section
 
 namespace IsDirectLimit
 

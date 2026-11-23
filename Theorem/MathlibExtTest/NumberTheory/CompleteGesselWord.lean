@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/CompleteGesselWord.lean -/
+module
 
+public import Def.NumberTheory.CompleteGesselWord
+public import Theorem.Nat.CompleteGesselWord
 
-import Def.NumberTheory.CompleteGesselWord
-import Theorem.Nat.CompleteGesselWord
-
+public section
 
 namespace MetaMathlibExt
 

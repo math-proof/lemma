@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/UnitaryDivisorTests.lean -/
+module
 
+public import Def.NumberTheory.UnitaryDivisor.Part2
+public import Theorem.Set.UnitaryDivisor
 
-import Def.NumberTheory.UnitaryDivisor.Part2
-import Theorem.Set.UnitaryDivisor
-
+public section
 
 example : Nat.unitaryDivisors 12 = {1, 3, 4, 12} := by decide
 

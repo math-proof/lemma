@@ -7,11 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Theorem.v1.Atlas.Probability.code.MartingaleConvergence
-import Theorem.v1.Atlas.Probability.code.UnifIntegrableLp
+public import Theorem.v1.Atlas.Probability.code.MartingaleConvergence
+public import Theorem.v1.Atlas.Probability.code.UnifIntegrableLp
 open MeasureTheory Filter Topology
 open scoped ENNReal NNReal
+
+public section
 
 /--
 Auxiliary lemma: if a submartingale `f` on a probability space has

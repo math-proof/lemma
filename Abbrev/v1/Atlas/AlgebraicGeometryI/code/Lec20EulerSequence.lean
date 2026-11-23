@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicGeometryI.code.TwistSheaf.Part2
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.TwistSheaf
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleProjective
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TwistSheaf
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleProjective
 import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleProjective.Part4
 set_option maxHeartbeats 800000
 

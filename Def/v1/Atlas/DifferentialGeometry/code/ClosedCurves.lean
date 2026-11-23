@@ -8,13 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.DifferentialGeometry.code.PlaneCurves.Part4
-import Lemma.Real.Atlas.v1.DifferentialGeometry.code.PlaneCurves
-import Theorem.Real.Atlas.v1.DifferentialGeometry.code.DegreeTheory
-import Theorem.v1.Atlas.DifferentialGeometry.code.Reparametrization
-import Def.v1.Atlas.DifferentialGeometry.code.DegreeTheory
-import Structure.v1.Atlas.DifferentialGeometry.code.ClosedCurves
+module
 
+public import Def.v1.Atlas.DifferentialGeometry.code.PlaneCurves.Part4
+public import Theorem.Real.Atlas.v1.DifferentialGeometry.code.PlaneCurves
+public import Theorem.Real.Atlas.v1.DifferentialGeometry.code.DegreeTheory
+public import Theorem.v1.Atlas.DifferentialGeometry.code.Reparametrization
+public import Def.v1.Atlas.DifferentialGeometry.code.DegreeTheory
+public import Structure.v1.Atlas.DifferentialGeometry.code.ClosedCurves
+
+@[expose] public section
 
 noncomputable section
 

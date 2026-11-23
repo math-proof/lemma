@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/QuadraticForm/System.lean -/
+module
 
+public import Def.LinearAlgebra.QuadraticForm.System
+public import Theorem.Matrix.QuadraticForm.System
 
-import Def.LinearAlgebra.QuadraticForm.System
-import Theorem.Matrix.QuadraticForm.System
-
+public section
 
 namespace QuadraticForm
 

@@ -7,15 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_2
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_2
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_6
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_6
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_2
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_2
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_6
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_6
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
 open MeasureTheory Real ProbabilityTheory BigOperators Finset
 
+public section
 
 /-- **Corollary 1.7 (upper tail).** Let `X₁,…,Xₙ` be independent random
 variables, each sub-Gaussian with variance proxy `σ²`. For any coefficients

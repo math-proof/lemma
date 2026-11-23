@@ -8,24 +8,28 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Preadditive.Projective.Basic
-import Mathlib.CategoryTheory.Preadditive.Injective.Basic
-import Mathlib.CategoryTheory.Preadditive.AdditiveFunctor
-import Mathlib.CategoryTheory.Functor.EpiMono
-import Mathlib.CategoryTheory.Monoidal.Functor
-import Mathlib.CategoryTheory.Simple
-import Mathlib.CategoryTheory.Functor.Category
-import Mathlib.CategoryTheory.Linear.Basic
-import Mathlib.CategoryTheory.Preadditive.Projective.Preserves
-import Mathlib.CategoryTheory.Adjunction.Limits
-import Mathlib.CategoryTheory.Limits.Constructions.EpiMono
-import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
-import Lemma.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
-import Theorem.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
-import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
-import Class.v1.Atlas.TensorCategories.code.QuasiTensorFunctorProjective.Part2
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Preadditive.Projective.Basic
+public import Mathlib.CategoryTheory.Preadditive.Injective.Basic
+public import Mathlib.CategoryTheory.Preadditive.AdditiveFunctor
+public import Mathlib.CategoryTheory.Functor.EpiMono
+public import Mathlib.CategoryTheory.Monoidal.Functor
+public import Mathlib.CategoryTheory.Simple
+public import Mathlib.CategoryTheory.Functor.Category
+public import Mathlib.CategoryTheory.Linear.Basic
+public import Mathlib.CategoryTheory.Preadditive.Projective.Preserves
+public import Mathlib.CategoryTheory.Adjunction.Limits
+public import Mathlib.CategoryTheory.Limits.Constructions.EpiMono
+public import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
+public import Theorem.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
+public import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
+public import Class.v1.Atlas.TensorCategories.code.QuasiTensorFunctorProjective.Part2
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 set_option autoImplicit false

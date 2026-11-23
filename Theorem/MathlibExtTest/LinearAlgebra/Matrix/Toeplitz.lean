@@ -1,13 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/Toeplitz.lean -/
+module
 
-
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Order
-import Def.LinearAlgebra.Matrix.Toeplitz
-import Theorem.Matrix.Toeplitz
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Order
+public import Def.LinearAlgebra.Matrix.Toeplitz
+public import Theorem.Matrix.Toeplitz
 open MetaMathlibExt
 
+public section
 
 /-- Dimension 1: every `1 × 1` real matrix is Toeplitz. -/
 example : IsToeplitzMatrix (n := 0) ![![(7 : ℝ)]] :=

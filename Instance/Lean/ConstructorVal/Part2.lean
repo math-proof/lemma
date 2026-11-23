@@ -1,5 +1,9 @@
-import Lean
-import Def.Lean.ConstructorVal.Part2
+module
+
+public import Lean
+public import Def.Lean.ConstructorVal.Part2
+@[expose] public section
+
 open Lean
 
 

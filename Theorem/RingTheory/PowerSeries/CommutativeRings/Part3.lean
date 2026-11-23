@@ -6,9 +6,12 @@ All rights reserved.
 Copyright (c) 2025 AlgebraicCombinatorics contributors. All rights reserved.
 Authors: AlgebraicCombinatorics contributors
 -/
-import Mathlib
-import Def.RingTheory.PowerSeries.DividingFPS.Part2
-import Def.RingTheory.PowerSeries.CommutativeRings.Part2
+module
+
+public import Mathlib
+public import Def.RingTheory.PowerSeries.DividingFPS.Part2
+public import Def.RingTheory.PowerSeries.CommutativeRings.Part2
+
 /-!
 # Commutative Rings and Modules
 
@@ -109,6 +112,8 @@ The equivalence is analogous.
 - Additional source: `AlgebraicCombinatorics/tex/FPS/DividingFPS.tex` (inverses/fractions)
 - Labels: `def.alg.commring`, `def.alg.module`, `def.commring.inverse`, `def.commring.fracs`
 -/
+
+public section
 
 
 /-!

@@ -1,14 +1,17 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Ramanujan/Part1Ch5Entry4.lean -/
+module
 
+public import Def.Analysis.Ramanujan.Part1Ch5Entry4
+public import Theorem.Complex.Part1Ch5Entry4
 
-import Def.Analysis.Ramanujan.Part1Ch5Entry4
-import Theorem.Complex.Part1Ch5Entry4
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 5, Entry 4 API checks
 
 Small rows of the Eulerian triangle, coefficients out of range, `chapter5Psi` at `n = 0` and
 `n = 2`, and the entry itself at `n = 0` and `n = 2`.
 -/
+
+public section
 
 
 namespace MathlibExtTest.Analysis.Ramanujan.Part1Ch5Entry4

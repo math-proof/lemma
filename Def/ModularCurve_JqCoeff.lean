@@ -1,4 +1,8 @@
-import Theorem.HahnSeries.X0
+module
+
+public import Theorem.HahnSeries.X0
+
+@[expose] public section
 
 set_option autoImplicit false
 

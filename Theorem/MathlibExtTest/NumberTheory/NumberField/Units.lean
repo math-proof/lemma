@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/Units.lean -/
+module
 
-
-import Theorem.Nat.NumberField.Units
+public import Theorem.Nat.NumberField.Units
 open NumberField
 open scoped NumberField
 
+public section
 
 namespace MathlibExtTest.NumberTheory.Units
 

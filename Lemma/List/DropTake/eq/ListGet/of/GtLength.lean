@@ -1,7 +1,7 @@
 import Initialize.Tactic.Attr.Basic
-import Lemma.List.Drop.eq.Cons_Drop_Add_1.of.GtLength
-import Lemma.List.TakeCons.eq.List
-import Lemma.List.DropTake.eq.TakeDrop
+import Theorem.List.Drop.eq.Cons_Drop_Add_1.of.GtLength
+import Theorem.List.TakeCons.eq.List
+import Theorem.List.DropTake.eq.TakeDrop
 open List
 
 
@@ -15,9 +15,9 @@ private lemma main
 -- proof
   rw [DropTake.eq.TakeDrop]
   simp
-  rw [Drop.eq.Cons_Drop_Add_1.of.GtLength (by assumption)]
+  rw [Drop.eq.Cons_Drop_Add_1.of.GtLength h]
   rw [TakeCons.eq.List]
 
 
 -- created on 2025-06-14
--- updated on 2025-06-20
+-- updated on 2026-11-22

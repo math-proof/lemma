@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/RamificationInertia/ResidueGenerator.lean -/
+module
 
+public import Theorem.Ideal.RamificationInertia.ResidueGenerator
 
-import Theorem.Ideal.RamificationInertia.ResidueGenerator
+public section
+
 variable {A B : Type*} [CommRing A] [CommRing B] [Algebra A B]
 
 

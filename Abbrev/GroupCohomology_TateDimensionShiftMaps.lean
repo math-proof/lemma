@@ -1,6 +1,8 @@
-import Mathlib
-import Abbrev.GroupCohomology_TateCohomology
-import Lemma.Representation.EqIndBotMk
+module
+
+public import Mathlib
+public import Abbrev.GroupCohomology_TateCohomology
+public import Theorem.Representation.EqIndBotMk
 
 set_option autoImplicit false
 
@@ -8,7 +10,7 @@ universe u
 
 open CategoryTheory
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace Rep
 

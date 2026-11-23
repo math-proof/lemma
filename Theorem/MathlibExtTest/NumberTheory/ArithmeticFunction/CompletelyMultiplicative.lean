@@ -5,10 +5,11 @@ Copyright (c) 2026 Adam Kiezun. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Adam Kiezun
 -/
+module
 
+public import Def.NumberTheory.ArithmeticFunction.CompletelyMultiplicative
+public import Theorem.Nat.ArithmeticFunction.CompletelyMultiplicative
 
-import Def.NumberTheory.ArithmeticFunction.CompletelyMultiplicative
-import Theorem.Nat.ArithmeticFunction.CompletelyMultiplicative
 /-!
 # Tests for completely multiplicative arithmetic functions
 
@@ -16,6 +17,8 @@ Checks `IsCompletelyMultiplicative.map_mul`, the normalization bridge
 `IsCompletelyMultiplicative.isMultiplicative`, and the zero-function
 boundary: `0` is completely multiplicative but not `IsMultiplicative`.
 -/
+
+public section
 
 
 namespace ArithmeticFunctionTest

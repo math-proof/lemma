@@ -4,16 +4,19 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Int.Basic
-import Mathlib.SetTheory.Cardinal.Finite
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.LinearAlgebra.Matrix.Notation
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.Ring
-import Abbrev.Combinatorics.Enumerative.FaultFree3xnTiling.Part2
+module
 
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Int.Basic
+public import Mathlib.SetTheory.Cardinal.Finite
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.LinearAlgebra.Matrix.Notation
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.IntervalCases
+public import Mathlib.Tactic.Ring
+public import Abbrev.Combinatorics.Enumerative.FaultFree3xnTiling.Part2
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

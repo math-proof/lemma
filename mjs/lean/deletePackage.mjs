@@ -6,13 +6,13 @@ import fs from 'fs/promises';
 import path from 'path';
 import { REPO_ROOT, moduleToLemmaPackageDir } from './modulePath.mjs';
 import { getMysqlPool } from './fetchLemmaMysql.mjs';
+import { deleteLemmaRowsAndInverted } from '../leanInvertedIndex.mjs';
 
 /**
- * @param {string} projectUser
  * @param {import('express').Request} req
  * @param {import('express').Response} res
  */
-export async function handleDeletePackage(projectUser, req, res) {
+export async function handleDeletePackage(req, res) {
   const body = req.body && typeof req.body === 'object' ? req.body : {};
   let pkg = String(body.package ?? '')
     .replace(/\//g, '.')
@@ -57,10 +57,7 @@ export async function handleDeletePackage(projectUser, req, res) {
   const pool = getMysqlPool();
   if (pool) {
     try {
-      await pool.query(
-        'DELETE FROM lemma WHERE user = ? AND (module = ? OR module LIKE ?)',
-        [projectUser, module, `${module}.%`]
-      );
+      await deleteLemmaRowsAndInverted(pool, { prefix: module });
     } catch (err) {
       console.warn('[delete-package mysql]', err.message);
     }

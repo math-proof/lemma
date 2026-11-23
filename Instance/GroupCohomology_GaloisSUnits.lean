@@ -1,6 +1,9 @@
 -- Carved from Lemma/Definitions/Def_GroupCohomology_GaloisSUnits.lean: instance decls only.
-import Mathlib
-import Def.GroupCohomology_GaloisSUnits
+module
+
+public import Mathlib
+public import Def.GroupCohomology_GaloisSUnits
+@[expose] public section
 
 set_option autoImplicit false
 

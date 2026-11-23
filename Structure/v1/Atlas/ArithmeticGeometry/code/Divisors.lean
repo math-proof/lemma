@@ -13,7 +13,7 @@ module
 public import Mathlib
 public import Def.v1.Atlas.ArithmeticGeometry.code.DegreePullback
 public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.DegreePullback
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.RationalLineCriterion
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.RationalLineCriterion
 public import Def.v1.Atlas.ArithmeticGeometry.code.RationalLineCriterion
 
 

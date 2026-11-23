@@ -1,7 +1,10 @@
-import Initialize.Tactic.Attr.Basic
-import Mathlib.RingTheory.Polynomial.Pochhammer
-import Mathlib.Combinatorics.Enumerative.Stirling
+module
 
+public import Initialize.Tactic.Attr.Basic
+public import Mathlib.RingTheory.Polynomial.Pochhammer
+public import Mathlib.Combinatorics.Enumerative.Stirling
+
+@[expose] public section
 
 /-!
 SymPy's `RisingFactorial(x, k)` for integer `k` (`rf(x, -k) = 1 / rf(x - k, k)`), and `binomial(n, k)`

@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PrimeCounting/WeightedLargeSieve.lean -/
+module
 
+public import Def.NumberTheory.PrimeCounting.WeightedLargeSieve
+public import Theorem.Nat.PrimeCounting.WeightedLargeSieve
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.NormNum
 
-import Def.NumberTheory.PrimeCounting.WeightedLargeSieve
-import Lemma.Nat.PrimeCounting.WeightedLargeSieve
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MathlibExtTest.NumberTheory.PrimeCounting.WeightedLargeSieve
 

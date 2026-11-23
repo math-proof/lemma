@@ -1,5 +1,5 @@
 import Lemma.Int.Div.lt.One.of.Gt_0
-import Lemma.Int.EqFloor.is.Le.Lt
+import Theorem.Int.EqFloor.is.Le.Lt
 import Lemma.Int.GeDivS.of.Gt_0
 open Int
 
@@ -24,4 +24,4 @@ private lemma main
 
 
 -- created on 2025-10-08
--- updated on 2025-11-14
+-- updated on 2026-11-22

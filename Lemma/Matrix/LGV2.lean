@@ -31,6 +31,7 @@ import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part28
 import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part29
 import Abbrev.LinearAlgebra.Matrix.Determinant.LGV2
 import Syntax.LinearAlgebra.Matrix.Notation
+open scoped Matrix
 open Finset
 open Matrix
 open LGV
@@ -3030,14 +3031,14 @@ lemma binom_2x2_ineq (a b c d : ℕ) (hab : b ≤ a) (hcd : d ≤ c) :
 lemma binom_det_nonneg_zero (a b : Fin 0 → ℕ)
     (_ha : ∀ i j : Fin 0, i ≤ j → a j ≤ a i)
     (_hb : ∀ i j : Fin 0, i ≤ j → b j ≤ b i) :
-    0 ≤ ([i < 0, j < 0] ((a i).choose (b j) : ℤ)).det := by
+    0 ≤ ([i < 0][j < 0] ((a i).choose (b j) : ℤ)).det := by
   simp [det_isEmpty]
 
 /-- Base case k=1: 1×1 matrix has determinant = C(a₀, b₀) ≥ 0 -/
 lemma binom_det_nonneg_one (a b : Fin 1 → ℕ)
     (_ha : ∀ i j : Fin 1, i ≤ j → a j ≤ a i)
     (_hb : ∀ i j : Fin 1, i ≤ j → b j ≤ b i) :
-    0 ≤ ([i < 1, j < 1] ((a i).choose (b j) : ℤ)).det := by
+    0 ≤ ([i < 1][j < 1] ((a i).choose (b j) : ℤ)).det := by
   simp only [det_unique, of_apply, Fin.default_eq_zero]
   exact Int.natCast_nonneg _
 
@@ -3046,7 +3047,7 @@ lemma binom_det_nonneg_one (a b : Fin 1 → ℕ)
 lemma binom_det_nonneg_two (a b : Fin 2 → ℕ)
     (ha : ∀ i j : Fin 2, i ≤ j → a j ≤ a i)
     (hb : ∀ i j : Fin 2, i ≤ j → b j ≤ b i) :
-    0 ≤ ([i < 2, j < 2] ((a i).choose (b j) : ℤ)).det := by
+    0 ≤ ([i < 2][j < 2] ((a i).choose (b j) : ℤ)).det := by
   simp only [det_fin_two, of_apply]
   have ha01 : a 1 ≤ a 0 := ha 0 1 (Fin.zero_le 1)
   have hb01 : b 1 ≤ b 0 := hb 0 1 (Fin.zero_le 1)
@@ -3142,7 +3143,7 @@ lemma pathWeightSum_unitArcWeight (u v : ℤ × ℤ) :
 
 /-- The binomial matrix equals pathWeightMatrix with unit weight -/
 lemma binom_matrix_eq_pathWeightMatrix {k : ℕ} (a b : Fin k → ℕ) :
-    ([i < k, j < k] ((a i).choose (b j) : ℤ)) =
+    ([i < k][j < k] ((a i).choose (b j) : ℤ)) =
     pathWeightMatrix integerLattice_pathFinite unitArcWeight (binomLatticeA a) (binomLatticeB b) := by
   ext i j
   simp only [Matrix.ofFun_apply, pathWeightMatrix]
@@ -3217,7 +3218,7 @@ lemma sum_signed_ipatFinset_card_eq_zero {k : ℕ} (A B : kVertex (ℤ × ℤ) k
 lemma binom_det_nonneg {k : ℕ} (a b : Fin k → ℕ)
     (ha : ∀ i j : Fin k, i ≤ j → a j ≤ a i)
     (hb : ∀ i j : Fin k, i ≤ j → b j ≤ b i) :
-    0 ≤ ([i < k, j < k] ((a i).choose (b j) : ℤ)).det := by
+    0 ≤ ([i < k][j < k] ((a i).choose (b j) : ℤ)).det := by
   match k with
   | 0 => exact binom_det_nonneg_zero a b ha hb
   | 1 => exact binom_det_nonneg_one a b ha hb
@@ -3233,7 +3234,7 @@ lemma binom_det_nonneg {k : ℕ} (a b : Fin k → ℕ)
     have hxB : xDecreasing B := binomLatticeB_xDecreasing b hb
     have hyB : yIncreasing B := binomLatticeB_yIncreasing b hb
     -- Step 1: Show binomial matrix = pathWeightMatrix with unit weight
-    have heq : ([i < n + 3, j < n + 3] ((a i).choose (b j) : ℤ)) =
+    have heq : ([i < n + 3][j < n + 3] ((a i).choose (b j) : ℤ)) =
         pathWeightMatrix integerLattice_pathFinite unitArcWeight A B :=
       binom_matrix_eq_pathWeightMatrix a b
     rw [heq]
@@ -6324,7 +6325,7 @@ private lemma lgv_binom_matrix_eq_pathWeightMatrix
 -- given
   (a b : Fin k → ℕ) :
 -- imply
-  ([i < k, j < k] ((a i).choose (b j) : ℤ)) = pathWeightMatrix integerLattice_pathFinite unitArcWeight (binomLatticeA a) (binomLatticeB b) := by
+  ([i < k][j < k] ((a i).choose (b j) : ℤ)) = pathWeightMatrix integerLattice_pathFinite unitArcWeight (binomLatticeA a) (binomLatticeB b) := by
 -- proof
   apply LGV.binom_matrix_eq_pathWeightMatrix a b
 
@@ -6406,7 +6407,7 @@ private lemma lgv_binom_det_nonneg
   (ha : ∀ i j : Fin k, i ≤ j → a j ≤ a i)
   (hb : ∀ i j : Fin k, i ≤ j → b j ≤ b i) :
 -- imply
-  0 ≤ ([i < k, j < k] ((a i).choose (b j) : ℤ)).det := by
+  0 ≤ ([i < k][j < k] ((a i).choose (b j) : ℤ)).det := by
 -- proof
   apply LGV.binom_det_nonneg a b ha hb
 
@@ -7786,7 +7787,7 @@ private lemma pv_binom_det_nonneg_zero
   (ha : ∀ i j : Fin 0, i ≤ j → a j ≤ a i)
   (hb : ∀ i j : Fin 0, i ≤ j → b j ≤ b i) :
 -- imply
-  0 ≤ ([i < 0, j < 0] ((a i).choose (b j) : ℤ)).det := by
+  0 ≤ ([i < 0][j < 0] ((a i).choose (b j) : ℤ)).det := by
 -- proof
   apply LGV.binom_det_nonneg_zero a b ha hb
 
@@ -7800,7 +7801,7 @@ private lemma pv_binom_det_nonneg_one
   (ha : ∀ i j : Fin 1, i ≤ j → a j ≤ a i)
   (hb : ∀ i j : Fin 1, i ≤ j → b j ≤ b i) :
 -- imply
-  0 ≤ ([i < 1, j < 1] ((a i).choose (b j) : ℤ)).det := by
+  0 ≤ ([i < 1][j < 1] ((a i).choose (b j) : ℤ)).det := by
 -- proof
   apply LGV.binom_det_nonneg_one a b ha hb
 
@@ -7814,7 +7815,7 @@ private lemma pv_binom_det_nonneg_two
   (ha : ∀ i j : Fin 2, i ≤ j → a j ≤ a i)
   (hb : ∀ i j : Fin 2, i ≤ j → b j ≤ b i) :
 -- imply
-  0 ≤ ([i < 2, j < 2] ((a i).choose (b j) : ℤ)).det := by
+  0 ≤ ([i < 2][j < 2] ((a i).choose (b j) : ℤ)).det := by
 -- proof
   apply LGV.binom_det_nonneg_two a b ha hb
 

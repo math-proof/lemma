@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.AlgebraicTopologyI.code.Section32.Part2
-public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section32
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section32
 public import Mathlib.Analysis.Convex.Contractible
 public import Theorem.v1.Atlas.AlgebraicTopologyI.code.Lemma32_4
 public section

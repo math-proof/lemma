@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/Elliptic/FundamentalParallelogram.lean -/
+module
 
+public import Def.Analysis.SpecialFunctions.Elliptic.FundamentalParallelogram
+public import Theorem.Complex.FundamentalParallelogram
 
-import Def.Analysis.SpecialFunctions.Elliptic.FundamentalParallelogram
-import Theorem.Complex.FundamentalParallelogram
-
+public section
 
 example (L : PeriodPair) :
     L.fundamentalParallelogram 0 = ZSpan.fundamentalDomain L.basis := by

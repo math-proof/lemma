@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.AlgebraicTopologyI.code.Section1.Part3
-public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section1
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section1
 public import Mathlib.Topology.Basic
 public import Mathlib.Topology.Homotopy.Basic
 public import Mathlib.Algebra.Exact

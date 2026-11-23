@@ -4,29 +4,34 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Basic.Complex.Basic
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.NumberTheory.Bernoulli
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Def.Analysis.Ramanujan.Part1Ch5Entry4
-import Theorem.Complex.Part1Ch5Entry4
-import Mathlib.Algebra.Polynomial.Basic
-import Mathlib.Algebra.Polynomial.Derivative
-import Mathlib.Algebra.Polynomial.Eval.Defs
-import Mathlib.Analysis.Calculus.ContDiff.Basic
-import Mathlib.Analysis.Calculus.Deriv.Polynomial
-import Mathlib.Analysis.Complex.TaylorSeries
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Data.Finset.Defs
-import Mathlib.Data.Finset.Range
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Topology.Basic
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Def.Analysis.Ramanujan.Part1Ch5Entry4
+public import Theorem.Complex.Part1Ch5Entry4
+public import Mathlib.Algebra.Polynomial.Basic
+public import Mathlib.Algebra.Polynomial.Derivative
+public import Mathlib.Algebra.Polynomial.Eval.Defs
+public import Mathlib.Analysis.Calculus.ContDiff.Basic
+public import Mathlib.Analysis.Calculus.Deriv.Polynomial
+public import Mathlib.Analysis.Complex.TaylorSeries
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Data.Finset.Defs
+public import Mathlib.Data.Finset.Range
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Topology.Basic
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 5, Entry 8
 

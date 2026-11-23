@@ -7,14 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib
-import Def.StatisticalMechanics.Code.FrontierA.SurfaceKacWardArf.Part3
+public import Mathlib
+public import Def.StatisticalMechanics.Code.FrontierA.SurfaceKacWardArf.Part3
 open scoped BigOperators
 
 set_option linter.unusedDecidableInType false
 
+public section
 
 namespace StatMech.FrontierA
 

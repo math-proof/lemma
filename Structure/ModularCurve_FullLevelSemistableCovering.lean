@@ -2,9 +2,10 @@ module
 
 public import Structure.AlgebraicCurve_SemistableCharts
 public import Instance.ModularCurve_FullLevelJacobian
-public import Lemma.HahnSeries.QAdicPlace
+public import Def.ModularCurve_QAdicPlace
+public import Theorem.HahnSeries.QAdicPlace
 public import Instance.ModularCurve_JZeroSemistableSpecialization
-public import Lemma.AlgEquiv.SemistableChartsComap
+public import Theorem.AlgEquiv.SemistableChartsComap
 
 set_option autoImplicit false
 

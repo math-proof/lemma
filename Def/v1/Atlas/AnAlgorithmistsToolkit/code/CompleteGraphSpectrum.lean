@@ -8,17 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AnAlgorithmistsToolkit.code.GraphMatrices
-import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.GraphMatrices
-import Mathlib.Combinatorics.SimpleGraph.LapMatrix
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.LinearAlgebra.Eigenspace.Basic
-import Mathlib.LinearAlgebra.Matrix.ToLin
-import Mathlib.Data.Real.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+module
 
+public import Def.v1.Atlas.AnAlgorithmistsToolkit.code.GraphMatrices
+public import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.GraphMatrices
+public import Mathlib.Combinatorics.SimpleGraph.LapMatrix
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.LinearAlgebra.Eigenspace.Basic
+public import Mathlib.LinearAlgebra.Matrix.ToLin
+public import Mathlib.Data.Real.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+
+@[expose] public section
 
 namespace CompleteGraphSpectrum
 

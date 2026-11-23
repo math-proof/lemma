@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/Polynomial/RiordanOrthogonalPolynomials.lean -/
+module
 
+public import Def.Algebra.Polynomial.RiordanOrthogonalPolynomials
+public import Theorem.Int.Polynomial.RiordanOrthogonalPolynomials
 
-import Def.Algebra.Polynomial.RiordanOrthogonalPolynomials
-import Theorem.Int.Polynomial.RiordanOrthogonalPolynomials
-
+public section
 
 namespace MetaMathlibExt
 

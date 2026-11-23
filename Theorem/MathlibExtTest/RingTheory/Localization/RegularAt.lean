@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/Localization/RegularAt.lean -/
+module
 
+public import Def.RingTheory.Localization.RegularAt.Part2
+public import Theorem.MvPolynomial.Localization.RegularAt
 
-import Def.RingTheory.Localization.RegularAt.Part2
-import Theorem.MvPolynomial.Localization.RegularAt
-
+public section
 
 example (ev : ℤ →+* ℚ) (a : ℤ) :
     FractionRing.IsRegularAt ev (algebraMap ℤ (FractionRing ℤ) a) :=

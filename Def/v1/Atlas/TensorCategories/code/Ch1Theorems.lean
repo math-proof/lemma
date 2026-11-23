@@ -19,8 +19,8 @@ import Mathlib.CategoryTheory.Abelian.Projective.Basic
 import Mathlib.Algebra.Category.ModuleCat.Basic
 import Mathlib.RingTheory.HopfAlgebra.Basic
 import Def.v1.Atlas.TensorCategories.code.SemisimpleMultitensor.Part6
-import Lemma.Category.Atlas.v1.TensorCategories.code.SemisimpleMultitensor
-import Lemma.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctorProjective
+import Theorem.Category.Atlas.v1.TensorCategories.code.SemisimpleMultitensor
+import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctorProjective
 import Theorem.v1.Atlas.TensorCategories.code.UnitSemisimplicity
 import Class.v1.Atlas.TensorCategories.code.QuasiTensorFunctorProjective.Part3
 import Structure.v1.Atlas.TensorCategories.code.Ch1Theorems

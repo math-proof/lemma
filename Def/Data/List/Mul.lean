@@ -1,6 +1,9 @@
-import Mathlib.Data.Nat.GCD.Basic
-import Def.Data.Tensor.Defs.Part4
+module
 
+public import Mathlib.Data.Nat.GCD.Basic
+public import Def.Data.Tensor.Defs.Part4
+
+@[expose] public section
 
 namespace Tensor
 

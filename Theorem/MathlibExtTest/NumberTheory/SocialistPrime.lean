@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/SocialistPrime.lean -/
+module
 
+public import Def.NumberTheory.SocialistPrime
+public import Theorem.Nat.SocialistPrime
 
-import Def.NumberTheory.SocialistPrime
-import Theorem.Nat.SocialistPrime
-
+public section
 
 -- 5 is excluded by the strict source bound 5 < p; its listed residues
 -- in [2,4] happen to be distinct.

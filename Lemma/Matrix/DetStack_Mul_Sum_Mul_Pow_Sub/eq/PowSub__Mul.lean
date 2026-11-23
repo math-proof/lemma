@@ -1,6 +1,7 @@
 import Mathlib.LinearAlgebra.Matrix.Block
 import Initialize.Tactic.Attr.Basic
 import Syntax.LinearAlgebra.Matrix.Notation
+open scoped Matrix
 open Matrix
 
 
@@ -14,7 +15,7 @@ private lemma main
   {n d : ℕ}
   {x l : α} :
 -- imply
-  ([i < n, j < n]
+  ([i < n][j < n]
       ((i : ℕ).choose j : α) *
         ∑ h ∈ Finset.range (d + 1),
           (d.choose h : α) * (-l) ^ (d - h) * x ^ h *

@@ -3,7 +3,7 @@ module
 public import Mathlib
 public import Structure.ModularCurve_JZeroNeronPrimaryTorsionSheaf
 public import Structure.AlgebraicGeometry_RelativeGroupLaw
-public import Lemma.Scheme.RelativeGroupLawKernel
+public import Theorem.Scheme.RelativeGroupLawKernel
 public import Theorem.Scheme.NeronModelEndomorphismExtension
 
 set_option autoImplicit false

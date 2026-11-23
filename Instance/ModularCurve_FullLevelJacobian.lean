@@ -2,7 +2,8 @@
 import Lemma.UpperHalfPlane.XHOperators
 import Instance.CuspidalType_IsCuspidalOfType
 import Def.HeckeGalois_EichlerShimura
-import Lemma.Matrix.FullLevelJacobian
+import Theorem.Matrix.FullLevelJacobian
+import Def.ModularCurve_FullLevelJacobian
 
 set_option autoImplicit false
 

@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Bernoulli/CarlitzIdentity.lean -/
+module
 
+public import Def.NumberTheory.Bernoulli.CarlitzIdentity
+public import Theorem.Nat.Bernoulli.CarlitzIdentity
 
-import Def.NumberTheory.Bernoulli.CarlitzIdentity
-import Theorem.Nat.Bernoulli.CarlitzIdentity
-
+public section
 
 namespace MetaMathlibExt
 

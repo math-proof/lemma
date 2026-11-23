@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.AlgebraicTopologyI.code.Section30.Part4
-public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section30
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section30
 public import Mathlib.Topology.Basic
 public import Mathlib.Topology.Sets.Closeds
 public import Mathlib.Algebra.FiveLemma

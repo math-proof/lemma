@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.CombinatorialOptimization.code.Flow.ShortestAugPath
-import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.ShortestAugPath
+import Theorem.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.ShortestAugPath
 open Finset BigOperators Classical
 
 

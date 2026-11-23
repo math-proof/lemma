@@ -1,11 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/Completion/FiniteLiesOverInstances.lean -/
+module
 
-
-import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
-import Instance.NumberTheory.NumberField.Completion.FiniteLiesOverInstances
+public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+public import Instance.NumberTheory.NumberField.Completion.FiniteLiesOverInstances
 open IsDedekindDomain.HeightOneSpectrum
 open scoped NumberField
 open scoped NumberField.LiesOver
+
+public section
 
 variable {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
   [Algebra K L]

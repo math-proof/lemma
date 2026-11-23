@@ -1,12 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Ramanujan/Part1Ch3Entry15Example1ExponentialSeries.lean -/
+module
 
-
-import Def.NumberTheory.Ramanujan.Part1Ch3Entry15Example1ExponentialSeries
-import Lemma.Nat.Ramanujan.Part1Ch3Entry15Example1ExponentialSeries
+public import Def.NumberTheory.Ramanujan.Part1Ch3Entry15Example1ExponentialSeries
+public import Theorem.Nat.Ramanujan.Part1Ch3Entry15Example1ExponentialSeries
 open scoped BigOperators
 
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry15Example1ExponentialSeries
 
+public section
 
 -- The theorem specializes to the ordinary binomial series when `n = 1`.
 example (m : ℝ) :

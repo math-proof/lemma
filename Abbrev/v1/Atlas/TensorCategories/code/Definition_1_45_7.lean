@@ -8,7 +8,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TensorCategories.code.FPdimCategory
+module
+
+public import Def.v1.Atlas.TensorCategories.code.FPdimCategory
+@[expose] public section
+
 open CategoryTheory
 
 universe u v

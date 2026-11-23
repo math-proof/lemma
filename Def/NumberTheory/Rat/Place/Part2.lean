@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Rat/Place.lean -/
 
-import Mathlib.NumberTheory.Ostrowski
-import Mathlib.NumberTheory.Padics.PadicNumbers
-import Instance.NumberTheory.Rat.Place.Part2
+module
+
+public import Mathlib.NumberTheory.Ostrowski
+public import Mathlib.NumberTheory.Padics.PadicNumbers
+public import Instance.NumberTheory.Rat.Place.Part2
+
+@[expose] public section
+
 /-!
 # Rational places and completed fields
 

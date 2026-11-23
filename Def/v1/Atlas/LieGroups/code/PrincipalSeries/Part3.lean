@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.LieGroups.code.VermaModules.Part7
-import Lemma.Int.WeightSubspace.eq.ToSubmoduleWeightSpace
-import Lemma.Int.IsInQPlus0
+import Theorem.Int.WeightSubspace.eq.ToSubmoduleWeightSpace
+import Theorem.Int.IsInQPlus0
 import Def.v1.Atlas.LieGroups.code.CategoryO.Part3
 import Mathlib.Algebra.Lie.TensorProduct
 import Mathlib.Algebra.Lie.Submodule

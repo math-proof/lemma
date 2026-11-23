@@ -9,7 +9,8 @@ public import Structure.ModularCurve_JZeroNeronData
 public import Structure.ModularCurve_ToricDescentData
 public import Def.GaloisRep_Flat
 public import Def.FLTPrelim_Ramification
-public import Lemma.Finset.SupersingularNodePlaces
+public import Def.ModularCurve_SupersingularNodePlaces
+public import Theorem.Finset.SupersingularNodePlaces
 public import Structure.JacJ1Iface
 
 set_option autoImplicit false

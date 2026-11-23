@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part3
-import Lemma.Category.Atlas.v1.TensorCategories.code.HopfAlgebra
+import Theorem.Category.Atlas.v1.TensorCategories.code.HopfAlgebra
 import Mathlib.Algebra.Category.ModuleCat.Basic
 import Mathlib.RingTheory.TensorProduct.Basic
 import Def.v1.Atlas.TensorCategories.code.HopfAlgebraRep

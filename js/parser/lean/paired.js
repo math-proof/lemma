@@ -924,10 +924,6 @@ export class LeanParenthesis extends LeanPairedGroup {
         return `\\mathord{\\left({\\colorbox{#${r}${g}${b}}{$%s$}}\\right)}`;
     }
 
-    pathChoices(opts = {}) {
-        return this.arg?.pathChoices?.(opts) ?? [""];
-    }
-
 }
 
 export class LeanAngleBracket extends LeanPairedGroup {
@@ -1139,11 +1135,11 @@ export class LeanBrace extends LeanPairedGroup {
      * `{a}` → `{Brace: [a]}`; `{a, b, …}` (a `LeanArgsCommaSeparated` body) →
      * `{Brace: [a, b, …]}`. Overrides `LeanUnary.toJSON`, which unwraps the brace.
      */
-    toJSON() {
+    toJSON(ctx = { leaves: new Map() }) {
         const inner = this.arg ?? this.args?.[0];
         if (!inner) return { [this.pathToken]: [] };
         const parts = inner instanceof L.LeanArgsCommaSeparated ? inner.args : [inner];
-        return { [this.pathToken]: parts.map((a) => a.toJSON()).filter((s) => s !== "") };
+        return { [this.pathToken]: parts.map((a) => a.toJSON(ctx)).filter((s) => s !== "") };
     }
 
     /**
@@ -1310,9 +1306,9 @@ export class LeanAbs extends LeanPairedGroup {
     static { this.register(); }
 
     /** `|x|` keeps its head: `{Abs: [x]}` instead of unwrapping to `x`. */
-    toJSON() {
+    toJSON(ctx = { leaves: new Map() }) {
         const inner = this.arg ?? this.args?.[0];
-        return { [this.pathToken]: [inner ? inner.toJSON() : ""] };
+        return { [this.pathToken]: [inner ? inner.toJSON(ctx) : ""] };
     }
 
     get operator() {

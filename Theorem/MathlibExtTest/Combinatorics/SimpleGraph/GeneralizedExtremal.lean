@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/GeneralizedExtremal.lean -/
+module
 
-
-import Def.Combinatorics.SimpleGraph.GeneralizedExtremal
-import Theorem.SimpleGraph.GeneralizedExtremal
+public import Def.Combinatorics.SimpleGraph.GeneralizedExtremal
+public import Theorem.SimpleGraph.GeneralizedExtremal
 open SimpleGraph
+
+public section
 
 variable {α β : Type*} [Fintype α]
 variable (T : SimpleGraph α) (H : SimpleGraph β)

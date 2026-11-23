@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/NarayanaPolynomial.lean -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Polynomial.Basic
-import Def.Combinatorics.Enumerative.NarayanaNumber
-import Theorem.Finset.Enumerative.NarayanaNumber
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Polynomial.Basic
+public import Def.Combinatorics.Enumerative.NarayanaNumber
+public import Theorem.Finset.Enumerative.NarayanaNumber
+
+@[expose] public section
+
 /-!
 # Narayana polynomials with zero constant term
 

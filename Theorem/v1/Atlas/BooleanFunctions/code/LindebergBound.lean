@@ -7,10 +7,12 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.BooleanFunctions.code.LindebergHybrid.Part2
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.LindebergHybrid
+public import Def.v1.Atlas.BooleanFunctions.code.LindebergHybrid.Part2
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.LindebergHybrid
 
+public section
 
 namespace BooleanFourier
 

@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PadovanSequence.lean -/
+module
 
+public import Def.NumberTheory.PadovanSequence
+public import Theorem.Nat.PadovanSequence
 
-import Def.NumberTheory.PadovanSequence
-import Theorem.Nat.PadovanSequence
-
+public section
 
 namespace MetaMathlibExt
 

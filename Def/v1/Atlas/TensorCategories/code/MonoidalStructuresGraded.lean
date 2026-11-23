@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.TensorCategories.code.MonoidalFunctorsCohomology.Part5
-import Lemma.Category.Atlas.v1.TensorCategories.code.MonoidalFunctorsCohomology
+import Theorem.Category.Atlas.v1.TensorCategories.code.MonoidalFunctorsCohomology
 set_option maxHeartbeats 400000
 
 universe u v

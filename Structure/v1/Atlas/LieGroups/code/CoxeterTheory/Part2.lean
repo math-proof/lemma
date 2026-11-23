@@ -11,8 +11,8 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.LieGroups.code.CategoryO.Part3
-public import Lemma.Int.IsInQPlus0
-public import Lemma.Finset.EqMul_Mul.of.In_SimpleReflections
+public import Theorem.Int.IsInQPlus0
+public import Theorem.Finset.EqMul_Mul.of.In_SimpleReflections
 public import Def.v1.Atlas.LieGroups.code.HeckeKL.Part9
 public import Def.v1.Atlas.LieGroups.code.CoxeterTheory
 

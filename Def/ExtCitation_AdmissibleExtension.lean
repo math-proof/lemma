@@ -1,7 +1,11 @@
-import Mathlib.NumberTheory.Cyclotomic.CyclotomicCharacter
-import Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed
-import Def.FLTPrelim_Ramification
-import Structure.ExtCitation_AdmissibleExtension
+module
+
+public import Mathlib.NumberTheory.Cyclotomic.CyclotomicCharacter
+public import Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed
+public import Def.FLTPrelim_Ramification
+public import Structure.ExtCitation_AdmissibleExtension
+
+@[expose] public section
 
 set_option autoImplicit false
 

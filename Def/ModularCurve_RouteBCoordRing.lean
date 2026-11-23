@@ -1,6 +1,10 @@
-import Mathlib
-import Theorem.HahnSeries.X0
-import Abbrev.ModularCurve_RouteBCoordRing
+module
+
+public import Mathlib
+public import Theorem.HahnSeries.X0
+public import Abbrev.ModularCurve_RouteBCoordRing
+
+@[expose] public section
 
 noncomputable section
 

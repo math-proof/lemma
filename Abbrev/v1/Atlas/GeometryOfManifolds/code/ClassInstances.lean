@@ -14,10 +14,10 @@ import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.TwoDimDFS
 import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.AlmostComplexManifolds
 import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.MoserDarboux
 import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.FourManifoldsSW
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ArnoldConjecture
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.AdvancedKahler
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ArnoldConjecture
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.AdvancedKahler
 import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.PontrjaginObstructions
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.HodgeTheory
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.HodgeTheory
 import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ChernClassProperties
 import Instance.v1.Atlas.GeometryOfManifolds.code.TrivialDFS
 import Def.v1.Atlas.GeometryOfManifolds.code.TwoDimDFS.Part3

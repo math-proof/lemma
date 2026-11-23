@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/SelbergSieve.lean -/
+module
 
-
-import Def.NumberTheory.SelbergSieve
-import Theorem.Nat.SelbergSieve
-import Mathlib.Tactic.NormNum
+public import Def.NumberTheory.SelbergSieve
+public import Theorem.Nat.SelbergSieve
+public import Mathlib.Tactic.NormNum
 open MathlibExt.SelbergSieve
 
+public section
 
 namespace MathlibExtTest.NumberTheory.SelbergSieve
 

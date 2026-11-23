@@ -4,16 +4,20 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.Polynomial.Chebyshev
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Fin.Tuple.Basic
-import Mathlib.Data.Nat.Find
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Ring
-import Def.Combinatorics.Enumerative.Partition.PeakGeneratingFunction.Part3
+module
+
+public import Mathlib.RingTheory.PowerSeries.Basic
+public import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.Polynomial.Chebyshev
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Fin.Tuple.Basic
+public import Mathlib.Data.Nat.Find
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Ring
+public import Def.Combinatorics.Enumerative.Partition.PeakGeneratingFunction.Part3
+
+@[expose] public section
 
 
 namespace MetaMathlibExt

@@ -1,12 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/MergeHiInvariant.lean -/
 
-import Def.CPythonListsort.Code.Assembly.GallopCorrectness
-import Theorem.CPythonListsort.Code.Assembly.MergeHiSafety.Part5
-import Def.CPythonListsort.Code.Correctness.MergeMovementCorrectness.Part2
-import Structure.CPythonListsort.Code.Correctness.MergeSemanticPre
-import Def.CPythonListsort.Code.Correctness.SortSliceRange
-import Def.CPythonListsort.Code.Correctness.StableMerge
-import Def.CPythonListsort.Code.Correctness.MergeHiInvariant
+module
+
+public import Def.CPythonListsort.Code.Assembly.GallopCorrectness
+public import Theorem.CPythonListsort.Code.Assembly.MergeHiSafety.Part5
+public import Def.CPythonListsort.Code.Correctness.MergeMovementCorrectness.Part2
+public import Structure.CPythonListsort.Code.Correctness.MergeSemanticPre
+public import Def.CPythonListsort.Code.Correctness.SortSliceRange
+public import Def.CPythonListsort.Code.Correctness.StableMerge
+public import Def.CPythonListsort.Code.Correctness.MergeHiInvariant
+@[expose] public section
+
 /-!
 # Semantic invariant for `merge_hi`
 

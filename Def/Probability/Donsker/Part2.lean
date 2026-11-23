@@ -4,24 +4,29 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
 
-import Mathlib.Tactic.FunProp
-import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Algebra.Order.Floor.Semiring
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.MeasureTheory.Constructions.BorelSpace.ContinuousMap
-import Mathlib.MeasureTheory.Constructions.BorelSpace.Metrizable
-import Mathlib.MeasureTheory.Constructions.Projective
-import Mathlib.MeasureTheory.Measure.LevyConvergence
-import Mathlib.MeasureTheory.Measure.LevyProkhorovMetric
-import Mathlib.MeasureTheory.Measure.Prokhorov
-import Mathlib.Probability.CentralLimitTheorem
-import Mathlib.Probability.IdentDistribIndep
-import Mathlib.Probability.Independence.CharacteristicFunction
-import Mathlib.Topology.ContinuousMap.Bounded.ArzelaAscoli
-import Mathlib.Topology.ContinuousMap.SecondCountableSpace
-import Mathlib.Probability.BrownianMotion.Basic
-import Mathlib.MeasureTheory.Function.ConvergenceInDistribution
-import Instance.Probability.Donsker
+module
+
+public import Mathlib.Tactic.FunProp
+public import Mathlib.Algebra.BigOperators.Intervals
+public import Mathlib.Algebra.Order.Floor.Semiring
+public import Mathlib.Analysis.SpecialFunctions.Bernstein
+public import Mathlib.MeasureTheory.Constructions.BorelSpace.ContinuousMap
+public import Mathlib.MeasureTheory.Constructions.BorelSpace.Metrizable
+public import Mathlib.MeasureTheory.Constructions.Projective
+public import Mathlib.MeasureTheory.Measure.LevyConvergence
+public import Mathlib.MeasureTheory.Measure.LevyProkhorovMetric
+public import Mathlib.MeasureTheory.Measure.Prokhorov
+public import Mathlib.Probability.CentralLimitTheorem
+public import Mathlib.Probability.IdentDistribIndep
+public import Mathlib.Probability.Independence.CharacteristicFunction
+public import Mathlib.Topology.ContinuousMap.Bounded.ArzelaAscoli
+public import Mathlib.Topology.ContinuousMap.SecondCountableSpace
+public import Mathlib.Probability.BrownianMotion.Basic
+public import Mathlib.MeasureTheory.Function.ConvergenceInDistribution
+public import Instance.Probability.Donsker
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Filter Topology
 open scoped ENNReal NNReal ProbabilityTheory Real
 

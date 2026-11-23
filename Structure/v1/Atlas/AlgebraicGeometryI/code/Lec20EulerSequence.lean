@@ -11,8 +11,8 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.AlgebraicGeometryI.code.TwistSheaf.Part2
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.TwistSheaf
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleProjective
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TwistSheaf
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleProjective
 public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleProjective.Part4
 public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec20EulerSequence
 set_option maxHeartbeats 800000

@@ -1,6 +1,9 @@
 -- Carved from Lemma/Definitions/Def_ExtCitation_CyclotomicUnits.lean: instance decls only.
-import Lemma.ClassGroup.GaloisAction
-import Def.Stickelberger_Basic
+module
+
+public import Theorem.ClassGroup.GaloisAction
+public import Def.Stickelberger_Basic
+@[expose] public section
 
 set_option autoImplicit false
 

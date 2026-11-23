@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/CoveringSystem/ExactCover.lean -/
+module
 
+public import Def.NumberTheory.CoveringSystem.ExactCover
 
-import Def.NumberTheory.CoveringSystem.ExactCover
-
+public section
 
 example : Int.indexedCoverMultiplicity (fun _ : Fin 2 => 2)
     (fun i => (i : ℕ)) 0 = 1 := by decide

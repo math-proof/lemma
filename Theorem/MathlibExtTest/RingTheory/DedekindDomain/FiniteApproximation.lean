@@ -3,8 +3,9 @@
 /-
 Author: Muse Code
 -/
+module
 
-import Theorem.Int.DedekindDomain.FiniteApproximation
+public import Theorem.Int.DedekindDomain.FiniteApproximation
 open UniqueFactorizationMonoid IsDedekindDomain Ideal Finset
 
 open scoped nonZeroDivisors
@@ -17,6 +18,8 @@ Generic API checks for `Ideal.exists_elem_eq_valuation_at_primes` and
 empty-finset specialization, and singleton specialization for each
 (three integral and three fractional generic tests).
 -/
+
+public section
 
 
 namespace MathlibExtTest.RingTheory.DedekindDomain.FiniteApproximation

@@ -1,65 +1,195 @@
 {
   "lean": "ℙ[π](s[0]) * (∏ k ∈ Finset.range n, ℙ[π](s[k + 1] | s[k]))",
   "regex": [
-    "Mul(Prob_(Get_(0)))(Prod(Range_)(Prob_(Cond(Get_(Add_(1)))(Get__))))",
-    "Mul(Prob_(Get_(0)))(Prod(Range_)(Prob_(CondGetS__)))"
+    "Mul(Prob_(Get_(0)))(Prod_(Prob_(CondGetS__)))",
+    "Mul(Prob_(Get_(0)))(Prod_(Prob_(Cond(Get_(Add_(1)))(Get__))))"
   ],
   "suggestion": [
-    "MulProb_Get_0ProdRange_Prob_CondGet_Add_1Get",
-    "MulProb_Get_0ProdRange_Prob_CondGetS"
+    "MulProb_Get_0Prod_Prob_CondGetS",
+    "MulProb_Get_0Prod_Prob_CondGet_Add_1Get"
   ],
   "dag": [
     [
-      {"token":"Mul"},
-      {"token":"Prob"},
-      {"token":"_"},
-      {"token":"Get"},
-      {"token":"0"},
-      {"group":[4]},
-      {"group":[3,2,5]},
-      {"group":[1,2,6]},
-      {"token":"Prod"},
-      {"token":"Range"},
-      {"group":[9,2]},
-      {"token":"Cond"},
-      {"token":"Add"},
-      {"token":"1"},
-      {"group":[13]},
-      {"group":[12,2,14]},
-      {"group":[3,2,15]},
-      {"group":[3,2,2]},
-      {"group":[11,16,17]},
-      {"group":[1,2,18]},
-      {"group":[8,10,19]},
-      {"sequence":[0,7,20]}
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "token": "0"
+      },
+      {
+        "group": [
+          4
+        ]
+      },
+      {
+        "group": [
+          3,
+          2,
+          5
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          6
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "token": "CondGetS"
+      },
+      {
+        "group": [
+          9,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          10
+        ]
+      },
+      {
+        "group": [
+          8,
+          2,
+          11
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          7,
+          12
+        ]
+      }
     ],
     [
-      {"token":"Mul"},
-      {"token":"Prob"},
-      {"token":"_"},
-      {"token":"Get"},
-      {"token":"0"},
-      {"group":[4]},
-      {"group":[3,2,5]},
-      {"group":[1,2,6]},
-      {"token":"Prod"},
-      {"token":"Range"},
-      {"group":[9,2]},
-      {"token":"CondGetS"},
-      {"group":[11,2,2]},
-      {"group":[1,2,12]},
-      {"group":[8,10,13]},
-      {"sequence":[0,7,14]}
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "token": "0"
+      },
+      {
+        "group": [
+          4
+        ]
+      },
+      {
+        "group": [
+          3,
+          2,
+          5
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          6
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          11
+        ]
+      },
+      {
+        "group": [
+          10,
+          2,
+          12
+        ]
+      },
+      {
+        "group": [
+          3,
+          2,
+          13
+        ]
+      },
+      {
+        "group": [
+          3,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          9,
+          14,
+          15
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          16
+        ]
+      },
+      {
+        "group": [
+          8,
+          2,
+          17
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          7,
+          18
+        ]
+      }
     ]
   ],
   "json": {
     "Mul": [
       {
         "Prob": [
-          "_",
+          "$1",
           {
             "Get": [
-              "_",
+              "$2",
               "0"
             ]
           }
@@ -68,21 +198,26 @@
       {
         "Prod": [
           {
-            "Range": [
-              "_"
+            "In": [
+              "?0",
+              {
+                "Range": [
+                  "$3"
+                ]
+              }
             ]
           },
           {
             "Prob": [
-              "_",
+              "$1",
               {
                 "Cond": [
                   {
                     "Get": [
-                      "_",
+                      "$2",
                       {
                         "Add": [
-                          "_",
+                          "?0",
                           "1"
                         ]
                       }
@@ -90,8 +225,8 @@
                   },
                   {
                     "Get": [
-                      "_",
-                      "_"
+                      "$2",
+                      "?0"
                     ]
                   }
                 ]
@@ -101,5 +236,6 @@
         ]
       }
     ]
-  }
+  },
+  "fingerprint": "Mul(Prob($1)(Get($2)(0)))(Prod(In(?0)(Range($3)))(Prob($1)(Cond(Get($2)(Add(?0)(1)))(Get($2)(?0)))))"
 }

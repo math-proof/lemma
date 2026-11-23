@@ -1,15 +1,18 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Ramanujan/Part1Ch2Entry6Corollary.lean -/
+module
 
+public import Def.NumberTheory.Ramanujan.Part1Ch2Entry6Corollary
+public import Theorem.Nat.Ramanujan.Part1Ch2Entry6Corollary
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Tactic.NormNum
 
-import Def.NumberTheory.Ramanujan.Part1Ch2Entry6Corollary
-import Theorem.Nat.Ramanujan.Part1Ch2Entry6Corollary
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Tactic.NormNum
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 2, Corollary to Entry 6 API checks
 
 Values of `A` from its simp lemmas, and the corollary at `r = 2`.
 -/
+
+public section
 
 
 namespace MathlibExtTest.NumberTheory.Ramanujan.Part1Ch2Entry6Corollary

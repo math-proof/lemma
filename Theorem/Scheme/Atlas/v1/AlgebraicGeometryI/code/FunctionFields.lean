@@ -1,0 +1,32 @@
+module
+
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.AlgebraicGeometryI.code.FunctionFields
+
+public section
+
+open Module Ideal
+
+
+/--
+[morphismDegree_eq_finrank](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/FunctionFields.lean)
+-/
+@[path]
+public theorem morphismDegree_eq_finrank
+  {B A : Type*}
+  [CommRing B]
+  [IsDomain B]
+  [CommRing A]
+  [IsDomain A]
+  [Algebra.IsAlgebraic B A] :
+-- imply
+  morphismDegree B A = finrank B A :=
+-- proof
+  Algebra.IsAlgebraic.finrank_of_isFractionRing B (FractionRing B) A (FractionRing A)
+end FiberBound
+section Ramification
+end Ramification
+
+
+-- created on 2026-10-23

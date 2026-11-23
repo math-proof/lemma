@@ -1,5 +1,9 @@
-import Mathlib
-import Theorem.Analysis.Section_8_1.Part2
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_8_1.Part2
+@[expose] public section
+
 /-!
 # Analysis I, Section 8.1: Countability
 

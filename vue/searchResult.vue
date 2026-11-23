@@ -1,10 +1,11 @@
 <template>
 	<div @keydown=keydown>
-		<searchForm :ref="$refs.searchForm" :q=q :regularExpression=regularExpression :wholeWord=wholeWord :caseSensitive=caseSensitive :fullText=fullText :replacement=replacement :limit=limit></searchForm>
+		<searchForm :ref="$refs.searchForm" :q=q :regularExpression=regularExpression :wholeWord=wholeWord :caseSensitive=caseSensitive :fullText=fullText :lean=lean :replacement=replacement :limit=limit></searchForm>
 		<a :href=href>search</a> results:
 		<br>
 		in all, there are {{data.length}} hits:
 		<br>
+		<span v-if="shownLabel">{{shownLabel}} ({{data.length}}):</span>
 		<ul>
 			<li v-for="data, i of data">
 				<searchLink :data=data :ref="el => self.searchLink[i] = el"></searchLink>
@@ -20,7 +21,7 @@ import searchLink from "./searchLink.vue";
 
 console.log('import searchResult.vue');
 
-const props = defineProps(['data', 'q', 'caseSensitive', 'wholeWord', 'regularExpression', 'fullText', 'replacement', 'limit']);
+const props = defineProps(['data', 'q', 'caseSensitive', 'wholeWord', 'regularExpression', 'fullText', 'lean', 'replacement', 'limit', 'exact', 'similar']);
 
 const self = new Vue({
 	props,
@@ -36,6 +37,18 @@ const self = new Vue({
 	},
 
 	computed: {
+		// `data` is already `exact` when it has hits, otherwise `similar`
+		// (mjs/lean/buildSearchPayload.mjs); only the heading differs.
+		shownLabel() {
+			if (!this.lean)
+				return null;
+			if (this.exact && this.exact.length)
+				return 'exact matches';
+			if (this.similar && this.similar.length)
+				return 'similarity matches';
+			return null;
+		},
+
 		href() {
 			var {q, replacement, limit} = this;
 			var kwargs = {};
@@ -49,6 +62,8 @@ const self = new Vue({
 				kwargs.regularExpression = 'on';
 			if (this.fullText)
 				kwargs.fullText = 'on';
+			if (this.lean)
+				kwargs.lean = 'on';
 			if (replacement)
 				kwargs.replacement = replacement.encodeURI();
 			if (limit)
@@ -117,7 +132,7 @@ module = ${module}`);
 	},
 });
 
-const { $refs, href, keydown } = self.globals;
+const { $refs, href, keydown, shownLabel } = self.globals;
 </script>
 
 <style scoped>

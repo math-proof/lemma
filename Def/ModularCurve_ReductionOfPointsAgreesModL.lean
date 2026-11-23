@@ -1,5 +1,9 @@
-import Mathlib
-import Lemma.Finsupp.ReductionModL
+module
+
+public import Mathlib
+public import Theorem.Finsupp.ReductionModL
+
+@[expose] public section
 
 set_option autoImplicit false
 

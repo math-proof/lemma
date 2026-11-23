@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/ReverseSliceCorrectness.lean -/
 
-import Def.CPythonListsort.Code.Assembly.ReverseSliceSafety.Part2
+module
+
+public import Def.CPythonListsort.Code.Assembly.ReverseSliceSafety.Part2
+
+@[expose] public section
+
 /-!
 # Exact correctness of slice reversal
 

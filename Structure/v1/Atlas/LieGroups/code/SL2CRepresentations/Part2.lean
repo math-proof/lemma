@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Theorem.v1.Atlas.LieGroups.code.SL2Basics.Part4
-public import Lemma.Nat.basisHC.eq.SMul
+public import Theorem.Nat.basisHC.eq.SMul
 public import Mathlib.Data.ZMod.Basic
 public import Mathlib.Data.Complex.Basic
 public import Mathlib.Analysis.InnerProductSpace.Basic

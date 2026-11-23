@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Instance.v1.Atlas.NumberTheoryI.code.Ch22WeberLFunction
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Ch22WeberLFunction
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Ch22WeberLFunction
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Ch22ConductorDef
 import Def.v1.Atlas.NumberTheoryI.code.Ch22ConductorDef
 

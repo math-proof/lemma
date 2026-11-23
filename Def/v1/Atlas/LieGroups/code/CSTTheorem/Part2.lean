@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.LieGroups.code.ChevalleyRestriction.Part7
-import Lemma.Rat.EqProjectToH.of.Given
+import Theorem.Rat.EqProjectToH.of.Given
 import Theorem.Ideal.IsHomogeneous_AugmentationIdealGraded
 import Instance.v1.Atlas.LieGroups.code.SyzygiesKoszul.Part2
 import Mathlib.Data.Complex.Basic

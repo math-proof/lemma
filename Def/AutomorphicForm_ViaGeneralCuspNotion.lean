@@ -1,5 +1,5 @@
 import Def.AutomorphicForm_ViaCompactCuspNotion
-import Lemma.ClassGroup.ProductionPinsGeneral
+import Theorem.ClassGroup.ProductionPinsGeneral
 
 set_option autoImplicit false
 

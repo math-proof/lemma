@@ -2,9 +2,11 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part29
-import Def.LinearAlgebra.Matrix.Determinant.LGV1.Part11
+module
+
+public import Mathlib
+public import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part29
+public import Def.LinearAlgebra.Matrix.Determinant.LGV1.Part11
 open Finset BigOperators Matrix
 
 /-!
@@ -80,6 +82,8 @@ LGV1's definitions. Both definitions are kept compatible with trivial conversion
 LGV2.lean contains the complete weighted LGV lemma proof. This file contains the
 counting case infrastructure with lattice-specific path counting results.
 -/
+
+public section
 
 
 namespace LGV1

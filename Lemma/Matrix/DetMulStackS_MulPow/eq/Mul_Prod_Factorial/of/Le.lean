@@ -4,6 +4,7 @@ import Mathlib.LinearAlgebra.Vandermonde
 import Lemma.Matrix.Det.eq.Prod.of.All_All_Eq_0
 import Lemma.Matrix.GetMulOfOfPowNegChoose.eq.MulPowFwdDiff.of.Le
 import Syntax.LinearAlgebra.Matrix.Notation
+open scoped Matrix
 open Matrix Nat
 
 
@@ -15,8 +16,8 @@ private lemma main
 -- given
   (h : d ≤ m) :
 -- imply
-  (([i < d, j < m] (x ^ (j : ℕ) * ((j : R) + δ) ^ (i : ℕ))) *
-    ([k < m, j < d] ((-x) ^ (j - k : ℤ) * ((j : ℕ).choose k : R)))).det =
+  (([i < d][j < m] (x ^ (j : ℕ) * ((j : R) + δ) ^ (i : ℕ))) *
+    ([k < m][j < d] ((-x) ^ (j - k : ℤ) * ((j : ℕ).choose k : R)))).det =
     x ^ (d.choose 2) * ∏ i ∈ Finset.range d, (i ! : R) := by
 -- proof
   have hmul (i j : Fin d) :=

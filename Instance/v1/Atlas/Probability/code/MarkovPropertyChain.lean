@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Instance.v1.Atlas.Probability.code.MarkovChainConstruction.Part2
-import Lemma.Measure.Atlas.v1.Probability.code.MarkovChainConstruction
+import Theorem.Measure.Atlas.v1.Probability.code.MarkovChainConstruction
 import Def.Probability.MarkovPropertyChain
 open MeasureTheory ProbabilityTheory
 

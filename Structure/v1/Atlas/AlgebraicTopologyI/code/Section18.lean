@@ -34,8 +34,8 @@ public import Mathlib.Algebra.Module.PID
 public import Mathlib.Algebra.FreeAbelianGroup.Finsupp
 public import Structure.v1.Atlas.AlgebraicTopologyI.code.Section14
 public import Def.v1.Atlas.AlgebraicTopologyI.code.Section1.Part3
-public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section1
-public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section16
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section1
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section16
 public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.ContractibleHomology
 public import Def.v1.Atlas.AlgebraicTopologyI.code.Section16.Part4
 public import Def.v1.Atlas.AlgebraicTopologyI.code.ContractibleHomology.Part2

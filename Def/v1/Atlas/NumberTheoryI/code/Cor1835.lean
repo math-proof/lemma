@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.NumberTheoryI.code.DirichletCharacters
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.DirichletCharacters
-import Instance.v1.Atlas.NumberTheoryI.code.Cor1835
+module
 
+public import Def.v1.Atlas.NumberTheoryI.code.DirichletCharacters
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DirichletCharacters
+public import Instance.v1.Atlas.NumberTheoryI.code.Cor1835
+
+@[expose] public section
 
 namespace CharacterGroup
 

@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/Log/Integral.lean -/
+module
 
-
-import Def.Analysis.SpecialFunctions.Log.Integral
-import Theorem.Real.Integral
+public import Def.Analysis.SpecialFunctions.Log.Integral
+public import Theorem.Real.Integral
 open MeasureTheory
 
+public section
 
 noncomputable section
 

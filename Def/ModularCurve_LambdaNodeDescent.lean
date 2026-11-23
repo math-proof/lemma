@@ -1,6 +1,10 @@
-import Mathlib
-import Def.ModularCurve_LambdaNodeLocalized
-import Def.ModularCurve_NodeDescent
+module
+
+public import Mathlib
+public import Def.ModularCurve_LambdaNodeLocalized
+public import Def.ModularCurve_NodeDescent
+
+@[expose] public section
 
 set_option autoImplicit false
 

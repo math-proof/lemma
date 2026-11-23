@@ -1,12 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/Polynomial/RootBound.lean -/
 
 -- Author: @toskua, Avocado
+module
 
-import Mathlib.Algebra.Polynomial.Monic
-import Theorem.Algebra.Polynomial.RootBound
-import Theorem.Polynomial.RootBound
-import Instance.MathlibExtTest.Algebra.Polynomial.RootBound
+public import Mathlib.Algebra.Polynomial.Monic
+public import Theorem.Algebra.Polynomial.RootBound
+public import Theorem.Polynomial.RootBound
+public import Instance.MathlibExtTest.Algebra.Polynomial.RootBound
 
+public section
 
 namespace Polynomial
 

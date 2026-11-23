@@ -4,13 +4,18 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Analysis.Calculus.ContDiff.Basic
-import Mathlib.Analysis.Calculus.FDeriv.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Geometry.Manifold.Immersion
-import Mathlib.Analysis.Calculus.BumpFunction.FiniteDimension
-import Theorem.Geometry.Manifold.LocalGraph
-import Theorem.Set.Manifold.LocalGraph
+module
+
+public import Mathlib.Analysis.Calculus.ContDiff.Basic
+public import Mathlib.Analysis.Calculus.FDeriv.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Geometry.Manifold.Immersion
+public import Mathlib.Analysis.Calculus.BumpFunction.FiniteDimension
+public import Theorem.Geometry.Manifold.LocalGraph
+public import Theorem.Set.Manifold.LocalGraph
+
+@[expose] public section
+
 open scoped Topology Manifold ContDiff
 open Manifold
 

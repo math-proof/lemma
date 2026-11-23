@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Def.v1.Atlas.EllipticCurves.code.IntegerFactorization.Part4
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.IntegerFactorization
+module
 
+public import Mathlib
+public import Def.v1.Atlas.EllipticCurves.code.IntegerFactorization.Part4
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.IntegerFactorization
+
+@[expose] public section
 
 noncomputable section
 

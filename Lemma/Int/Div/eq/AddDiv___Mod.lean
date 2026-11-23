@@ -1,6 +1,6 @@
 import Lemma.Nat.Mod.eq.Sub_MulDiv
 import Theorem.Rat.DivSub.eq.SubDivS
-import Lemma.Nat.EqDivMul.of.Ne_0
+import Theorem.Nat.EqDivMul.of.Ne_0
 import Lemma.Int.EqAdd_Sub
 open Nat Rat Int
 
@@ -26,4 +26,4 @@ private lemma main
 
 
 -- created on 2025-03-20
--- updated on 2026-11-21
+-- updated on 2026-11-22

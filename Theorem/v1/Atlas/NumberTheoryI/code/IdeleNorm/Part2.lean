@@ -9,9 +9,9 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.NumberTheoryI.code.Ideles.Part3
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Ideles
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.AdicCompletionAlgebra
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.KroneckerWeber
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Ideles
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.AdicCompletionAlgebra
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.KroneckerWeber
 import Theorem.v1.Atlas.NumberTheoryI.code.AdicCompletionAlgebra.Part3
 import Def.v1.Atlas.NumberTheoryI.code.KroneckerWeber.Part5
 import Def.v1.Atlas.NumberTheoryI.code.IdeleNorm.Part2

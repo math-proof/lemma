@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Class.v1.Atlas.Buildings.code.Valuation.LatticesValuations
-import Theorem.Nat.IsInO
-import Theorem.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
-import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
-import Def.v1.Atlas.Buildings.code.Building.Affine.Part2
+module
+
+public import Class.v1.Atlas.Buildings.code.Valuation.LatticesValuations
+public import Theorem.Nat.IsInO
+public import Theorem.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
+public import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
+public import Def.v1.Atlas.Buildings.code.Building.Affine.Part2
+
+@[expose] public section
+
 set_option linter.unusedSectionVars false
 
 

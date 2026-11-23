@@ -1,12 +1,14 @@
-import Instance.Submodule_LocalBox
-import Class.CerednikDrinfeld_MumfordPeriod
+module
+
+public import Instance.Submodule_LocalBox
+public import Class.CerednikDrinfeld_MumfordPeriod
 
 set_option autoImplicit false
 
 open scoped TensorProduct Quaternion
 open IsDedekindDomain NumberField
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace CerednikDrinfeld.CosetGraph
 

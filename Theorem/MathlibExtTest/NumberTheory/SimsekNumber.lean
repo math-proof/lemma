@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/SimsekNumber.lean -/
+module
 
+public import Def.NumberTheory.SimsekNumber
+public import Theorem.Nat.SimsekNumber
 
-import Def.NumberTheory.SimsekNumber
-import Theorem.Nat.SimsekNumber
-
+public section
 
 namespace MetaMathlibExt
 

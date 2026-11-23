@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section30.Part4
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section30
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section30
 
 
 noncomputable section

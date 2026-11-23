@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/MultisetEulerianNumber.lean -/
 
+module
 
-import Def.Combinatorics.Enumerative.MultisetEulerianNumber.Part2
+public import Def.Combinatorics.Enumerative.MultisetEulerianNumber.Part2
 
+@[expose] public section
 
 namespace MetaMathlibExt
 

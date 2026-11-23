@@ -2,7 +2,7 @@ module
 
 public import Mathlib.Tactic
 public meta import Def.Lean.Expr.Parser
-public meta import Def.Lean.PrettyPrinter.Latex.Part2
+public meta import Def.Lean.PrettyPrinter.Latex.Expr
 public meta import Def.Tactic.Echo
 public meta import Initialize.Tactic.Attr.Axioms
 

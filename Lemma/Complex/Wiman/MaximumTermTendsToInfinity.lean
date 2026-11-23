@@ -5,9 +5,8 @@ import Lemma.Complex.Wiman.InfiniteTaylorSupport
 import Lemma.Complex.Wiman.MaximumTermAttained
 import Theorem.Analysis.Complex.Wiman.MaximumTermAttained
 open Filter
+open Complex
 
-
-namespace Complex
 
 /--
 [tendsto_wimanMaximumTerm_atTop](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/MaximumTermTendsToInfinity.lean)
@@ -38,9 +37,6 @@ lemma tendsto_wimanMaximumTerm_atTop
   filter_upwards with r
   exact wimanTerm_le_wimanMaximumTerm (f := f) (r := r) (n := n) hf
 
-end Complex
-
-namespace Complex
 
 /--
 [eventually_one_lt_wimanMaximumTerm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/MaximumTermTendsToInfinity.lean)
@@ -56,9 +52,6 @@ lemma eventually_one_lt_wimanMaximumTerm
 -- proof
   (tendsto_wimanMaximumTerm_atTop (f := f) hf htrans).eventually (eventually_gt_atTop 1)
 
-end Complex
-
-namespace Complex
 
 /--
 [eventually_pos_log_wimanMaximumTerm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/MaximumTermTendsToInfinity.lean)
@@ -75,8 +68,7 @@ lemma eventually_pos_log_wimanMaximumTerm
   filter_upwards [eventually_one_lt_wimanMaximumTerm (f := f) hf htrans] with r hr
   exact Real.log_pos hr
 
-end Complex
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-22

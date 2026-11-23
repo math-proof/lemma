@@ -1,4 +1,9 @@
-import Def.Data.Tensor.MaskedFill
+module
+
+public import Def.Data.Tensor.MaskedFill
+
+@[expose] public section
+
 open Tensor
 
 

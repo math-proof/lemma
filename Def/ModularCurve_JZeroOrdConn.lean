@@ -1,5 +1,9 @@
-import Structure.ModularCurve_JZeroGoodReductionV3
-import Def.ModularCurve_EichlerShimuraData
+module
+
+public import Structure.ModularCurve_JZeroGoodReductionV3
+public import Def.ModularCurve_EichlerShimuraData
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 400000

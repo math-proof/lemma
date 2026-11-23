@@ -1,7 +1,7 @@
 -- Carved from Lemma/Definitions/Def_WeierstrassCurve_ModularityLiftingConductor.lean: instance decls only.
-import Lemma.WeierstrassCurve.FreyPackage
+import Theorem.WeierstrassCurve.FreyPackage
 import Instance.FLTPrelim_GaloisRep
-import Lemma.CuspForm.ModularRep
+import Theorem.CuspForm.ModularRep
 import Instance.FLTPrelim_Modularity
 import Def.WeierstrassCurve_Mlc1RowStatement
 import Def.WeierstrassCurve_ModularityProps

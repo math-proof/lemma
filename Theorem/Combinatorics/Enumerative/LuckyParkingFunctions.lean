@@ -1,20 +1,22 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/LuckyParkingFunctions.lean -/
+module
 
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Rat.Defs
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Combinatorics.Enumerative.Catalan.Basic
-import Mathlib.Data.Fin.Basic
-import Mathlib.Data.Finset.Max
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Rat.Star
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Instance.Combinatorics.Enumerative.LuckyParkingFunctions.Part2
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Rat.Defs
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Combinatorics.Enumerative.Catalan.Basic
+public import Mathlib.Data.Fin.Basic
+public import Mathlib.Data.Finset.Max
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Rat.Star
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Instance.Combinatorics.Enumerative.LuckyParkingFunctions.Part2
 
+public section
 
 section
 

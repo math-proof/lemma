@@ -8,25 +8,30 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.ChevalleyRestriction.Part7
-import Lemma.Rat.EqProjectToH.of.Given
-import Mathlib.RingTheory.MvPolynomial.Basic
-import Mathlib.RingTheory.AlgebraicIndependent.Basic
-import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.Algebra.MvPolynomial.PDeriv
-import Mathlib.RingTheory.MvPolynomial.EulerIdentity
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.RingTheory.Adjoin.Tower
-import Mathlib.RingTheory.Adjoin.FG
-import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
-import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
-import Mathlib.RingTheory.Polynomial.Subring
-import Mathlib.RingTheory.FiniteType
-import Mathlib.RingTheory.Nullstellensatz
-import Mathlib.RingTheory.Ideal.GoingUp
+module
+
+public import Def.v1.Atlas.LieGroups.code.ChevalleyRestriction.Part7
+public import Theorem.Rat.EqProjectToH.of.Given
+public import Mathlib.RingTheory.MvPolynomial.Basic
+public import Mathlib.RingTheory.AlgebraicIndependent.Basic
+public import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.Algebra.MvPolynomial.PDeriv
+public import Mathlib.RingTheory.MvPolynomial.EulerIdentity
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.RingTheory.Adjoin.Tower
+public import Mathlib.RingTheory.Adjoin.FG
+public import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
+public import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
+public import Mathlib.RingTheory.Polynomial.Subring
+public import Mathlib.RingTheory.FiniteType
+public import Mathlib.RingTheory.Nullstellensatz
+public import Mathlib.RingTheory.Ideal.GoingUp
+
+@[expose] public section
+
 set_option linter.unusedSectionVars false
 
 

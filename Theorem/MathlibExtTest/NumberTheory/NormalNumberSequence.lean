@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NormalNumberSequence.lean -/
+module
 
+public import Lean.Elab.Tactic.Omega
+public import Mathlib.Tactic.Ring
+public import Def.NumberTheory.NormalNumberSequence
+public import Theorem.Nat.NormalNumberSequence
 
-import Lean.Elab.Tactic.Omega
-import Mathlib.Tactic.Ring
-import Def.NumberTheory.NormalNumberSequence
-import Theorem.Nat.NormalNumberSequence
-
+public section
 
 namespace MetaMathlibExt
 

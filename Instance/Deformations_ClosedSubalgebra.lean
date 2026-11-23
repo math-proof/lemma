@@ -1,7 +1,10 @@
 -- Carved from Lemma/Definitions/Def_Deformations_ClosedSubalgebra.lean: instance decls only.
-import Mathlib
-import Instance.Deformations_ProartinianCompact
-import Lemma.Ideal.ClosedSubalgebra
+module
+
+public import Mathlib
+public import Instance.Deformations_ProartinianCompact
+public import Theorem.Ideal.ClosedSubalgebra
+@[expose] public section
 
 set_option autoImplicit false
 

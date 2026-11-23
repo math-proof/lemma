@@ -1,11 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/Saturation.lean -/
+module
 
-
-import Def.Combinatorics.SimpleGraph.Saturation
-import Theorem.SimpleGraph.Saturation
-import Mathlib.Tactic.FinCases
+public import Def.Combinatorics.SimpleGraph.Saturation
+public import Theorem.SimpleGraph.Saturation
+public import Mathlib.Tactic.FinCases
 open SimpleGraph
-
 
 /-!
 # Boundary tests for graph saturation and the saturation number
@@ -19,6 +18,8 @@ source-sensitive boundaries: a complete host with no missing edge, the
 edgeless host saturated for the one-edge forbidden graph, and the `n = 0`
 and `n = 1` vertex counts.
 -/
+
+public section
 
 /-- `isSaturated_def`: saturation unfolds to freeness plus maximality. -/
 example {V W : Type*} (H : SimpleGraph V) (G : SimpleGraph W) :

@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Class.v1.Atlas.TensorCategories.code.ModuleFunctorAbelianDefs
-import Mathlib.CategoryTheory.Monoidal.Bimod
-import Mathlib.CategoryTheory.InducedCategory
-import Structure.v1.Atlas.TensorCategories.code.Proposition_2_12_2
+module
+
+public import Class.v1.Atlas.TensorCategories.code.ModuleFunctorAbelianDefs
+public import Mathlib.CategoryTheory.Monoidal.Bimod
+public import Mathlib.CategoryTheory.InducedCategory
+public import Structure.v1.Atlas.TensorCategories.code.Proposition_2_12_2
+@[expose] public section
+
 set_option maxHeartbeats 800000
 set_option linter.all false
 

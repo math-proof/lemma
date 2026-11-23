@@ -13,7 +13,7 @@ module
 public import Abbrev.v1.Atlas.TensorCategories.code.ModuleCategory.Part5
 public import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
 public import Theorem.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
-public import Lemma.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
 public import Theorem.v1.Atlas.TensorCategories.code.DeligneTensorProductMonoidal
 public import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
 public import Mathlib.CategoryTheory.Monoidal.Functor

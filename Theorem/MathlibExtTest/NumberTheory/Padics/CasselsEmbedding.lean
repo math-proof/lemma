@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Padics/CasselsEmbedding.lean -/
+module
 
+public import Def.NumberTheory.Padics.CasselsEmbedding
+public import Theorem.Int.Padics.CasselsEmbedding
+public import Mathlib.Basic.Real.Basic
 
-import Def.NumberTheory.Padics.CasselsEmbedding
-import Theorem.Int.Padics.CasselsEmbedding
-import Mathlib.Basic.Real.Basic
-
+public section
 
 noncomputable section
 

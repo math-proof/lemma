@@ -10,7 +10,8 @@ import Mathlib.AlgebraicGeometry.Limits
 import Mathlib.FieldTheory.RatFunc.AsPolynomial
 import Instance.JacJ1_ChartAlgebra
 import Instance.AlgebraicCurve_CurveModelSmooth
-import Lemma.Scheme.CurveModelConstruction
+import Theorem.Scheme.CurveModelConstruction
+import Def.AlgebraicCurve_CurveModelConstruction
 
 set_option autoImplicit false
 

@@ -9,15 +9,15 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves.Part2
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.DedekindCurve
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzFormula
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzApplications
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DedekindCurve
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzFormula
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzApplications
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BertiniDimensionCount
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityCurves
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochRiemannForm
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckBirkhoffGeometric
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityCurves
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochRiemannForm
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckBirkhoffGeometric
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.ProjectiveIntersection
 import Def.v1.Atlas.AlgebraicGeometryI.code.DedekindCurve
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochCurves

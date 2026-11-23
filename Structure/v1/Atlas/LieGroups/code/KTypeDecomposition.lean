@@ -12,7 +12,7 @@ module
 
 public import Def.v1.Atlas.LieGroups.code.GKModule.Part2
 public import Theorem.v1.Atlas.LieGroups.code.SL2Basics.Part4
-public import Lemma.Nat.basisHC.eq.SMul
+public import Theorem.Nat.basisHC.eq.SMul
 public import Mathlib.LinearAlgebra.Eigenspace.Basic
 public import Mathlib.LinearAlgebra.Eigenspace.Semisimple
 public import Mathlib.LinearAlgebra.Dimension.Finrank

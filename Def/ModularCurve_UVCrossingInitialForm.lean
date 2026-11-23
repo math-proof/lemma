@@ -1,7 +1,11 @@
-import Mathlib
-import Lemma.MvPowerSeries.UVCrossingModel
-import Def.ModularCurve_UVCrossingGaussOrder
-import Def.ModularCurve_UVCrossingDominantIndices
+module
+
+public import Mathlib
+public import Theorem.MvPowerSeries.UVCrossingModel
+public import Def.ModularCurve_UVCrossingGaussOrder
+public import Def.ModularCurve_UVCrossingDominantIndices
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.AlgebraicCombinatorics.code.YoungEigenvalues
-import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungEigenvalues
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Data.Fintype.Prod
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+module
+
+public import Structure.v1.Atlas.AlgebraicCombinatorics.code.YoungEigenvalues
+public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungEigenvalues
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Data.Fintype.Prod
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+
+@[expose] public section
+
 set_option autoImplicit false
 
 

@@ -1,7 +1,6 @@
-import Initialize.Tactic.Attr.Basic
-import Lemma.List.Cons_Append.eq.AppendCons
-import Lemma.List.DropTake.eq.ListGet
-import Lemma.List.LengthTake.eq.Min_Length
+import Theorem.List.Cons_Append.eq.AppendCons
+import Theorem.List.DropTake.eq.ListGet
+import Theorem.List.LengthTake.eq.Min_Length
 import Lemma.List.Permute_SubLength_0.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.List.SliceTake.eq.Slice.of.Ge
 import Lemma.List.TakeDrop.eq.Slice
@@ -26,8 +25,7 @@ private lemma main
   s.permute i (-d) = (s.take (i + 1)).take (i - d) ++ ((s.take (i + 1)).drop (i - d)).rotate (d ⊓ i) ++ s.drop (i + 1) := by
 -- proof
   have h_i := LeAdd_1 i
-  by_cases h_i' : i + 1 = s.length
-  ·
+  if h_i' : i + 1 = s.length then
     have h_i' := Eq_Fin.of.EqVal (Eq_Sub.of.EqAdd h_i')
     rw [h_i']
     rw [Permute_SubLength_0.eq.AppendRotateTake___Drop.of.GtLength_0]
@@ -35,7 +33,7 @@ private lemma main
       simp [EqAddSub.of.Ge (Ge_1 i)]
     ·
       grind
-  ·
+  else
     unfold List.permute
     simp
     match h_d : (-d : ℤ) with
@@ -88,7 +86,6 @@ private lemma main
         ·
           simp_all
 
-
 @[path]
 private lemma simp
   {s : List α}
@@ -103,4 +100,4 @@ private lemma simp
 
 
 -- created on 2025-06-18
--- updated on 2025-10-27
+-- updated on 2026-11-22

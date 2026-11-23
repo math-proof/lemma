@@ -2,11 +2,12 @@ module
 
 public import Mathlib
 public import Def.ModularCurve_X0ModL
-public import Lemma.HahnSeries.QAdicPlaceMod
-public import Lemma.WeierstrassCurve.ModuliPointMap
-public import Lemma.WeierstrassCurve.ReduceHom
-public import Lemma.WeierstrassCurve.CyclicQuotientJ
-public import Lemma.Scheme.Correspondence
+public import Theorem.HahnSeries.QAdicPlaceMod
+public import Theorem.WeierstrassCurve.ModuliPointMap
+public import Def.WeierstrassCurve_ReduceHom
+public import Theorem.WeierstrassCurve.ReduceHom
+public import Theorem.WeierstrassCurve.CyclicQuotientJ
+public import Theorem.Scheme.Correspondence
 public import Instance.ModularCurve_ModuliPlace
 
 set_option autoImplicit false

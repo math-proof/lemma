@@ -1,12 +1,16 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicCurve_TwoChartIntegralModel.lean: instance decls only.
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.Limits
-import Mathlib.RingTheory.Ideal.IntegralClosure
-import Mathlib.RingTheory.Localization.Integral
-import Mathlib.RingTheory.Polynomial.ScaleRoots
-import Mathlib.Algebra.Polynomial.Lifts
-import Lemma.Scheme.TwoChartIntegralModel
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.Limits
+public import Mathlib.RingTheory.Ideal.IntegralClosure
+public import Mathlib.RingTheory.Localization.Integral
+public import Mathlib.RingTheory.Polynomial.ScaleRoots
+public import Mathlib.Algebra.Polynomial.Lifts
+public import Theorem.Scheme.TwoChartIntegralModel
+public import Def.AlgebraicCurve_TwoChartIntegralModel
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,7 +1,7 @@
 module
 
 public import Mathlib
-public import Lemma.WeierstrassCurve.ReduceHom
+public import Theorem.WeierstrassCurve.ReduceHom
 public import Instance.WeierstrassCurve_ZeroComponentReduction
 
 public section

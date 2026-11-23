@@ -5,7 +5,7 @@
 -/
 
 import Def.RingTheory.GradedAlgebra.MultigradedPoincareCoefficients
-import Lemma.Int.GradedAlgebra.MultigradedPoincareCoefficients
+import Theorem.Int.GradedAlgebra.MultigradedPoincareCoefficients
 import Def.RingTheory.GradedAlgebra.MultigradedPoincareFiniteSupport
 /-!
 # Finite support of multigraded Poincaré coefficients

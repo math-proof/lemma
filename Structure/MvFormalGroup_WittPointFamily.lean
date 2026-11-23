@@ -3,7 +3,7 @@ module
 public import Mathlib
 public import Instance.MvFormalGroup_NegV2
 public import Instance.MvFormalGroup_CartierModule
-public import Lemma.PowerSeries.CartierModuleHomothety
+public import Theorem.PowerSeries.CartierModuleHomothety
 public import Instance.MvFormalGroup_CartierModuleWittAction
 
 set_option autoImplicit false

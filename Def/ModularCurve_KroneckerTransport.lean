@@ -1,5 +1,9 @@
-import Mathlib
-import Theorem.HahnSeries.X0
+module
+
+public import Mathlib
+public import Theorem.HahnSeries.X0
+
+@[expose] public section
 
 noncomputable section
 

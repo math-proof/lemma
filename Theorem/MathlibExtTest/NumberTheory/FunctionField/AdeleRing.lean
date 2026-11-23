@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/FunctionField/AdeleRing.lean -/
+module
 
-
-import Instance.NumberTheory.FunctionField.AdeleRing
-import Theorem.Nat.FunctionField.AdeleRing
+public import Instance.NumberTheory.FunctionField.AdeleRing
+public import Theorem.Nat.FunctionField.AdeleRing
 open scoped RestrictedProduct
 
+public section
 
 namespace FunctionFieldAdeleRing
 

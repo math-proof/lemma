@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Submodule/PNeighbor.lean -/
+module
 
+public import Def.LinearAlgebra.Submodule.PNeighbor
+public import Theorem.Matrix.Submodule.PNeighbor
 
-import Def.LinearAlgebra.Submodule.PNeighbor
-import Theorem.Matrix.Submodule.PNeighbor
-
+public section
 
 namespace Submodule
 

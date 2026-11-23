@@ -3,21 +3,28 @@
  * hole-regex string (the `regex` field of `mjs/regression/*.json`).
  *
  * Shape rules:
- * - `"_"` is a hole; `""` is an empty slot and contributes nothing at all;
- *   a numeric string is a literal.
+ * - `"_"` and leaf names `$1`, `$2`, … / bound `?0`, `?1`, … are holes; `""` is
+ *   an empty slot and contributes nothing at all; a numeric string is a literal.
+ * - A big operator's first argument (the binder/scope slot holding
+ *   `{In: [binder, set]}`, `{Colon: [binder, type]}`, or the stacked `{And: […]}`
+ *   form) is replaced by a single `_`; only the body is rendered.
  * - `{Head: [args…]}` → `Head` followed by each argument, parenthesised when
  *   it is not a hole: `{"Get":["_","0"]}` → `Get_(0)`, `{"Card":["_"]}` → `Card_`.
  * - `{"Get":[obj, {Slice: [lo, hi]}]}` keeps both constructors; the empty lower
  *   bound of `s[:k]` is dropped, so it becomes `Get_(Slice_)`.
  *
- * Big-operator domains come from `LeanBigOperator.jsonDomain` (rhs of a typed
- * or membership binder); every domain present in the JSON is rendered.
+ * Big operators ignore the binder/domain entirely (see `stripBinderDomains`), so
+ * De Bruijn indices and the membership/type annotation never reach a suggestion.
  */
 
-import { compile } from "../lean.js";
-import { LeanColon } from "./colon.js";
-
-const isHole = (node) => node == null || node === "_";
+/**
+ * `toJSON` names free leaves `$1`, `$2`, … and bound ones `?0`, `?1`, … (De Bruijn depth);
+ * the regex renders every one of them as a `_` hole, since suggestions ignore identity.
+ */
+const isHole = (node) =>
+    node == null ||
+    node === "_" ||
+    (typeof node === "string" && /^[$?]\d+$/u.test(node));
 
 const regexFormat = {
     literal: (value) => value,
@@ -53,7 +60,7 @@ function convert(node, format = regexFormat) {
  * @returns {string} stored hole regex (`_` when the whole node is a hole)
  */
 export function json2regex(node) {
-    return convert(node) ?? "_";
+    return convert(stripBinderDomains(node)) ?? "_";
 }
 
 function matchImplyHoleRegex(regex, suggestion) {
@@ -117,7 +124,7 @@ export function json2dag(node) {
         return children;
     }
 
-    const parts = convert(node, format) ?? ["_"];
+    const parts = convert(stripBinderDomains(node), format) ?? ["_"];
     intern({ sequence: walk(parts) });
     return nodes;
 }
@@ -208,6 +215,38 @@ function canon(node) {
     return JSON.stringify(node);
 }
 
+/** Regex ignores leaf identity, so pluralisation compares shape with every leaf as `_`. */
+function anonymize(node) {
+    if (Array.isArray(node)) return node.map(anonymize);
+    if (node && typeof node === "object") {
+        const head = headOf(node);
+        return head ? { [head]: anonymize(node[head]) } : node;
+    }
+    return isHole(node) ? "_" : node;
+}
+
+/** JSON heads of big operators: their first argument is the binder domain. */
+const bigOpHeads = new Set([
+    "All", "Any", "Argmax", "Argmin", "Bigcap", "Bigcup", "Deriv", "Expect", "Grad",
+    "Inf", "Integral", "Lim", "Max", "Min", "Prob", "Prod", "Stack", "Sum", "Sup", "Var",
+]);
+
+/**
+ * Regex ignores the bound variable entirely: a big operator's first argument (the binder/scope
+ * slot) becomes a single `_` hole, and only its body is considered.
+ */
+function stripBinderDomains(node) {
+    if (Array.isArray(node)) return node.map(stripBinderDomains);
+    if (!node || typeof node !== "object") return node;
+    const head = headOf(node);
+    if (!head) return node;
+    const args = argsOf(node);
+    if (bigOpHeads.has(head) && args.length) {
+        return { [head]: ["_", ...args.slice(1).map(stripBinderDomains)] };
+    }
+    return { [head]: args.map(stripBinderDomains) };
+}
+
 const headOf = (node) =>
     node && typeof node === "object" && !Array.isArray(node) && Object.keys(node).length === 1
         ? Object.keys(node)[0]
@@ -285,28 +324,19 @@ function pluralChildren(children) {
  * @returns {string[]} e.g. `Prob_(Cond(Get_(Add_(1)))(Get__))` → `Prob_(CondGetS__)`
  */
 export function json2plural(node) {
-    return [...new Set(pluralTrees(node).map((tree) => json2regex(tree)))];
+    return [...new Set(pluralTrees(anonymize(stripBinderDomains(node))).map((tree) => json2regex(tree)))];
 }
 
 /** Generate one validated path token per base or plural pattern. */
 export function json2pathPatterns(node) {
-    return [json2regex(node), ...json2plural(node)].map((regex, index) => {
-        const path = dag2suggession(index === 0 ? json2dag(node) : regex2dag(regex));
+    const patterns = [
+        { regex: json2regex(node), dag: json2dag(node) },
+        ...json2plural(node).map((regex) => ({ regex, dag: regex2dag(regex) })),
+    ];
+    // Shortest regex first; `sort` is stable, so equal lengths keep the base before its plurals.
+    patterns.sort((a, b) => a.regex.length - b.regex.length);
+    return patterns.map(({ regex, dag }) => {
+        const path = dag2suggession(dag);
         return { regex, token: suggestionMatches(regex, path) ? path : "" };
     });
-}
-
-/** Return the shortest generated path token for a Lean expression. */
-export function lean2path(expression) {
-    const module = compile(`private lemma main : ${expression} := by\n  sorry\n`);
-    const signature = module.args[0]?.assignment?.lhs;
-    if (!(signature instanceof LeanColon)) return "";
-
-    let shortest = "";
-    for (const { token } of json2pathPatterns(signature.rhs.toJSON())) {
-        if (token && (!shortest || token.length < shortest.length)) {
-            shortest = token;
-        }
-    }
-    return shortest;
 }

@@ -5,9 +5,8 @@ import Def.Analysis.CStarAlgebra.KadisonSinger.Paving
 
 open scoped BigOperators Matrix.Norms.L2Operator
 open scoped Matrix.Norms.L2Operator MatrixOrder ComplexOrder
+open MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksSum_lift_outer](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -63,9 +62,6 @@ private lemma ksSum_lift_outer {r d : ℕ} (hr : 0 < r) (u : Fin d → ℂ)
       simp [hxa, hya]
     · simp [hxa]
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksLift_covariance_sum](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -101,9 +97,6 @@ private lemma ksLift_covariance_sum {m d r : ℕ} (hr : 0 < r)
     simpa [Prod.ext_iff, hxy] using hf
   · simp [Prod.ext_iff, hxy]
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksLift_norm_sq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -127,9 +120,6 @@ private lemma ksLift_norm_sq {r d : ℕ} (a : Fin r) (u : Fin d → ℂ) :
       simp_rw [mul_pow, Real.sq_sqrt (Nat.cast_nonneg r)]
       rw [Finset.mul_sum]
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksFiltered_columns](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -162,9 +152,6 @@ private lemma ksFiltered_columns {n r : ℕ} (S : Matrix (Fin n) (Fin n) ℂ)
   intro i hi
   by_cases hc : c i = j <;> simp [hc]
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksAll_columns](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -185,9 +172,6 @@ private lemma ksAll_columns {n : ℕ} (S : Matrix (Fin n) (Fin n) ℂ) :
   rw [Matrix.mul_apply]
   simp
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksColumn_norm_sq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -199,9 +183,6 @@ private lemma ksColumn_norm_sq {n : ℕ} (S B : Matrix (Fin n) (Fin n) ℂ)
   have hi := congrFun (congrFun hSB i) i
   simpa [Matrix.mul_apply, RCLike.star_def, RCLike.conj_mul] using hi
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksPavingProj_star](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -215,9 +196,6 @@ private lemma ksPavingProj_star {n r : ℕ} (c : Fin n → Fin r) (j : Fin r) :
     simp [ksPavingProj, Matrix.conjTranspose_apply]
   · simp [ksPavingProj, Matrix.conjTranspose_apply, hab, Ne.symm hab]
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksPavingProj_sq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -231,9 +209,6 @@ private lemma ksPavingProj_sq {n r : ℕ} (c : Fin n → Fin r) (j : Fin r) :
   funext i
   by_cases hc : c i = j <;> simp [hc]
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksPavingProj_mul_of_refines](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -250,9 +225,6 @@ private lemma ksPavingProj_mul_of_refines {n r s : ℕ}
   · simp [hc, h i hc]
   · simp [hc]
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksPavingProj_mul_of_refines'](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -270,9 +242,6 @@ private lemma ksPavingProj_mul_of_refines' {n r s : ℕ}
   · simp [hc]
 open scoped Matrix.Norms.L2Operator MatrixOrder ComplexOrder
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksOperatorNorm_mul](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -291,9 +260,6 @@ private lemma ksOperatorNorm_mul {l m n : Type} [Fintype l] [Fintype m] [Fintype
   ext1 x
   exact congr(WithLp.toLp 2 ($(Matrix.toLin'_mul A B) x))
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksOperatorNorm_conjTranspose](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -307,9 +273,6 @@ private lemma ksOperatorNorm_conjTranspose {m n : Type} [Fintype m] [Fintype n]
     Matrix.toLin_conjTranspose, LinearMap.adjoint_toContinuousLinearMap]
   exact ContinuousLinearMap.adjoint.norm_map _
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksBlockEmbedding_star_mul_self](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -317,14 +280,12 @@ namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 @[path]
 private lemma ksBlockEmbedding_star_mul_self {r d : ℕ} (j : Fin r) :
   Matrix.conjTranspose
-    (ksBlockEmbedding j : Matrix (Fin r × Fin d) (Fin d) ℂ) * ksBlockEmbedding j =
+    (ksBlockEmbedding j : Matrix (Fin r × Fin d) (Fin d) ℂ) *
+    (ksBlockEmbedding j : Matrix (Fin r × Fin d) (Fin d) ℂ) =
     (1 : Matrix (Fin d) (Fin d) ℂ) := by
   ext a b
   simp [ksBlockEmbedding, Matrix.mul_apply, Matrix.one_apply, eq_comm]
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksBlockEmbedding_norm_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -337,9 +298,6 @@ private lemma ksBlockEmbedding_norm_le {r d : ℕ} [Nonempty (Fin d)] (j : Fin r
     rw [← Matrix.l2_opNorm_conjTranspose_mul_self, ksBlockEmbedding_star_mul_self, norm_one]
   nlinarith [norm_nonneg (ksBlockEmbedding j : Matrix (Fin r × Fin d) (Fin d) ℂ)]
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksBlockCompression_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -347,16 +305,14 @@ namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 @[path]
 private lemma ksBlockCompression_eq {r d : ℕ}
   (M : Matrix (Fin r × Fin d) (Fin r × Fin d) ℂ) (j : Fin r) :
-  Matrix.conjTranspose (ksBlockEmbedding j) * M * ksBlockEmbedding j =
+  Matrix.conjTranspose (ksBlockEmbedding j : Matrix (Fin r × Fin d) (Fin d) ℂ) * M *
+    (ksBlockEmbedding j : Matrix (Fin r × Fin d) (Fin d) ℂ) =
     ksBlock M j := by
   ext a b
   change (∑ x : Fin r × Fin d, (∑ y : Fin r × Fin d,
     star (ksBlockEmbedding j y a) * M y x) * ksBlockEmbedding j x b) = _
   simp [ksBlockEmbedding, ksBlock]
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksBlock_norm_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -365,38 +321,37 @@ namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 private lemma ksBlock_norm_le {r d : ℕ} [Nonempty (Fin d)]
   (M : Matrix (Fin r × Fin d) (Fin r × Fin d) ℂ) (j : Fin r) :
   ksOperatorNorm (ksBlock M j) ≤ ksOperatorNorm M := by
+  let A : Matrix (Fin r × Fin d) (Fin d) ℂ := ksBlockEmbedding j
   rw [← ksBlockCompression_eq M j]
   rw [Matrix.mul_assoc]
-  have hE : ksOperatorNorm
-    (ksBlockEmbedding j : Matrix (Fin r × Fin d) (Fin d) ℂ) ≤ 1 := by
+  have hE : ksOperatorNorm A ≤ 1 := by
     unfold ksOperatorNorm ksMatrixCLM
     rw [← Matrix.l2_opNorm_def]
     exact ksBlockEmbedding_norm_le j
   have hM_nonneg : 0 ≤ ksOperatorNorm M := by
     exact norm_nonneg _
-  have hE_nonneg : 0 ≤ ksOperatorNorm
-    (ksBlockEmbedding j : Matrix (Fin r × Fin d) (Fin d) ℂ) := by
+  have hE_nonneg : 0 ≤ ksOperatorNorm A := by
     exact norm_nonneg _
   calc
-    ksOperatorNorm (Matrix.conjTranspose (ksBlockEmbedding j) *
-      (M * ksBlockEmbedding j)) ≤
-      ksOperatorNorm (Matrix.conjTranspose (ksBlockEmbedding j)) *
-        ksOperatorNorm (M * ksBlockEmbedding j) := by
-      exact ksOperatorNorm_mul (Matrix.conjTranspose (ksBlockEmbedding j))
-        (M * ksBlockEmbedding j)
-    _ ≤ ksOperatorNorm (Matrix.conjTranspose (ksBlockEmbedding j)) *
-      (ksOperatorNorm M * ksOperatorNorm (ksBlockEmbedding j)) :=
+    ksOperatorNorm (Matrix.conjTranspose A *
+      (M * A)) ≤
+      ksOperatorNorm (Matrix.conjTranspose A) *
+        ksOperatorNorm (M * A) := by
+      exact ksOperatorNorm_mul (Matrix.conjTranspose A)
+        (M * A)
+    _ ≤ ksOperatorNorm (Matrix.conjTranspose A) *
+      (ksOperatorNorm M * ksOperatorNorm A) :=
       mul_le_mul_of_nonneg_left
-        (ksOperatorNorm_mul M (ksBlockEmbedding j))
-        (by exact norm_nonneg (ksMatrixCLM (Matrix.conjTranspose (ksBlockEmbedding j))))
-    _ = ksOperatorNorm (ksBlockEmbedding j) *
-      (ksOperatorNorm M * ksOperatorNorm (ksBlockEmbedding j)) := by
-      rw [show ksOperatorNorm (Matrix.conjTranspose (ksBlockEmbedding j)) =
-        ksOperatorNorm (ksBlockEmbedding j) by
-        exact ksOperatorNorm_conjTranspose (ksBlockEmbedding j)]
-    _ = (ksOperatorNorm (ksBlockEmbedding j) * ksOperatorNorm M) *
-      ksOperatorNorm (ksBlockEmbedding j) := by ring
-    _ ≤ ksOperatorNorm M * ksOperatorNorm (ksBlockEmbedding j) :=
+        (ksOperatorNorm_mul M A)
+        (by exact norm_nonneg (ksMatrixCLM (Matrix.conjTranspose A)))
+    _ = ksOperatorNorm A *
+      (ksOperatorNorm M * ksOperatorNorm A) := by
+      rw [show ksOperatorNorm (Matrix.conjTranspose A) =
+        ksOperatorNorm A by
+        exact ksOperatorNorm_conjTranspose A]
+    _ = (ksOperatorNorm A * ksOperatorNorm M) *
+      ksOperatorNorm A := by ring
+    _ ≤ ksOperatorNorm M * ksOperatorNorm A :=
       mul_le_mul_of_nonneg_right
         (by simpa using mul_le_mul_of_nonneg_right hE hM_nonneg)
         hE_nonneg
@@ -404,9 +359,6 @@ private lemma ksBlock_norm_le {r d : ℕ} [Nonempty (Fin d)]
       mul_le_mul_of_nonneg_left hE hM_nonneg
     _ = ksOperatorNorm M := mul_one _
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksPavingProj_norm_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -418,9 +370,6 @@ private lemma ksPavingProj_norm_le {n r : ℕ} (c : Fin n → Fin r) (j : Fin r)
     rw [← Matrix.l2_opNorm_conjTranspose_mul_self, ksPavingProj_star, ksPavingProj_sq]
   nlinarith [norm_nonneg (ksPavingProj c j)]
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksRefine_order_bound](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -449,9 +398,6 @@ private lemma ksRefine_order_bound {n r s : ℕ}
         simp only [mul_smul_comm, smul_mul_assoc]]
       rw [hQP, ksPavingProj_sq]
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksCompression_le_smul_projection](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -491,9 +437,6 @@ private lemma ksCompression_le_smul_projection {n r : ℕ}
     _ ≤ Q * (algebraMap ℝ (Matrix (Fin n) (Fin n) ℂ)) a * Q := hc
     _ = a • Q := by simp [Algebra.algebraMap_eq_smul_one, hQsq]
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksMSS_outcome_for_frame](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -525,9 +468,6 @@ private lemma ksMSS_outcome_for_frame
         simp [hr.ne']
       _ ≤ r * δ := mul_le_mul_of_nonneg_left (hu i) (Nat.cast_nonneg r)
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksBlock_outcome_eq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -567,9 +507,6 @@ private lemma ksBlock_outcome_eq {m d r : ℕ} (u : Fin m → Fin d → ℂ)
   · have hjc : j ≠ c i := Ne.symm hc
     simp [ksLiftVector, hc, hjc]
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksMSS_rescale](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -585,9 +522,6 @@ private lemma ksMSS_rescale {r : ℕ} (hr : 0 < r) {δ : ℝ} :
   field_simp [hsne]
   nlinarith
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksExists_fin_frame_partition](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -641,7 +575,6 @@ private lemma ksExists_fin_frame_partition
         (le_div_iff₀ (Nat.cast_pos.2 hr)).2 (by simpa [mul_comm] using hblock)
       _ = (1 / Real.sqrt r + Real.sqrt δ) ^ 2 := ksMSS_rescale hr
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [exists_frame_partition_of_finiteMSS](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -662,8 +595,6 @@ lemma exists_frame_partition_of_finiteMSS
 -- proof
   Analysis.CStarAlgebra.KadisonSinger.exists_frame_partition_of_finiteMSS
     hMSS hr u δ hδ hframe hu
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksPositive_half_paving](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -714,7 +645,8 @@ private lemma ksPositive_half_paving
         exact hcol.trans hcomp
       exact heq.le
   obtain ⟨cSum, hcSum⟩ :=
-    exists_frame_partition_of_finiteMSS hMSS hr u (1 / 2) (by norm_num) hframe hu
+    Analysis.CStarAlgebra.KadisonSinger.exists_frame_partition_of_finiteMSS
+      hMSS hr u (1 / 2) (by norm_num) hframe hu
   let c : Fin n → Fin r := fun i ↦ cSum (Sum.inl i)
   refine ⟨c, ?_⟩
   intro j
@@ -770,9 +702,6 @@ private lemma ksPositive_half_paving
     _ = ‖L‖ := congrArg norm hL.symm
     _ ≤ _ := hLnorm
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksPositive_half_paving_order](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -790,9 +719,6 @@ private lemma ksPositive_half_paving_order
   intro j
   exact ksCompression_le_smul_projection B hB0 c j _ (hc j)
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
-
-namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [ksHermitian_paving_of_mss](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -936,7 +862,6 @@ private lemma ksHermitian_paving_of_mss
     _ = ‖β • Q‖ := by simp
     _ ≤ β := hendpoint
 
-end MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 /--
 [andersonPaving_of_finiteMSS](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Paving.lean)
@@ -959,4 +884,4 @@ lemma andersonPaving_of_finiteMSS
 
 
 -- created on 2026-10-09
--- updated on 2026-10-26
+-- updated on 2026-11-22

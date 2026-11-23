@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/JosephusFunction.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.JosephusFunction
+public import Theorem.Finset.Enumerative.JosephusFunction
 
-import Def.Combinatorics.Enumerative.JosephusFunction
-import Theorem.Finset.Enumerative.JosephusFunction
-
+public section
 
 namespace MetaMathlibExt
 

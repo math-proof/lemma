@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/PascalMatrix.lean -/
+module
 
-
-import Mathlib.Tactic.NormNum
-import Def.Combinatorics.Enumerative.PascalMatrix
-import Theorem.Finset.Enumerative.PascalMatrix
+public import Mathlib.Tactic.NormNum
+public import Def.Combinatorics.Enumerative.PascalMatrix
+public import Theorem.Finset.Enumerative.PascalMatrix
 open scoped BigOperators Topology
 
+public section
 
 namespace MetaMathlibExt
 

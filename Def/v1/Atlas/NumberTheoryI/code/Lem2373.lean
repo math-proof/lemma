@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Instance.v1.Atlas.NumberTheoryI.code.Def2371.Part2
-import Mathlib.Algebra.Homology.DerivedCategory.Ext.Basic
+module
+
+public import Instance.v1.Atlas.NumberTheoryI.code.Def2371.Part2
+public import Mathlib.Algebra.Homology.DerivedCategory.Ext.Basic
+
+@[expose] public section
+
 open CategoryTheory Abelian
 
 universe w v u

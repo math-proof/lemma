@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/CongruenceEquivalence.lean -/
 
 import Def.NumberTheory.NumberField.RayClass.CongruenceSubgroup
-import Lemma.Nat.NumberField.RayClass.CongruenceSubgroup
+import Theorem.Nat.NumberField.RayClass.CongruenceSubgroup
 import Structure.NumberTheory.NumberField.RayClass.CongruenceEquivalence
 /-!
 # Congruence subgroup pair equivalence (N420 Definition 22.3)

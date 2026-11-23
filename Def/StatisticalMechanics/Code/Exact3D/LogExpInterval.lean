@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.StatisticalMechanics.Code.Exact3D.LogExpBounds
-import Def.StatisticalMechanics.Code.Exact3D.Intervals.Part12
+module
 
+public import Theorem.StatisticalMechanics.Code.Exact3D.LogExpBounds
+public import Def.StatisticalMechanics.Code.Exact3D.Intervals.Part12
+
+@[expose] public section
 
 namespace StatMech
 

@@ -4,11 +4,16 @@
 Author: @akiezun, Avocado
 -/
 
-import Def.NumberTheory.Ramanujan.Part1Ch3Entry9IiGeneralizedbellgeneratingDefining
-import Theorem.Nat.Ramanujan.Part1Ch3Entry9IiGeneralizedbellgeneratingDefining
-import Mathlib.Analysis.SpecialFunctions.Exponential
-import Mathlib.Topology.GDelta.MetrizableSpace
-import Mathlib.Topology.UniformSpace.Uniformizable
+module
+
+public import Def.NumberTheory.Ramanujan.Part1Ch3Entry9IiGeneralizedbellgeneratingDefining
+public import Theorem.Nat.Ramanujan.Part1Ch3Entry9IiGeneralizedbellgeneratingDefining
+public import Mathlib.Analysis.SpecialFunctions.Exponential
+public import Mathlib.Topology.GDelta.MetrizableSpace
+public import Mathlib.Topology.UniformSpace.Uniformizable
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 3, Entry 4
 

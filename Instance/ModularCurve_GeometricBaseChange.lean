@@ -1,10 +1,14 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_GeometricBaseChange.lean: instance decls only.
-import Mathlib.FieldTheory.LinearDisjoint
-import Mathlib.RingTheory.TensorProduct.Free
-import Mathlib.Algebra.Algebra.Hom.Rat
-import Mathlib.Algebra.Module.LinearMap.Rat
-import Instance.FieldTheory_RatAlgClosureGalois
-import Lemma.LaurentSeries.GeometricBaseChange
+module
+
+public import Mathlib.FieldTheory.LinearDisjoint
+public import Mathlib.RingTheory.TensorProduct.Free
+public import Mathlib.Algebra.Algebra.Hom.Rat
+public import Mathlib.Algebra.Module.LinearMap.Rat
+public import Instance.FieldTheory_RatAlgClosureGalois
+public import Theorem.LaurentSeries.GeometricBaseChange
+public import Def.ModularCurve_GeometricBaseChange
+@[expose] public section
 
 set_option autoImplicit false
 

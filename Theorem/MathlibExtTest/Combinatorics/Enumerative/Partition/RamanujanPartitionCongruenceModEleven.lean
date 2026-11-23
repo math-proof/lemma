@@ -2,8 +2,8 @@
 
 
 import Def.Combinatorics.Enumerative.Partition.RamanujanPartitionCongruenceModEleven.Part2
-import Lemma.Finset.Enumerative.Partition.RamanujanPartitionCongruenceModEleven
-import Lemma.Finset.Enumerative.Partition.RamanujanPartitionCongruence
+import Theorem.Finset.Enumerative.Partition.RamanujanPartitionCongruenceModEleven
+import Theorem.Finset.Enumerative.Partition.RamanujanPartitionCongruence
 import Def.Combinatorics.Enumerative.Partition.RamanujanPartitionCongruence
 
 

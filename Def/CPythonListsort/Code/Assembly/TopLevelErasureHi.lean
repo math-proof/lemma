@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/TopLevelErasureHi.lean -/
 
-import Theorem.CPythonListsort.Code.Assembly.MergeHiSafety.Part5
+module
+
+public import Theorem.CPythonListsort.Code.Assembly.MergeHiSafety.Part5
+
+@[expose] public section
+
 /-!
 # Raw-domain erasure for `merge_hi`
 

@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.KrullDimensionAffineSpace
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.KrullDimensionAffineSpace
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.FiniteMorphismDimension
-import Mathlib.RingTheory.TensorProduct.MvPolynomial
-import Mathlib.RingTheory.NoetherNormalization
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.RingTheory.TensorProduct.Finite
+module
+
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.KrullDimensionAffineSpace
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.KrullDimensionAffineSpace
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.FiniteMorphismDimension
+public import Mathlib.RingTheory.TensorProduct.MvPolynomial
+public import Mathlib.RingTheory.NoetherNormalization
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.TensorProduct.Finite
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 

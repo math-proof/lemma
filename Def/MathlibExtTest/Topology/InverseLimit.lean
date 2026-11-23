@@ -1,8 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Topology/InverseLimit.lean -/
 
+module
 
-import Def.Topology.InverseLimit
-import Theorem.Set.InverseLimit
+public import Def.Topology.InverseLimit
+public import Theorem.Set.InverseLimit
+
+@[expose] public section
+
 /-!
 # Inverse-limit smoke tests
 

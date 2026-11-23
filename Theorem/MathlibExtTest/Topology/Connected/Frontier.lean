@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Topology/Connected/Frontier.lean -/
+module
 
-
-import Theorem.Set.Connected.Frontier
-import Mathlib.Topology.Algebra.Ring.Real
-import Mathlib.Topology.Order.IntermediateValue
+public import Theorem.Set.Connected.Frontier
+public import Mathlib.Topology.Algebra.Ring.Real
+public import Mathlib.Topology.Order.IntermediateValue
 open Set Topology
 
+public section
 
 /-- Generic API example: a preconnected set crossing a set meets its frontier. -/
 example {α : Type*} [TopologicalSpace α] {s A : Set α} (hs : IsPreconnected s)

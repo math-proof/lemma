@@ -4,13 +4,18 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Defs
-import Mathlib.Data.Finset.Card
-import Theorem.NumberTheory.PolygonalNumber
-import Theorem.Nat.PolygonalNumber
-import Mathlib.NumberTheory.SumFourSquares
-import Mathlib.Tactic
-import Theorem.Nat.QuadraticForms.LegendreThreeSquare
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Data.Finset.Card
+public import Theorem.NumberTheory.PolygonalNumber
+public import Theorem.Nat.PolygonalNumber
+public import Mathlib.NumberTheory.SumFourSquares
+public import Mathlib.Tactic
+public import Theorem.Nat.QuadraticForms.LegendreThreeSquare
+
+@[expose] public section
+
 open scoped BigOperators
 
 /-!

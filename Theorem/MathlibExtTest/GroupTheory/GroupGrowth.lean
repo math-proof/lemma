@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/GroupTheory/GroupGrowth.lean -/
+module
 
+public import Def.GroupTheory.GroupGrowth
+public import Theorem.MvPolynomial.Growth0.eq.One
 
-import Def.GroupTheory.GroupGrowth
-import Theorem.MvPolynomial.Growth0.eq.One
-
+public section
 
 /-- Ordinary case: every generating family of a finite group has polynomial growth. -/
 example (G ι : Type*) [Group G] [Finite G] (P : Group.Generators G ι) :

@@ -1,7 +1,7 @@
 module
 
 public import Instance.DedekindDomain_Completion_BaseChange
-public import Lemma.Filter.FiniteAdeleRing_TensorRestrictedProduct
+public import Theorem.Filter.FiniteAdeleRing_TensorRestrictedProduct
 public import Instance.Mathlib_Topology_Algebra_RestrictedProduct_TopologicalSpace
 public import Notation.DedekindDomain_FiniteAdeleRing_BaseChange
 public import Instance.DedekindDomain_FiniteAdeleRing_BaseChange

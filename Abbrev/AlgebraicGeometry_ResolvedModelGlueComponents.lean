@@ -1,5 +1,7 @@
-import Mathlib
-import Lemma.Scheme.ResolvedModelGlueFibre
+module
+
+public import Mathlib
+public import Theorem.Scheme.ResolvedModelGlueFibre
 
 set_option maxHeartbeats 200000
 
@@ -9,7 +11,7 @@ universe u
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace V3Glue.ChartInput
 

@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/SylvesterInertia.lean -/
+module
 
+public import Mathlib.Analysis.Matrix.PosDef
+public import Theorem.Matrix.SylvesterInertia
 
-import Mathlib.Analysis.Matrix.PosDef
-import Theorem.Matrix.SylvesterInertia
-
+public section
 
 -- A concrete indefinite congruence has one positive and one negative eigenvalue.
 example :

@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.Buildings.code.Building.AffineSLV.Part4
-import Lemma.Set.IsHomothetic_πLattice
+import Theorem.Set.IsHomothetic_πLattice
 import Theorem.Set.ConjSet.eq.Image
 import Structure.v1.Atlas.Buildings.code.Building.GroupApplicationsCh17
 import Mathlib.LinearAlgebra.Matrix.SpecialLinearGroup

@@ -1,5 +1,9 @@
-import Def.HeckeGalois_EichlerShimura
-import Abbrev.ModularCurve_EigenformIdeal
+module
+
+public import Def.HeckeGalois_EichlerShimura
+public import Abbrev.ModularCurve_EigenformIdeal
+
+@[expose] public section
 
 set_option autoImplicit false
 

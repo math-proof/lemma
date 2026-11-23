@@ -4,8 +4,13 @@
   Author: Muse Code powered by Meta Muse Spark
 -/
 
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
-import Instance.MeasureTheory.Measure.VitaliNonmeasurable
+module
+
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+public import Instance.MeasureTheory.Measure.VitaliNonmeasurable
+
+@[expose] public section
+
 /-!
 # Vitali non-measurable set
 

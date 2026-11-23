@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/PellLucasNumber.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.PellLucasNumber
+public import Theorem.Finset.Enumerative.PellLucasNumber
 
-import Def.Combinatorics.Enumerative.PellLucasNumber
-import Theorem.Finset.Enumerative.PellLucasNumber
-
+public section
 
 namespace MetaMathlibExt
 

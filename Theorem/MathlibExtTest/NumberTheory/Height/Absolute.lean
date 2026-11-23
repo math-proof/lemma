@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Height/Absolute.lean -/
+module
 
+public import Def.NumberTheory.Height.Absolute
+public import Theorem.Nat.Height.Absolute
 
-import Def.NumberTheory.Height.Absolute
-import Theorem.Nat.Height.Absolute
-
+public section
 
 namespace HeightTest
 

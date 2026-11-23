@@ -1,12 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/GroupTheory/TwoPowerRank.lean -/
+module
 
+public import Abbrev.GroupTheory.TwoPowerRank.Part2
+public import Theorem.Int.LeTwoPowerImage
+public import Mathlib.Algebra.Field.ZMod
+public import Mathlib.Algebra.Module.Torsion.Field
+public import Mathlib.LinearAlgebra.Dimension.Finite
 
-import Abbrev.GroupTheory.TwoPowerRank.Part2
-import Lemma.Int.LeTwoPowerImage
-import Mathlib.Algebra.Field.ZMod
-import Mathlib.Algebra.Module.Torsion.Field
-import Mathlib.LinearAlgebra.Dimension.Finite
-
+public section
 
 namespace AbelianGroupTest
 

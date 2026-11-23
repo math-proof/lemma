@@ -8,14 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Complex.Basic
-import Mathlib.Data.Nat.Prime.Defs
-import Mathlib.GroupTheory.Index
-import Mathlib.GroupTheory.SpecificGroups.Cyclic
-import Mathlib.Tactic.Linarith
-import Def.v1.Atlas.EllipticCurves.code.Isogenies.Part13
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.Isogenies
+module
 
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Data.Nat.Prime.Defs
+public import Mathlib.GroupTheory.Index
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic
+public import Mathlib.Tactic.Linarith
+public import Def.v1.Atlas.EllipticCurves.code.Isogenies.Part13
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Isogenies
+
+@[expose] public section
 
 noncomputable section
 

@@ -8,12 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part3
-import Lemma.Category.Atlas.v1.TensorCategories.code.HopfAlgebra
-import Mathlib.Algebra.Category.ModuleCat.Basic
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
-import Mathlib.RepresentationTheory.FDRep
-import Def.v1.Atlas.TensorCategories.code.Corollary_1_22_6
+module
+
+public import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part3
+public import Theorem.Category.Atlas.v1.TensorCategories.code.HopfAlgebra
+public import Mathlib.Algebra.Category.ModuleCat.Basic
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+public import Mathlib.RepresentationTheory.FDRep
+public import Def.v1.Atlas.TensorCategories.code.Corollary_1_22_6
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 open CategoryTheory Coalgebra HopfAlgebra LinearMap

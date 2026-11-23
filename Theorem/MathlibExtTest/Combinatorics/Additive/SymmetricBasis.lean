@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Additive/SymmetricBasis.lean -/
+module
 
-import Theorem.Finset.Additive.SymmetricBasis
+public import Theorem.Finset.Additive.SymmetricBasis
 
+public section
 
 example (A : Finset ℕ) (a : ℕ)
     (hsymm : A.image (fun x => a - x) = A)

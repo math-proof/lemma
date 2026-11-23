@@ -5,23 +5,33 @@ import Mathlib.MeasureTheory.Function.FactorsThrough
 import Mathlib.Probability.Independence.Conditional
 import Def.Probability.Process.HiddenMarkovSequence.Part2
 import Instance.Probability.SinglePSpaceMeasurable
-import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Measure Random Fun
 open scoped ProbabilityTheory
 
 
 /--
-Bayes product for a label `x` and document features `y`. If each feature `y[t]`
-is conditionally independent of its prefix given the label,
-`y[t] ⟂ᵢ[π] y[:t] | x`, and the joint atom is nonzero, then
-`ℙ(x = «\sf{x}» | y[:m] = «\sf{y}»[:m]) =
-  ℙ(x = «\sf{x}») * (∏ j, ℙ(y[j] = «\sf{y}»[j] | x = «\sf{x}»)) / ℙ(y[:m] = «\sf{y}»[:m])`.
+Let \(X\) be a candidate label variable and \(Y=(Y_0,\ldots,Y_{m-1})\)
+the feature vector. Assume each \(Y_t\), for \(0<t<m\), is independent
+of \((Y_0,\ldots,Y_{t-1})\) conditional on \(X\). For a label value \(a\)
+and an observed feature vector \(b\), the naïve Bayes factorization is
 
-In NLP this is the core identity behind naive Bayes document classification
-(text categorization): bag-of-words features `y`, keywords/labels `x`.
+\[
+\mathbb P_\pi(X=a\mid Y=b)
+=
+\frac{\mathbb P_\pi(X=a)\displaystyle\prod_{j=0}^{m-1}
+       \mathbb P_\pi(Y_j=b_j\mid X=a)}
+     {\mathbb P_\pi(Y=b)}.
+\]
 
-`[Fact (Measurable x)]` and `[Fact (Measurable y[:m])]` feed
-`SinglePSpace π (x, y[:m])`, so the joint binder is not an argument.
+When \(\mathbb P_\pi(X=a)=0\), the joint event \(X=a\land Y=b\) is also
+null, and both sides are zero. The
+[discrete conditional probability quotient](?module=Random.Prob_Cond.eq.Div.of.SinglePSpace)
+uses extended nonnegative real division, with \(0/0=0\), so the identity
+also covers zero-probability evidence.
+
+For document classification, \(Y\) can encode word-presence features and
+\(X\) a semantic tag. With the observed vector fixed, the same evidence
+denominator is used for every tag.
 -/
 @[path]
 private lemma main
@@ -34,8 +44,7 @@ private lemma main
   {y : ℕ ⇀ Ω → β} {m : ℕ} [Fact (Measurable y[:m])]
   {«\sf{x}» : α} {«\sf{y}» : ℕ ⇀ β}
 -- given
-  (h₀ : ∀ t : ℕ, 0 < t → t < m → y[t] ⟂ᵢ[x, ‹Fact (Measurable x)›.out; π] y[:t])
-  (h₁ : ℙ[π](x = «\sf{x}» ∧ y[:m] = «\sf{y}»[:m]) ≠ 0) :
+  (h₀ : ∀ t : ℕ, t > 0 → t < m → y[t] ⟂ᵢ[x, ‹Fact (Measurable x)›.out; π] y[:t]) :
 -- imply
   have : SinglePSpace π x :=
     SinglePSpace.of.SinglePSpace.fst
@@ -50,6 +59,15 @@ private lemma main
       ℙ[π](y[:m] = «\sf{y}»[:m]) := by
 -- proof
   intro hxs hys hyx
+  by_cases hp : ℙ[π](x = «\sf{x}») = 0 <;> dsimp only
+  ·
+    have hmeasure : π (x ⁻¹' {«\sf{x}»}) = 0 :=
+      (EqProb (x := x) _).symm.trans hp
+    have hjoint := measure_mono_null
+      (Set.inter_subset_left (t := (show Ω → Fin m → β from y[:m]) ⁻¹' {«\sf{y}»[:m]}))
+      hmeasure
+    rw [Prob_Cond.eq.Div.of.SinglePSpace inferInstance, hjoint, hp,
+      zero_mul, ENNReal.zero_div, ENNReal.zero_div]
   let a : α := «\sf{x}»
   let b : ℕ → β := ⇑«\sf{y}»
   let ys : Ω → Fin m → β := y[:m]
@@ -89,7 +107,7 @@ private lemma main
       funext j
       rw [hslice_apply, hb_apply]
       simpa using h j
-  have hinter (k : ℕ) : prefixSet (k + 1) = prefixSet k ∩ (y k) ⁻¹' {b k} := by
+  have hinter (k : ℕ) : prefixSet (k + 1) = prefixSet k ∩ y k ⁻¹' {b k} := by
     ext ω
     simp only [prefixSet, Set.mem_iInter, Set.mem_inter_iff, Set.mem_preimage,
       Set.mem_singleton_iff]
@@ -104,23 +122,8 @@ private lemma main
         exact h.2
       ·
         exact h.1 i
-  have hjoint : π (A ∩ ys ⁻¹' {b[:m]}) ≠ 0 := by
-    let z : Ω → α × (Fin m → β) := (x, show Ω → Fin m → β from y[:m])
-    have hz : z = fun ω => (x ω, y[:m] ω) := rfl
-    have hprob :
-      π.prob z («\sf{x}», show Fin m → β from «\sf{y}»[:m]) =
-        π (z ⁻¹' {(«\sf{x}», show Fin m → β from «\sf{y}»[:m])}) :=
-      EqProb _
-    have hpre : z ⁻¹' {(a, show Fin m → β from b[:m])} = A ∩ ys ⁻¹' {b[:m]} := by
-      rw [hz]
-      ext ω
-      simp [A, ys, Prod.ext_iff]
-    rw [hpre] at hprob
-    simpa [a, b, ys] using hprob.symm.trans_ne h₁
   have hA0 : π A ≠ 0 := by
-    intro h0
-    apply hjoint
-    exact measure_mono_null Set.inter_subset_left h0
+    simpa only [A, a, ← EqProb (x := x)] using hp
   have hratio : ∀ k, k ≤ m →
     π (A ∩ prefixSet k) / π A =
       ∏ j : Fin k, π (A ∩ y[j] ⁻¹' {b j}) / π A := by
@@ -135,7 +138,7 @@ private lemma main
       have hk' : k ≤ m := Nat.le_of_succ_le hk
       have ih := ih hk'
       have hL : π (A ∩ prefixSet (k + 1)) * π A =
-        π (A ∩ (y k) ⁻¹' {b k}) * π (A ∩ prefixSet k) := by
+        π (A ∩ y k ⁻¹' {b k}) * π (A ∩ prefixSet k) := by
         if hk0 : k = 0 then
           subst hk0
           have hU : prefixSet 0 = Set.univ := by
@@ -143,10 +146,10 @@ private lemma main
             simp [prefixSet]
           rw [hinter 0, hU, Set.univ_inter, Set.inter_univ]
         else
-          have ht0 : 0 < k := Nat.pos_of_ne_zero hk0
+          have ht0 : k > 0 := Nat.pos_of_ne_zero hk0
           have htm : k < m := Nat.lt_of_succ_le hk
           have hm' := ‹Fact (Measurable x)›.out.comap_le
-          let S : Set Ω := (y k) ⁻¹' {b k}
+          let S : Set Ω := y k ⁻¹' {b k}
           let T : Set Ω := (show Ω → Fin k → β from y[:k]) ⁻¹' {b[:k]}
           have hyk : Measurable (y k) := hyj ⟨k, htm⟩
           have hS : MeasurableSet S := hyk (measurableSet_singleton _)
@@ -211,7 +214,7 @@ private lemma main
             have hp : (π A).toReal ≠ 0 := (ENNReal.toReal_pos hA0 hAtop).ne'
             rw [eq_div_iff hp]
             calc
-              _ = ((π⟦S | MeasurableSpace.comap x inferInstance⟧) ω0 * (π A).toReal) *
+              _ = (π⟦S | MeasurableSpace.comap x inferInstance⟧) ω0 * (π A).toReal *
                   ((π⟦T | MeasurableSpace.comap x inferInstance⟧) ω0 * (π A).toReal) := by
                 ring
               _ = (π (A ∩ S)).toReal * (π (A ∩ T)).toReal := by
@@ -232,14 +235,14 @@ private lemma main
             dsimp only [S, T]
             rw [hinter k, hslice_set k]
             ac_rfl
-          have hSset : A ∩ S = A ∩ (y k) ⁻¹' {b k} := by
+          have hSset : A ∩ S = A ∩ y k ⁻¹' {b k} := by
             dsimp only [S]
           have hTset : A ∩ T = A ∩ prefixSet k := by
             dsimp only [T]
             rw [hslice_set k]
           rw [hsets, heq, mul_comm, ENNReal.mul_div_cancel hA0 hAtop, hSset, hTset]
       have hdiv : π (A ∩ prefixSet (k + 1)) / π A =
-        (π (A ∩ (y k) ⁻¹' {b k}) / π A) * (π (A ∩ prefixSet k) / π A) := by
+        π (A ∩ y k ⁻¹' {b k}) / π A * (π (A ∩ prefixSet k) / π A) := by
         apply (ENNReal.toReal_eq_toReal_iff'
           (ENNReal.div_ne_top (measure_ne_top _ _) hA0)
           (ENNReal.mul_ne_top
@@ -247,7 +250,7 @@ private lemma main
             (ENNReal.div_ne_top (measure_ne_top _ _) hA0))).mp
         rw [ENNReal.toReal_div, ENNReal.toReal_mul, ENNReal.toReal_div, ENNReal.toReal_div]
         have hreal : (π (A ∩ prefixSet (k + 1))).toReal * (π A).toReal =
-          (π (A ∩ (y k) ⁻¹' {b k})).toReal * (π (A ∩ prefixSet k)).toReal := by
+          (π (A ∩ y k ⁻¹' {b k})).toReal * (π (A ∩ prefixSet k)).toReal := by
           rw [← ENNReal.toReal_mul, ← ENNReal.toReal_mul, hL]
         field_simp [(ENNReal.toReal_pos hA0 hAtop).ne']
         linear_combination hreal
@@ -293,4 +296,4 @@ private lemma main
 
 
 -- created on 2024-06-18
--- updated on 2026-11-17
+-- updated on 2026-11-22

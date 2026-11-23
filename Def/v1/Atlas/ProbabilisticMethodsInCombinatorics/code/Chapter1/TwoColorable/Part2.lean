@@ -8,14 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Finset.Card
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Data.Fintype.Card
-import Mathlib.Analysis.SpecialFunctions.Exp
-import Mathlib.Data.Finset.Powerset
-import Mathlib.Data.Nat.Choose.Basic
-import Instance.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter1.TwoColorable
+module
+
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Analysis.SpecialFunctions.Exp
+public import Mathlib.Data.Finset.Powerset
+public import Mathlib.Data.Nat.Choose.Basic
+public import Instance.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter1.TwoColorable
+
+@[expose] public section
+
 open Finset Fintype
 
 

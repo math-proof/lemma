@@ -25,7 +25,7 @@ import Mathlib.GroupTheory.SpecificGroups.Cyclic
 import Abbrev.v1.Atlas.NumberTheoryI.code.GlobalFields
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.GlobalFields
 import Theorem.Nat.Atlas.v1.NumberTheoryI.code.KrasnerLemma
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.AdicCompletionAlgebra
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.AdicCompletionAlgebra
 import Def.v1.Atlas.NumberTheoryI.code.KrasnerLemma
 import Mathlib.Topology.Algebra.Valued.NormedValued
 import Mathlib.FieldTheory.PrimitiveElement

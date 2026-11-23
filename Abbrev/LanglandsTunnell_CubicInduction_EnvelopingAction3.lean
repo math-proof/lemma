@@ -1,8 +1,10 @@
-import Lemma.Matrix.CubicInduction_ArchSmoothSpace3
+module
+
+public import Theorem.Matrix.CubicInduction_ArchSmoothSpace3
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open IsDedekindDomain NumberField AutomorphicForm
 

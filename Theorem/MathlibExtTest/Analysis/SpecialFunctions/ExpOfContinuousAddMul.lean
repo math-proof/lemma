@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/ExpOfContinuousAddMul.lean -/
+module
 
+public import Theorem.Complex.ExpOfContinuousAddMul
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 
-import Theorem.Complex.ExpOfContinuousAddMul
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-
+public section
 
 namespace MathlibExtTest.Analysis.SpecialFunctions.ExpOfContinuousAddMul
 

@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/AssociatedStirlingSecond.lean -/
+module
 
+public import Def.Combinatorics.AssociatedStirlingSecond
+public import Theorem.Finset.AssociatedStirlingSecond
 
-import Def.Combinatorics.AssociatedStirlingSecond
-import Theorem.Finset.AssociatedStirlingSecond
-
+public section
 
 namespace MetaMathlibExt
 

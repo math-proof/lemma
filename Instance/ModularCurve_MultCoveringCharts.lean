@@ -1,10 +1,10 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_MultCoveringCharts.lean: instance decls only.
-import Lemma.ValuationSubring.SemistableCharts
+import Theorem.ValuationSubring.SemistableCharts
 import Def.AlgebraicCurve_ChordalProximity
 import Lemma.WeierstrassCurve.SupersingularModuli
 import Structure.ModularCurve_LevelOneProlongationPair
-import Lemma.AlgEquiv.SemistableChartsComap
-import Lemma.ResidueField.LevelOneChartFst
+import Theorem.AlgEquiv.SemistableChartsComap
+import Theorem.ResidueField.LevelOneChartFst
 
 set_option maxHeartbeats 200000
 set_option synthInstance.maxHeartbeats 20000

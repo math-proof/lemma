@@ -1,7 +1,11 @@
-import Mathlib
-import Lemma.LaurentSeries.CharPReduction
-import Def.ModularCurve_NodeLocalized
-import Def.ModularCurve_LambdaSeries
+module
+
+public import Mathlib
+public import Theorem.LaurentSeries.CharPReduction
+public import Def.ModularCurve_NodeLocalized
+public import Def.ModularCurve_LambdaSeries
+
+@[expose] public section
 
 set_option autoImplicit false
 

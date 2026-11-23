@@ -1,7 +1,8 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_RelEffCartierDivRestrict.lean: instance decls only.
 import Mathlib.AlgebraicGeometry.Morphisms.Separated
 import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
-import Lemma.Scheme.RelEffCartierDivRestrict
+import Theorem.Scheme.RelEffCartierDivRestrict
+import Def.AlgebraicGeometry_RelEffCartierDivRestrict
 
 set_option autoImplicit false
 

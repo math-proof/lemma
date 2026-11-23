@@ -9,11 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.LieGroups.code.HCBimoduleProjectives.Part2
-import Lemma.Fin.All_Eq.of.All_Eq.All_Eq_RightAction.All_Eq_RightAction.All_Any_Eq_Sum_RightAction
-import Lemma.Int.IsInQPlus0
-import Lemma.Int.WeightLE.of.BruhatLE
-import Lemma.Int.Level1.ne.Top
-import Lemma.Int.FGUeaIotaRange
+import Theorem.Fin.All_Eq.of.All_Eq.All_Eq_RightAction.All_Eq_RightAction.All_Any_Eq_Sum_RightAction
+import Theorem.Int.IsInQPlus0
+import Theorem.Int.WeightLE.of.BruhatLE
+import Theorem.Int.Level1.ne.Top
+import Theorem.Int.FGUeaIotaRange
 import Def.v1.Atlas.LieGroups.code.CategoryO.Part3
 import Def.v1.Atlas.LieGroups.code.CategoryOII.Part3
 import Def.v1.Atlas.LieGroups.code.JantzenFiltration.Part2

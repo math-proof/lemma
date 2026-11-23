@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Instance.v1.Atlas.DifferentialAnalysis.code.TestFunctions
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TestFunctions
-import Mathlib.Analysis.Normed.Group.Basic
-import Theorem.v1.Atlas.DifferentialAnalysis.code.CkBanach
+module
+
+public import Instance.v1.Atlas.DifferentialAnalysis.code.TestFunctions
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TestFunctions
+public import Mathlib.Analysis.Normed.Group.Basic
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.CkBanach
+@[expose] public section
+
 open scoped ZeroAtInfty
 open Filter Topology Finset
 

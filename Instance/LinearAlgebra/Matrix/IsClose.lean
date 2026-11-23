@@ -1,7 +1,9 @@
-import Mathlib.Data.Matrix.Basic
-import Abbrev.Analysis.Real.Relational
-import Theorem.Analysis.Real.Relational
+module
 
+public import Mathlib.Data.Matrix.Basic
+public import Abbrev.Analysis.Real.Relational
+public import Theorem.Analysis.Real.Relational
+@[expose] public section
 
 /-- Entrywise hyperreal closeness, the matrix form of `XEq (Tensor α s)`. -/
 instance [XEq α] : XEq (Matrix m n α) where

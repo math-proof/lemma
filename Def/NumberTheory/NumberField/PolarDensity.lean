@@ -1,10 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/PolarDensity.lean -/
 
-import Def.NumberTheory.NumberField.PartialDedekindZeta
-import Theorem.Nat.NumberField.PartialDedekindZeta
-import Mathlib.Analysis.Meromorphic.Order
-import Mathlib.Analysis.Meromorphic.IsolatedZeros
-import Mathlib.Analysis.Complex.ReImTopology
+module
+
+public import Def.NumberTheory.NumberField.PartialDedekindZeta
+public import Theorem.Nat.NumberField.PartialDedekindZeta
+public import Mathlib.Analysis.Meromorphic.Order
+public import Mathlib.Analysis.Meromorphic.IsolatedZeros
+public import Mathlib.Analysis.Complex.ReImTopology
+
+@[expose] public section
+
 open Filter Topology NumberField IsDedekindDomain
 
 /-!

@@ -1,5 +1,5 @@
 import Def.ModularCurve_MazurStepThreeInputs
-import Lemma.MvPolynomial.HeckeModule
+import Theorem.MvPolynomial.HeckeModule
 
 set_option autoImplicit false
 

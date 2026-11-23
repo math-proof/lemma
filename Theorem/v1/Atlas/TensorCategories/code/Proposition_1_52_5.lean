@@ -7,8 +7,9 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Structure.v1.Atlas.TensorCategories.code.IntegralsCartanMatrix.Part2
-import Theorem.Category.Atlas.v1.TensorCategories.code.IntegralsCartanMatrix
+public import Structure.v1.Atlas.TensorCategories.code.IntegralsCartanMatrix.Part2
+public import Theorem.Category.Atlas.v1.TensorCategories.code.IntegralsCartanMatrix
 
-
+public section

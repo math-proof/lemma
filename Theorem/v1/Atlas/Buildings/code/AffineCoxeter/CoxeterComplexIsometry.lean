@@ -7,15 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Theorem.v1.Atlas.Buildings.code.AffineCoxeter.CoxeterSimilitude
-import Def.v1.Atlas.Buildings.code.Building.AffineMetric.Part5
+public import Theorem.v1.Atlas.Buildings.code.AffineCoxeter.CoxeterSimilitude
+public import Def.v1.Atlas.Buildings.code.Building.AffineMetric.Part5
 set_option maxHeartbeats 400000
 set_option linter.unusedSectionVars false
 
 open scoped InnerProductSpace
 open AffineCoxeter AffineCoxeterComplex
 
+public section
 
 noncomputable section
 

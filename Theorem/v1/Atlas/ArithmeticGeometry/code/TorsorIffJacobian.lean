@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.ArithmeticGeometry.code.WeilChatelet.Part2
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.WeilChatelet
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.WeilChatelet
 import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.JInvariant
 import Def.v1.Atlas.ArithmeticGeometry.code.JInvariant.Part3
 import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure

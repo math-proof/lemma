@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.NumberTheoryI.code.Thm2370
-import Mathlib.Algebra.Category.ModuleCat.Ext.HasExt
-import Def.v1.Atlas.NumberTheoryI.code.Def2371.Part2
+module
+
+public import Def.v1.Atlas.NumberTheoryI.code.Thm2370
+public import Mathlib.Algebra.Category.ModuleCat.Ext.HasExt
+public import Def.v1.Atlas.NumberTheoryI.code.Def2371.Part2
+@[expose] public section
+
 open CategoryTheory CochainComplex HomComplex Abelian
 
 universe w v u

@@ -1,4 +1,4 @@
-import Lemma.ClassGroup.ProductionPinsGeneral
+import Theorem.ClassGroup.ProductionPinsGeneral
 import Def.LanglandsTunnell_JLConverse
 import Def.AutomorphicForm_ConstantTerm
 import Lemma.Measure.CarrierPins
@@ -12,7 +12,7 @@ import Lemma.Measure.WhittakerCoefficient
 import Mathlib.Analysis.Normed.Group.FunctionSeries
 import Lemma.Measure.IdeleProductMeasure
 import Lemma.Matrix.ArchType
-import Lemma.Matrix.ArchWeightChar
+import Theorem.Matrix.ArchWeightChar
 import Lemma.Ideal.ViaCompactCuspNotion
 import Def.LanglandsTunnell_JLSynthesis
 import Abbrev.LanglandsTunnell_TorusTransform

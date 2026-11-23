@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/LocalRing/ResidueField/DVRBijective.lean -/
+module
 
+public import Theorem.Int.LocalRing.ResidueField.DVRBijective
 
-import Theorem.Int.LocalRing.ResidueField.DVRBijective
+public section
+
 variable {A B C : Type*}
 variable [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
 variable [CommRing B] [IsDomain B] [IsDiscreteValuationRing B]

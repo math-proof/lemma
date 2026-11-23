@@ -7,10 +7,10 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Sharpness.Switching.Part3
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Sharpness.Switching.Part3
 open Finset BigOperators SimpleGraph
 open scoped symmDiff
 
@@ -25,6 +25,7 @@ set_option linter.style.multiGoal false
 set_option maxHeartbeats 1600000
 set_option maxRecDepth 100000
 
+public section
 
 namespace StatMech.Walls
 

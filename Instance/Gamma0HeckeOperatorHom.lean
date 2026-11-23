@@ -5,7 +5,8 @@ import Mathlib.GroupTheory.GroupAction.Quotient
 import Mathlib.Tactic.Group
 import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.FinCases
-import Lemma.Matrix.Gamma0HeckeOperatorHom
+import Theorem.Matrix.Gamma0HeckeOperatorHom
+import Def.Matrix_Gamma0HeckeOperatorHom
 
 namespace HeckeEis
 

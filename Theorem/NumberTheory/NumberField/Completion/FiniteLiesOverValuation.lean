@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOverValuation.lean -/
+module
 
-import Theorem.NumberTheory.NumberField.Completion.FiniteLiesOver
-import Theorem.Nat.NumberField.Completion.FiniteLiesOver
+public import Theorem.NumberTheory.NumberField.Completion.FiniteLiesOver
+public import Theorem.Nat.NumberField.Completion.FiniteLiesOver
+
 /-!
 # Valuation formula for maps between finite-place completions
 
@@ -38,6 +40,8 @@ continuity; `adicCompletionMap_mem_integers` translates it to the
 valuation-subring condition; and `adicCompletionIntegersMap` restricts the same
 map to the integer rings.
 -/
+
+public section
 
 
 namespace IsDedekindDomain.HeightOneSpectrum

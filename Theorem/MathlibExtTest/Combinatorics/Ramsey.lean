@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Ramsey.lean -/
+module
 
+public import Def.Combinatorics.Ramsey
+public import Theorem.Finset.Ramsey
 
-import Def.Combinatorics.Ramsey
-import Theorem.Finset.Ramsey
-
+public section
 
 namespace MathlibExt.Combinatorics.Ramsey
 

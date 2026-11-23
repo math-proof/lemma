@@ -1,30 +1,55 @@
 {
   "lean": "∑ k ∈ Finset.Icc 1 n, ∑ d ∈ k.divisors, (d : ℤ) * (n - k).partitionCount",
   "regex": [
-    "Sum(And(Divisors_)(Icc(1)_))(Mul_(PartitionCount(Sub__)))"
+    "Sum_(Mul_(PartitionCount(Sub__)))"
   ],
   "suggestion": [
-    "SumAndDivisors_Icc1_Mul_PartitionCountSub"
+    "Sum_Mul_PartitionCountSub"
   ],
   "dag": [
     [
-      {"token":"Sum"},
-      {"token":"And"},
-      {"token":"Divisors"},
-      {"token":"_"},
-      {"group":[2,3]},
-      {"token":"Icc"},
-      {"token":"1"},
-      {"group":[6]},
-      {"group":[5,7,3]},
-      {"group":[1,4,8]},
-      {"token":"Mul"},
-      {"token":"PartitionCount"},
-      {"token":"Sub"},
-      {"group":[12,3,3]},
-      {"group":[11,13]},
-      {"group":[10,3,14]},
-      {"sequence":[0,9,15]}
+      {
+        "token": "Sum"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "PartitionCount"
+      },
+      {
+        "token": "Sub"
+      },
+      {
+        "group": [
+          4,
+          1,
+          1
+        ]
+      },
+      {
+        "group": [
+          3,
+          5
+        ]
+      },
+      {
+        "group": [
+          2,
+          1,
+          6
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          1,
+          7
+        ]
+      }
     ]
   ],
   "json": {
@@ -32,27 +57,37 @@
       {
         "And": [
           {
-            "Divisors": [
-              "_"
+            "In": [
+              "?0",
+              {
+                "Divisors": [
+                  "?0"
+                ]
+              }
             ]
           },
           {
-            "Icc": [
-              "1",
-              "_"
+            "In": [
+              "?0",
+              {
+                "Icc": [
+                  "1",
+                  "$1"
+                ]
+              }
             ]
           }
         ]
       },
       {
         "Mul": [
-          "_",
+          "?0",
           {
             "PartitionCount": [
               {
                 "Sub": [
-                  "_",
-                  "_"
+                  "$1",
+                  "?1"
                 ]
               }
             ]
@@ -60,5 +95,6 @@
         ]
       }
     ]
-  }
+  },
+  "fingerprint": "Sum(And(In(?0)(Divisors(?0)))(In(?0)(Icc(1)($1))))(Mul(?0)(PartitionCount(Sub($1)(?1))))"
 }

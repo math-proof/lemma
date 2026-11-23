@@ -278,13 +278,22 @@ partial def Expectation.Macro.mkJointTerms (ys : Array Syntax) : MacroM Term := 
     let tail ← Expectation.Macro.mkJointTerms rest.toArray
     `(JointRandomSymbol $y $tail)
 
-/-- Unpack a right-nested product into `let y := nest.1; …; body`.
-`rebind[i] = false` skips the `let` for that binder (the body keeps the outer local).
+/-- Replace occurrences of ident `y` in `stx` with `val`. -/
+partial def Expectation.Macro.substIdent (y : Name) (val : Syntax) (stx : Syntax) : Syntax :=
+  if stx.isIdent && stx.getId == y then
+    val
+  else
+    stx.setArgs (stx.getArgs.map (Expectation.Macro.substIdent y val))
+
+/-- Unpack a right-nested product by substituting each binder in `body`
+(`y ↦ Fun.mk nest.1` or `y ↦ nest.1`), so the elaborated expectation term has no `let`.
+`rebind[i] = false` skips that binder (the body keeps the outer local).
 `asFun[i] = true` wraps the value path as `Fun.mk`, so `y[t]` stays `Fun` indexing. -/
 partial def Expectation.Macro.unpackRest
     (ys : Array Syntax) (nest : Term) (body : Term) (rebind : Array Bool) (asFun : Array Bool) : MacroM Term := do
-  let bind (y : Ident) (rhs : Term) (funProcess : Bool) (body : Term) : MacroM Term :=
-    if funProcess then `(let $y := Fun.mk $rhs; $body) else `(let $y := $rhs; $body)
+  let bind (y : Ident) (rhs : Term) (funProcess : Bool) (body : Term) : MacroM Term := do
+    let val : Term ← if funProcess then `(Fun.mk $rhs) else pure rhs
+    pure ⟨Expectation.Macro.substIdent y.getId val body⟩
   match ys.toList, rebind.toList, asFun.toList with
   | [], _, _ => pure body
   | [y], r :: _, f :: _ =>

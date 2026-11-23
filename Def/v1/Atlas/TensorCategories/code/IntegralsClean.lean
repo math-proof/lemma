@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part3
-import Lemma.Category.Atlas.v1.TensorCategories.code.HopfAlgebra
-import Structure.v1.Atlas.TensorCategories.code.IntegralsClean
+module
+
+public import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part3
+public import Theorem.Category.Atlas.v1.TensorCategories.code.HopfAlgebra
+public import Structure.v1.Atlas.TensorCategories.code.IntegralsClean
+
+@[expose] public section
+
 set_option autoImplicit false
 
 universe u v

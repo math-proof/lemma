@@ -1,5 +1,5 @@
-import Lemma.ZMod.Inst
-import Lemma.CuspForm.HeckeAlgebra
+import Theorem.ZMod.Inst
+import Theorem.CuspForm.HeckeAlgebra
 import Mathlib.RingTheory.LocalRing.ResidueField.Basic
 import Instance.CuspForm_AuxLevelHeckeModule
 import Structure.CuspForm_AuxLevelHeckeModule

@@ -8,17 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Instance.v1.Atlas.DifferentialAnalysis.code.TestFunctions
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TestFunctions
-import Mathlib.Analysis.Distribution.TemperedDistribution
-import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.InnerProductSpace.Dual
-import Mathlib.MeasureTheory.Function.LpSeminorm.Basic
-import Mathlib.Topology.ContinuousMap.ZeroAtInfty
-import Mathlib.RingTheory.MvPolynomial.Basic
-import Mathlib.Analysis.Calculus.FDeriv.Symmetric
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SobolevEmbedding.Part2
+module
+
+public import Instance.v1.Atlas.DifferentialAnalysis.code.TestFunctions
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TestFunctions
+public import Mathlib.Analysis.Distribution.TemperedDistribution
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.InnerProductSpace.Dual
+public import Mathlib.MeasureTheory.Function.LpSeminorm.Basic
+public import Mathlib.Topology.ContinuousMap.ZeroAtInfty
+public import Mathlib.RingTheory.MvPolynomial.Basic
+public import Mathlib.Analysis.Calculus.FDeriv.Symmetric
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SobolevEmbedding.Part2
+
+@[expose] public section
+
 open scoped ZeroAtInfty
 open MeasureTheory Filter Topology
 

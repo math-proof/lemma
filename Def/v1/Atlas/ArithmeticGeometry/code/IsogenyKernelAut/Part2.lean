@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.ArithmeticGeometry.code.Isogenies.Part3
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Isogenies
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Isogenies
 import Structure.v1.Atlas.ArithmeticGeometry.code.IsogenyKernelAut.Part2
 open WeierstrassCurve
 

@@ -1,13 +1,16 @@
 /-
 Author: Muse Spark 1.3
 -/
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Data.Set.Card
-import Mathlib.Order.Filter.AtTopBot.Basic
-import Instance.Analysis.InnerProductSpace.DiscreteSpectrum
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Data.Set.Card
+public import Mathlib.Order.Filter.AtTopBot.Basic
+public import Instance.Analysis.InnerProductSpace.DiscreteSpectrum
 open scoped BigOperators
 
+public section
 
 namespace NonnegativeDiscreteSpectrum
 

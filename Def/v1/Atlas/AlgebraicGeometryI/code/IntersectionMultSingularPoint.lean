@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AlgebraicGeometryI.code.LocalIntersectionMultiplicity
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.LocalIntersectionMultiplicity
-import Mathlib.Algebra.MvPolynomial.PDeriv
+module
 
+public import Def.v1.Atlas.AlgebraicGeometryI.code.LocalIntersectionMultiplicity
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.LocalIntersectionMultiplicity
+public import Mathlib.Algebra.MvPolynomial.PDeriv
+
+@[expose] public section
 
 noncomputable section
 

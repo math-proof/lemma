@@ -4,25 +4,28 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
 
-import Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.Analytic.Uniqueness
-import Mathlib.Analysis.Calculus.Deriv.Comp
-import Mathlib.Analysis.Calculus.Deriv.Inv
-import Mathlib.Analysis.Calculus.Deriv.Pow
-import Mathlib.Analysis.Calculus.DSlope
-import Mathlib.Analysis.Complex.AbsMax
-import Mathlib.Analysis.Complex.BranchLogRoot
-import Mathlib.Analysis.Complex.LocallyUniformLimit
-import Mathlib.Analysis.Complex.Schwarz
-import Mathlib.Analysis.SpecialFunctions.Complex.Analytic
-import Mathlib.RingTheory.RootsOfUnity.Complex
-import Theorem.Analysis.Complex.Hurwitz
-import Theorem.Complex.Hurwitz
-import Theorem.Set.IsLocallyUniformlyBoundedOn.of.All_All_LeNorm.Ge_0.IsOpen
-import Def.Analysis.Complex.NormalFamilies
+module
 
+public import Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Analysis.Analytic.Uniqueness
+public import Mathlib.Analysis.Calculus.Deriv.Comp
+public import Mathlib.Analysis.Calculus.Deriv.Inv
+public import Mathlib.Analysis.Calculus.Deriv.Pow
+public import Mathlib.Analysis.Calculus.DSlope
+public import Mathlib.Analysis.Complex.AbsMax
+public import Mathlib.Analysis.Complex.BranchLogRoot
+public import Mathlib.Analysis.Complex.LocallyUniformLimit
+public import Mathlib.Analysis.Complex.Schwarz
+public import Mathlib.Analysis.SpecialFunctions.Complex.Analytic
+public import Mathlib.RingTheory.RootsOfUnity.Complex
+public import Theorem.Analysis.Complex.Hurwitz
+public import Theorem.Complex.Hurwitz
+public import Theorem.Set.IsLocallyUniformlyBoundedOn.of.All_All_LeNorm.Ge_0.IsOpen
+public import Def.Analysis.Complex.NormalFamilies
+
+@[expose] public section
 
 namespace MathlibExt.Analysis.Complex.RiemannMappingWanted
 

@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/GeneralizedFussCatalanNumbersFMNK.lean -/
+module
 
+public import Def.NumberTheory.GeneralizedFussCatalanNumbersFMNK
+public import Theorem.Nat.GeneralizedFussCatalanNumbersFMNK
 
-import Def.NumberTheory.GeneralizedFussCatalanNumbersFMNK
-import Theorem.Nat.GeneralizedFussCatalanNumbersFMNK
-
+public section
 
 namespace MetaMathlibExt
 

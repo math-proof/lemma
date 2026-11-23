@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/ConsecutiveCyclicPrimeLabeling.lean -/
 
-import Mathlib.Data.Nat.GCD.Basic
-import Instance.Combinatorics.ConsecutiveCyclicPrimeLabeling
+module
 
+public import Mathlib.Data.Nat.GCD.Basic
+public import Instance.Combinatorics.ConsecutiveCyclicPrimeLabeling
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

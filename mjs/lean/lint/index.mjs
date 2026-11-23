@@ -125,6 +125,8 @@ export const RULES = {
     'prefer-unicode-type': null,
     // not an AGENTS.md rule (user request): `x ^ 2` / `x ^ 3` / `x ^ 4` → `x²` / `x³` / `x⁴`
     'prefer-unicode-pow': null,
+    // not an AGENTS.md rule (user request via Random): `2 ≤ n` → `n ≥ 2` (variable before the operator)
+    'literal-left-comparison': null,
     // not an AGENTS.md rule (user request via Matrix/Body): `a - (∑ …)` -> drop parens around ∑/∏ RHS of `-`
     'paren-redundant-sum-sub': null,
     // not an AGENTS.md rule (user request via Random / @js): `((sub) ^ 2)` -> drop outer parens around pow

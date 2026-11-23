@@ -4,28 +4,33 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @akiezun, Avocado, Codex
 -/
 
-import Mathlib.Analysis.Asymptotics.Defs
-import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.Combinatorics.Enumerative.Stirling
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Def.Combinatorics.AssociatedStirlingSecond
-import Theorem.Finset.AssociatedStirlingSecond
-import Mathlib.Analysis.Asymptotics.Arith
-import Mathlib.Analysis.Calculus.Deriv.Pow
-import Mathlib.Analysis.Calculus.MeanValue
-import Mathlib.Analysis.Complex.RealDeriv
-import Mathlib.Analysis.Normed.Module.FiniteDimension
-import Mathlib.Analysis.SpecialFunctions.Exponential
-import Mathlib.Data.Nat.Cast.Field
-import Mathlib.LinearAlgebra.Complex.FiniteDimensional
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Algebra.InfiniteSum.Defs
-import Mathlib.Topology.Algebra.InfiniteSum.Module
+module
+
+public import Mathlib.Analysis.Asymptotics.Defs
+public import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.Combinatorics.Enumerative.Stirling
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Def.Combinatorics.AssociatedStirlingSecond
+public import Theorem.Finset.AssociatedStirlingSecond
+public import Mathlib.Analysis.Asymptotics.Arith
+public import Mathlib.Analysis.Calculus.Deriv.Pow
+public import Mathlib.Analysis.Calculus.MeanValue
+public import Mathlib.Analysis.Complex.RealDeriv
+public import Mathlib.Analysis.Normed.Module.FiniteDimension
+public import Mathlib.Analysis.SpecialFunctions.Exponential
+public import Mathlib.Data.Nat.Cast.Field
+public import Mathlib.LinearAlgebra.Complex.FiniteDimensional
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Algebra.InfiniteSum.Defs
+public import Mathlib.Topology.Algebra.InfiniteSum.Module
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 3
 

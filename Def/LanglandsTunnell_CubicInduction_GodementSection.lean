@@ -1,5 +1,9 @@
-import Def.LanglandsTunnell_StandardLocalConstantsAt
-import Lemma.Matrix.SmoothingKernel
+module
+
+public import Def.LanglandsTunnell_StandardLocalConstantsAt
+public import Theorem.Matrix.SmoothingKernel
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -2,12 +2,10 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.SpecialFunctions.Part1Ch5Entry4
 
-open Ramanujan.Part1Ch5.Entry4
 open scoped Nat Real BigOperators Interval Polynomial
 open Asymptotics Filter Finset Complex Topology
+open Ramanujan.Part1Ch5.Entry4 hiding eulerian_succ_ge choose_succ_right_ℂ key_id key_id_cast coeff_add eulerian_expand pascal_cast worp_step worpitzky summable_entry4 summable_choose_shift tsum_choose_shift ramanujan_part1_ch5_entry4
 
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
 
 /--
 [eulerian_succ_ge](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch5Entry4.lean)
@@ -34,9 +32,6 @@ private lemma eulerian_succ_ge : ∀ (n j : ℕ), eulerianNumber (n+1) (n+1+j) =
     have hC : n + 1 + 1 - (n + 1 + 1 + j) = 0 := by omega
     rw [h2, hC, zero_mul, add_zero, h1', mul_zero]
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
 
 /--
 [choose_succ_right_ℂ](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch5Entry4.lean)
@@ -59,9 +54,6 @@ private lemma choose_succ_right_ℂ (a N : ℕ) :
     have h3 : a.choose (N+1) = 0 := Nat.choose_eq_zero_of_lt (by omega)
     simp [h1, h3]
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
 
 /--
 [key_id](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch5Entry4.lean)
@@ -99,9 +91,6 @@ private lemma key_id (k m N : ℕ) (hm : m ≤ N) :
           linear_combination -hchoice
       rw [add_mul, hcc]
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
 
 /--
 [key_id_cast](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch5Entry4.lean)
@@ -113,9 +102,6 @@ private lemma key_id_cast (k m N : ℕ) (hm : m ≤ N) :
       + (↑(N + 1) : ℂ) * (↑((k + (N - m)).choose (N + 1)) : ℂ) :=
   key_id k m N hm
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
 
 /--
 [coeff_add](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch5Entry4.lean)
@@ -126,9 +112,6 @@ private lemma coeff_add (m n : ℕ) (hm : m ≤ n + 1) :
   have hnat : m + 1 + (n + 1 - m) = n + 1 + 1 := by omega
   exact_mod_cast hnat
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
 
 /--
 [eulerian_expand](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch5Entry4.lean)
@@ -145,9 +128,6 @@ private lemma eulerian_expand (n m : ℕ) :
         simp only [eulerianNumber]
   exact_mod_cast hnat
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
 
 /--
 [pascal_cast](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch5Entry4.lean)
@@ -162,9 +142,6 @@ private lemma pascal_cast (n k m : ℕ) (hm : m ≤ n + 1) :
   rw [htop]
   exact_mod_cast h
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
 
 /--
 [worp_step](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch5Entry4.lean)
@@ -461,11 +438,8 @@ private lemma worp_step (n k : ℕ) :
           * (↑(eulerianNumber (n + 1) m) : ℂ)
           * (↑((k + (n + 1) - m).choose (n + 1 + 1)) : ℂ)) := by
             rw [add_assoc, e4]
-  rwa [hk, hA]
+  rw [hk, hA, ← hB]
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
 
 /--
 [worpitzky](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch5Entry4.lean)
@@ -501,9 +475,6 @@ private lemma worpitzky (n k : ℕ) :
         (↑(eulerianNumber (n + 1 + 1) m) : ℂ)
           * (↑((k + (n + 1 + 1) - m).choose (n + 1 + 1)) : ℂ) := hws
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
 
 /--
 [summable_entry4](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch5Entry4.lean)
@@ -533,9 +504,6 @@ private lemma summable_entry4 (n : ℕ) (p : ℂ) (hp : ‖p‖ < 1) :
   intro i hi
   exact (summable_pow_mul_geometric_of_norm_lt_one i hpx).mul_left _
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
 
 /--
 [summable_choose_shift](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch5Entry4.lean)
@@ -561,9 +529,6 @@ private lemma summable_choose_shift (N m : ℕ) (x : ℂ) (hx : ‖x‖ < 1) (hm
   apply htrans
   exact hshifted
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
 
 /--
 [tsum_choose_shift](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch5Entry4.lean)
@@ -593,19 +558,14 @@ private lemma tsum_choose_shift (N m : ℕ) (x : ℂ) (hx : ‖x‖ < 1) (hm : m
   have hts : (∑' i : ℕ, (↑(((i + m) + N - m).choose N) : ℂ) * x ^ (i + m))
     = x ^ m * (∑' i : ℕ, (↑((i + N).choose N) : ℂ) * x ^ i) := by
     calc (∑' i : ℕ, (↑(((i + m) + N - m).choose N) : ℂ) * x ^ (i + m))
-      = ∑' i : ℕ, x ^ m * ((↑((i + N).choose N) : ℂ) * x ^ i) := by
-        apply tsum_congr
-        intro i
-        exact hshift i
+      = ∑' i : ℕ, x ^ m * ((↑((i + N).choose N) : ℂ) * x ^ i) :=
+        tsum_congr (fun i => hshift i)
       _ = x ^ m * (∑' i : ℕ, (↑((i + N).choose N) : ℂ) * x ^ i) :=
         Summable.tsum_mul_left _ hgsum
   have hdecomp := Summable.sum_add_tsum_nat_add m hF
   rw [Finset.sum_eq_zero hvan, zero_add] at hdecomp
   rw [← hdecomp, hts, hval, mul_one_div]
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
 
 /--
 [Part1Ch5Entry4](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch5Entry4.lean)
@@ -734,9 +694,7 @@ lemma ramanujan_part1_ch5_entry4
     rw [hPsi, hsum2]
     have hpp : (1 : ℂ) - (-p) = p + 1 := by ring
     rw [hpp]
-end MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
-
 
 
 -- created on 2026-10-10
--- updated on 2026-10-26
+-- updated on 2026-11-22

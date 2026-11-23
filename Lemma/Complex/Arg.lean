@@ -4,7 +4,7 @@ open Complex
 
 
 @[path]
-private lemma simp.exp
+private lemma simp_exp
   {z : ℂ} :
 -- imply
   arg (Complex.exp (Complex.I * arg z)) = arg z := by
@@ -14,3 +14,4 @@ private lemma simp.exp
 
 
 -- created on 2019-03-01
+-- updated on 2026-11-22

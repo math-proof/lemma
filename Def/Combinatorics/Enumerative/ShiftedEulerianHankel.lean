@@ -4,18 +4,21 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Mathlib.Basic.Real.Basic
-import Mathlib.Data.Nat.Choose.Basic
-import Def.Combinatorics.Enumerative.HeilermannWeightedMotzkinDeterminant
-import Theorem.Finset.Enumerative.HeilermannWeightedMotzkinDeterminant
-import Def.NumberTheory.HankelTransform
-import Mathlib.Combinatorics.Enumerative.Stirling
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring
+module
 
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Data.Nat.Choose.Basic
+public import Def.Combinatorics.Enumerative.HeilermannWeightedMotzkinDeterminant
+public import Theorem.Finset.Enumerative.HeilermannWeightedMotzkinDeterminant
+public import Def.NumberTheory.HankelTransform
+public import Mathlib.Combinatorics.Enumerative.Stirling
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 section
 

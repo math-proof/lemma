@@ -8,14 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Basic
-import Mathlib.Data.Fintype.Basic
-import Mathlib.Data.Finset.Image
-import Mathlib.Data.Finset.Card
-import Mathlib.GroupTheory.Perm.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Instance.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6.NonnegDependence
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.Data.Fintype.Basic
+public import Mathlib.Data.Finset.Image
+public import Mathlib.Data.Finset.Card
+public import Mathlib.GroupTheory.Perm.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Instance.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6.NonnegDependence
+
+@[expose] public section
+
 open Finset Function
 
 

@@ -6,9 +6,15 @@ All rights reserved.
 Copyright (c) 2025 AlgebraicCombinatorics contributors. All rights reserved.
 Authors: AlgebraicCombinatorics contributors
 -/
-import Mathlib
-import Def.RingTheory.PowerSeries.DividingFPS.Part2
-import Theorem.RingTheory.PowerSeries.CommutativeRings.Part2
+
+module
+
+public import Mathlib
+public import Def.RingTheory.PowerSeries.DividingFPS.Part2
+public import Theorem.RingTheory.PowerSeries.CommutativeRings.Part2
+
+@[expose] public section
+
 /-!
 # Commutative Rings and Modules
 

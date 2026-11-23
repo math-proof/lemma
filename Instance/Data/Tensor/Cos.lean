@@ -1,6 +1,10 @@
-import Def.Data.Tensor.Defs.Part4
-import Def.Analysis.SpecialFunctions.Trigonometric.Part2
-import Def.Data.Tensor.Cos
+module
+
+public import Def.Data.Tensor.Defs.Part4
+public import Def.Analysis.SpecialFunctions.Trigonometric.Part2
+public import Def.Data.Tensor.Cos
+@[expose] public section
+
 open Tensor
 
 

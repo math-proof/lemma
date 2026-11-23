@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Bernoulli/KummerCongruence.lean -/
+module
 
+public import Def.NumberTheory.Bernoulli.KummerCongruence
+public import Theorem.Nat.Bernoulli.KummerCongruence
+public import Mathlib.Tactic.NormNum
 
-import Def.NumberTheory.Bernoulli.KummerCongruence
-import Theorem.Nat.Bernoulli.KummerCongruence
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MetaMathlibExtTest
 

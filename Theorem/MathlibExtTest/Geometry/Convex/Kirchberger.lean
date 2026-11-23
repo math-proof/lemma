@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Geometry/Convex/Kirchberger.lean -/
+module
 
+public import Def.Geometry.Convex.Kirchberger
+public import Theorem.Set.Convex.Kirchberger
 
-import Def.Geometry.Convex.Kirchberger
-import Theorem.Set.Convex.Kirchberger
-
+public section
 
 namespace MetaMathlibExt
 

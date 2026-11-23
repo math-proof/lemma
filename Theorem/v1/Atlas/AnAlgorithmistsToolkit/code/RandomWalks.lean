@@ -15,8 +15,8 @@ import Mathlib.Data.Real.Basic
 import Def.v1.Atlas.AnAlgorithmistsToolkit.code.Cheeger
 import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.Cheeger
 import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.Expanders
-import Lemma.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.HallTheorem
-import Lemma.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.LovaszSimonovits
+import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.HallTheorem
+import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.LovaszSimonovits
 import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.CanonicalPaths
 import Abbrev.v1.Atlas.AnAlgorithmistsToolkit.code.Expanders.Part2
 import Def.v1.Atlas.AnAlgorithmistsToolkit.code.HallTheorem.Part2

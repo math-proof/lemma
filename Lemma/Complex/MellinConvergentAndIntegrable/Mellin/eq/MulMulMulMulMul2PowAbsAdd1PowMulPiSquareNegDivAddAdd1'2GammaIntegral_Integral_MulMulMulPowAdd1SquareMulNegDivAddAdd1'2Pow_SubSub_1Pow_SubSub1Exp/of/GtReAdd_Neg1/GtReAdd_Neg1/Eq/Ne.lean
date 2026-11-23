@@ -26,6 +26,8 @@ private lemma  ψ_lt_one {w r : ℝ} (hw : 0 < w) (hr : 0 < r) : ψ w r < 1 := b
 private lemma  Φ_pos (a p q κ : ℝ) {w r : ℝ} (hw : 0 < w) (hr : 0 < r) : 0 < Φ a p q κ w r := by
   unfold Φ; positivity
 
+local notation "μ0" => Measure.restrict (volume : Measure ℝ) (Ioi (0:ℝ))
+
 noncomputable def J (a p q κ Z : ℝ) : ℝ :=
   ∫ v, ψ v.1 v.2 ^ Z * Φ a p q κ v.1 v.2 ∂((μ0).prod (μ0))
 
@@ -103,8 +105,6 @@ private lemma  integral_sigma (A B : ℝ) (hA : -1 < A) (hB : 0 < B) :
   simp_rw [Real.rpow_two] at h
   exact h
 
-local notation "μ0" => Measure.restrict (volume : Measure ℝ) (Ioi (0:ℝ))
-
 private lemma  measurable_Φ (a p q κ : ℝ) : Measurable (Function.uncurry (Φ a p q κ)) := by
   unfold Φ
   have h1 : Measurable fun z : ℝ × ℝ => z.1 ^ (κ - 1 - q) := measurable_fst.pow_const _
@@ -141,7 +141,7 @@ private lemma  integrableOn_w (a : ℝ) (ha : a ≠ 0) (s : ℝ) :
     IntegrableOn (fun w : ℝ => w ^ s * rexp (-(π * ((w ^ 2)⁻¹ + a ^ 2 * w ^ 2)))) (Ioi 0) := by
 
   obtain ⟨n, hn⟩ : ∃ n : ℕ, -1 < s + 2 * n := ⟨Nat.ceil (|s| + 1), by
-    have := Nat.le_ceil (|s| + 1); have := abs_nonneg s; have := neg_abs_le s; push_cast; linarith⟩
+    have := Nat.le_ceil (|s| + 1); have := abs_nonneg s; have := neg_abs_le s; linarith⟩
   have hb : 0 < π * a ^ 2 := by positivity
   have hdom := (integrableOn_rpow_mul_exp_neg_mul_sq hb hn).const_mul ((n.factorial : ℝ) * π⁻¹ ^ n)
   refine Integrable.mono' hdom ?_ ?_
@@ -176,7 +176,7 @@ private lemma  integrableOn_w (a : ℝ) (ha : a ≠ 0) (s : ℝ) :
         ≤ w ^ s * (n.factorial * (π⁻¹ ^ n * w ^ (2 * (n : ℝ))) * rexp (-(π * a ^ 2) * w ^ 2)) :=
           mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_right hexp he2) hws
       _ = (n.factorial : ℝ) * π⁻¹ ^ n * (w ^ (s + 2 * n) * rexp (-(π * a ^ 2) * w ^ 2)) := by
-          rw [Real.rpow_add hw]; push_cast; ring
+          rw [Real.rpow_add hw]; ring
 
 private lemma  ae_pos_prod : ∀ᵐ v : ℝ × ℝ ∂((μ0).prod (μ0)), 0 < v.1 ∧ 0 < v.2 := by
   rw [Measure.prod_restrict]
@@ -345,8 +345,6 @@ private lemma  closed_form (a p q κ x : ℝ) (ha : a ≠ 0) (hxq : -1 < x + q) 
   rfl
 
 
-local notation "μ0" => Measure.restrict (volume : Measure ℝ) (Ioi (0:ℝ))
-
 private lemma  Jc_eq (a : ℝ) (p q κ z : ℂ) (v : ℝ × ℝ) : Jc a p q κ z v = Jc' a p q κ z v.1 v.2 := rfl
 
 private lemma  Jc'_eq (a : ℝ) (p q κ z : ℂ) (w r : ℝ) : Jc' a p q κ z w r = Jc a p q κ z (w, r) := rfl
@@ -374,8 +372,6 @@ private lemma  mellin_integrand_eq_iter (a : ℝ) (C p q κ z : ℂ) (σ' : ℝ)
   simp only [← integral_const_mul, ← integral_mul_const]
 
 
-
-local notation "μ0" => Measure.restrict (volume : Measure ℝ) (Ioi (0:ℝ))
 
 private lemma  norm_ofReal_of_nonneg {x : ℝ} (hx : 0 ≤ x) : ‖(x : ℂ)‖ = x := by
   rw [Complex.norm_real, Real.norm_eq_abs, abs_of_nonneg hx]
@@ -549,8 +545,6 @@ private lemma  Fc_eq (a : ℝ) (ha : a ≠ 0) (C p q κ z : ℂ) {σ w r : ℝ} 
     ((|a| : ℝ) : ℂ) ^ q * (σ : ℂ) ^ q * ((w : ℂ) ^ q)⁻¹ * ((r : ℂ) ^ q)⁻¹ * (r : ℂ)⁻¹ * (w : ℂ) ^ κ) * h7
 
 
-local notation "μ0" => Measure.restrict (volume : Measure ℝ) (Ioi (0:ℝ))
-
 private lemma  integral_Fc_sigma (a : ℝ) (ha : a ≠ 0) (C p q κ z : ℂ) (hzq : -1 < (z + q).re)
     {w r : ℝ} (hw : 0 < w) (hr : 0 < r) :
     ∫ σ in Ioi (0:ℝ), Fc a C p q κ z σ w r =
@@ -653,3 +647,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-22

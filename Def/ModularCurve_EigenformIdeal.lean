@@ -1,5 +1,9 @@
-import Def.HeckeGalois_EichlerShimura
-import Instance.FLTPrelim_Modularity
+module
+
+public import Def.HeckeGalois_EichlerShimura
+public import Instance.FLTPrelim_Modularity
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/AlgebraicGeometry/EllipticCurve/PointCount.lean -/
+module
 
-import Mathlib.Algebra.Field.ZMod
-import Mathlib.AlgebraicGeometry.EllipticCurve.NormalForms
-import Def.AlgebraicGeometry.EllipticCurve.PointCount
-import Lemma.Nat.FrobeniusTrace.eq.SubAddCardF1CardPoint.of.AffineF
+public import Mathlib.Algebra.Field.ZMod
+public import Mathlib.AlgebraicGeometry.EllipticCurve.NormalForms
+public import Def.AlgebraicGeometry.EllipticCurve.PointCount
+public import Theorem.Nat.FrobeniusTrace.eq.SubAddCardF1CardPoint.of.AffineF
 
+public section
 
 namespace WeierstrassCurve.Affine.PointCountTest
 

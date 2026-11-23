@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Probability.ProbabilityMassFunction.Constructions
-import Mathlib.MeasureTheory.Constructions.Pi
-import Def.v1.Atlas.BooleanFunctions.code.PBiased.Part2
+module
+
+public import Mathlib.Probability.ProbabilityMassFunction.Constructions
+public import Mathlib.MeasureTheory.Constructions.Pi
+public import Def.v1.Atlas.BooleanFunctions.code.PBiased.Part2
+@[expose] public section
+
 open scoped NNReal
 open MeasureTheory Measure PMF
 

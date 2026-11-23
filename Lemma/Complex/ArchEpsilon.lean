@@ -1,4 +1,3 @@
-import Lemma.Complex.ArchParam
 import Def.LanglandsTunnell_ArchEpsilon
 
 set_option autoImplicit false
@@ -43,8 +42,8 @@ theorem epsilonFactor_discrete_sq (u : ℂ) (k : ℕ) (hk : 1 ≤ k) :
     (discrete u k hk).epsilonFactor ^ 2 = (-1) ^ (k + 1) := by
   rw [epsilonFactor_discrete, ← pow_mul, mul_comm, pow_mul, I_sq]
 
-theorem epsilonFactor_oddArtin : RealArchParam.oddArtin.epsilonFactor = I := by
-  simp [RealArchParam.oddArtin, epsilonFactor]
+theorem epsilonFactor_oddArtin : (RealArchParam.principal 0 0 0 1).epsilonFactor = I := by
+  simp [epsilonFactor, signEpsilon]
 
 end RealArchParam
 
@@ -64,11 +63,13 @@ theorem epsilonFactor_mul_epsilonFactor_dual (P : ComplexArchParam) :
     show P.k₁.natAbs + P.k₂.natAbs + (P.k₁.natAbs + P.k₂.natAbs) = 2 * (P.k₁.natAbs + P.k₂.natAbs) by ring,
     pow_mul, I_sq]
 
-theorem epsilonFactor_trivialArtin : ComplexArchParam.trivialArtin.epsilonFactor = 1 := by
-  simp [ComplexArchParam.trivialArtin, epsilonFactor]
+theorem epsilonFactor_trivialArtin : (⟨0, 0, 0, 0⟩ : ComplexArchParam).epsilonFactor = 1 := by
+  simp [epsilonFactor]
 
 end ComplexArchParam
 
 end LanglandsTunnell
 
 end
+
+-- updated on 2026-11-22

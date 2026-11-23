@@ -1,7 +1,8 @@
 module
 
 public import Mathlib
-public import Lemma.Scheme.Correspondence
+public import Def.AlgebraicCurve_Correspondence
+public import Theorem.Scheme.Correspondence
 public import Class.WeierstrassCurve_GenusOnePic0
 
 set_option autoImplicit false

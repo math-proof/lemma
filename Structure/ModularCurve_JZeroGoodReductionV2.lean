@@ -1,7 +1,7 @@
 module
 
 public import Mathlib
-public import Lemma.MvPolynomial.HeckeModule
+public import Theorem.MvPolynomial.HeckeModule
 public import Instance.ModularCurve_SpecializationWitness
 public import Def.ModularCurve_JqCoeff
 public import Instance.EllipticCurve_FrobeniusTrace

@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRoch
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRoch
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRoch
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.PicardProjective
 import Def.v1.Atlas.AlgebraicGeometryI.code.PicardProjective.Part7
 import Mathlib.RingTheory.Localization.Away.AdjoinRoot

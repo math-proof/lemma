@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Abbrev.v1.Atlas.TensorCategories.code.QuasiTensorFunctor.Part5
 import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
-import Lemma.Category.Atlas.v1.TensorCategories.code.MonoidalFunctorsCohomology
+import Theorem.Category.Atlas.v1.TensorCategories.code.MonoidalFunctorsCohomology
 import Abbrev.v1.Atlas.TensorCategories.code.QuasiBialgebra
 import Def.v1.Atlas.TensorCategories.code.MonoidalFunctorsCohomology.Part5
 open scoped TensorProduct

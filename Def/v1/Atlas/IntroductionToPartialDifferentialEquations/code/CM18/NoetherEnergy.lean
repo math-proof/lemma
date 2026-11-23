@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM18.LagrangianMechanics
-import Theorem.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM18.LagrangianMechanics
-import Abbrev.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM18.NoetherEnergy
+module
+
+public import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM18.LagrangianMechanics
+public import Theorem.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM18.LagrangianMechanics
+public import Abbrev.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM18.NoetherEnergy
+
+@[expose] public section
+
 open Real Set MeasureTheory
 
 

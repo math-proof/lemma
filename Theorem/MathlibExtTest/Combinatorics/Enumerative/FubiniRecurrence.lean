@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/FubiniRecurrence.lean -/
+module
 
+public import Theorem.Finset.Enumerative.FubiniRecurrence
 
-import Lemma.Finset.Enumerative.FubiniRecurrence
-
+public section
 
 namespace MetaMathlibExt
 

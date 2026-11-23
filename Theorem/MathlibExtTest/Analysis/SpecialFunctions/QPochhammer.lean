@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/QPochhammer.lean -/
+module
 
+public import Def.Analysis.SpecialFunctions.QPochhammer
+public import Theorem.Complex.QPochhammer
 
-import Def.Analysis.SpecialFunctions.QPochhammer
-import Theorem.Complex.QPochhammer
-
+public section
 
 namespace MetaMathlibExt.QPochhammer
 

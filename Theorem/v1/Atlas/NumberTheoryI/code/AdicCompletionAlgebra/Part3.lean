@@ -13,7 +13,7 @@ import Mathlib.RingTheory.Ideal.IntegralClosure
 import Mathlib.NumberTheory.RamificationInertia.Ramification
 import Mathlib.RingTheory.Ideal.Over
 import Theorem.v1.Atlas.NumberTheoryI.code.CompleteFields.Part2
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.CompleteFields
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.CompleteFields
 import Def.v1.Atlas.NumberTheoryI.code.AdicCompletionAlgebra.Part2
 open IsDedekindDomain UniformSpace
 

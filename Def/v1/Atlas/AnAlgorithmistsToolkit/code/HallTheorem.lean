@@ -8,12 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Combinatorics.Hall.Basic
-import Mathlib.Combinatorics.SimpleGraph.Hall
-import Mathlib.Order.Defs.PartialOrder
-import Mathlib.Tactic
-import Abbrev.v1.Atlas.AnAlgorithmistsToolkit.code.Expanders.Part2
-import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.Expanders
+module
+
+public import Mathlib.Combinatorics.Hall.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Hall
+public import Mathlib.Order.Defs.PartialOrder
+public import Mathlib.Tactic
+public import Abbrev.v1.Atlas.AnAlgorithmistsToolkit.code.Expanders.Part2
+public import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.Expanders
+
+@[expose] public section
+
 open Finset Function SimpleGraph
 
 

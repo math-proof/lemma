@@ -1,7 +1,11 @@
-import Def.HeckeGalois_EichlerShimura
-import Def.ModularCurve_DeligneRapoport
-import Abbrev.ModularCurve_EigenformIdeal
-import Def.ModularCurve_MultiplicativeType
+module
+
+public import Def.HeckeGalois_EichlerShimura
+public import Def.ModularCurve_DeligneRapoport
+public import Abbrev.ModularCurve_EigenformIdeal
+public import Def.ModularCurve_MultiplicativeType
+
+@[expose] public section
 
 set_option autoImplicit false
 

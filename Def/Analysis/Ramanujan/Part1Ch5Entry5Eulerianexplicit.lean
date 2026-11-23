@@ -4,16 +4,21 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Data.Nat.Choose.Basic
-import Def.Analysis.Ramanujan.Part1Ch5Entry4
-import Theorem.Complex.Part1Ch5Entry4
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Algebra.Polynomial.Derivative
-import Mathlib.Algebra.Polynomial.Eval.Defs
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Data.Nat.Choose.Basic
+public import Def.Analysis.Ramanujan.Part1Ch5Entry4
+public import Theorem.Complex.Part1Ch5Entry4
+public import Mathlib.Algebra.BigOperators.Field
+public import Mathlib.Algebra.Polynomial.Derivative
+public import Mathlib.Algebra.Polynomial.Eval.Defs
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 5, Entry 5
 

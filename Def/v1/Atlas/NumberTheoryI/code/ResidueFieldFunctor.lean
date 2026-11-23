@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Instance.v1.Atlas.NumberTheoryI.code.HenselLemmas
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.HenselLemmas
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.HenselFactorization
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.HenselLemmas
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.HenselFactorization
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.LocalExtensions
 import Theorem.v1.Atlas.NumberTheoryI.code.HenselFactorization
 import Theorem.v1.Atlas.NumberTheoryI.code.LocalExtensions.Part2

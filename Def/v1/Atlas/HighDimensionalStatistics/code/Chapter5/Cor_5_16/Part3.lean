@@ -18,7 +18,7 @@ import Mathlib.Topology.MetricSpace.Bounded
 import Mathlib.Topology.Sequences
 import Mathlib.Order.Filter.AtTopBot.CountablyGenerated
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.InfoTheory.Part3
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.InfoTheory
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.InfoTheory
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Cor_5_13
 import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Cor_5_15
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Cor_5_13.Part3

@@ -11,10 +11,10 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.AlgebraicGeometryI.code.CoherentSheavesCurves.Part2
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSheavesCurves
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleProjective
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSheavesCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleProjective
 public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleGeneral
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
 public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleProjective.Part4
 public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleGeneral
 public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochCurves

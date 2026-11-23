@@ -1,0 +1,73 @@
+/-
+Copyright (c) 2024 Kevin Buzzard, Ruben Van de Velde, Pietro Monticone. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Ported from the Imperial College London FLT formalization
+(https://github.com/ImperialCollegeLondon/FLT, blueprint §2.5–2.6).
+-/
+
+module
+
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
+public import Mathlib.Algebra.Field.ZMod
+public import Mathlib.Algebra.GCDMonoid.Nat
+public import Mathlib.Algebra.EuclideanDomain.Int
+public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.RingTheory.Int.Basic
+public import Mathlib.Tactic.ModCases
+public import Structure.FLTPrelim_FreyPackage
+
+public section
+
+set_option autoImplicit false
+
+
+namespace FreyPackage
+
+public theorem hppos (P : FreyPackage) : 0 < P.p := lt_of_lt_of_le (by omega) P.hp5
+
+
+public theorem hp0 (P : FreyPackage) : P.p ≠ 0 := P.hppos.ne'
+
+
+public theorem hp_odd (P : FreyPackage) : Odd P.p :=
+  P.pp.odd_of_ne_two (by have := P.hp5; omega)
+
+
+public theorem gcdab_eq_gcdac {a b c : ℤ} {p : ℕ} (hp : 0 < p) (h : a ^ p + b ^ p = c ^ p) :
+    gcd a b = gcd a c := by
+  have foo : gcd a b ∣ gcd a c := by
+    apply dvd_gcd (gcd_dvd_left a b)
+    rw [← Int.pow_dvd_pow_iff hp.ne', ← h]
+    apply dvd_add <;> rw [Int.pow_dvd_pow_iff hp.ne']
+    · exact gcd_dvd_left a b
+    · exact gcd_dvd_right a b
+  have bar : gcd a c ∣ gcd a b := by
+    apply dvd_gcd (gcd_dvd_left a c)
+    have h2 : b ^ p = c ^ p - a ^ p := eq_sub_of_add_eq' h
+    rw [← Int.pow_dvd_pow_iff hp.ne', h2]
+    apply dvd_add
+    · rw [Int.pow_dvd_pow_iff hp.ne']; exact gcd_dvd_right a c
+    · rw [dvd_neg, Int.pow_dvd_pow_iff hp.ne']; exact gcd_dvd_left a c
+  change _ ∣ (Int.gcd a c : ℤ) at foo
+  apply Int.ofNat_dvd.1 at bar
+  apply Int.ofNat_dvd.1 at foo
+  exact congr_arg ((↑) : ℕ → ℤ) <| Nat.dvd_antisymm foo bar
+
+
+public theorem hgcdac (P : FreyPackage) : gcd P.a P.c = 1 := by
+  rw [← gcdab_eq_gcdac P.hppos P.hFLT, P.hgcdab]
+
+
+public theorem hgcdbc (P : FreyPackage) : gcd P.b P.c = 1 := by
+  rw [← gcdab_eq_gcdac P.hppos, gcd_comm, P.hgcdab]
+  rw [add_comm]; exact P.hFLT
+
+
+public theorem habc0 (P : FreyPackage) : P.a * P.b * P.c ≠ 0 :=
+  mul_ne_zero (mul_ne_zero P.ha0 P.hb0) P.hc0
+
+
+public theorem two_dvd_abc (P : FreyPackage) : (2 : ℤ) ∣ P.a * P.b * P.c :=
+  dvd_mul_of_dvd_left (dvd_mul_of_dvd_right
+    ((ZMod.intCast_zmod_eq_zero_iff_dvd P.b 2).1 P.hb2) _) _
+

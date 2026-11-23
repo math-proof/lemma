@@ -4,15 +4,20 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Basic
-import Mathlib.Algebra.Group.End
-import Mathlib.Data.Fintype.Defs
-import Mathlib.Data.Fintype.Pigeonhole
-import Mathlib.Data.Finset.Max
-import Mathlib.Data.List.Chain
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Dynamics.PeriodicPts.Lemmas
-import Theorem.Combinatorics.RoadColoring.Part2
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.Algebra.Group.End
+public import Mathlib.Data.Fintype.Defs
+public import Mathlib.Data.Fintype.Pigeonhole
+public import Mathlib.Data.Finset.Max
+public import Mathlib.Data.List.Chain
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Dynamics.PeriodicPts.Lemmas
+public import Theorem.Combinatorics.RoadColoring.Part2
+
+@[expose] public section
+
 /-!
 # Road coloring theorem
 

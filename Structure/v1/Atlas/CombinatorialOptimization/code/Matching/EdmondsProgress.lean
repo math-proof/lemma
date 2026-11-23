@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.CombinatorialOptimization.code.Matching.BlossomShrinking.Part2
-public import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Matching.BlossomShrinking
+public import Theorem.Finset.Atlas.v1.CombinatorialOptimization.code.Matching.BlossomShrinking
 public section
 
 open SimpleGraph

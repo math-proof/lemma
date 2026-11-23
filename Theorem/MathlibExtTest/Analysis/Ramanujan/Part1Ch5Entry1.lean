@@ -1,13 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Ramanujan/Part1Ch5Entry1.lean -/
+module
 
+public import Def.Analysis.Ramanujan.Part1Ch5Entry1
+public import Theorem.Real.Ramanujan.Part1Ch5Entry1
 
-import Def.Analysis.Ramanujan.Part1Ch5Entry1
-import Lemma.Real.Ramanujan.Part1Ch5Entry1
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 5, Entry 1 API checks
 
 The Bernoulli coefficients and direct uses of both clauses of the exported theorem.
 -/
+
+public section
 
 
 namespace MathlibExtTest.Analysis.Ramanujan.Part1Ch5Entry1

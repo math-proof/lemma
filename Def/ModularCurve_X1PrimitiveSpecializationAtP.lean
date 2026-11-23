@@ -2,9 +2,9 @@ import Mathlib
 import Def.FLTPrelim_Ramification
 import Instance.EllipticCurve_FrobeniusTrace
 import Instance.EllipticCurve_TateModule
-import Lemma.MvPolynomial.X1HeckeModule
+import Theorem.MvPolynomial.X1HeckeModule
 import Def.ModularCurve_X1PrimitiveSpecialization
-import Lemma.LaurentSeries.QExpFrobeniusModL
+import Theorem.LaurentSeries.QExpFrobeniusModL
 
 set_option autoImplicit false
 

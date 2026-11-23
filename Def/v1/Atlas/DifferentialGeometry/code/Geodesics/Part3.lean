@@ -8,23 +8,28 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Calculus.ContDiff.Deriv
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.InnerProductSpace.Calculus
-import Mathlib.Analysis.Calculus.MeanValue
-import Mathlib.Analysis.Calculus.Deriv.Shift
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-import Structure.v1.Atlas.DifferentialGeometry.code.Manifolds.Part6
-import Theorem.Real.Atlas.v1.DifferentialGeometry.code.Manifolds
-import Lemma.Real.Atlas.v1.DifferentialGeometry.code.Intrinsic
-import Mathlib.Analysis.Convex.StrictConvexSpace
-import Mathlib.Analysis.InnerProductSpace.Convex
-import Def.v1.Atlas.DifferentialGeometry.code.Intrinsic.Part4
-import Mathlib.Analysis.Calculus.LocalExtr.Basic
-import Mathlib.Topology.Connected.Clopen
-import Mathlib.SetTheory.Cardinal.Finite
-import Abbrev.v1.Atlas.DifferentialGeometry.code.GaussMap
-import Structure.v1.Atlas.DifferentialGeometry.code.Geodesics.Part2
+module
+
+public import Mathlib.Analysis.Calculus.ContDiff.Deriv
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.InnerProductSpace.Calculus
+public import Mathlib.Analysis.Calculus.MeanValue
+public import Mathlib.Analysis.Calculus.Deriv.Shift
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+public import Structure.v1.Atlas.DifferentialGeometry.code.Manifolds.Part6
+public import Theorem.Real.Atlas.v1.DifferentialGeometry.code.Manifolds
+public import Theorem.Real.Atlas.v1.DifferentialGeometry.code.Intrinsic
+public import Mathlib.Analysis.Convex.StrictConvexSpace
+public import Mathlib.Analysis.InnerProductSpace.Convex
+public import Def.v1.Atlas.DifferentialGeometry.code.Intrinsic.Part4
+public import Mathlib.Analysis.Calculus.LocalExtr.Basic
+public import Mathlib.Topology.Connected.Clopen
+public import Mathlib.SetTheory.Cardinal.Finite
+public import Abbrev.v1.Atlas.DifferentialGeometry.code.GaussMap
+public import Structure.v1.Atlas.DifferentialGeometry.code.Geodesics.Part2
+
+@[expose] public section
+
 open MeasureTheory intervalIntegral Hypersurface Finset
 open scoped InnerProductSpace BigOperators
 

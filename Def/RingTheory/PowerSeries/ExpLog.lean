@@ -2,9 +2,15 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.RingTheory.PowerSeries.InfiniteProducts
-import Theorem.PowerSeries.InfiniteProducts
+
+module
+
+public import Mathlib
+public import Def.RingTheory.PowerSeries.InfiniteProducts
+public import Theorem.PowerSeries.InfiniteProducts
+
+@[expose] public section
+
 /-!
 # Exponentials and Logarithms of Formal Power Series
 

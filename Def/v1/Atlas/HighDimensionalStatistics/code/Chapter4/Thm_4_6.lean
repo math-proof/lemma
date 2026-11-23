@@ -8,25 +8,30 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.LinearAlgebra.Matrix.PosDef
-import Mathlib.Analysis.Matrix.Order
-import Mathlib.Analysis.CStarAlgebra.Matrix
-import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.LinearAlgebra.Matrix.DotProduct
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Probability.Moments.Basic
-import Mathlib.Probability.Independence.Integration
-import Mathlib.Analysis.Convex.SpecificFunctions.Basic
-import Mathlib.Analysis.Convex.Jensen
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_12
-import Notation.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Lemma_4_2
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Lemma_4_2
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_18
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_18
+module
+
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.LinearAlgebra.Matrix.PosDef
+public import Mathlib.Analysis.Matrix.Order
+public import Mathlib.Analysis.CStarAlgebra.Matrix
+public import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.LinearAlgebra.Matrix.DotProduct
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Probability.Moments.Basic
+public import Mathlib.Probability.Independence.Integration
+public import Mathlib.Analysis.Convex.SpecificFunctions.Basic
+public import Mathlib.Analysis.Convex.Jensen
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_12
+public import Notation.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Lemma_4_2
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Lemma_4_2
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_18
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_18
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Matrix Real Finset BigOperators
 
 

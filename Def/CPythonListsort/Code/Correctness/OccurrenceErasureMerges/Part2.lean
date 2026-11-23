@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/OccurrenceErasureMerges.lean -/
 
-import Def.CPythonListsort.Code.Correctness.OccurrenceErasure
-import Theorem.CPythonListsort.Code.Correctness.OccurrenceErasureMerges
+module
+
+public import Def.CPythonListsort.Code.Correctness.OccurrenceErasure
+public import Theorem.CPythonListsort.Code.Correctness.OccurrenceErasureMerges
+
+@[expose] public section
+
 /-!
 # Occurrence-tag erasure for merge evaluators
 

@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
-import Theorem.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
-import Lemma.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
-import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
-import Mathlib.CategoryTheory.Monoidal.Mod_
+module
+
+public import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
+public import Theorem.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
+public import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
+public import Mathlib.CategoryTheory.Monoidal.Mod_
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 universe w v u

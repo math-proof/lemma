@@ -1,6 +1,10 @@
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.SpecialFunctions.OrdinaryHypergeometric
-import Def.Analysis.SpecialFunctions.GeneralizedHypergeometric.Part3
+module
+
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Analysis.SpecialFunctions.OrdinaryHypergeometric
+public import Def.Analysis.SpecialFunctions.GeneralizedHypergeometric.Part3
+@[expose] public section
+
 /-!
 # Generalized hypergeometric series `ₚF_q`
 

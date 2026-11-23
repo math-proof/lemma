@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/InfiniteWord/GeneralizedThueMorseSequence.lean -/
+module
 
+public import Def.Combinatorics.InfiniteWord.GeneralizedThueMorseSequence.Part3
+public import Theorem.Finset.InfiniteWord.GeneralizedThueMorseSequence
 
-import Def.Combinatorics.InfiniteWord.GeneralizedThueMorseSequence.Part3
-import Lemma.Finset.InfiniteWord.GeneralizedThueMorseSequence
-
+public section
 
 namespace MetaMathlibExt.GeneralizedThueMorse
 

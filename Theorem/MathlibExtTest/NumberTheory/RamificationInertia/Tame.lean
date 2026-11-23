@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/RamificationInertia/Tame.lean -/
+module
 
+public import Def.NumberTheory.RamificationInertia.Tame
+public import Theorem.Int.RamificationInertia.Tame
 
-import Def.NumberTheory.RamificationInertia.Tame
-import Theorem.Int.RamificationInertia.Tame
+public section
+
 variable (R : Type*) {S : Type*} [CommRing R] [CommRing S] [Algebra R S]
 variable (q : Ideal S) [q.IsPrime]
 

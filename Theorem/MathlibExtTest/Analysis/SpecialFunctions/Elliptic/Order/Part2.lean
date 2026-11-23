@@ -2,7 +2,7 @@
 
 
 import Def.Analysis.SpecialFunctions.Elliptic.Order
-import Lemma.Real.SpecialFunctions.Elliptic.Order
+import Theorem.Real.SpecialFunctions.Elliptic.Order
 import Def.MathlibExtTest.Analysis.SpecialFunctions.Elliptic.Order
 open scoped Topology
 

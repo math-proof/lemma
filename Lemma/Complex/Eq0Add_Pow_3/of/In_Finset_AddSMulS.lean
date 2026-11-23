@@ -5,7 +5,7 @@ open Complex
 
 
 @[path]
-private lemma sub.given
+private lemma main
   {x p q δ : ℂ}
   {d : ℤ}
 -- given
@@ -23,3 +23,4 @@ private lemma sub.given
 
 
 -- created on 2018-11-20
+-- updated on 2026-11-22

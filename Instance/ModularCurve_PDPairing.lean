@@ -2,7 +2,8 @@
 import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
 import Mathlib.GroupTheory.Transfer
 import Mathlib.GroupTheory.FreeGroup.NielsenSchreier
-import Lemma.Matrix.PDPairing
+import Theorem.Matrix.PDPairing
+import Def.Matrix_PDPairing
 
 set_option autoImplicit false
 

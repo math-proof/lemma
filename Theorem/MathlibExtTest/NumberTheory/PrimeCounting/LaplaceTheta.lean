@@ -1,12 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PrimeCounting/LaplaceTheta.lean -/
+module
 
-import Def.NumberTheory.PrimeCounting.LaplaceTheta
-import Theorem.Nat.PrimeCounting.LaplaceTheta
-
+public import Def.NumberTheory.PrimeCounting.LaplaceTheta
+public import Theorem.Nat.PrimeCounting.LaplaceTheta
 
 /-!
 # Tests for the Laplace transform of `theta (exp ·)`.
 -/
+
+public section
 
 -- Definitional expansion of `primeLogSeries`.
 example (s : ℂ) : Chebyshev.primeLogSeries s =

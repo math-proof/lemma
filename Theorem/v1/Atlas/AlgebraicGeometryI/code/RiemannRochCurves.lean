@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochGeneral
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochGeneral
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckGroup
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckGroup
 import Def.v1.Atlas.AlgebraicGeometryI.code.GrothendieckGroup.Part3
 import Mathlib.RingTheory.DedekindDomain.Ideal.Basic
 import Mathlib.RingTheory.Kaehler.Polynomial

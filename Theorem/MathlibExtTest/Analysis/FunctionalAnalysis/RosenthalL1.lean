@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/FunctionalAnalysis/RosenthalL1.lean -/
+module
 
-
-import Theorem.Analysis.FunctionalAnalysis.RosenthalL1.Part13
-import Theorem.Set.Any_All_Any_All_LtNormSubOrHasUniformL1LowerBound.of.IsBounded_Range
+public import Theorem.Analysis.FunctionalAnalysis.RosenthalL1.Part13
+public import Theorem.Set.Any_All_Any_All_LtNormSubOrHasUniformL1LowerBound.of.IsBounded_Range
 open MathlibExt.Analysis.FunctionalAnalysis.RosenthalL1Wanted
 
+public section
 
 -- A bounded sequence with no weakly Cauchy subsequence has an `ℓ¹` subsequence.
 example {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] [CompleteSpace E]

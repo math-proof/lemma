@@ -1,13 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/Polynomial/AdjoinRootTensorProduct.lean -/
+module
 
-
-import Def.RingTheory.Polynomial.AdjoinRootTensorProduct
-import Theorem.Ideal.Polynomial.AdjoinRootTensorProduct
-import Mathlib.Algebra.Polynomial.RingDivision
+public import Def.RingTheory.Polynomial.AdjoinRootTensorProduct
+public import Theorem.Ideal.Polynomial.AdjoinRootTensorProduct
+public import Mathlib.Algebra.Polynomial.RingDivision
 set_option autoImplicit false
 
 open scoped TensorProduct
 
+public section
 
 /-- The algebraic CRT equivalence sends a quotient representative to the
 same representative in every component. -/

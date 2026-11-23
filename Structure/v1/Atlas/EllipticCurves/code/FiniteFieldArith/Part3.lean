@@ -24,7 +24,7 @@ public import Mathlib.Analysis.SpecialFunctions.Log.Basic
 public import Mathlib.FieldTheory.Finite.Basic
 public import Mathlib.NumberTheory.LegendreSymbol.Basic
 public import Def.v1.Atlas.EllipticCurves.code.FiniteFields.Part5
-public import Lemma.Complex.Atlas.v1.EllipticCurves.code.FiniteFields
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.FiniteFields
 public import Mathlib.FieldTheory.Finite.Extension
 public import Def.v1.Atlas.EllipticCurves.code.FiniteFieldArith.Part3
 

@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MultisetEulerianNumber.lean -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Fintype.Pi
-import Instance.Combinatorics.Enumerative.MultisetEulerianNumber
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Fintype.Pi
+public import Instance.Combinatorics.Enumerative.MultisetEulerianNumber
+
+@[expose] public section
+
 /-!
 # Eulerian numbers of multiset permutations
 

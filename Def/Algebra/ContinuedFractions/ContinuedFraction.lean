@@ -1,4 +1,9 @@
-import Def.Algebra.ContinuedFractions.Continuant
+module
+
+public import Def.Algebra.ContinuedFractions.Continuant
+
+@[expose] public section
+
 /-!
 SymPy's continued fraction `alpha` (`Lemma/Finset/Alpha/gt/Zero.py`):
 `alpha(x[:1]) = x[0]`, `alpha(x[:n]) = x[0] + 1 / alpha(x[1:n])`; the multi-argument form

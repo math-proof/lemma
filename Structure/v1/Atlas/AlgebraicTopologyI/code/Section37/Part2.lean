@@ -25,7 +25,7 @@ public import Mathlib.CategoryTheory.Filtered.Final
 public import Mathlib.CategoryTheory.Comma.Final
 public import Mathlib.Topology.Separation.Hausdorff
 public import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section34.Part3
-public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section34
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section34
 public import Def.v1.Atlas.AlgebraicTopologyI.code.Section37
 public section
 

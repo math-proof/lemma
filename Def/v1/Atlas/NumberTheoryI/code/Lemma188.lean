@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.NumberTheoryI.code.ArithmeticFunctions.Part4
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ArithmeticFunctions
-import Mathlib.FieldTheory.Finite.Basic
+module
+
+public import Def.v1.Atlas.NumberTheoryI.code.ArithmeticFunctions.Part4
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ArithmeticFunctions
+public import Mathlib.FieldTheory.Finite.Basic
+
+@[expose] public section
+
 open scoped Classical
 open ArithmeticFunction
 

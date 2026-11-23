@@ -1,8 +1,11 @@
-import Syntax.Probability.Expectation.Elab
-import Theorem.Probability.JointRv.AsRV
-import Theorem.Probability.SymbolicProbability
+module
+
+public import Syntax.Probability.Expectation.Elab
+public import Theorem.Probability.JointRv.AsRV
+public import Theorem.Probability.SymbolicProbability
 open MeasureTheory ProbabilityTheory
 
+public section
 
 /-- `𝔼[… | y = y0]` against a conditional law is the Bochner integral against `π[|y ⁻¹' {y0}]`. -/
 theorem Expectation.condEvent_eq_integral

@@ -9,9 +9,9 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.LieGroups.code.Admissible.Part3
-import Lemma.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
+import Theorem.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
 import Theorem.Real.GetToMonoidHom.in.SmoothSubspace.of.In_SmoothSubspace
-import Lemma.Complex.IsKFinite0
+import Theorem.Complex.IsKFinite0
 import Def.v1.Atlas.LieGroups.code.SmoothVectors
 import Def.v1.Atlas.LieGroups.code.KFinite.Part3
 import Def.v1.Atlas.LieGroups.code.GKModuleDefs.Part2

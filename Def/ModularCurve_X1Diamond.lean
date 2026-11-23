@@ -1,4 +1,8 @@
-import Lemma.UpperHalfPlane.X1
+module
+
+public import Theorem.UpperHalfPlane.X1
+
+@[expose] public section
 
 set_option autoImplicit false
 

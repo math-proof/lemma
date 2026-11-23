@@ -9,13 +9,13 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.NumberTheoryI.code.RayClassFields.Part28
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.RayClassFields
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Ideles
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.IdeleNorm
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.KroneckerWeber
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Cor227
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Ch22NormGroup
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Prop2219
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.RayClassFields
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Ideles
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.IdeleNorm
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.KroneckerWeber
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor227
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Ch22NormGroup
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Prop2219
 import Def.v1.Atlas.NumberTheoryI.code.Ideles.Part3
 import Def.v1.Atlas.NumberTheoryI.code.IdeleNorm.Part4
 import Def.v1.Atlas.NumberTheoryI.code.KroneckerWeber.Part5

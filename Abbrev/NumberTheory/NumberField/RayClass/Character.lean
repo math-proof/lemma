@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/Character.lean -/
 
 import Def.NumberTheory.NumberField.RayClass.Group
-import Lemma.Nat.NumberField.RayClass.Group
+import Theorem.Nat.NumberField.RayClass.Group
 import Mathlib.Analysis.Complex.Circle
 @[expose] noncomputable section
 

@@ -7,12 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib
-import Theorem.v1.Atlas.ArithmeticGeometry.code.GaloisPlaceHelper
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.GaloisPlaceHelper
-import Def.v1.Atlas.ArithmeticGeometry.code.Heights
+public import Mathlib
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.GaloisPlaceHelper
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.GaloisPlaceHelper
+public import Def.v1.Atlas.ArithmeticGeometry.code.Heights
 
+public section
 
 noncomputable section
 

@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Abbrev.v1.Atlas.NumberTheoryI.code.GlobalFields
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.GlobalFields
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.CompleteFields
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.CompleteFields
 import Theorem.v1.Atlas.NumberTheoryI.code.CompleteFields.Part2
 
 

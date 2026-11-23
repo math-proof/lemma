@@ -2,7 +2,8 @@
 import Mathlib
 import Instance.AlgebraicGeometry_LocalRepresentabilityULift
 import Def.AlgebraicGeometry_RelSubPicPresheaf
-import Lemma.Scheme.RelSubPicGlue
+import Theorem.Scheme.RelSubPicGlue
+import Def.AlgebraicGeometry_RelSubPicGlue
 
 set_option autoImplicit false
 

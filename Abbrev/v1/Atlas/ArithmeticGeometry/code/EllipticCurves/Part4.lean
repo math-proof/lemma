@@ -23,7 +23,7 @@ import Mathlib.Topology.Compactification.OnePoint.ProjectiveLine
 import Mathlib.LinearAlgebra.Lagrange
 import Instance.v1.Atlas.ArithmeticGeometry.code.CompleteVarieties
 import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CompleteVarieties
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.RationalLineCriterion
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.RationalLineCriterion
 import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.ProjectiveComplete
 import Def.v1.Atlas.ArithmeticGeometry.code.RationalLineCriterion
 import Structure.v1.Atlas.ArithmeticGeometry.code.ProjectiveComplete

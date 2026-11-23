@@ -2,7 +2,7 @@ module
 
 public import Mathlib
 public import Def.ModularCurve_JZeroToricTorsion
-public import Lemma.MvPolynomial.HeckeModule
+public import Theorem.MvPolynomial.HeckeModule
 public import Def.FLTPrelim_Ramification
 public import Def.GaloisRep_Flat
 

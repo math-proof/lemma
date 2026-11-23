@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.NumberTheoryI.code.KroneckerWeber.Part5
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.KroneckerWeber
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.KroneckerWeber
 import Mathlib.NumberTheory.Wilson
 
 

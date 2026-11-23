@@ -1,5 +1,5 @@
 import Def.AutomorphicForm_ProductionPinsCompact
-import Lemma.Ideal.ArithCuspRealization
+import Theorem.Ideal.ArithCuspRealization
 
 set_option autoImplicit false
 

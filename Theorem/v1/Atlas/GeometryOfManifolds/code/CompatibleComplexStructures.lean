@@ -7,14 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Theorem.v1.Atlas.GeometryOfManifolds.code.SymplecticStandardBasis
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticStandardBasis
-import Structure.v1.Atlas.GeometryOfManifolds.code.CompatibleComplexStructures
+public import Theorem.v1.Atlas.GeometryOfManifolds.code.SymplecticStandardBasis
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticStandardBasis
+public import Structure.v1.Atlas.GeometryOfManifolds.code.CompatibleComplexStructures
 set_option autoImplicit false
 
 open Module FiniteDimensional
 
+public section
 
 namespace SymplecticLinearAlgebra
 

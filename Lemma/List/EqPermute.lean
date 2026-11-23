@@ -1,9 +1,15 @@
 import Initialize.Tactic.Attr.Basic
-import Lemma.List.Permute.eq.Ite
-import Lemma.List.Slice.eq.Nil
+import Theorem.List.Permute.eq.Ite
+import Theorem.List.Slice.eq.Nil
 open List
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | List.EqPermute |
+| comm | List.Eq_Permute |
+-/
 @[path, comm]
 private lemma main
   {s : List α}
@@ -19,3 +25,4 @@ private lemma main
 
 
 -- created on 2025-06-16
+-- updated on 2026-11-22

@@ -1,11 +1,11 @@
-import Lemma.List.Cons.eq.Append
-import Lemma.List.AppendAppend.eq.Append_Append
-import Lemma.List.Append.of.Eq
-import Lemma.List.LengthTake.eq.Min_Length
+import Theorem.List.Cons.eq.Append
+import Theorem.List.AppendAppend.eq.Append_Append
+import Theorem.List.Append.of.Eq
+import Theorem.List.LengthTake.eq.Min_Length
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
-import Lemma.Nat.Le_Min.is.Le.Le
-import Lemma.List.TakeTake.eq.Take.of.Ge
-import Lemma.List.Append.of.Eq.Eq
+import Theorem.Nat.Le_Min.is.Le.Le
+import Theorem.List.TakeTake.eq.Take.of.Ge
+import Theorem.List.Append.of.Eq.Eq
 import Lemma.List.Take_1.eq.ListGet_0.of.GtLength_0
 import Lemma.List.TailTake.eq.TakeTail
 open List Nat
@@ -42,3 +42,4 @@ private lemma main
 
 
 -- created on 2025-06-17
+-- updated on 2026-11-22

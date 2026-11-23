@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/GibonacciNumber.lean -/
+module
 
+public import Def.NumberTheory.GibonacciNumber
+public import Theorem.Nat.GibonacciNumber
+public import Mathlib.Tactic.NormNum
 
-import Def.NumberTheory.GibonacciNumber
-import Theorem.Nat.GibonacciNumber
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MetaMathlibExt
 

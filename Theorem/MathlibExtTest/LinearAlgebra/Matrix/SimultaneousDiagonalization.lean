@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/SimultaneousDiagonalization.lean -/
+module
 
-
-import Mathlib.Algebra.Order.Star.Real
-import Theorem.Matrix.SimultaneousDiagonalization
+public import Mathlib.Algebra.Order.Star.Real
+public import Theorem.Matrix.SimultaneousDiagonalization
 open MathlibExt.LinearAlgebra.Matrix.SimultaneousDiagonalizationWanted
 
+public section
 
 -- Congruence normalization gives the expected determinant identity.
 example {n : Type*} [Fintype n] [DecidableEq n] (P : Matrix n n ℝ)

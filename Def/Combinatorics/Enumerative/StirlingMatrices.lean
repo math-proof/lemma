@@ -1,13 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/StirlingMatrices.lean -/
 
-import Mathlib.Combinatorics.Enumerative.Stirling
-import Mathlib.Data.Matrix.Mul
-import Def.Combinatorics.Enumerative.SignedStirlingFirst
-import Theorem.Finset.Enumerative.SignedStirlingFirst
-import Mathlib.LinearAlgebra.Matrix.InvariantBasisNumber
-import Mathlib.RingTheory.FiniteType
-import Mathlib.Tactic.Ring
+module
 
+public import Mathlib.Combinatorics.Enumerative.Stirling
+public import Mathlib.Data.Matrix.Mul
+public import Def.Combinatorics.Enumerative.SignedStirlingFirst
+public import Theorem.Finset.Enumerative.SignedStirlingFirst
+public import Mathlib.LinearAlgebra.Matrix.InvariantBasisNumber
+public import Mathlib.RingTheory.FiniteType
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecificLimits/RisingProductSeries.lean -/
+module
 
+public import Theorem.Complex.RisingProductSeries
 
-import Theorem.Complex.RisingProductSeries
-
+public section
 
 example (x : ℂ) :
     Summable (fun j : ℕ =>

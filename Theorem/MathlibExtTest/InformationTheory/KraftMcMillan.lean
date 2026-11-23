@@ -1,16 +1,17 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/InformationTheory/KraftMcMillan.lean -/
+module
 
-
-import Def.InformationTheory.KraftMcMillan
-import Lemma.Real.KraftMcMillan
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Data.Fintype.Card
+public import Def.InformationTheory.KraftMcMillan
+public import Theorem.Real.KraftMcMillan
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Data.Fintype.Card
 open scoped BigOperators
 
 open MathlibExt.InformationTheory.KraftMcMillan
 
+public section
 
 /-- Forward direction on a two-word binary code with repeated lengths:
 the Kraft sum `1/2 + 1/2` is at most one. -/

@@ -8,27 +8,32 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.EllipticCurves.code.FermatsLastTheorem.Part3
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.FermatsLastTheorem
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.Data.Nat.Squarefree
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.Data.Nat.PrimeFin
-import Mathlib.RingTheory.Polynomial.Basic
-import Mathlib.NumberTheory.LSeries.Basic
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib.NumberTheory.Padics.RingHoms
-import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Basic
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.NumberTheory.ModularForms.Basic
-import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
-import Mathlib.Analysis.InnerProductSpace.JointEigenspace
-import Mathlib.Analysis.Analytic.Order
-import Mathlib.GroupTheory.Torsion
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Structure.v1.Atlas.EllipticCurves.code.ModularForms.Part5
+module
+
+public import Def.v1.Atlas.EllipticCurves.code.FermatsLastTheorem.Part3
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.FermatsLastTheorem
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.Data.Nat.Squarefree
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.Data.Nat.PrimeFin
+public import Mathlib.RingTheory.Polynomial.Basic
+public import Mathlib.NumberTheory.LSeries.Basic
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Mathlib.NumberTheory.Padics.RingHoms
+public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Basic
+public import Mathlib.LinearAlgebra.Matrix.Trace
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+public import Mathlib.NumberTheory.ModularForms.Basic
+public import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
+public import Mathlib.Analysis.InnerProductSpace.JointEigenspace
+public import Mathlib.Analysis.Analytic.Order
+public import Mathlib.GroupTheory.Torsion
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Structure.v1.Atlas.EllipticCurves.code.ModularForms.Part5
+
+@[expose] public section
+
 open scoped CongruenceSubgroup MatrixGroups ModularForm Topology Manifold
 
 

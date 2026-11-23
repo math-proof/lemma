@@ -20,6 +20,7 @@ variable (p : ℕ) [hp : Fact p.Prime]
 
 variable (R : Type u) [CommRing R]
 
+@[expose]
 def addFam (n : ℕ) : MvPowerSeries (Fin 2 × ℕ) R :=
   ↑(MvPolynomial.map (Int.castRingHom R) (WittVector.wittAdd p n))
 
@@ -57,10 +58,12 @@ end CartierModule
 
 namespace WittLaw
 
+@[expose]
 def blk (i : Fin 2) : ℕ → MvPowerSeries (Fin 2 × ℕ) R := fun m => MvPowerSeries.X (i, m)
 
 variable (p)
 
+@[expose]
 def pairFam (u : ℕ → MvPowerSeries ℕ R) : Fin 2 × ℕ → MvPowerSeries (Fin 2 × ℕ) R :=
   fun im => subst (blk im.1) (u im.2)
 

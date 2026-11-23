@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/UniformHypergraph.lean -/
+module
 
+public import Def.Combinatorics.SetFamily.UniformHypergraph
+public import Theorem.Finset.SetFamily.UniformHypergraph
 
-import Def.Combinatorics.SetFamily.UniformHypergraph
-import Theorem.Finset.SetFamily.UniformHypergraph
-
+public section
 
 example {V : Type*} (H : Finset (Finset V)) :
     SetFamily.IsUniform H 3 ↔ ∀ e ∈ H, e.card = 3 :=

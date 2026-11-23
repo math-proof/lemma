@@ -250,13 +250,31 @@ def Expectation.Macro.mkOuterAliases (xs : Array Syntax) : TermElabM (List (Name
       acc := acc ++ [(n, mkIdent aliasName)]
   return acc
 
-/-- Wrap `core` with `let a₀ := a; …` for each outer alias. -/
+/-- Whether `stx` mentions `n` as an identifier (ignoring macro scopes). -/
+partial def Expectation.Macro.containsUserName (n : Name) (stx : Syntax) : Bool :=
+  if stx.isIdent && stx.getId.eraseMacroScopes == n.eraseMacroScopes then
+    true
+  else
+    stx.getArgs.any (Expectation.Macro.containsUserName n)
+
+/-- Wrap `core` with `let a₀ := a; …` for each outer alias that `core` actually mentions.
+Unused aliases (the typical `let x₀ := x` around a body that never uses RA sugar)
+are omitted so proof goals do not show a hygienic unused `let`. -/
 def Expectation.Macro.wrapAliases (aliases : List (Name × Ident)) (core : Term) : MacroM Term := do
   let mut result := core
   for (n, a) in aliases.reverse do
-    let b := mkIdent n
-    result ← `(let $a := $b; $result)
+    if Expectation.Macro.containsUserName a.getId core then
+      let b := mkIdent n
+      result ← `(let $a := $b; $result)
   pure result
+
+/-- Binder for the unpacked nest: the unique source ident when there is a single
+variable, so `x[k]` pretty-prints as `x_k` rather than `integ_k`.
+A joint product still uses `joint` (`integ` / `rest`). -/
+def Expectation.Macro.nestBinder (xs : Array Syntax) (joint : Name) : Ident :=
+  match xs.toList with
+  | [x] => ⟨x⟩
+  | _ => mkIdent joint
 
 open Lean.Elab.Term in
 /-- Elaborate one `𝔼` form. `build` receives the unpacked body.
@@ -268,7 +286,7 @@ def Expectation.Macro.elabExpect (xs : Array Syntax) (body : Syntax)
   let body' ← Lean.Elab.liftMacroM <| Expectation.Macro.desugarProbRA aliases body
   let mask ← Expectation.Macro.rebindMask xs body'
   let asFun ← Expectation.Macro.funBinderMask xs
-  let nest := mkIdent `«integ»
+  let nest := Expectation.Macro.nestBinder xs `«integ»
   let unpacked ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest xs nest ⟨body'⟩ mask asFun
   let lam ← if mask.any id then
       `(fun $nest ↦ $unpacked)
@@ -558,8 +576,8 @@ elab_rules : term
       let funY ← Expectation.Macro.funBinderMask ys
       let integ ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint xs
       let free ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint ys
-      let nestX := mkIdent `«integ»
-      let nestY := mkIdent `«rest»
+      let nestX := Expectation.Macro.nestBinder xs `«integ»
+      let nestY := Expectation.Macro.nestBinder ys `«rest»
       let bodyY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest ys nestY ⟨body'⟩ maskY funY
       let bodyXY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest xs nestX bodyY maskX funX
       let lam ← if maskX.any id then
@@ -581,8 +599,8 @@ elab_rules : term
       let funY ← Expectation.Macro.funBinderMask ys
       let integ ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint xs
       let free ← Lean.Elab.liftMacroM <| Expectation.Macro.mkRestJoint ys
-      let nestX := mkIdent `«integ»
-      let nestY := mkIdent `«rest»
+      let nestX := Expectation.Macro.nestBinder xs `«integ»
+      let nestY := Expectation.Macro.nestBinder ys `«rest»
       let bodyY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest ys nestY ⟨body'⟩ maskY funY
       let bodyXY ← Lean.Elab.liftMacroM <| Expectation.Macro.unpackRest xs nestX bodyY maskX funX
       let lam ← if maskX.any id then

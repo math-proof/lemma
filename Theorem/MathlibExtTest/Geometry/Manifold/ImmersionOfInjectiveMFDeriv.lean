@@ -1,14 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Geometry/Manifold/ImmersionOfInjectiveMFDeriv.lean -/
+module
 
-
-import Mathlib.Analysis.LocallyConvex.HahnBanach
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
-import Theorem.Geometry.Manifold.ImmersionOfInjectiveMFDeriv
-import Theorem.Set.Manifold.ImmersionOfInjectiveMFDeriv
+public import Mathlib.Analysis.LocallyConvex.HahnBanach
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
+public import Theorem.Geometry.Manifold.ImmersionOfInjectiveMFDeriv
+public import Theorem.Set.Manifold.ImmersionOfInjectiveMFDeriv
 open scoped Topology ContDiff
 open Manifold
 open MathlibExt.Geometry.Manifold.ImmersionOfInjectiveMFDerivWanted
 
+public section
 
 noncomputable section
 

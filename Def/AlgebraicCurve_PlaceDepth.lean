@@ -1,7 +1,11 @@
-import Mathlib
-import Lemma.ResidueField.GluedPic0
-import Def.AlgebraicCurve_PlaceEvaluation
-import Lemma.Scheme.GluedPic0Functoriality
+module
+
+public import Mathlib
+public import Theorem.ResidueField.GluedPic0
+public import Def.AlgebraicCurve_PlaceEvaluation
+public import Theorem.Scheme.GluedPic0Functoriality
+
+@[expose] public section
 
 set_option autoImplicit false
 

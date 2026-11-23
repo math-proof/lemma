@@ -1,14 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PierceExpansion.lean -/
+module
 
-
-import Def.NumberTheory.PierceExpansion.Part2
-import Theorem.Nat.PierceExpansion
-import Mathlib.Tactic.IntervalCases
-
+public import Def.NumberTheory.PierceExpansion.Part2
+public import Theorem.Nat.PierceExpansion
+public import Mathlib.Tactic.IntervalCases
 
 /-!
 # Tests for Pierce expansion trajectories
 -/
+
+public section
 
 
 example : PierceExpansion.traj 7 3 0 = 3 := rfl

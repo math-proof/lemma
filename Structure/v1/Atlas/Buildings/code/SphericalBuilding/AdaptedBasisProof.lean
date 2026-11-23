@@ -13,7 +13,7 @@ module
 public import Def.v1.Atlas.Buildings.code.SphericalBuilding.BasisExtensionChain
 public import Def.v1.Atlas.Buildings.code.SphericalBuilding.AdaptedBasisSingle
 public import Theorem.Fin.EqLinesFrameOfBasis
-public import Lemma.Fin.All_Eq_Val.of.Eq.Eq_0.StrictMono
+public import Theorem.Fin.All_Eq_Val.of.Eq.Eq_0.StrictMono
 public import Def.v1.Atlas.Buildings.code.SphericalBuilding.BasisFromFlagProof
 public import Mathlib.LinearAlgebra.Basis.VectorSpace
 public import Mathlib.LinearAlgebra.Basis.Flag

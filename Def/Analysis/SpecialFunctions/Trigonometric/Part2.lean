@@ -1,7 +1,12 @@
-import Mathlib.Tactic
-import Mathlib.Analysis.Complex.Trigonometric
-import Instance.Analysis.Real.Numbers
-import Instance.Analysis.SpecialFunctions.Trigonometric
+module
+
+public import Mathlib.Tactic
+public import Mathlib.Analysis.Complex.Trigonometric
+public import Instance.Analysis.Real.Numbers
+public import Instance.Analysis.SpecialFunctions.Trigonometric
+
+@[expose] public section
+
 export Real (cos sin arccos arcsin tan cot)
 
 

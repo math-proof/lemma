@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Calculus/PowerGrowthBadSet.lean -/
+module
 
-
-import Def.Analysis.Calculus.PowerGrowthBadSet
-import Theorem.Real.Calculus.PowerGrowthBadSet
+public import Def.Analysis.Calculus.PowerGrowthBadSet
+public import Theorem.Real.Calculus.PowerGrowthBadSet
 open MeasureTheory Set
 open scoped ENNReal
 
+public section
 
 example (h : ℝ → ℝ) {p x₀ : ℝ} (hp : 1 < p)
     (hpos : ∀ x, x₀ ≤ x → 0 < h x)

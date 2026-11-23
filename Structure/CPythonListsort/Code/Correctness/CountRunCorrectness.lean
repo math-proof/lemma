@@ -8,7 +8,7 @@ public import Structure.CPythonListsort.Code.Correctness.ReverseSliceCorrectness
 public import Def.CPythonListsort.Code.Correctness.SortSliceRange
 public import Def.CPythonListsort.Code.Correctness.DescendingRunNormalization
 public import Def.CPythonListsort.Code.Correctness.DescendingRunInvariant.Part2
-public import Lemma.List.Atlas.CPythonListsort.Code.Correctness.ReverseRangeSupport
+public import Theorem.List.Atlas.CPythonListsort.Code.Correctness.ReverseRangeSupport
 public import Def.CPythonListsort.Code.Correctness.ScanRemainder.Part3
 public import Def.CPythonListsort.Code.Correctness.CountRunCorrectness
 /-!

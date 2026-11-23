@@ -13,7 +13,7 @@ import Mathlib.Analysis.Calculus.ContDiff.Defs
 import Mathlib.Analysis.SpecificLimits.Basic
 import Mathlib.Topology.Algebra.Order.LiminfLimsup
 import Instance.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM8.RepresentationFormulas
-import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM8.RepresentationFormulas
+import Theorem.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM8.RepresentationFormulas
 import Theorem.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM7.LaplaceProperties
 import Theorem.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM8.GreenExistence
 import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM7.LaplaceProperties.Part2

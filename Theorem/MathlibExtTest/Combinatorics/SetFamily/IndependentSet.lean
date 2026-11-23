@@ -1,10 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SetFamily/IndependentSet.lean -/
+module
 
-
-import Def.Combinatorics.SetFamily.IndependentSet
-import Lemma.Finset.SetFamily.IndependentSet
-import Mathlib.Tactic.FinCases
-import Mathlib.Data.Fintype.Card
+public import Def.Combinatorics.SetFamily.IndependentSet
+public import Theorem.Finset.SetFamily.IndependentSet
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Data.Fintype.Card
 open SetFamily
 
 /-!
@@ -13,6 +13,8 @@ open SetFamily
 Positive and negative examples for `SetFamily.IsIndependent` and
 `SetFamily.IsSteinerTripleSystem`, plus the persistence and projection API.
 -/
+
+public section
 
 
 /-- Positive example: neither edge is contained in `{0, 2}`. -/

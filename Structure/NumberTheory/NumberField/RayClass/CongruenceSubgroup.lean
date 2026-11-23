@@ -3,7 +3,7 @@
 module
 
 public import Def.NumberTheory.NumberField.RayClass.Group
-public import Lemma.Nat.NumberField.RayClass.Group
+public import Theorem.Nat.NumberField.RayClass.Group
 /-!
 # Congruence subgroups (N419 Definition 22.1)
 A congruence subgroup is a subgroup of the coprime ideals

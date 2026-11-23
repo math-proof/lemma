@@ -1,12 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Recurrences/SomerLucasInterfaces.lean -/
+module
 
+public import Def.NumberTheory.Recurrences.LucasSequenceFirstKind
+public import Theorem.Nat.Recurrences.LucasSequenceFirstKind
+public import Theorem.Nat.LucasSequence
+public import Def.NumberTheory.Recurrences.NondegenerateLucasPair
+public import Def.NumberTheory.LucasSequence
 
-import Def.NumberTheory.Recurrences.LucasSequenceFirstKind
-import Theorem.Nat.Recurrences.LucasSequenceFirstKind
-import Theorem.Nat.LucasSequence
-import Def.NumberTheory.Recurrences.NondegenerateLucasPair
-import Def.NumberTheory.LucasSequence
-
+public section
 
 namespace MetaMathlibExt
 

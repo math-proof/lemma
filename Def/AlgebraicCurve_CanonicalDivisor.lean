@@ -1,6 +1,10 @@
-import Mathlib
-import Class.ModularCurve_CanonicalDivisor
-import Class.AlgebraicCurve_CanonicalDivisor
+module
+
+public import Mathlib
+public import Class.ModularCurve_CanonicalDivisor
+public import Class.AlgebraicCurve_CanonicalDivisor
+
+@[expose] public section
 
 set_option autoImplicit false
 

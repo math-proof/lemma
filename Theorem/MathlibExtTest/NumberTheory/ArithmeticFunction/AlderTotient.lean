@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ArithmeticFunction/AlderTotient.lean -/
+module
 
-
-import Def.NumberTheory.ArithmeticFunction.AlderTotient
-import Theorem.Nat.ArithmeticFunction.AlderTotient
+public import Def.NumberTheory.ArithmeticFunction.AlderTotient
+public import Theorem.Nat.ArithmeticFunction.AlderTotient
 open ArithmeticFunction
 
+public section
 
 example (k : ℕ) :
     alderTotientTwo k =

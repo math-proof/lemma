@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.EllipticCurves.code.Lattice.Part2
-public import Lemma.Complex.Atlas.v1.EllipticCurves.code.Lattice
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Lattice
 public import Mathlib.Analysis.Complex.CauchyIntegral
 public import Mathlib.Analysis.Calculus.ContDiff.Deriv
 public import Mathlib.Analysis.Calculus.Deriv.Shift

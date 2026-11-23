@@ -4,18 +4,23 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Def.RingTheory.GradedAlgebra.MultigradedBetti.Part2
-import Theorem.RingTheory.GradedAlgebra.MultigradedBaseChangedDifferential
-import Theorem.Int.GradedAlgebra.MultigradedBaseChangedDifferential
-import Def.RingTheory.GradedAlgebra.MultigradedBaseChangedTermDecomposition
-import Theorem.Int.GradedAlgebra.MultigradedBaseChangedDegreePieceFinite
-import Mathlib.Algebra.Homology.HomologicalComplex
-import Mathlib.Algebra.Homology.ShortComplex.HomologicalComplex
-import Mathlib.Algebra.Homology.ShortComplex.Abelian
-import Mathlib.Algebra.Category.ModuleCat.Abelian
-import Mathlib.Algebra.Category.ModuleCat.EpiMono
-import Mathlib.RingTheory.Noetherian.Basic
-import Mathlib.RingTheory.Finiteness.Basic
+module
+
+public import Def.RingTheory.GradedAlgebra.MultigradedBetti.Part2
+public import Theorem.RingTheory.GradedAlgebra.MultigradedBaseChangedDifferential
+public import Theorem.Int.GradedAlgebra.MultigradedBaseChangedDifferential
+public import Def.RingTheory.GradedAlgebra.MultigradedBaseChangedTermDecomposition
+public import Theorem.Int.GradedAlgebra.MultigradedBaseChangedDegreePieceFinite
+public import Mathlib.Algebra.Homology.HomologicalComplex
+public import Mathlib.Algebra.Homology.ShortComplex.HomologicalComplex
+public import Mathlib.Algebra.Homology.ShortComplex.Abelian
+public import Mathlib.Algebra.Category.ModuleCat.Abelian
+public import Mathlib.Algebra.Category.ModuleCat.EpiMono
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Mathlib.RingTheory.Finiteness.Basic
+
+@[expose] public section
+
 /-!
 # Degree components of the base-changed multigraded resolution
 

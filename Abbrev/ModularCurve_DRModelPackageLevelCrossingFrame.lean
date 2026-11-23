@@ -1,13 +1,15 @@
-import Mathlib
-import Abbrev.ModularCurve_DRModelPackageCrossingFrame
-import Structure.ModularCurve_DRResolvedModelPackageLevel
-import Lemma.Scheme.DRModelPackageLevelAPI
+module
+
+public import Mathlib
+public import Abbrev.ModularCurve_DRModelPackageCrossingFrame
+public import Structure.ModularCurve_DRResolvedModelPackageLevel
+public import Theorem.Scheme.DRModelPackageLevelAPI
 
 set_option autoImplicit false
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry ModularCurve
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace ModularCurve
 

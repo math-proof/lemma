@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/BNomialNumberType3.lean -/
+module
 
+public import Def.NumberTheory.BNomialNumberType3.Part2
 
-import Def.NumberTheory.BNomialNumberType3.Part2
-
+public section
 
 namespace MetaMathlibExt
 

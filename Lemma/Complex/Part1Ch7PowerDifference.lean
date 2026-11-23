@@ -5,8 +5,6 @@ import Theorem.Analysis.SpecialFunctions.Part1Ch7PowerDifference
 open Ramanujan.Part1Ch7
 
 
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch7
-
 /--
 [Part1Ch7PowerDifference](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch7PowerDifference.lean)
 -/
@@ -17,9 +15,6 @@ private lemma chapter7Admissible_zero_eq :
 -- proof
   chapter7Admissible_zero
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch7
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch7
 
 /--
 [Part1Ch7PowerDifference](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch7PowerDifference.lean)
@@ -34,9 +29,6 @@ private lemma chapter7PowerDifferenceTerm_zero_left_eq
 -- proof
   chapter7PowerDifferenceTerm_zero_left x j
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch7
-
-namespace MathlibExt.Analysis.Ramanujan.Part1Ch7
 
 /--
 [Part1Ch7PowerDifference](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch7PowerDifference.lean)
@@ -51,8 +43,6 @@ private lemma chapter7PowerDifferenceTerm_zero_right_eq
 -- proof
   chapter7PowerDifferenceTerm_zero_right r j
 
-end MathlibExt.Analysis.Ramanujan.Part1Ch7
-
 
 -- created on 2026-10-10
--- updated on 2026-10-26
+-- updated on 2026-11-22

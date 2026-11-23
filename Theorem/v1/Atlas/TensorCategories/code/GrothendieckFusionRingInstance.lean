@@ -7,13 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
-import Lemma.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
-import Lemma.Category.Atlas.v1.TensorCategories.code.GrothendieckRingCategorical
-import Def.v1.Atlas.TensorCategories.code.GrothendieckRingCategorical.Part4
-import Def.v1.Atlas.TensorCategories.code.GrothendieckFusionRingInstance
+public import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
+public import Theorem.Category.Atlas.v1.TensorCategories.code.GrothendieckRingCategorical
+public import Def.v1.Atlas.TensorCategories.code.GrothendieckRingCategorical.Part4
+public import Def.v1.Atlas.TensorCategories.code.GrothendieckFusionRingInstance
 open CategoryTheory MonoidalCategory Finset
+
+public section
 
 universe v u
 

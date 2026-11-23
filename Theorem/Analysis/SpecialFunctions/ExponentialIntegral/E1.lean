@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExponentialIntegral/E1.lean -/
+module
 
-import Def.Analysis.SpecialFunctions.EntireExponentialIntegral
-import Theorem.Complex.EntireExponentialIntegral
-import Mathlib.Analysis.SpecialFunctions.Complex.Log
-import Mathlib.NumberTheory.Harmonic.EulerMascheroni
-import Def.Analysis.SpecialFunctions.ExponentialIntegral.E1
+public import Def.Analysis.SpecialFunctions.EntireExponentialIntegral
+public import Theorem.Complex.EntireExponentialIntegral
+public import Mathlib.Analysis.SpecialFunctions.Complex.Log
+public import Mathlib.NumberTheory.Harmonic.EulerMascheroni
+public import Def.Analysis.SpecialFunctions.ExponentialIntegral.E1
+
 /-!
 # Principal exponential-integral definitions
 
@@ -18,6 +20,8 @@ standard-named definitions below take an explicit `z ≠ 0` proof argument. The
 arguments and the zero-value regressions can be stated, and must not be used
 as the classical `E1` at the singular point.
 -/
+
+public section
 
 
 namespace Complex

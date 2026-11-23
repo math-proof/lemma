@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/FractionalIdeal/Dual.lean -/
+module
 
-
-import Def.RingTheory.FractionalIdeal.Dual.Part2
-import Lemma.Int.FractionalIdeal.Dual
+public import Def.RingTheory.FractionalIdeal.Dual.Part2
+public import Theorem.Int.FractionalIdeal.Dual
 open scoped nonZeroDivisors
 
+public section
 
 noncomputable section
 

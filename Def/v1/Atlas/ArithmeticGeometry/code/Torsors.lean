@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.AddTorsor.Defs
-import Instance.v1.Atlas.ArithmeticGeometry.code.Torsors
+module
 
+public import Mathlib.Algebra.AddTorsor.Defs
+public import Instance.v1.Atlas.ArithmeticGeometry.code.Torsors
+
+@[expose] public section
 
 /-- Choosing a base point $t_0 \in T$ of a $G$-torsor $T$ yields an equivalence $G \simeq T$
 sending $g \mapsto g +_v t_0$. -/

@@ -2,9 +2,15 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.LinearAlgebra.Matrix.Determinant.PermFinset
-import Instance.LinearAlgebra.Matrix.Determinant.CauchyBinet
+
+module
+
+public import Mathlib
+public import Def.LinearAlgebra.Matrix.Determinant.PermFinset
+public import Instance.LinearAlgebra.Matrix.Determinant.CauchyBinet
+
+@[expose] public section
+
 set_option backward.isDefEq.respectTransparency false
 open scoped Matrix BigOperators
 open Finset Matrix

@@ -1,14 +1,17 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Ramanujan/Part1Ch5Entry3.lean -/
+module
 
+public import Def.Analysis.Ramanujan.Part1Ch5Entry3
+public import Theorem.Real.Ramanujan.Part1Ch5Entry3
 
-import Def.Analysis.Ramanujan.Part1Ch5Entry3
-import Lemma.Real.Ramanujan.Part1Ch5Entry3
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 5, Entry 3 API checks
 
 The coefficients (built on Entry 4's Eulerian data), the shift, and direct uses of the exported
 inversion theorem.
 -/
+
+public section
 
 
 namespace MathlibExtTest.Analysis.Ramanujan.Part1Ch5Entry3

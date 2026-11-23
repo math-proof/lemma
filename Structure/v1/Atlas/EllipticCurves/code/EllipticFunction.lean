@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.EllipticCurves.code.Lattice.Part2
-public import Lemma.Complex.Atlas.v1.EllipticCurves.code.Lattice
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Lattice
 public import Theorem.Complex.Atlas.v1.EllipticCurves.code.ComplexAnalysis
 public import Def.v1.Atlas.EllipticCurves.code.ComplexAnalysis.Part3
 public import Mathlib.Analysis.Meromorphic.Basic

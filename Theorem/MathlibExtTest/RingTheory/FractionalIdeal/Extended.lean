@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/FractionalIdeal/Extended.lean -/
+module
 
+public import Theorem.Int.FractionalIdeal.Extended
+public import Mathlib.Tactic.NormNum
 
-import Theorem.Int.FractionalIdeal.Extended
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MathlibExtTest
 

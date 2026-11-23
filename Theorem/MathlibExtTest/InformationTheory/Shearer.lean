@@ -1,14 +1,17 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/InformationTheory/Shearer.lean -/
+module
 
+public import Def.InformationTheory.Shearer
+public import Theorem.Real.Shearer
 
-import Def.InformationTheory.Shearer
-import Theorem.Real.Shearer
 /-!
 # Shearer's entropy inequality API checks
 
 Entropy of a point mass, the empty and full marginals, monotonicity, submodularity, and
 two-coordinate subadditivity as a case of the inequality.
 -/
+
+public section
 
 
 namespace MathlibExtTest.InformationTheory.Shearer

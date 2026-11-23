@@ -1,9 +1,11 @@
 module
 
-public import Lemma.MvPolynomial.HeckeModule
+public import Def.ModularCurve_HeckeModule
+public import Theorem.MvPolynomial.HeckeModule
 public import Def.AlgebraicCurve_Differentials
 public import Def.ModularCurve_QExpansionDiff
-public import Lemma.WeierstrassCurve.JZeroTateModule
+public import Def.ModularCurve_JZeroTateModule
+public import Theorem.WeierstrassCurve.JZeroTateModule
 
 set_option autoImplicit false
 

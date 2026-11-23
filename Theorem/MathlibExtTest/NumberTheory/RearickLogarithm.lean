@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/RearickLogarithm.lean -/
+module
 
+public import Def.NumberTheory.RearickLogarithm
+public import Theorem.Nat.RearickLogarithm
 
-import Def.NumberTheory.RearickLogarithm
-import Theorem.Nat.RearickLogarithm
-
+public section
 
 namespace MetaMathlibExt
 

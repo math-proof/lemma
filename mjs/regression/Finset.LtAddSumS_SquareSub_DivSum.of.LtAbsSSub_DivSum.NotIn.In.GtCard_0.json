@@ -1,45 +1,149 @@
 {
   "lean": "|a[y'] - (∑ x ∈ X, a[x]) / (X.card : ℝ)| < |a[y'] - (∑ y ∈ Y, a[y]) / (Y.card : ℝ)|",
   "regex": [
-    "Lt(Abs(Sub(Get__)(Div(Sum_(Get__))(Card_))))(Abs(Sub(Get__)(Div(Sum_(Get__))(Card_))))",
-    "LtAbsS(Sub(Get__)(Div(Sum_(Get__))(Card_)))"
+    "LtAbsS(Sub(Get__)(Div(Sum_(Get__))(Card_)))",
+    "Lt(Abs(Sub(Get__)(Div(Sum_(Get__))(Card_))))(Abs(Sub(Get__)(Div(Sum_(Get__))(Card_))))"
   ],
   "suggestion": [
-    "Lt_AbsSubGet__DivSum__Card",
-    "LtAbsSSubGet__DivSum__Card"
+    "LtAbsSSubGet__DivSum__Card",
+    "Lt_AbsSubGet__DivSum__Card"
   ],
   "dag": [
     [
-      {"token":"Lt"},
-      {"token":"Abs"},
-      {"token":"Sub"},
-      {"token":"Get"},
-      {"token":"_"},
-      {"group":[3,4,4]},
-      {"token":"Div"},
-      {"token":"Sum"},
-      {"group":[7,4,5]},
-      {"token":"Card"},
-      {"group":[9,4]},
-      {"group":[6,8,10]},
-      {"group":[2,5,11]},
-      {"group":[1,12]},
-      {"sequence":[0,13,13]}
+      {
+        "token": "LtAbsS"
+      },
+      {
+        "token": "Sub"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "group": [
+          2,
+          3,
+          3
+        ]
+      },
+      {
+        "token": "Div"
+      },
+      {
+        "token": "Sum"
+      },
+      {
+        "group": [
+          6,
+          3,
+          4
+        ]
+      },
+      {
+        "token": "Card"
+      },
+      {
+        "group": [
+          8,
+          3
+        ]
+      },
+      {
+        "group": [
+          5,
+          7,
+          9
+        ]
+      },
+      {
+        "group": [
+          1,
+          4,
+          10
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          11
+        ]
+      }
     ],
     [
-      {"token":"LtAbsS"},
-      {"token":"Sub"},
-      {"token":"Get"},
-      {"token":"_"},
-      {"group":[2,3,3]},
-      {"token":"Div"},
-      {"token":"Sum"},
-      {"group":[6,3,4]},
-      {"token":"Card"},
-      {"group":[8,3]},
-      {"group":[5,7,9]},
-      {"group":[1,4,10]},
-      {"sequence":[0,11]}
+      {
+        "token": "Lt"
+      },
+      {
+        "token": "Abs"
+      },
+      {
+        "token": "Sub"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "group": [
+          3,
+          4,
+          4
+        ]
+      },
+      {
+        "token": "Div"
+      },
+      {
+        "token": "Sum"
+      },
+      {
+        "group": [
+          7,
+          4,
+          5
+        ]
+      },
+      {
+        "token": "Card"
+      },
+      {
+        "group": [
+          9,
+          4
+        ]
+      },
+      {
+        "group": [
+          6,
+          8,
+          10
+        ]
+      },
+      {
+        "group": [
+          2,
+          5,
+          11
+        ]
+      },
+      {
+        "group": [
+          1,
+          12
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          13,
+          13
+        ]
+      }
     ]
   ],
   "json": {
@@ -50,26 +154,31 @@
             "Sub": [
               {
                 "Get": [
-                  "_",
-                  "_"
+                  "$1",
+                  "$2"
                 ]
               },
               {
                 "Div": [
                   {
                     "Sum": [
-                      "_",
+                      {
+                        "In": [
+                          "?0",
+                          "$3"
+                        ]
+                      },
                       {
                         "Get": [
-                          "_",
-                          "_"
+                          "$1",
+                          "?0"
                         ]
                       }
                     ]
                   },
                   {
                     "Card": [
-                      "_"
+                      "$3"
                     ]
                   }
                 ]
@@ -84,26 +193,31 @@
             "Sub": [
               {
                 "Get": [
-                  "_",
-                  "_"
+                  "$1",
+                  "$2"
                 ]
               },
               {
                 "Div": [
                   {
                     "Sum": [
-                      "_",
+                      {
+                        "In": [
+                          "?0",
+                          "$4"
+                        ]
+                      },
                       {
                         "Get": [
-                          "_",
-                          "_"
+                          "$1",
+                          "?0"
                         ]
                       }
                     ]
                   },
                   {
                     "Card": [
-                      "_"
+                      "$4"
                     ]
                   }
                 ]
@@ -113,5 +227,6 @@
         ]
       }
     ]
-  }
+  },
+  "fingerprint": "Lt(Abs(Sub(Get($1)($2))(Div(Sum(In(?0)($3))(Get($1)(?0)))(Card($3)))))(Abs(Sub(Get($1)($2))(Div(Sum(In(?0)($4))(Get($1)(?0)))(Card($4)))))"
 }

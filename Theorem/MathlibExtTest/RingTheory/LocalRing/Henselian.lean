@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/LocalRing/Henselian.lean -/
+module
 
-
-import Theorem.Int.LocalRing.Henselian
+public import Theorem.Int.LocalRing.Henselian
 open IsLocalRing Polynomial
+
+public section
 
 variable (R : Type*) [CommRing R] [IsLocalRing R]
   [IsAdicComplete (maximalIdeal R) R]

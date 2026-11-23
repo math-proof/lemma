@@ -1,6 +1,9 @@
-import Mathlib.Analysis.Complex.Trigonometric
-import Instance.Analysis.Real.Numbers
+module
 
+public import Mathlib.Analysis.Complex.Trigonometric
+public import Instance.Analysis.Real.Numbers
+
+@[expose] public section
 
 namespace Real
 

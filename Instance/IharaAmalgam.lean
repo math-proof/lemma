@@ -1,6 +1,7 @@
 -- Carved from Lemma/Definitions/Def_IharaAmalgam.lean: instance decls only.
 import Mathlib.GroupTheory.PushoutI
-import Lemma.Matrix.IharaAmalgam
+import Theorem.Matrix.IharaAmalgam
+import Def.Matrix_IharaAmalgam
 
 namespace Ihara
 

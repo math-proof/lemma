@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/CongruenceSubgroup.lean -/
 
 import Def.NumberTheory.NumberField.RayClass.Group
-import Lemma.Nat.NumberField.RayClass.Group
+import Theorem.Nat.NumberField.RayClass.Group
 import Structure.NumberTheory.NumberField.RayClass.CongruenceSubgroup
 /-!
 # Congruence subgroups (N419 Definition 22.1)

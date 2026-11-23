@@ -7,9 +7,10 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Theorem.v1.Atlas.Probability.code.StoppedSumSqUI
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
+public import Theorem.v1.Atlas.Probability.code.StoppedSumSqUI
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
 open MeasureTheory ProbabilityTheory MeasureTheory.Measure Finset ENNReal Filter Topology
 
-
+public section

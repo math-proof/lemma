@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzFormula
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzFormula
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzFormula
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
 import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves.Part2
 import Structure.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzDegree
 

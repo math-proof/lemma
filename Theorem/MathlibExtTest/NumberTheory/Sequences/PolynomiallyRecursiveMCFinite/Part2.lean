@@ -3,7 +3,7 @@
 
 import Mathlib.Tactic
 import Def.NumberTheory.Sequences.PolynomiallyRecursiveMCFinite
-import Lemma.Nat.Sequences.PolynomiallyRecursiveMCFinite
+import Theorem.Nat.Sequences.PolynomiallyRecursiveMCFinite
 import Def.MathlibExtTest.NumberTheory.Sequences.PolynomiallyRecursiveMCFinite
 
 

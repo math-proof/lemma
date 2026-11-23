@@ -1,14 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/AlgebraicGeometry/Curve/Evaluation.lean -/
+module
 
-
-import Def.AlgebraicGeometry.Curve.Evaluation
-import Theorem.Finsupp.Eval.eq.Prod_Pow
-import Theorem.Finsupp.Eval0.eq.One
-import Theorem.Finsupp.Eval_Single.eq.Pow
-import Theorem.Finsupp.EvalAdd.eq.MulEvalS
-import Theorem.Finsupp.Eval.eq.PowEval
+public import Def.AlgebraicGeometry.Curve.Evaluation
+public import Theorem.Finsupp.Eval.eq.Prod_Pow
+public import Theorem.Finsupp.Eval0.eq.One
+public import Theorem.Finsupp.Eval_Single.eq.Pow
+public import Theorem.Finsupp.EvalAdd.eq.MulEvalS
+public import Theorem.Finsupp.Eval.eq.PowEval
 open Finsupp
 
+public section
 
 namespace CurveDivisor
 

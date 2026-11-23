@@ -1,6 +1,6 @@
 import Mathlib
-import Lemma.WeierstrassCurve.FreyPackage
-import Lemma.MvPolynomial.HeckeModule
+import Theorem.WeierstrassCurve.FreyPackage
+import Theorem.MvPolynomial.HeckeModule
 import Abbrev.ModularCurve_AttachmentConcrete
 import Def.ModularCurve_HeckeInputsAll
 

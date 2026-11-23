@@ -11,8 +11,8 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochCurves
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
 public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves.Part2
 set_option maxHeartbeats 1600000
 

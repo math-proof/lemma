@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology.Part2
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.DedekindCurve
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DedekindCurve
 import Def.v1.Atlas.AlgebraicGeometryI.code.DedekindCurve
 import Mathlib.LinearAlgebra.Dual.Lemmas
 

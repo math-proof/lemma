@@ -8,18 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Complex.Harmonic.Poisson
-import Mathlib.Analysis.Complex.Poisson
-import Mathlib.Analysis.InnerProductSpace.Harmonic.Basic
-import Mathlib.Analysis.InnerProductSpace.Harmonic.Constructions
-import Mathlib.Analysis.Complex.Harmonic.Analytic
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.LinearAlgebra.Complex.FiniteDimensional
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
-import Mathlib.Analysis.Calculus.ParametricIntervalIntegral
-import Mathlib.Analysis.SpecialFunctions.Integrals.PosLogEqCircleAverage
-import Def.v1.Atlas.ComplexVariables.code.Lecture13.Part2
-import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture13
+module
+
+public import Mathlib.Analysis.Complex.Harmonic.Poisson
+public import Mathlib.Analysis.Complex.Poisson
+public import Mathlib.Analysis.InnerProductSpace.Harmonic.Basic
+public import Mathlib.Analysis.InnerProductSpace.Harmonic.Constructions
+public import Mathlib.Analysis.Complex.Harmonic.Analytic
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.LinearAlgebra.Complex.FiniteDimensional
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
+public import Mathlib.Analysis.Calculus.ParametricIntervalIntegral
+public import Mathlib.Analysis.SpecialFunctions.Integrals.PosLogEqCircleAverage
+public import Def.v1.Atlas.ComplexVariables.code.Lecture13.Part2
+public import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture13
+@[expose] public section
+
 open Complex InnerProductSpace Laplacian Metric Real Set Topology Filter MeasureTheory
 
 

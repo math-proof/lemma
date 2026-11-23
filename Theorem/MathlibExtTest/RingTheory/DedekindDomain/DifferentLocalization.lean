@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/DedekindDomain/DifferentLocalization.lean -/
+module
 
-
-import Instance.RingTheory.DedekindDomain.DifferentLocalization
-import Lemma.Int.DedekindDomain.DifferentLocalization
-import Notation.MathlibExtTest.RingTheory.DedekindDomain.DifferentLocalization
+public import Instance.RingTheory.DedekindDomain.DifferentLocalization
+public import Theorem.Int.DedekindDomain.DifferentLocalization
+public import Notation.MathlibExtTest.RingTheory.DedekindDomain.DifferentLocalization
 set_option autoImplicit false
+
+public section
 
 universe u
 

@@ -4,15 +4,13 @@ import Theorem.Analysis.Complex.Wiman.CorrectedEstimateAbsorption
 
 open Complex.Wiman.CorrectedEstimateAbsorption
 open Asymptotics Filter
+open Complex
 
-
-namespace Complex
 
 /--
 [eventually_absorb_corrected_wiman_exponent](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CorrectedEstimateAbsorption.lean)
 -/
-@[path]
-lemma eventually_absorb_corrected_wiman_exponent
+private lemma eventually_absorb_corrected_wiman_exponent
 -- given
   (C : ℝ)
   (hC : 0 < C) :
@@ -123,8 +121,7 @@ lemma eventually_absorb_corrected_wiman_exponent
     _ ≤ μ * Real.log μ ^ β := mul_le_mul_of_nonneg_left hcoefficient hμpos.le
     _ = μ * Real.log μ ^ (2 / 3 : ℝ) := by rw [show β = (2 / 3 : ℝ) by norm_num [β]]
 
-end Complex
 
 
 -- created on 2026-10-10
--- updated on 2026-10-26
+-- updated on 2026-11-22

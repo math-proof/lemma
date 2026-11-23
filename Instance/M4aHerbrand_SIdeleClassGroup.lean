@@ -1,8 +1,12 @@
 -- Carved from Lemma/Definitions/Def_M4aHerbrand_SIdeleClassGroup.lean: instance decls only.
-import Mathlib
-import Def.M4aHerbrand_IdeleClassVocab
-import Theorem.Set.FiniteUnitIdelesOutside
-import Lemma.Set.SIdeleClassGroup
+module
+
+public import Mathlib
+public import Def.M4aHerbrand_IdeleClassVocab
+public import Theorem.Set.FiniteUnitIdelesOutside
+public import Theorem.Set.SIdeleClassGroup
+public import Def.NumberField_SIdeleClassGroup
+@[expose] public section
 
 set_option autoImplicit false
 

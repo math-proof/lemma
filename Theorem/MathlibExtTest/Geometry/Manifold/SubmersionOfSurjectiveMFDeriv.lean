@@ -1,13 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Geometry/Manifold/SubmersionOfSurjectiveMFDeriv.lean -/
+module
 
-
-import Mathlib.Analysis.Calculus.FDeriv.Pow
-import Mathlib.Geometry.Manifold.MFDeriv.NormedSpace
-import Def.Geometry.Manifold.SubmersionOfSurjectiveMFDeriv
-import Theorem.Set.Manifold.SubmersionOfSurjectiveMFDeriv
+public import Mathlib.Analysis.Calculus.FDeriv.Pow
+public import Mathlib.Geometry.Manifold.MFDeriv.NormedSpace
+public import Def.Geometry.Manifold.SubmersionOfSurjectiveMFDeriv
+public import Theorem.Set.Manifold.SubmersionOfSurjectiveMFDeriv
 open scoped ContDiff Manifold Topology
 open MathlibExt.Geometry.Manifold.SubmersionOfSurjectiveMFDerivWanted
 
+public section
 
 namespace MathlibExtTest.Geometry.Manifold.SubmersionOfSurjectiveMFDeriv
 

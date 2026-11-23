@@ -8,12 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.DifferentialAnalysis.code.ContinuousFunctions.Part2
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ContinuousFunctions
-import Mathlib.Topology.ContinuousMap.ZeroAtInfty
-import Mathlib.Analysis.Normed.Operator.ContinuousLinearMap
-import Mathlib.Order.ConditionallyCompleteLattice.Basic
-import Mathlib.Algebra.Order.Group.Pointwise.CompleteLattice
+module
+
+public import Def.v1.Atlas.DifferentialAnalysis.code.ContinuousFunctions.Part2
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ContinuousFunctions
+public import Mathlib.Topology.ContinuousMap.ZeroAtInfty
+public import Mathlib.Analysis.Normed.Operator.ContinuousLinearMap
+public import Mathlib.Order.ConditionallyCompleteLattice.Basic
+public import Mathlib.Algebra.Order.Group.Pointwise.CompleteLattice
+
+@[expose] public section
 
 
 /-- The space `C₀(X, ℝ)` of continuous real-valued functions on `X` vanishing at infinity. -/

@@ -12,8 +12,8 @@ module
 
 public import Mathlib.Computability.DFA
 public import Def.v1.Atlas.TheoryOfComputation.code.Complexity.Part2
-public import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
-public import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity
 public import Def.v1.Atlas.TheoryOfComputation.code.SpaceComplexity.Part7
 public import Def.v1.Atlas.TheoryOfComputation.code.HierarchyTheorems
 

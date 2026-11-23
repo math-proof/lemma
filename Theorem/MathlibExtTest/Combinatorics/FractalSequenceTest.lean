@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/FractalSequenceTest.lean -/
+module
 
+public import Structure.Combinatorics.FractalSequence
+public import Theorem.Finset.FractalSequence
+public import Mathlib.Tactic
 
-import Structure.Combinatorics.FractalSequence
-import Theorem.Finset.FractalSequence
-import Mathlib.Tactic
-
+public section
 
 namespace MetaMathlibExt
 

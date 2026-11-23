@@ -1,5 +1,8 @@
 -- Carved from Lemma/Definitions/Def_DrinfeldCurve_MapConstants.lean: instance decls only.
-import Lemma.MvPolynomial.MapConstants
+module
+
+public import Theorem.MvPolynomial.MapConstants
+@[expose] public section
 
 set_option autoImplicit false
 

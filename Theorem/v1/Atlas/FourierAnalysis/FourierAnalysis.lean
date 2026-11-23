@@ -7,24 +7,25 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.FourierAnalysis.code.BrownianMotion.Part6
-import Theorem.Measure.Atlas.v1.FourierAnalysis.code.BrownianMotion
-import Theorem.Measure.Atlas.v1.FourierAnalysis.code.CentralLimitTheorem
-import Theorem.Measure.Atlas.v1.FourierAnalysis.code.FiniteMeasures
-import Theorem.Measure.Atlas.v1.FourierAnalysis.code.FourierIntegrals
-import Theorem.Complex.Atlas.v1.FourierAnalysis.code.FourierOrthonormalBasis
-import Theorem.Complex.Atlas.v1.FourierAnalysis.code.FourierSeries
-import Theorem.Complex.Atlas.v1.FourierAnalysis.code.OrthonormalBases
-import Theorem.Measure.Atlas.v1.FourierAnalysis.code.TruncatedFourierInversion
-import Def.v1.Atlas.FourierAnalysis.code.CentralLimitTheorem
-import Def.v1.Atlas.FourierAnalysis.code.FiniteMeasures.Part2
-import Def.v1.Atlas.FourierAnalysis.code.FourierIntegrals
-import Theorem.v1.Atlas.FourierAnalysis.code.FourierOrthonormalBasis
-import Instance.v1.Atlas.FourierAnalysis.code.FourierSeries
-import Theorem.Real.Atlas.v1.FourierAnalysis.code.GaussianFourthMoment
-import Theorem.Measure.Atlas.v1.FourierAnalysis.code.LpCompleteness
-import Class.v1.Atlas.FourierAnalysis.code.OrthonormalBases
-import Theorem.v1.Atlas.FourierAnalysis.code.TruncatedFourierInversion
+public import Def.v1.Atlas.FourierAnalysis.code.BrownianMotion.Part6
+public import Theorem.Measure.Atlas.v1.FourierAnalysis.code.BrownianMotion
+public import Theorem.Measure.Atlas.v1.FourierAnalysis.code.CentralLimitTheorem
+public import Theorem.Measure.Atlas.v1.FourierAnalysis.code.FiniteMeasures
+public import Theorem.Measure.Atlas.v1.FourierAnalysis.code.FourierIntegrals
+public import Theorem.Complex.Atlas.v1.FourierAnalysis.code.FourierOrthonormalBasis
+public import Theorem.Complex.Atlas.v1.FourierAnalysis.code.FourierSeries
+public import Theorem.Complex.Atlas.v1.FourierAnalysis.code.OrthonormalBases
+public import Theorem.Measure.Atlas.v1.FourierAnalysis.code.TruncatedFourierInversion
+public import Def.v1.Atlas.FourierAnalysis.code.CentralLimitTheorem
+public import Def.v1.Atlas.FourierAnalysis.code.FiniteMeasures.Part2
+public import Def.v1.Atlas.FourierAnalysis.code.FourierIntegrals
+public import Theorem.v1.Atlas.FourierAnalysis.code.FourierOrthonormalBasis
+public import Instance.v1.Atlas.FourierAnalysis.code.FourierSeries
+public import Theorem.Real.Atlas.v1.FourierAnalysis.code.GaussianFourthMoment
+public import Theorem.Measure.Atlas.v1.FourierAnalysis.code.LpCompleteness
+public import Class.v1.Atlas.FourierAnalysis.code.OrthonormalBases
+public import Theorem.v1.Atlas.FourierAnalysis.code.TruncatedFourierInversion
 
-
+public section

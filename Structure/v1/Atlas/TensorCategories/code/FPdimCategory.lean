@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
-public import Lemma.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
 public section
 
 set_option maxHeartbeats 800000

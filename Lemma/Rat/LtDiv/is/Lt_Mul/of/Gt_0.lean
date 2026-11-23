@@ -1,7 +1,7 @@
 import Lemma.Rat.EqMul_Div.of.Ne_0
-import Lemma.Nat.LtMulS.of.Gt_0.Lt
+import Theorem.Nat.LtMulS.of.Gt_0.Lt
 import Lemma.Rat.LtDivS.of.Lt.Gt_0
-import Lemma.Nat.EqDivMul.of.Ne_0
+import Theorem.Nat.EqDivMul.of.Ne_0
 import Lemma.Nat.Ne.of.Gt
 open Nat Rat
 
@@ -40,3 +40,4 @@ private lemma main
 
 
 -- created on 2025-07-06
+-- updated on 2026-11-22

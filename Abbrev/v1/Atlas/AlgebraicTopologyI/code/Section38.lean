@@ -10,8 +10,8 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section17.Part6
 import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section17
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section34
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section34
 import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section37
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section26.Part8
 import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section34.Part3

@@ -1,7 +1,11 @@
-import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
-import Mathlib.GroupTheory.Transfer
-import Mathlib.GroupTheory.FreeGroup.NielsenSchreier
-import Lemma.UpperHalfPlane.PeriodMap
+module
+
+public import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
+public import Mathlib.GroupTheory.Transfer
+public import Mathlib.GroupTheory.FreeGroup.NielsenSchreier
+public import Theorem.UpperHalfPlane.PeriodMap
+
+@[expose] public section
 
 set_option autoImplicit false
 

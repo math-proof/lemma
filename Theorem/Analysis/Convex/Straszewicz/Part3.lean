@@ -2,23 +2,25 @@
 -- Provenance: Adam Kiezun authored the original formalization
 -- (commit 8a13ba393c1d23f85b900081c600941a4bdd56dc); @toskua, Avocado
 -- authored only the Convexity.StdSimplex representation migration.
+module
 
-import Mathlib.Analysis.Convex.Caratheodory
-import Mathlib.Analysis.Convex.Exposed
-import Mathlib.Analysis.Convex.Segment
-import Mathlib.Analysis.Convex.Slope
-import Mathlib.Analysis.Convex.Topology
-import Mathlib.Analysis.LocallyConvex.Separation
-import Mathlib.Analysis.Normed.Module.FiniteDimension
-import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.LinearAlgebra.Dual.Lemmas
-import Mathlib.Topology.Algebra.Module.FiniteDimension
-import Mathlib.Topology.Baire.Lemmas
-import Mathlib.Topology.Baire.CompleteMetrizable
-import Mathlib.Tactic.Module
-import Mathlib.Topology.Bases
-import Def.Analysis.Convex.Straszewicz.Part3
+public import Mathlib.Analysis.Convex.Caratheodory
+public import Mathlib.Analysis.Convex.Exposed
+public import Mathlib.Analysis.Convex.Segment
+public import Mathlib.Analysis.Convex.Slope
+public import Mathlib.Analysis.Convex.Topology
+public import Mathlib.Analysis.LocallyConvex.Separation
+public import Mathlib.Analysis.Normed.Module.FiniteDimension
+public import Mathlib.LinearAlgebra.AffineSpace.FiniteDimensional
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.LinearAlgebra.Dual.Lemmas
+public import Mathlib.Topology.Algebra.Module.FiniteDimension
+public import Mathlib.Topology.Baire.Lemmas
+public import Mathlib.Topology.Baire.CompleteMetrizable
+public import Mathlib.Tactic.Module
+public import Mathlib.Topology.Bases
+public import Def.Analysis.Convex.Straszewicz.Part3
+
 /-!
 # Straszewicz's theorem on exposed points
 
@@ -29,6 +31,8 @@ Primary source: S. Straszewicz, "Über exponierte Punkte abgeschlossener
 Punktmengen", Fundamenta Mathematicae 24 (1935), 139–143,
 DOI 10.4064/FM-24-1-139-143.
 -/
+
+public section
 
 
 namespace Convex.Straszewicz

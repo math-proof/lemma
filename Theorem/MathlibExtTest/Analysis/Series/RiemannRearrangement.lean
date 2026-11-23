@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Series/RiemannRearrangement.lean -/
+module
 
+public import Theorem.Topology.Algebra.InfiniteSum.RiemannRearrangement.Part3
 
-import Theorem.Topology.Algebra.InfiniteSum.RiemannRearrangement.Part3
-
+public section
 
 namespace MathlibExtTest.Analysis.Series.RiemannRearrangement
 

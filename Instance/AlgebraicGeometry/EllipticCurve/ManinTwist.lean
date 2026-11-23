@@ -7,8 +7,8 @@ Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 import Def.AlgebraicGeometry.EllipticCurve.ManinSequence
 import Theorem.Int.EllipticCurve.ManinSequence
 import Theorem.Polynomial.PrimitiveTripleManinProjectiveDegreeEllipticCurve.of.All_False.Ne_0
-import Lemma.Scheme.EllipticCurve.VariableChangePoint
-import Lemma.Nat.FrobeniusTrace.eq.SubAddCardF1CardPoint.of.AffineF
+import Theorem.Scheme.EllipticCurve.VariableChangePoint
+import Theorem.Nat.FrobeniusTrace.eq.SubAddCardF1CardPoint.of.AffineF
 import Def.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree
 import Def.AlgebraicGeometry.EllipticCurve.VariableChangePoint.Part3
 import Mathlib.AlgebraicGeometry.EllipticCurve.NormalForms

@@ -4,18 +4,23 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
 
-import Def.Algebra.Polynomial.RealRooted.Part2
-import Theorem.Polynomial.RealRooted
-import Theorem.MvPolynomial.PDeriv
-import Def.Algebra.MvPolynomial.PDeriv
-import Mathlib.Algebra.MvPolynomial.CommRing
-import Mathlib.Analysis.Polynomial.CauchyBound
-import Mathlib.Analysis.Polynomial.MahlerMeasure
-import Mathlib.Algebra.Polynomial.Reverse
-import Mathlib.Algebra.Polynomial.Taylor
-import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
-import Mathlib.Data.List.OfFn
-import Mathlib.Topology.MetricSpace.Sequences
+module
+
+public import Def.Algebra.Polynomial.RealRooted.Part2
+public import Theorem.Polynomial.RealRooted
+public import Theorem.MvPolynomial.PDeriv
+public import Def.Algebra.MvPolynomial.PDeriv
+public import Mathlib.Algebra.MvPolynomial.CommRing
+public import Mathlib.Analysis.Polynomial.CauchyBound
+public import Mathlib.Analysis.Polynomial.MahlerMeasure
+public import Mathlib.Algebra.Polynomial.Reverse
+public import Mathlib.Algebra.Polynomial.Taylor
+public import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
+public import Mathlib.Data.List.OfFn
+public import Mathlib.Topology.MetricSpace.Sequences
+
+@[expose] public section
+
 open scoped BigOperators ComplexOrder
 
 

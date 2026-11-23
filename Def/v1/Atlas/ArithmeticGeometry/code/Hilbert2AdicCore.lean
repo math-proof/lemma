@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.ArithmeticGeometry.code.HilbertSymbol.Part2
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertSymbol
+module
+
+public import Def.v1.Atlas.ArithmeticGeometry.code.HilbertSymbol.Part2
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertSymbol
+
+@[expose] public section
+
 open PadicInt HilbertSymbol
 
 

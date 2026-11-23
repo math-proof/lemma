@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Instance.v1.Atlas.AlgebraicCombinatorics.code.YoungLattice.Part3
-public import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungLattice
+public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungLattice
 public import Mathlib.Data.Multiset.Sort
 public import Mathlib.Data.Finset.Card
 public import Mathlib.Order.Fin.Basic

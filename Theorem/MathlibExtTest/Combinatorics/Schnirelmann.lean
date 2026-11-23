@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Schnirelmann.lean -/
+module
 
+public import Def.Combinatorics.Schnirelmann
+public import Theorem.Finset.Schnirelmann
+public import Mathlib.Tactic
 
-import Def.Combinatorics.Schnirelmann
-import Theorem.Finset.Schnirelmann
-import Mathlib.Tactic
-
+public section
 
 namespace MathlibExtTest.Combinatorics.Schnirelmann
 

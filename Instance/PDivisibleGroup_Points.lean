@@ -2,7 +2,8 @@
 import Mathlib
 import Instance.PDivisibleGroup_Basic
 import Instance.EllipticCurve_TateModule
-import Lemma.AlgHom.Points
+import Theorem.AlgHom.Points
+import Def.AlgHom_Points
 
 set_option autoImplicit false
 

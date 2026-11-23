@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Theorem.v1.Atlas.ArithmeticGeometry.code.GaloisPlaceHelper
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.GaloisPlaceHelper
+module
 
+public import Mathlib
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.GaloisPlaceHelper
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.GaloisPlaceHelper
+
+@[expose] public section
 
 noncomputable section
 

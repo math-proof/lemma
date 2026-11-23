@@ -1,9 +1,13 @@
 -- Carved from Lemma/Definitions/Def_MvFormalGroup_WittPointFamily.lean: instance decls only.
-import Mathlib
-import Instance.MvFormalGroup_NegV2
-import Instance.MvFormalGroup_CartierModule
-import Instance.MvFormalGroup_CartierModuleWittAction
-import Lemma.MvPowerSeries.WittPointFamily
+module
+
+public import Mathlib
+public import Instance.MvFormalGroup_NegV2
+public import Instance.MvFormalGroup_CartierModule
+public import Instance.MvFormalGroup_CartierModuleWittAction
+public import Theorem.MvPowerSeries.WittPointFamily
+public import Def.FormalGroup_WittPointFamily
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Instance.v1.Atlas.AlgebraicCombinatorics.code.YoungLattice.Part3
-import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungLattice
+import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungLattice
 import Mathlib.Data.Multiset.Sort
 import Mathlib.Data.Finset.Card
 import Mathlib.Order.Fin.Basic

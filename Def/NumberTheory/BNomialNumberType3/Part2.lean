@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/BNomialNumberType3.lean -/
 
-import Mathlib.Data.Fintype.Pi
-import Instance.NumberTheory.BNomialNumberType3
+module
+
+public import Mathlib.Data.Fintype.Pi
+public import Instance.NumberTheory.BNomialNumberType3
+
+@[expose] public section
+
 /-!
 # Type-3 b-nomial numbers
 

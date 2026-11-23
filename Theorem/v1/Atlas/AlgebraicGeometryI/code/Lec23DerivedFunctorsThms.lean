@@ -7,15 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec23DerivedFunctors.Part3
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec23DerivedFunctors
-import Def.v1.Atlas.AlgebraicGeometryI.code.AffinePushforwardCohomology.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec24GrothendieckBirkhoff
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec23DerivedFunctors.Part3
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec23DerivedFunctors
+public import Def.v1.Atlas.AlgebraicGeometryI.code.AffinePushforwardCohomology.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec24GrothendieckBirkhoff
 open CategoryTheory Category Limits AlgebraicGeometry
 
 set_option maxHeartbeats 1600000
 
+public section
 
 namespace Lec23Thms
 

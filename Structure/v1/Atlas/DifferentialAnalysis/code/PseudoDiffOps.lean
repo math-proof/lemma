@@ -11,8 +11,8 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
-public import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
-public import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.ConvolutionTheorem
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ConvolutionTheorem
 public import Def.v1.Atlas.DifferentialAnalysis.code.ConvolutionTheorem
 public import Mathlib.Topology.Algebra.Monoid
 public import Mathlib.Geometry.Manifold.PartitionOfUnity

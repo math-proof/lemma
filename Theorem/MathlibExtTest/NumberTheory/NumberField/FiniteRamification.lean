@@ -1,10 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/FiniteRamification.lean -/
+module
 
-
-import Theorem.Nat.NumberField.FiniteRamification
+public import Theorem.Nat.NumberField.FiniteRamification
 open IsDedekindDomain
 open scoped NumberField
-
 
 /-!
 # Finite-ramification smoke tests
@@ -13,6 +12,8 @@ The two examples test the minimal no-Galois API
 (`NumberField.finite_ramified_primes`) and the finite exceptional-set
 consumer keeping native `Algebra.IsUnramifiedIn` outside it.
 -/
+
+public section
 
 /-- Direct consumption of the finite-ramification theorem. -/
 example (K L : Type*) [Field K] [NumberField K] [Field L] [NumberField L]

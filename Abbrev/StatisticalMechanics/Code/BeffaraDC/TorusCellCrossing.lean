@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Theorem.StatisticalMechanics.Code.Onsager.Torus
-import Inductive.StatisticalMechanics.Code.BeffaraDC.TorusCellCrossing
+module
+
+public import Theorem.StatisticalMechanics.Code.Onsager.Torus
+public import Inductive.StatisticalMechanics.Code.BeffaraDC.TorusCellCrossing
+@[expose] public section
+
 open SimpleGraph
 
 

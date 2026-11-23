@@ -13,7 +13,7 @@ module
 public import Def.v1.Atlas.LieGroups.code.GKModule.Part2
 public import Def.v1.Atlas.LieGroups.code.GKModuleDefs.Part2
 public import Structure.v1.Atlas.LieGroups.code.HarishChandraFunctor
-public import Lemma.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
+public import Theorem.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
 public import Def.v1.Atlas.LieGroups.code.Admissible.Part3
 public import Mathlib.Analysis.InnerProductSpace.Completion
 public import Mathlib.Analysis.Normed.Module.Completion

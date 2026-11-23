@@ -8,7 +8,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.AffineCoxeter.TitsCone.Part3
+module
+
+public import Def.v1.Atlas.Buildings.code.AffineCoxeter.TitsCone.Part3
+@[expose] public section
+
 set_option linter.unusedSectionVars false
 
 

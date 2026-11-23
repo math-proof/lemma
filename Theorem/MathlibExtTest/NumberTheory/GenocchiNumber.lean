@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/GenocchiNumber.lean -/
+module
 
+public import Def.NumberTheory.GenocchiNumber
+public import Theorem.Nat.GenocchiNumber
+public import Mathlib.Tactic.NormNum
 
-import Def.NumberTheory.GenocchiNumber
-import Theorem.Nat.GenocchiNumber
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MetaMathlibExtTest
 

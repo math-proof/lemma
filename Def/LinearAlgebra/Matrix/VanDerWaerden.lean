@@ -4,16 +4,21 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
 
-import Mathlib.LinearAlgebra.Matrix.Permanent
-import Mathlib.Analysis.Convex.DoublyStochasticMatrix
-import Theorem.Analysis.Complex.Hurwitz
-import Theorem.Complex.Hurwitz
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.Algebra.MvPolynomial.Equiv
-import Mathlib.Analysis.Complex.Polynomial.GaussLucas
-import Mathlib.Analysis.Complex.Convex
-import Mathlib.Topology.Algebra.MvPolynomial
-import Mathlib.Analysis.MeanInequalities
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Permanent
+public import Mathlib.Analysis.Convex.DoublyStochasticMatrix
+public import Theorem.Analysis.Complex.Hurwitz
+public import Theorem.Complex.Hurwitz
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.Algebra.MvPolynomial.Equiv
+public import Mathlib.Analysis.Complex.Polynomial.GaussLucas
+public import Mathlib.Analysis.Complex.Convex
+public import Mathlib.Topology.Algebra.MvPolynomial
+public import Mathlib.Analysis.MeanInequalities
+
+@[expose] public section
+
 open Matrix
 
 

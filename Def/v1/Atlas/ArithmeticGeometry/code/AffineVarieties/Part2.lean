@@ -8,17 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Mathlib.FieldTheory.IntermediateField.Basic
-import Mathlib.FieldTheory.Perfect
-import Mathlib.FieldTheory.Galois.Infinite
-import Mathlib.FieldTheory.IsSepClosed
-import Mathlib.RingTheory.MvPolynomial.Basic
-import Mathlib.RingTheory.Noetherian.Basic
-import Mathlib.RingTheory.Noetherian.Defs
-import Mathlib.RingTheory.Polynomial.Basic
-import Mathlib.RingTheory.Nullstellensatz
-import Instance.v1.Atlas.ArithmeticGeometry.code.AffineVarieties
+module
+
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Mathlib.FieldTheory.IntermediateField.Basic
+public import Mathlib.FieldTheory.Perfect
+public import Mathlib.FieldTheory.Galois.Infinite
+public import Mathlib.FieldTheory.IsSepClosed
+public import Mathlib.RingTheory.MvPolynomial.Basic
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Mathlib.RingTheory.Noetherian.Defs
+public import Mathlib.RingTheory.Polynomial.Basic
+public import Mathlib.RingTheory.Nullstellensatz
+public import Instance.v1.Atlas.ArithmeticGeometry.code.AffineVarieties
+
+@[expose] public section
+
 variable (k : Type*) [Field k]
 
 

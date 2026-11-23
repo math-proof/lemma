@@ -7,13 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Theorem.StatisticalMechanics.Code.Foundations.Prokhorov
-import Theorem.StatisticalMechanics.Code.Foundations.StochasticDomination
+public import Theorem.StatisticalMechanics.Code.Foundations.Prokhorov
+public import Theorem.StatisticalMechanics.Code.Foundations.StochasticDomination
 open MeasureTheory TopologicalSpace Filter Topology MeasurableSpace
 open scoped ENNReal NNReal Topology
 
+public section
 
 namespace StatMech
 

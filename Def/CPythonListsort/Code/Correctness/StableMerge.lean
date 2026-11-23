@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/StableMerge.lean -/
 
-import Def.CPythonListsort.Code.Assembly.Order.Part4
-import Def.CPythonListsort.Code.Correctness.DescendingRunInvariant.Part2
-import Theorem.CPythonListsort.Code.Transcription.SortSlice
-import Mathlib.Data.List.Sort
+module
+
+public import Def.CPythonListsort.Code.Assembly.Order.Part4
+public import Def.CPythonListsort.Code.Correctness.DescendingRunInvariant.Part2
+public import Theorem.CPythonListsort.Code.Transcription.SortSlice
+public import Mathlib.Data.List.Sort
+
+@[expose] public section
+
 /-!
 # Pure stable-merge specification
 

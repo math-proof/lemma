@@ -12,8 +12,8 @@ module
 
 public import Def.v1.Atlas.ArithmeticGeometry.code.Torsors
 public import Def.v1.Atlas.ArithmeticGeometry.code.EllipticCurves.Part7
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.EllipticCurves
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Divisors
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.EllipticCurves
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Divisors
 public import Def.v1.Atlas.ArithmeticGeometry.code.Divisors.Part11
 public import Theorem.v1.Atlas.ArithmeticGeometry.code.WeilChatelet
 /-- Abstract predicate: the type `C_pts` represents the points of a smooth curve of arithmetic

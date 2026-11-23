@@ -1,5 +1,9 @@
-import Lemma.Matrix.SmoothingKernel
-import Mathlib.Analysis.Calculus.ContDiff.Defs
+module
+
+public import Theorem.Matrix.SmoothingKernel
+public import Mathlib.Analysis.Calculus.ContDiff.Defs
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,12 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/CenteredColoring.lean -/
 
 -- MathlibExtTest/Combinatorics/SimpleGraph/CenteredColoring.lean
+module
 
-import Mathlib.Combinatorics.SimpleGraph.Coloring.Constructions
-import Def.Combinatorics.SimpleGraph.CenteredColoring
-import Theorem.SimpleGraph.CenteredColoring
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.Constructions
+public import Def.Combinatorics.SimpleGraph.CenteredColoring
+public import Theorem.SimpleGraph.CenteredColoring
 open SimpleGraph
 
+public section
 
 /-- Singleton induced subgraph is connected: boundary probe. -/
 example : ((⊥ : SimpleGraph (Fin 2)).induce ({0} : Set (Fin 2))).Connected := by

@@ -1,19 +1,24 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch/Lower.lean -/
 
-import Mathlib.Analysis.SpecialFunctions.Exponential
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Data.Finset.Defs
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Algebra.Divisibility.Basic
-import Mathlib.Data.Nat.Cast.Field
-import Def.NumberTheory.PrimeInterval.Breusch.Grid
-import Theorem.Nat.PrimeInterval.Breusch.Grid
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.GCongr
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Exponential
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Data.Finset.Defs
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Algebra.Divisibility.Basic
+public import Mathlib.Data.Nat.Cast.Field
+public import Def.NumberTheory.PrimeInterval.Breusch.Grid
+public import Theorem.Nat.PrimeInterval.Breusch.Grid
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.GCongr
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # Breusch weighted-product lower bound
 

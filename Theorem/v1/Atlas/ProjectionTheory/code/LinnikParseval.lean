@@ -7,13 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.ProjectionTheory.code.LinnikLargeSieve
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.LinnikLargeSieve
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.ParsevalHighFreq
-import Def.v1.Atlas.ProjectionTheory.code.ParsevalHighFreq
+public import Def.v1.Atlas.ProjectionTheory.code.LinnikLargeSieve
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.LinnikLargeSieve
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.ParsevalHighFreq
+public import Def.v1.Atlas.ProjectionTheory.code.ParsevalHighFreq
 open Finset Complex ZMod
 
+public section
 
 namespace LinnikLargeSieve
 

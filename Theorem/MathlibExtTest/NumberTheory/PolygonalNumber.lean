@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PolygonalNumber.lean -/
+module
 
-import Theorem.NumberTheory.PolygonalNumber
-import Theorem.Nat.PolygonalNumber
+public import Theorem.NumberTheory.PolygonalNumber
+public import Theorem.Nat.PolygonalNumber
 
+public section
 
 namespace Nat
 

@@ -11,8 +11,8 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.AlgebraicGeometryI.code.EffaceableUniversal
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.EffaceableUniversal
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.EffaceableUniversal
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
 public import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology.Part2
 
 

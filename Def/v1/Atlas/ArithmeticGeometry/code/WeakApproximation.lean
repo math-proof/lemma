@@ -8,16 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.NumberTheory.Ostrowski
-import Mathlib.Analysis.AbsoluteValue.Equivalence
-import Mathlib.Analysis.Normed.Field.WithAbs
-import Mathlib.NumberTheory.Padics.PadicNumbers
-import Mathlib.NumberTheory.Padics.RingHoms
-import Mathlib.Data.Nat.ChineseRemainder
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.Topology.Instances.Rat
-import Instance.v1.Atlas.ArithmeticGeometry.code.WeakApproximation
+module
 
+public import Mathlib.NumberTheory.Ostrowski
+public import Mathlib.Analysis.AbsoluteValue.Equivalence
+public import Mathlib.Analysis.Normed.Field.WithAbs
+public import Mathlib.NumberTheory.Padics.PadicNumbers
+public import Mathlib.NumberTheory.Padics.RingHoms
+public import Mathlib.Data.Nat.ChineseRemainder
+public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.Topology.Instances.Rat
+public import Instance.v1.Atlas.ArithmeticGeometry.code.WeakApproximation
+
+@[expose] public section
 
 noncomputable section
 

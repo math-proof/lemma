@@ -1,7 +1,11 @@
-import Lemma.LaurentSeries.CharLDegeneracyHecke
-import Def.ModularCurve_PlaceWidth
-import Def.CerednikDrinfeld_Ribbon
-import Structure.ModularCurve_SSDegeneracyHecke
+module
+
+public import Theorem.LaurentSeries.CharLDegeneracyHecke
+public import Def.ModularCurve_PlaceWidth
+public import Def.CerednikDrinfeld_Ribbon
+public import Structure.ModularCurve_SSDegeneracyHecke
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -5,6 +5,7 @@ import Lemma.Matrix.MulOfPowAddOfPowNegChoose.eq.Zero
 import Lemma.Matrix.DetMulOfMulPowOfPowNegChoose.eq.MulMulPowPowSubProd
 import Lemma.Matrix.DetMulStackS_MulPow.eq.Mul_Prod_Factorial.of.Le
 import Syntax.LinearAlgebra.Matrix.Notation
+open scoped Matrix
 open Matrix Nat
 
 
@@ -15,18 +16,18 @@ private lemma main
 -- given
   (h : d ≤ m) :
 -- imply
-  ([a < m, j < m]
+  ([a < m][j < m]
     if (a : ℕ) < d then (j : ℝ) ^ (a : ℕ) * x₁ ^ (j : ℕ) else (j : ℝ) ^ ((a : ℕ) - d) * x₂ ^ (j : ℕ)).det =
     x₂ ^ ((m - d).choose 2) * x₁ ^ (d.choose 2) * (x₂ - x₁) ^ (d * (m - d)) *
       (∏ i ∈ Finset.range d, (i ! : ℝ)) * ∏ i ∈ Finset.range (m - d), (i ! : ℝ) := by
 -- proof
-  set M := [a < m, j < m]
+  set M := [a < m][j < m]
     if (a : ℕ) < d then (j : ℝ) ^ (a : ℕ) * x₁ ^ (j : ℕ) else (j : ℝ) ^ ((a : ℕ) - d) * x₂ ^ (j : ℕ) with hM
   set e : Fin d ⊕ Fin (m - d) ≃ Fin m := finSumFinEquiv.trans (finCongr (by omega : d + (m - d) = m)) with he
-  set A₁ := [i < d, j < m] (x₁ ^ (j : ℕ) * ((j : ℝ) + 0) ^ (i : ℕ)) with hA₁
-  set A₂ := [i < m - d, j < m] (x₂ ^ (j : ℕ) * ((j : ℝ) + 0) ^ (i : ℕ)) with hA₂
-  set B₁ := [k < m, j < d] ((-x₁) ^ ((j : ℤ) - (k : ℕ)) * ((j : ℕ).choose k : ℝ)) with hB₁
-  set B₂ := [i < m, j < m - d]
+  set A₁ := [i < d][j < m] (x₁ ^ (j : ℕ) * ((j : ℝ) + 0) ^ (i : ℕ)) with hA₁
+  set A₂ := [i < m - d][j < m] (x₂ ^ (j : ℕ) * ((j : ℝ) + 0) ^ (i : ℕ)) with hA₂
+  set B₁ := [k < m][j < d] ((-x₁) ^ ((j : ℤ) - (k : ℕ)) * ((j : ℕ).choose k : ℝ)) with hB₁
+  set B₂ := [i < m][j < m - d]
     ((-x₁) ^ ((d : ℤ) + (j : ℕ) - (i : ℕ)) * (if (j : ℕ) ≤ i then (d.choose ((i : ℕ) - j) : ℝ) else 0)) with hB₂
   set T := Matrix.fromCols B₁ B₂ with hT
   have he1 : ∀ c : Fin m, ∀ hc : (c : ℕ) < d, e.symm c = Sum.inl ⟨c, hc⟩ := by
@@ -55,10 +56,10 @@ private lemma main
       refine Finset.prod_eq_one fun c _ => ?_
       simp only [Matrix.submatrix_apply, id]
       if hc : (c : ℕ) < d then
-        rw [he1 c hc, hT, Matrix.fromCols_apply_inl, hB₁, Matrix.ofFun_apply]
+        rw [he1 c hc, hT, Matrix.fromCols_apply_inl, hB₁, Matrix.of_apply]
         simp
       else
-        rw [he2 c hc, hT, Matrix.fromCols_apply_inr, hB₂, Matrix.ofFun_apply]
+        rw [he2 c hc, hT, Matrix.fromCols_apply_inr, hB₂, Matrix.of_apply]
         have hcd : ((d : ℤ) + ((c - d : ℕ) : ℤ) - (c : ℤ)) = 0 := by push_cast [Nat.cast_sub (by omega : d ≤ (c : ℕ))]; ring
         simp only [hcd, zpow_zero, one_mul]
         rw [ite_eq_left (by omega), show (c : ℕ) - ((c : ℕ) - d) = d by omega, Nat.choose_self, Nat.cast_one]
@@ -67,11 +68,11 @@ private lemma main
       have hkc : (c : ℕ) < k := hkc
       simp only [Matrix.submatrix_apply, id]
       if hc : (c : ℕ) < d then
-        rw [he1 c hc, hT, Matrix.fromCols_apply_inl, hB₁, Matrix.ofFun_apply]
+        rw [he1 c hc, hT, Matrix.fromCols_apply_inl, hB₁, Matrix.of_apply]
         simp only
         rw [Nat.choose_eq_zero_of_lt (by omega), Nat.cast_zero, mul_zero]
       else
-        rw [he2 c hc, hT, Matrix.fromCols_apply_inr, hB₂, Matrix.ofFun_apply]
+        rw [he2 c hc, hT, Matrix.fromCols_apply_inr, hB₂, Matrix.of_apply]
         simp only
         rw [ite_eq_left (by omega), Nat.choose_eq_zero_of_lt (by omega), Nat.cast_zero, mul_zero]
   have hmain := congrArg Matrix.det h5

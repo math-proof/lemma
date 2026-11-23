@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Recurrences/DresdenDuSimplifiedBinet.lean -/
+module
 
+public import Mathlib.Tactic
+public import Def.NumberTheory.Recurrences.DresdenDuSimplifiedBinet
+public import Theorem.Nat.Recurrences.DresdenDuSimplifiedBinet
 
-import Mathlib.Tactic
-import Def.NumberTheory.Recurrences.DresdenDuSimplifiedBinet
-import Theorem.Nat.Recurrences.DresdenDuSimplifiedBinet
-
+public section
 
 namespace MetaMathlibExt
 

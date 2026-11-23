@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.IntegerComplexity.Part3
-import Lemma.Nat.IntegerComplexity
+import Theorem.Nat.IntegerComplexity
 import Def.MathlibExtTest.NumberTheory.IntegerComplexity
 open IntegerComplexity
 open IntegerComplexity.Expr

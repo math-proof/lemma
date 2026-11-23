@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.CombinatorialOptimization.code.Flow.MaxFlowMinCut.Part2
-import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.MaxFlowMinCut
+import Theorem.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.MaxFlowMinCut
 import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.LargeAugPath
 import Def.v1.Atlas.CombinatorialOptimization.code.Flow.LargeAugPath.Part3
 import Def.v1.Atlas.CombinatorialOptimization.code.Flow.MaxFlowAugPath

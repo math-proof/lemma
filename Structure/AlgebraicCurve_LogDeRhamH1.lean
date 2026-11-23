@@ -2,7 +2,7 @@ module
 
 public import Mathlib
 public import Def.AlgebraicCurve_RegularDifferentials
-public import Lemma.ResidueField.GluedPic0
+public import Theorem.ResidueField.GluedPic0
 
 set_option autoImplicit false
 

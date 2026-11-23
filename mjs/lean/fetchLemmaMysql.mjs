@@ -13,9 +13,24 @@
 import fs from 'fs';
 import path from 'path';
 import mysql from 'mysql2/promise';
+import { REPO_ROOT, dirExists } from './modulePath.mjs';
 
 /** @type {import('mysql2/promise').Pool | null} */
 let pool = null;
+
+/**
+ * Canonical `axiom.lemma.module` key: the Lean namespace, with no `Lemma.` / `Theorem.`
+ * (or other repo-folder) prefix. `Lemma.Random.X` → `Random.X`. Identity when the
+ * module is already the namespace. Used when reading legacy prefixed DB rows;
+ * `fetchLemmaRowFromMysql` tries the key, then the raw module string.
+ */
+export function lemmaModuleKey(module) {
+  const m = String(module ?? '').trim();
+  const dot = m.indexOf('.');
+  if (dot <= 0) return m;
+  const head = m.slice(0, dot);
+  return dirExists(path.join(REPO_ROOT, head)) ? m.slice(dot + 1) : m;
+}
 
 export function leanEchoPath(leanAbsPath) {
   return leanAbsPath.replace(/\.lean$/i, '.echo.lean');
@@ -206,26 +221,37 @@ export function codeFromMysqlRow(row, module, user) {
     meta.error = [];
   code.meta = meta;
   code.date = decode(code.date);
-  code.module = module;
+  code.module = lemmaModuleKey(module);
   code.user = user;
   if (isEmptyDecodedLemmaField(code.lemma) || isEmptyDecodedLemmaField(code.date)) return null;
   return code;
 }
 
 /**
- * @param {string} user
  * @param {string} module
  * @returns {Promise<Record<string, unknown> | null>}
  */
-export async function fetchLemmaRowFromMysql(user, module) {
+export async function fetchLemmaRowFromMysql(module) {
   const p = getMysqlPool();
   if (!p) return null;
-  const [rows] = await p.query(
-    'SELECT * FROM lemma WHERE user = ? AND module = ? LIMIT 1',
-    [user, module]
-  );
-  if (!Array.isArray(rows) || rows.length === 0) return null;
-  return /** @type {Record<string, unknown>} */ (rows[0]);
+  const key = lemmaModuleKey(module);
+  const keys = [key];
+  if (module && module !== key) keys.push(module);
+  // Legacy rows may still be stored as `Lemma.Random.X` / `Theorem.Random.X`.
+  for (const folder of ['Lemma', 'Theorem']) {
+    const legacy = `${folder}.${key}`;
+    if (key && !keys.includes(legacy)) keys.push(legacy);
+  }
+  for (const k of keys) {
+    const [rows] = await p.query(
+      'SELECT * FROM lemma WHERE module = ? ORDER BY id DESC LIMIT 1',
+      [k]
+    );
+    if (Array.isArray(rows) && rows.length > 0) {
+      return /** @type {Record<string, unknown>} */ (rows[0]);
+    }
+  }
+  return null;
 }
 
 /**

@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutLight
-import Mathlib.RingTheory.Localization.AtPrime.Basic
+module
 
+public import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutLight
+public import Mathlib.RingTheory.Localization.AtPrime.Basic
+
+@[expose] public section
 
 noncomputable section
 

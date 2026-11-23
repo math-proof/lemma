@@ -3,7 +3,7 @@
 import Mathlib.Data.Fintype.Card
 import Mathlib.Data.Fintype.BigOperators
 import Def.Combinatorics.Enumerative.ULDMotzkinNumberOfRankR.Part2
-import Lemma.Finset.Enumerative.ULDMotzkinNumberOfRankR
+import Theorem.Finset.Enumerative.ULDMotzkinNumberOfRankR
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.Order.Ring.Nat
 import Mathlib.Data.Fintype.Pi

@@ -1,7 +1,10 @@
-import Initialize.Lean.Meta.CtorName
-import Def.Data.String.String.Part2
-import Instance.Lean.ConstantInfo
+module
 
+public import Initialize.Lean.Meta.CtorName
+public import Def.Data.String.String.Part2
+public import Instance.Lean.ConstantInfo
+
+@[expose] public section
 
 def Lean.AxiomVal.toString : Lean.AxiomVal → String
   | ⟨constantVal, isUnsafe⟩ => "{%s}".format s!"

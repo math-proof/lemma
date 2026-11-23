@@ -4,19 +4,24 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Combinatorics.Enumerative.Partition.Basic
-import Mathlib.Data.Nat.ModEq
-import Mathlib.Algebra.CharP.Algebra
-import Mathlib.Combinatorics.Enumerative.Pentagonal.PowerSeries
-import Mathlib.Data.ZMod.Basic
-import Mathlib.RingTheory.PowerSeries.Expand
-import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.ReduceModChar
-import Mathlib.Tactic.Ring
-import Def.Combinatorics.Enumerative.Partition.RamanujanPartitionCongruence
-import Lemma.Finset.Enumerative.Partition.RamanujanPartitionCongruence
-import Instance.Combinatorics.Enumerative.Partition.RamanujanPartitionCongruenceModEleven.Part2
+module
+
+public import Mathlib.Combinatorics.Enumerative.Partition.Basic
+public import Mathlib.Data.Nat.ModEq
+public import Mathlib.Algebra.CharP.Algebra
+public import Mathlib.Combinatorics.Enumerative.Pentagonal.PowerSeries
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.RingTheory.PowerSeries.Expand
+public import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.ReduceModChar
+public import Mathlib.Tactic.Ring
+public import Def.Combinatorics.Enumerative.Partition.RamanujanPartitionCongruence
+public import Theorem.Finset.Enumerative.Partition.RamanujanPartitionCongruence
+public import Instance.Combinatorics.Enumerative.Partition.RamanujanPartitionCongruenceModEleven.Part2
+
+@[expose] public section
+
 /-!
 # Ramanujan's partition congruence modulo 11
 

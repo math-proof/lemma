@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/InfiniteWord/FibonacciWord.lean -/
+module
 
+public import Theorem.Combinatorics.InfiniteWord.FibonacciWord
+public import Theorem.Finset.InfiniteWord.FibonacciWord
 
-import Theorem.Combinatorics.InfiniteWord.FibonacciWord
-import Theorem.Finset.InfiniteWord.FibonacciWord
-
+public section
 
 namespace MetaMathlibExt
 

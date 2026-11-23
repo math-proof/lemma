@@ -4,7 +4,7 @@ public import Mathlib
 public import Structure.NeronModelInfra_WeakNeronModel
 public import Def.AlgebraicGeometry_KaehlerModule
 public import Def.NeronModelInfra_TopFormOrder
-public import Lemma.Scheme.SmoothnessDefect
+public import Theorem.Scheme.SmoothnessDefect
 
 set_option autoImplicit false
 

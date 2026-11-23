@@ -15,6 +15,11 @@ export class LeanProperty extends LeanBinary {
 
     static input_priority = 81; // LeanPow::$input_priority + 1
 
+    /** `Matrix.softmax A` / `Tensor.softmax x`: a namespace call, not the `x.softmax` method. */
+    static isSoftmaxNamespace(lhs) {
+        return lhs instanceof L.LeanToken && (lhs.text === 'Matrix' || lhs.text === 'Tensor');
+    }
+
     get stack_priority() {
         return 87;
     }
@@ -37,25 +42,18 @@ export class LeanProperty extends LeanBinary {
         return field ? field.charAt(0).toUpperCase() + field.slice(1) : super.pathToken;
     }
 
-    /** In an application head, a capitalised object (`Finset.range`) is a namespace, not an argument. */
-    get jsonAppObjectArg() {
-        const obj = this.lhs;
-        if (!(obj instanceof L.LeanToken)) return null;
-        return /^[\p{Ll}_]/u.test(obj.text || "") ? obj.toJSON() : null;
-    }
-
     /**
      * `obj.attribute` → `{Attribute: [obj]}`: the object is always an argument,
      * so `(n - k).partitionCount` → `{"PartitionCount":[{"Sub":["_","_"]}]}`.
      * As an application head, the parent `LeanArgsSpaceSeparated` owns the JSON
      * (`obj.attribute a b`).
      */
-    toJSON() {
-        if (!this.fieldName) return super.toJSON();
+    toJSON(ctx = { leaves: new Map() }) {
+        if (!this.fieldName) return super.toJSON(ctx);
         const parent = this.parent;
         if (parent instanceof L.LeanArgsSpaceSeparated && parent.args[0] === this)
-            return parent.toJSON();
-        return { [this.pathToken]: [this.lhs.toJSON()] };
+            return parent.toJSON(ctx);
+        return { [this.pathToken]: [this.lhs.toJSON(ctx)] };
     }
 
     equals(other) {
@@ -228,6 +226,9 @@ export class LeanProperty extends LeanBinary {
                     break;
                 case 'softmax':
                     if (syntax) syntax.softmax = true;
+                    // `x.softmax` is a method; `Matrix.softmax A` keeps the namespace.
+                    if (!LeanProperty.isSoftmaxNamespace(this.lhs))
+                        return [this.lhs.toLatex(syntax)];
                     break;
                 case 'sigmoid':
                     return [this.lhs.toLatex(syntax)];
@@ -240,6 +241,16 @@ export class LeanProperty extends LeanBinary {
                         let arg = this.lhs;
                         if (arg instanceof L.LeanParenthesis && !(arg.arg instanceof L.LeanColon))
                             arg = arg.arg;
+                        return [arg.toLatex(syntax)];
+                    }
+                    break;
+                }
+                case 'sign': {
+                    // `(k - i : ℤ).sign` → `sign(k - i)`; `Int.sign x` stays a namespace call.
+                    if (!(lhs instanceof L.LeanToken && this.parent instanceof L.LeanArgsSpaceSeparated && this.parent.args[0] === this)) {
+                        let arg = this.lhs;
+                        if (arg instanceof L.LeanParenthesis) arg = arg.arg;
+                        if (arg instanceof L.LeanColon) arg = arg.lhs;
                         return [arg.toLatex(syntax)];
                     }
                     break;
@@ -347,6 +358,16 @@ export class LeanProperty extends LeanBinary {
                         return '\\left|{%s}\\right|';
                     }
                     break;
+                case 'softmax':
+                    // `x.softmax` → `softmax(x)`; an axis is folded in by LeanArgsSpaceSeparated.
+                    if (!LeanProperty.isSoftmaxNamespace(lhs))
+                        return '\\operatorname{softmax}\\left({%s}\\right)';
+                    break;
+                case 'sign':
+                    // `x.sign` → `sign(x)`; `Int.sign x` / `Complex.sign z` keep the namespace.
+                    if (!(lhs instanceof L.LeanToken && this.parent instanceof L.LeanArgsSpaceSeparated && this.parent.args[0] === this))
+                        return '\\operatorname{sign}\\left({%s}\\right)';
+                    break;
                 case 'natAbs':
                     return '\\left|{%s}\\right|';
                 case 'toReal':
@@ -401,12 +422,6 @@ export class LeanProperty extends LeanBinary {
             rhs = rhs.args[1];
         }
         return [this.lhs, rhs];
-    }
-
-    pathChoices(opts = {}) {
-        if (this.rhs instanceof L.LeanToken && (this.rhs.text || "") === "sqrt")
-            return ["Sqrt_", ""];
-        return this.lhs?.pathChoices?.(opts) ?? [""];
     }
 
 }

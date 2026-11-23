@@ -1,7 +1,8 @@
 -- Carved from Lemma/Definitions/Def_GoodReductionJacobian_RelativeGroupLawKerPair.lean: instance decls only.
 import Mathlib
 import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
-import Lemma.Scheme.RelativeGroupLawKerPair
+import Theorem.Scheme.RelativeGroupLawKerPair
+import Def.GoodReductionJacobian_RelativeGroupLawKerPair
 
 set_option autoImplicit false
 

@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SetFamily/IndependentSet.lean -/
 
-import Mathlib.Data.Finset.Card
-import Def.Combinatorics.SetFamily.UniformHypergraph
-import Theorem.Finset.SetFamily.UniformHypergraph
+module
+
+public import Mathlib.Data.Finset.Card
+public import Def.Combinatorics.SetFamily.UniformHypergraph
+public import Theorem.Finset.SetFamily.UniformHypergraph
+
+@[expose] public section
+
 /-!
 # Independent sets and Steiner triple systems in finite hypergraphs
 

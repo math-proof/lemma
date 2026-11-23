@@ -9,9 +9,11 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Def.FC.OeisA211417_supercongruence_solution.Part2
+module
 
+public import Mathlib
+public import Def.FC.OeisA211417_supercongruence_solution.Part2
+@[expose] public section
 
 namespace OeisA211417
 

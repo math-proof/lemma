@@ -9,7 +9,8 @@ import Mathlib.Algebra.Polynomial.Lifts
 import Theorem.HahnSeries.X0
 import Def.GaloisRep_Flat
 import Abbrev.ModularCurve_IgusaScheme
-import Lemma.Scheme.IgusaScheme
+import Theorem.Scheme.IgusaScheme
+import Def.ModularCurve_IgusaScheme
 
 set_option autoImplicit false
 

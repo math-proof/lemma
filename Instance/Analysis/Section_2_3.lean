@@ -1,6 +1,8 @@
-import Mathlib
-import Instance.Analysis.Section_2_2_api
-import Abbrev.Analysis.Section_2_3
+module
+
+public import Mathlib
+public import Instance.Analysis.Section_2_2_api
+public import Abbrev.Analysis.Section_2_3
 /-!
 # Analysis I, Section 2.3: Multiplication
 
@@ -29,7 +31,7 @@ Users of the companion who have completed the exercises in this section are welc
 - (Add tip here)
 
 -/
-
+@[expose] public section
 
 namespace Chapter2
 

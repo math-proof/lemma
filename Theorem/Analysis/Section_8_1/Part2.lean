@@ -1,5 +1,8 @@
-import Mathlib
-import Instance.Analysis.Section_8_1
+module
+
+public import Mathlib
+public import Instance.Analysis.Section_8_1
+
 /-!
 # Analysis I, Section 8.1: Countability
 
@@ -18,6 +21,8 @@ Main constructions and results of this section:
 Note that as the Chapter 3 set theory has been deprecated, we will not re-use relevant constructions from that theory here, replacing them with Mathlib counterparts instead.
 
 -/
+
+public section
 
 
 namespace Chapter8

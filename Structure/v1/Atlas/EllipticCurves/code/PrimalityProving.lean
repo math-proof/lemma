@@ -21,7 +21,7 @@ public import Mathlib.Data.Real.Sqrt
 public import Mathlib.Data.Int.GCD
 public import Mathlib.GroupTheory.OrderOfElement
 public import Def.v1.Atlas.EllipticCurves.code.PointCounting.Part2
-public import Lemma.Complex.Atlas.v1.EllipticCurves.code.PointCounting
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.PointCounting
 public import Def.v1.Atlas.EllipticCurves.code.PrimalityProving
 open scoped Nat
 

@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/GeneralizedBellPolynomial.lean -/
+module
 
-
-import Def.Combinatorics.GeneralizedBellPolynomial
-import Theorem.Finset.GeneralizedBellPolynomial
-import Mathlib.Algebra.Ring.Int.Defs
+public import Def.Combinatorics.GeneralizedBellPolynomial
+public import Theorem.Finset.GeneralizedBellPolynomial
+public import Mathlib.Algebra.Ring.Int.Defs
 open MetaMathlibExt
 
+public section
 
 example : genStirling (0 : ℤ) (1 : ℤ) 0 0 = 1 := by decide
 

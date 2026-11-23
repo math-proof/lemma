@@ -260,8 +260,8 @@ export class LeanStatements extends LeanMultipleLine(LeanArgs) {
         if (args.length === 1) return args[0].isProp(vars);
     }
 
-    toJSON() {
-        let args = super.toJSON();
+    toJSON(ctx = { leaves: new Map() }) {
+        let args = super.toJSON(ctx);
         if (this.args.length && this.args[this.args.length - 1] instanceof L.LeanCaret) {
             args = args.slice(0, -1);
         }

@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/Ideal/IntegralKrullDim.lean -/
+module
 
+public import Theorem.Int.Ideal.IntegralKrullDim
 
-import Theorem.Int.Ideal.IntegralKrullDim
-
+public section
 
 -- Generic API example: the lemma applies to any integral extension.
 example {A B : Type*} [CommRing A] [CommRing B] [Algebra A B]

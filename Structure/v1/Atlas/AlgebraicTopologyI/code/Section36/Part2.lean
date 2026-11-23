@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section34.Part3
-public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section34
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section34
 public import Mathlib.AlgebraicTopology.SingularHomology.Basic
 public import Mathlib.Algebra.Category.ModuleCat.Abelian
 public import Mathlib.Algebra.Category.ModuleCat.Colimits

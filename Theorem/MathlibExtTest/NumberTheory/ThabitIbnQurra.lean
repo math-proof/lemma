@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ThabitIbnQurra.lean -/
+module
 
-
-import Theorem.Nat.ThabitIbnQurra
+public import Theorem.Nat.ThabitIbnQurra
 open scoped BigOperators
 
+public section
 
 -- The classical `n = 2` case gives the amicable pair `220` and `284`.
 example :

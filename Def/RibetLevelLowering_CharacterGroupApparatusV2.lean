@@ -1,8 +1,12 @@
-import Mathlib
-import Lemma.WeierstrassCurve.FreyPackage
-import Def.FLTPrelim_ModularRep
-import Def.FreyPackage_LevelRaising
-import Def.RibetLevelLowering_ExchangeData
+module
+
+public import Mathlib
+public import Theorem.WeierstrassCurve.FreyPackage
+public import Def.FLTPrelim_ModularRep
+public import Def.FreyPackage_LevelRaising
+public import Def.RibetLevelLowering_ExchangeData
+
+@[expose] public section
 
 open WeierstrassCurve CuspForm
 open scoped CongruenceSubgroup

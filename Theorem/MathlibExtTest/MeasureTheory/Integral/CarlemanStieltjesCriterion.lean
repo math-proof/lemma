@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/MeasureTheory/Integral/CarlemanStieltjesCriterion.lean -/
+module
 
-
-import Def.MeasureTheory.Integral.CarlemanStieltjesCriterion
-import Theorem.Measure.Integral.CarlemanStieltjesCriterion
+public import Def.MeasureTheory.Integral.CarlemanStieltjesCriterion
+public import Theorem.Measure.Integral.CarlemanStieltjesCriterion
 open MeasureTheory Set
 open scoped BigOperators
 
+public section
 
 namespace MathlibExtTest.MeasureTheory.Integral.CarlemanStieltjesCriterion
 

@@ -8,19 +8,22 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Nat.Totient
-import Mathlib.Data.ZMod.Basic
-import Mathlib.RingTheory.Multiplicity
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.Order.Interval.Finset.Nat
-import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.Data.Real.Sqrt
-import Mathlib.Data.Int.GCD
-import Mathlib.GroupTheory.OrderOfElement
-import Def.v1.Atlas.EllipticCurves.code.PointCounting.Part2
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.PointCounting
+module
 
+public import Mathlib.Data.Nat.Totient
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.RingTheory.Multiplicity
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.Order.Interval.Finset.Nat
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.Data.Real.Sqrt
+public import Mathlib.Data.Int.GCD
+public import Mathlib.GroupTheory.OrderOfElement
+public import Def.v1.Atlas.EllipticCurves.code.PointCounting.Part2
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.PointCounting
+
+@[expose] public section
 
 /-- `N` is a Carmichael number if it is a composite integer greater than `1`
 for which every unit `a` in `ZMod N` satisfies `a ^ (N - 1) = 1`. -/

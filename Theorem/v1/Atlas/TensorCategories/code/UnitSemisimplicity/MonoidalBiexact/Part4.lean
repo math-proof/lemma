@@ -7,36 +7,39 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.CategoryTheory.Monoidal.Category
-import Mathlib.CategoryTheory.Endomorphism
-import Mathlib.Tactic.CategoryTheory.Monoidal.PureCoherence
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
-import Mathlib.CategoryTheory.Simple
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Limits.Shapes.Biproducts
-import Mathlib.CategoryTheory.Monoidal.Preadditive
-import Mathlib.CategoryTheory.Preadditive.Biproducts
-import Mathlib.CategoryTheory.Linear.Basic
-import Mathlib.CategoryTheory.Monoidal.Linear
-import Mathlib.CategoryTheory.Preadditive.Schur
-import Mathlib.RingTheory.SimpleModule.Basic
-import Mathlib.RingTheory.SimpleModule.WedderburnArtin
-import Mathlib.RingTheory.SimpleRing.Matrix
-import Mathlib.RingTheory.SimpleRing.Field
-import Mathlib.RingTheory.Artinian.Module
-import Mathlib.CategoryTheory.Subobject.ArtinianObject
-import Mathlib.RingTheory.Idempotents
-import Mathlib.CategoryTheory.Idempotents.Basic
-import Mathlib.CategoryTheory.Adjunction.Limits
-import Mathlib.CategoryTheory.Limits.Constructions.EpiMono
-import Mathlib.CategoryTheory.Limits.Preserves.Finite
-import Mathlib.Tactic.CategoryTheory.Slice
-import Mathlib.CategoryTheory.Monoidal.Braided.Basic
-import Instance.v1.Atlas.TensorCategories.code.UnitSemisimplicity.MonoidalBiexact.Part3
+public import Mathlib.CategoryTheory.Monoidal.Category
+public import Mathlib.CategoryTheory.Endomorphism
+public import Mathlib.Tactic.CategoryTheory.Monoidal.PureCoherence
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+public import Mathlib.CategoryTheory.Simple
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Limits.Shapes.Biproducts
+public import Mathlib.CategoryTheory.Monoidal.Preadditive
+public import Mathlib.CategoryTheory.Preadditive.Biproducts
+public import Mathlib.CategoryTheory.Linear.Basic
+public import Mathlib.CategoryTheory.Monoidal.Linear
+public import Mathlib.CategoryTheory.Preadditive.Schur
+public import Mathlib.RingTheory.SimpleModule.Basic
+public import Mathlib.RingTheory.SimpleModule.WedderburnArtin
+public import Mathlib.RingTheory.SimpleRing.Matrix
+public import Mathlib.RingTheory.SimpleRing.Field
+public import Mathlib.RingTheory.Artinian.Module
+public import Mathlib.CategoryTheory.Subobject.ArtinianObject
+public import Mathlib.RingTheory.Idempotents
+public import Mathlib.CategoryTheory.Idempotents.Basic
+public import Mathlib.CategoryTheory.Adjunction.Limits
+public import Mathlib.CategoryTheory.Limits.Constructions.EpiMono
+public import Mathlib.CategoryTheory.Limits.Preserves.Finite
+public import Mathlib.Tactic.CategoryTheory.Slice
+public import Mathlib.CategoryTheory.Monoidal.Braided.Basic
+public import Instance.v1.Atlas.TensorCategories.code.UnitSemisimplicity.MonoidalBiexact.Part3
 set_option maxHeartbeats 800000
 
 open CategoryTheory MonoidalCategory Category CategoryTheory.Limits
+
+public section
 
 universe v u w
 

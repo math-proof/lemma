@@ -1,10 +1,13 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_JZeroSemistableSpecialization.lean: instance decls only.
-import Lemma.ResidueField.GluedPic0
-import Lemma.Scheme.GluedPic0Functoriality
-import Instance.ModularCurve_ArithmeticGalois
-import Lemma.HahnSeries.JqCoeff
-import Def.HeckeGalois_EichlerShimura
-import Theorem.Finset.ComponentGroup
+module
+
+public import Theorem.ResidueField.GluedPic0
+public import Theorem.Scheme.GluedPic0Functoriality
+public import Instance.ModularCurve_ArithmeticGalois
+public import Theorem.HahnSeries.JqCoeff
+public import Def.HeckeGalois_EichlerShimura
+public import Theorem.Finset.ComponentGroup
+@[expose] public section
 
 noncomputable section
 

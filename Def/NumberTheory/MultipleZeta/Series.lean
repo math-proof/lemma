@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/Series.lean -/
 
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Topology.Algebra.Ring.Real
-import Theorem.NumberTheory.MultipleZeta.Index.Part2
-import Theorem.Nat.MultipleZeta.Index
+module
+
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Topology.Algebra.Ring.Real
+public import Theorem.NumberTheory.MultipleZeta.Index.Part2
+public import Theorem.Nat.MultipleZeta.Index
+
+@[expose] public section
+
 /-!
 # Multiple-zeta and multiple-zeta-star series
 

@@ -7,17 +7,19 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib.NumberTheory.Padics.PadicVal.Basic
-import Mathlib.NumberTheory.Padics.Hensel
-import Mathlib.NumberTheory.Padics.RingHoms
-import Mathlib.RingTheory.Polynomial.Basic
-import Mathlib.Tactic.LinearCombination
-import Def.v1.Atlas.ArithmeticGeometry.code.HilbertSymbol.Part2
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertSymbol
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Mathlib.NumberTheory.Padics.PadicVal.Basic
+public import Mathlib.NumberTheory.Padics.Hensel
+public import Mathlib.NumberTheory.Padics.RingHoms
+public import Mathlib.RingTheory.Polynomial.Basic
+public import Mathlib.Tactic.LinearCombination
+public import Def.v1.Atlas.ArithmeticGeometry.code.HilbertSymbol.Part2
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertSymbol
 open Polynomial PadicInt HilbertSymbol
 
+public section
 
 noncomputable section
 

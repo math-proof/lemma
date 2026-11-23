@@ -2,7 +2,8 @@
 import Mathlib
 import Def.GaloisRep_Flat
 import Def.FLTPrelim_Ramification
-import Lemma.AlgHom.InertiaRing
+import Theorem.AlgHom.InertiaRing
+import Def.AlgHom_InertiaRing
 
 set_option autoImplicit false
 

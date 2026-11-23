@@ -21,6 +21,20 @@ export function jsonHead(name) {
     return s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
 }
 
+/** Render a `toJSON` tree as `Head(child)(child)`, skipping the empty slots. */
+function fingerprintFormat(json) {
+    if (json == null || json === '') return '';
+    if (typeof json === 'string') return json;
+    if (Array.isArray(json)) return json.map(fingerprintFormat).join('');
+    const head = Object.keys(json)[0];
+    const children = json[head];
+    if (!Array.isArray(children)) return head;
+    return head + children.map((c) => {
+        const s = fingerprintFormat(c);
+        return s === '' ? '' : `(${s})`;
+    }).join('');
+}
+
 export class Lean extends IndentedNode {
     /**
      * Every registered Lean AST class, keyed by `cls.name`. Classes that are not base classes
@@ -75,6 +89,15 @@ export class Lean extends IndentedNode {
     get pathToken() {
         const n = (this.constructor?.name || '').replace(/^Lean_?/, '');
         return n ? n.charAt(0).toUpperCase() + n.slice(1) : '';
+    }
+
+    /**
+     * Structural fingerprint in `toJSON` shape, with free leaves named by first appearance
+     * (`√a + b²` → `Add(Sqrt($1))(Square($2))`, `√a + a²` → `Add(Sqrt($1))(Square($1))`)
+     * and bound variables as De Bruijn `?0`, `?1`, … (`?0` is the nearest binder).
+     */
+    get fingerprint() {
+        return fingerprintFormat(this.toJSON({ leaves: new Map(), binders: [] }));
     }
 
     get level() {

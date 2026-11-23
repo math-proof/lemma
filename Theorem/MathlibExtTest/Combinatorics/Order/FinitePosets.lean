@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Order/FinitePosets.lean -/
+module
 
-
-import Def.Combinatorics.Order.FinitePosets
-import Theorem.Finset.Order.FinitePosets
-import Mathlib.Tactic
+public import Def.Combinatorics.Order.FinitePosets
+public import Theorem.Finset.Order.FinitePosets
+public import Mathlib.Tactic
 open MathlibExt.Combinatorics.Order.FinitePosets
 
+public section
 
 /-- The migrated theorem retains the exact former Wanted signature. -/
 example {α : Type*} [Fintype α] [DecidableEq α] [PartialOrder α] :

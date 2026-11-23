@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.ArithmeticGeometry.code.AffineVarieties.Part5
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.AffineVarieties
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.AffineVarieties
 public import Mathlib.RingTheory.Localization.FractionRing
 public import Mathlib.CategoryTheory.Category.Basic
 public import Mathlib.CategoryTheory.Functor.Basic

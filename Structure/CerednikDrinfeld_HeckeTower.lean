@@ -1,6 +1,7 @@
 module
 
-public import Lemma.Scheme.Correspondence
+public import Def.AlgebraicCurve_Correspondence
+public import Theorem.Scheme.Correspondence
 public import Instance.AlgebraicCurve_IsCurveOver
 public import Abbrev.CerednikDrinfeld_HeckeTower
 public import Instance.CerednikDrinfeld_HeckeTower

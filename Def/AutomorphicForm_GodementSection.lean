@@ -1,6 +1,10 @@
-import Def.NumberField_AdelicFourier
-import Def.NumberField_TateGlobalZeta
-import Def.AutomorphicForm_EtaFamily
+module
+
+public import Def.NumberField_AdelicFourier
+public import Def.NumberField_TateGlobalZeta
+public import Def.AutomorphicForm_EtaFamily
+
+@[expose] public section
 
 open NumberField IsDedekindDomain MeasureTheory
 open scoped SchwartzMap

@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.ArithmeticGeometry.code.WeilChatelet.Part2
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.WeilChatelet
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.GaloisCohomology
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.WeilChatelet
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.GaloisCohomology
 import Abbrev.v1.Atlas.ArithmeticGeometry.code.GaloisCohomology.Part3
 import Structure.v1.Atlas.ArithmeticGeometry.code.WCGroupH1
 

@@ -1,14 +1,17 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Ramanujan/Part1Ch7Entry10Zetaviabernoulli.lean -/
+module
 
+public import Abbrev.Analysis.Ramanujan.Part1Ch7Entry10Zetaviabernoulli
+public import Theorem.Real.Ramanujan.Part1Ch7Entry10Zetaviabernoulli
 
-import Abbrev.Analysis.Ramanujan.Part1Ch7Entry10Zetaviabernoulli
-import Lemma.Real.Ramanujan.Part1Ch7Entry10Zetaviabernoulli
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 7, Entry 10 corollary API checks
 
 Both sides at `n = 1` and `n = 2`, trivial power-difference terms, admissibility of `-k/n`, and
 the identity at `r = -2`.
 -/
+
+public section
 
 
 namespace MathlibExtTest.Analysis.Ramanujan.Part1Ch7Entry10Zetaviabernoulli

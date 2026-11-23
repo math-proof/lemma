@@ -7,11 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.ShermanLoop
-import Def.StatisticalMechanics.Code.Onsager.ShermanLemma4
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.ShermanLoop
+public import Def.StatisticalMechanics.Code.Onsager.ShermanLemma4
 
+public section
 
 namespace StatMech.Onsager
 

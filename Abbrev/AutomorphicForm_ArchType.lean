@@ -1,4 +1,6 @@
-import Lemma.Matrix.RowIsometryInvariance
+module
+
+public import Theorem.Matrix.RowIsometryInvariance
 
 open AutomorphicForm AutomorphicForm.WindowedSiegel NumberField AdelicLevel IsDedekindDomain Matrix
 
@@ -10,7 +12,7 @@ section MatrixFurniture
 
 variable (F : Type) [Field F]
 
-noncomputable section
+@[expose] public noncomputable section
 
 abbrev archMatrixPiEquiv :
     Matrix (Fin 2) (Fin 2) (InfiniteAdeleRing F) ≃+* Π w : InfinitePlace F,

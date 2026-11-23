@@ -6,7 +6,7 @@ import Lemma.Scheme.CurveModel
 import Lemma.LaurentSeries.GeometricBaseChange
 import Lemma.LaurentSeries.ArithmeticGalois
 import Theorem.Nat.PlaceWidthChar
-import Lemma.LaurentSeries.CoeffSemilinearAut
+import Theorem.LaurentSeries.CoeffSemilinearAut
 import Theorem.Scheme.NeronModelPropertyBundleCarrier
 import Structure.ModularCurve_DRModelPackageLevel
 import Abbrev.ModularCurve_DRModelPackageLevel

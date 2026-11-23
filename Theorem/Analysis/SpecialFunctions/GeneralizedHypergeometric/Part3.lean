@@ -1,6 +1,9 @@
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.SpecialFunctions.OrdinaryHypergeometric
-import Def.Analysis.SpecialFunctions.GeneralizedHypergeometric.Part4
+module
+
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Analysis.SpecialFunctions.OrdinaryHypergeometric
+public import Def.Analysis.SpecialFunctions.GeneralizedHypergeometric.Part4
+
 /-!
 # Generalized hypergeometric series `ₚF_q`
 
@@ -86,6 +89,8 @@ of `ascPochhammer_eval_neg_coe_nat_of_lt` and needs no admissibility.
 * [A proof of a weighted sum conjecture for finite multiple zeta values of level
   two](https://arxiv.org/abs/2608.10675)
 -/
+
+public section
 
 
 namespace MetaMathlibExt.GeneralizedHypergeometric

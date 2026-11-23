@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Geometry/Euclidean/Hinge.lean -/
+module
 
+public import Theorem.Set.Euclidean.Hinge
 
-import Theorem.Set.Euclidean.Hinge
-
+public section
 
 namespace MetaMathlibExt
 

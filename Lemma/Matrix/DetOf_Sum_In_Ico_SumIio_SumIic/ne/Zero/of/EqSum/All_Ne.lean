@@ -5,6 +5,7 @@ import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.Order.Interval.Finset.Fin
 import Syntax.LinearAlgebra.Matrix.Notation
 import Theorem.Function
+open scoped Matrix
 open Matrix Finset
 
 
@@ -20,7 +21,7 @@ private lemma main
   (hdist : ∀ i j : Fin r, i ≠ j → x[i] ≠ x[j])
   (hsum : ∑ k : Fin r, d[k] = n) :
 -- imply
-  ([t < n, i < n]
+  ([t < n][i < n]
     ∑ k : Fin r,
       if (i : ℕ) ∈ Finset.Ico (∑ j ∈ Finset.Iio k, d[j]) (∑ j ∈ Finset.Iic k, d[j]) then
         (t : ℕ).descFactorial (i - ∑ j ∈ Finset.Iio k, d[j]) *

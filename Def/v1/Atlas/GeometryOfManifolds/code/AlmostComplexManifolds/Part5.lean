@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
 import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.CompatibleComplexStructures
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.CompatibleComplexStructures
 import Theorem.v1.Atlas.GeometryOfManifolds.code.CompatibleComplexStructures
 import Class.v1.Atlas.GeometryOfManifolds.code.TangentBundleDFS
 import Mathlib.Geometry.Manifold.IsManifold.Basic

@@ -1,11 +1,12 @@
 -- Carved from Lemma/Definitions/Def_Dieudonne_WittKernelHopf.lean: instance decls only.
 import Mathlib
-import Lemma.LinearMap.DatumAndHonda
+import Theorem.LinearMap.DatumAndHonda
 import Instance.Dieudonne_WittVectorHom
 import Instance.Dieudonne_WittHomColimit
 import Instance.Dieudonne_WittGroupHopf
 import Class.HopfAlgebra_HopfIdealQuotient
-import Lemma.Ideal.WittKernelHopf
+import Theorem.Ideal.WittKernelHopf
+import Def.Ideal_WittKernelHopf
 
 set_option autoImplicit false
 

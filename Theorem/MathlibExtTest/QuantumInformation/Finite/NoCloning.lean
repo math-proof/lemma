@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/QuantumInformation/Finite/NoCloning.lean -/
+module
 
-
-import Theorem.Matrix.Finite.NoCloning
+public import Theorem.Matrix.Finite.NoCloning
 open scoped InnerProductSpace TensorProduct
 
 /-!
@@ -11,6 +11,8 @@ Exact-statement exercise for `NoCloning.no_cloning_two_state`, plus the identica
 boundary case: a unit vector paired with itself has `‖⟪ψ, ψ⟫‖ = 1`, so the strict
 `0 < ‖·‖ < 1` obstruction hypothesis can never fire.
 -/
+
+public section
 
 
 namespace NoCloningTest

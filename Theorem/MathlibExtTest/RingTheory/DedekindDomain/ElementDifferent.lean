@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/DedekindDomain/ElementDifferent.lean -/
+module
 
-
-import Def.RingTheory.DedekindDomain.ElementDifferent
-import Theorem.Int.DedekindDomain.ElementDifferent
+public import Def.RingTheory.DedekindDomain.ElementDifferent
+public import Theorem.Int.DedekindDomain.ElementDifferent
 set_option autoImplicit false
+
+public section
 
 variable (A K L : Type*) {B : Type*}
   [CommRing A] [Field K] [CommRing B] [Field L]

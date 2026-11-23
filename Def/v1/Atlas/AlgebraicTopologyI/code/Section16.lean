@@ -10,9 +10,9 @@ LICENSE file in the root directory of this source tree.
 
 import Mathlib.GroupTheory.FreeAbelianGroup
 import Instance.v1.Atlas.AlgebraicTopologyI.code.Section15
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section15
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section1
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section10
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section15
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section1
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section10
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section1.Part3
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section10.Part24
 import Mathlib.CategoryTheory.Limits.Shapes.ZeroObjects

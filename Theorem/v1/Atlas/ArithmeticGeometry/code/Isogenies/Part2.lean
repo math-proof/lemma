@@ -18,7 +18,7 @@ import Mathlib.RingTheory.Algebraic.Defs
 import Mathlib.FieldTheory.Separable
 import Mathlib.FieldTheory.PurelyInseparable.Basic
 import Def.v1.Atlas.ArithmeticGeometry.code.EllipticCurves.Part7
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.EllipticCurves
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.EllipticCurves
 import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.PadicElliptic
 import Mathlib.NumberTheory.Padics.PadicNumbers
 import Mathlib.NumberTheory.Padics.PadicVal.Basic

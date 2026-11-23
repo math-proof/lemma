@@ -1,7 +1,12 @@
-import Lemma.Finset.SupersingularNodePlaces
-import Lemma.LaurentSeries.CoeffSemilinearAut
-import Lemma.Submodule.Repartitions
-import Structure.ModularCurve_ProlongationTuple
+module
+
+public import Theorem.Finset.SupersingularNodePlaces
+public import Theorem.LaurentSeries.CoeffSemilinearAut
+public import Theorem.Submodule.Repartitions
+public import Structure.ModularCurve_ProlongationTuple
+
+@[expose] public section
+
 set_option synthInstance.maxHeartbeats 400000
 set_option maxHeartbeats 800000
 set_option Elab.async false

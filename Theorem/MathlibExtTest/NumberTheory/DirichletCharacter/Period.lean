@@ -1,14 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/Period.lean -/
+module
 
-
-import Def.NumberTheory.DirichletCharacter.Period
-import Theorem.Nat.DirichletCharacter.Period
-import Mathlib.Data.Complex.Basic
+public import Def.NumberTheory.DirichletCharacter.Period
+public import Theorem.Nat.DirichletCharacter.Period
+public import Mathlib.Data.Complex.Basic
 open MonoidHom
 
 /-!
 # Tests for Dirichlet character periods (ATLAS `NumberTheoryI` Lemma 18.8)
 -/
+
+public section
 
 
 /-- Regression: the constant-one map has least period `1`. -/

@@ -1,5 +1,6 @@
 import Def.Analysis.SpecialFunctions.Trigonometric.Part2
-import Lemma.Complex.Norm.eq.Sqrt
+import Initialize.Tactic.Attr.Basic
+import Notation.Algebra.Power
 open Complex
 
 
@@ -13,7 +14,7 @@ private lemma main
     else
       re z / √((re z)² + (im z)²) := by
 -- proof
-  rw [← Norm.eq.Sqrt (z := z)]
+  rw [← Complex.norm_eq_sqrt_sq_add_sq]
   split_ifs with h
   ·
     rw [h, arg_zero, Real.cos_zero]
@@ -22,4 +23,4 @@ private lemma main
 
 
 -- created on 2018-06-12
--- updated on 2026-08-21
+-- updated on 2026-11-22

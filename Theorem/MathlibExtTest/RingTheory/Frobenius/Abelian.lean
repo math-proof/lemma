@@ -1,10 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/Frobenius/Abelian.lean -/
+module
 
+public import Theorem.RingTheory.Frobenius.Abelian
+public import Theorem.Int.Frobenius.Abelian
+public import Mathlib.FieldTheory.Galois.Abelian
+public import Mathlib.NumberTheory.NumberField.Basic
 
-import Theorem.RingTheory.Frobenius.Abelian
-import Theorem.Int.Frobenius.Abelian
-import Mathlib.FieldTheory.Galois.Abelian
-import Mathlib.NumberTheory.NumberField.Basic
+public section
+
 variable {R S G : Type*} [CommRing R] [CommRing S] [Algebra R S]
   [Group G] [MulSemiringAction G S] [SMulCommClass G R S]
   [Finite G] [Algebra.IsInvariant R S G]

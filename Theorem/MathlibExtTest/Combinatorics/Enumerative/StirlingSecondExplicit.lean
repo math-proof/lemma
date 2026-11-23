@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/StirlingSecondExplicit.lean -/
+module
 
-
-import Theorem.Finset.Enumerative.StirlingSecondExplicit
+public import Theorem.Finset.Enumerative.StirlingSecondExplicit
 open scoped BigOperators
 
+public section
 
 namespace MetaMathlibExt
 

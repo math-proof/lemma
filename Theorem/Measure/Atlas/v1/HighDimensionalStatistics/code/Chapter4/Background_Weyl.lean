@@ -1,0 +1,28 @@
+module
+
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Background_Weyl
+
+public section
+
+open Matrix Real Finset
+
+
+/--
+[matrixOpNorm_neg_sub](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter4/Background_Weyl.lean)
+-/
+@[path]
+public theorem matrixOpNorm_neg_sub
+  {d T : ℕ}
+  {A B : Matrix (Fin d) (Fin T) ℝ} :
+-- imply
+  matrixOpNorm (B - A) = matrixOpNorm (A - B) := by
+-- proof
+  unfold matrixOpNorm
+  rw [show B - A = -(A - B) from (neg_sub A B).symm, map_neg,
+    show (-toEuclideanLin (A - B)).toContinuousLinearMap =
+      -(toEuclideanLin (A - B)).toContinuousLinearMap from map_neg _ _,
+    ContinuousLinearMap.opNorm_neg]
+
+-- created on 2026-10-23

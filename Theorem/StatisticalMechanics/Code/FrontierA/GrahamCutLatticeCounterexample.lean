@@ -7,12 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib
-import Instance.StatisticalMechanics.Code.FrontierA.GrahamCutLatticeCounterexample.Part3
+public import Mathlib
+public import Instance.StatisticalMechanics.Code.FrontierA.GrahamCutLatticeCounterexample.Part3
 open Finset
 
+public section
 
 namespace StatMech.FrontierA
 

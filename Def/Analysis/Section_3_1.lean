@@ -1,5 +1,10 @@
-import Mathlib
-import Instance.Analysis.Section_3_1.Part3
+module
+
+public import Mathlib
+public import Instance.Analysis.Section_3_1.Part3
+
+@[expose] public section
+
 set_option doc.verso.suggestions false
 
 /-!

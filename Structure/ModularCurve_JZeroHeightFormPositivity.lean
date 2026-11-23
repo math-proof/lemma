@@ -1,6 +1,7 @@
 module
 
-public import Lemma.Finsupp.JZeroHeightForm
+public import Def.AlgebraicCurve_JZeroHeightForm
+public import Theorem.Finsupp.JZeroHeightForm
 public import Instance.Compat_Mathlib430
 public import Def.ModularCurve_JZeroHeightFormPositivity
 public section

@@ -1,11 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/PiFieldDecomposition.lean -/
 
 -- MathlibExtTest/RingTheory/PiFieldDecomposition.lean
+module
 
-import Def.RingTheory.PiFieldDecomposition
-import Lemma.Int.PiFieldDecomposition
+public import Def.RingTheory.PiFieldDecomposition
+public import Theorem.Int.PiFieldDecomposition
 open PiFieldQuotient
 
+public section
 
 /-- Identity on the two-factor product preserves both factors and their multiplicity. -/
 example :

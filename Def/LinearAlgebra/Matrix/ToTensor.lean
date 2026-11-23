@@ -1,9 +1,12 @@
-import Mathlib.Data.Matrix.Basic
-import Def.Data.Tensor.Stack.Part2
-import Def.Data.Tensor.Tensor.Part2
-import Def.Data.Tensor.Item
-import Instance.Data.Tensor.Defs.Part3
+module
 
+public import Mathlib.Data.Matrix.Basic
+public import Def.Data.Tensor.Stack.Part2
+public import Def.Data.Tensor.Tensor.Part2
+public import Def.Data.Tensor.Item
+public import Instance.Data.Tensor.Defs.Part3
+
+@[expose] public section
 
 /-- Rank-2 tensor whose entries are the matrix entries, row by row. -/
 def Matrix.toTensor {m n : ℕ} {α : Type*} (A : Matrix (Fin m) (Fin n) α) : Tensor α [m, n] :=

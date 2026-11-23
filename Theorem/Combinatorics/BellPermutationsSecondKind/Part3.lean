@@ -1,13 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/BellPermutationsSecondKind.lean -/
+module
 
-import Mathlib.Combinatorics.Enumerative.Stirling
-import Mathlib.Data.List.FinRange
-import Mathlib.GroupTheory.Perm.Basic
-import Mathlib.SetTheory.Cardinal.Finite
-import Mathlib.Order.Interval.Finset.Fin
-import Mathlib.Tactic.Ring
-import Def.Combinatorics.BellPermutationsSecondKind.Part3
+public import Mathlib.Combinatorics.Enumerative.Stirling
+public import Mathlib.Data.List.FinRange
+public import Mathlib.GroupTheory.Perm.Basic
+public import Mathlib.SetTheory.Cardinal.Finite
+public import Mathlib.Order.Interval.Finset.Fin
+public import Mathlib.Tactic.Ring
+public import Def.Combinatorics.BellPermutationsSecondKind.Part3
 
+public section
 
 namespace MetaMathlibExt
 

@@ -1,5 +1,9 @@
-import Abbrev.AlgebraicCurve_Correspondence
-import Lemma.Scheme.IsCurveOver
+module
+
+public import Abbrev.AlgebraicCurve_Correspondence
+public import Theorem.Scheme.IsCurveOver
+
+@[expose] public section
 
 set_option autoImplicit false
 

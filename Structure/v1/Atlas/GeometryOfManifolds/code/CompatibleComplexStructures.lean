@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Theorem.v1.Atlas.GeometryOfManifolds.code.SymplecticStandardBasis
-public import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticStandardBasis
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticStandardBasis
 public section
 
 set_option autoImplicit false

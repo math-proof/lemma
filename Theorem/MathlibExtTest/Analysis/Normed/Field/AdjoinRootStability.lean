@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Normed/Field/AdjoinRootStability.lean -/
+module
 
-
-import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
-import Theorem.Polynomial.Normed.Field.AdjoinRootStability
+public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+public import Theorem.Polynomial.Normed.Field.AdjoinRootStability
 open Polynomial
 open scoped Polynomial Valued
+
+public section
 
 #check @Polynomial.exists_pos_adjoinRoot_algEquiv_of_l1Norm_sub_lt
 

@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Exact3D.FiniteHardField.Part2
+module
+
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Exact3D.FiniteHardField.Part2
+
+@[expose] public section
+
 open Filter
 open scoped BigOperators Topology
 

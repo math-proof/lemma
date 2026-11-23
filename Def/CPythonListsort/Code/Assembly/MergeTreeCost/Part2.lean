@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergeTreeCost.lean -/
 
-import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
-import Def.CPythonListsort.Code.Assembly.MergeCost.Part3
-import Instance.CPythonListsort.Code.Assembly.MergeTreeCost
+module
+
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
+public import Def.CPythonListsort.Code.Assembly.MergeCost.Part3
+public import Instance.CPythonListsort.Code.Assembly.MergeTreeCost
+
+@[expose] public section
+
 /-!
 # Logical merge replay and final-collapse cost dominance
 

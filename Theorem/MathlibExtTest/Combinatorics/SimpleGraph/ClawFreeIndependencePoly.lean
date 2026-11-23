@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/ClawFreeIndependencePoly.lean -/
+module
 
+public import Def.Combinatorics.SimpleGraph.ClawFreeIndependencePoly
+public import Theorem.SimpleGraph.ClawFreeIndependencePoly
 
-import Def.Combinatorics.SimpleGraph.ClawFreeIndependencePoly
-import Theorem.SimpleGraph.ClawFreeIndependencePoly
-
+public section
 
 -- The empty graph on `Fin 3` is claw-free: no vertex has any neighbours.
 example : MetaMathlibExt.clawFree (⊥ : SimpleGraph (Fin 3)) := by

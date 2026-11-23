@@ -1,34 +1,36 @@
-import Instance.Analysis.Section_2_2.Part2
-import Lemma.Nat.Eq0Add
-import Lemma.Nat.Eq_Add
-import Lemma.Nat.EqAdd1
-import Lemma.Nat.EqAdd2
-import Lemma.Nat.Eq_Add0
-import Lemma.Nat.AddEqAdd
-import Lemma.Nat.EqAddAdd
-import Lemma.Nat.Eq.of.Add
-import Lemma.Nat.IsPos.is.Ne_0
-import Lemma.Nat.IsPosAdd.of.IsPos
-import Lemma.Nat.Add.of.IsPos
-import Lemma.Nat.Eq_0.Eq_0.of.EqAdd_0
-import Lemma.Nat.Le.is.Any_Eq_Add
-import Lemma.Nat.Lt.is.Any_Eq_AddAndNe
-import Lemma.Nat.GeIffLe
-import Lemma.Nat.GtIffLt
-import Lemma.Nat.Le.of.Lt_Nat_le_of_lt
-import Lemma.Nat.Le.is.LtOrEq
-import Lemma.Nat.Le_Nat_le_refl
-import Lemma.Nat.Le.of.Le.Le_Nat_le_trans
-import Lemma.Nat.Ge.is.Add.ge.Add
-import Lemma.Nat.Le.is.Add.le.Add
-import Lemma.Nat.IffLeLeAdd
-import Lemma.Nat.Ne_Nat_ne_of_lt
-import Lemma.Nat.Ne_Nat_ne_of_gt
-import Lemma.Nat.False_Nat_not_lt_of_gt
-import Lemma.Nat.False.of.Lt
-import Lemma.Nat.Lt.of.Lt.Le_Nat_lt_of_le_of_lt
-import Abbrev.Analysis.Section_2_2_api
+module
 
+public import Instance.Analysis.Section_2_2.Part2
+public import Theorem.Nat.Eq0Add
+public import Theorem.Nat.Eq_Add
+public import Theorem.Nat.EqAdd1
+public import Theorem.Nat.EqAdd2
+public import Theorem.Nat.Eq_Add0
+public import Theorem.Nat.AddEqAdd
+public import Theorem.Nat.EqAddAdd
+public import Theorem.Nat.Eq.of.Add
+public import Theorem.Nat.IsPos.is.Ne_0
+public import Theorem.Nat.IsPosAdd.of.IsPos
+public import Theorem.Nat.Add.of.IsPos
+public import Theorem.Nat.Eq_0.Eq_0.of.EqAdd_0
+public import Theorem.Nat.Le.is.Any_Eq_Add
+public import Theorem.Nat.Lt.is.Any_Eq_AddAndNe
+public import Theorem.Nat.GeIffLe
+public import Theorem.Nat.GtIffLt
+public import Theorem.Nat.Le.of.Lt_Nat_le_of_lt
+public import Theorem.Nat.Le.is.LtOrEq
+public import Theorem.Nat.Le_Nat_le_refl
+public import Theorem.Nat.Le.of.Le.Le_Nat_le_trans
+public import Theorem.Nat.Ge.is.Add.ge.Add
+public import Theorem.Nat.Le.is.Add.le.Add
+public import Theorem.Nat.IffLeLeAdd
+public import Theorem.Nat.Ne_Nat_ne_of_lt
+public import Theorem.Nat.Ne_Nat_ne_of_gt
+public import Theorem.Nat.False_Nat_not_lt_of_gt
+public import Theorem.Nat.False.of.Lt
+public import Theorem.Nat.Lt.of.Lt.Le_Nat_lt_of_le_of_lt
+public import Abbrev.Analysis.Section_2_2_api
+@[expose] public section
 
 namespace Chapter2
 

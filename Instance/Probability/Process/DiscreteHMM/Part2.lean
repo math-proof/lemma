@@ -1,4 +1,4 @@
-import Lemma.Random.SinglePSpace.of.All_Measurable.All_Measurable
+import Theorem.Random.SinglePSpace.of.All_Measurable.All_Measurable
 import Theorem.Random.SinglePSpace.of.Measurable.Measurable
 import Theorem.Random.SinglePSpace.of.Measurable
 import Def.Probability.Process.HiddenMarkovSequence.Part2

@@ -1,5 +1,5 @@
 import Def.LanglandsTunnell_JLConverse
-import Lemma.Matrix.SmoothingKernel
+import Theorem.Matrix.SmoothingKernel
 
 set_option autoImplicit false
 

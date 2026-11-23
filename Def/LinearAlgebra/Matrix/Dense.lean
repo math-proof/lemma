@@ -1,8 +1,13 @@
-import Mathlib.LinearAlgebra.Matrix.Defs
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.LinearAlgebra.Matrix.ToLin
-import Mathlib.LinearAlgebra.FiniteDimensional.Basic
-import Instance.Data.Tensor.Tensor.Part2
+module
+
+public import Mathlib.LinearAlgebra.Matrix.Defs
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Mathlib.LinearAlgebra.Matrix.ToLin
+public import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+public import Instance.Data.Tensor.Tensor.Part2
+
+@[expose] public section
+
 open scoped Matrix
 
 

@@ -3,15 +3,19 @@
 /-
 Author: @akiezun, Avocado
 -/
+module
 
-import Def.Analysis.Ramanujan.Part1Ch5Entry8Eulerianformula
-import Lemma.Real.Ramanujan.Part1Ch5Entry8Eulerianformula
+public import Def.Analysis.Ramanujan.Part1Ch5Entry8Eulerianformula
+public import Theorem.Real.Ramanujan.Part1Ch5Entry8Eulerianformula
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 5
 
 Compatibility alias for Entry 8 (historically misnumbered as Entry 3); the
 implementation lives in `Part1Ch5Entry8Eulerianformula.lean`.
 -/
+
+public section
 
 
 noncomputable section

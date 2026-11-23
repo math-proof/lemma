@@ -7,10 +7,11 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Structure.v1.Atlas.LieGroups.code.InfinitesimalEquivalenceCore.Part3
-import Lemma.Complex.DenseRange_ι
-import Theorem.Submodule.All_NormSubtype.of.All_EqinnerS
-import Theorem.v1.Atlas.LieGroups.code.InfinitesimalEquivalenceProposition71
+public import Structure.v1.Atlas.LieGroups.code.InfinitesimalEquivalenceCore.Part3
+public import Lemma.Complex.DenseRange_ι
+public import Theorem.Submodule.All_NormSubtype.of.All_EqinnerS
+public import Theorem.v1.Atlas.LieGroups.code.InfinitesimalEquivalenceProposition71
 
-
+public section

@@ -5,8 +5,6 @@ open Complex Module ZSpan Set ComplexLattice
 open Pointwise
 
 
-namespace ComplexLattice
-
 /--
 [linearIndependent](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Lattice.lean)
 -/
@@ -18,9 +16,6 @@ lemma linearIndependent
 -- proof
   L.indep
 
-end ComplexLattice
-
-namespace ComplexLattice
 
 variable (L : ComplexLattice)
 /--
@@ -30,9 +25,6 @@ variable (L : ComplexLattice)
 lemma ω₁_mem : L.ω₁ ∈ L.lattice :=
   L.ω₁_mem_lattice
 
-end ComplexLattice
-
-namespace ComplexLattice
 
 variable (L : ComplexLattice)
 /--
@@ -42,9 +34,6 @@ variable (L : ComplexLattice)
 lemma ω₂_mem : L.ω₂ ∈ L.lattice :=
   L.ω₂_mem_lattice
 
-end ComplexLattice
-
-namespace ComplexLattice
 
 /--
 [finrank_eq_two](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Lattice.lean)
@@ -57,9 +46,6 @@ lemma finrank_eq_two
 -- proof
   L.finrank_lattice
 
-end ComplexLattice
-
-namespace ComplexLattice
 
 /--
 [isClosed](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Lattice.lean)
@@ -72,9 +58,6 @@ lemma isClosed
 -- proof
   L.isClosed_lattice
 
-end ComplexLattice
-
-namespace ComplexLattice
 
 /--
 [linearIndependent_int](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Lattice.lean)
@@ -86,36 +69,29 @@ lemma linearIndependent_int
   ∀ (a b : ℤ), a • L.ω₁ + b • L.ω₂ = 0 → a = 0 ∧ b = 0 := by
 -- proof
   intro a b h
-  have hli := LinearIndependent.pair_iff.mp L.linearIndependent (a : ℝ) (b : ℝ)
+  have hli := LinearIndependent.pair_iff.mp (linearIndependent (L := L)) (a : ℝ) (b : ℝ)
   rw [Int.cast_smul_eq_zsmul ℝ, Int.cast_smul_eq_zsmul ℝ] at hli
   obtain ⟨ha, hb⟩ := hli h
   exact ⟨by exact_mod_cast ha, by exact_mod_cast hb⟩
 
-end ComplexLattice
-
-namespace ComplexLattice
 
 /--
-[IsHomothetic.refl](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Lattice.lean)
+[isHomothetic_refl](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Lattice.lean)
 -/
 @[path]
-lemma IsHomothetic.refl
+lemma isHomothetic_refl
   {L : ComplexLattice} :
 -- imply
   IsHomothetic L L :=
 -- proof
   ⟨1, one_ne_zero, (one_smul ℂ (L.lattice : Set ℂ)).symm⟩
 
-end ComplexLattice
-
-namespace ComplexLattice
 
 /--
-[IsHomothetic.symm](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Lattice.lean)
+[isHomothetic_symm](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Lattice.lean)
 -/
 @[path]
-lemma IsHomothetic.symm
-  {L : ComplexLattice}
+lemma isHomothetic_symm
   {L L' : ComplexLattice}
 -- given
   (h : IsHomothetic L L') :
@@ -125,16 +101,12 @@ lemma IsHomothetic.symm
   obtain ⟨c, hc, hcL⟩ := h
   exact ⟨c⁻¹, inv_ne_zero hc, by rw [hcL, inv_smul_smul₀ hc]⟩
 
-end ComplexLattice
-
-namespace ComplexLattice
 
 /--
-[IsHomothetic.trans](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Lattice.lean)
+[isHomothetic_trans](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Lattice.lean)
 -/
 @[path]
-lemma IsHomothetic.trans
-  {L : ComplexLattice}
+lemma isHomothetic_trans
   {L₁ L₂ L₃ : ComplexLattice}
 -- given
   (h₁₂ : IsHomothetic L₁ L₂)
@@ -146,24 +118,17 @@ lemma IsHomothetic.trans
   obtain ⟨c₂, hc₂, hc₂L⟩ := h₂₃
   exact ⟨c₂ * c₁, mul_ne_zero hc₂ hc₁, by rw [hc₂L, hc₁L, smul_smul]⟩
 
-end ComplexLattice
-
-namespace ComplexLattice
 
 /--
 [isHomothetic_equivalence](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Lattice.lean)
 -/
 @[path]
-lemma isHomothetic_equivalence
-  {L : ComplexLattice} :
+lemma isHomothetic_equivalence :
 -- imply
   Equivalence IsHomothetic :=
 -- proof
-  ⟨IsHomothetic.refl, fun h => h.symm, fun h₁ h₂ => h₁.trans h₂⟩
+  ⟨fun _ => isHomothetic_refl, isHomothetic_symm, isHomothetic_trans⟩
 
-end ComplexLattice
-
-namespace ComplexLattice
 
 /--
 [discriminantLattice_def](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Lattice.lean)
@@ -176,9 +141,6 @@ lemma discriminantLattice_def
 -- proof
   rfl
 
-end ComplexLattice
-
-namespace ComplexLattice
 
 /--
 [jInvariantLattice_def](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Lattice.lean)
@@ -191,9 +153,6 @@ lemma jInvariantLattice_def
 -- proof
   rfl
 
-end ComplexLattice
-
-namespace ComplexLattice
 
 /--
 [fundamentalParallelogram_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Lattice.lean)
@@ -206,9 +165,6 @@ lemma fundamentalParallelogram_zero
 -- proof
   simp [fundamentalParallelogram]
 
-end ComplexLattice
-
-namespace ComplexLattice
 
 /--
 [basis_repr_omega](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Lattice.lean)
@@ -227,9 +183,6 @@ lemma basis_repr_omega
   fin_cases i <;>
     simp [show (1 : Fin 2) ≠ 0 from by decide, show (0 : Fin 2) ≠ 1 from by decide]
 
-end ComplexLattice
-
-namespace ComplexLattice
 
 /--
 [mem_fundamentalParallelogram_iff](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Lattice.lean)
@@ -250,15 +203,15 @@ lemma mem_fundamentalParallelogram_iff
     refine ⟨h0.1, h0.2, h1.1, h1.2, ?_⟩
     have decomp : w = L.basis.repr w 0 • L.ω₁ + L.basis.repr w 1 • L.ω₂ := by
       have h := L.basis.sum_repr w
-      rwa [Fin.sum_univ_two, L.basis_zero, L.basis_one] at h
+      rw [Fin.sum_univ_two, L.basis_zero, L.basis_one] at h
+      exact h.symm
     conv_lhs => rw [decomp]
     ring
   · rintro ⟨t₁, t₂, ht₁0, ht₁1, ht₂0, ht₂1, rfl⟩
     refine ⟨t₁ • L.ω₁ + t₂ • L.ω₂, fun i => ?_, by ring⟩
-    rw [L.basis_repr_omega]
+    rw [basis_repr_omega (L := L)]
     fin_cases i <;> simp <;> constructor <;> linarith
 
-end ComplexLattice
 
 /--
 [mem_lattice_iff](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Lattice.lean)
@@ -274,3 +227,4 @@ private lemma mem_lattice_iff_eq
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-22

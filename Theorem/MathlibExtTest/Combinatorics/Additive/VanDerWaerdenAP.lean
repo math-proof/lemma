@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Additive/VanDerWaerdenAP.lean -/
+module
 
+public import Theorem.Finset.Additive.VanDerWaerdenAP
 
-import Theorem.Finset.Additive.VanDerWaerdenAP
-
+public section
 
 -- The finite interval theorem yields the infinite form for colorings of `ℕ`.
 example (r k : Nat) (hr : 0 < r) (hk : 0 < k) (c : Nat → Fin r) :

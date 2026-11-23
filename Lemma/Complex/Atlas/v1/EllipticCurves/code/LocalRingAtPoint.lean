@@ -4,8 +4,6 @@ import Def.v1.Atlas.EllipticCurves.code.LocalRingAtPoint
 open LocalRingAtPoint
 
 
-namespace LocalRingAtPoint
-
 /--
 [isRegularAt_iff](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/LocalRingAtPoint.lean)
 -/
@@ -21,15 +19,12 @@ lemma isRegularAt_iff
 -- proof
   Iff.rfl
 
-end LocalRingAtPoint
-
-namespace LocalRingAtPoint
 
 /--
 [algebraMap_mem](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/LocalRingAtPoint.lean)
 -/
 @[path]
-lemma algebraMap_mem
+lemma algebraMap_mem_toValuationSubring
   [Field k]
   [Field K]
   [Algebra k K]
@@ -43,7 +38,7 @@ lemma algebraMap_mem
   · rw [← P.toValuationSubring.valuation_le_one_iff]
     rw [P.valuation_trivial_on_k a ha]
 
-end LocalRingAtPoint
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-22

@@ -2,8 +2,12 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Theorem.Combinatorics.Enumerative.InclusionExclusion1
+module
+
+public import Mathlib
+public import Theorem.Combinatorics.Enumerative.InclusionExclusion1
+@[expose] public section
+
 open Finset BigOperators Nat
 
 /-!

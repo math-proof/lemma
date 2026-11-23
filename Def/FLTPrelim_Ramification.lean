@@ -1,7 +1,11 @@
-import Mathlib.RingTheory.Valuation.RamificationGroup
-import Mathlib.RingTheory.Valuation.ValuationSubring
-import Lemma.WeierstrassCurve.FreyPackage
-import Instance.FLTPrelim_GaloisRep
+module
+
+public import Mathlib.RingTheory.Valuation.RamificationGroup
+public import Mathlib.RingTheory.Valuation.ValuationSubring
+public import Theorem.WeierstrassCurve.FreyPackage
+public import Instance.FLTPrelim_GaloisRep
+
+@[expose] public section
 
 set_option autoImplicit false
 

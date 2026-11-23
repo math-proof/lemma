@@ -2,7 +2,7 @@
 
 
 import Def.NumberTheory.PrimeCounting.SquarefreeTotientWeighted
-import Lemma.Nat.PrimeCounting.SquarefreeTotientWeighted
+import Theorem.Nat.PrimeCounting.SquarefreeTotientWeighted
 import Mathlib.Tactic.NormNum
 
 

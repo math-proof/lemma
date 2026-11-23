@@ -407,7 +407,7 @@ SELECT
 FROM
     axiom.lemma
 where
-    user = "${this.user}" and module = "${module}" and json_length(lemma) > 0`;
+    module = "${module}" and json_length(lemma) > 0`;
                         console.log(sql);
                         var [{count}] = await form_post('php/request/execute.php', {sql, resultType: 1});
                     }
@@ -459,20 +459,26 @@ where
                 return false;
             var {by} = proof;
             if (by) {
-                for (var i of range(by.length - 1))
-                    if (!by[i].latex)
-                        return true;
+                // `let`/`set` bind local definitions; no echo is generated for
+                // them, so their latex stays null and never gets filled.
+                for (var i of range(by.length - 1)) {
+                    if (by[i].latex) continue;
+                    if (/^\s*(let|set)\b/.test(by[i].lean || '')) continue;
+                    return true;
+                }
             }
         },
 
         leanSourceCode(index) {
             var {module} = this;
             if (!module)
-                module = getParameterByName('module');
+                module = getParameterByName('module') || getParameterByName('lemma') || getParameterByName('theorem');
             var path = module.replace(/[.]/g, '/');
-            // `?lemma=` / `?theorem=` payloads already carry the `Lemma.` / `Theorem.` decl-library
-            // prefix; only Lemma-relative modules (`?module=Vector.…`) need it prepended.
-            return /^(Lemma|Theorem)\//.test(path) ? `${path}.lean` : `Lemma/${path}.lean`;
+            // Namespace only: Lemma/Theorem are repo folders, not part of the module name.
+            // `?lemma=` vs `?theorem=` matches the folder the file was resolved in.
+            if (/^(Lemma|Theorem)\//.test(path)) return `${path}.lean`;
+            var folder = getParameterByName('theorem') ? 'Theorem' : 'Lemma';
+            return `${folder}/${path}.lean`;
         },
 
         lemmaName(index) {
@@ -1490,7 +1496,7 @@ where
         },
 
         async fetch_proof(module) {
-            var {user} = this;
+            var key = module;
             var sql = `
 SELECT
     JSON_ARRAYAGG(
@@ -1503,8 +1509,8 @@ CROSS JOIN JSON_TABLE(
         proof JSON PATH '$.proof'
     )
 ) AS j
-WHERE l.user = '${user}' AND l.module = "${module}"
-GROUP BY l.user, l.module`;
+WHERE l.module = "${key}"
+GROUP BY l.module`;
             var rows = await form_post('php/request/execute.php', {sql, resultType: 1});
             if (!rows?.length)
                 return;
@@ -1568,23 +1574,33 @@ GROUP BY l.user, l.module`;
                     requestAnimationFrame(() => this.apply_location_hash());
                 });
             }
-            var {user} = this;
             meta = meta.error.length ? {error: meta.error} : null;
+            var errorLiteral = meta == null ? null : JSON.stringify(meta).mysqlStr();
+            var key = module;
             var sql = `
-replace into 
+insert into
     axiom.lemma
-    (user, module, imports, open, set_option, preamble, lemma, meta, date) 
+    (module, imports, open, set_option, preamble, lemma, meta, date) 
     values (
-        '${user}',
-        "${module}",
+        "${key}",
         ${JSON.stringify(imports).mysqlStr()},
         ${JSON.stringify(open).mysqlStr()},
         ${JSON.stringify(set_option).mysqlStr()},
         ${JSON.stringify(preamble).mysqlStr()},
         ${JSON.stringify(lemma).mysqlStr()},
-        ${meta == null ? 'NULL' : JSON.stringify(meta).mysqlStr()},
+        ${errorLiteral == null ? 'NULL' : errorLiteral},
         ${JSON.stringify(date).mysqlStr()}
     )
+    on duplicate key update
+        imports = values(imports),
+        open = values(open),
+        set_option = values(set_option),
+        preamble = values(preamble),
+        lemma = values(lemma),
+        meta = ${errorLiteral == null
+            ? "JSON_REMOVE(COALESCE(meta, JSON_OBJECT()), '$.error')"
+            : `JSON_SET(COALESCE(meta, JSON_OBJECT()), '$.error', ${errorLiteral})`},
+        date = values(date)
 `;
             console.log(sql);
             form_post('php/request/execute.php', {sql}).then(rowcount => {

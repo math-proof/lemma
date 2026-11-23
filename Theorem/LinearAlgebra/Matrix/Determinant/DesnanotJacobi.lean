@@ -2,11 +2,13 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.Data.Fin.SkipTwo
-import Def.LinearAlgebra.Matrix.Determinant.PermFinset
-import Theorem.Finset.PermFinset
-import Def.LinearAlgebra.Matrix.Determinant.DesnanotJacobi
+module
+
+public import Mathlib
+public import Def.Data.Fin.SkipTwo
+public import Def.LinearAlgebra.Matrix.Determinant.PermFinset
+public import Theorem.Finset.PermFinset
+public import Def.LinearAlgebra.Matrix.Determinant.DesnanotJacobi
 open Matrix BigOperators Finset
 
 /-!
@@ -64,6 +66,8 @@ Many of these results are already in Mathlib under `Matrix.det_vandermonde`, `Ma
 `Matrix.det_laplace_row`, etc. This file provides the statements matching the textbook
 presentation and connects them to Mathlib's API.
 -/
+
+public section
 
 
 /-!

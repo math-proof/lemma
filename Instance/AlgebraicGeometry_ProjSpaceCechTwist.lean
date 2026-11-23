@@ -1,6 +1,7 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ProjSpaceCechTwist.lean: instance decls only.
 import Mathlib
-import Lemma.LinearMap.ProjSpaceCechTwist
+import Theorem.LinearMap.ProjSpaceCechTwist
+import Def.AlgebraicGeometry_ProjSpaceCechTwist
 
 set_option autoImplicit false
 

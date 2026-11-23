@@ -3,15 +3,17 @@
 /-
 Author: @toskua, Avocado
 -/
+module
 
-
-import Def.NumberTheory.NumberField.Completion.FinitePlacesOverTensorProduct
-import Lemma.Nat.NumberField.Completion.FinitePlacesOverTensorProduct
+public import Def.NumberTheory.NumberField.Completion.FinitePlacesOverTensorProduct
+public import Theorem.Nat.NumberField.Completion.FinitePlacesOverTensorProduct
 open IsDedekindDomain
 open IsDedekindDomain.HeightOneSpectrum
 open scoped NumberField
 open TensorProduct
 open scoped IsDedekindDomain.HeightOneSpectrum.CompletionTensorProduct
+
+public section
 
 variable {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
 variable [Algebra K L] (v : HeightOneSpectrum (𝓞 K))

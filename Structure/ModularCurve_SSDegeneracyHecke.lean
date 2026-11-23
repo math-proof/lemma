@@ -1,6 +1,7 @@
 module
 
-public import Lemma.LaurentSeries.CharLDegeneracyHecke
+public import Def.AlgebraicCurve_CharLDegeneracyHecke
+public import Theorem.LaurentSeries.CharLDegeneracyHecke
 public import Def.ModularCurve_PlaceWidth
 public import Structure.CerednikDrinfeld_Ribbon
 

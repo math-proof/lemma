@@ -23,7 +23,7 @@ public import Mathlib.Analysis.Calculus.ContDiff.FiniteDimension
 public import Mathlib.Analysis.Calculus.IteratedDeriv.WithinZpow
 public import Theorem.v1.Atlas.DifferentialAnalysis.code.DistributionSupport
 public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DistributionSupport
-public import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzTranslateContinuity
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzTranslateContinuity
 public import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzTranslateContinuity
 public import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators
 open scoped SchwartzMap

@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/GroupTheory/QuotientGroup/Basic.lean -/
+module
 
+public import Theorem.GroupTheory.QuotientGroup.Basic
+public import Theorem.Nat.EqQuotientEquivRangeQuotient.of.LeKer
+public import Mathlib.Data.ZMod.Basic
+public import Def.MathlibExtTest.GroupTheory.QuotientGroup.Basic
 
-import Theorem.GroupTheory.QuotientGroup.Basic
-import Theorem.Nat.EqQuotientEquivRangeQuotient.of.LeKer
-import Mathlib.Data.ZMod.Basic
-import Def.MathlibExtTest.GroupTheory.QuotientGroup.Basic
 /-!
 # Tests for `QuotientGroup.quotientEquivRangeQuotient`
 
@@ -13,6 +14,8 @@ containing a homomorphism kernel and the corresponding quotient of the range,
 covering the multiplicative API, the additive API, and representative
 evaluation on the concrete reduction-mod-two map.
 -/
+
+public section
 
 
 namespace QuotientEquivRangeTest

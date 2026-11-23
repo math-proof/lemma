@@ -14,7 +14,7 @@ import Mathlib.Algebra.MonoidAlgebra.Defs
 import Mathlib.LinearAlgebra.Finsupp.VectorSpace
 import Mathlib.FieldTheory.IsAlgClosed.Basic
 import Def.v1.Atlas.LieGroups.code.CompositionSeries
-import Lemma.Int.StandardFiltrationMultiplicity.eq.DimHomProjectiveContragredientVerma
+import Theorem.Int.StandardFiltrationMultiplicity.eq.DimHomProjectiveContragredientVerma
 import Def.v1.Atlas.LieGroups.code.HeckeKL.Part2
 
 

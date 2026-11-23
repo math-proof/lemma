@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PrimeCounting/ResidueClassPsi.lean -/
+module
 
+public import Mathlib.NumberTheory.Chebyshev
+public import Def.NumberTheory.PrimeCounting.ResidueClassPsi
+public import Theorem.Nat.PrimeCounting.ResidueClassPsi
 
-import Mathlib.NumberTheory.Chebyshev
-import Def.NumberTheory.PrimeCounting.ResidueClassPsi
-import Theorem.Nat.PrimeCounting.ResidueClassPsi
-
+public section
 
 example {q : ℕ} (a : ZMod q) : Chebyshev.psiResidueClass a 0 = 0 := by
   exact Chebyshev.psiResidueClass_of_lt_one a zero_lt_one

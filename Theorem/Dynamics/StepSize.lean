@@ -1,8 +1,10 @@
-import Mathlib.Order.Filter.AtTopBot.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.Real
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Instance.Dynamics.StepSize
+module
+
+public import Mathlib.Order.Filter.AtTopBot.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.Real
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Instance.Dynamics.StepSize
 open Finset Filter
 
 /-!
@@ -19,6 +21,8 @@ Ported from rl-theory-in-lean `RLTheory/StochasticApproximation/StepSize.lean`.
 * `SufficientlySparse anc`: `α (t n) ≤ C β n²` for some `C ≥ 0`.
 * `inv_poly ν n₀ n = (n + n₀)^(-ν)`.
 -/
+
+public section
 
 
 namespace Anchors

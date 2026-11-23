@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/PentagonalNumber.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.PentagonalNumber
+public import Theorem.Finset.Enumerative.PentagonalNumber
 
-import Def.Combinatorics.Enumerative.PentagonalNumber
-import Theorem.Finset.Enumerative.PentagonalNumber
-
+public section
 
 namespace MetaMathlibExt
 

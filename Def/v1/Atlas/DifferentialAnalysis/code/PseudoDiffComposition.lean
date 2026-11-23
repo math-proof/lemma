@@ -13,7 +13,7 @@ import Mathlib.Analysis.InnerProductSpace.PiL2
 import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
 import Mathlib.Analysis.Calculus.MeanValue
 import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
 import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.LaplacianExistence
 import Instance.v1.Atlas.DifferentialAnalysis.code.PseudoDiffComposition
 

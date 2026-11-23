@@ -3,6 +3,7 @@ import Mathlib.Data.Matrix.ColumnRowPartitioned
 import Mathlib.LinearAlgebra.Vandermonde
 import Initialize.Tactic.Attr.Basic
 import Syntax.LinearAlgebra.Matrix.Notation
+open scoped Matrix
 
 
 @[path]
@@ -11,8 +12,8 @@ private lemma main
   {d m : ℕ}
   {x δ : R} :
 -- imply
-  ([i < d, j < m] x ^ (j : ℕ) * ((j : R) + δ) ^ (i : ℕ)) *
-    ([i < m, j < m - d]
+  ([i < d][j < m] x ^ (j : ℕ) * ((j : R) + δ) ^ (i : ℕ)) *
+    ([i < m][j < m - d]
       (-x) ^ ((d : ℤ) + (j : ℕ) - (i : ℕ)) * (if (j : ℕ) ≤ i then (d.choose ((i : ℕ) - j) : R) else 0)) = 0 := by
 -- proof
   ext i j

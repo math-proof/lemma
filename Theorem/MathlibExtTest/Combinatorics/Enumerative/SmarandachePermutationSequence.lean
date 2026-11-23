@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/SmarandachePermutationSequence.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.SmarandachePermutationSequence
+public import Theorem.Finset.Enumerative.SmarandachePermutationSequence
 
-import Def.Combinatorics.Enumerative.SmarandachePermutationSequence
-import Theorem.Finset.Enumerative.SmarandachePermutationSequence
-
+public section
 
 namespace MetaMathlibExt
 

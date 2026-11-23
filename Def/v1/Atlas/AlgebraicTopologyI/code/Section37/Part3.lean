@@ -23,7 +23,7 @@ import Mathlib.CategoryTheory.Filtered.Final
 import Mathlib.CategoryTheory.Comma.Final
 import Mathlib.Topology.Separation.Hausdorff
 import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section34.Part3
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section34
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section34
 import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section37.Part2
 open CategoryTheory
 

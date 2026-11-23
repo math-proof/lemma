@@ -4,14 +4,19 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.RingTheory.LaurentSeries
-import Mathlib.Algebra.Polynomial.OfFn
-import Mathlib.RingTheory.AdicCompletion.Completeness
-import Mathlib.RingTheory.HahnSeries.Summable
-import Mathlib.RingTheory.HahnSeries.Valuation
-import Mathlib.RingTheory.Valuation.ValuationSubring
-import Theorem.Polynomial.HenselFactorization
-import Abbrev.FieldTheory.PuiseuxTheorem
+module
+
+public import Mathlib.RingTheory.LaurentSeries
+public import Mathlib.Algebra.Polynomial.OfFn
+public import Mathlib.RingTheory.AdicCompletion.Completeness
+public import Mathlib.RingTheory.HahnSeries.Summable
+public import Mathlib.RingTheory.HahnSeries.Valuation
+public import Mathlib.RingTheory.Valuation.ValuationSubring
+public import Theorem.Polynomial.HenselFactorization
+public import Abbrev.FieldTheory.PuiseuxTheorem
+
+@[expose] public section
+
 /-!
 # Puiseux's theorem
 

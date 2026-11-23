@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExponentialIntegral/E1.lean -/
 
-import Def.Analysis.SpecialFunctions.EntireExponentialIntegral
-import Theorem.Complex.EntireExponentialIntegral
-import Mathlib.Analysis.SpecialFunctions.Complex.Log
-import Mathlib.NumberTheory.Harmonic.EulerMascheroni
+module
+
+public import Def.Analysis.SpecialFunctions.EntireExponentialIntegral
+public import Theorem.Complex.EntireExponentialIntegral
+public import Mathlib.Analysis.SpecialFunctions.Complex.Log
+public import Mathlib.NumberTheory.Harmonic.EulerMascheroni
+
+@[expose] public section
+
 /-!
 # Principal exponential-integral definitions
 

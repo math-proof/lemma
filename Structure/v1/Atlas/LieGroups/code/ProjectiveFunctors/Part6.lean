@@ -11,8 +11,8 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.LieGroups.code.CategoryOII.Part3
-public import Lemma.Int.WeightLE.of.BruhatLE
-public import Lemma.Int.FGUeaIotaRange
+public import Theorem.Int.WeightLE.of.BruhatLE
+public import Theorem.Int.FGUeaIotaRange
 public import Theorem.Int.IsCategoryOA.of.IsCategoryOB
 public import Def.v1.Atlas.LieGroups.code.DufloJoseph.Part8
 public import Structure.v1.Atlas.LieGroups.code.TensorO

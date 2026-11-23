@@ -1,8 +1,12 @@
-import Lemma.MvPolynomial.HeckeModule
-import Def.AlgebraicCurve_Differentials
-import Theorem.LaurentSeries.QExpansionDiff
-import Lemma.WeierstrassCurve.JZeroTateModule
-import Structure.ModularCurve_HeckeSeam
+module
+
+public import Theorem.MvPolynomial.HeckeModule
+public import Def.AlgebraicCurve_Differentials
+public import Theorem.LaurentSeries.QExpansionDiff
+public import Theorem.WeierstrassCurve.JZeroTateModule
+public import Structure.ModularCurve_HeckeSeam
+
+@[expose] public section
 
 set_option autoImplicit false
 

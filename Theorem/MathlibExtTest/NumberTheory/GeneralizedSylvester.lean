@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/GeneralizedSylvester.lean -/
+module
 
+public import Def.NumberTheory.GeneralizedSylvester
+public import Theorem.Nat.GeneralizedSylvester
 
-import Def.NumberTheory.GeneralizedSylvester
-import Theorem.Nat.GeneralizedSylvester
-
+public section
 
 example : Nat.generalizedSylvester 1 0 = 2 := by simp
 

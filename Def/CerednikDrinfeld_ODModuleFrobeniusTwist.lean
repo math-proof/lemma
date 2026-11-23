@@ -1,7 +1,7 @@
 import Mathlib
 import Instance.MvFormalGroup_NegV2
 import Instance.MvFormalGroup_CartierModule
-import Lemma.PowerSeries.CartierModuleHomothety
+import Theorem.PowerSeries.CartierModuleHomothety
 import Lemma.MvPowerSeries.SpecialFormalModule
 import Def.CerednikDrinfeld_CartierGradedPiece
 

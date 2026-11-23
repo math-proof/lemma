@@ -7,14 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
-import Structure.v1.Atlas.GeometryOfManifolds.code.HodgeTheory.Part5
+public import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
+public import Structure.v1.Atlas.GeometryOfManifolds.code.HodgeTheory.Part5
 set_option autoImplicit false
 
 open DifferentialFormSpace
 
+public section
 
 /-- On a Kähler manifold, the Laplacian $\Delta$ preserves the Hodge $(p,q)$ bigrading,
 deduced from the fact that $\bar\square$ preserves it and $\Delta = 2\bar\square$. -/

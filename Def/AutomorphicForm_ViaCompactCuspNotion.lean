@@ -1,4 +1,4 @@
-import Lemma.Ideal.ArithCuspRealization
+import Theorem.Ideal.ArithCuspRealization
 import Def.AutomorphicForm_ProductionPinsCompact
 import Lemma.Matrix.ArchWeightCharTransport
 import Def.ModularForm_EisensteinChiNegThree

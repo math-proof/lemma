@@ -8,15 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RepresentationTheory.Homological.GroupCohomology.LongExactSequence
-import Mathlib.RepresentationTheory.Homological.GroupCohomology.Shapiro
-import Mathlib.Algebra.Homology.ShortComplex.ExactFunctor
-import Mathlib.CategoryTheory.Limits.ExactFunctor
-import Mathlib.RepresentationTheory.Homological.GroupHomology.Functoriality
-import Mathlib.CategoryTheory.Preadditive.Injective.Resolution
-import Mathlib.Algebra.Homology.HomologySequenceLemmas
-import Abbrev.v1.Atlas.NumberTheoryI.code.GroupCohomology.Part4
+module
 
+public import Mathlib.RepresentationTheory.Homological.GroupCohomology.LongExactSequence
+public import Mathlib.RepresentationTheory.Homological.GroupCohomology.Shapiro
+public import Mathlib.Algebra.Homology.ShortComplex.ExactFunctor
+public import Mathlib.CategoryTheory.Limits.ExactFunctor
+public import Mathlib.RepresentationTheory.Homological.GroupHomology.Functoriality
+public import Mathlib.CategoryTheory.Preadditive.Injective.Resolution
+public import Mathlib.Algebra.Homology.HomologySequenceLemmas
+public import Abbrev.v1.Atlas.NumberTheoryI.code.GroupCohomology.Part4
+
+@[expose] public section
 
 noncomputable section
 

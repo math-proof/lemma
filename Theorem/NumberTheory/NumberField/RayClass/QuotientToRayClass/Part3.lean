@@ -3,7 +3,7 @@
 import Theorem.NumberTheory.NumberField.RayClass.IntegralUnits.Part4
 import Lemma.Nat.NumberField.RayClass.IntegralUnits
 import Lemma.Nat.NumberField.RayClass.PrincipalIdeal
-import Lemma.Nat.NumberField.RayClass.Group
+import Theorem.Nat.NumberField.RayClass.Group
 import Theorem.NumberTheory.NumberField.RayClass.PrincipalIdeal
 import Def.NumberTheory.NumberField.RayClass.Group
 import Def.NumberTheory.NumberField.RayClass.QuotientToRayClass.Part3

@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/CobhamBaseDependence.lean -/
+module
 
+public import Def.NumberTheory.CobhamBaseDependence
+public import Theorem.Nat.CobhamBaseDependence
 
-import Def.NumberTheory.CobhamBaseDependence
-import Lemma.Nat.CobhamBaseDependence
-
+public section
 
 -- The even numbers are ultimately periodic with period 2.
 example : MetaMathlibExt.IsUltimatelyPeriodic

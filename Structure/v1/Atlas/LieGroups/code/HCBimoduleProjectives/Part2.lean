@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Instance.v1.Atlas.LieGroups.code.MaximalQuotients
-public import Lemma.Int.Any_EqUeaAction
+public import Theorem.Int.Any_EqUeaAction
 public import Mathlib.Algebra.Lie.Semisimple.Defs
 public import Def.v1.Atlas.LieGroups.code.HCBimoduleProjectives
 

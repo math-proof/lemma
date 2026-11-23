@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicGeometryI.code.EffaceableUniversal
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.EffaceableUniversal
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.EffaceableUniversal
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology.Part2
 import Structure.v1.Atlas.AlgebraicGeometryI.code.SheafCohDerived
 

@@ -1,24 +1,30 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
-import Mathlib.Analysis.Calculus.Deriv.Basic
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.Calculus.Deriv.Add
-import Mathlib.Analysis.Calculus.Deriv.Mul
-import Mathlib.Analysis.BoundedVariation
-import Mathlib.Analysis.BoxIntegral.Integrability
-import Mathlib.Analysis.Calculus.FDeriv.Measurable
-import Mathlib.Analysis.Complex.CauchyIntegral
-import Mathlib.Analysis.Complex.Conformal
-import Mathlib.Analysis.Complex.HasPrimitives
-import Mathlib.Analysis.Complex.RealDeriv
-import Mathlib.Analysis.Complex.Tietze
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.AbsolutelyContinuousFun
-import Mathlib.MeasureTheory.Integral.Prod
-import Mathlib.Topology.Baire.CompleteMetrizable
-import Mathlib.Topology.Baire.LocallyCompactRegular
-import Mathlib.Topology.Order.LeftRightNhds
-import Theorem.Analysis.Complex.LoomanMenchoff.Part2
+
+module
+
+public import Mathlib.Analysis.Calculus.Deriv.Basic
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Analysis.Calculus.Deriv.Add
+public import Mathlib.Analysis.Calculus.Deriv.Mul
+public import Mathlib.Analysis.BoundedVariation
+public import Mathlib.Analysis.BoxIntegral.Integrability
+public import Mathlib.Analysis.Calculus.FDeriv.Measurable
+public import Mathlib.Analysis.Complex.CauchyIntegral
+public import Mathlib.Analysis.Complex.Conformal
+public import Mathlib.Analysis.Complex.HasPrimitives
+public import Mathlib.Analysis.Complex.RealDeriv
+public import Mathlib.Analysis.Complex.Tietze
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.AbsolutelyContinuousFun
+public import Mathlib.MeasureTheory.Integral.Prod
+public import Mathlib.Topology.Baire.CompleteMetrizable
+public import Mathlib.Topology.Baire.LocallyCompactRegular
+public import Mathlib.Topology.Order.LeftRightNhds
+public import Theorem.Analysis.Complex.LoomanMenchoff.Part2
+
+@[expose] public section
+
 /-!
 # The Looman–Menchoff theorem
 

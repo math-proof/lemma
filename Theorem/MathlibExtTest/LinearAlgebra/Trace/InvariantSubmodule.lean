@@ -3,9 +3,13 @@
 /-
 Author: Muse Code
 -/
+module
 
-import Theorem.LinearAlgebra.Trace.InvariantSubmodule
-import Theorem.Matrix.Trace.InvariantSubmodule
+public import Theorem.LinearAlgebra.Trace.InvariantSubmodule
+public import Theorem.Matrix.Trace.InvariantSubmodule
+
+public section
+
 variable {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
   [FiniteDimensional K V]
 

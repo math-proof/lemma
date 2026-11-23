@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/NormalizedPlace.lean -/
 
-import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
-import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
-import Def.Analysis.AbsoluteValue.Rpow
-import Theorem.AbsoluteValue.Rpow
+module
+
+public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
+public import Def.Analysis.AbsoluteValue.Rpow
+public import Theorem.AbsoluteValue.Rpow
+
+@[expose] public section
+
 /-!
 # Degree-normalized places of a number field
 

@@ -1,7 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/OccurrenceErasureMerges.lean -/
+module
 
-import Def.CPythonListsort.Code.Correctness.OccurrenceErasure
-import Def.CPythonListsort.Code.Correctness.OccurrenceErasureMerges.Part2
+public import Def.CPythonListsort.Code.Correctness.OccurrenceErasure
+public import Def.CPythonListsort.Code.Correctness.OccurrenceErasureMerges.Part2
+
 /-!
 # Occurrence-tag erasure for merge evaluators
 
@@ -10,6 +12,8 @@ This module proves that temporary-storage allocation, galloping, and both
 concrete merge engines commute with erasing those origins.
 These are evaluator equations only: no ordering or stability law is assumed.
 -/
+
+public section
 
 
 namespace CPythonListsort

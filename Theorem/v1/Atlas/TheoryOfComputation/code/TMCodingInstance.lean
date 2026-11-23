@@ -7,11 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.TheoryOfComputation.code.RecursionTheorem
-import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.RecursionTheorem
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.SelfReference
-import Def.v1.Atlas.TheoryOfComputation.code.SelfReference.Part7
+public import Def.v1.Atlas.TheoryOfComputation.code.RecursionTheorem
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.RecursionTheorem
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.SelfReference
+public import Def.v1.Atlas.TheoryOfComputation.code.SelfReference.Part7
+
+public section
+
 /-- A fixed binary encoding `⟨·⟩ : ℕ → List Bool` of natural-number TM indices. -/
 /-- The standard `TMCoding` instance for `RecursionTheorem`, packaging the
 behavior-level encoding, pairing, s-m-n, and computability operations into the

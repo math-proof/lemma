@@ -7,12 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec2AffineVarieties.Part3
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec2AffineVarieties
-import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec2AffineVarieties.Part3
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec2AffineVarieties
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
 open AlgebraicGeometry CategoryTheory
 
+public section
 
 noncomputable section
 

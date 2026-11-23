@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.ArithmeticGeometry.code.ProjectiveVarieties.Part7
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.ProjectiveVarieties
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.ProjectiveVarieties
 public import Mathlib.Algebra.MvPolynomial.Monad
 public import Def.v1.Atlas.ArithmeticGeometry.code.ProjectiveMorphisms.Part5
 

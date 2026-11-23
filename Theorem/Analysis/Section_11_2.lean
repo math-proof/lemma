@@ -1,6 +1,9 @@
-import Mathlib
-import Instance.Analysis.Section_11_1.Part8
-import Abbrev.Analysis.Section_11_2
+module
+
+public import Mathlib
+public import Instance.Analysis.Section_11_1.Part8
+public import Abbrev.Analysis.Section_11_2
+
 /-!
 # Analysis I, Section 11.2: Piecewise constant functions
 
@@ -15,6 +18,8 @@ Main constructions and results of this section:
 - The piecewise constant integral.
 
 -/
+
+public section
 
 
 namespace Chapter11

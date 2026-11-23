@@ -1,9 +1,13 @@
-import Mathlib
-import Def.AutomorphicForm_HeckeEigensystem
-import Def.FormalHecke_Eigensystem
-import Def.LanglandsTunnell_ExplicitLift
-import Def.ModularForm_EisensteinChiNegThree
-import Def.CuspForm_IntegralLattice
+module
+
+public import Mathlib
+public import Def.AutomorphicForm_HeckeEigensystem
+public import Def.FormalHecke_Eigensystem
+public import Def.LanglandsTunnell_ExplicitLift
+public import Def.ModularForm_EisensteinChiNegThree
+public import Def.CuspForm_IntegralLattice
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PrimeCounting/WeightedHilbert.lean -/
+module
 
+public import Def.NumberTheory.PrimeCounting.WeightedHilbert
+public import Theorem.Nat.PrimeCounting.WeightedHilbert
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.NormNum
 
-import Def.NumberTheory.PrimeCounting.WeightedHilbert
-import Theorem.Nat.PrimeCounting.WeightedHilbert
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MathlibExtTest.NumberTheory.PrimeCounting.WeightedHilbert
 

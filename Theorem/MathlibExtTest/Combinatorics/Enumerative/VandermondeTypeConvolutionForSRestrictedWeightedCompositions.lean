@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/VandermondeTypeConvolutionForSRestrictedWeightedCompositions.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.VandermondeTypeConvolutionForSRestrictedWeightedCompositions
+public import Theorem.Finset.Enumerative.VandermondeTypeConvolutionForSRestrictedWeightedCompositions
+public import Mathlib.Algebra.Ring.Int.Defs
 
-import Def.Combinatorics.Enumerative.VandermondeTypeConvolutionForSRestrictedWeightedCompositions
-import Theorem.Finset.Enumerative.VandermondeTypeConvolutionForSRestrictedWeightedCompositions
-import Mathlib.Algebra.Ring.Int.Defs
-
+public section
 
 namespace MathlibExt.Combinatorics.Enumerative
 

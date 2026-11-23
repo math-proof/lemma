@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Normed/Field/IsClosestConjugate.lean -/
+module
 
+public import Def.Analysis.Normed.Field.IsClosestConjugate
+public import Theorem.AbsoluteValue.IsClosestConjugate
 
-import Def.Analysis.Normed.Field.IsClosestConjugate
-import Theorem.AbsoluteValue.IsClosestConjugate
-
+public section
 
 namespace AlgebraicClosure
 

@@ -1,5 +1,5 @@
 CREATE TABLE `lemma` (
-  user varchar(32) NOT NULL,
+  id int NOT NULL AUTO_INCREMENT,
   module varchar(256) NOT NULL,
   imports json NOT NULL,
   open json NOT NULL,
@@ -8,6 +8,6 @@ CREATE TABLE `lemma` (
   lemma json NOT NULL,
   meta json,
   date json NOT NULL,
-  PRIMARY KEY (user, module)
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_lemma_module (module)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
-PARTITION BY KEY() PARTITIONS 8

@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/SortSliceRange.lean -/
 
-import Theorem.CPythonListsort.Code.Transcription.SortSlice
-import Mathlib
+module
+
+public import Theorem.CPythonListsort.Code.Transcription.SortSlice
+public import Mathlib
+
+@[expose] public section
+
 /-!
 # Half-open `SortSlice` ranges and semantic frames
 

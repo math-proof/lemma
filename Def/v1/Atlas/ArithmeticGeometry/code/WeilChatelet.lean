@@ -10,8 +10,8 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.ArithmeticGeometry.code.Torsors
 import Def.v1.Atlas.ArithmeticGeometry.code.EllipticCurves.Part7
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.EllipticCurves
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Divisors
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.EllipticCurves
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Divisors
 import Def.v1.Atlas.ArithmeticGeometry.code.Divisors.Part11
 /-- Abstract predicate: the type `C_pts` represents the points of a smooth curve of arithmetic
 genus 1 over $k$. The concrete content is deferred via `sorry`. -/

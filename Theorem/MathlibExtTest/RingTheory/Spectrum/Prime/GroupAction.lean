@@ -1,12 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/Spectrum/Prime/GroupAction.lean -/
+module
 
-
-import Theorem.Int.Spectrum.Prime.GroupAction
+public import Theorem.Int.Spectrum.Prime.GroupAction
 open scoped Pointwise
 
 /-!
 # Tests for group actions on prime spectra
 -/
+
+public section
 
 
 namespace N150Test

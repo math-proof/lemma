@@ -3,17 +3,21 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
+module
 
-import Mathlib.Combinatorics.SimpleGraph.Hamiltonian
-import Theorem.Combinatorics.SimpleGraph.VertexConnectivity
-import Theorem.SimpleGraph.VertexConnectivity
-import Theorem.SimpleGraph.HamiltonianCycle
-import Def.Combinatorics.SimpleGraph.Square
+public import Mathlib.Combinatorics.SimpleGraph.Hamiltonian
+public import Theorem.Combinatorics.SimpleGraph.VertexConnectivity
+public import Theorem.SimpleGraph.VertexConnectivity
+public import Theorem.SimpleGraph.HamiltonianCycle
+public import Def.Combinatorics.SimpleGraph.Square
+
 /-!
 # Squares of simple graphs
 
 This file defines the square of a simple graph and proves its basic properties.
 -/
+
+public section
 
 
 namespace SimpleGraph

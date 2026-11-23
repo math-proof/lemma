@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/GroupTheory/PermutationStability.lean -/
+module
 
+public import Def.GroupTheory.PermutationStability
+public import Theorem.Equiv.NormalizedHammingDistance.eq.Zero
 
-import Def.GroupTheory.PermutationStability
-import Theorem.Equiv.NormalizedHammingDistance.eq.Zero
-
+public section
 
 namespace PermutationStabilityTest
 

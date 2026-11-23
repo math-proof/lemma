@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Mathlib
 import Instance.v1.Atlas.TensorCategories.code.VecSemisimple.Part2
 import Lemma.Category.Atlas.v1.TensorCategories.code.VecSemisimple
-import Lemma.Category.Atlas.v1.TensorCategories.code.GrothendieckRingCategorical
+import Theorem.Category.Atlas.v1.TensorCategories.code.GrothendieckRingCategorical
 import Def.v1.Atlas.TensorCategories.code.GrothendieckRingCategorical.Part4
 import Theorem.v1.Atlas.TensorCategories.code.VecCategoricalFusionData
 set_option maxHeartbeats 800000

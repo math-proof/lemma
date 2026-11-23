@@ -1,16 +1,19 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Complex/NormalFamilies.lean -/
+module
 
+public import Def.Analysis.Complex.NormalFamilies
+public import Theorem.Set.IsLocallyUniformlyBoundedOn.of.All_All_LeNorm.Ge_0.IsOpen
+public import Mathlib.Analysis.Calculus.FDeriv.Pow
+public import Mathlib.Analysis.Normed.Module.Convex
 
-import Def.Analysis.Complex.NormalFamilies
-import Theorem.Set.IsLocallyUniformlyBoundedOn.of.All_All_LeNorm.Ge_0.IsOpen
-import Mathlib.Analysis.Calculus.FDeriv.Pow
-import Mathlib.Analysis.Normed.Module.Convex
 /-!
 # Normal families API checks
 
 Local uniform boundedness from a global bound, bounds on compact subsets, and Montel's and
 Vitali's theorems applied to the powers `z ^ n` on the unit disc.
 -/
+
+public section
 
 
 namespace MathlibExtTest.Analysis.Complex.NormalFamilies

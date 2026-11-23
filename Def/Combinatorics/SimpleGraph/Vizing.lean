@@ -4,16 +4,21 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Coloring.EdgeLabeling
-import Mathlib.Combinatorics.SimpleGraph.Bipartite
-import Def.Combinatorics.SimpleGraph.EdgeColoring
-import Theorem.Finset.SimpleGraph.EdgeColoring
-import Mathlib.Algebra.BigOperators.Ring.Nat
-import Mathlib.Combinatorics.Enumerative.DoubleCounting
-import Mathlib.Combinatorics.SimpleGraph.Acyclic
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
-import Mathlib.Combinatorics.SimpleGraph.DeleteEdges
-import Mathlib.Tactic.Push
+module
+
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.EdgeLabeling
+public import Mathlib.Combinatorics.SimpleGraph.Bipartite
+public import Def.Combinatorics.SimpleGraph.EdgeColoring
+public import Theorem.Finset.SimpleGraph.EdgeColoring
+public import Mathlib.Algebra.BigOperators.Ring.Nat
+public import Mathlib.Combinatorics.Enumerative.DoubleCounting
+public import Mathlib.Combinatorics.SimpleGraph.Acyclic
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+public import Mathlib.Combinatorics.SimpleGraph.DeleteEdges
+public import Mathlib.Tactic.Push
+
+@[expose] public section
+
 /-!
 # Edge coloring landmarks
 

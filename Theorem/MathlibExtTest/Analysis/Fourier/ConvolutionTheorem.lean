@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Fourier/ConvolutionTheorem.lean -/
+module
 
-
-import Theorem.Measure.Eq_MulFourierSIntegral.of.Integrable.Integrable.All_MeasurePreserving_Add.Continuous
+public import Theorem.Measure.Eq_MulFourierSIntegral.of.Integrable.Integrable.All_MeasurePreserving_Add.Continuous
 open MeasureTheory
 open scoped Convolution
 
+public section
 
 namespace MetaMathlibExt
 

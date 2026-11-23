@@ -12,10 +12,10 @@ module
 
 public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Remark_3_1
 public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Remark_3_1
-public import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Def_3_10
-public import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Lemma_3_14
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Def_3_10
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Lemma_3_14
 public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Lemma_3_13
-public import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_11
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_11
 public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Def_3_10
 public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Lemma_3_14
 public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Lemma_3_13

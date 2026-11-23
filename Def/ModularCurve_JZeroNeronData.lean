@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.MvPolynomial.HeckeModule
+import Theorem.MvPolynomial.HeckeModule
 import Def.ModularCurve_HeckeInputsAll
 import Def.FLTPrelim_Ramification
 import Theorem.Submodule.ToricMonodromyPart

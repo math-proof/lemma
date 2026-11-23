@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/ChromaticSymmetric.lean -/
+module
 
+public import Def.Combinatorics.SimpleGraph.ChromaticSymmetric
+public import Theorem.SimpleGraph.ChromaticSymmetric
 
-import Def.Combinatorics.SimpleGraph.ChromaticSymmetric
-import Theorem.SimpleGraph.ChromaticSymmetric
-
+public section
 
 namespace SimpleGraph
 

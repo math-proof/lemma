@@ -7,16 +7,18 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ConnectionsCurvature
-import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part7
-import Class.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part6
+public import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ConnectionsCurvature
+public import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part7
+public import Class.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part6
 set_option autoImplicit false
 
 open DifferentialFormSpace
 
+public section
 
 /-- Helper: from a squared bound $a^2 \le (C/k) b^2$ with $a, b \ge 0$ and
 $C/k \ge 0$, conclude the linear bound $a \le \sqrt{C/k}\, b$. -/

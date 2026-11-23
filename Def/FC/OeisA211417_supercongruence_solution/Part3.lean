@@ -8,10 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
+module
 
-import Mathlib
-import Instance.FC.OeisA211417_supercongruence_solution.Part2
+public import Mathlib
+public import Instance.FC.OeisA211417_supercongruence_solution.Part2
 
+@[expose] public section
 
 namespace OeisA211417
 

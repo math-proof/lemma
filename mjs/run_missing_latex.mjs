@@ -18,8 +18,6 @@ import mysql from 'mysql2/promise';
 import { runLeanFile } from './run.mjs';
 import { moduleToLeanPath, fileExists } from './lean/modulePath.mjs';
 
-const USER = process.env.LEAN_PROJECT_USER || path.basename(process.cwd());
-
 function latexReady(lx) {
   if (lx == null || lx === '') return false;
   if (Array.isArray(lx)) {
@@ -116,7 +114,7 @@ async function connectMysql() {
 async function listNeed(opts) {
   const conn = await connectMysql();
   try {
-    const [rows] = await conn.query(`SELECT module, lemma FROM lemma WHERE user = ?`, [USER]);
+    const [rows] = await conn.query(`SELECT module, lemma FROM lemma`);
     const need = [];
     for (const r of rows) {
       const d = needsLatexRun(r.lemma);

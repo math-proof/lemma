@@ -7,39 +7,40 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Theorem.v1.Atlas.ComplexVariables.code.AnnulusCauchy
-import Theorem.v1.Atlas.ComplexVariables.code.BridgeSingleSingularity
-import Theorem.v1.Atlas.ComplexVariables.code.BridgeSingleSingularityBase
-import Theorem.v1.Atlas.ComplexVariables.code.CauchyTransformContinuity
-import Theorem.Complex.Atlas.v1.ComplexVariables.code.CauchyTransformDiff
-import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture11
-import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture18
-import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture19
-import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture3
-import Theorem.v1.Atlas.ComplexVariables.code.CircleIntegralTsum
-import Theorem.v1.Atlas.ComplexVariables.code.FPlusPHolomorphic
-import Theorem.v1.Atlas.ComplexVariables.code.Lecture10
-import Def.v1.Atlas.ComplexVariables.code.Lecture13.Part2
-import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture13
-import Lemma.Complex.Atlas.v1.ComplexVariables.code.Lecture14
-import Lemma.Complex.Atlas.v1.ComplexVariables.code.Lecture16
-import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture17
-import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture2
-import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture21
-import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture6
-import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture8
-import Theorem.Complex.Atlas.v1.ComplexVariables.code.TaylorComplex
-import Abbrev.v1.Atlas.ComplexVariables.code.Lecture14
-import Def.v1.Atlas.ComplexVariables.code.Lecture16
-import Def.v1.Atlas.ComplexVariables.code.Lecture17
-import Def.v1.Atlas.ComplexVariables.code.Lecture2
-import Def.v1.Atlas.ComplexVariables.code.Lecture21
-import Def.v1.Atlas.ComplexVariables.code.Lecture6.Part3
-import Def.v1.Atlas.ComplexVariables.code.Lecture7
-import Def.v1.Atlas.ComplexVariables.code.Lecture8
-import Theorem.v1.Atlas.ComplexVariables.code.ScoutAnalytic
-import Theorem.v1.Atlas.ComplexVariables.code.ScoutDeriv
-import Def.v1.Atlas.ComplexVariables.code.TaylorComplex
+public import Theorem.v1.Atlas.ComplexVariables.code.AnnulusCauchy
+public import Theorem.v1.Atlas.ComplexVariables.code.BridgeSingleSingularity
+public import Theorem.v1.Atlas.ComplexVariables.code.BridgeSingleSingularityBase
+public import Theorem.v1.Atlas.ComplexVariables.code.CauchyTransformContinuity
+public import Theorem.Complex.Atlas.v1.ComplexVariables.code.CauchyTransformDiff
+public import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture11
+public import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture18
+public import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture19
+public import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture3
+public import Theorem.v1.Atlas.ComplexVariables.code.CircleIntegralTsum
+public import Theorem.v1.Atlas.ComplexVariables.code.FPlusPHolomorphic
+public import Theorem.v1.Atlas.ComplexVariables.code.Lecture10
+public import Def.v1.Atlas.ComplexVariables.code.Lecture13.Part2
+public import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture13
+public import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture14
+public import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture16
+public import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture17
+public import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture2
+public import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture21
+public import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture6
+public import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture8
+public import Theorem.Complex.Atlas.v1.ComplexVariables.code.TaylorComplex
+public import Abbrev.v1.Atlas.ComplexVariables.code.Lecture14
+public import Def.v1.Atlas.ComplexVariables.code.Lecture16
+public import Def.v1.Atlas.ComplexVariables.code.Lecture17
+public import Def.v1.Atlas.ComplexVariables.code.Lecture2
+public import Def.v1.Atlas.ComplexVariables.code.Lecture21
+public import Def.v1.Atlas.ComplexVariables.code.Lecture6.Part3
+public import Def.v1.Atlas.ComplexVariables.code.Lecture7
+public import Def.v1.Atlas.ComplexVariables.code.Lecture8
+public import Theorem.v1.Atlas.ComplexVariables.code.ScoutAnalytic
+public import Theorem.v1.Atlas.ComplexVariables.code.ScoutDeriv
+public import Def.v1.Atlas.ComplexVariables.code.TaylorComplex
 
-
+public section

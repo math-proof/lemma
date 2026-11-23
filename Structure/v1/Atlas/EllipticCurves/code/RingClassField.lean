@@ -12,10 +12,10 @@ module
 
 public import Mathlib
 public import Def.v1.Atlas.EllipticCurves.code.PointCounting.Part2
-public import Lemma.Complex.Atlas.v1.EllipticCurves.code.PointCounting
-public import Lemma.Complex.Atlas.v1.EllipticCurves.code.OrdinarySupersingular
-public import Lemma.Complex.Atlas.v1.EllipticCurves.code.HilbertClassPolynomial
-public import Lemma.Complex.Atlas.v1.EllipticCurves.code.CMTorsor
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.PointCounting
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.OrdinarySupersingular
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.HilbertClassPolynomial
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.CMTorsor
 public import Def.v1.Atlas.EllipticCurves.code.OrdinarySupersingular
 public import Def.v1.Atlas.EllipticCurves.code.HilbertClassPolynomial.Part2
 public import Def.v1.Atlas.EllipticCurves.code.CMTorsor.Part7

@@ -5,7 +5,7 @@ public import Structure.FLTPrelim_FreyPackage
 public import Def.FreyPackage_LevelRaising
 public import Instance.FreyPackage_GaloisRep
 public import Def.GaloisRep_GlobalUnramifiedAt
-public import Lemma.MvPolynomial.HeckeModule
+public import Theorem.MvPolynomial.HeckeModule
 public import Def.ModularCurve_HeckeInputsAll
 public import Structure.ModularCurve_MazurPrincipleCore
 

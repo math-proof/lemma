@@ -1,6 +1,11 @@
-import Mathlib
-import Instance.Analysis.Misc.Probability
+module
+
+public import Mathlib
+public import Instance.Analysis.Misc.Probability
+
 /-! Some finite probability theory -/
+
+public section
 
 
 namespace ProbabilityTheory

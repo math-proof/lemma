@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.TheoryOfComputation.code.BPP.Part3
 import Def.v1.Atlas.TheoryOfComputation.code.SpaceComplexity.Part7
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity
+import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity
 import Structure.v1.Atlas.TheoryOfComputation.code.InteractiveProofs
 
 

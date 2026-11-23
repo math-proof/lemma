@@ -1,13 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Complex/Hurwitz.lean -/
+module
 
-import Theorem.Analysis.Complex.Hurwitz
-import Theorem.Complex.Hurwitz
+public import Theorem.Analysis.Complex.Hurwitz
+public import Theorem.Complex.Hurwitz
 open Filter Set
 open scoped Topology
 
 /-!
 # Tests for the Hurwitz zero-free limit theorem (N327)
 -/
+
+public section
 
 
 example {F : ℕ → ℂ → ℂ} {f : ℂ → ℂ} {U : Set ℂ}

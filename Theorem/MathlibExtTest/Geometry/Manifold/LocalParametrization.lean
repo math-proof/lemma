@@ -1,12 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Geometry/Manifold/LocalParametrization.lean -/
+module
 
-
-import Def.Geometry.Manifold.LocalParametrization
-import Lemma.Set.Manifold.LocalParametrization
+public import Def.Geometry.Manifold.LocalParametrization
+public import Theorem.Set.Manifold.LocalParametrization
 open scoped Topology Manifold ContDiff
 open Manifold
 open MathlibExt.Geometry.Manifold.LocalParametrizationWanted
 
+public section
 
 noncomputable section
 

@@ -7,12 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib
-import Def.StatisticalMechanics.Code.Foundations.FiniteNonnegativeMatrixRate.Part3
+public import Mathlib
+public import Def.StatisticalMechanics.Code.Foundations.FiniteNonnegativeMatrixRate.Part3
 open Finset Matrix Filter Topology
 open scoped Matrix.Norms.Operator NNReal
 
+public section
 
 namespace StatMech
 

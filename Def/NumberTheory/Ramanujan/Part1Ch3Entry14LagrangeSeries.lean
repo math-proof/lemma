@@ -4,14 +4,19 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @akiezun, Avocado, Codex
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.PSeries
-import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
-import Mathlib.Analysis.SpecialFunctions.Stirling
-import Mathlib.Topology.Algebra.Polynomial
-import Def.NumberTheory.Ramanujan.Part1Ch3Entry13CorollarySchroder
-import Theorem.Nat.Ramanujan.Part1Ch3Entry13CorollarySchroder
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.PSeries
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Beta
+public import Mathlib.Analysis.SpecialFunctions.Stirling
+public import Mathlib.Topology.Algebra.Polynomial
+public import Def.NumberTheory.Ramanujan.Part1Ch3Entry13CorollarySchroder
+public import Theorem.Nat.Ramanujan.Part1Ch3Entry13CorollarySchroder
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 3, Entry 14
 

@@ -8,11 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AlgebraicCombinatorics.code.SpernerProperty.Part2
-import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.SpernerProperty
-import Mathlib.GroupTheory.GroupAction.Quotient
-import Mathlib.Algebra.Group.Action.Pointwise.Finset
-import Mathlib.Data.Finset.Card
+module
+
+public import Def.v1.Atlas.AlgebraicCombinatorics.code.SpernerProperty.Part2
+public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.SpernerProperty
+public import Mathlib.GroupTheory.GroupAction.Quotient
+public import Mathlib.Algebra.Group.Action.Pointwise.Finset
+public import Mathlib.Data.Finset.Card
+@[expose] public section
+
 open Finset MulAction
 open scoped Pointwise
 

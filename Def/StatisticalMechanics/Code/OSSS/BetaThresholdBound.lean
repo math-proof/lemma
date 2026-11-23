@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
+module
 
-import Theorem.StatisticalMechanics.Code.OSSS.IntegrationSubcriticalAssembly
-import Theorem.StatisticalMechanics.Code.OSSS.FKSharpDiffIneq
+public import Theorem.StatisticalMechanics.Code.OSSS.IntegrationSubcriticalAssembly
+public import Theorem.StatisticalMechanics.Code.OSSS.FKSharpDiffIneq
+
+@[expose] public section
+
 open scoped BigOperators
 open Real Filter Topology Set Finset
 

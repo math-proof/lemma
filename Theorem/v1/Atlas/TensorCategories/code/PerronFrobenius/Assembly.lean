@@ -7,13 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.TensorCategories.code.PerronFrobeniusProof.Part2
-import Lemma.Category.Atlas.v1.TensorCategories.code.PerronFrobeniusProof
-import Theorem.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
-import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
+public import Def.v1.Atlas.TensorCategories.code.PerronFrobeniusProof.Part2
+public import Theorem.Category.Atlas.v1.TensorCategories.code.PerronFrobeniusProof
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
+public import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
 open FusionRing
 
+public section
 
 section Assembly
 

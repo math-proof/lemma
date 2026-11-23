@@ -3,7 +3,7 @@ open Complex
 
 
 @[path]
-private lemma sub.given
+private lemma main
   {x a b c p q δ : ℂ}
   {d : ℤ}
 -- given
@@ -15,9 +15,10 @@ private lemma sub.given
 -- imply
   x ^ 3 + a * x ^ 2 + b * x + c = 0 := by
 -- proof
-  have h := Complex.Eq0Add_Pow_3.of.In_Finset_AddSMulS.sub.given (x := x + a / 3) hδ h₀ (by rw [h₁]; ring)
+  have h := Complex.Eq0Add_Pow_3.of.In_Finset_AddSMulS (x := x + a / 3) hδ h₀ (by rw [h₁]; ring)
   subst hp hq
   linear_combination h
 
 
 -- created on 2018-11-20
+-- updated on 2026-11-22

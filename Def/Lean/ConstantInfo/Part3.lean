@@ -1,7 +1,10 @@
-import Initialize.Lean.Meta.CtorName
-import Def.Data.String.String.Part2
-import Instance.Lean.ConstantInfo.Part2
+module
 
+public import Initialize.Lean.Meta.CtorName
+public import Def.Data.String.String.Part2
+public import Instance.Lean.ConstantInfo.Part2
+
+@[expose] public section
 
 def Lean.TheoremVal.toString : Lean.TheoremVal → String
   | ⟨constantVal, value, all⟩ => "{%s}".format s!"

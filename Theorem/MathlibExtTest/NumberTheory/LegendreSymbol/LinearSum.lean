@@ -3,10 +3,12 @@
 /-
 # Tests for linear sums of Legendre symbols
 -/
+module
 
-import Theorem.Nat.LegendreSymbol.LinearSum
+public import Theorem.Nat.LegendreSymbol.LinearSum
 open scoped BigOperators
 
+public section
 
 example (p : ℕ) [Fact p.Prime] (hpodd : Odd p) (b c : ℤ) (hb : ¬ (p : ℤ) ∣ b) :
     ∑ ℓ ∈ Finset.range p, legendreSym p (b * (ℓ : ℤ) + c) = 0 :=

@@ -7,12 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.Buildings.code.Building.Affine.Part2
-import Def.v1.Atlas.Buildings.code.AffineCoxeter.CanonicalMetric.Part2
-import Lemma.Real.IsWInvariantEuclideanDist
-import Mathlib.Topology.MetricSpace.Basic
-import Def.v1.Atlas.Buildings.code.Building.AffineMetric.Part3
+public import Def.v1.Atlas.Buildings.code.Building.Affine.Part2
+public import Def.v1.Atlas.Buildings.code.AffineCoxeter.CanonicalMetric.Part2
+public import Theorem.Real.IsWInvariantEuclideanDist
+public import Mathlib.Topology.MetricSpace.Basic
+public import Def.v1.Atlas.Buildings.code.Building.AffineMetric.Part3
 set_option maxHeartbeats 800000
 set_option linter.unusedSectionVars false
 
@@ -20,6 +21,7 @@ open Classical
 open ChamberComplex
 open AffineCoxeter
 
+public section
 
 /-- A "cross" version of well-definedness: $x$ lies in a shared face
 $\sigma$ and $y$ lies in a shared chamber $C$; the two apartments share

@@ -1,5 +1,9 @@
-import Lemma.Finsupp.JZeroHeightForm
-import Instance.Compat_Mathlib430
+module
+
+public import Theorem.Finsupp.JZeroHeightForm
+public import Instance.Compat_Mathlib430
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option Elab.async false

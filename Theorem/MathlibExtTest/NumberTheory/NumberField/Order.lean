@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/Order.lean -/
+module
 
+public import Def.NumberTheory.NumberField.Order
+public import Theorem.Nat.NumberField.Order
 
-import Def.NumberTheory.NumberField.Order
-import Theorem.Nat.NumberField.Order
-
+public section
 
 -- Clause elimination
 example {K : Type*} [Field K] [NumberField K] {O : Subalgebra ℤ K}

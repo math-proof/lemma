@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Mathlib
 import Abbrev.v1.Atlas.TensorCategories.code.TensorCategoryDef.Part3
 import Theorem.Category.Atlas.v1.TensorCategories.code.TensorCategoryDef
-import Lemma.Category.Atlas.v1.TensorCategories.code.VecInstances
+import Theorem.Category.Atlas.v1.TensorCategories.code.VecInstances
 import Abbrev.v1.Atlas.TensorCategories.code.VecInstances.Part2
 import Theorem.v1.Atlas.TensorCategories.code.VecSemisimple
 set_option maxHeartbeats 400000

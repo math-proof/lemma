@@ -1,15 +1,17 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/RamanujanSum.lean -/
+module
 
-
-import Def.NumberTheory.RamanujanSum
-import Theorem.Nat.RamanujanSum
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
+public import Def.NumberTheory.RamanujanSum
+public import Theorem.Nat.RamanujanSum
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Ring
 open MetaMathlibExt
 
 /-!
 # Tests for Ramanujan sums
 -/
+
+public section
 
 
 example (n : ℕ) [NeZero n] : ramanujanSum n 0 = Nat.totient n := by

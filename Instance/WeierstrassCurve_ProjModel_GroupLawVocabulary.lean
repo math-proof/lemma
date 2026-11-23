@@ -1,5 +1,5 @@
 -- Carved from Lemma/Definitions/Def_WeierstrassCurve_ProjModel_GroupLawVocabulary.lean: instance decls only.
-import Lemma.WeierstrassCurve.ProjModel
+import Theorem.WeierstrassCurve.ProjModel
 import Mathlib.AlgebraicGeometry.EllipticCurve.Projective.Basic
 import Mathlib.RingTheory.MvPolynomial.Homogeneous
 import Mathlib.Algebra.MvPolynomial.Rename
@@ -20,7 +20,9 @@ import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Functor
 import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
 import Mathlib.Algebra.Module.Torsion.Basic
 import Mathlib.AlgebraicGeometry.EllipticCurve.Projective.Point
-import Lemma.WeierstrassCurve.ProjModel_GroupLawVocabulary
+import Theorem.WeierstrassCurve.ProjModel_GroupLawVocabulary
+import Def.WeierstrassCurve_ProjModel
+import Def.WeierstrassCurve_ProjModel_GroupLawVocabulary
 
 set_option Elab.async false
 

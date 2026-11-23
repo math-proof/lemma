@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.TensorCategories.code.StarAlgebra
-import Lemma.Category.Atlas.v1.TensorCategories.code.StarAlgebra
-import Lemma.Category.Atlas.v1.TensorCategories.code.BasedRings
+import Theorem.Category.Atlas.v1.TensorCategories.code.StarAlgebra
+import Theorem.Category.Atlas.v1.TensorCategories.code.BasedRings
 import Abbrev.v1.Atlas.TensorCategories.code.BasedRings
 import Mathlib.LinearAlgebra.Dimension.Finrank
 set_option maxHeartbeats 800000

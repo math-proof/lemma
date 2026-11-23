@@ -1,16 +1,19 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Ramanujan/Part1Ch2Entry6.lean -/
+module
 
+public import Def.NumberTheory.Ramanujan.Part1Ch2Entry6
+public import Theorem.Nat.Ramanujan.Part1Ch2Entry6
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Tactic.NormNum
 
-import Def.NumberTheory.Ramanujan.Part1Ch2Entry6
-import Theorem.Nat.Ramanujan.Part1Ch2Entry6
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Tactic.NormNum
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 2, Entry 6 API checks
 
 Values of `A` from its recurrence, the `n = 0` and `r = 0` boundaries, and Entry 6 at
 `n = 1`, `r = 1`.
 -/
+
+public section
 
 
 namespace MathlibExtTest.NumberTheory.Ramanujan.Part1Ch2Entry6

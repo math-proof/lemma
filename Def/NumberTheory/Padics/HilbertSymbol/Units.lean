@@ -1,18 +1,23 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/HilbertSymbol/Units.lean -/
 
-import Def.NumberTheory.Padics.HilbertSymbol
-import Theorem.Nat.Padics.HilbertSymbol
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib.NumberTheory.Padics.RingHoms
-import Mathlib.NumberTheory.Padics.Hensel
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.Analysis.Normed.Group.Ultra
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Order
-import Mathlib.Tactic.Push
-import Mathlib.Tactic.Ring
+module
+
+public import Def.NumberTheory.Padics.HilbertSymbol
+public import Theorem.Nat.Padics.HilbertSymbol
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Mathlib.NumberTheory.Padics.RingHoms
+public import Mathlib.NumberTheory.Padics.Hensel
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.Analysis.Normed.Group.Ultra
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Order
+public import Mathlib.Tactic.Push
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 set_option autoImplicit false
 
 /-!

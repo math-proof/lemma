@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/HighlyComposite.lean -/
+module
 
+public import Mathlib.Tactic.IntervalCases
+public import Mathlib.Tactic.NormNum
+public import Def.NumberTheory.HighlyComposite
+public import Theorem.Nat.HighlyComposite
 
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.NormNum
-import Def.NumberTheory.HighlyComposite
-import Theorem.Nat.HighlyComposite
-
+public section
 
 example : Nat.IsHighlyComposite 1 := by simp [Nat.IsHighlyComposite]
 

@@ -3,8 +3,6 @@ import Initialize.Tactic.Attr.Basic
 open NumberField
 
 
-namespace MaximalOrder
-
 /--
 [ringOfIntegers_isOrder](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/MaximalOrder.lean)
 -/
@@ -18,9 +16,6 @@ lemma ringOfIntegers_isOrder
 -- proof
   ⟨inferInstance, RingOfIntegers.rank K⟩
 
-end MaximalOrder
-
-namespace MaximalOrder
 
 /--
 [ringOfIntegers_isMaximalOrder](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/MaximalOrder.lean)
@@ -38,9 +33,6 @@ lemma ringOfIntegers_isMaximalOrder
   intro x hx
   exact (IsIntegral.of_finite ℤ (⟨x, hx⟩ : O)).algebraMap
 
-end MaximalOrder
-
-namespace MaximalOrder
 
 /--
 [ringOfIntegers_unique_maximalOrder](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/MaximalOrder.lean)
@@ -58,11 +50,11 @@ lemma ringOfIntegers_unique_maximalOrder
   O = integralClosure ℤ K := by
 -- proof
   apply le_antisymm
-  · exact ringOfIntegers_isMaximalOrder K O
-  · haveI : Module.Finite ℤ ↥(integralClosure ℤ K) := inferInstanceAs (Module.Finite ℤ (𝓞 K))
-    exact hmax (integralClosure ℤ K) (ringOfIntegers_isMaximalOrder K O)
+  · exact ringOfIntegers_isMaximalOrder
+  · have : Module.Finite ℤ ↥(integralClosure ℤ K) := inferInstanceAs (Module.Finite ℤ (𝓞 K))
+    exact hmax (integralClosure ℤ K) ringOfIntegers_isMaximalOrder
 
-end MaximalOrder
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-22

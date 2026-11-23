@@ -1,9 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Probability/Combinatorics/LovaszLocalLemma.lean -/
+module
 
-
-import Def.Probability.Combinatorics.LovaszLocalLemma
-import Theorem.Measure.Combinatorics.LovaszLocalLemma
+public import Def.Probability.Combinatorics.LovaszLocalLemma
+public import Theorem.Measure.Combinatorics.LovaszLocalLemma
 open scoped BigOperators
+
+public section
+
 attribute [local instance] Classical.propDecidable
 
 

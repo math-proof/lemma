@@ -1,5 +1,10 @@
-import Mathlib
-import Theorem.Analysis.Appendix_B_1.Part4
+module
+
+public import Mathlib
+public import Theorem.Analysis.Appendix_B_1.Part4
+
+@[expose] public section
+
 /-!
 # Analysis I, Appendix B.1: The decimal representation of natural numbers
 

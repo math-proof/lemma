@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PrimeCounting/SquarefreeTotient.lean -/
+module
 
+public import Def.NumberTheory.PrimeCounting.SquarefreeTotient.Part2
+public import Theorem.Nat.PrimeCounting.SquarefreeTotient
+public import Mathlib.Tactic.NormNum
 
-import Def.NumberTheory.PrimeCounting.SquarefreeTotient.Part2
-import Lemma.Nat.PrimeCounting.SquarefreeTotient
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MathlibExtTest.NumberTheory.PrimeCounting.SquarefreeTotient
 

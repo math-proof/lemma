@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PocklingtonPrimePowerCriterion.lean -/
+module
 
+public import Theorem.Nat.PocklingtonPrimePowerCriterion
+public import Mathlib.Tactic.NormNum.GCD
+public import Mathlib.Tactic.NormNum.ModEq
+public import Mathlib.Tactic.NormNum.Prime
 
-import Theorem.Nat.PocklingtonPrimePowerCriterion
-import Mathlib.Tactic.NormNum.GCD
-import Mathlib.Tactic.NormNum.ModEq
-import Mathlib.Tactic.NormNum.Prime
-
+public section
 
 -- The witness `a = 2` certifies `13 = 3 * 2 ^ 2 + 1`.
 example : Nat.Prime 13 := by

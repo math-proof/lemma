@@ -1,5 +1,10 @@
-import Mathlib
-import Abbrev.Analysis.Section_3_1.Part4
+module
+
+public import Mathlib
+public import Abbrev.Analysis.Section_3_1.Part4
+
+@[expose] public section
+
 set_option doc.verso.suggestions false
 
 /-!

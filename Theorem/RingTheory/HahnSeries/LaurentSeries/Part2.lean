@@ -9,8 +9,8 @@ Authors: AlgebraicCombinatorics contributors
 import Mathlib
 import Def.RingTheory.LaurentSeries.Part11
 import Theorem.PowerSeries.InfiniteProducts2
-import Lemma.LaurentSeries.LaurentSeries
-import Lemma.Partition.NPartition
+import Theorem.LaurentSeries.LaurentSeries
+import Theorem.Partition.NPartition
 import Def.RingTheory.HahnSeries.LaurentSeries.Part4
 open scoped LaurentPolynomial Polynomial
 open LaurentPolynomial HahnSeries

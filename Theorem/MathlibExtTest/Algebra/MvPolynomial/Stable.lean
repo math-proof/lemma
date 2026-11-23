@@ -1,12 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/MvPolynomial/Stable.lean -/
+module
 
-
-import Def.Algebra.MvPolynomial.Stable
-import Lemma.MvPolynomial.Stable
+public import Def.Algebra.MvPolynomial.Stable
+public import Theorem.MvPolynomial.Stable
 open scoped ComplexOrder
 
 open MvPolynomial
 
+public section
 
 namespace MathlibExtTest.Algebra.MvPolynomial.Stable
 

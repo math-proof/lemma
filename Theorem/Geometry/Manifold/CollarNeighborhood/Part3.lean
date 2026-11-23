@@ -3,17 +3,21 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
+module
 
-import Mathlib.Geometry.Manifold.Instances.Real
-import Mathlib.Topology.LocalAtTarget
-import Mathlib.Topology.PartitionOfUnity
-import Def.Geometry.Manifold.CollarNeighborhood.Part4
+public import Mathlib.Geometry.Manifold.Instances.Real
+public import Mathlib.Topology.LocalAtTarget
+public import Mathlib.Topology.PartitionOfUnity
+public import Def.Geometry.Manifold.CollarNeighborhood.Part4
+
 /-!
 # Collar neighborhoods of smooth manifold boundaries
 
 This file proves that the boundary of a Hausdorff second-countable smooth manifold modeled on a
 Euclidean half-space admits a topological collar neighborhood.
 -/
+
+public section
 
 
 noncomputable section

@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
-public import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
 public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ConnectionsCurvature
 public import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part7
 public import Def.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part3

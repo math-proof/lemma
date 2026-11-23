@@ -1,8 +1,12 @@
-import Mathlib
-import Notation.Mathlib_Algebra_Algebra_Hom
-import Instance.Mathlib_Algebra_Algebra_Hom
-import Class.Mathlib_Algebra_Algebra_Hom
-import Structure.Mathlib_Algebra_Algebra_Hom
+module
+
+public import Mathlib
+public import Notation.Mathlib_Algebra_Algebra_Hom
+public import Instance.Mathlib_Algebra_Algebra_Hom
+public import Class.Mathlib_Algebra_Algebra_Hom
+public import Structure.Mathlib_Algebra_Algebra_Hom
+
+@[expose] public section
 
 section
 

@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.AlgebraicGeometryI.code.ZariskiSheafCohomology.Part4
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.ZariskiSheafCohomology
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.DedekindCurve
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DedekindCurve
 import Def.v1.Atlas.AlgebraicGeometryI.code.DedekindCurve
 open AlgebraicGeometry CategoryTheory CategoryTheory.Abelian TopologicalSpace
 open ZariskiSheafCohomology

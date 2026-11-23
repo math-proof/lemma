@@ -4,9 +4,14 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Theorem.Combinatorics.SimpleGraph.VertexConnectivity
-import Theorem.SimpleGraph.VertexConnectivity
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite
+module
+
+public import Theorem.Combinatorics.SimpleGraph.VertexConnectivity
+public import Theorem.SimpleGraph.VertexConnectivity
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite
+
+@[expose] public section
+
 /-!
 # Říha's cycle lemma
 

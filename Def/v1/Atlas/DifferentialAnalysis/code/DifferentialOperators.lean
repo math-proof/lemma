@@ -21,7 +21,7 @@ import Mathlib.Analysis.Calculus.ContDiff.FiniteDimension
 import Mathlib.Analysis.Calculus.IteratedDeriv.WithinZpow
 import Theorem.v1.Atlas.DifferentialAnalysis.code.DistributionSupport
 import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DistributionSupport
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzTranslateContinuity
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzTranslateContinuity
 import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzTranslateContinuity
 open scoped SchwartzMap
 open TemperedDistribution MvPolynomial

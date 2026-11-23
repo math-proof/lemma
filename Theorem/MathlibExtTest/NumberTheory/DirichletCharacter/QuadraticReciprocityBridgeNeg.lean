@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridgeNeg.lean -/
+module
 
-
-import Theorem.Nat.DirichletCharacter.QuadraticReciprocityBridgeNeg
-import Mathlib.Tactic.NormNum.LegendreSymbol
-import Mathlib.Tactic.NormNum.Prime
+public import Theorem.Nat.DirichletCharacter.QuadraticReciprocityBridgeNeg
+public import Mathlib.Tactic.NormNum.LegendreSymbol
+public import Mathlib.Tactic.NormNum.Prime
 open MetaMathlibExt
 
+public section
 
 example :
     jacobiSym ((3 : ℕ) : ℤ) (-7 : ℤ).natAbs = kroneckerSym (-7 : ℤ) 3 :=

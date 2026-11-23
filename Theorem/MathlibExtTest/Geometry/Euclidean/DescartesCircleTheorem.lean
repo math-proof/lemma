@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Geometry/Euclidean/DescartesCircleTheorem.lean -/
+module
 
+public import Theorem.Set.Euclidean.DescartesCircleTheorem
 
-import Theorem.Set.Euclidean.DescartesCircleTheorem
-
+public section
 
 namespace MetaMathlibExt
 

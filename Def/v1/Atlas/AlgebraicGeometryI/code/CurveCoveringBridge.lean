@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalDivisorDecomposition.Part4
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalDivisorDecomposition
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzDegree
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalDivisorDecomposition
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzDegree
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzDegree
 
 

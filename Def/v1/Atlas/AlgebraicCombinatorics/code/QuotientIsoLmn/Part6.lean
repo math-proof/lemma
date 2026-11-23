@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Theorem.v1.Atlas.AlgebraicCombinatorics.code.WreathOrbits.Part5
 import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.WreathOrbits
-import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungLattice
+import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungLattice
 import Instance.v1.Atlas.AlgebraicCombinatorics.code.YoungLattice.Part3
 import Theorem.v1.Atlas.AlgebraicCombinatorics.code.QuotientIsoLmn.Part5
 set_option autoImplicit false

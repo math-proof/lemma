@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/FieldTheory/PurelyInseparablePrimeDegree.lean -/
+module
 
-
-import Theorem.Rat.PurelyInseparablePrimeDegree
+public import Theorem.Rat.PurelyInseparablePrimeDegree
 set_option autoImplicit false
 
 open IntermediateField Module Polynomial
+
+public section
 
 variable (K L : Type*) [Field K] [Field L] [Algebra K L]
 variable (p : ℕ) [CharP K p] [IsPurelyInseparable K L]

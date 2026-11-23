@@ -2,7 +2,8 @@
 import Mathlib
 import Instance.CuspForm_AuxLevelHeckeModule
 import Inductive.CuspForm_TWLevelHeckeModule_Gen
-import Lemma.CuspForm.TWLevelHeckeModule
+import Theorem.CuspForm.TWLevelHeckeModule
+import Def.CuspForm_TWLevelHeckeModule
 
 set_option autoImplicit false
 

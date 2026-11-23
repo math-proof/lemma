@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Additive/ThreeSumset.lean -/
+module
 
-
-import Def.Combinatorics.Additive.ThreeSumset.Part3
-import Lemma.Finset.Additive.ThreeSumset
+public import Def.Combinatorics.Additive.ThreeSumset.Part3
+public import Theorem.Finset.Additive.ThreeSumset
 open scoped Pointwise
 
+public section
 
 namespace MetaMathlibExt
 

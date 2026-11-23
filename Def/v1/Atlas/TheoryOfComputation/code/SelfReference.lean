@@ -8,15 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Notation.v1.Atlas.TheoryOfComputation.code.Reductions
-import Def.v1.Atlas.TheoryOfComputation.code.Decidability.Part13
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.Decidability
-import Mathlib.Data.Set.Basic
-import Mathlib.Data.Fintype.Basic
-import Mathlib.Order.RelClasses
-import Mathlib.Tactic.Set
-import Structure.v1.Atlas.TheoryOfComputation.code.SelfReference
+module
 
+public import Notation.v1.Atlas.TheoryOfComputation.code.Reductions
+public import Def.v1.Atlas.TheoryOfComputation.code.Decidability.Part13
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.Decidability
+public import Mathlib.Data.Set.Basic
+public import Mathlib.Data.Fintype.Basic
+public import Mathlib.Order.RelClasses
+public import Mathlib.Tactic.Set
+public import Structure.v1.Atlas.TheoryOfComputation.code.SelfReference
+
+@[expose] public section
 
 namespace SelfReference
 

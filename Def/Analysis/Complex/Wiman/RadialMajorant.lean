@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/RadialMajorant.lean -/
 
-import Theorem.Analysis.Complex.Wiman.TaylorExpansion
-import Theorem.Complex.Wiman.TaylorExpansion
+module
 
+public import Theorem.Analysis.Complex.Wiman.TaylorExpansion
+public import Theorem.Complex.Wiman.TaylorExpansion
+
+@[expose] public section
 
 namespace Complex
 

@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Def_4_1.Part3
-import Mathlib.Order.Bounds.Basic
+module
+
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Def_4_1.Part3
+public import Mathlib.Order.Bounds.Basic
+
+@[expose] public section
+
 open Matrix Real Finset MeasureTheory
 
 

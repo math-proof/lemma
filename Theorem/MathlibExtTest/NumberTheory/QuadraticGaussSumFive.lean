@@ -3,11 +3,13 @@
 /-
   Author: Muse Code powered by Meta Muse Spark (Muse Spark 1.3)
 -/
+module
 
-import Def.NumberTheory.QuadraticGaussSumFive
-import Theorem.Nat.QuadraticGaussSumFive
-import Mathlib.Tactic
+public import Def.NumberTheory.QuadraticGaussSumFive
+public import Theorem.Nat.QuadraticGaussSumFive
+public import Mathlib.Tactic
 
+public section
 
 namespace MetaMathlibExt
 

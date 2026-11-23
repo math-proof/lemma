@@ -6,11 +6,10 @@ import { getMysqlPool } from './fetchLemmaMysql.mjs';
 import { commutativeImportAlias } from './moduleResolve.mjs';
 
 /**
- * @param {string} user
  * @param {string} module
  * @param {boolean} reverse true = who imports this module (callee view); false = this module's imports (caller view)
  */
-async function selectHierarchyFromDb(user, module, reverse) {
+async function selectHierarchyFromDb(module, reverse) {
   const pool = getMysqlPool();
   if (!pool) return [];
 
@@ -19,21 +18,21 @@ async function selectHierarchyFromDb(user, module, reverse) {
     const [rows] = await pool.query(
       alt
         ? `SELECT DISTINCT module FROM lemma
-           WHERE user = ? AND (
+           WHERE (
              JSON_CONTAINS(imports, JSON_QUOTE(CONCAT('Lemma.', ?)), '$')
              OR JSON_CONTAINS(imports, JSON_QUOTE(CONCAT('Lemma.', ?)), '$')
            )`
         : `SELECT module FROM lemma
-           WHERE user = ? AND JSON_CONTAINS(imports, JSON_QUOTE(CONCAT('Lemma.', ?)), '$')`,
-      alt ? [user, module, alt] : [user, module]
+           WHERE JSON_CONTAINS(imports, JSON_QUOTE(CONCAT('Lemma.', ?)), '$')`,
+      alt ? [module, alt] : [module]
     );
     if (!Array.isArray(rows)) return [];
     return rows.map((/** @type {{ module: string }} */ r) => r.module);
   }
 
   const [rows] = await pool.query(
-    'SELECT imports FROM lemma WHERE user = ? AND module = ? LIMIT 1',
-    [user, module]
+    'SELECT imports FROM lemma WHERE module = ? LIMIT 1',
+    [module]
   );
   if (!Array.isArray(rows) || rows.length === 0) return [];
   let imports = rows[0].imports;
@@ -58,12 +57,11 @@ async function selectHierarchyFromDb(user, module, reverse) {
 
 /**
  * Adjacency list: node -> child modules (same shape as PHP `Graph::jsonSerialize()`).
- * @param {string} user
  * @param {string} startNode
  * @param {boolean} reverse
  * @returns {Promise<Record<string, string[]>>}
  */
-export async function establishHierarchyGraph(user, startNode, reverse) {
+export async function establishHierarchyGraph(startNode, reverse) {
   /** @type {Record<string, string[]>} */
   const G = {};
   const processed = new Set();
@@ -79,7 +77,7 @@ export async function establishHierarchyGraph(user, startNode, reverse) {
     const cacheKey = `${reverse ? 'r' : 'f'}:${node}`;
     let children = cache.get(cacheKey);
     if (!children) {
-      children = await selectHierarchyFromDb(user, node, reverse);
+      children = await selectHierarchyFromDb(node, reverse);
       cache.set(cacheKey, children);
     }
 

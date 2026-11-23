@@ -5,7 +5,7 @@ public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
 public import Mathlib.RingTheory.Valuation.ValuationSubring
 public import Mathlib.FieldTheory.IsAlgClosed.Basic
 public import Mathlib.RingTheory.DiscreteValuationRing.Basic
-public import Lemma.RingHom.FunctionField
+public import Theorem.RingHom.FunctionField
 
 set_option autoImplicit false
 

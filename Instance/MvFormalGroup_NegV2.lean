@@ -1,6 +1,10 @@
 -- Carved from Lemma/Definitions/Def_MvFormalGroup_NegV2.lean: instance decls only.
-import Instance.MvFormalGroup_EndRingV2
-import Lemma.MvPowerSeries.NegV2
+module
+
+public import Instance.MvFormalGroup_EndRingV2
+public import Theorem.MvPowerSeries.NegV2
+public import Def.FormalGroup_NegV2
+@[expose] public section
 
 set_option autoImplicit false
 

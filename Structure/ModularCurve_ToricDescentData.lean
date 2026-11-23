@@ -3,7 +3,7 @@ module
 public import Mathlib
 public import Structure.ModularCurve_MazurPrincipleCore
 public import Def.ModularCurve_DeligneRapoport
-public import Lemma.LaurentSeries.HeckeOperator
+public import Theorem.LaurentSeries.HeckeOperator
 public import Structure.Isogeny_ConditionalCurrency
 
 set_option autoImplicit false

@@ -1,6 +1,9 @@
-import Mathlib.Analysis.Convex.Cone.Dual
-import Mathlib.Analysis.InnerProductSpace.Dual
-import Def.Analysis.Convex.LinearProgrammingDuality.Part2
+module
+
+public import Mathlib.Analysis.Convex.Cone.Dual
+public import Mathlib.Analysis.InnerProductSpace.Dual
+public import Def.Analysis.Convex.LinearProgrammingDuality.Part2
+
 /-!
 # Strong linear programming duality
 
@@ -11,6 +14,8 @@ equal objective value `c ⬝ᵥ x = b ⬝ᵥ y`.
 Informal source: George B. Dantzig, *Linear Programming and Extensions*,
 Princeton University Press, 1963, strong duality theorem.
 -/
+
+public section
 
 
 namespace Convex.LPDuality

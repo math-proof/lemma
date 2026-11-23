@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/Deza.lean -/
+module
 
-
-import Mathlib.Tactic.FinCases
-import Structure.Combinatorics.SimpleGraph.Deza
-import Theorem.SimpleGraph.Deza
+public import Mathlib.Tactic.FinCases
+public import Structure.Combinatorics.SimpleGraph.Deza
+public import Theorem.SimpleGraph.Deza
 open SimpleGraph
 
+public section
 
 /-- The triangle is Deza with parameters `(3, 2, 1, 1)`. -/
 example : (⊤ : SimpleGraph (Fin 3)).IsDezaWith 3 2 1 1 := by

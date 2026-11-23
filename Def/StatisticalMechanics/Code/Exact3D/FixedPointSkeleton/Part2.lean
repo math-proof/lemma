@@ -8,12 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Topology.MetricSpace.Contracting
-import Mathlib.Topology.MetricSpace.Pseudo.Pi
-import Mathlib.Topology.UniformSpace.Pi
-import Theorem.StatisticalMechanics.Code.Exact3D.MatrixCertificate.Part6
-import Theorem.StatisticalMechanics.Code.Exact3D.FixedPointSkeleton
+module
 
+public import Mathlib.Topology.MetricSpace.Contracting
+public import Mathlib.Topology.MetricSpace.Pseudo.Pi
+public import Mathlib.Topology.UniformSpace.Pi
+public import Theorem.StatisticalMechanics.Code.Exact3D.MatrixCertificate.Part6
+public import Theorem.StatisticalMechanics.Code.Exact3D.FixedPointSkeleton
+
+@[expose] public section
 
 namespace StatMech
 

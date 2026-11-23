@@ -16,14 +16,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Theorem.Set.ImageIioDiv_2.eq.InterSetOfEven_Iio
-import Theorem.Set.Interval.Finset.Basic
-import Instance.Data.Set.Interval
-import Mathlib.Order.Interval.Finset.Nat
-import Mathlib.Order.Interval.Set.Nat
-import Mathlib.Tactic
-import Abbrev.Data.Set.Density
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Theorem.Set.ImageIioDiv_2.eq.InterSetOfEven_Iio
+public import Theorem.Set.Interval.Finset.Basic
+public import Instance.Data.Set.Interval
+public import Mathlib.Order.Interval.Finset.Nat
+public import Mathlib.Order.Interval.Set.Nat
+public import Mathlib.Tactic
+public import Abbrev.Data.Set.Density
+
+@[expose] public section
+
 open Filter
 
 open scoped Topology

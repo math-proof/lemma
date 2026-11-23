@@ -1,14 +1,18 @@
-import Def.CerednikDrinfeld_Ribbon
-import Mathlib.Combinatorics.SimpleGraph.Dart
-import Mathlib.Combinatorics.SimpleGraph.Acyclic
-import Mathlib.GroupTheory.GroupAction.Quotient
-import Mathlib.GroupTheory.OrderOfElement
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.LinearAlgebra.BilinearMap
-import Instance.CerednikDrinfeld_MumfordPeriod
-import Class.CerednikDrinfeld_MumfordPeriod
-import Structure.CerednikDrinfeld_MumfordPeriod
-import Abbrev.CerednikDrinfeld_MumfordPeriod
+module
+
+public import Def.CerednikDrinfeld_Ribbon
+public import Mathlib.Combinatorics.SimpleGraph.Dart
+public import Mathlib.Combinatorics.SimpleGraph.Acyclic
+public import Mathlib.GroupTheory.GroupAction.Quotient
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.LinearAlgebra.BilinearMap
+public import Instance.CerednikDrinfeld_MumfordPeriod
+public import Class.CerednikDrinfeld_MumfordPeriod
+public import Structure.CerednikDrinfeld_MumfordPeriod
+public import Abbrev.CerednikDrinfeld_MumfordPeriod
+
+@[expose] public section
 
 set_option autoImplicit false
 noncomputable section

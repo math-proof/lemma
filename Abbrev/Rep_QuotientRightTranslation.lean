@@ -1,6 +1,10 @@
-import Mathlib
-import Abbrev.Compat_Mathlib430
-import Abbrev.GroupCohomology_Selmer
+module
+
+public import Mathlib
+public import Abbrev.Compat_Mathlib430
+public import Abbrev.GroupCohomology_Selmer
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutLight
-import Mathlib.RingTheory.Localization.AtPrime.Basic
-import Structure.v1.Atlas.AlgebraicGeometryI.code.BezoutMultiplicitySum
+module
 
+public import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutLight
+public import Mathlib.RingTheory.Localization.AtPrime.Basic
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.BezoutMultiplicitySum
+
+@[expose] public section
 
 noncomputable section
 

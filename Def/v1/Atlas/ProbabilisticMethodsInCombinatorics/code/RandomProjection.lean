@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.MeasureTheory.Measure.MeasureSpace
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.SubGaussian
-import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.SubGaussian
+module
+
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.MeasureTheory.Measure.MeasureSpace
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.SubGaussian
+public import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.SubGaussian
+
+@[expose] public section
+
 open MeasureTheory Measure Real Set
 open scoped ENNReal NNReal
 

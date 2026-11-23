@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/Dichromatic.lean -/
+module
 
-
-import Def.Combinatorics.SimpleGraph.Dichromatic
-import Theorem.SimpleGraph.Dichromatic
+public import Def.Combinatorics.SimpleGraph.Dichromatic
+public import Theorem.SimpleGraph.Dichromatic
 open SimpleGraph
 
+public section
 
 -- Normal API use: the canonical orientation/dichromatic predicates accept a
 -- graph and elaborate at the expected types.

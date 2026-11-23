@@ -4,18 +4,21 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Def.NumberTheory.Recurrences.PrimitiveDivisor
-import Theorem.Nat.Recurrences.PrimitiveDivisor
-import Mathlib.Data.Nat.Fib.Basic
-import Mathlib.NumberTheory.ArithmeticFunction.Moebius
-import Mathlib.NumberTheory.Padics.PadicVal.Basic
-import Mathlib.NumberTheory.Real.GoldenRatio
-import Mathlib.Data.Nat.Totient
-import Mathlib.Algebra.Order.Field.GeomSum
-import Mathlib.Order.Interval.Finset.Nat
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.LinearCombination
+module
 
+public import Def.NumberTheory.Recurrences.PrimitiveDivisor
+public import Theorem.Nat.Recurrences.PrimitiveDivisor
+public import Mathlib.Data.Nat.Fib.Basic
+public import Mathlib.NumberTheory.ArithmeticFunction.Moebius
+public import Mathlib.NumberTheory.Padics.PadicVal.Basic
+public import Mathlib.NumberTheory.Real.GoldenRatio
+public import Mathlib.Data.Nat.Totient
+public import Mathlib.Algebra.Order.Field.GeomSum
+public import Mathlib.Order.Interval.Finset.Nat
+public import Mathlib.Tactic.IntervalCases
+public import Mathlib.Tactic.LinearCombination
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

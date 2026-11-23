@@ -2,7 +2,8 @@ module
 
 public import Mathlib
 public import Structure.ModularCurve_JZeroNeronData
-public import Lemma.MvPolynomial.HeckeModule
+public import Def.ModularCurve_HeckeModule
+public import Theorem.MvPolynomial.HeckeModule
 public import Def.ModularCurve_HeckeInputsAll
 public import Def.FLTPrelim_Ramification
 public import Def.GaloisRep_Flat

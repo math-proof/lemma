@@ -1,9 +1,11 @@
-import Mathlib
-import Def.ModularCurve_NodeLocalized
+module
+
+public import Mathlib
+public import Def.ModularCurve_NodeLocalized
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace ModularCurve
 namespace NodeLocalized

@@ -9,6 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.LieGroups.code.CategoryO.Part3
-import Lemma.Int.IsInQPlus0
+import Theorem.Int.IsInQPlus0
 
 

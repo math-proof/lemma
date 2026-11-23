@@ -1,6 +1,10 @@
-import Instance.AlgebraicGeometry_OrderedAffineCoverCech
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+module
+
+public import Instance.AlgebraicGeometry_OrderedAffineCoverCech
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+
+@[expose] public section
 
 set_option autoImplicit false
 

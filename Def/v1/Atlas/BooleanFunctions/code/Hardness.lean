@@ -19,10 +19,10 @@ import Mathlib.Data.Fin.Basic
 import Def.v1.Atlas.BooleanFunctions.code.PCP.Part5
 import Def.v1.Atlas.BooleanFunctions.code.UniqueGames.Part8
 import Theorem.Bool.Atlas.v1.BooleanFunctions.code.UniqueGames
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Borel
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.MultilinearExtension
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.MultilinearExtension
 import Def.v1.Atlas.BooleanFunctions.code.MajorityStablest
 import Def.v1.Atlas.BooleanFunctions.code.Talagrand
 import Def.v1.Atlas.BooleanFunctions.code.Borel

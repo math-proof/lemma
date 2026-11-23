@@ -7,14 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
+public import Mathlib.Algebra.BigOperators.Field
+public import Mathlib.Algebra.Ring.Commute
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Lean.Elab.Tactic.Omega
+public import Def.StatisticalMechanics.Code.FrontierA.IsoradialDualSubgraphSum.Part3
 
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Algebra.Ring.Commute
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Lean.Elab.Tactic.Omega
-import Def.StatisticalMechanics.Code.FrontierA.IsoradialDualSubgraphSum.Part3
-
+public section
 
 namespace StatMech.FrontierA
 

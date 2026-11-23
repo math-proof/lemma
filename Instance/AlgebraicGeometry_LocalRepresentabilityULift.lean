@@ -1,6 +1,7 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_LocalRepresentabilityULift.lean: instance decls only.
 import Mathlib
-import Lemma.Scheme.LocalRepresentabilityULift
+import Theorem.Scheme.LocalRepresentabilityULift
+import Def.AlgebraicGeometry_LocalRepresentabilityULift
 
 set_option autoImplicit false
 

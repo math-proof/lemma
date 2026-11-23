@@ -1,15 +1,6 @@
+import Theorem.List.DropTake.eq.TakeDrop
 import Initialize.Tactic.Attr.Basic
 
 
-@[path]
-private lemma main
--- given
-  (l : List α)
-  (i j : ℕ):
--- imply
-  (l.take j).drop i = (l.drop i).take (j - i) := by
--- proof
-  apply List.drop_take
-
-
 -- created on 2025-06-20
+-- updated on 2026-11-22

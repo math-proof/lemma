@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
-import Theorem.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
-import Mathlib.CategoryTheory.Preadditive.Projective.Preserves
-import Def.v1.Atlas.TensorCategories.code.ModuleFunctorDefs
+module
+
+public import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
+public import Theorem.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
+public import Mathlib.CategoryTheory.Preadditive.Projective.Preserves
+public import Def.v1.Atlas.TensorCategories.code.ModuleFunctorDefs
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 universe v₁ v₂ v₃ v₄ u₁ u₂ u₃ u₄

@@ -7,15 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.CohomologyP1.Part2
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyP1
-import Mathlib.RingTheory.Flat.Localization
-import Mathlib.Algebra.Module.LocalizedModule.Basic
-import Mathlib.RingTheory.Ideal.Span
-import Mathlib.RingTheory.Localization.Away.Basic
-import Def.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.CohomologyP1.Part2
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyP1
+public import Mathlib.RingTheory.Flat.Localization
+public import Mathlib.Algebra.Module.LocalizedModule.Basic
+public import Mathlib.RingTheory.Ideal.Span
+public import Mathlib.RingTheory.Localization.Away.Basic
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology
 
+public section
 
 namespace SheafCohomology
 

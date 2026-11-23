@@ -1,6 +1,10 @@
-import Mathlib
-import Instance.FLTPrelim_Modularity
-import Def.ModularForm_EisensteinChiNegThree
+module
+
+public import Mathlib
+public import Instance.FLTPrelim_Modularity
+public import Def.ModularForm_EisensteinChiNegThree
+
+@[expose] public section
 
 set_option autoImplicit false
 

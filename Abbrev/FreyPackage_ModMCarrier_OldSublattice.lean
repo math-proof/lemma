@@ -1,12 +1,14 @@
-import Mathlib
-import Abbrev.FreyPackage_ModMCarrier_LatticeRed
-import Abbrev.FreyPackage_ModMCarrier_Rescale
-import Def.CuspForm_IntegralStructure
-import Structure.ModularForm_AtkinLehnerDatum
-import Instance.FreyPackage_ModMCarrier_OldSublattice
+module
+
+public import Mathlib
+public import Abbrev.FreyPackage_ModMCarrier_LatticeRed
+public import Abbrev.FreyPackage_ModMCarrier_Rescale
+public import Def.CuspForm_IntegralStructure
+public import Structure.ModularForm_AtkinLehnerDatum
+public import Instance.FreyPackage_ModMCarrier_OldSublattice
 
 set_option autoImplicit false
-noncomputable section
+@[expose] public noncomputable section
 open CongruenceSubgroup ModularForm
 open scoped TensorProduct
 

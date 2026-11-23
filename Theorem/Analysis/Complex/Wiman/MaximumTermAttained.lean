@@ -1,11 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/MaximumTermAttained.lean -/
+module
 
-import Def.Analysis.Complex.Wiman.RadialMajorant
-import Theorem.Complex.Wiman.RadialMajorant
-import Mathlib.Topology.Algebra.InfiniteSum.Group
-import Mathlib.Topology.Instances.Nat
-import Mathlib.Topology.Order.Compact
+public import Def.Analysis.Complex.Wiman.RadialMajorant
+public import Theorem.Complex.Wiman.RadialMajorant
+public import Mathlib.Topology.Algebra.InfiniteSum.Group
+public import Mathlib.Topology.Instances.Nat
+public import Mathlib.Topology.Order.Compact
 
+public section
 
 noncomputable section
 

@@ -19,19 +19,17 @@ function isSafeLemmaModule(m) {
 }
 
 /**
- * @param {string} projectUser
  * @param {string} oldModule
  * @param {string} newModule
  */
-async function updateAxiomModuleRow(projectUser, oldModule, newModule) {
+async function updateAxiomModuleRow(oldModule, newModule) {
   const pool = getMysqlPool();
   if (!pool) return;
   const lemmaOld = `Lemma.${oldModule}`;
   const lemmaNew = `Lemma.${newModule}`;
   try {
-    await pool.query('UPDATE lemma SET module = ? WHERE user = ? AND module = ?', [
+    await pool.query('UPDATE lemma SET module = ? WHERE module = ?', [
       newModule,
-      projectUser,
       oldModule,
     ]);
     await pool.query(
@@ -39,8 +37,8 @@ async function updateAxiomModuleRow(projectUser, oldModule, newModule) {
         imports,
         JSON_UNQUOTE(JSON_SEARCH(imports, 'one', ?)),
         ?
-      ) WHERE user = ? AND JSON_CONTAINS(imports, JSON_QUOTE(?))`,
-      [lemmaOld, lemmaNew, projectUser, lemmaOld]
+      ) WHERE JSON_CONTAINS(imports, JSON_QUOTE(?))`,
+      [lemmaOld, lemmaNew, lemmaOld]
     );
   } catch (e) {
     console.warn('[rename mysql]', e.message);
@@ -76,11 +74,10 @@ function runRenameShell(old, new_) {
 }
 
 /**
- * @param {string} projectUser
  * @param {import('express').Request} req
  * @param {import('express').Response} res
  */
-export async function handleRenameLemma(projectUser, req, res) {
+export async function handleRenameLemma(req, res) {
   const body = req.body && typeof req.body === 'object' ? req.body : {};
   const pkg = body.package != null && String(body.package).trim() !== '' ? String(body.package) : null;
 
@@ -148,7 +145,7 @@ export async function handleRenameLemma(projectUser, req, res) {
     return;
   }
 
-  await updateAxiomModuleRow(projectUser, old, new_);
+  await updateAxiomModuleRow(old, new_);
 
   /** Same as PHP `echo std\\encode("renamed!");` — JSON string for axios. */
   res.status(200).json('renamed!');

@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicGeometryI.code.GBSplittingExistence.Part2
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.GBSplittingExistence
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GBSplittingExistence
 import Structure.v1.Atlas.AlgebraicGeometryI.code.GrothendieckBirkhoffGeometric
 open BigOperators
 

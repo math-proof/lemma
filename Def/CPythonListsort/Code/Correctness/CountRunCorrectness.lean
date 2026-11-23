@@ -6,7 +6,7 @@ import Structure.CPythonListsort.Code.Correctness.ReverseSliceCorrectness
 import Def.CPythonListsort.Code.Correctness.SortSliceRange
 import Def.CPythonListsort.Code.Correctness.DescendingRunNormalization
 import Def.CPythonListsort.Code.Correctness.DescendingRunInvariant.Part2
-import Lemma.List.Atlas.CPythonListsort.Code.Correctness.ReverseRangeSupport
+import Theorem.List.Atlas.CPythonListsort.Code.Correctness.ReverseRangeSupport
 import Def.CPythonListsort.Code.Correctness.ScanRemainder.Part3
 /-!
 # Functional correctness of `count_run`

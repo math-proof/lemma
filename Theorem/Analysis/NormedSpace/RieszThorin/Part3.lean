@@ -1,19 +1,21 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
+module
 
-import Mathlib.MeasureTheory.Function.LpSeminorm.Basic
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Complex.Hadamard
-import Mathlib.MeasureTheory.Function.LpSeminorm.Count
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Push
-import Mathlib.Tactic.Ring
-import Def.Analysis.NormedSpace.RieszThorin.Part2
+public import Mathlib.MeasureTheory.Function.LpSeminorm.Basic
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Complex.Hadamard
+public import Mathlib.MeasureTheory.Function.LpSeminorm.Count
+public import Mathlib.Order.CompletePartialOrder
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Push
+public import Mathlib.Tactic.Ring
+public import Def.Analysis.NormedSpace.RieszThorin.Part2
 
+public section
 
 section
 

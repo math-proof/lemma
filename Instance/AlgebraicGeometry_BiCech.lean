@@ -1,8 +1,11 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_BiCech.lean: instance decls only.
-import Mathlib
-import Instance.AlgebraicGeometry_OrderedAffineCoverCech
-import Instance.AlgebraicGeometry_DoubleComplex
-import Lemma.Scheme.BiCech
+module
+
+public import Mathlib
+public import Instance.AlgebraicGeometry_OrderedAffineCoverCech
+public import Instance.AlgebraicGeometry_DoubleComplex
+public import Theorem.Scheme.BiCech
+@[expose] public section
 
 set_option autoImplicit false
 

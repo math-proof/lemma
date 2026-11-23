@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.Probability.code.MarkovChain
-import Mathlib.Probability.Kernel.IonescuTulcea.Traj
-import Instance.v1.Atlas.Probability.code.MarkovChainConstruction
+module
+
+public import Structure.v1.Atlas.Probability.code.MarkovChain
+public import Mathlib.Probability.Kernel.IonescuTulcea.Traj
+public import Instance.v1.Atlas.Probability.code.MarkovChainConstruction
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Kernel Set
 
 variable {S : Type*} [MeasurableSpace S]

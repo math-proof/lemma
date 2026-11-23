@@ -1,13 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Ramanujan/Part1Ch3Section8Example4BernoulliIntegral.lean -/
+module
 
+public import Theorem.Nat.Ramanujan.Part1Ch3Section8Example4BernoulliIntegral
+public import Mathlib.Tactic.NormNum
 
-import Lemma.Nat.Ramanujan.Part1Ch3Section8Example4BernoulliIntegral
-import Mathlib.Tactic.NormNum
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 3, Section 8, Example 4 API checks
 
 Values of `bernoulli`, and the theorem at `m = 0`, where it says `F(0, 1, x; 0) = x`.
 -/
+
+public section
 
 
 namespace MathlibExtTest.NumberTheory.Ramanujan.Part1Ch3Section8Example4BernoulliIntegral

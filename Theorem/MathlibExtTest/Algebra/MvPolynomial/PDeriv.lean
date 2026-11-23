@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/MvPolynomial/PDeriv.lean -/
+module
 
-
-import Def.Algebra.MvPolynomial.PDeriv
-import Theorem.MvPolynomial.PDeriv
+public import Def.Algebra.MvPolynomial.PDeriv
+public import Theorem.MvPolynomial.PDeriv
 open MvPolynomial
 
+public section
 
 -- Mixed partial derivatives commute on a polynomial involving both variables.
 example :

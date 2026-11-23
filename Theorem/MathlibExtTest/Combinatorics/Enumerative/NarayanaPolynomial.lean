@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/NarayanaPolynomial.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.NarayanaPolynomial
+public import Theorem.Finset.Enumerative.NarayanaPolynomial
+public import Mathlib.Tactic.Ring
 
-import Def.Combinatorics.Enumerative.NarayanaPolynomial
-import Lemma.Finset.Enumerative.NarayanaPolynomial
-import Mathlib.Tactic.Ring
-
+public section
 
 namespace MetaMathlibExt
 

@@ -1,7 +1,8 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_KatzLevelPUniversal.lean: instance decls only.
 import Mathlib
 import Instance.ModularCurve_KatzLevelP
-import Lemma.WeierstrassCurve.KatzLevelPUniversal
+import Theorem.WeierstrassCurve.KatzLevelPUniversal
+import Def.ModularCurve_KatzLevelPUniversal
 
 set_option autoImplicit false
 

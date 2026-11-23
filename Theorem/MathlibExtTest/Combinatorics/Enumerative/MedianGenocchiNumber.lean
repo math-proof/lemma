@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/MedianGenocchiNumber.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.MedianGenocchiNumber
+public import Theorem.Finset.Enumerative.MedianGenocchiNumber
 
-import Def.Combinatorics.Enumerative.MedianGenocchiNumber
-import Theorem.Finset.Enumerative.MedianGenocchiNumber
-
+public section
 
 namespace MetaMathlibExt
 

@@ -8,19 +8,24 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Instance.v1.Atlas.DifferentialAnalysis.code.TestFunctions
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TestFunctions
-import Mathlib.Analysis.Convolution
-import Mathlib.Analysis.Calculus.ContDiff.Convolution
-import Mathlib.Topology.ContinuousMap.ZeroAtInfty
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
-import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
-import Mathlib.Analysis.Distribution.SchwartzSpace.Deriv
-import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
-import Mathlib.Analysis.Calculus.ParametricIntegral
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
-import Abbrev.v1.Atlas.DifferentialAnalysis.code.ConvolutionSmooth
+module
+
+public import Instance.v1.Atlas.DifferentialAnalysis.code.TestFunctions
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TestFunctions
+public import Mathlib.Analysis.Convolution
+public import Mathlib.Analysis.Calculus.ContDiff.Convolution
+public import Mathlib.Topology.ContinuousMap.ZeroAtInfty
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Deriv
+public import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
+public import Mathlib.Analysis.Calculus.ParametricIntegral
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
+public import Abbrev.v1.Atlas.DifferentialAnalysis.code.ConvolutionSmooth
+
+@[expose] public section
+
 open scoped ZeroAtInfty Convolution SchwartzMap ContDiff
 open MeasureTheory Filter Topology Function Set TestFunctions
 open ContinuousLinearMap

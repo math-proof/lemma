@@ -1,14 +1,18 @@
-import Mathlib.Topology.Algebra.Nonarchimedean.AdicTopology
-import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
-import Mathlib.RingTheory.FiniteType
-import Mathlib.Topology.Algebra.Ring.Basic
-import Mathlib.RingTheory.Regular.RegularSequence
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.Order.Filter.Ultrafilter.Defs
-import Mathlib.Data.ENat.Lattice
-import Instance.Patching_SystemTypes
-import Class.Patching_SystemTypes
+module
+
+public import Mathlib.Topology.Algebra.Nonarchimedean.AdicTopology
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
+public import Mathlib.RingTheory.FiniteType
+public import Mathlib.Topology.Algebra.Ring.Basic
+public import Mathlib.RingTheory.Regular.RegularSequence
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.Order.Filter.Ultrafilter.Defs
+public import Mathlib.Data.ENat.Lattice
+public import Instance.Patching_SystemTypes
+public import Class.Patching_SystemTypes
+
+@[expose] public section
 
 set_option autoImplicit false
 

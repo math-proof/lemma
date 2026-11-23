@@ -8,22 +8,25 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Data.Real.Basic
-import Mathlib.Data.Real.Archimedean
-import Mathlib.Data.Finset.Sort
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Order.Monotone.Basic
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Data.Fin.Basic
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Order.Interval.Finset.Fin
-import Mathlib.Analysis.Convex.Function
-import Mathlib.Data.Real.Sqrt
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Def.v1.Atlas.AnAlgorithmistsToolkit.code.Cheeger
-import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.Cheeger
+module
 
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Data.Real.Archimedean
+public import Mathlib.Data.Finset.Sort
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Order.Monotone.Basic
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Data.Fin.Basic
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+public import Mathlib.Order.Interval.Finset.Fin
+public import Mathlib.Analysis.Convex.Function
+public import Mathlib.Data.Real.Sqrt
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Def.v1.Atlas.AnAlgorithmistsToolkit.code.Cheeger
+public import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.Cheeger
+
+@[expose] public section
 
 namespace LovaszSimonovits
 

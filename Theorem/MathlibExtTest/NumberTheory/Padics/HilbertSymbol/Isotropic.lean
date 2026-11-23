@@ -1,14 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Padics/HilbertSymbol/Isotropic.lean -/
+module
 
-
-import Theorem.Nat.Padics.HilbertSymbol.Isotropic
-import Instance.MathlibExtTest.NumberTheory.Padics.HilbertSymbol.Isotropic
+public import Theorem.Nat.Padics.HilbertSymbol.Isotropic
+public import Instance.MathlibExtTest.NumberTheory.Padics.HilbertSymbol.Isotropic
 set_option autoImplicit false
-
 
 /-!
 # Tests for isotropy of unit diagonal forms over `ℚ_[p]`
 -/
+
+public section
 
 
 namespace HilbertSymbol

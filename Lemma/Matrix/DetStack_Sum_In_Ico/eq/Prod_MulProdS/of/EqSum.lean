@@ -12,6 +12,7 @@ import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.Order.Interval.Finset.Fin
 import Syntax.LinearAlgebra.Matrix.Notation
 import Theorem.Function
+open scoped Matrix
 open Polynomial Matrix Finset
 set_option maxHeartbeats 999999
 
@@ -23,7 +24,7 @@ private lemma falling_det_mul_Q
 -- given
   (hsum : ∑ k : Fin r, d k = n) :
 -- imply
-  ([t < n, i < n]
+  ([t < n][i < n]
     ∑ k : Fin r,
       if (i : ℕ) ∈ Finset.Ico (∑ j ∈ Finset.Iio k, d j) (∑ j ∈ Finset.Iic k, d j) then
         (t : ℕ).descFactorial (i - ∑ j ∈ Finset.Iio k, d j) *
@@ -154,17 +155,17 @@ private lemma falling_det_mul_Q
       rw [← hex, ← h]
       exact Nat.add_lt_add_left hlt _
   let Φ : Matrix (Fin n) (Fin n) ℂ :=
-    [t < n, i < n]
+    [t < n][i < n]
       (t : ℕ).descFactorial (ex i) * x (block i) ^ ((t : ℕ) - ex i)
   let Ψ : Matrix (Fin n) (Fin n) ℂ :=
-    [t < n, i < n] ((t : ℕ) : ℂ) ^ ex i * x (block i) ^ (t : ℕ)
+    [t < n][i < n] ((t : ℕ) : ℂ) ^ ex i * x (block i) ^ (t : ℕ)
   let T : Matrix (Fin n) (Fin n) ℂ :=
-    [s < n, i < n]
+    [s < n][i < n]
       if block s = block i ∧ ex s ≤ ex i then
         Nat.stirlingSecond (ex i) (ex s) * x (block i) ^ ex s
       else 0
   have hΦ : Φ =
-      [t < n, i < n]
+      [t < n][i < n]
         ∑ k : Fin r,
           if (i : ℕ) ∈ Finset.Ico (∑ j ∈ Finset.Iio k, d j) (∑ j ∈ Finset.Iic k, d j) then
             (t : ℕ).descFactorial (i - ∑ j ∈ Finset.Iio k, d j) *
@@ -336,7 +337,7 @@ private lemma falling_det_mul_Q
   have hΨdet : Ψ.det = Φ.det * T.det := by
     rw [hmul, Matrix.det_mul]
   let Mmono : Matrix (Fin n) (Fin n) ℂ :=
-    [i < n, j < n]
+    [i < n][j < n]
       ∑ k : Fin r,
         if (i : ℕ) ∈ Finset.Ico (∑ t ∈ Finset.Iio k, d t) (∑ t ∈ Finset.Iic k, d t) then
           (j : ℂ) ^ (i - ∑ t ∈ Finset.Iio k, d t) * x k ^ (j : ℕ)
@@ -388,7 +389,7 @@ private lemma falling_det_mul_Q
   have hL : Mmono.det = Vand * Fact * Q := by
     have hmat :
       Mmono =
-          [i < n, j < n]
+          [i < n][j < n]
             ∑ k : Fin r,
               if (i : ℕ) ∈ Finset.Ico
                 (∑ t ∈ Finset.Iio k, (⟨d⟩ : Fin r ⇀ ℕ)[t])
@@ -414,7 +415,7 @@ private lemma main
 -- given
   (hsum : ∑ k : Fin r, d k = n) :
 -- imply
-  ([t < n, i < n]
+  ([t < n][i < n]
     ∑ k : Fin r,
       if (i : ℕ) ∈ Finset.Ico (∑ j ∈ Finset.Iio k, d j) (∑ j ∈ Finset.Iic k, d j) then
         (t : ℕ).descFactorial (i - ∑ j ∈ Finset.Iio k, d j) *
@@ -430,7 +431,7 @@ private lemma main
   let Fact : ℂ := ∏ i : Fin r, ∏ j ∈ Finset.range (d i), (Nat.factorial j)
   let Qp : ℂ[X] := ∏ i : Fin r, subst (x i) ^ (d i).choose 2
   let Mp : Matrix (Fin n) (Fin n) ℂ[X] :=
-    [t < n, i < n]
+    [t < n][i < n]
       ∑ k : Fin r,
         if (i : ℕ) ∈ Finset.Ico (∑ j ∈ Finset.Iio k, d j) (∑ j ∈ Finset.Iic k, d j) then
           C (((t : ℕ).descFactorial (i - ∑ j ∈ Finset.Iio k, d j) : ℂ)) *
@@ -456,7 +457,7 @@ private lemma main
         simp [subst, h0]
     have hMy :
       eval t Mp.det =
-          ([time < n, slot < n]
+          ([time < n][slot < n]
             ∑ k : Fin r,
               if (slot : ℕ) ∈ Finset.Ico (∑ j ∈ Finset.Iio k, d j) (∑ j ∈ Finset.Iic k, d j) then
                 (time : ℕ).descFactorial ((slot : ℕ) - ∑ j ∈ Finset.Iio k, d j) *
@@ -479,7 +480,7 @@ private lemma main
     have hQp : eval t Qp = ∏ i : Fin r, y i ^ (d i).choose 2 := by
       simp only [Qp, eval_prod, eval_pow, hsubst, y]
     rw [eval_mul, eval_sub, eval_mul, eval_C, hMy, hV, hQp]
-    have hy0 : (([time < n, slot < n]
+    have hy0 : (([time < n][slot < n]
         ∑ k : Fin r,
           if (slot : ℕ) ∈ Finset.Ico (∑ j ∈ Finset.Iio k, d j) (∑ j ∈ Finset.Iic k, d j) then
             (time : ℕ).descFactorial ((slot : ℕ) - ∑ j ∈ Finset.Iio k, d j) *
@@ -494,7 +495,7 @@ private lemma main
   have hpoly : Mp.det = Vand * C Fact := by
     rwa [← sub_eq_zero]
   have hAt0 : eval 0 Mp.det =
-      ([t < n, i < n]
+      ([t < n][i < n]
         ∑ k : Fin r,
           if (i : ℕ) ∈ Finset.Ico (∑ j ∈ Finset.Iio k, d j) (∑ j ∈ Finset.Iic k, d j) then
             (t : ℕ).descFactorial (i - ∑ j ∈ Finset.Iio k, d j) *

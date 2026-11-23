@@ -42,13 +42,16 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
      * token head. Lowercase heads (`f x`), single-letter heads (`F x`, `Δ x`) — they
      * are variables, not global functions — and all other heads are anonymous: `"_"`.
      */
-    toJSON() {
+    toJSON(ctx = { leaves: new Map() }) {
         const head = this.args[0];
-        const rest = () => this.args.slice(1).map((arg) => arg.toJSON());
+        const rest = () => this.args.slice(1).map((arg) => arg.toJSON(ctx));
         if (head instanceof L.LeanProperty) {
             if (head.fieldName) {
-                const obj = head.jsonAppObjectArg;
-                return { [head.pathToken]: obj !== null ? [obj, ...rest()] : rest() };
+                const obj = head.lhs;
+                const objJson = obj instanceof L.LeanToken && /^[\p{Ll}_]/u.test(obj.text || "")
+                    ? obj.toJSON(ctx)
+                    : null;
+                return { [head.pathToken]: objJson !== null ? [objJson, ...rest()] : rest() };
             }
             return "_";
         }
@@ -79,11 +82,6 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
 
     peelGroup() {
         return this.args.length === 1 ? this.args[0].peelGroup() : this;
-    }
-
-    pathChoices(opts = {}) {
-        // Expect/Prob/Var binder apps promote to Lean_Expect / Lean_Prob / Lean_Var (bigops).
-        return [""];
     }
 
     /**
@@ -811,9 +809,9 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         }
     }
 
-    /** Colour one `𝔼[head](body)` / Lean_Expect (body may be `….toReal`). */
+    /** Colour one `𝔼[head](body)` / `𝕍𝕒𝕣[head](body)` (body may be `….toReal`). */
     static markOneExpectBinder(head, body) {
-        const index = head instanceof L.Lean_Expect ? head.bound : head.rhs;
+        const index = head instanceof L.Lean_Expect || head instanceof L.Lean_Var ? head.bound : head.rhs;
         const {bound, free} = LeanArgsSpaceSeparated.expectBinderNames(index);
         // Free RA names from the body's `| y`.
         const peel = (n) => (n instanceof L.LeanParenthesis ? n.arg : n);
@@ -829,11 +827,17 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             addTok(b.rhs);
         }
         LeanArgsSpaceSeparated.markExpectBodyColors(body, bound, free);
-        // Bound names under 𝔼 (`r` / `s` in `r, s : T`, or `x` in `x: 𝕡`) should be red too.
+        // Bound names under 𝔼 / 𝕍𝕒𝕣 (`r` / `s` in `r, s : T`, or `x` in `x: 𝕡`) should be red too.
         const markBinderRed = (n) => {
             n = peel(n);
             if (n instanceof L.LeanToken && bound.has(n.text))
                 n.kwargs.isRandomVariable = true;
+            else if (n instanceof L.LeanGet) {
+                // An indexed binder colors only its base; do not add it to the body scope,
+                // where a local `let` / `fun` binder with the same name may shadow it.
+                const base = peel(n.lhs);
+                if (base instanceof L.LeanToken) base.kwargs.isRandomVariable = true;
+            }
             else if (n instanceof L.LeanColon) markBinderRed(n.lhs);
             else if (n instanceof LeanArgsCommaSeparated)
                 for (const a of n.args) markBinderRed(a);
@@ -845,6 +849,20 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         this.markProbBinderColors();
         this.markExpectBinderColors();
         this.markMeasurableTupleColors();
+        // `A.softmax 0`: the axis is folded into the function name, so the args swap.
+        {
+            const [func, axis] = this.args;
+            if (
+                this.args.length === 2 &&
+                func instanceof L.LeanProperty &&
+                func.rhs instanceof L.LeanToken && func.rhs.text === 'softmax' &&
+                axis instanceof L.LeanToken && /^\d+$/u.test(axis.text || '') &&
+                !L.LeanProperty.isSoftmaxNamespace(func.lhs)
+            ) {
+                if (syntax) syntax.softmax = true;
+                return [axis.toLatex(syntax), func.lhs.toLatex(syntax)];
+            }
+        }
         const matrixArgs = this.matrixLatexArgs(syntax);
         if (matrixArgs) return matrixArgs;
         const idOps = this.idLatexOperands();
@@ -1161,6 +1179,13 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             // `Finset.card {…}` / `Matrix.det M` — bars around the arg, not the namespace.
             if ((func.rhs.text === 'card' || func.rhs.text === 'det') && args.length === 2)
                 return '\\left|{%s}\\right|';
+            // `A.softmax 0` → `softmax_0 (A)`; `Matrix.softmax A` is a namespace call, not an axis.
+            if (
+                func.rhs.text === 'softmax' && args.length === 2 &&
+                args[1] instanceof L.LeanToken && /^\d+$/u.test(args[1].text || '') &&
+                !L.LeanProperty.isSoftmaxNamespace(func.lhs)
+            )
+                return '\\operatorname{softmax}_{%s}\\left({%s}\\right)';
             // `Real.chiSquare n` -> glued mathcal X^2 (Def Part2).
             if (
                 func.rhs.text === 'chiSquare' &&

@@ -1,8 +1,11 @@
-import Mathlib
-import Lemma.Scheme.CanonicalDivisor
-import Def.AlgebraicCurve_RegularDifferentials
+module
+
+public import Mathlib
+public import Theorem.Scheme.CanonicalDivisor
+public import Def.AlgebraicCurve_RegularDifferentials
 set_option autoImplicit false
 
+public section
 
 noncomputable section
 

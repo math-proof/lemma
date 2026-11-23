@@ -1,6 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Matrix/Spectrum.lean -/
 
-import Theorem.Matrix.Spectrum
+module
+
+public import Theorem.Matrix.Spectrum
+
+@[expose] public section
+
 open scoped ComplexOrder Matrix.Norms.L2Operator
 
 

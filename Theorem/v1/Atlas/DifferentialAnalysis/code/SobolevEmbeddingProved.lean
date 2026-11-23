@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbeddingTheorem
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbeddingTheorem
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbeddingTheorem
 open scoped ZeroAtInfty
 open MeasureTheory Filter Topology
 

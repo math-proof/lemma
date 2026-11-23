@@ -1,6 +1,9 @@
 -- Carved from Lemma/Definitions/Def_NumberField_NormResidueCharacter.lean: instance decls only.
-import Mathlib
-import Lemma.Ideal.NormResidueCharacter
+module
+
+public import Mathlib
+public import Theorem.Ideal.NormResidueCharacter
+@[expose] public section
 
 set_option autoImplicit false
 set_option linter.unusedSectionVars false

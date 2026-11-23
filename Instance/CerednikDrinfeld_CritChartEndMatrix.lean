@@ -4,8 +4,9 @@ import Instance.MvFormalGroup_NegV2
 import Instance.MvFormalGroup_CartierModule
 import Instance.MvFormalGroup_CartierModuleWittAction
 import Instance.MvFormalGroup_CartierModuleBaseChange
-import Lemma.MvPowerSeries.SpecialFormalModule
-import Lemma.FormalGroup.CritChartEndMatrix
+import Theorem.MvPowerSeries.SpecialFormalModule
+import Theorem.FormalGroup.CritChartEndMatrix
+import Def.FormalGroup_CritChartEndMatrix
 
 set_option autoImplicit false
 

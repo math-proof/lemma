@@ -4,14 +4,19 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.Analysis.Normed.Group.AddCircle
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Def.NumberTheory.PrimeCounting.WeightedHilbert
-import Theorem.Nat.PrimeCounting.WeightedHilbert
-import Mathlib.Algebra.Field.GeomSum
-import Mathlib.Analysis.Complex.Trigonometric
-import Mathlib.Tactic
+module
+
+public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.Analysis.Normed.Group.AddCircle
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Def.NumberTheory.PrimeCounting.WeightedHilbert
+public import Theorem.Nat.PrimeCounting.WeightedHilbert
+public import Mathlib.Algebra.Field.GeomSum
+public import Mathlib.Analysis.Complex.Trigonometric
+public import Mathlib.Tactic
+
+@[expose] public section
+
 open scoped BigOperators ComplexConjugate
 
 /-!

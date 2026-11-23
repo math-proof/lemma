@@ -11,8 +11,8 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Theorem.v1.Atlas.LieGroups.code.SL2Basics.Part4
-public import Lemma.Nat.basisHC.eq.SMul
-public import Lemma.Complex.In_WeightSpace.is.H.eq.SMul
+public import Theorem.Nat.basisHC.eq.SMul
+public import Theorem.Complex.In_WeightSpace.is.H.eq.SMul
 public import Def.v1.Atlas.LieGroups.code.GKModule.Part2
 public import Def.v1.Atlas.LieGroups.code.KTypeDecomposition.Part3
 public import Mathlib.Data.ZMod.Basic

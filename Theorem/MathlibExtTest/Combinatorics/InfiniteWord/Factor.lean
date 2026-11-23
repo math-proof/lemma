@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/InfiniteWord/Factor.lean -/
+module
 
+public import Def.Combinatorics.InfiniteWord.Factor
+public import Theorem.Finset.InfiniteWord.Factor
+public import Lean.Elab.Tactic.Omega
 
-import Def.Combinatorics.InfiniteWord.Factor
-import Theorem.Finset.InfiniteWord.Factor
-import Lean.Elab.Tactic.Omega
-
+public section
 
 example (u : ℕ → Bool) :
     InfiniteWord.factor u 0 37 = fun i : Fin 0 => i.elim0 := by

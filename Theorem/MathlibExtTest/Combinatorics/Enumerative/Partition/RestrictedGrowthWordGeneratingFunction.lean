@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/Partition/RestrictedGrowthWordGeneratingFunction.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.Partition.RestrictedGrowthWordGeneratingFunction
+public import Theorem.Finset.Enumerative.Partition.RestrictedGrowthWordGeneratingFunction
 
-import Def.Combinatorics.Enumerative.Partition.RestrictedGrowthWordGeneratingFunction
-import Theorem.Finset.Enumerative.Partition.RestrictedGrowthWordGeneratingFunction
-
+public section
 
 namespace MetaMathlibExt
 

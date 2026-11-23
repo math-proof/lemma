@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.ArithmeticGeometry.code.Divisors.Part11
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Divisors
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Divisors
 
 
 public noncomputable section

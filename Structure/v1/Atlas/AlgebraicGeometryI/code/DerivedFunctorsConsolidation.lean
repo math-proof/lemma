@@ -12,8 +12,8 @@ module
 
 public import Def.v1.Atlas.AlgebraicGeometryI.code.DerivedFunctorsDefs
 public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DerivedFunctorsDefs
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RightDerivedDelta
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.EffaceableUniversal
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RightDerivedDelta
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.EffaceableUniversal
 public import Def.v1.Atlas.AlgebraicGeometryI.code.RightDerivedDelta
 public import Def.v1.Atlas.AlgebraicGeometryI.code.EffaceableUniversal
 public import Def.v1.Atlas.AlgebraicGeometryI.code.DerivedFunctorsConsolidation

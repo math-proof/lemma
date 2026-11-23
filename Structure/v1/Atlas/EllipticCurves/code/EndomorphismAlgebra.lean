@@ -17,7 +17,7 @@ public import Mathlib.Algebra.Module.Submodule.Lattice
 public import Mathlib.Algebra.Algebra.Basic
 public import Mathlib.NumberTheory.NumberField.Basic
 public import Def.v1.Atlas.EllipticCurves.code.TorsionEndomorphism.Part3
-public import Lemma.Complex.Atlas.v1.EllipticCurves.code.TorsionEndomorphism
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.TorsionEndomorphism
 public import Mathlib.Algebra.Quaternion
 public import Mathlib.Algebra.QuaternionBasis
 public import Mathlib.Data.Real.Basic

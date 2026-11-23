@@ -5,8 +5,6 @@ open MeasureTheory ProbabilityTheory Set
 open Complex
 
 
-namespace Complex
-
 /--
 [one_le_eight_mul_atomBound_mul_one_add_sqrt_variance](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CorrectedRosenbloom.lean)
 the natural-valued random variable.  The additive `1` makes the estimate valid at zero variance.
@@ -120,9 +118,6 @@ private lemma one_le_eight_mul_atomBound_mul_one_add_sqrt_variance
   dsimp [c] at hmass
   nlinarith [mul_nonneg hp hs]
 
-end Complex
-
-namespace Complex
 
 /--
 [wimanMajorant_le_eight_mul_maximumTerm](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CorrectedRosenbloom.lean)
@@ -206,9 +201,8 @@ lemma wimanMajorant_le_eight_mul_maximumTerm
     rwa [hmajorant]
       (mul_nonneg (by norm_num) hmaximumNonneg)
       (add_nonneg zero_le_one (Real.sqrt_nonneg _))
-end Complex
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-22

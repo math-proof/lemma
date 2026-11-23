@@ -47,12 +47,12 @@ private lemma main
       set s₃ : ℂ := x * y * z with hs₃
       have hexp : (X - C x) * (X - C y) * (X - C z) = (X ^ 3 - C s₁ * X ^ 2 + C s₂ * X - C s₃ : ℂ[X]) := by
         rw [hs₁, hs₂, hs₃]; simp only [map_add, map_mul]; ring
-      have hf2 : f.coeff 2 = -e₁ := by simp [f, coeff_X_pow, coeff_C_mul]
+      have hf2 : f.coeff 2 = -e₁ := by simp [f, coeff_X_pow]
       have hf1 : f.coeff 1 = e₂ := by simp [f, coeff_X_pow, coeff_C_mul]
-      have hf0 : f.coeff 0 = -e₃ := by simp [f, coeff_X_pow, coeff_C_mul]
-      have hg2 : (X ^ 3 - C s₁ * X ^ 2 + C s₂ * X - C s₃ : ℂ[X]).coeff 2 = -s₁ := by simp [coeff_X_pow, coeff_C_mul]
+      have hf0 : f.coeff 0 = -e₃ := by simp [f, coeff_X_pow]
+      have hg2 : (X ^ 3 - C s₁ * X ^ 2 + C s₂ * X - C s₃ : ℂ[X]).coeff 2 = -s₁ := by simp [coeff_X_pow]
       have hg1 : (X ^ 3 - C s₁ * X ^ 2 + C s₂ * X - C s₃ : ℂ[X]).coeff 1 = s₂ := by simp [coeff_X_pow, coeff_C_mul]
-      have hg0 : (X ^ 3 - C s₁ * X ^ 2 + C s₂ * X - C s₃ : ℂ[X]).coeff 0 = -s₃ := by simp [coeff_X_pow, coeff_C_mul]
+      have hg0 : (X ^ 3 - C s₁ * X ^ 2 + C s₂ * X - C s₃ : ℂ[X]).coeff 0 = -s₃ := by simp [coeff_X_pow]
       have hfg := hprod.trans hexp
       have hv1 : s₁ = e₁ := by
         have h := congrArg (fun g : ℂ[X] => g.coeff 2) hfg

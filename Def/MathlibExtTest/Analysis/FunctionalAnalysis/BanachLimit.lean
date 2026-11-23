@@ -5,7 +5,7 @@ Author: @toskua, Avocado
 -/
 
 import Theorem.Analysis.FunctionalAnalysis.BanachLimit.Part5
-import Lemma.Filter.Any_And_Eq_1AndAll_EqAndAll_Eq
+import Theorem.Filter.Any_And_Eq_1AndAll_EqAndAll_Eq
 import Mathlib.Topology.Algebra.Module.ContinuousLinearMap.Basic
 
 

@@ -9,8 +9,8 @@ Authors: AlgebraicCombinatorics contributors
 module
 
 public import Mathlib
-public import Lemma.PowerSeries.InfiniteProducts2
-public import Lemma.Partition.NPartition
+public import Theorem.PowerSeries.InfiniteProducts2
+public import Theorem.Partition.NPartition
 public import Theorem.RingTheory.LaurentSeries.Part2
 open scoped LaurentPolynomial
 

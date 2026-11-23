@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/GroupTheory/FiniteAbelianDual.lean -/
+module
 
-
-import Def.GroupTheory.FiniteAbelianDual.Part2
-import Theorem.Complex.Nonempty_AddChar
-import Mathlib.SetTheory.Cardinal.Finite
+public import Def.GroupTheory.FiniteAbelianDual.Part2
+public import Theorem.Complex.Nonempty_AddChar
+public import Mathlib.SetTheory.Cardinal.Finite
 open MathlibExt.GroupTheory.FiniteAbelianDualWanted
 
+public section
 
 -- Self-duality gives equality of the underlying finite cardinalities.
 example (α : Type*) [AddCommGroup α] [Finite α] :

@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/UnionClosedOrderly.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.UnionClosedOrderly
+public import Theorem.Finset.Enumerative.UnionClosedOrderly
 
-import Def.Combinatorics.Enumerative.UnionClosedOrderly
-import Theorem.Finset.Enumerative.UnionClosedOrderly
-
+public section
 
 namespace MetaMathlibExt
 

@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/LatticeDiscriminant.lean -/
+module
 
+public import Def.NumberTheory.NumberField.LatticeDiscriminant
+public import Theorem.Nat.NumberField.LatticeDiscriminant
 
-import Def.NumberTheory.NumberField.LatticeDiscriminant
-import Theorem.Nat.NumberField.LatticeDiscriminant
+public section
+
 universe u
 
 variable (A K : Type*) {L : Type u} [CommRing A] [Field K] [Field L]

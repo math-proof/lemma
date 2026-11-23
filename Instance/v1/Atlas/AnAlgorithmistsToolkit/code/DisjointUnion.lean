@@ -8,11 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AnAlgorithmistsToolkit.code.GraphMatrices
-import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.GraphMatrices
-import Mathlib.Combinatorics.SimpleGraph.Sum
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
+module
 
+public import Def.v1.Atlas.AnAlgorithmistsToolkit.code.GraphMatrices
+public import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.GraphMatrices
+public import Mathlib.Combinatorics.SimpleGraph.Sum
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
+@[expose] public section
 
 namespace DisjointUnion
 

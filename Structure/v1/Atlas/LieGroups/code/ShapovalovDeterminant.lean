@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.LieGroups.code.JantzenFiltration.Part2
-public import Lemma.Int.Level1.ne.Top
+public import Theorem.Int.Level1.ne.Top
 
 
 public noncomputable section

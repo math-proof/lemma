@@ -8,7 +8,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TensorCategories.code.HomExactImpliesExact.Part2
+module
+
+public import Def.v1.Atlas.TensorCategories.code.HomExactImpliesExact.Part2
+@[expose] public section
+
 universe v₁ v₂ v₃ u₁ u₂ u₃
 
 

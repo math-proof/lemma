@@ -2,8 +2,10 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part5
+module
+
+public import Mathlib
+public import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part5
 open Finset BigOperators Matrix
 
 /-!
@@ -71,6 +73,8 @@ The integer lattice definitions have equivalent adjacency relations, proven by
 This file contains the complete weighted LGV lemma proof. LGV1.lean contains the
 counting case infrastructure with lattice-specific path counting results.
 -/
+
+public section
 
 
 namespace LGV

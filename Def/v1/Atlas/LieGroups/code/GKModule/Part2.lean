@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
 import Theorem.Complex.IsStronglyContinuousToMonoidHom
-import Lemma.Complex.IsKFinite0
+import Theorem.Complex.IsKFinite0
 import Def.v1.Atlas.LieGroups.code.KFinite.Part3
 import Mathlib.Algebra.Lie.Basic
 import Mathlib.Algebra.Lie.Subalgebra

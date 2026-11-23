@@ -771,7 +771,7 @@ private theorem block_nu12_one
     let δ : (Fin 3 → ℂ) → ℂ → MvPolynomial (Fin 3 × Fin 3) ℂ → MvPolynomial (Fin 3 × Fin 3) ℂ :=
       fun ν c' f => act ν 0 1 (act ν 1 2 f) - act ν 0 2 (act ν 1 1 f) - MvPolynomial.C c' * act ν 0 2 f
     let ν₁₂ : Fin 3 → ℂ := ![-1 / 2 + τ * Complex.I, 1 / 2 + τ * Complex.I, τ₃ * Complex.I]
-    let ν₁₃ : Fin 3 → ℂ := ![-1 / 2 + τ * Complex.I, τ₃ * Complex.I, 1 / 2 + τ * Complex.I]
+    let _ : Fin 3 → ℂ := ![-1 / 2 + τ * Complex.I, τ₃ * Complex.I, 1 / 2 + τ * Complex.I]
     let c' : ℂ := 1 / 2 - τ * Complex.I
     let IsOrthogonal : (Fin 3 × Fin 3 → ℂ) → Prop :=
       fun k => ∀ i j : Fin 3, ∑ a : Fin 3, k (i, a) * k (j, a) = if i = j then 1 else 0
@@ -1002,7 +1002,7 @@ private theorem block_nu12_x20
     let δ : (Fin 3 → ℂ) → ℂ → MvPolynomial (Fin 3 × Fin 3) ℂ → MvPolynomial (Fin 3 × Fin 3) ℂ :=
       fun ν c' f => act ν 0 1 (act ν 1 2 f) - act ν 0 2 (act ν 1 1 f) - MvPolynomial.C c' * act ν 0 2 f
     let ν₁₂ : Fin 3 → ℂ := ![-1 / 2 + τ * Complex.I, 1 / 2 + τ * Complex.I, τ₃ * Complex.I]
-    let ν₁₃ : Fin 3 → ℂ := ![-1 / 2 + τ * Complex.I, τ₃ * Complex.I, 1 / 2 + τ * Complex.I]
+    let _ : Fin 3 → ℂ := ![-1 / 2 + τ * Complex.I, τ₃ * Complex.I, 1 / 2 + τ * Complex.I]
     let c' : ℂ := 1 / 2 - τ * Complex.I
     let IsOrthogonal : (Fin 3 × Fin 3 → ℂ) → Prop :=
       fun k => ∀ i j : Fin 3, ∑ a : Fin 3, k (i, a) * k (j, a) = if i = j then 1 else 0
@@ -1251,7 +1251,7 @@ private theorem block_nu12_x21
     let δ : (Fin 3 → ℂ) → ℂ → MvPolynomial (Fin 3 × Fin 3) ℂ → MvPolynomial (Fin 3 × Fin 3) ℂ :=
       fun ν c' f => act ν 0 1 (act ν 1 2 f) - act ν 0 2 (act ν 1 1 f) - MvPolynomial.C c' * act ν 0 2 f
     let ν₁₂ : Fin 3 → ℂ := ![-1 / 2 + τ * Complex.I, 1 / 2 + τ * Complex.I, τ₃ * Complex.I]
-    let ν₁₃ : Fin 3 → ℂ := ![-1 / 2 + τ * Complex.I, τ₃ * Complex.I, 1 / 2 + τ * Complex.I]
+    let _ : Fin 3 → ℂ := ![-1 / 2 + τ * Complex.I, τ₃ * Complex.I, 1 / 2 + τ * Complex.I]
     let c' : ℂ := 1 / 2 - τ * Complex.I
     let IsOrthogonal : (Fin 3 × Fin 3 → ℂ) → Prop :=
       fun k => ∀ i j : Fin 3, ∑ a : Fin 3, k (i, a) * k (j, a) = if i = j then 1 else 0
@@ -1491,7 +1491,7 @@ private theorem block_nu12_x22
     let δ : (Fin 3 → ℂ) → ℂ → MvPolynomial (Fin 3 × Fin 3) ℂ → MvPolynomial (Fin 3 × Fin 3) ℂ :=
       fun ν c' f => act ν 0 1 (act ν 1 2 f) - act ν 0 2 (act ν 1 1 f) - MvPolynomial.C c' * act ν 0 2 f
     let ν₁₂ : Fin 3 → ℂ := ![-1 / 2 + τ * Complex.I, 1 / 2 + τ * Complex.I, τ₃ * Complex.I]
-    let ν₁₃ : Fin 3 → ℂ := ![-1 / 2 + τ * Complex.I, τ₃ * Complex.I, 1 / 2 + τ * Complex.I]
+    let _ : Fin 3 → ℂ := ![-1 / 2 + τ * Complex.I, τ₃ * Complex.I, 1 / 2 + τ * Complex.I]
     let c' : ℂ := 1 / 2 - τ * Complex.I
     let IsOrthogonal : (Fin 3 × Fin 3 → ℂ) → Prop :=
       fun k => ∀ i j : Fin 3, ∑ a : Fin 3, k (i, a) * k (j, a) = if i = j then 1 else 0
@@ -1735,7 +1735,7 @@ private theorem block_nu13_one
             MvPolynomial.pderiv (i, j) p
     let δ : (Fin 3 → ℂ) → ℂ → MvPolynomial (Fin 3 × Fin 3) ℂ → MvPolynomial (Fin 3 × Fin 3) ℂ :=
       fun ν c' f => act ν 0 1 (act ν 1 2 f) - act ν 0 2 (act ν 1 1 f) - MvPolynomial.C c' * act ν 0 2 f
-    let ν₁₂ : Fin 3 → ℂ := ![-1 / 2 + τ * Complex.I, 1 / 2 + τ * Complex.I, τ₃ * Complex.I]
+    let _ : Fin 3 → ℂ := ![-1 / 2 + τ * Complex.I, 1 / 2 + τ * Complex.I, τ₃ * Complex.I]
     let ν₁₃ : Fin 3 → ℂ := ![-1 / 2 + τ * Complex.I, τ₃ * Complex.I, 1 / 2 + τ * Complex.I]
     let c' : ℂ := 1 / 2 - τ * Complex.I
     let IsOrthogonal : (Fin 3 × Fin 3 → ℂ) → Prop :=
@@ -1965,7 +1965,7 @@ private theorem block_nu13_x10
             MvPolynomial.pderiv (i, j) p
     let δ : (Fin 3 → ℂ) → ℂ → MvPolynomial (Fin 3 × Fin 3) ℂ → MvPolynomial (Fin 3 × Fin 3) ℂ :=
       fun ν c' f => act ν 0 1 (act ν 1 2 f) - act ν 0 2 (act ν 1 1 f) - MvPolynomial.C c' * act ν 0 2 f
-    let ν₁₂ : Fin 3 → ℂ := ![-1 / 2 + τ * Complex.I, 1 / 2 + τ * Complex.I, τ₃ * Complex.I]
+    let _ : Fin 3 → ℂ := ![-1 / 2 + τ * Complex.I, 1 / 2 + τ * Complex.I, τ₃ * Complex.I]
     let ν₁₃ : Fin 3 → ℂ := ![-1 / 2 + τ * Complex.I, τ₃ * Complex.I, 1 / 2 + τ * Complex.I]
     let c' : ℂ := 1 / 2 - τ * Complex.I
     let IsOrthogonal : (Fin 3 × Fin 3 → ℂ) → Prop :=
@@ -2212,7 +2212,7 @@ private theorem block_nu13_x11
             MvPolynomial.pderiv (i, j) p
     let δ : (Fin 3 → ℂ) → ℂ → MvPolynomial (Fin 3 × Fin 3) ℂ → MvPolynomial (Fin 3 × Fin 3) ℂ :=
       fun ν c' f => act ν 0 1 (act ν 1 2 f) - act ν 0 2 (act ν 1 1 f) - MvPolynomial.C c' * act ν 0 2 f
-    let ν₁₂ : Fin 3 → ℂ := ![-1 / 2 + τ * Complex.I, 1 / 2 + τ * Complex.I, τ₃ * Complex.I]
+    let _ : Fin 3 → ℂ := ![-1 / 2 + τ * Complex.I, 1 / 2 + τ * Complex.I, τ₃ * Complex.I]
     let ν₁₃ : Fin 3 → ℂ := ![-1 / 2 + τ * Complex.I, τ₃ * Complex.I, 1 / 2 + τ * Complex.I]
     let c' : ℂ := 1 / 2 - τ * Complex.I
     let IsOrthogonal : (Fin 3 × Fin 3 → ℂ) → Prop :=
@@ -2452,7 +2452,7 @@ private theorem block_nu13_x12
             MvPolynomial.pderiv (i, j) p
     let δ : (Fin 3 → ℂ) → ℂ → MvPolynomial (Fin 3 × Fin 3) ℂ → MvPolynomial (Fin 3 × Fin 3) ℂ :=
       fun ν c' f => act ν 0 1 (act ν 1 2 f) - act ν 0 2 (act ν 1 1 f) - MvPolynomial.C c' * act ν 0 2 f
-    let ν₁₂ : Fin 3 → ℂ := ![-1 / 2 + τ * Complex.I, 1 / 2 + τ * Complex.I, τ₃ * Complex.I]
+    let _ : Fin 3 → ℂ := ![-1 / 2 + τ * Complex.I, 1 / 2 + τ * Complex.I, τ₃ * Complex.I]
     let ν₁₃ : Fin 3 → ℂ := ![-1 / 2 + τ * Complex.I, τ₃ * Complex.I, 1 / 2 + τ * Complex.I]
     let c' : ℂ := 1 / 2 - τ * Complex.I
     let IsOrthogonal : (Fin 3 × Fin 3 → ℂ) → Prop :=
@@ -2724,3 +2724,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-22

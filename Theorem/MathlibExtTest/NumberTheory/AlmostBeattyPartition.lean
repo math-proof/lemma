@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/AlmostBeattyPartition.lean -/
+module
 
+public import Def.NumberTheory.AlmostBeattyPartition
+public import Theorem.Nat.AlmostBeattyPartition
 
-import Def.NumberTheory.AlmostBeattyPartition
-import Theorem.Nat.AlmostBeattyPartition
-
+public section
 
 namespace MetaMathlibExt
 

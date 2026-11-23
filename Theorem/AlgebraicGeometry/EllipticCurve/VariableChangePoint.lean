@@ -3,18 +3,22 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
+module
 
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Def.AlgebraicGeometry.EllipticCurve.PointCount
-import Lemma.Nat.FrobeniusTrace.eq.SubAddCardF1CardPoint.of.AffineF
-import Mathlib.AlgebraicGeometry.EllipticCurve.VariableChange
-import Mathlib.Tactic.Ring
-import Def.AlgebraicGeometry.EllipticCurve.VariableChangePoint
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Def.AlgebraicGeometry.EllipticCurve.PointCount
+public import Theorem.Nat.FrobeniusTrace.eq.SubAddCardF1CardPoint.of.AffineF
+public import Mathlib.AlgebraicGeometry.EllipticCurve.VariableChange
+public import Mathlib.Tactic.Ring
+public import Def.AlgebraicGeometry.EllipticCurve.VariableChangePoint
+
 /-!
 # Variable changes on affine Weierstrass points
 
 This file transports affine solutions and rational points along an admissible variable change.
 -/
+
+public section
 
 
 namespace WeierstrassCurve.VariableChange

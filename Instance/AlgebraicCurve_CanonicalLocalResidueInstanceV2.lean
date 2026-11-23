@@ -1,11 +1,14 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicCurve_CanonicalLocalResidueInstanceV2.lean: instance decls only.
-import Mathlib
-import Class.AlgebraicCurve_LocalResidue
-import Instance.AlgebraicCurve_IsCurveOver
-import Class.AlgebraicCurve_DivisorPushPull
-import Instance.AlgebraicCurve_PlaceCompletion
-import Def.AlgebraicCurve_WeilOfKaehler
-import Structure.AlgebraicCurve_CanonicalLocalResidueInstanceV2
+module
+
+public import Mathlib
+public import Class.AlgebraicCurve_LocalResidue
+public import Instance.AlgebraicCurve_IsCurveOver
+public import Class.AlgebraicCurve_DivisorPushPull
+public import Instance.AlgebraicCurve_PlaceCompletion
+public import Def.AlgebraicCurve_WeilOfKaehler
+public import Structure.AlgebraicCurve_CanonicalLocalResidueInstanceV2
+@[expose] public section
 
 set_option autoImplicit false
 set_option maxHeartbeats 1600000

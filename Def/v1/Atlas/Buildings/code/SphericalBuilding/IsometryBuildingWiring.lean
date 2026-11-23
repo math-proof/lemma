@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.IsometryCommonApartment
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.IsometryApartmentExchange
-import Theorem.Set.Simplices.of.In_StandardApartments.In_StandardApartments
+module
 
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.IsometryCommonApartment
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.IsometryApartmentExchange
+public import Theorem.Set.Simplices.of.In_StandardApartments.In_StandardApartments
+
+@[expose] public section
 
 namespace IsometryBuilding
 

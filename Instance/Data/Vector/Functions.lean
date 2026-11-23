@@ -1,8 +1,12 @@
-import Abbrev.Analysis.Real.Relational
-import Instance.Data.Vector.Vector
-import Instance.Analysis.SpecialFunctions.Logarithm
-import Def.Analysis.SpecialFunctions.Trigonometric.Part2
-import Def.Data.Vector.Functions
+module
+
+public import Abbrev.Analysis.Real.Relational
+public import Instance.Data.Vector.Vector
+public import Instance.Analysis.SpecialFunctions.Logarithm
+public import Def.Analysis.SpecialFunctions.Trigonometric.Part2
+public import Def.Data.Vector.Functions
+@[expose] public section
+
 open Vector
 
 

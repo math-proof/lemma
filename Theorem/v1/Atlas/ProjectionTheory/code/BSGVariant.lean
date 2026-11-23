@@ -7,12 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib
-import Def.v1.Atlas.ProjectionTheory.code.KeyLemmaBSG
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.KeyLemmaBSG
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.BSGProposition
-import Def.v1.Atlas.ProjectionTheory.code.BSGProposition
+public import Mathlib
+public import Def.v1.Atlas.ProjectionTheory.code.KeyLemmaBSG
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.KeyLemmaBSG
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.BSGProposition
+public import Def.v1.Atlas.ProjectionTheory.code.BSGProposition
+
+public section
+
 /--
 Balog–Szemerédi–Gowers (projection variant). For a commutative ring `G` and any
 parameter `t ∈ G`, define the projection `πₜ(a, b) = a + t·b`. If

@@ -7,13 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Instance.v1.Atlas.DifferentialAnalysis.code.TestFunctions
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TestFunctions
-import Mathlib.Analysis.Normed.Group.Basic
+public import Instance.v1.Atlas.DifferentialAnalysis.code.TestFunctions
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TestFunctions
+public import Mathlib.Analysis.Normed.Group.Basic
 open scoped ZeroAtInfty
 open Filter Topology Finset
 
+public section
 
 noncomputable section
 

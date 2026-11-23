@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.LieGroups.code.HeckeKL.Part9
-import Lemma.Finset.EqMul_Mul.of.In_SimpleReflections
+import Theorem.Finset.EqMul_Mul.of.In_SimpleReflections
 
 
 noncomputable section

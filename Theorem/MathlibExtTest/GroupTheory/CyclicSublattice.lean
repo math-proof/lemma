@@ -1,11 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/GroupTheory/CyclicSublattice.lean -/
+module
 
-
-import Def.GroupTheory.CyclicSublattice
-import Theorem.Int.IsCyclicSublattice.is.LeAndIsAddCyclic_AddSubgroupOf
-import Mathlib.Data.ZMod.Basic
-import Mathlib.GroupTheory.SpecificGroups.Cyclic
-
+public import Def.GroupTheory.CyclicSublattice
+public import Theorem.Int.IsCyclicSublattice.is.LeAndIsAddCyclic_AddSubgroupOf
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic
 
 /-!
 # Examples for cyclic sublattices
@@ -13,6 +12,8 @@ import Mathlib.GroupTheory.SpecificGroups.Cyclic
 Positive and negative examples for `AddSubgroup.IsCyclicSublattice`, each
 exercising cyclicity of the quotient rather than containment alone.
 -/
+
+public section
 
 /-- Positive example: `⊥` is a cyclic sublattice of `⊤` over `ZMod 4`,
 since the quotient is (equivalent to) the cyclic group `ZMod 4`. -/

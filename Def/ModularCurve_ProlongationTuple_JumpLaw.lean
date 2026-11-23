@@ -1,4 +1,9 @@
-import Def.ModularCurve_ProlongationTuple
+module
+
+public import Def.ModularCurve_ProlongationTuple
+
+@[expose] public section
+
 set_option synthInstance.maxHeartbeats 400000
 set_option autoImplicit false
 

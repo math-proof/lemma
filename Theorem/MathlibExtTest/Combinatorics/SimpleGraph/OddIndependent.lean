@@ -1,10 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/OddIndependent.lean -/
+module
 
-
-import Def.Combinatorics.SimpleGraph.OddIndependent
-import Theorem.SimpleGraph.OddIndependent
-import Mathlib.Combinatorics.SimpleGraph.Hasse
-
+public import Def.Combinatorics.SimpleGraph.OddIndependent
+public import Theorem.SimpleGraph.OddIndependent
+public import Mathlib.Combinatorics.SimpleGraph.Hasse
 
 /-!
 # Odd independent set tests
@@ -12,6 +11,8 @@ import Mathlib.Combinatorics.SimpleGraph.Hasse
 Checks the empty/singleton theorems and separates independence from the
 parity condition on the three-vertex path.
 -/
+
+public section
 
 
 /-- Empty and singleton sanity checks for odd independence. -/

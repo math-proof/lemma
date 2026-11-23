@@ -7,36 +7,38 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.RingTheory.MvPolynomial.Basic
-import Mathlib.RingTheory.MvPolynomial.Ideal
-import Mathlib.Algebra.MvPolynomial.Basic
-import Mathlib.Algebra.Module.Basic
-import Mathlib.LinearAlgebra.FreeModule.Basic
-import Mathlib.Algebra.Module.Submodule.Range
-import Mathlib.Algebra.Module.Projective
-import Mathlib.LinearAlgebra.ExteriorAlgebra.Basic
-import Mathlib.RingTheory.Ideal.Basic
-import Mathlib.Algebra.MvPolynomial.CommRing
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
-import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
-import Mathlib.RingTheory.GradedAlgebra.Basic
-import Mathlib.RingTheory.GradedAlgebra.Homogeneous.Ideal
-import Mathlib.Algebra.Module.GradedModule
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.RingTheory.PowerSeries.WellKnown
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.RingTheory.Ideal.AssociatedPrime.Basic
-import Mathlib.RingTheory.KrullDimension.Polynomial
-import Mathlib.RingTheory.KrullDimension.Field
-import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
-import Mathlib.LinearAlgebra.FreeModule.StrongRankCondition
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.Algebra.Order.Antidiag.FinsuppEquiv
-import Def.v1.Atlas.LieGroups.code.SyzygiesKoszul.Part5
+public import Mathlib.RingTheory.MvPolynomial.Basic
+public import Mathlib.RingTheory.MvPolynomial.Ideal
+public import Mathlib.Algebra.MvPolynomial.Basic
+public import Mathlib.Algebra.Module.Basic
+public import Mathlib.LinearAlgebra.FreeModule.Basic
+public import Mathlib.Algebra.Module.Submodule.Range
+public import Mathlib.Algebra.Module.Projective
+public import Mathlib.LinearAlgebra.ExteriorAlgebra.Basic
+public import Mathlib.RingTheory.Ideal.Basic
+public import Mathlib.Algebra.MvPolynomial.CommRing
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
+public import Mathlib.RingTheory.GradedAlgebra.Basic
+public import Mathlib.RingTheory.GradedAlgebra.Homogeneous.Ideal
+public import Mathlib.Algebra.Module.GradedModule
+public import Mathlib.RingTheory.PowerSeries.Basic
+public import Mathlib.RingTheory.PowerSeries.WellKnown
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.RingTheory.Ideal.AssociatedPrime.Basic
+public import Mathlib.RingTheory.KrullDimension.Polynomial
+public import Mathlib.RingTheory.KrullDimension.Field
+public import Mathlib.RingTheory.KrullDimension.NonZeroDivisors
+public import Mathlib.LinearAlgebra.FreeModule.StrongRankCondition
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.Algebra.Order.Antidiag.FinsuppEquiv
+public import Def.v1.Atlas.LieGroups.code.SyzygiesKoszul.Part5
 
+public section
 
 section HilbertHelpers
 

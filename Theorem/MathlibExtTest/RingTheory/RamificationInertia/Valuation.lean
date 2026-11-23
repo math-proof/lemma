@@ -1,10 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/RamificationInertia/Valuation.lean -/
+module
 
-
-import Theorem.Int.RamificationInertia.Valuation
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib.NumberTheory.Padics.RingHoms
-
+public import Theorem.Int.RamificationInertia.Valuation
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Mathlib.NumberTheory.Padics.RingHoms
 
 /-!
 # Tests for the valuation bridge
@@ -14,6 +13,8 @@ the `emultiplicity`/`addVal` identification, the scaling of `addVal`
 along a torsion-free local DVR extension, and the residue-characteristic
 criterion for natural casts, generically and in one concrete 5-adic case.
 -/
+
+public section
 
 -- Identification endpoint, generic: a unit has vanishing ideal multiplicity.
 example {R : Type*} [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]

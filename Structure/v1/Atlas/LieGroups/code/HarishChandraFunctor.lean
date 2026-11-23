@@ -13,7 +13,7 @@ module
 public import Def.v1.Atlas.LieGroups.code.Admissible.Part3
 public import Mathlib.Algebra.Lie.OfAssociative
 public import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
-public import Lemma.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
+public import Theorem.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
 public import Theorem.Real.GetToMonoidHom.in.SmoothSubspace.of.In_SmoothSubspace
 public import Def.v1.Atlas.LieGroups.code.GKModule.Part2
 public import Def.v1.Atlas.LieGroups.code.GKModuleDefs.Part2

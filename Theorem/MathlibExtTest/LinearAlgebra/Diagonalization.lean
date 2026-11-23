@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Diagonalization.lean -/
+module
 
+public import Theorem.Matrix.Diagonalization
+public import Mathlib.LinearAlgebra.Projection
+public import Mathlib.LinearAlgebra.Trace
 
-import Theorem.Matrix.Diagonalization
-import Mathlib.LinearAlgebra.Projection
-import Mathlib.LinearAlgebra.Trace
-
+public section
 
 namespace MathlibExtTest.LinearAlgebra.Diagonalization
 

@@ -1,8 +1,10 @@
-import Lemma.ZMod.Inst
+module
+
+public import Theorem.ZMod.Inst
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace CohCarrier
 

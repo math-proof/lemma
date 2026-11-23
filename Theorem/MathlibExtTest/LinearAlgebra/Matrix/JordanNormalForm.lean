@@ -1,13 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/JordanNormalForm.lean -/
+module
 
-
-import Mathlib.Tactic
-import Mathlib.LinearAlgebra.Matrix.Basis
-import Def.LinearAlgebra.Matrix.JordanNormalForm
-import Theorem.Matrix.JordanNormalForm
+public import Mathlib.Tactic
+public import Mathlib.LinearAlgebra.Matrix.Basis
+public import Def.LinearAlgebra.Matrix.JordanNormalForm
+public import Theorem.Matrix.JordanNormalForm
 open MathlibExt.LinearAlgebra.Matrix.JordanNormalFormWanted
 open Module
 
+public section
 
 -- A two-vector Jordan chain puts one in the superdiagonal entry.
 example {V : Type*} [AddCommGroup V] [Module ℚ V]

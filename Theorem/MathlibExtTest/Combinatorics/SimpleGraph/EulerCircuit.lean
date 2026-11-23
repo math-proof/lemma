@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/EulerCircuit.lean -/
+module
 
+public import Theorem.SimpleGraph.EulerCircuit
+public import Mathlib.Combinatorics.SimpleGraph.CycleGraph
+public import Abbrev.MathlibExtTest.Combinatorics.SimpleGraph.EulerCircuit
 
-import Theorem.SimpleGraph.EulerCircuit
-import Mathlib.Combinatorics.SimpleGraph.CycleGraph
-import Abbrev.MathlibExtTest.Combinatorics.SimpleGraph.EulerCircuit
-
+public section
 
 namespace MathlibExtTest.Combinatorics.SimpleGraph.EulerCircuit
 

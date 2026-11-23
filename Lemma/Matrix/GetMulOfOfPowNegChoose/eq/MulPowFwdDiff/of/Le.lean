@@ -3,6 +3,7 @@ import Mathlib.Data.Matrix.ColumnRowPartitioned
 import Mathlib.LinearAlgebra.Vandermonde
 import Syntax.LinearAlgebra.Matrix.Notation
 import Initialize.Tactic.Attr.Basic
+open scoped Matrix
 
 
 @[path]
@@ -14,11 +15,10 @@ private lemma main
   (h : d ≤ m)
   (i j : Fin d) :
 -- imply
-  (([i < d, j < m] (x ^ (j : ℕ) * ((j : R) + δ) ^ (i : ℕ))) *
-    ([k < m, j < d] ((-x) ^ (j - k : ℤ) * ((j : ℕ).choose k : R)))) i j =
+  (([i < d][j < m] (x ^ (j : ℕ) * ((j : R) + δ) ^ (i : ℕ))) *
+    ([k < m][j < d] ((-x) ^ (j - k : ℤ) * ((j : ℕ).choose k : R)))) i j =
     x ^ (j : ℕ) * Nat.iterate (fwdDiff (1 : R)) j (fun r : R => r ^ (i : ℕ)) δ := by
 -- proof
-  unfold Matrix.ofFun
   have hj := j.isLt
   simp only [Matrix.mul_apply, Matrix.of_apply]
   rw [Fin.sum_univ_eq_sum_range (fun k => x ^ k * ((k : R) + δ) ^ (i : ℕ) * ((-x) ^ (((j : ℕ) : ℤ) - (k : ℤ)) * ((j : ℕ).choose k : R))) m]

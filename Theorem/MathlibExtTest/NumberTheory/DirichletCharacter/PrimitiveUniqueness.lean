@@ -1,10 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/PrimitiveUniqueness.lean -/
+module
 
+public import Theorem.Nat.DirichletCharacter.PrimitiveUniqueness
 
-import Theorem.Nat.DirichletCharacter.PrimitiveUniqueness
 /-!
 Abstract tests for uniqueness of the primitive inducer of a Dirichlet character.
 -/
+
+public section
 
 
 namespace DirichletCharacter

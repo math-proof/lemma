@@ -6,31 +6,10 @@ open Complex.Wiman
 open Complex Set
 
 
-namespace Complex
-
-/--
-[wimanTerm_abs](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman.lean)
--/
-@[path]
-lemma wimanTerm_abs
--- given
-  (f : ℂ → ℂ)
-  (r : ℝ)
-  (n : ℕ) :
--- imply
-  wimanTerm f |r| n = wimanTerm f r n := by
--- proof
-  simp [wimanTerm]
-
-end Complex
-
-namespace Complex
-
 /--
 [wimanMaximumTerm_abs](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman.lean)
 -/
-@[path]
-lemma wimanMaximumTerm_abs
+private lemma wimanMaximumTerm_abs
 -- given
   (f : ℂ → ℂ)
   (r : ℝ) :
@@ -42,15 +21,11 @@ lemma wimanMaximumTerm_abs
   funext n
   exact wimanTerm_abs f r n
 
-end Complex
-
-namespace Complex
 
 /--
 [wimanMaximumModulus_abs](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman.lean)
 -/
-@[path]
-lemma wimanMaximumModulus_abs
+private lemma wimanMaximumModulus_abs
 -- given
   (f : ℂ → ℂ)
   (r : ℝ) :
@@ -59,33 +34,11 @@ lemma wimanMaximumModulus_abs
 -- proof
   simp [wimanMaximumModulus]
 
-end Complex
-
-namespace Complex
-
-/--
-[wimanTerm_neg](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman.lean)
--/
-@[path]
-lemma wimanTerm_neg
--- given
-  (f : ℂ → ℂ)
-  (r : ℝ)
-  (n : ℕ) :
--- imply
-  wimanTerm f (-r) n = wimanTerm f r n := by
--- proof
-  simp [wimanTerm]
-
-end Complex
-
-namespace Complex
 
 /--
 [wimanMaximumTerm_neg](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman.lean)
 -/
-@[path]
-lemma wimanMaximumTerm_neg
+private lemma wimanMaximumTerm_neg
 -- given
   (f : ℂ → ℂ)
   (r : ℝ) :
@@ -97,15 +50,11 @@ lemma wimanMaximumTerm_neg
   funext n
   exact wimanTerm_neg f r n
 
-end Complex
-
-namespace Complex
 
 /--
 [wimanMaximumModulus_neg](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman.lean)
 -/
-@[path]
-lemma wimanMaximumModulus_neg
+private lemma wimanMaximumModulus_neg
 -- given
   (f : ℂ → ℂ)
   (r : ℝ) :
@@ -114,15 +63,11 @@ lemma wimanMaximumModulus_neg
 -- proof
   simp [wimanMaximumModulus]
 
-end Complex
-
-namespace Complex
 
 /--
 [norm_le_wimanMaximumModulus](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman.lean)
 -/
-@[path]
-lemma norm_le_wimanMaximumModulus
+private lemma norm_le_wimanMaximumModulus
 -- given
   {f : ℂ → ℂ}
   {r : ℝ}
@@ -141,15 +86,11 @@ lemma norm_le_wimanMaximumModulus
     simpa [Metric.mem_sphere, abs_of_nonneg hr] using hz
   exact le_csSup hbd hmem
 
-end Complex
-
-namespace Complex
 
 /--
 [cube_le_cube_mul_log_sq_of_wiman](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman.lean)
 -/
-@[path]
-lemma cube_le_cube_mul_log_sq_of_wiman
+private lemma cube_le_cube_mul_log_sq_of_wiman
 -- given
   {M μ : ℝ}
   (hM : 0 ≤ M)
@@ -168,9 +109,8 @@ lemma cube_le_cube_mul_log_sq_of_wiman
       congr 1
       rw [← Real.rpow_mul_natCast hlog]
       norm_num [Real.rpow_two]
-end Complex
 
 
 
 -- created on 2026-10-10
--- updated on 2026-10-26
+-- updated on 2026-11-22

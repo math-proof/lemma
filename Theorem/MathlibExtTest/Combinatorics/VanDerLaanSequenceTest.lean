@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/VanDerLaanSequenceTest.lean -/
+module
 
+public import Def.Combinatorics.VanDerLaanSequence
+public import Theorem.Finset.VanDerLaanSequence
 
-import Def.Combinatorics.VanDerLaanSequence
-import Theorem.Finset.VanDerLaanSequence
-
+public section
 
 namespace MetaMathlibExt
 

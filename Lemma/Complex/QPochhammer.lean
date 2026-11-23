@@ -1,9 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.SpecialFunctions.QPochhammer
+open MetaMathlibExt.QPochhammer
 
-
-namespace MetaMathlibExt.QPochhammer
 
 /--
 [QPochhammer](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/QPochhammer.lean)
@@ -18,9 +17,6 @@ private lemma qPochhammerInf_zero_left_eq
 -- proof
   qPochhammerInf_zero_left q hq
 
-end MetaMathlibExt.QPochhammer
-
-namespace MetaMathlibExt.QPochhammer
 
 /--
 [QPochhammer](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/QPochhammer.lean)
@@ -36,9 +32,6 @@ private lemma hasProd_qPochhammerInf_eq
 -- proof
   hasProd_qPochhammerInf a q hq
 
-end MetaMathlibExt.QPochhammer
-
-namespace MetaMathlibExt.QPochhammer
 
 /--
 [QPochhammer](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/QPochhammer.lean)
@@ -50,9 +43,6 @@ private lemma qPochhammerInf_one_zero_eq :
 -- proof
   qPochhammerInf_one_zero
 
-end MetaMathlibExt.QPochhammer
-
-namespace MetaMathlibExt.QPochhammer
 
 /--
 [QPochhammer](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/QPochhammer.lean)
@@ -64,8 +54,6 @@ private lemma qPochhammerInfRaw_two_one_eq :
 -- proof
   qPochhammerInfRaw_two_one
 
-end MetaMathlibExt.QPochhammer
-
 
 -- created on 2026-10-11
--- updated on 2026-10-26
+-- updated on 2026-11-22

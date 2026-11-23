@@ -1,9 +1,10 @@
 module
 
-public import Lemma.ClassGroup.ProductionPinsGeneral
+public import Theorem.ClassGroup.ProductionPinsGeneral
 public import Def.AutomorphicForm_RightConvolution
 public import Def.AutomorphicForm_SigmaAdelicAction
-public import Lemma.Matrix.ArchWeightChar
+public import Def.AutomorphicForm_ArchWeightChar
+public import Theorem.Matrix.ArchWeightChar
 
 set_option autoImplicit false
 

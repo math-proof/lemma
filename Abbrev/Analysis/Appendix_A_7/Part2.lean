@@ -1,5 +1,9 @@
-import Mathlib
-import Theorem.Analysis.Appendix_A_7
+module
+
+public import Mathlib
+public import Theorem.Analysis.Appendix_A_7
+
+@[expose] public section
 
 
 abbrev NewInt.quot {X:Type} {f: ℤ → X} (hf: f 12 = f 2) : NewInt → X := by

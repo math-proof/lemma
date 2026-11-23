@@ -1,6 +1,10 @@
-import Mathlib
-import Def.NumberField_PlaceAbove
-import Instance.NumberField_PlaceDecompositionAction
+module
+
+public import Mathlib
+public import Def.NumberField_PlaceAbove
+public import Instance.NumberField_PlaceDecompositionAction
+
+@[expose] public section
 
 set_option autoImplicit false
 

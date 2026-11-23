@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/NarayanaNumber.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.NarayanaNumber
+public import Theorem.Finset.Enumerative.NarayanaNumber
 
-import Def.Combinatorics.Enumerative.NarayanaNumber
-import Theorem.Finset.Enumerative.NarayanaNumber
-
+public section
 
 namespace MetaMathlibExt
 

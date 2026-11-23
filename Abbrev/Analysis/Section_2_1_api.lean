@@ -1,18 +1,22 @@
-import Abbrev.Analysis.Section_2_1
-import Theorem.Nat.Zero.eq.One
-import Theorem.Nat.One.eq.Two
-import Theorem.Nat.Two.eq.Three
-import Theorem.Nat.Ne0
-import Theorem.Nat.Four.ne.Zero
-import Theorem.Nat.Eq.of.Eq_Nat_succ_cancel
-import Theorem.Nat.Ne_Nat_succ_ne_succ
-import Theorem.Nat.Six.ne.Two
-import Theorem.Nat.Ne62
-import Theorem.Nat.All.of.All_Nat_induction
-import Theorem.Nat.EqRecurseNat0
-import Theorem.Nat.EqRecurse
-import Theorem.Nat.EqAndAll_Eq.is.Eq_Recurse
-import Theorem.Nat.All_Eq.Unique
+module
+
+public import Abbrev.Analysis.Section_2_1
+public import Theorem.Nat.Zero.eq.One
+public import Theorem.Nat.One.eq.Two
+public import Theorem.Nat.Two.eq.Three
+public import Theorem.Nat.Ne0
+public import Theorem.Nat.Four.ne.Zero
+public import Theorem.Nat.Eq.of.Eq_Nat_succ_cancel
+public import Theorem.Nat.Ne_Nat_succ_ne_succ
+public import Theorem.Nat.Six.ne.Two
+public import Theorem.Nat.Ne62
+public import Theorem.Nat.All.of.All_Nat_induction
+public import Theorem.Nat.EqRecurseNat0
+public import Theorem.Nat.EqRecurse
+public import Theorem.Nat.EqAndAll_Eq.is.Eq_Recurse
+public import Theorem.Nat.All_Eq.Unique
+
+@[expose] public section
 
 
 namespace Chapter2

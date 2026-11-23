@@ -7,13 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.GeometryOfManifolds.code.ManifoldDFS.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ManifoldDFS
+public import Def.v1.Atlas.GeometryOfManifolds.code.ManifoldDFS.Part2
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ManifoldDFS
 set_option autoImplicit false
 
 open scoped Manifold ContDiff
 
+public section
 
 /-- Sanity check: the manifold-`DifferentialFormSpace` instance is available for any smooth
 manifold modelled on $(E, H, I)$. -/

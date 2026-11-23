@@ -1,7 +1,11 @@
-import Def.Probability.SymbolicProbability
-import Class.Probability.SymbolicProbability
-import Theorem.Data.Vector.Basic
-import Def.Data.Tensor.Defs.Part4
+module
+
+public import Def.Probability.SymbolicProbability
+public import Class.Probability.SymbolicProbability
+public import Theorem.Data.Vector.Basic
+public import Def.Data.Tensor.Defs.Part4
+@[expose] public section
+
 open MeasureTheory
 
 export Expectation (expectation)

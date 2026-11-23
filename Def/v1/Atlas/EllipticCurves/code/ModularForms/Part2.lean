@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.EllipticCurves.code.FermatsLastTheorem.Part3
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.FermatsLastTheorem
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.FermatsLastTheorem
 import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
 import Mathlib.Data.Nat.Squarefree
 import Mathlib.Data.ZMod.Basic

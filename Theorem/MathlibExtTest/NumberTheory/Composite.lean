@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Composite.lean -/
+module
 
+public import Def.NumberTheory.Composite
+public import Theorem.Nat.Composite
 
-import Def.NumberTheory.Composite
-import Theorem.Nat.Composite
-
+public section
 
 example : Nat.IsComposite 4 := by
   change 1 < 4 ∧ ¬ Nat.Prime 4

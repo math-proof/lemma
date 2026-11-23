@@ -7,8 +7,9 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Theorem.Complex.Atlas.v1.ComplexVariables.code.CauchyTransformDiff
+public import Theorem.Complex.Atlas.v1.ComplexVariables.code.CauchyTransformDiff
 open Complex MeasureTheory Set Metric Filter Topology NNReal
 
-
+public section

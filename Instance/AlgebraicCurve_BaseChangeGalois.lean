@@ -3,11 +3,14 @@
 -- Entangled defs smulValuationSubringEquiv / smulResidueRingEquiv / degZeroSMulHom are PUBLIC
 -- so Definitions theorems and GluedPic0 can rw against the same constants the instances use.
 -- Theorems remain private where only needed for elaboration order.
-import Def.AlgebraicCurve_BaseChangeGalois
-import Instance.AlgebraicCurve_DivisorClassGroup
-import Mathlib.Algebra.Ring.Action.End
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.Algebra.Module.ZMod
+module
+
+public import Def.AlgebraicCurve_BaseChangeGalois
+public import Instance.AlgebraicCurve_DivisorClassGroup
+public import Mathlib.Algebra.Ring.Action.End
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.Algebra.Module.ZMod
+@[expose] public section
 
 set_option autoImplicit false
 

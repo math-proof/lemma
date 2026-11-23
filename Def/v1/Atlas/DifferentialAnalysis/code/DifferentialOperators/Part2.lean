@@ -8,22 +8,27 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.MvPolynomial.Eval
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.Distribution.Support
-import Mathlib.Analysis.Distribution.FourierMultiplier
-import Mathlib.Analysis.Distribution.SchwartzSpace.Deriv
-import Mathlib.Analysis.Calculus.ContDiff.Bounds
-import Mathlib.Analysis.Calculus.MeanValue
-import Mathlib.Analysis.Calculus.ContDiff.Defs
-import Mathlib.Analysis.Calculus.ContDiff.FiniteDimension
-import Mathlib.Analysis.Calculus.IteratedDeriv.WithinZpow
-import Theorem.v1.Atlas.DifferentialAnalysis.code.DistributionSupport
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DistributionSupport
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzTranslateContinuity
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzTranslateContinuity
-import Instance.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators
+module
+
+public import Mathlib.Algebra.MvPolynomial.Eval
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Analysis.Distribution.Support
+public import Mathlib.Analysis.Distribution.FourierMultiplier
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Deriv
+public import Mathlib.Analysis.Calculus.ContDiff.Bounds
+public import Mathlib.Analysis.Calculus.MeanValue
+public import Mathlib.Analysis.Calculus.ContDiff.Defs
+public import Mathlib.Analysis.Calculus.ContDiff.FiniteDimension
+public import Mathlib.Analysis.Calculus.IteratedDeriv.WithinZpow
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.DistributionSupport
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DistributionSupport
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzTranslateContinuity
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzTranslateContinuity
+public import Instance.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators
+
+@[expose] public section
+
 open scoped SchwartzMap
 open TemperedDistribution MvPolynomial
 

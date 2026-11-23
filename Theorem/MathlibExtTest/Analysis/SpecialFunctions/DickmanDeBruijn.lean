@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/DickmanDeBruijn.lean -/
+module
 
-
-import Def.Analysis.SpecialFunctions.DickmanDeBruijn
-import Theorem.Real.DickmanDeBruijn
-import Mathlib.Tactic.NormNum
+public import Def.Analysis.SpecialFunctions.DickmanDeBruijn
+public import Theorem.Real.DickmanDeBruijn
+public import Mathlib.Tactic.NormNum
 open Set
 
+public section
 
 example : Real.IsDickmanDeBruijn = fun ρ : ℝ → ℝ =>
     (∀ u, u < 0 → ρ u = 0) ∧

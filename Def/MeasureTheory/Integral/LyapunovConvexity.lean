@@ -4,28 +4,31 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
 
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Theorem.MeasureTheory.Measure.Atomless.Part3
-import Theorem.Measure.Atomless
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.Asymptotics.SpecificAsymptotics
-import Mathlib.Analysis.InnerProductSpace.Dual
-import Mathlib.Analysis.InnerProductSpace.Subspace
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
-import Mathlib.Analysis.Normed.Affine.AddTorsorBases
-import Mathlib.Analysis.Normed.Module.FiniteDimension
-import Mathlib.Analysis.RCLike.Lemmas
-import Mathlib.MeasureTheory.Function.AEEqOfIntegral
-import Mathlib.MeasureTheory.Function.ConvergenceInMeasure
-import Mathlib.MeasureTheory.Function.L2Space
-import Mathlib.MeasureTheory.Function.LpSeminorm.Indicator
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
-import Mathlib.Order.CompletePartialOrder
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.MetricSpace.Bounded
-import Mathlib.Topology.Sequences
+module
 
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Theorem.MeasureTheory.Measure.Atomless.Part3
+public import Theorem.Measure.Atomless
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.Asymptotics.SpecificAsymptotics
+public import Mathlib.Analysis.InnerProductSpace.Dual
+public import Mathlib.Analysis.InnerProductSpace.Subspace
+public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+public import Mathlib.Analysis.Normed.Affine.AddTorsorBases
+public import Mathlib.Analysis.Normed.Module.FiniteDimension
+public import Mathlib.Analysis.RCLike.Lemmas
+public import Mathlib.MeasureTheory.Function.AEEqOfIntegral
+public import Mathlib.MeasureTheory.Function.ConvergenceInMeasure
+public import Mathlib.MeasureTheory.Function.L2Space
+public import Mathlib.MeasureTheory.Function.LpSeminorm.Indicator
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
+public import Mathlib.Order.CompletePartialOrder
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.MetricSpace.Bounded
+public import Mathlib.Topology.Sequences
+
+@[expose] public section
 
 section
 

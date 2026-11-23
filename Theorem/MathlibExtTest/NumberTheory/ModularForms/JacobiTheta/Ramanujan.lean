@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ModularForms/JacobiTheta/Ramanujan.lean -/
+module
 
+public import Def.NumberTheory.ModularForms.JacobiTheta.Ramanujan
+public import Theorem.Nat.ModularForms.JacobiTheta.Ramanujan
 
-import Def.NumberTheory.ModularForms.JacobiTheta.Ramanujan
-import Theorem.Nat.ModularForms.JacobiTheta.Ramanujan
-
+public section
 
 namespace MetaMathlibExt
 

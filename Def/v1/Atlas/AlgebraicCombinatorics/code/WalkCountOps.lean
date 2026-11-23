@@ -8,12 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.AlgebraicCombinatorics.code.HasseWalks
-import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.HasseWalks
-import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungTableaux
-import Def.v1.Atlas.AlgebraicCombinatorics.code.YoungTableaux
-import Mathlib.LinearAlgebra.Finsupp.LSum
+module
 
+public import Theorem.v1.Atlas.AlgebraicCombinatorics.code.HasseWalks
+public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.HasseWalks
+public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungTableaux
+public import Def.v1.Atlas.AlgebraicCombinatorics.code.YoungTableaux
+public import Mathlib.LinearAlgebra.Finsupp.LSum
+
+@[expose] public section
 
 noncomputable section
 

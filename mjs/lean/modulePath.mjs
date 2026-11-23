@@ -81,9 +81,26 @@ export function titleFromModule(module) {
   return module.replace(/\./g, '/');
 }
 
+/** Repo folders that are not Lean namespaces and must not appear on page/DB module keys. */
+export const DECL_LIBRARY_FOLDERS = ['Lemma', 'Theorem'];
+
 /**
- * Dotted module of any `.lean` file under the repo, not only `Lemma/`:
- * `/repo/Theorem/Rat/DivMulS/eq/Div/of/Ne_0.lean` → `Theorem.Rat.DivMulS.eq.Div.of.Ne_0`.
+ * `Lemma.Random.X` / `Theorem.Random.X` → `Random.X`. Any other module is unchanged.
+ */
+export function stripDeclFolderPrefix(module) {
+  const m = String(module ?? '').trim();
+  const dot = m.indexOf('.');
+  if (dot <= 0) return m;
+  const head = m.slice(0, dot);
+  if (DECL_LIBRARY_FOLDERS.includes(head)) return m.slice(dot + 1);
+  return m;
+}
+
+/**
+ * Dotted Lean namespace of any `.lean` file under the repo.
+ * `/repo/Theorem/Rat/DivMulS/eq/Div/of/Ne_0.lean` → `Rat.DivMulS.eq.Div.of.Ne_0`
+ * (the `Lemma/` / `Theorem/` folder is not part of the module name).
+ * Other top-level folders are kept (`Def.Foo` stays `Def.Foo`).
  * Returns `null` for paths outside the repo or not ending in `.lean`.
  */
 export function leanFilePathToModule(absPath, repoRoot = REPO_ROOT) {
@@ -94,29 +111,44 @@ export function leanFilePathToModule(absPath, repoRoot = REPO_ROOT) {
   const last = parts[parts.length - 1];
   if (!last || !last.endsWith('.lean')) return null;
   parts[parts.length - 1] = last.slice(0, -'.lean'.length);
+  if (parts.length >= 2 && DECL_LIBRARY_FOLDERS.includes(parts[0])) parts.shift();
+  if (parts.length === 0) return null;
   return parts.join('.');
 }
 
 /**
- * Like `moduleToLeanPath`, but also resolves modules whose first segment is another
- * top-level repo folder (`Theorem`, …): `Theorem.Rat…` → `<repo>/Theorem/Rat….lean`.
- * The `Lemma/` mapping wins, so existing URLs are unchanged.
+ * Resolve a Lean namespace or a legacy/explicit folder-prefixed module to a `.lean` file.
+ * Bare names (`Random.X`, `Vector.X.eq.Y`) prefer `Lemma/`, then fall back to `Theorem/`.
+ * An explicit first segment that is a repo folder (`Lemma.…`, `Theorem.…`, `Def.…`) is tried as written first.
  */
 export function moduleToRepoLeanPath(module) {
   if (!module || typeof module !== 'string') return null;
-  const lemma = moduleToLeanPath(module);
-  if (lemma && fileExists(lemma)) return lemma;
   let m = module.trim();
   if (!m) return null;
   if (m.endsWith('.lean')) m = m.slice(0, -4).replace(/\//g, '.');
-  if (m.includes('#')) return null;
+  if (m.includes('#')) {
+    const lemma = moduleToLeanPath(m);
+    return lemma && fileExists(lemma) ? lemma : null;
+  }
   const parts = m.split('.').filter(Boolean);
-  if (parts.length < 2 || parts.some((p) => p === '..' || p === '.')) return null;
-  if (!dirExists(path.join(REPO_ROOT, parts[0]))) return null;
-  const abs = path.join(REPO_ROOT, ...parts) + '.lean';
-  const rel = path.relative(path.resolve(REPO_ROOT), abs);
-  if (!rel || rel.startsWith('..') || path.isAbsolute(rel)) return null;
-  return fileExists(abs) ? abs : null;
+  if (parts.length === 0 || parts.some((p) => p === '..' || p === '.')) return null;
+
+  const tryAbs = (...segs) => {
+    const abs = path.join(REPO_ROOT, ...segs) + '.lean';
+    const rel = path.relative(path.resolve(REPO_ROOT), abs);
+    if (!rel || rel.startsWith('..') || path.isAbsolute(rel)) return null;
+    return fileExists(abs) ? abs : null;
+  };
+
+  if (parts.length >= 2 && dirExists(path.join(REPO_ROOT, parts[0]))) {
+    const abs = tryAbs(...parts);
+    if (abs) return abs;
+  }
+  for (const folder of DECL_LIBRARY_FOLDERS) {
+    const abs = tryAbs(folder, ...parts);
+    if (abs) return abs;
+  }
+  return null;
 }
 
 export function readLeanFile(absPath) {

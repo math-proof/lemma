@@ -18,7 +18,7 @@ private lemma mulℂ_eq :
 [ApproximateIdentity.periodicConvolution](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/FourierAnalysis/code/FourierSeries.lean)
 -/
 @[path]
-private lemma ApproximateIdentity.periodicConvolution_eq
+private lemma approximateIdentity_periodicConvolution_eq
   {f K : ℝ → ℝ}
   {x : ℝ} :
 -- imply
@@ -42,7 +42,7 @@ private lemma periodicL1Norm_eq
 [FejerL1Density.periodicConvolution](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/FourierAnalysis/code/FourierSeries.lean)
 -/
 @[path]
-private lemma FejerL1Density.periodicConvolution_eq
+private lemma fejerL1Density_periodicConvolution_eq
   {f K : ℝ → ℝ}
   {x : ℝ} :
 -- imply
@@ -90,4 +90,4 @@ private lemma IsTrigPolynomial_iff
 
 
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-22

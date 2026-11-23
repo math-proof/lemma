@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/RisingDiagonalSequence.lean -/
 
+module
 
-import Def.Combinatorics.Enumerative.RisingDiagonalSequence
-import Theorem.Finset.Enumerative.RisingDiagonalSequence
-import Mathlib.Tactic.NormNum
+public import Def.Combinatorics.Enumerative.RisingDiagonalSequence
+public import Theorem.Finset.Enumerative.RisingDiagonalSequence
+public import Mathlib.Tactic.NormNum
 
+@[expose] public section
 
 namespace MetaMathlibExt
 

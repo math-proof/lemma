@@ -7,13 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib
-import Def.v1.Atlas.ArithmeticGeometry.code.DegreePullback
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.DegreePullback
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.RationalLineCriterion
-import Def.v1.Atlas.ArithmeticGeometry.code.RationalLineCriterion
-import Class.v1.Atlas.ArithmeticGeometry.code.Divisors.Part2
+public import Mathlib
+public import Def.v1.Atlas.ArithmeticGeometry.code.DegreePullback
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.DegreePullback
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.RationalLineCriterion
+public import Def.v1.Atlas.ArithmeticGeometry.code.RationalLineCriterion
+public import Class.v1.Atlas.ArithmeticGeometry.code.Divisors.Part2
+
+public section
+
 attribute [instance] ClosedPointRes.residueFieldField ClosedPointRes.residueFieldAlgebra
     ClosedPointRes.finiteDimensional
 

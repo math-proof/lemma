@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.DifferentialAnalysis.code.EllipticLowerBound
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.EllipticLowerBound
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.EllipticLowerBound
 import Structure.v1.Atlas.DifferentialAnalysis.code.CommutatorEstimates
 open scoped SchwartzMap
 open TemperedDistribution MvPolynomial

@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Abbrev.v1.Atlas.TensorCategories.code.IntegralsDefs
-import Lemma.Category.Atlas.v1.TensorCategories.code.IntegralsDefs
+module
+
+public import Abbrev.v1.Atlas.TensorCategories.code.IntegralsDefs
+public import Theorem.Category.Atlas.v1.TensorCategories.code.IntegralsDefs
+@[expose] public section
+
 set_option autoImplicit false
 
 universe u v

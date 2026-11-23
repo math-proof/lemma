@@ -1,5 +1,5 @@
 import Instance.ModularCurve_FullLevelJacobian
-import Lemma.Matrix.TateProdRep.eq.TateRep
+import Theorem.Matrix.TateProdRep.eq.TateRep
 
 set_option autoImplicit false
 

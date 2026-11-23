@@ -1,7 +1,7 @@
 import Mathlib
 import Instance.AlgebraicGeometry_RigKerDualNumber
 import Structure.AlgebraicGeometry_TwoAffineOpenCoverH1BaseChange
-import Lemma.Scheme.ModulesSectionsTensor
+import Theorem.Scheme.ModulesSectionsTensor
 
 set_option autoImplicit false
 

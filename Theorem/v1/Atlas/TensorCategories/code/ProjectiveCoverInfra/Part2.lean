@@ -20,7 +20,7 @@ import Mathlib.LinearAlgebra.FiniteDimensional.Defs
 import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 import Mathlib.LinearAlgebra.Dimension.Finrank
 import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
-import Lemma.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
+import Theorem.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
 import Def.v1.Atlas.TensorCategories.code.ProjectiveCoverInfra.Part2
 set_option maxHeartbeats 800000
 

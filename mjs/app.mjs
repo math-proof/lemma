@@ -7,6 +7,7 @@ import path from 'path';
 import fs from 'fs/promises';
 import {
   REPO_ROOT,
+  DECL_LIBRARY_FOLDERS,
   moduleToLeanPath,
   moduleToRepoLeanPath,
   leanFilePathToModule,
@@ -17,6 +18,7 @@ import {
   fileExists,
   dirExists,
   listLemmaPackageContents,
+  stripDeclFolderPrefix,
 } from './lean/modulePath.mjs';
 import { echo2vueFromSource, render2vueFromSource } from './lean/compiler/index.mjs';
 import { compile, LeanModule, LeanCaret } from '../js/parser/lean.js';
@@ -300,7 +302,7 @@ app.get('/:userSegment/__cm__/*pkg', async (req, res) => {
 /** Lemma tree size for `website` home.md `<label id=count>` / `<label id=lines>`. */
 app.get('/:userSegment/api/repo-stats.json', ensureProjectUser, async (_req, res) => {
   try {
-    const { theoremCount, lineCount } = await getRepoStatsCached(PROJECT_USER);
+    const { theoremCount, lineCount } = await getRepoStatsCached();
     res.set('Cache-Control', 'public, max-age=300');
     res.json({ theoremCount, lineCount });
   } catch (e) {
@@ -351,8 +353,7 @@ app.post('/:userSegment/php/request/mathlib.php', ensureProjectUser, (req, res) 
 
 /** Same contract as `php/request/delete/lemma.php` (POST `package`, `lemma` → JSON `"deleted!"`). */
 app.post('/:userSegment/php/request/delete/lemma.php', ensureProjectUser, (req, res) => {
-  const userSeg = req.params.userSegment || PROJECT_USER;
-  handleDeleteLemma(userSeg, req, res).catch((e) => {
+  handleDeleteLemma(req, res).catch((e) => {
     console.error('[delete-lemma]', e);
     res.status(500).json({ error: String(e?.message || e) });
   });
@@ -360,8 +361,7 @@ app.post('/:userSegment/php/request/delete/lemma.php', ensureProjectUser, (req, 
 
 /** Same contract as `php/request/delete/package.php` (POST `package`, `section` → JSON `"deleted!"`). */
 app.post('/:userSegment/php/request/delete/package.php', ensureProjectUser, (req, res) => {
-  const userSeg = req.params.userSegment || PROJECT_USER;
-  handleDeletePackage(userSeg, req, res).catch((e) => {
+  handleDeletePackage(req, res).catch((e) => {
     console.error('[delete-package]', e);
     res.status(500).json({ error: String(e?.message || e) });
   });
@@ -369,8 +369,7 @@ app.post('/:userSegment/php/request/delete/package.php', ensureProjectUser, (req
 
 /** Same contract as `php/request/rename.php` for POST `old` + `new` (dotted modules). */
 app.post('/:userSegment/php/request/rename.php', ensureProjectUser, (req, res) => {
-  const userSeg = req.params.userSegment || PROJECT_USER;
-  handleRenameLemma(userSeg, req, res).catch((e) => {
+  handleRenameLemma(req, res).catch((e) => {
     console.error('[rename]', e);
     res.status(500).json({ error: String(e?.message || e) });
   });
@@ -385,7 +384,7 @@ app.get('/:userSegment/php/request/recent.php', ensureProjectUser, handleRecent)
 /** Plain text, same as `php/request/count.php` (`select_count`). */
 app.get('/:userSegment/php/request/count.php', ensureProjectUser, async (_req, res) => {
   try {
-    const { theoremCount } = await getRepoStatsCached(PROJECT_USER);
+    const { theoremCount } = await getRepoStatsCached();
     res.type('text/plain; charset=utf-8').send(String(theoremCount));
   } catch (e) {
     console.error('[count.php]', e);
@@ -396,7 +395,7 @@ app.get('/:userSegment/php/request/count.php', ensureProjectUser, async (_req, r
 /** Plain text, same as `php/request/lines.php`. */
 app.get('/:userSegment/php/request/lines.php', ensureProjectUser, async (_req, res) => {
   try {
-    const { lineCount } = await getRepoStatsCached(PROJECT_USER);
+    const { lineCount } = await getRepoStatsCached();
     res.type('text/plain; charset=utf-8').send(String(lineCount));
   } catch (e) {
     console.error('[lines.php]', e);
@@ -480,7 +479,7 @@ app.use('/:userSegment/css', ensureProjectUser, express.static(path.join(REPO_RO
 }));
 
 async function renderSummaryPage(res, userSegment) {
-  const { state_count_pairs, repertoire } = await buildSummaryPayload(PROJECT_USER);
+  const { state_count_pairs, repertoire } = await buildSummaryPayload();
   const summaryJson = jsonForScriptEmbed({ state_count_pairs, repertoire });
   res.set('Content-Type', 'text/html; charset=utf-8');
   res.render('summary', { summaryJson, userSegment });
@@ -507,6 +506,7 @@ function renderPackageBrowserPage(res, module, userSegment) {
 }
 
 async function renderLemmaPage(res, module, userSegment) {
+  module = stripDeclFolderPrefix(module);
   /**
    * PHP `index.php`: `?module=Section...Name.` (trailing `.`) makes `$title` end with `/`,
    * so `$leanFile` is never set and `package.php` runs — browse the folder, not `Name.lean`.
@@ -522,8 +522,8 @@ async function renderLemmaPage(res, module, userSegment) {
       );
       return;
     }
-    /** `moduleToLemmaPackageDir` is Lemma-relative: `Lemma.Nat` → `Nat` → `Lemma/Nat`. */
-    const relPkgMod = pkgMod.startsWith('Lemma.') ? pkgMod.slice('Lemma.'.length) : pkgMod;
+    /** `moduleToLemmaPackageDir` is Lemma-relative: namespace `Nat` → `Lemma/Nat`. */
+    const relPkgMod = stripDeclFolderPrefix(pkgMod);
     const pkgDir = moduleToLemmaPackageDir(relPkgMod);
     if (pkgDir && dirExists(pkgDir)) {
       renderPackageBrowserPage(res, relPkgMod, userSegment);
@@ -540,7 +540,7 @@ async function renderLemmaPage(res, module, userSegment) {
   const leanMissing = !abs || !fileExists(abs);
   if (leanMissing) {
     /** Same as PHP `index.php`: folder `Lemma/<module path>/` → `php/package.php` + `axiomContents`. */
-    const relPkgMod = module.startsWith('Lemma.') ? module.slice('Lemma.'.length) : module;
+    const relPkgMod = stripDeclFolderPrefix(module);
     const pkgDir = moduleToLemmaPackageDir(relPkgMod);
     if (pkgDir && dirExists(pkgDir)) {
       renderPackageBrowserPage(res, relPkgMod, userSegment);
@@ -569,7 +569,7 @@ async function renderLemmaPage(res, module, userSegment) {
 
   if (shouldLoadLemmaFromMysql(abs, echoAbs)) {
     try {
-      const row = await fetchLemmaRowFromMysql(PROJECT_USER, module);
+      const row = await fetchLemmaRowFromMysql(module);
       if (row) {
         code = codeFromMysqlRow(row, module, PROJECT_USER);
         if (code && !fileExists(echoAbs)) ensureEmptyEchoFile(echoAbs);
@@ -582,7 +582,7 @@ async function renderLemmaPage(res, module, userSegment) {
   if (!code) {
     const source = readLeanFile(abs);
     code = render2vueFromSource(source, { user: PROJECT_USER });
-    code.module = module;
+    code.module = stripDeclFolderPrefix(module);
   }
 
   renderLemmaCode(res, code, module, userSegment);
@@ -597,8 +597,8 @@ function renderLemmaCode(res, code, module, userSegment) {
 
 /**
  * `?theorem=<abs path | repo path | dotted module>`: resolve any `.lean` file under the repo.
- * Dotted addresses default to the `Theorem/` decl library (`Rat.DivMulS.eq.Div.of.Ne_0` →
- * `Theorem/Rat/DivMulS/eq/Div/of/Ne_0.lean`); a full module (`Theorem.…`, `Lemma.…`) is used as written.
+ * Dotted addresses are Lean namespaces (`Rat.DivMulS.eq.Div.of.Ne_0`): prefer `Lemma/`,
+ * then `Theorem/`. An explicit folder prefix (`Theorem.…`, `Lemma.…`, `Def.…`) is used as written.
  * Symlinks are resolved and the real path must stay inside the repo.
  */
 async function resolveTheoremPath(input) {
@@ -606,15 +606,8 @@ async function resolveTheoremPath(input) {
   if (!raw) return null;
   const cleaned = raw.replace(/[\\/]+$/, '');
   if (!cleaned.endsWith('.lean')) {
-    // A bare dotted address is a `Theorem/` module; an explicit top-level folder
-    // (`Lemma.…`, `Theorem.…`) is used as written.
-    const head = cleaned.split('.')[0];
-    const explicitDir = dirExists(path.join(REPO_ROOT, head));
-    const candidates = explicitDir ? [cleaned] : [`Theorem.${cleaned}`];
-    for (const module of candidates) {
-      const absModule = moduleToRepoLeanPath(module);
-      if (absModule && fileExists(absModule)) return absModule;
-    }
+    const absModule = moduleToRepoLeanPath(cleaned);
+    if (absModule && fileExists(absModule)) return absModule;
     return null;
   }
   const candidate = path.isAbsolute(cleaned) ? cleaned : path.join(REPO_ROOT, cleaned);
@@ -631,11 +624,9 @@ async function resolveTheoremPath(input) {
   return abs;
 }
 
-/** Canonical `?theorem=` address for a file: its dotted module, with the `Theorem.` prefix dropped. */
+/** Canonical `?theorem=` address for a file: the Lean namespace (no folder prefix). */
 function theoremCanonicalModule(abs) {
-  const module = leanFilePathToModule(abs);
-  if (!module) return null;
-  return module.startsWith('Theorem.') ? module.slice('Theorem.'.length) : module;
+  return leanFilePathToModule(abs);
 }
 
 async function renderTheoremPage(res, abs, userSegment) {
@@ -653,7 +644,7 @@ async function renderTheoremPage(res, abs, userSegment) {
   let code = null;
   if (shouldLoadLemmaFromMysql(abs, echoAbs)) {
     try {
-      const row = await fetchLemmaRowFromMysql(PROJECT_USER, module);
+      const row = await fetchLemmaRowFromMysql(module);
       if (row) {
         code = codeFromMysqlRow(row, module, PROJECT_USER);
         if (code && !fileExists(echoAbs)) ensureEmptyEchoFile(echoAbs);
@@ -664,7 +655,7 @@ async function renderTheoremPage(res, abs, userSegment) {
   }
   if (!code) {
     code = render2vueFromSource(readLeanFile(abs), { user: PROJECT_USER });
-    code.module = module;
+    code.module = stripDeclFolderPrefix(module);
   }
   renderLemmaCode(res, code, module, userSegment);
 }
@@ -705,15 +696,27 @@ function isTopLevelFolder(head) {
   return /^[A-Z][A-Za-z0-9]*$/.test(head) && dirExists(path.join(REPO_ROOT, head));
 }
 
-/** `?lemma=Nat.Mul…` → `Lemma.Nat.Mul…`; an explicit top-level folder (`Def.…`) is kept. */
+/** `?lemma=Nat.Mul…` stays `Nat.Mul…`. Legacy `Lemma.` / `Theorem.` folder prefixes are stripped. */
 function lemmaParamToModule(input) {
   let module = String(input ?? '').trim().replace(/\//g, '.');
   const hash = module.indexOf('#');
   if (hash !== -1) module = module.slice(0, hash);
   if (!module) return null;
-  const head = module.split('.')[0];
-  if (isTopLevelFolder(head)) return module;
-  return `Lemma.${module}`;
+  module = stripDeclFolderPrefix(module);
+  return module || null;
+}
+
+/** `Lemma` or `Theorem` if `abs` lives in that repo folder, else null. */
+function declFolderOfAbs(abs) {
+  if (!abs) return null;
+  const rel = path.relative(path.resolve(REPO_ROOT), path.resolve(abs));
+  if (!rel || rel.startsWith('..') || path.isAbsolute(rel)) return null;
+  const folder = rel.split(/[/\\]/)[0];
+  return DECL_LIBRARY_FOLDERS.includes(folder) ? folder : null;
+}
+
+function declQueryParam(folder) {
+  return folder === 'Theorem' ? 'theorem' : 'lemma';
 }
 
 /** PHP `lean.php/website` → marketing/docs shell (`website/index.php`). */
@@ -738,7 +741,7 @@ app.use('/:userSegment/website', ensureProjectUser,
   maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
 }));
 
-/** Same idea as `php/search.php` + `index.php` (`?type=`, `?q=`, `?latex=`). */
+/** Same idea as `php/search.php` + `index.php` (`?type=`, `?q=`, `?lean=`). */
 async function renderSearchPage(res, dict, userSegment) {
   try {
     const payload = await buildSearchPayload(dict, PROJECT_USER);
@@ -764,29 +767,28 @@ function postFieldString(val) {
 }
 
 /**
- * Lemma editor save (`render.vue` POST): write `Lemma/<module>.lean` and redirect to `?module=`.
+ * Lemma editor save (`render.vue` POST): write the existing file under `Lemma/` or `Theorem/`
+ * (prefer Lemma, then Theorem), or create `Lemma/<module>.lean` when the file is new.
  * PHP uses `php/lemma.php` inside `index.php`; Node assembles text in `assembleLemmaPost.mjs`.
  */
 async function handleLemmaSavePost(res, userSegment, body) {
-  let module = postFieldString(body.module).replace(/\//g, '.');
+  let module = stripDeclFolderPrefix(postFieldString(body.module).replace(/\//g, '.'));
   if (!module || module.includes('..') || module.includes('\\')) {
     res.status(400).type('html').send(
       `<!DOCTYPE html><meta charset="utf-8"><title>Bad request</title><p>Invalid module.</p>`
     );
     return;
   }
-  const leanPath = moduleToLeanPath(module);
+  const leanPath = moduleToRepoLeanPath(module) || moduleToLeanPath(module);
   if (!leanPath) {
     res.status(400).type('html').send(
       `<!DOCTYPE html><meta charset="utf-8"><title>Bad request</title><p>Invalid module path.</p>`
     );
     return;
   }
-  const lemmaRoot = path.join(REPO_ROOT, 'Lemma');
-  const rel = path.relative(path.resolve(lemmaRoot), path.resolve(leanPath));
-  if (!rel || rel.startsWith('..') || path.isAbsolute(rel)) {
+  if (!declFolderOfAbs(leanPath)) {
     res.status(400).type('html').send(
-      `<!DOCTYPE html><meta charset="utf-8"><title>Bad request</title><p>Module outside Lemma/.</p>`
+      `<!DOCTYPE html><meta charset="utf-8"><title>Bad request</title><p>Module outside Lemma/ or Theorem/.</p>`
     );
     return;
   }
@@ -806,7 +808,8 @@ async function handleLemmaSavePost(res, userSegment, body) {
   await fs.mkdir(path.dirname(leanPath), { recursive: true });
   await fs.writeFile(leanPath, text, 'utf8');
 
-  redirectToModule(res, userSegment, module);
+  const folder = declFolderOfAbs(leanPath) || 'Lemma';
+  res.redirect(302, `/${userSegment || PROJECT_USER}/?${declQueryParam(folder)}=${encodeURIComponent(module)}`);
 }
 
 /** POST body from `searchForm.vue` (PHP `index.php`); same logic as `/:userSegment/` POST. */
@@ -851,7 +854,7 @@ async function renderHierarchyPage(res, query, keyInput, userSegment) {
     }
   }
   const invert = keyInput === 'callee';
-  const graph = await establishHierarchyGraph(PROJECT_USER, moduleStr, invert);
+  const graph = await establishHierarchyGraph(moduleStr, invert);
   const parent = [];
   detectCycleTraceback(graph, moduleStr, parent);
   const traceback = buildHierarchyTraceback(parent, moduleStr);
@@ -955,12 +958,17 @@ async function handleLeanGet(req, res) {
         );
         return;
       }
-      // A filesystem path canonicalises to the dotted address (`…/Theorem/Rat/…/Ne_0.lean`
-      // → `?theorem=Rat.…Ne_0`).
-      if (raw.replace(/[\\/]+$/, '').endsWith('.lean')) {
-        const canonical = theoremCanonicalModule(abs);
-        if (canonical) {
-          res.redirect(302, `/${userSeg}/?theorem=${canonical}`);
+      // Canonicalise to the Lean namespace and the folder the file actually lives in
+      // (`…/Theorem/Rat/…/Ne_0.lean` → `?theorem=Rat.…Ne_0`; a Lemma file → `?lemma=`).
+      const canonical = theoremCanonicalModule(abs);
+      const folder = declFolderOfAbs(abs);
+      if (canonical) {
+        const param = declQueryParam(folder || 'Theorem');
+        const rawMod = raw.replace(/[\\/]+$/, '').endsWith('.lean')
+          ? ''
+          : stripDeclFolderPrefix(String(raw).trim().replace(/\//g, '.'));
+        if (rawMod !== canonical || param !== 'theorem') {
+          res.redirect(302, `/${userSeg}/?${param}=${encodeURIComponent(canonical)}`);
           return;
         }
       }
@@ -975,15 +983,39 @@ async function handleLeanGet(req, res) {
     return;
   }
 
-  /** `?lemma=<Lemma-relative module>` — where `?module=Lemma.…` redirects to. */
+  /** `?lemma=<namespace>` — where `?module=Lemma.…` redirects to. */
   if (req.query.lemma != null && String(req.query.lemma).trim() !== '') {
     try {
-      const module = lemmaParamToModule(req.query.lemma);
+      const raw = String(req.query.lemma).trim();
+      if (raw.endsWith('.lean')) {
+        const abs = await resolveTheoremPath(raw);
+        const module = abs && leanFilePathToModule(abs);
+        const folder = abs && declFolderOfAbs(abs);
+        if (!module || !folder || !fileExists(abs) || !(await fs.stat(abs)).isFile()) {
+          res.status(404).type('html').send(
+            `<!DOCTYPE html><meta charset="utf-8"><title>Not found</title>
+            <p>Not a readable <code>.lean</code> file under <code>Lemma/</code> or <code>Theorem/</code>:
+            <code>${escapeHtml(raw)}</code></p>`
+          );
+          return;
+        }
+        res.redirect(302, `/${userSeg}/?${declQueryParam(folder)}=${encodeURIComponent(module)}`);
+        return;
+      }
+      const module = lemmaParamToModule(raw);
       if (!module) {
         res.status(404).type('html').send(
           `<!DOCTYPE html><meta charset="utf-8"><title>Not found</title>
           <p>Not a module: <code>${escapeHtml(String(req.query.lemma))}</code></p>`
         );
+        return;
+      }
+      const abs = moduleToRepoLeanPath(module);
+      const folder = abs && declFolderOfAbs(abs);
+      const param = folder === 'Theorem' ? 'theorem' : 'lemma';
+      const rawMod = String(raw).trim().replace(/\//g, '.');
+      if (param === 'theorem' || rawMod !== module) {
+        res.redirect(302, `/${userSeg}/?${param}=${encodeURIComponent(module)}`);
         return;
       }
       await renderLemmaPage(res, module, userSeg);
@@ -1171,7 +1203,7 @@ app.listen(PORT, '0.0.0.0', () => {
   if (getMysqlConfig()) {
     console.log('  mysql:       lemma from DB when row exists (.echo.lean gate like php/lemma.php)');
   }
-  getRepoStatsCached(PROJECT_USER).catch((e) =>
+  getRepoStatsCached().catch((e) =>
     console.warn('[repo-stats warm]', e?.message || e)
   );
 });

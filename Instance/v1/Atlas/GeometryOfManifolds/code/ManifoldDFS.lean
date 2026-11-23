@@ -8,15 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Geometry.Manifold.VectorBundle.Tangent
-import Mathlib.Geometry.Manifold.MFDeriv.Basic
-import Mathlib.Geometry.Manifold.MFDeriv.SpecificFunctions
-import Mathlib.Analysis.Normed.Module.Alternating.Uncurry.Fin
-import Mathlib.Analysis.Calculus.VectorField
-import Def.v1.Atlas.GeometryOfManifolds.code.DifferentialForms.Part2
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialForms
-import Def.v1.Atlas.GeometryOfManifolds.code.OmitIndex
-import Def.v1.Atlas.GeometryOfManifolds.code.ManifoldDFS
+module
+
+public import Mathlib.Geometry.Manifold.VectorBundle.Tangent
+public import Mathlib.Geometry.Manifold.MFDeriv.Basic
+public import Mathlib.Geometry.Manifold.MFDeriv.SpecificFunctions
+public import Mathlib.Analysis.Normed.Module.Alternating.Uncurry.Fin
+public import Mathlib.Analysis.Calculus.VectorField
+public import Def.v1.Atlas.GeometryOfManifolds.code.DifferentialForms.Part2
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialForms
+public import Def.v1.Atlas.GeometryOfManifolds.code.OmitIndex
+public import Def.v1.Atlas.GeometryOfManifolds.code.ManifoldDFS
+@[expose] public section
+
 set_option autoImplicit false
 set_option maxHeartbeats 400000
 

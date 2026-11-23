@@ -29,7 +29,6 @@ function find(n, pred) {
   check("argmax is Lean_argmax", !!am);
   check("argmax bound is Colon", am && am.bound?.constructor?.name === "LeanColon");
   check("argmax scope is Parenthesis", am && am.scope?.constructor?.name === "LeanParenthesis");
-  check("argmax pathChoices has ArgMax", am?.pathChoices?.().includes("ArgMax"));
   const lx = mod.render2vue(false).lemma[0].imply.latex;
   check("argmax underset latex", lx.includes("\\underset{") && lx.includes("\\operatorname{max}^{-1}"));
   check("argmax no limits on ^{-1}", !/max\^{-1}\\limits/.test(lx) && !/operatorname\{max\}\^{-1}\\limits/.test(lx));
@@ -49,7 +48,6 @@ function find(n, pred) {
   const mx = find(mod, (n) => n.constructor?.name === "Lean_max");
   check("max is Lean_max", !!mx);
   check("max bound Colon", mx?.bound?.constructor?.name === "LeanColon");
-  check("max pathChoices has Max", mx?.pathChoices?.().includes("Max"));
   const lx = mod.render2vue(false).lemma[0].imply.latex;
   check("max limits latex", lx.includes("\\max\\limits_"));
 }
@@ -90,7 +88,6 @@ function find(n, pred) {
   const pr = find(mod, (n) => n.constructor?.name === "Lean_Prob");
   check("nested outer Lean_argmax", !!am);
   check("nested inner Lean_Prob", !!pr);
-  check("ArgMaxProb path", am?.pathChoices?.().includes("ArgMaxProb"));
 }
 
 {

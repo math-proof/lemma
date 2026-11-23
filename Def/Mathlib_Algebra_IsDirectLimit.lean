@@ -1,6 +1,10 @@
-import Mathlib
-import Instance.Mathlib_Algebra_IsDirectLimit
-import Class.Mathlib_Algebra_IsDirectLimit
+module
+
+public import Mathlib
+public import Instance.Mathlib_Algebra_IsDirectLimit
+public import Class.Mathlib_Algebra_IsDirectLimit
+
+@[expose] public section
 
 section
 

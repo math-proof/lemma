@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.Buildings.code.Building.Spherical
 import Theorem.Finset.AreOpposite.of.AreOpposite
-import Lemma.List.Any.of.Not.In_A.IsChainA
+import Theorem.List.Any.of.Not.In_A.IsChainA
 import Theorem.Finset.OppositeSides.of.EqToSimplicialComplex.AreOppositeToSimplicialComplexToChamberComplex.IsMaximal.IsMaximal.In_Faces.In_Faces.In_Apartments.OppositeChamberHyp
 import Def.v1.Atlas.Buildings.code.Building.Convexity
 import Structure.v1.Atlas.Buildings.code.Building.OppositeChambers

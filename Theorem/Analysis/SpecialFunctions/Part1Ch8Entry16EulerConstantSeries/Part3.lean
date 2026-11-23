@@ -1,17 +1,21 @@
 /-
 Author: @akiezun, Avocado
 -/
+module
 
-import Mathlib.NumberTheory.Harmonic.EulerMascheroni
-import Mathlib.NumberTheory.Harmonic.Bounds
-import Mathlib.Tactic.NormNum.Parity
-import Def.Analysis.SpecialFunctions.Part1Ch8Entry16EulerConstantSeries.Part3
+public import Mathlib.NumberTheory.Harmonic.EulerMascheroni
+public import Mathlib.NumberTheory.Harmonic.Bounds
+public import Mathlib.Tactic.NormNum.Parity
+public import Def.Analysis.SpecialFunctions.Part1Ch8Entry16EulerConstantSeries.Part3
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 8
 
 Statements of entries from B. C. Berndt, *Ramanujan's Notebooks, Part I*
 (Springer, 1985), with proofs.
 -/
+
+public section
 
 
 section

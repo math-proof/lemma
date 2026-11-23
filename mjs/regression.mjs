@@ -1,21 +1,31 @@
 /**
  * regression.mjs — JSON / hole-regex regression over `mjs/regression/*.json`.
  *
- * Fixtures can use parallel `regex`, `suggestion`, and `dag` arrays.
- * Index 0 is the base pattern and subsequent indices are plural variants.
+ * Fixtures can use parallel `regex`, `suggestion`, and `dag` arrays, stored in
+ * canonical order: shortest regex first, so the base is not necessarily index 0.
  * Legacy fixtures store the base and plural values in separate fields.
  *
  * Read-only checks per fixture:
  *   1. `json`  — parse `lean`, locate the statement node, and require its
- *      `toJSON()` to deep-equal the stored `json` field (key order ignored).
+ *      `toJSON({ leaves: new Map(), binders: [] })` to deep-equal the stored
+ *      `json` field (key order ignored). This is the fingerprint tree, with
+ *      free leaves as `$n` and binders as De Bruijn `?n`.
  *   2. `regex` — require `json2regex(stored json)` to equal `regex`.
  *   3. `plural`— require `json2plural(stored json)` to equal `plural`
  *      (as a set; order is not significant).
+ *   3b. `order` — indexed fixtures must store `regex` and `suggestion` in
+ *      `json2pathPatterns` order, which decides the emitted path.
  *   4. `suggestion` — match the stored path against `regex`.
  *   5. `pluralSuggestion` — match each stored path against its paired `plural`
  *      regex in fixture order.
  *   6. `dag` — check each indexed graph and compare the base DAG from JSON
  *      with the base DAG from the regex string.
+ *   7. `fingerprint` — require `node.fingerprint` to equal the stored field.
+ *      Free leaves are named by first appearance, so `√a + a²` is
+ *      `Add(Sqrt($1))(Square($1))` while `√a + b²` is
+ *      `Add(Sqrt($1))(Square($2))`. Bound variables of sums, products, and
+ *      quantifiers are De Bruijn `?0`, `?1`, … (`?0` is nearest); `ℙ[π]`,
+ *      `∇[x]`, and `∂[x]` do not bind, but `∇[x = x₀]` and `∂[x = x₀]` do.
  *
  * The runner never writes to the fixtures; regenerating them is a separate,
  * deliberate step.
@@ -27,7 +37,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { compile } from "../js/parser/lean.js";
 import { strStmt } from "../js/parser/lean/utility.js";
-import { dag2suggession, json2dag, json2regex, json2plural, regex2dag, suggestionMatches } from "../js/parser/lean/json2regex.js";
+import { dag2suggession, json2dag, json2regex, json2plural, json2pathPatterns, regex2dag, suggestionMatches } from "../js/parser/lean/json2regex.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -103,7 +113,6 @@ for (const name of files) {
   const regexes = indexed ? doc.regex : [doc.regex, ...(Array.isArray(doc.plural) ? doc.plural : [])];
   const suggestions = indexed ? doc.suggestion :
     [doc.suggestion, ...(Array.isArray(doc.pluralSuggestion) ? doc.pluralSuggestion : [])];
-  const [baseRegex, ...wantPlural] = regexes;
   if (!regexes.length || !regexes.every((regex) => typeof regex === "string") ||
       (!indexed && !Array.isArray(doc.plural))) {
     problems.push("expected a base regex and an array of plural regex strings");
@@ -116,8 +125,9 @@ for (const name of files) {
   } catch (e) {
     problems.push(`json2regex error: ${e.message}`);
   }
-  if (rendered !== null && rendered !== baseRegex) {
-    problems.push(`regex mismatch\n  got:  ${show(rendered)}\n  want: ${show(baseRegex)}`);
+  // The canonical order is shortest-first, so the base regex need not sit at index 0.
+  if (rendered !== null && !regexes.includes(rendered)) {
+    problems.push(`base regex missing\n  got:  ${show(regexes)}\n  want: ${show(rendered)}`);
   }
 
   // Check 3: S-plural variants, compared as a set (order is not significant).
@@ -128,9 +138,28 @@ for (const name of files) {
     problems.push(`json2plural error: ${e.message}`);
   }
   if (plurals !== null) {
-    const want = [...new Set(wantPlural)].sort();
+    const want = [...new Set(regexes.filter((regex) => regex !== rendered))].sort();
     if (JSON.stringify(plurals) !== JSON.stringify(want)) {
       problems.push(`plural mismatch\n  got:  ${show(plurals)}\n  want: ${show(want)}`);
+    }
+  }
+
+  // Check 3b: the canonical order is shortest regex first, and the emitted path is
+  // taken from the front of that list, so both arrays must be stored in that exact
+  // order. A reordering is a behaviour change, not a cosmetic diff.
+  if (indexed) {
+    try {
+      const patterns = json2pathPatterns(doc.json);
+      const wantRegex = patterns.map(({ regex }) => regex);
+      const wantSuggestion = patterns.map(({ token }) => token);
+      if (JSON.stringify(regexes) !== JSON.stringify(wantRegex)) {
+        problems.push(`regex order mismatch\n  got:  ${show(regexes)}\n  want: ${show(wantRegex)}`);
+      }
+      if (JSON.stringify(suggestions) !== JSON.stringify(wantSuggestion)) {
+        problems.push(`suggestion order mismatch\n  got:  ${show(suggestions)}\n  want: ${show(wantSuggestion)}`);
+      }
+    } catch (e) {
+      problems.push(`json2pathPatterns error: ${e.message}`);
     }
   }
 
@@ -153,10 +182,11 @@ for (const name of files) {
       regexes.forEach((regex, i) => {
         if (typeof regex !== "string") return;
         try {
-          const graph = i === 0 ? json2dag(doc.json) : regex2dag(regex);
+          const isBase = regex === rendered;
+          const graph = isBase ? json2dag(doc.json) : regex2dag(regex);
           if (canon(doc.dag[i]) !== canon(graph)) problems.push(`dag[${i}] mismatch`);
-          if (i === 0 && canon(graph) !== canon(regex2dag(regex))) {
-            problems.push("dag[0] differs between the JSON node and the regex string");
+          if (isBase && canon(graph) !== canon(regex2dag(regex))) {
+            problems.push(`dag[${i}] differs between the JSON node and the regex string`);
           }
           if (!suggestionMatches(regex, dag2suggession(graph))) {
             problems.push(`dag[${i}] did not generate a matching suggestion`);
@@ -181,12 +211,28 @@ for (const name of files) {
   } else {
     let fresh;
     try {
-      fresh = node.toJSON();
+      fresh = node.toJSON({ leaves: new Map(), binders: [] });
     } catch (e) {
       problems.push(`toJSON error: ${e.message}`);
     }
     if (fresh !== undefined && canon(fresh) !== canon(doc.json)) {
       problems.push(`json mismatch\n  got:  ${show(fresh)}\n  want: ${show(doc.json)}`);
+    }
+
+    // Check 7: leaf-identity fingerprint. `toJSON` names a leaf on its first
+    // appearance, so `√a + a²` shares `$1` while `√a + b²` gets `$1`/`$2`.
+    if (typeof doc.fingerprint !== "string" || doc.fingerprint === "") {
+      problems.push("fingerprint is missing");
+    } else {
+      let fingerprint = null;
+      try {
+        fingerprint = node.fingerprint;
+      } catch (e) {
+        problems.push(`fingerprint error: ${e.message}`);
+      }
+      if (fingerprint != null && fingerprint !== doc.fingerprint) {
+        problems.push(`fingerprint mismatch\n  got:  ${show(fingerprint)}\n  want: ${show(doc.fingerprint)}`);
+      }
     }
   }
 

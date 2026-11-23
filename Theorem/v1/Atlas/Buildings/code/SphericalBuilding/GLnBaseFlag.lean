@@ -7,14 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnChainRefinement.Part2
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.LinearAlgebra.StdBasis
-import Mathlib.LinearAlgebra.Dimension.Free
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnBaseFlag
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnChainRefinement.Part2
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.LinearAlgebra.StdBasis
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnBaseFlag
 
+public section
 
 namespace GLnBuilding
 

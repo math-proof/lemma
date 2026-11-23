@@ -8,16 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section1.Part3
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section1
-import Mathlib.LinearAlgebra.TensorProduct.Basic
-import Mathlib.LinearAlgebra.TensorProduct.DirectLimit
-import Mathlib.Order.Directed
-import Mathlib.Algebra.Colimit.Module
-import Mathlib.CategoryTheory.Category.Preorder
-import Mathlib.CategoryTheory.Limits.HasLimits
-import Mathlib.RingTheory.Flat.Localization
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section23
+module
+
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section1.Part3
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section1
+public import Mathlib.LinearAlgebra.TensorProduct.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.DirectLimit
+public import Mathlib.Order.Directed
+public import Mathlib.Algebra.Colimit.Module
+public import Mathlib.CategoryTheory.Category.Preorder
+public import Mathlib.CategoryTheory.Limits.HasLimits
+public import Mathlib.RingTheory.Flat.Localization
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section23
+
+@[expose] public section
 
 
 namespace DirectedSystems

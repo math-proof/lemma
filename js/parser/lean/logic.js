@@ -7,7 +7,6 @@
  */
 import { LeanBinaryBoolean } from './boolean.js';
 import { Lean } from './base.js';
-import { pathAndInfixChoices } from './pathChoices.js';
 import { strStmt } from './utility.js';
 
 const L = Lean.classes;
@@ -53,9 +52,9 @@ export class LeanLogicAnd extends LeanLogic {
         return '&&';
     }
 
-    toJSON() {
-        const lhs = this.lhs.toJSON();
-        const rhs = this.rhs.toJSON();
+    toJSON(ctx = { leaves: new Map() }) {
+        const lhs = this.lhs.toJSON(ctx);
+        const rhs = this.rhs.toJSON(ctx);
         const f = this.pathToken;
         const rec = lhs && typeof lhs === 'object' ? lhs : null;
         if (this.lhs instanceof LeanLogicAnd && rec && Array.isArray(rec[f])) {
@@ -86,9 +85,9 @@ export class LeanLogicOr extends LeanLogic {
         return '||';
     }
 
-    toJSON() {
-        const lhs = this.lhs.toJSON();
-        const rhs = this.rhs.toJSON();
+    toJSON(ctx = { leaves: new Map() }) {
+        const lhs = this.lhs.toJSON(ctx);
+        const rhs = this.rhs.toJSON(ctx);
         const f = this.pathToken;
         const rec = lhs && typeof lhs === 'object' ? lhs : null;
         if (this.lhs instanceof LeanLogicOr && rec && Array.isArray(rec[f])) {
@@ -234,19 +233,6 @@ export class Lean_land extends LeanLogic {
         const sides = eqChainSides(this);
         if (sides) return sides.map((s) => `{${s.toLatex(syntax)}}`).join(' = ');
         return super.toLatex(syntax);
-    }
-
-    /**
-     * And as a binary operator (like Eq): `LHS/and/RHS` and `And(LHS)(RHS)`.
-     * Each argument's pathChoices supplies the side list (`""` = omit). Both omit → `And__`.
-     * @param {object} [opts]
-     * @returns {string[]}
-     */
-    pathChoices(opts = {}) {
-        return pathAndInfixChoices(
-            this.lhs?.pathChoices?.(opts) ?? [""],
-            this.rhs?.pathChoices?.(opts) ?? [""],
-        ).stems;
     }
 
     insert_newline(caret, newline_count, indent, next) {

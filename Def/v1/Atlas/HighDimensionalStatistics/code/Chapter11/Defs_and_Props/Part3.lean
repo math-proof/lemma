@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Distribution.TemperedDistribution
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Abbrev.v1.Atlas.HighDimensionalStatistics.code.Chapter11.Defs_and_Props.Part2
+module
+
+public import Mathlib.Analysis.Distribution.TemperedDistribution
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Abbrev.v1.Atlas.HighDimensionalStatistics.code.Chapter11.Defs_and_Props.Part2
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 

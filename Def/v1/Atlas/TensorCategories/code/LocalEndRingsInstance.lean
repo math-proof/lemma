@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
-import Lemma.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
-import Theorem.Category.Atlas.v1.TensorCategories.code.FittingLemmaLocalEnd
-import Class.v1.Atlas.TensorCategories.code.FittingLemmaLocalEnd
+module
+
+public import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FittingLemmaLocalEnd
+public import Class.v1.Atlas.TensorCategories.code.FittingLemmaLocalEnd
+
+@[expose] public section
+
 set_option autoImplicit false
 
 open CategoryTheory CategoryTheory.Limits

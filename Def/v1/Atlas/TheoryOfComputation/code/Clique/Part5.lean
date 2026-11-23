@@ -12,8 +12,8 @@ import Mathlib.Combinatorics.SimpleGraph.Clique
 import Mathlib.Data.Fintype.Basic
 import Mathlib.Data.Finset.Basic
 import Def.v1.Atlas.TheoryOfComputation.code.Complexity.Part2
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.NPCompleteness
+import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
+import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.NPCompleteness
 import Def.v1.Atlas.TheoryOfComputation.code.NPCompleteness.Part8
 import Abbrev.v1.Atlas.TheoryOfComputation.code.Clique.Part2
 

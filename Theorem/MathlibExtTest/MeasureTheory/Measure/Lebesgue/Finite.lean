@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/MeasureTheory/Measure/Lebesgue/Empty.Finite.lean -/
+module
 
-
-import Theorem.Measure.Lebesgue.Finite
+public import Theorem.Measure.Lebesgue.Finite
 open MeasureTheory Set
 open scoped ENNReal
 
+public section
 
 example (E : Set ℝ) (hE : volume E < ∞) (X : ℝ) :
     ∃ x : ℝ, X < x ∧ x ∉ E :=

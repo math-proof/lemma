@@ -9,9 +9,9 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section26.Part8
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section31
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section33
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section31
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section33
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section31.Part7
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section33.Part2
 import Mathlib.Algebra.Colimit.Module

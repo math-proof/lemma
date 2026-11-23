@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.ReesAlgebra
-import Def.v1.Atlas.AlgebraicGeometryI.code.BlowupChart
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BlowupChart
+module
+
+public import Mathlib.RingTheory.ReesAlgebra
+public import Def.v1.Atlas.AlgebraicGeometryI.code.BlowupChart
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BlowupChart
+
+@[expose] public section
+
 open Polynomial
 
 

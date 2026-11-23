@@ -8,11 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Module.LocalizedModule.Exact
-import Mathlib.RingTheory.Flat.Localization
-import Mathlib.AlgebraicGeometry.Modules.Tilde
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec14QCohProjective
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec14QCohProjective
+module
+
+public import Mathlib.Algebra.Module.LocalizedModule.Exact
+public import Mathlib.RingTheory.Flat.Localization
+public import Mathlib.AlgebraicGeometry.Modules.Tilde
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec14QCohProjective
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec14QCohProjective
+
+@[expose] public section
 
 
 namespace QCohLocalization

@@ -1,15 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Padics/HilbertSymbol/Units.lean -/
+module
 
-
-import Def.NumberTheory.Padics.HilbertSymbol.Units
-import Theorem.Nat.Padics.HilbertSymbol.Units
-import Instance.MathlibExtTest.NumberTheory.Padics.HilbertSymbol.Units
+public import Def.NumberTheory.Padics.HilbertSymbol.Units
+public import Theorem.Nat.Padics.HilbertSymbol.Units
+public import Instance.MathlibExtTest.NumberTheory.Padics.HilbertSymbol.Units
 set_option autoImplicit false
-
 
 /-!
 # Tests for Hilbert symbols of p-adic integer units
 -/
+
+public section
 
 
 namespace HilbertSymbol

@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.LieGroups.code.VermaModules.Part7
-public import Lemma.Int.WeightSubspace.eq.ToSubmoduleWeightSpace
+public import Theorem.Int.WeightSubspace.eq.ToSubmoduleWeightSpace
 public import Theorem.v1.Atlas.LieGroups.code.PBW
 public import Mathlib.Algebra.Algebra.Subalgebra.Basic
 public import Mathlib.Algebra.Lie.OfAssociative

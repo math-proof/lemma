@@ -1,6 +1,9 @@
 -- Carved from Lemma/Definitions/Def_Module_CommFamilyAnnPart.lean: instance decls only.
-import Mathlib
-import Lemma.MvPolynomial.CommFamilyAnnPart
+module
+
+public import Mathlib
+public import Theorem.MvPolynomial.CommFamilyAnnPart
+@[expose] public section
 
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 400000

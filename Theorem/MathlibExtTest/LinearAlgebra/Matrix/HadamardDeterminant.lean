@@ -3,10 +3,13 @@
 /-
 Author: Muse Spark 1.3
 -/
+module
 
-import Theorem.Matrix.HadamardDeterminant
-import Mathlib.Tactic.NormNum
+public import Theorem.Matrix.HadamardDeterminant
+public import Mathlib.Tactic.NormNum
 open MathlibExt.LinearAlgebra.Matrix.HadamardDeterminant
+
+public section
 
 #check @hadamard_determinant_inequality
 

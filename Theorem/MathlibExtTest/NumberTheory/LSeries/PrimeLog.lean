@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/LSeries/PrimeLog.lean -/
+module
 
+public import Def.NumberTheory.LSeries.PrimeLog
+public import Theorem.Nat.LSeries.PrimeLog
 
-import Def.NumberTheory.LSeries.PrimeLog
-import Theorem.Nat.LSeries.PrimeLog
-
+public section
 
 namespace PrimeLogTest
 

@@ -1,14 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/GroupTheory/AbelianRepresentation.lean -/
+module
 
-
-import Def.GroupTheory.AbelianRepresentation
-import Theorem.Representation.IsIrreducible
-import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Def.GroupTheory.AbelianRepresentation
+public import Theorem.Representation.IsIrreducible
+public import Mathlib.Analysis.Complex.Polynomial.Basic
 open CategoryTheory
 open scoped IsMulCommutative
 
 open MathlibExt.GroupTheory.AbelianRepresentationWanted
 
+public section
 
 namespace MathlibExtTest.GroupTheory.AbelianRepresentation
 

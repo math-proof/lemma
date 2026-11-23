@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Ramanujan/Part1Ch3Entry14LagrangeSeries.lean -/
+module
 
+public import Def.NumberTheory.Ramanujan.Part1Ch3Entry14LagrangeSeries
+public import Theorem.Nat.Ramanujan.Part1Ch3Entry14LagrangeSeries
 
-import Def.NumberTheory.Ramanujan.Part1Ch3Entry14LagrangeSeries
-import Lemma.Nat.Ramanujan.Part1Ch3Entry14LagrangeSeries
-
+public section
 
 namespace MathlibExtTest.NumberTheory.Ramanujan.Part1Ch3Entry14LagrangeSeries
 

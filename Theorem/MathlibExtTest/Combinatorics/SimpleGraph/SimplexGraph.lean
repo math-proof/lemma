@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/SimplexGraph.lean -/
+module
 
-
-import Def.Combinatorics.SimpleGraph.SimplexGraph
-import Theorem.SimpleGraph.SimplexGraph
+public import Def.Combinatorics.SimpleGraph.SimplexGraph
+public import Theorem.SimpleGraph.SimplexGraph
 open scoped symmDiff
 
+public section
 
 example : SimpleGraph.SimplexVertex (⊥ : _root_.SimpleGraph (Fin 2)) :=
   SimpleGraph.emptyVertex _

@@ -1,11 +1,16 @@
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Data.Fintype.Pi
-import Syntax.Probability.Expectation.Elab
-import Def.Data.List.List.Basic
-import Instance.Analysis.Real.Numbers
-import Notation.Fun
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Algebra.BigOperators.Intervals
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Data.Fintype.Pi
+public import Syntax.Probability.Expectation.Elab
+public import Def.Data.List.List.Basic
+public import Instance.Analysis.Real.Numbers
+public import Notation.Fun
+
+@[expose] public section
+
 /-- Sequential (first-order, hidden) Markov structure of the prefix joint probabilities used by the
 py CRF lemmas.  `P t ys` is `ℙ(x[:t+1] = x_obs[:t+1], y[:t+1] = ys[:t+1])` for the fixed observed
 sequence, `π a = ℙ(y[0] = a)`, `T a b = ℙ(y[i] = b | y[i-1] = a)` (time-homogeneous) and

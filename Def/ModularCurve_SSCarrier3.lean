@@ -1,5 +1,9 @@
-import Def.ModularCurve_ModPFormFn
-import Abbrev.ModularCurve_SSCarrier3
+module
+
+public import Def.ModularCurve_ModPFormFn
+public import Abbrev.ModularCurve_SSCarrier3
+
+@[expose] public section
 
 set_option autoImplicit false
 

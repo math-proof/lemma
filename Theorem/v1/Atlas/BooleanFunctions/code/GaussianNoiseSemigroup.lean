@@ -7,12 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.BooleanFunctions.code.OUSemigroup
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.OUSemigroup
-import Def.v1.Atlas.BooleanFunctions.code.GaussianStability.Part2
+public import Def.v1.Atlas.BooleanFunctions.code.OUSemigroup
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.OUSemigroup
+public import Def.v1.Atlas.BooleanFunctions.code.GaussianStability.Part2
 set_option maxHeartbeats 400000
 
+public section
 
 noncomputable section
 

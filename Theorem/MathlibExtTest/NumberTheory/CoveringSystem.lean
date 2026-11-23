@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/CoveringSystem.lean -/
+module
 
+public import Def.NumberTheory.CoveringSystem
+public import Theorem.Int.CoveringSystem
 
-import Def.NumberTheory.CoveringSystem
-import Theorem.Int.CoveringSystem
-
+public section
 
 example : ¬ Int.IsCoveringSystem ∅ := by
   intro h

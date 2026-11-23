@@ -3,7 +3,6 @@ import Initialize.Tactic.Attr.Basic
 import Lemma.Measure.ArchPlace
 import Lemma.Complex.ArchParam
 import Lemma.Measure.TateLocalZeta
-import Lemma.Complex.ArchEpsilon
 import Lemma.Int.P2MUtil
 
 open scoped Real
@@ -324,3 +323,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-22

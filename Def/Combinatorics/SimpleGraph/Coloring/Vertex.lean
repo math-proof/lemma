@@ -16,13 +16,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -/
 
-import Def.Combinatorics.SimpleGraph.Clique
-import Theorem.SimpleGraph.Clique
-import Mathlib.Data.NNRat.Floor
-import Mathlib.Combinatorics.Enumerative.DoubleCounting
-import Mathlib.Combinatorics.SimpleGraph.Coloring.EdgeLabeling
-import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
-import Mathlib.Data.Set.Card
+module
+
+public import Def.Combinatorics.SimpleGraph.Clique
+public import Theorem.SimpleGraph.Clique
+public import Mathlib.Data.NNRat.Floor
+public import Mathlib.Combinatorics.Enumerative.DoubleCounting
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.EdgeLabeling
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
+public import Mathlib.Data.Set.Card
+
+@[expose] public section
+
 variable {V α : Type*} {G : SimpleGraph V} {n : ℕ}
 
 

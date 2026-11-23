@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/Polynomial/MomentGeneratingJFraction.lean -/
+module
 
+public import Def.Algebra.Polynomial.MomentGeneratingJFraction
+public import Theorem.Int.Polynomial.MomentGeneratingJFraction
 
-import Def.Algebra.Polynomial.MomentGeneratingJFraction
-import Theorem.Int.Polynomial.MomentGeneratingJFraction
-
+public section
 
 namespace MetaMathlibExt
 

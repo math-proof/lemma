@@ -1,6 +1,10 @@
-import Mathlib.SetTheory.Cardinal.Finite
-import Def.ModularCurve_ComplexPlaceDictionary
-import Def.ModularForm_HeckeOperator
+module
+
+public import Mathlib.SetTheory.Cardinal.Finite
+public import Def.ModularCurve_ComplexPlaceDictionary
+public import Def.ModularForm_HeckeOperator
+
+@[expose] public section
 
 set_option autoImplicit false
 

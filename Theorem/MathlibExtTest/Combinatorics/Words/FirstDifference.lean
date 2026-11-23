@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Words/FirstDifference.lean -/
+module
 
+public import Def.Combinatorics.Words.FirstDifference
+public import Theorem.Finset.Words.FirstDifference
 
-import Def.Combinatorics.Words.FirstDifference
-import Theorem.Finset.Words.FirstDifference
-
+public section
 
 namespace MetaMathlibExt
 

@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Mathlib.InformationTheory.KullbackLeibler.Basic
 import Mathlib.MeasureTheory.Measure.Prod
 import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.InfoTheory.Part3
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.InfoTheory
+import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.InfoTheory
 set_option maxHeartbeats 4800000
 
 open InformationTheory MeasureTheory MeasureTheory.Measure

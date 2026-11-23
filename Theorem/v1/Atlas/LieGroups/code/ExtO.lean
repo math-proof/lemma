@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.LieGroups.code.BGGReciprocity.Part3
-import Lemma.Int.All_Eq_0.of.EqCompositionLengthO_0.IsCategoryO
-import Lemma.Finset.EqMul_Mul.of.In_SimpleReflections
+import Theorem.Int.All_Eq_0.of.EqCompositionLengthO_0.IsCategoryO
+import Theorem.Finset.EqMul_Mul.of.In_SimpleReflections
 import Def.v1.Atlas.LieGroups.code.HeckeKL.Part9
 import Def.v1.Atlas.LieGroups.code.ExtO
 

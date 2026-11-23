@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Diophantine/PowerSquare.lean -/
+module
 
+public import Theorem.Nat.Diophantine.PowerSquare
+public import Mathlib.Tactic.Linarith
 
-import Theorem.Nat.Diophantine.PowerSquare
-import Mathlib.Tactic.Linarith
-
+public section
 
 example : 3 ^ (0 + 1) + 1 = 2 ^ 2 := by decide
 

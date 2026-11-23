@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.AlgebraicTopologyI.code.Section6
-import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section6
+module
+
+public import Structure.v1.Atlas.AlgebraicTopologyI.code.Section6
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section6
+@[expose] public section
+
 open Finset BigOperators
 
 

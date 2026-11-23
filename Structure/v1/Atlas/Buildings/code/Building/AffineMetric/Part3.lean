@@ -12,7 +12,7 @@ module
 
 public import Def.v1.Atlas.Buildings.code.Building.Affine.Part2
 public import Def.v1.Atlas.Buildings.code.AffineCoxeter.CanonicalMetric.Part2
-public import Lemma.Real.IsWInvariantEuclideanDist
+public import Theorem.Real.IsWInvariantEuclideanDist
 public import Mathlib.Topology.MetricSpace.Basic
 public import Def.v1.Atlas.Buildings.code.Building.AffineMetric.Part4
 public section

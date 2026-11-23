@@ -1,12 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/GroupTheory/FiniteGroupConvolution.lean -/
+module
 
-
-import Def.GroupTheory.FiniteGroupConvolution
-import Theorem.Complex.Conv_Conv
+public import Def.GroupTheory.FiniteGroupConvolution
+public import Theorem.Complex.Conv_Conv
 open scoped BigOperators
 
 open MathlibExt.GroupTheory.FiniteGroupConvolutionWanted
 
+public section
 
 -- On an abelian group, the delta at one is also a right identity.
 example {G : Type*} [CommGroup G] [Fintype G] [DecidableEq G] (f : G → ℂ) :

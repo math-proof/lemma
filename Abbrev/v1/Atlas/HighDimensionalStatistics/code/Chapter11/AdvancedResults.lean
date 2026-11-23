@@ -8,13 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Distribution.TemperedDistribution
-import Mathlib.Analysis.Distribution.FourierMultiplier
-import Abbrev.v1.Atlas.HighDimensionalStatistics.code.Chapter11.Defs_and_Props.Part3
+module
+
+public import Mathlib.Analysis.Distribution.TemperedDistribution
+public import Mathlib.Analysis.Distribution.FourierMultiplier
+public import Abbrev.v1.Atlas.HighDimensionalStatistics.code.Chapter11.Defs_and_Props.Part3
 set_option maxHeartbeats 800000
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 open scoped SchwartzMap FourierTransform Laplacian BigOperators Pointwise
 

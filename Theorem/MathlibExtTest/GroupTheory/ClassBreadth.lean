@@ -1,10 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/GroupTheory/ClassBreadth.lean -/
+module
 
-
-import Def.GroupTheory.ClassBreadth
-import Theorem.Nat.CardCarrier.dvd.CardG
-import Mathlib.Data.ZMod.Basic
-import Mathlib.GroupTheory.PGroup
+public import Def.GroupTheory.ClassBreadth
+public import Theorem.Nat.CardCarrier.dvd.CardG
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.GroupTheory.PGroup
 open ClassBreadth
 
 /-!
@@ -15,6 +15,8 @@ the identity has breadth zero, the characteristic `p ^ br(g) = |g^G|`
 holds, and the group breadth is zero since every conjugacy class is a
 singleton.
 -/
+
+public section
 
 
 /-- The cyclic group of order three is a `3`-group. -/

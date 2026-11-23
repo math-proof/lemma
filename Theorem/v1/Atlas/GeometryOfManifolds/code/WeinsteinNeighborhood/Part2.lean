@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticLinearAlgebra
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticLinearAlgebra
 import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
 import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.MoserDarboux
 import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3

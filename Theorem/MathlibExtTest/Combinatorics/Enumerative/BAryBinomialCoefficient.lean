@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/BAryBinomialCoefficient.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.BAryBinomialCoefficient
+public import Theorem.Finset.Enumerative.BAryBinomialCoefficient
 
-import Def.Combinatorics.Enumerative.BAryBinomialCoefficient
-import Theorem.Finset.Enumerative.BAryBinomialCoefficient
-
+public section
 
 namespace MetaMathlibExt
 

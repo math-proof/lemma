@@ -1,6 +1,9 @@
 -- Carved from Lemma/Definitions/Def_CuspForm_HeckeOperatorFormsGammaH.lean: instance decls only.
-import Mathlib.NumberTheory.ModularForms.Basic
-import Lemma.CuspForm.HeckeOperatorFormsGammaH
+module
+
+public import Mathlib.NumberTheory.ModularForms.Basic
+public import Theorem.CuspForm.HeckeOperatorFormsGammaH
+@[expose] public section
 
 set_option autoImplicit false
 

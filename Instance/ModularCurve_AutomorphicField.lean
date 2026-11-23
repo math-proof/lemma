@@ -1,7 +1,11 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_AutomorphicField.lean: instance decls only.
-import Mathlib.NumberTheory.ModularForms.Basic
-import Mathlib.RingTheory.Localization.FractionRing
-import Lemma.ModularForm.AutomorphicField
+module
+
+public import Mathlib.NumberTheory.ModularForms.Basic
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Theorem.ModularForm.AutomorphicField
+public import Def.ModularCurve_AutomorphicField
+@[expose] public section
 
 set_option autoImplicit false
 

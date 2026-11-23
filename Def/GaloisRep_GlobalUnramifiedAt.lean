@@ -1,4 +1,8 @@
-import Def.FLTPrelim_Ramification
+module
+
+public import Def.FLTPrelim_Ramification
+
+@[expose] public section
 
 set_option autoImplicit false
 

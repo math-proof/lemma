@@ -2,11 +2,11 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Theorem.Combinatorics.Enumerative.Partition.NPartition.Part8
-open Finset BigOperators
+module
 
-variable {N : ℕ}
+public import Mathlib
+public import Theorem.Combinatorics.Enumerative.Partition.NPartition.Part8
+
 /-!
 # N-Partitions
 
@@ -83,6 +83,12 @@ To migrate a file to use this shared definition:
 
 * Source: AlgebraicCombinatorics/tex/SymmetricFunctions/MonomialSymmetric.tex (Definition def.sf.Npar)
 -/
+
+@[expose] public section
+
+open Finset BigOperators
+
+variable {N : ℕ}
 
 
 namespace NPartition

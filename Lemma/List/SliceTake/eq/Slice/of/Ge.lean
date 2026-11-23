@@ -1,5 +1,4 @@
-import Initialize.Tactic.Attr.Basic
-import Lemma.List.Slice.eq.Nil.of.Ge
+import Theorem.List.Slice.eq.Nil.of.Ge
 import Lemma.Nat.Gt.of.Ge.Gt
 import Lemma.List.EqAppendTake__Drop
 import Lemma.Bool.UFn.of.Eq
@@ -8,7 +7,7 @@ import Lemma.Nat.Le.of.Le.Lt
 import Lemma.Bool.NotAnd.is.OrNotS
 import Lemma.Nat.Ge.of.Gt.Ge
 import Lemma.List.EqTake.of.LeLength
-import Lemma.List.TakeTake.eq.Take.of.Ge
+import Theorem.List.TakeTake.eq.Take.of.Ge
 import Lemma.Nat.LeSubS.of.Le
 import Lemma.List.DropTake.eq.TakeDrop
 open List Bool Nat
@@ -45,3 +44,4 @@ private lemma main
 
 
 -- created on 2025-06-20
+-- updated on 2026-11-22

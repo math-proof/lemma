@@ -16,8 +16,8 @@ public import Mathlib.Data.Fintype.Prod
 public import Mathlib.Data.Set.Card
 public import Mathlib.Tactic.Ring
 public import Def.v1.Atlas.TheoryOfComputation.code.SpaceComplexity.Part7
-public import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity
-public import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
 public import Def.v1.Atlas.TheoryOfComputation.code.Complexity.Part2
 public import Def.v1.Atlas.TheoryOfComputation.code.LogSpace
 public section

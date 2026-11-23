@@ -6,8 +6,14 @@ All rights reserved.
 Copyright (c) 2024 AlgebraicCombinatorics Contributors. All rights reserved.
 Authors: AlgebraicCombinatorics Contributors
 -/
-import Mathlib
-import Instance.Combinatorics.Enumerative.IntegerCompositions
+
+module
+
+public import Mathlib
+public import Instance.Combinatorics.Enumerative.IntegerCompositions
+
+@[expose] public section
+
 open Finset Nat BigOperators
 set_option allowUnsafeReducibility true
 attribute [local reducible] PNat

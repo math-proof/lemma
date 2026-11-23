@@ -3,6 +3,7 @@ module
 public import Mathlib
 public import Def.LinearAlgebra.Matrix.RealSVD
 public import Syntax.LinearAlgebra.Matrix.Notation
+open scoped Matrix
 
 public section
 
@@ -147,7 +148,7 @@ public theorem realSVD_toMatrix_eq_rectangularDiagonal
   (u : OrthonormalBasis (Fin m) ℝ F) (σ : Fin n → ℝ)
   (h : ∀ j : Fin n, T (v j) = if hj : j.val < m then σ j • u ⟨j.val, hj⟩ else 0) :
   LinearMap.toMatrix v.toBasis u.toBasis T =
-    [i < m, j < n] (if i.val = j.val then σ j else 0) := by
+    [i < m][j < n] (if i.val = j.val then σ j else 0) := by
   ext i j
   rw [LinearMap.toMatrix_apply]
   change u.toBasis.repr (T (v j)) i = if i.val = j.val then σ j else 0
@@ -175,7 +176,7 @@ public theorem exists_orthogonalGroup_mul_eq_rectangularDiagonal
     (∀ j, 0 ≤ σ j) ∧ Antitone σ ∧ (∀ j, m ≤ j.val → σ j = 0) ∧
     A * (V : Matrix (Fin n) (Fin n) ℝ) =
     (U : Matrix (Fin m) (Fin m) ℝ) *
-    ([i < m, j < n] (if i.val = j.val then σ j else 0)) := by
+    ([i < m][j < n] (if i.val = j.val then σ j else 0)) := by
 -- proof
   classical
   let T : EuclideanSpace ℝ (Fin n) →ₗ[ℝ] EuclideanSpace ℝ (Fin m) :=
@@ -190,7 +191,7 @@ public theorem exists_orthogonalGroup_mul_eq_rectangularDiagonal
     rw [Matrix.toEuclideanLin_eq_toLin_orthonormal]
     exact LinearMap.toMatrix_toLin _ _ _
   have hdiag : LinearMap.toMatrix v.toBasis u.toBasis T =
-    [i < m, j < n] (if i.val = j.val then T.singularValues j.val else 0) :=
+    [i < m][j < n] (if i.val = j.val then T.singularValues j.val else 0) :=
     realSVD_toMatrix_eq_rectangularDiagonal T v u (fun j => T.singularValues j.val) hu
   refine ⟨⟨(EuclideanSpace.basisFun (Fin m) ℝ).toBasis.toMatrix u,
     (EuclideanSpace.basisFun (Fin m) ℝ).toMatrix_orthonormalBasis_mem_orthogonal u⟩,
@@ -216,7 +217,7 @@ public theorem exists_orthogonalGroup_mul_eq_rectangularDiagonal
         exact basis_toMatrix_mul_linearMap_toMatrix v.toBasis
           (EuclideanSpace.basisFun (Fin m) ℝ).toBasis u.toBasis T
     _ = (EuclideanSpace.basisFun (Fin m) ℝ).toBasis.toMatrix u *
-      ([i < m, j < n] (if i.val = j.val then T.singularValues j.val else 0)) := by
+      ([i < m][j < n] (if i.val = j.val then T.singularValues j.val else 0)) := by
         exact congrArg ((EuclideanSpace.basisFun (Fin m) ℝ).toBasis.toMatrix u * ·) hdiag
 
 end Matrix
@@ -234,7 +235,7 @@ public theorem exists_orthogonalGroup_rectangularDiagonal_antitone
     (σ : Fin n → ℝ),
     (∀ j, 0 ≤ σ j) ∧ Antitone σ ∧ (∀ j, m ≤ j.val → σ j = 0) ∧
     A = (U : Matrix (Fin m) (Fin m) ℝ) *
-    ([i < m, j < n] (if i.val = j.val then σ j else 0)) *
+    ([i < m][j < n] (if i.val = j.val then σ j else 0)) *
     Matrix.transpose (V : Matrix (Fin n) (Fin n) ℝ) := by
 -- proof
   obtain ⟨U, V, σ, hσ, hanti, hzero, hAV⟩ :=
@@ -250,7 +251,7 @@ public theorem exists_orthogonalGroup_rectangularDiagonal_antitone
     _ = (A * (V : Matrix (Fin n) (Fin n) ℝ)) *
       Matrix.transpose (V : Matrix (Fin n) (Fin n) ℝ) := by rw [Matrix.mul_assoc]
     _ = ((U : Matrix (Fin m) (Fin m) ℝ) *
-      ([i < m, j < n] (if i.val = j.val then σ j else 0))) *
+      ([i < m][j < n] (if i.val = j.val then σ j else 0))) *
       Matrix.transpose (V : Matrix (Fin n) (Fin n) ℝ) := by
       rw [hAV]
 end Matrix
@@ -268,7 +269,7 @@ public theorem real_singular_value_decomposition
   ∃ (U : Matrix (Fin m) (Fin m) ℝ) (V : Matrix (Fin n) (Fin n) ℝ) (σ : Fin n → ℝ),
     (∀ j, 0 ≤ σ j) ∧ (∀ j, m ≤ j.val → σ j = 0) ∧
     U ∈ Matrix.orthogonalGroup (Fin m) ℝ ∧ V ∈ Matrix.orthogonalGroup (Fin n) ℝ ∧
-    A = U * ([i < m, j < n] (if i.val = j.val then σ j else 0)) *
+    A = U * ([i < m][j < n] (if i.val = j.val then σ j else 0)) *
     Matrix.transpose V := by
 -- proof
   obtain ⟨U, V, σ, hσ, -, hzero, hA⟩ :=

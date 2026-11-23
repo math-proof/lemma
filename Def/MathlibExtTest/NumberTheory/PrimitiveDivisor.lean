@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PrimitiveDivisor.lean -/
 
+module
 
-import Mathlib.Data.Nat.Prime.Basic
-import Def.NumberTheory.PrimitiveDivisor
-import Theorem.Nat.PrimitiveDivisor
+public import Mathlib.Data.Nat.Prime.Basic
+public import Def.NumberTheory.PrimitiveDivisor
+public import Theorem.Nat.PrimitiveDivisor
 
+@[expose] public section
 
 namespace IntegerSequence
 

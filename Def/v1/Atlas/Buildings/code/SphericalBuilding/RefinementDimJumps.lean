@@ -8,11 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.SchreierRefinement
-import Theorem.Fin.SchreierCell_0.eq.SpacesSubVal1.of.GtVal_0
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.Order.ModularLattice
+module
 
+public import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.SchreierRefinement
+public import Theorem.Fin.SchreierCell_0.eq.SpacesSubVal1.of.GtVal_0
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.Order.ModularLattice
+
+@[expose] public section
 
 namespace GLnBuilding
 

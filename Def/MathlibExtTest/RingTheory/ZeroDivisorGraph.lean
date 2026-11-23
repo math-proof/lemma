@@ -1,9 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/ZeroDivisorGraph.lean -/
 
 -- MathlibExtTest/RingTheory/ZeroDivisorGraph.lean
-import Def.RingTheory.ZeroDivisorGraph
-import Theorem.Int.ZeroDivisorGraph
-import Mathlib.Data.ZMod.Basic
+
+module
+
+public import Def.RingTheory.ZeroDivisorGraph
+public import Theorem.Int.ZeroDivisorGraph
+public import Mathlib.Data.ZMod.Basic
+
+@[expose] public section
+
 open ZeroDivisorGraph
 
 

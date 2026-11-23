@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/GeneralizedStirlingNumbers.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.GeneralizedStirlingNumbers
+public import Theorem.Finset.Enumerative.GeneralizedStirlingNumbers
+public import Mathlib.Tactic.Ring
 
-import Def.Combinatorics.Enumerative.GeneralizedStirlingNumbers
-import Theorem.Finset.Enumerative.GeneralizedStirlingNumbers
-import Mathlib.Tactic.Ring
-
+public section
 
 namespace MetaMathlibExt
 

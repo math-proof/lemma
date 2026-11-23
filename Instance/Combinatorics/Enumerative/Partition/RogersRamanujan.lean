@@ -4,20 +4,22 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.Combinatorics.Enumerative.Partition.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Powerset
-import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Topology.Instances.Rat
-import Mathlib.Algebra.Order.Interval.Finset.SuccPred
-import Mathlib.Combinatorics.Enumerative.Partition.Glaisher
-import Mathlib.RingTheory.PowerSeries.Inverse
-import Mathlib.RingTheory.PowerSeries.PiTopology
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Def.Combinatorics.Enumerative.GaussianBinomial
-import Theorem.Finset.Enumerative.GaussianBinomial
-import Def.Combinatorics.Enumerative.Partition.RogersRamanujan
+module
 
+public import Mathlib.Combinatorics.Enumerative.Partition.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Powerset
+public import Mathlib.Algebra.BigOperators.Intervals
+public import Mathlib.Topology.Instances.Rat
+public import Mathlib.Algebra.Order.Interval.Finset.SuccPred
+public import Mathlib.Combinatorics.Enumerative.Partition.Glaisher
+public import Mathlib.RingTheory.PowerSeries.Inverse
+public import Mathlib.RingTheory.PowerSeries.PiTopology
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+public import Def.Combinatorics.Enumerative.GaussianBinomial
+public import Theorem.Finset.Enumerative.GaussianBinomial
+public import Def.Combinatorics.Enumerative.Partition.RogersRamanujan
+@[expose] public section
 
 section
 

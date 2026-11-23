@@ -7,14 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.AlgebraicGeometryI.code.DimensionProduct
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.DimensionProduct
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NakayamaApplications
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.NakayamaApplications
-import Instance.v1.Atlas.AlgebraicGeometryI.code.Lec2AlgebraicVariety
+public import Def.v1.Atlas.AlgebraicGeometryI.code.DimensionProduct
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DimensionProduct
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NakayamaApplications
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.NakayamaApplications
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.Lec2AlgebraicVariety
 set_option maxHeartbeats 800000
 
+public section
 
 noncomputable section
 

@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/LatinSquare/Mann.lean -/
+module
 
+public import Theorem.Finset.LatinSquare.Mann
 
-import Theorem.Finset.LatinSquare.Mann
-
+public section
 
 namespace MetaMathlibExt
 

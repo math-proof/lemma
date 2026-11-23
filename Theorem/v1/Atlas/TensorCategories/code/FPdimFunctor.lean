@@ -8,7 +8,7 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Lemma.Category.Atlas.v1.TensorCategories.code.Prop_1_45_10
+import Theorem.Category.Atlas.v1.TensorCategories.code.Prop_1_45_10
 import Abbrev.v1.Atlas.TensorCategories.code.QuasiTensorFunctor.Part5
 import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
 open Finset BigOperators FusionRing FusionRing.FPdimData

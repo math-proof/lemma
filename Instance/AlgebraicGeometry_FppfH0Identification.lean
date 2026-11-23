@@ -2,7 +2,8 @@
 import Mathlib.CategoryTheory.Sites.Continuous
 import Instance.AlgebraicGeometry_FppfSiteCohomology
 import Instance.AlgebraicGeometry_FppfCohomologyLES
-import Lemma.Scheme.FppfH0Identification
+import Theorem.Scheme.FppfH0Identification
+import Def.AlgebraicGeometry_FppfH0Identification
 
 universe v' u' wE vE uE v₁ v₂ u₁ u₂ u w' w v
 

@@ -18,7 +18,7 @@ import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Claim21Lec10
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Lemma26Lec10
 import Theorem.Bool.Atlas.v1.BooleanFunctions.code.GaussianSpace
 import Theorem.Bool.Atlas.v1.BooleanFunctions.code.UniqueGames
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.MultilinearExtension
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.MultilinearExtension
 import Lemma.Bool.Atlas.v1.BooleanFunctions.code.NoiseSensitivity
 import Theorem.v1.Atlas.BooleanFunctions.code.Corollary12Lec9
 import Def.v1.Atlas.BooleanFunctions.code.Claim21Lec10

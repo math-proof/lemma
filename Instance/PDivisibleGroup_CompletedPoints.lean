@@ -1,7 +1,8 @@
 -- Carved from Lemma/Definitions/Def_PDivisibleGroup_CompletedPoints.lean: instance decls only.
 import Mathlib
 import Instance.PDivisibleGroup_Points
-import Lemma.Ideal.CompletedPoints
+import Theorem.Ideal.CompletedPoints
+import Def.Ideal_CompletedPoints
 
 set_option autoImplicit false
 

@@ -1,7 +1,6 @@
 import Lemma.Complex.Arg.in.IocNegPiPi
 import Lemma.Int.LeAbs.is.LeNeg.Le
 import Lemma.Int.LeCeil.is.Le
-import Lemma.Nat.LeMulS.of.Gt_0.Le
 import Lemma.Nat.Lt0Mul.of.Gt_0.Gt_0
 import Lemma.Nat.LtMulS.of.Gt_0.Lt
 import Lemma.Real.GtPi0
@@ -34,9 +33,10 @@ private lemma main
     omega
   ·
     apply LeCeil.of.Le
-    have := LeMulS.of.Gt_0.Le (by norm_num : (3 : ℝ) > 0) hle
+    have := mul_le_mul_of_nonneg_left hle (by norm_num : (0 : ℝ) ≤ 3)
     rw [hdiv]
     linarith
 
 
 -- created on 2026-08-28
+-- updated on 2026-11-22

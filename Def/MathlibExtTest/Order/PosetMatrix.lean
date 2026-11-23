@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Order/PosetMatrix.lean -/
 
+module
 
-import Def.Order.PosetMatrix
-import Theorem.Set.PosetMatrix
-import Mathlib.Tactic.FinCases
+public import Def.Order.PosetMatrix
+public import Theorem.Set.PosetMatrix
+public import Mathlib.Tactic.FinCases
 
+@[expose] public section
 
 namespace MetaMathlibExt
 

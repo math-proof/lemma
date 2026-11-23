@@ -9,9 +9,9 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.LieGroups.code.CategoryOII.Part3
-import Lemma.Int.WeightLE.of.BruhatLE
-import Lemma.Int.FGUeaIotaRange
-import Lemma.Int.All_Eq_0.of.EqCompositionLengthO_0.IsCategoryO
+import Theorem.Int.WeightLE.of.BruhatLE
+import Theorem.Int.FGUeaIotaRange
+import Theorem.Int.All_Eq_0.of.EqCompositionLengthO_0.IsCategoryO
 import Theorem.Int.IsCategoryOA.of.IsCategoryOB
 import Def.v1.Atlas.LieGroups.code.DufloJoseph.Part8
 import Def.v1.Atlas.LieGroups.code.BGGReciprocity.Part3

@@ -1,4 +1,8 @@
-import Def.ExtCitation_AdmissibleExtension
+module
+
+public import Def.ExtCitation_AdmissibleExtension
+
+@[expose] public section
 
 set_option autoImplicit false
 

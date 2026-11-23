@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Abbrev.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Def_2_12
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Def_2_12
-import Mathlib
+module
+
+public import Abbrev.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Def_2_12
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Def_2_12
+public import Mathlib
+
+@[expose] public section
+
 open Finset Matrix BigOperators Rigollet
 
 

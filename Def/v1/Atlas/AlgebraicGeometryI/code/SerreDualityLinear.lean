@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.CohomologyP1.Part2
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyP1
+module
 
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.CohomologyP1.Part2
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyP1
+
+@[expose] public section
 
 namespace SerreDualityP1
 

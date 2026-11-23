@@ -2,10 +2,13 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.RingTheory.PowerSeries.InfiniteProducts
-import Theorem.PowerSeries.InfiniteProducts
-import Def.RingTheory.PowerSeries.ExpLog
+module
+
+public import Mathlib
+public import Def.RingTheory.PowerSeries.InfiniteProducts
+public import Theorem.PowerSeries.InfiniteProducts
+public import Def.RingTheory.PowerSeries.ExpLog
+
 /-!
 # Exponentials and Logarithms of Formal Power Series
 
@@ -56,6 +59,8 @@ This allows division by positive integers.
 
 power series, exponential, logarithm, formal power series
 -/
+
+public section
 
 
 namespace PowerSeries

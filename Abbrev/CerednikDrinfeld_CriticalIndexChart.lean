@@ -1,12 +1,12 @@
 import Mathlib
 import Instance.MvFormalGroup_NegV2
 import Instance.MvFormalGroup_CartierModule
-import Lemma.PowerSeries.CartierModuleHomothety
+import Theorem.PowerSeries.CartierModuleHomothety
 import Instance.MvFormalGroup_CartierModuleWittAction
 import Instance.MvFormalGroup_CartierModuleBaseChange
 import Structure.CerednikDrinfeld_SpecialFormalModule
 import Def.CerednikDrinfeld_CartierGradedPiece
-import Lemma.MvPolynomial.CartierStructureConstants
+import Theorem.MvPolynomial.CartierStructureConstants
 
 set_option autoImplicit false
 

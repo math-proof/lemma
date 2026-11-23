@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
+module
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.SLE.Defs.Part5
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.SLE.Defs.Part5
+
+@[expose] public section
+
 open scoped UpperHalfPlane NNReal
 open MeasureTheory ProbabilityTheory Complex Filter Topology
 

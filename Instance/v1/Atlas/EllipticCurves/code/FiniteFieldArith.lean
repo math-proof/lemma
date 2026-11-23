@@ -8,24 +8,26 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Polynomial.Basic
-import Mathlib.Algebra.Polynomial.Div
-import Mathlib.RingTheory.EuclideanDomain
-import Mathlib.FieldTheory.Perfect
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Data.Nat.Bits
-import Mathlib.Data.Nat.Size
-import Mathlib.Data.Nat.Log
-import Mathlib.Tactic
-import Mathlib.Analysis.Asymptotics.Defs
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.NumberTheory.LegendreSymbol.Basic
-import Def.v1.Atlas.EllipticCurves.code.FiniteFields.Part5
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.FiniteFields
-import Mathlib.FieldTheory.Finite.Extension
-import Def.v1.Atlas.EllipticCurves.code.FiniteFieldArith
+module
 
+public import Mathlib.RingTheory.Polynomial.Basic
+public import Mathlib.Algebra.Polynomial.Div
+public import Mathlib.RingTheory.EuclideanDomain
+public import Mathlib.FieldTheory.Perfect
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Data.Nat.Bits
+public import Mathlib.Data.Nat.Size
+public import Mathlib.Data.Nat.Log
+public import Mathlib.Tactic
+public import Mathlib.Analysis.Asymptotics.Defs
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.NumberTheory.LegendreSymbol.Basic
+public import Def.v1.Atlas.EllipticCurves.code.FiniteFields.Part5
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.FiniteFields
+public import Mathlib.FieldTheory.Finite.Extension
+public import Def.v1.Atlas.EllipticCurves.code.FiniteFieldArith
+@[expose] public section
 
 namespace FiniteFieldArith
 

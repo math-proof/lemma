@@ -1,7 +1,9 @@
-import Mathlib
-import Abbrev.Analysis.Section_2_1
-import Abbrev.Analysis.Section_2_1_api
-import Abbrev.Analysis.Section_2_2
+module
+
+public import Mathlib
+public import Abbrev.Analysis.Section_2_1
+public import Abbrev.Analysis.Section_2_1_api
+public import Abbrev.Analysis.Section_2_2
 /-!
 # Analysis I, Section 2.2: Addition
 
@@ -31,7 +33,7 @@ tips for future users in this section as PRs.
 - (Add tip here)
 
 -/
-
+@[expose] public section
 
 namespace Chapter2
 

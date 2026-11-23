@@ -1,9 +1,9 @@
 import Mathlib
-import Lemma.WeierstrassCurve.FreyPackage
+import Theorem.WeierstrassCurve.FreyPackage
 import Def.FreyPackage_LevelRaising
 import Lemma.WeierstrassCurve.FreyPackageGaloisRep
 import Lemma.ValuationSubring.GlobalUnramifiedAt
-import Lemma.MvPolynomial.HeckeModule
+import Theorem.MvPolynomial.HeckeModule
 import Def.ModularCurve_HeckeInputsAll
 import Theorem.MvPolynomial.MazurPrincipleCore
 import Structure.FreyPackage_MazurAttachmentApparatus

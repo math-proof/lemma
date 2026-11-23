@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/GeneralizedHypergeometric.lean -/
+module
 
+public import Theorem.Analysis.SpecialFunctions.GeneralizedHypergeometric.Part3
+public import Mathlib.Tactic.NormNum
 
-import Theorem.Analysis.SpecialFunctions.GeneralizedHypergeometric.Part3
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MetaMathlibExt.GeneralizedHypergeometric
 

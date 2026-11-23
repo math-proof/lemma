@@ -4,15 +4,20 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Meromorphic.Basic
-import Mathlib.NumberTheory.LSeries.RiemannZeta
-import Def.Analysis.Ramanujan.Part1Ch7PowerDifference
-import Theorem.Complex.Part1Ch7PowerDifference
-import Mathlib.Analysis.Complex.HalfPlane
-import Mathlib.Analysis.Normed.Module.Connected
-import Mathlib.NumberTheory.LSeries.Dirichlet
-import Theorem.Nat.LSeries.RiemannZeta
+module
+
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Meromorphic.Basic
+public import Mathlib.NumberTheory.LSeries.RiemannZeta
+public import Def.Analysis.Ramanujan.Part1Ch7PowerDifference
+public import Theorem.Complex.Part1Ch7PowerDifference
+public import Mathlib.Analysis.Complex.HalfPlane
+public import Mathlib.Analysis.Normed.Module.Connected
+public import Mathlib.NumberTheory.LSeries.Dirichlet
+public import Theorem.Nat.LSeries.RiemannZeta
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 7, Entry 10, corollary
 

@@ -16,7 +16,7 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.BigOperators.Finprod
 import Mathlib.Data.Set.Finite.Basic
 import Abbrev.v1.Atlas.TensorCategories.code.BasedRings
-import Lemma.Category.Atlas.v1.TensorCategories.code.BasedRings
+import Theorem.Category.Atlas.v1.TensorCategories.code.BasedRings
 set_option maxHeartbeats 800000
 
 open CategoryTheory MonoidalCategory Finset

@@ -7,17 +7,20 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NoetherianCoverFinite
-import Instance.v1.Atlas.AlgebraicGeometryI.code.FilteredColimitFiniteLimits.Part2
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.FilteredColimitFiniteLimits
-import Mathlib.Topology.Sheaves.Limits
-import Mathlib.Topology.Sheaves.SheafCondition.EqualizerProducts
-import Mathlib.Topology.NoetherianSpace
-import Mathlib.CategoryTheory.Limits.FilteredColimitCommutesFiniteLimit
-import Mathlib.CategoryTheory.Filtered.Basic
-import Mathlib.CategoryTheory.Limits.FunctorCategory.Basic
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NoetherianCoverFinite
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.FilteredColimitFiniteLimits.Part2
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.FilteredColimitFiniteLimits
+public import Mathlib.Topology.Sheaves.Limits
+public import Mathlib.Topology.Sheaves.SheafCondition.EqualizerProducts
+public import Mathlib.Topology.NoetherianSpace
+public import Mathlib.CategoryTheory.Limits.FilteredColimitCommutesFiniteLimit
+public import Mathlib.CategoryTheory.Filtered.Basic
+public import Mathlib.CategoryTheory.Limits.FunctorCategory.Basic
 open CategoryTheory CategoryTheory.Limits Opposite TopologicalSpace
+
+public section
 
 /-- Lem 22, Lec 12: on a Noetherian space, a filtered colimit of sheaves is
 already a sheaf; equivalently, the underlying presheaf colimit satisfies the

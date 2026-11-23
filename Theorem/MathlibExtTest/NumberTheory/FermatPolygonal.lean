@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/FermatPolygonal.lean -/
+module
 
+public import Def.NumberTheory.FermatPolygonal
+public import Theorem.Nat.FermatPolygonal
+public import Mathlib.Tactic
 
-import Def.NumberTheory.FermatPolygonal
-import Lemma.Nat.FermatPolygonal
-import Mathlib.Tactic
-
+public section
 
 namespace MathlibExtTest.NumberTheory.FermatPolygonal
 

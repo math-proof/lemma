@@ -1,5 +1,9 @@
-import Mathlib
-import Instance.ModularCurve_KatzLevelP
+module
+
+public import Mathlib
+public import Instance.ModularCurve_KatzLevelP
+
+@[expose] public section
 
 set_option autoImplicit false
 

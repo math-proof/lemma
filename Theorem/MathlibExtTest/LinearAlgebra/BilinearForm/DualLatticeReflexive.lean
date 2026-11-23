@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/BilinearForm/DualLatticeReflexive.lean -/
+module
 
-
-import Theorem.LinearAlgebra.BilinearForm.DualLatticeReflexive
-import Theorem.Matrix.BilinearForm.DualLatticeReflexive
+public import Theorem.LinearAlgebra.BilinearForm.DualLatticeReflexive
+public import Theorem.Matrix.BilinearForm.DualLatticeReflexive
 open LinearMap (BilinForm)
+
+public section
 
 variable {A K V : Type*} [CommRing A] [Field K] [Algebra A K]
   [IsFractionRing A K] [AddCommGroup V] [Module A V] [Module K V]

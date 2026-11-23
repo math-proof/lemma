@@ -7,13 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.SchreierRefinement
-import Theorem.Fin.SchreierCell_0.eq.SpacesSubVal1.of.GtVal_0
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.Order.ModularLattice
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.RefinementDimJumps
+public import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.SchreierRefinement
+public import Theorem.Fin.SchreierCell_0.eq.SpacesSubVal1.of.GtVal_0
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.Order.ModularLattice
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.RefinementDimJumps
 
+public section
 
 namespace GLnBuilding
 

@@ -8,16 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Remark_3_1
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Remark_3_1
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Def_3_10
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Lemma_3_14
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Lemma_3_13
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_11
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Def_3_10
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Lemma_3_14
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Lemma_3_13
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_11
+module
+
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Remark_3_1
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Remark_3_1
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Def_3_10
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Lemma_3_14
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Lemma_3_13
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_11
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Def_3_10
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Lemma_3_14
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Lemma_3_13
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_11
+
+@[expose] public section
+
 set_option maxHeartbeats 4800000
 set_option maxRecDepth 4096
 

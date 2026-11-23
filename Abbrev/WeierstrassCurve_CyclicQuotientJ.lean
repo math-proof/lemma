@@ -1,12 +1,14 @@
-import Mathlib
-import Structure.WeierstrassCurve_Velu
-import Def.WeierstrassCurve_VeluOrderTwo
-import Lemma.WeierstrassCurve.VeluPointMap2
-import Def.WeierstrassCurve_OddOrderSummingSet
+module
+
+public import Mathlib
+public import Structure.WeierstrassCurve_Velu
+public import Def.WeierstrassCurve_VeluOrderTwo
+public import Theorem.WeierstrassCurve.VeluPointMap2
+public import Def.WeierstrassCurve_OddOrderSummingSet
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace WeierstrassCurve
 

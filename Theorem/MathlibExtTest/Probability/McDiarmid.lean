@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Probability/McDiarmid.lean -/
+module
 
-
-import Theorem.Measure.McDiarmid
+public import Theorem.Measure.McDiarmid
 open MathlibExt.Probability.McDiarmid
 
+public section
 
 /-- One fair coin and its indicator: sensitivity `1` gives the tail bound `exp (-2 t ^ 2)`. -/
 example (t : ℝ) (ht : 0 < t) :

@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/InformationTheory/HammingExpansion.lean -/
 
-import Def.InformationTheory.HammingBall
-import Theorem.Real.HammingBall
+module
+
+public import Def.InformationTheory.HammingBall
+public import Theorem.Real.HammingBall
+
+@[expose] public section
+
 /-!
 # Generic Hamming expansion and ball predicates
 

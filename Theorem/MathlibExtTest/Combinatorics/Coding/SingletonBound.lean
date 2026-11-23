@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Coding/SingletonBound.lean -/
+module
 
-
-import Theorem.Finset.Coding.SingletonBound
+public import Theorem.Finset.Coding.SingletonBound
 open MathlibExt.Combinatorics.Coding.SingletonBound
 
+public section
 
 -- Generic public API: the bound applies to any code meeting the hypotheses.
 example {α : Type*} [Fintype α] [DecidableEq α] [Nonempty α] {n d : ℕ}

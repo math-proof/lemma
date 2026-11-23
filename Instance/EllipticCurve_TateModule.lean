@@ -10,7 +10,8 @@ import Mathlib.GroupTheory.Coset.Card
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.Algebra.Group.Subgroup.Finite
 import Def.GaloisRep_Adic
-import Lemma.WeierstrassCurve.TateModule.Basic
+import Theorem.WeierstrassCurve.TateModule.Basic
+import Def.WeierstrassCurve_TateModule_Basic
 
 open IsLocalRing
 

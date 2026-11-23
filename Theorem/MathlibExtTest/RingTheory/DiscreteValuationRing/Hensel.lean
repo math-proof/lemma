@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/DiscreteValuationRing/Hensel.lean -/
+module
 
+public import Theorem.RingTheory.DiscreteValuationRing.Hensel
+public import Theorem.Int.DiscreteValuationRing.Hensel
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Mathlib.Tactic.NormNum
 
-import Theorem.RingTheory.DiscreteValuationRing.Hensel
-import Theorem.Int.DiscreteValuationRing.Hensel
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib.Tactic.NormNum
-
+public section
 
 noncomputable section
 

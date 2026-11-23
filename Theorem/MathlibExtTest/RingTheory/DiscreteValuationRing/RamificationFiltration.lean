@@ -1,8 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/DiscreteValuationRing/RamificationFiltration.lean -/
+module
 
-
-import Theorem.RingTheory.DiscreteValuationRing.RamificationFiltration
-import Theorem.Int.DiscreteValuationRing.RamificationFiltration
+public import Theorem.RingTheory.DiscreteValuationRing.RamificationFiltration
+public import Theorem.Int.DiscreteValuationRing.RamificationFiltration
 open IsLocalRing
 
 /-!
@@ -12,6 +12,8 @@ Focused generic examples for
 `IsDiscreteValuationRing.map_maximalIdeal_eq_pow_ramificationIdx` and its
 membership corollary, plus an identity-extension smoke test.
 -/
+
+public section
 
 
 section GenericExamples

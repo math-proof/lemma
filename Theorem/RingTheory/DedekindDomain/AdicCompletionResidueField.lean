@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/AdicCompletionResidueField.lean -/
+module
 
-import Theorem.RingTheory.DedekindDomain.AdicCompletionIntegers
-import Theorem.Int.DedekindDomain.AdicCompletionIntegers
-import Mathlib.Tactic.GCongr
-import Mathlib.Tactic.Ring
-import Def.RingTheory.DedekindDomain.AdicCompletionResidueField
+public import Theorem.RingTheory.DedekindDomain.AdicCompletionIntegers
+public import Theorem.Int.DedekindDomain.AdicCompletionIntegers
+public import Mathlib.Tactic.GCongr
+public import Mathlib.Tactic.Ring
+public import Def.RingTheory.DedekindDomain.AdicCompletionResidueField
+
 /-!
 # Residue field of the adic completion integers
 
@@ -14,6 +16,8 @@ through the `𝔭`-adic completion integers and onto the residue field of the
 completion, is surjective with kernel `𝔭.asIdeal`, inducing a residue-field
 ring equivalence.
 -/
+
+public section
 
 
 noncomputable section

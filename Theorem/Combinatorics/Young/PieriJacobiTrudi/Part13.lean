@@ -7,8 +7,8 @@ import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part29
 import Def.Combinatorics.Young.OmegaInvolution.Part2
 import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
 import Def.Combinatorics.Young.LittlewoodRichardson.Part17
-import Lemma.Matrix.LGV2
-import Lemma.Partition.NPartition
+import Theorem.Matrix.LGV2
+import Theorem.Partition.NPartition
 import Def.Combinatorics.Young.PieriJacobiTrudi.Part23
 open Finset BigOperators Matrix MvPolynomial
 

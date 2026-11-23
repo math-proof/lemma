@@ -1,8 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Geometry/LatticePointEnumerator.lean -/
+module
 
-
-import Def.Geometry.LatticePointEnumerator
-import Theorem.Set.LatticePointEnumerator
+public import Def.Geometry.LatticePointEnumerator
+public import Theorem.Set.LatticePointEnumerator
 open LatticePointEnumerator
 
 open scoped Pointwise
@@ -10,6 +10,8 @@ open scoped Pointwise
 /-!
 # Tests for lattice-point enumerators
 -/
+
+public section
 
 
 /-- Boundary: the origin lies in the integer lattice. -/

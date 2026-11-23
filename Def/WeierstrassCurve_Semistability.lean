@@ -1,5 +1,9 @@
-import Mathlib.NumberTheory.Padics.PadicVal.Basic
-import Lemma.WeierstrassCurve.FreyPackage
+module
+
+public import Mathlib.NumberTheory.Padics.PadicVal.Basic
+public import Theorem.WeierstrassCurve.FreyPackage
+
+@[expose] public section
 
 set_option autoImplicit false
 

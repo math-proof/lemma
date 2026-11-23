@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Words/KolakoskiSequence.lean -/
+module
 
+public import Def.Combinatorics.Words.KolakoskiSequence
+public import Theorem.Finset.Words.KolakoskiSequence
 
-import Def.Combinatorics.Words.KolakoskiSequence
-import Theorem.Finset.Words.KolakoskiSequence
-
+public section
 
 namespace MetaMathlibExt
 

@@ -1,5 +1,4 @@
 import Lemma.Random.ProbCond.eq.DivMulProb_Prod_ProbCond.of.NeProbJoint__0.All_Indep
-import Lemma.Random.Prob.ne.Zero.of.NeProb_0
 import Syntax.Order.ExprWithLimits
 import Notation.Probability.JointRv
 import Initialize.Tactic.Attr.Basic
@@ -10,19 +9,52 @@ set_option maxHeartbeats 800000
 
 
 /--
-In NLP this is naive Bayes document classification (text categorization): given
-bag-of-words features `x`, pick the class/label `yᵢ` that maximizes `ℙ(yᵢ | x)`,
-rewritten as `ℙ(yᵢ) · ∏ⱼ ℙ(xⱼ | yᵢ)`.
+Let \(x\) and \(y\) be the sets of words used as vocabularies on the documents \(X\) and \(Y\) sides, respectively.
 
-Lemma binders use document features `y` and keywords/labels `x`. Under
-conditional independence of each `y[t]` from its prefix `y[:t]` given the label
-`x[i]`, and a nonzero joint,
-`max⁻¹[i] ℙ(x[i] | y[:m]) =
- max⁻¹[i] (ℙ(x[i]) * ∏ j, ℙ(y[j] | x[i]))`
-(the common factor `1 / ℙ(y[:m])` drops out of the argmax).
+Let \(N\) be the number of corpus pairs and let \(k\) index those pairs.
+Each pair is \((X_k,Y_k)\). Each \(X_k\) is represented
+by a subset of \(x\), and each \(Y_k\) by a subset of \(y\).
+Write \(x_i\) and \(y_j\) for the indexed words in the two vocabularies.
+Encode each membership event as a binary feature and let \(\pi\) give each
+of the \(N\) corpus pairs weight \(1/N\). Let \(\mathcal{X}\) and \(\mathcal{Y}\) denote the documents in the randomly
+selected pair. If the selected index is \(k\), then
+\((\mathcal{X},\mathcal{Y})=(X_k,Y_k)\). The joint and marginal probabilities
+are
 
-`[Fact (Measurable …)]` feeds `SinglePSpace π (x[:n], y[:m])` via the instance in
-`Instance.Probability.SinglePSpaceMeasurable`, so no explicit `hslice` binder is needed.
+\[
+\begin{aligned}
+\mathbb P_\pi(y_j\in\mathcal{Y} \land x_i\in\mathcal{X})
+  &= \frac{\left|\{k : x_i\in X_k \land y_j\in Y_k\}\right|}{N}, \\
+\mathbb P_\pi(x_i\in\mathcal{X})
+  &= \frac{\left|\{k : x_i\in X_k\}\right|}{N}.
+\end{aligned}
+\]
+
+If \(\mathbb P_\pi(x_i\in\mathcal{X})>0\), the
+[conditional probability quotient](?lemma=Random.All_EqProb_Cond__DivProbS.of.SinglePSpace)
+gives the empirical **conditional co-occurrence probability** (条件共现概率)
+
+\[
+\begin{aligned}
+\widehat{\mathbb P}_\pi(y_j\in\mathcal{Y}\mid x_i\in\mathcal{X})
+  &= \frac{\mathbb P_\pi(y_j\in\mathcal{Y} \land x_i\in\mathcal{X})}
+          {\mathbb P_\pi(x_i\in\mathcal{X})} \\
+  &= \frac{\left|\{k : x_i\in X_k \land y_j\in Y_k\}\right|/N}
+          {\left|\{k : x_i\in X_k\}\right|/N} \\
+  &= \frac{\left|\{k : x_i\in X_k \land y_j\in Y_k\}\right|}
+          {\left|\{k : x_i\in X_k\}\right|}.
+\end{aligned}
+\]
+
+# multi-label document classification
+Suppose you have a document consisting of subset of \(y\), and \(Y\) is labeled with some semantic tags (subset of \(x\));
+Now that there is a corpus consisting of pairs of document and its respective set of semantic tags;
+You are then given a new document \(Y'\), how to figure out the way of choosing the semantic tags (subset of \(x\)) with optimal probability?
+
+# X-cited patent examination
+Another application is predicting words in an X-cited reference. In this corpus, \(Y_k\) is the application under examination and \(X_k\) is a document cited as category X against a claim of \(Y_k\).
+For a new application \(Y′\), use its observed words as evidence. Under the lemma's assumptions, rank each candidate word for a counterpart \(X′\) by its frequency of occurrence on the \(X\) side times the product of the observed \(Y′\) word likelihoods conditioned on that candidate word being present.
+The highest-scoring words can help retrieve candidate references. A retrieved \(X′\) is an X-cited document for \(Y′\) if the search report cites it as category X against a claim of \(Y′\).
 -/
 @[path]
 private lemma main
@@ -37,8 +69,7 @@ private lemma main
   {«\sf{x}» : ℕ ⇀ α} [Fact (Measurable x[:n])]
   {«\sf{y}» : ℕ ⇀ β} [Fact (Measurable y[:m])]
 -- given
-  (h₀ : ∀ (i : Fin n) (t : ℕ), 0 < t → t < m → y[t] ⟂ᵢ[π] y[:t] | x[i])
-  (h₁ : ℙ[π](x[:n] = «\sf{x}»[:n] ∧ y[:m] = «\sf{y}»[:m]) ≠ 0) :
+  (h₀ : ∀ (i : Fin n) (t : ℕ), 0 < t → t < m → y[t] ⟂ᵢ[π] y[:t] | x[i]) :
 -- imply
   have : ∀ i : Fin n, Measurable x[i] :=
     fun i => (measurable_pi_apply i).comp ‹Fact (Measurable x[:n])›.out
@@ -61,61 +92,47 @@ private lemma main
     max⁻¹[i : Fin n] (ℙ[π](x[i] = «\sf{x}»[i]) : ℝ) * (∏ j : Fin m, (ℙ[π](y[j] = «\sf{y}»[j] | x[i] = «\sf{x}»[i]) : ℝ)) := by
 -- proof
   intro hxi hyj hys hsp hxy hyx
-  have h1i : ∀ i : Fin n, ℙ[π](x[i] = «\sf{x}»[i] ∧ y[:m] = «\sf{y}»[:m]) ≠ 0 := by
-    intro i
-    let xs : Ω → Fin n → α := x[:n]
-    let ys : Ω → Fin m → β := y[:m]
-    let z : Ω → (Fin n → α) × (Fin m → β) := (xs, ys)
-    have hz : Measurable z :=
-      Measurable.prodMk ‹Fact (Measurable x[:n])›.out ‹Fact (Measurable y[:m])›.out
-    let g : (Fin n → α) × (Fin m → β) → α × (Fin m → β) :=
-      fun p => (p.1 i, p.2)
-    have hg : Measurable g :=
-      ((measurable_pi_apply i).comp measurable_fst).prodMk measurable_snd
-    have hgz : g ∘ z = (x[i], show Ω → Fin m → β from y[:m]) := by
-      funext ω
-      rfl
-    have hgv : g («\sf{x}»[:n], «\sf{y}»[:m]) = («\sf{x}»[i], «\sf{y}»[:m]) := rfl
-    have h1z : π.prob z («\sf{x}»[:n], «\sf{y}»[:m]) ≠ 0 := h₁
-    have : Fact (Measurable z) := ⟨hz⟩
-    simpa [hgz, hgv] using Prob.ne.Zero.of.NeProb_0 (x := z) (g := g)
-      («\sf{x}»[:n], «\sf{y}»[:m]) hg (h := h1z)
-  have hMne : ℙ[π](y[:m] = «\sf{y}»[:m]) ≠ 0 := by
-    have i0 : Fin n := ⟨0, Nat.pos_of_ne_zero (NeZero.ne n)⟩
-    have h1 := h1i i0
-    let ys : Ω → Fin m → β := y[:m]
-    let z : Ω → α × (Fin m → β) := (x[i0], ys)
-    have hz : Measurable z :=
-      Measurable.prodMk (hxi i0) ‹Fact (Measurable y[:m])›.out
-    have hspz : SinglePSpace π z := hxy i0
-    have h1z : π.prob z («\sf{x}»[i0], «\sf{y}»[:m]) ≠ 0 := h1
-    have hsnd : Prod.snd ∘ z = y[:m] := by
-      funext ω
-      rfl
-    have : Fact (Measurable z) := ⟨hz⟩
-    simpa [hsnd] using Prob.ne.Zero.of.NeProb_0 (x := z) (g := Prod.snd)
-      («\sf{x}»[i0], «\sf{y}»[:m]) measurable_snd (h := h1z)
-  have hMtop : ℙ[π](y[:m] = «\sf{y}»[:m]) ≠ ⊤ := by
+  let evidence := ℙ[π](y[:m] = «\sf{y}»[:m])
+  have hevidenceTop : evidence ≠ ⊤ := by
+    dsimp only [evidence]
     rw [Measure.prob,
       show ReferenceMeasure.measure = Measure.count from rfl,
       EqRnDeriv_Count]
     apply measure_ne_top
-  have hc : 0 < (ℙ[π](y[:m] = «\sf{y}»[:m]) : ℝ) :=
-    ENNReal.toReal_pos hMne hMtop
+  -- Zero evidence gives zero scores on both sides, so use a positive scale there.
+  let scale : ℝ := if evidence = 0 then 1 else evidence.toReal
+  have hc : 0 < scale := by
+    dsimp only [scale]
+    split
+    · norm_num
+    · exact ENNReal.toReal_pos (by assumption) hevidenceTop
   have hpt : ∀ i : Fin n,
       (ℙ[π](x[i] = «\sf{x}»[i] | y[:m] = «\sf{y}»[:m]) : ℝ) =
         (ℙ[π](x[i] = «\sf{x}»[i]) : ℝ) *
           (∏ j : Fin m, (ℙ[π](y[j] = «\sf{y}»[j] | x[i] = «\sf{x}»[i]) : ℝ)) /
-        (ℙ[π](y[:m] = «\sf{y}»[:m]) : ℝ) := by
+        scale := by
     intro i
     have : Fact (Measurable x[i]) := ⟨hxi i⟩
     have hmul := ProbCond.eq.DivMulProb_Prod_ProbCond.of.NeProbJoint__0.All_Indep
       (x := x[i]) («\sf{x}» := «\sf{x}»[i])
-      (y := y)
+      (y := y) («\sf{y}» := «\sf{y}»)
       (h₀ := fun t ht htm => h₀ i t ht htm)
-      (h₁ := h1i i)
-    simpa [ENNReal.toReal_div, ENNReal.toReal_mul, ENNReal.toReal_prod] using
-      congrArg ENNReal.toReal hmul
+    if he : evidence = 0 then
+      have hmeasure : π ((show Ω → Fin m → β from y[:m]) ⁻¹' {«\sf{y}»[:m]}) = 0 :=
+        (EqProb (x := (show Ω → Fin m → β from y[:m])) _).symm.trans he
+      have hjoint := measure_mono_null
+        (Set.inter_subset_right (s := x[i] ⁻¹' {«\sf{x}»[i]})) hmeasure
+      have hzero : ℙ[π](x[i] = «\sf{x}»[i] | y[:m] = «\sf{y}»[:m]) = 0 := by
+        rw [Prob_Cond.eq.Div.of.SinglePSpace (hxy i), hjoint, ENNReal.zero_div]
+      dsimp only at hmul
+      rw [hzero, show ℙ[π](y[:m] = «\sf{y}»[:m]) = 0 from he] at hmul
+      have hn := hmul.symm
+      simp only [div_eq_mul_inv, ENNReal.inv_zero, mul_eq_zero, ENNReal.top_ne_zero, or_false] at hn
+      simpa [hzero, scale, he, ENNReal.toReal_mul, ENNReal.toReal_prod] using
+        (congrArg ENNReal.toReal (mul_eq_zero.mpr hn)).symm
+    else
+      simpa [scale, he, evidence, ENNReal.toReal_div, ENNReal.toReal_mul,
+        ENNReal.toReal_prod] using congrArg ENNReal.toReal hmul
   unfold «max⁻¹»
   congr 1
   funext i
@@ -142,4 +159,4 @@ private lemma main
 
 
 -- created on 2021-07-21
--- updated on 2026-11-17
+-- updated on 2026-11-22

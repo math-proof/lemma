@@ -8,15 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.MvPolynomial.PDeriv
-import Mathlib.LinearAlgebra.Matrix.Rank
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.Localization.AtPrime.Basic
-import Mathlib.RingTheory.Ideal.Maps
-import Instance.v1.Atlas.AlgebraicGeometryI.code.SmoothnessJacobianCriterion.Part2
+module
+
+public import Mathlib.Algebra.MvPolynomial.PDeriv
+public import Mathlib.LinearAlgebra.Matrix.Rank
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.Localization.AtPrime.Basic
+public import Mathlib.RingTheory.Ideal.Maps
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.SmoothnessJacobianCriterion.Part2
 
 
-noncomputable section
+@[expose] public noncomputable section
 
 /-- The **local ring at a `k`-rational point** `x` of an affine variety `V(I)`:
 the localization of `k[x]/I` at the maximal ideal of `x`. -/

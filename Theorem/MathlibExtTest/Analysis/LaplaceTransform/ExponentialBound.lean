@@ -1,13 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/LaplaceTransform/ExponentialBound.lean -/
+module
 
-import Mathlib.NumberTheory.Chebyshev
-import Theorem.Real.LaplaceTransform.BasicProperties
-import Theorem.Real.LaplaceTransform.ExponentialBound
+public import Mathlib.NumberTheory.Chebyshev
+public import Theorem.Real.LaplaceTransform.BasicProperties
+public import Theorem.Real.LaplaceTransform.ExponentialBound
 open MeasureTheory Asymptotics
 
 /-!
 # Tests for the Laplace exponential-bound package.
 -/
+
+public section
 
 
 example (f : ℝ → ℂ) (a C : ℝ)

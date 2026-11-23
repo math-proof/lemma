@@ -5,8 +5,6 @@ open Real
 open Complex
 
 
-namespace Complex
-
 /--
 [exp_add_prop1](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture2.lean)
 -/
@@ -18,7 +16,6 @@ lemma exp_add_prop1
 -- proof
   exp_add z w
 
-end Complex
 
 /--
 [rpow_eq_exp_mul_log](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture2.lean)
@@ -74,10 +71,10 @@ lemma roots_of_unity_eq_powers_of_primitiveUnitRoot
   z ^ n = 1 ↔ ∃ k : Fin n, z = (primitiveUnitRoot n) ^ (k : ℕ) := by
 -- proof
   have hne : n ≠ 0 := Nat.pos_iff_ne_zero.mp hn
-  have hprim := primitiveUnitRoot_isPrimitiveRoot n hne
+  have hprim := primitiveUnitRoot_isPrimitiveRoot hne
   constructor
   · intro hz
-    haveI : NeZero n := ⟨hne⟩
+    have : NeZero n := ⟨hne⟩
     obtain ⟨i, hi, hiz⟩ := hprim.eq_pow_of_pow_eq_one hz
     exact ⟨⟨i, hi⟩, hiz.symm⟩
   · rintro ⟨k, rfl⟩
@@ -90,10 +87,10 @@ lemma roots_of_unity_eq_powers_of_primitiveUnitRoot
     field_simp
 
 /--
-[Complex.log_mul_eq_add_log_add_int](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture2.lean)
+[log_mul_eq_add_log_add_int](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture2.lean)
 -/
 @[path]
-lemma Complex.log_mul_eq_add_log_add_int
+lemma log_mul_eq_add_log_add_int
   {z₁ z₂ : ℂ}
 -- given
   (hz₁ : z₁ ≠ 0)
@@ -129,3 +126,4 @@ lemma Complex.log_mul_eq_add_log_add_int
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-22

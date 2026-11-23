@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/AssociatedStirlingEulerian.lean -/
 
 -- Author: @toskua, Avocado
+module
 
-import Def.Combinatorics.AssociatedStirlingEulerian.Part2
+public import Def.Combinatorics.AssociatedStirlingEulerian.Part2
 open MetaMathlibExt
 
+public section
 
 -- Excedance counts on small perms.
 example : excedanceCount 0 (1 : Equiv.Perm (Fin 0)) = 0 := by decide

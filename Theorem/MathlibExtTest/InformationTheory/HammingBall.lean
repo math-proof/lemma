@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/InformationTheory/HammingBall.lean -/
+module
 
+public import Def.InformationTheory.HammingBall
+public import Theorem.Real.HammingBall
 
-import Def.InformationTheory.HammingBall
-import Theorem.Real.HammingBall
+public section
+
 variable {ι F : Type*} [Fintype ι] [DecidableEq ι] [Fintype F] [DecidableEq F]
 
 

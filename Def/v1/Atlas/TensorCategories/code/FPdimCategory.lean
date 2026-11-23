@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
-import Lemma.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
-import Structure.v1.Atlas.TensorCategories.code.FPdimCategory
+module
+
+public import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
+public import Structure.v1.Atlas.TensorCategories.code.FPdimCategory
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open CategoryTheory Finset

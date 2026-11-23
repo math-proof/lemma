@@ -3,7 +3,7 @@ module
 public import Structure.LanglandsTunnell_JLData
 public import Def.LanglandsTunnell_ArchEpsilon
 public import Def.UnramifiedWhittaker_HeckeRecursion
-public import Lemma.Ideal.ArithCuspRealization
+public import Theorem.Ideal.ArithCuspRealization
 public import Def.LanglandsTunnell_StandardLocalConstantsAt
 
 set_option autoImplicit false

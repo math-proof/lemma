@@ -1,5 +1,8 @@
-import Mathlib
-import Def.Analysis.Section_3_1.Part2
+module
+
+public import Mathlib
+public import Def.Analysis.Section_3_1.Part2
+
 set_option doc.verso.suggestions false
 
 /-!
@@ -69,6 +72,7 @@ Users of the companion who have completed the exercises in this section are welc
 - (Add tip here)
 -/
 
+@[expose] public section
 /- The ability to work in multiple universe is not relevant immediately, but
 becomes relevant when constructing models of set theory in the Chapter 3 epilogue. -/
 

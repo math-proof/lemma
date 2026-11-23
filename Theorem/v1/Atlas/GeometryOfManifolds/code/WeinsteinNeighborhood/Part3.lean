@@ -7,25 +7,27 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticLinearAlgebra
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.MoserDarboux
-import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
-import Structure.v1.Atlas.GeometryOfManifolds.code.MoserDarboux.Part2
-import Def.v1.Atlas.GeometryOfManifolds.code.BlockMatrixLp
-import Mathlib.Geometry.Manifold.Diffeomorph
-import Mathlib.Geometry.Manifold.MFDeriv.Basic
-import Mathlib.Analysis.Calculus.DifferentialForm.Basic
-import Mathlib.Analysis.ODE.PicardLindelof
-import Structure.v1.Atlas.GeometryOfManifolds.code.WeinsteinNeighborhood
+public import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticLinearAlgebra
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.MoserDarboux
+public import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
+public import Structure.v1.Atlas.GeometryOfManifolds.code.MoserDarboux.Part2
+public import Def.v1.Atlas.GeometryOfManifolds.code.BlockMatrixLp
+public import Mathlib.Geometry.Manifold.Diffeomorph
+public import Mathlib.Geometry.Manifold.MFDeriv.Basic
+public import Mathlib.Analysis.Calculus.DifferentialForm.Basic
+public import Mathlib.Analysis.ODE.PicardLindelof
+public import Structure.v1.Atlas.GeometryOfManifolds.code.WeinsteinNeighborhood
 set_option autoImplicit false
 
 open Module FiniteDimensional
 open SymplecticLinearAlgebra
 open DifferentialFormSpace
 
+public section
 
 /-- Cartan's magic formula applied to a chosen "scaling" vector field $V$:
 $d\iota_V \beta + \iota_V d\beta = \mathcal{L}_V \beta$. -/

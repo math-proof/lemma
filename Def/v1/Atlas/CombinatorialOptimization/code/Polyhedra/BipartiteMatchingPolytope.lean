@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.CombinatorialOptimization.code.Matching.MatchingCharacterization
-import Theorem.Finset.Atlas.v1.CombinatorialOptimization.code.Matching.MatchingCharacterization
+module
+
+public import Def.v1.Atlas.CombinatorialOptimization.code.Matching.MatchingCharacterization
+public import Theorem.Finset.Atlas.v1.CombinatorialOptimization.code.Matching.MatchingCharacterization
+
+@[expose] public section
+
 open SimpleGraph Finset Matrix
 
 

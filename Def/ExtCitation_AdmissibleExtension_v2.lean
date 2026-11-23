@@ -1,6 +1,10 @@
-import Mathlib
-import Def.ExtCitation_AdmissibleExtension
-import Structure.ExtCitation_AdmissibleExtension_v2
+module
+
+public import Mathlib
+public import Def.ExtCitation_AdmissibleExtension
+public import Structure.ExtCitation_AdmissibleExtension_v2
+
+@[expose] public section
 
 set_option autoImplicit false
 

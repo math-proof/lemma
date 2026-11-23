@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Recurrences/HonsbergerFibonacciP.lean -/
+module
 
-
-import Lean.Elab.Tactic.Omega
-import Def.NumberTheory.Recurrences.HonsbergerFibonacciP
-import Theorem.Nat.Recurrences.HonsbergerFibonacciP
+public import Lean.Elab.Tactic.Omega
+public import Def.NumberTheory.Recurrences.HonsbergerFibonacciP
+public import Theorem.Nat.Recurrences.HonsbergerFibonacciP
 open MetaMathlibExt
 
+public section
 
 -- Representative values include the ordinary Fibonacci specialization.
 example : fibonacciP 2 6 = 4 ∧ fibonacciP 1 10 = 55 := by

@@ -7,10 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.Buildings.code.Building.AptIsCoxeterProof
-import Lemma.Set.ApartmentsToApartmentSystem.eq.Apartments.of.IsThick
+public import Def.v1.Atlas.Buildings.code.Building.AptIsCoxeterProof
+public import Theorem.Set.ApartmentsToApartmentSystem.eq.Apartments.of.IsThick
 open ChamberComplex
+
+public section
 
 variable {V : Type*} [DecidableEq V]
 

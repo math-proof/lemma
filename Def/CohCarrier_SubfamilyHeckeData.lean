@@ -1,4 +1,8 @@
-import Lemma.ZMod.Inst
+module
+
+public import Theorem.ZMod.Inst
+
+@[expose] public section
 
 set_option autoImplicit false
 

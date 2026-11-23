@@ -12,7 +12,7 @@ module
 
 public import Instance.v1.Atlas.ArithmeticGeometry.code.CompleteVarieties
 public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CompleteVarieties
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.ValuationRings
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.ValuationRings
 public import Def.v1.Atlas.ArithmeticGeometry.code.ValuationRings.Part4
 public import Mathlib.FieldTheory.IsAlgClosed.Basic
 public import Mathlib.Topology.NoetherianSpace

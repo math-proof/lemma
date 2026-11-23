@@ -1,12 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/ODE/MaximalSolution.lean -/
+module
 
-
-import Structure.Analysis.ODE.MaximalSolution
-import Theorem.Set.Any_And_EqOnAndAll_HasDerivAt.of.EqOn_Inter.All_HasDerivAt.All_HasDerivAt.IsOpen.IsOpen
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Structure.Analysis.ODE.MaximalSolution
+public import Theorem.Set.Any_And_EqOnAndAll_HasDerivAt.of.EqOn_Inter.All_HasDerivAt.All_HasDerivAt.IsOpen.IsOpen
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 open Filter Set
 open MathlibExt.Analysis.ODE.MaximalSolutionWanted
 
+public section
 
 -- Global uniqueness identifies the exponential solution.
 example :

@@ -3,6 +3,7 @@ import Initialize.Tactic.Attr.Basic
 set_option maxHeartbeats 999999
 set_option synthInstance.maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
+open scoped Topology
 
 
 /--
@@ -53,7 +54,7 @@ private lemma main
     intro p
     have hne : ∀ᶠ q in nhds p, E p q ≠ 0 := (hE p).continuous.continuousAt.eventually_ne (hE1 p)
     apply DifferentiableAt.congr_of_eventuallyEq
-    · apply ((hZ p) p).div ((differentiableAt_const _).mul ((hE p) p)) (mul_ne_zero (hc p) (hE1 p))
+    · apply DifferentiableAt.div ((hZ p) p) ((differentiableAt_const (c p)).mul ((hE p) p)) (mul_ne_zero (hc p) (hE1 p))
     ·
       filter_upwards [hne] with q hq
       simp only [Pi.div_apply, Pi.mul_apply]
@@ -62,22 +63,36 @@ private lemma main
   ·
     intro s hs
     have hsσ : σ < s.re := lt_of_le_of_lt (le_max_left _ _) hs
-    have : Filter.NeBot (nhdsWithin s ({s} : Set ℂ)ᶜ) := PerfectSpace.not_isolated s
+    have : (𝓝[≠] s).NeBot := by
+      rw [← mem_closure_iff_nhdsWithin_neBot]
+      refine mem_closure_iff_nhds.mpr fun U hU => ?_
+      obtain ⟨ε, εpos, hball⟩ := Metric.mem_nhds_iff.mp hU
+      have hε2 : 0 < ε / 2 := half_pos εpos
+      let z : ℂ := s + (↑(ε / 2) : ℂ)
+      have hzsub : z - s = (↑(ε / 2) : ℂ) := by simp [z]
+      refine ⟨z, hball ?_, ?_⟩
+      · rw [Metric.mem_ball, dist_eq_norm, hzsub]
+        rw [Complex.norm_real, Real.norm_eq_abs, abs_of_pos hε2]
+        linarith
+      · intro hz
+        have hz0 : (↑(ε / 2) : ℂ) = 0 := by rw [← hzsub, hz, sub_self]
+        have : ε / 2 = 0 := by
+          simpa using congrArg Complex.re hz0
+        linarith
     apply tendsto_nhds_unique_of_eventuallyEq (l := nhdsWithin s ({s} : Set ℂ)ᶜ)
     ·
-      apply Filter.Tendsto.mono_left
-      ·
-        apply ContinuousAt.tendsto
-        apply DifferentiableAt.continuousAt
+      have hdiff : DifferentiableAt ℂ (fun q : ℂ => Z q q / (c q * E q q)) s := by
         apply DifferentiableAt.congr_of_eventuallyEq
-        · apply ((hZ s) s).div ((differentiableAt_const _).mul ((hE s) s)) (mul_ne_zero (hc s) (hE1 s))
-        ·
-          have hne : ∀ᶠ q in nhds s, E s q ≠ 0 := (hE s).continuous.continuousAt.eventually_ne (hE1 s)
+        · exact DifferentiableAt.div ((hZ s) s)
+            ((differentiableAt_const (c s)).mul ((hE s) s))
+            (mul_ne_zero (hc s) (hE1 s))
+        · have hne : ∀ᶠ q in nhds s, E s q ≠ 0 :=
+            (hE s).continuous.continuousAt.eventually_ne (hE1 s)
           filter_upwards [hne] with q hq
           simp only [Pi.div_apply, Pi.mul_apply]
           rw [div_eq_div_iff (mul_ne_zero (hc q) (hE1 q)) (mul_ne_zero (hc s) hq)]
           linear_combination -(star s q q)
-      · apply nhdsWithin_le_nhds
+      exact hdiff.continuousAt.tendsto.mono_left nhdsWithin_le_nhds
     ·
       have hH : {z : ℂ | σ < z.re} ∈ nhdsWithin s {s}ᶜ := mem_nhdsWithin_of_mem_nhds ((hopen σ).mem_nhds hsσ)
       have hcw : ContinuousWithinAt L {z : ℂ | σ < z.re} s := hL s hsσ
@@ -101,3 +116,4 @@ private lemma main
 
 
 -- created on 2026-10-20
+-- updated on 2026-11-22

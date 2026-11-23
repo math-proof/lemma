@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/MaximumModulusLeMajorant.lean -/
+module
 
-import Theorem.Analysis.Complex.Wiman.MaximumModulusAttained
-import Theorem.Complex.Wiman.MaximumModulusAttained
-import Theorem.Complex.Wiman.RadialMajorant
-import Def.Analysis.Complex.Wiman.RadialMajorant
+public import Theorem.Analysis.Complex.Wiman.MaximumModulusAttained
+public import Theorem.Complex.Wiman.MaximumModulusAttained
+public import Theorem.Complex.Wiman.RadialMajorant
+public import Def.Analysis.Complex.Wiman.RadialMajorant
 
+public section
 
 noncomputable section
 end

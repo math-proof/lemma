@@ -7,11 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.CombinatorialOptimization.code.Polyhedra.EdmondsPolytope
-import Theorem.Finset.Atlas.v1.CombinatorialOptimization.code.Polyhedra.EdmondsPolytope
+public import Def.v1.Atlas.CombinatorialOptimization.code.Polyhedra.EdmondsPolytope
+public import Theorem.Finset.Atlas.v1.CombinatorialOptimization.code.Polyhedra.EdmondsPolytope
 open SimpleGraph Finset BigOperators Classical
 
+public section
 
 namespace SimpleGraph
 

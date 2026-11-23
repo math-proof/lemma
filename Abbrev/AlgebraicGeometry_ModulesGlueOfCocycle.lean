@@ -1,5 +1,9 @@
-import Mathlib
-import Lemma.Scheme.ModulesSectionsTensor
+module
+
+public import Mathlib
+public import Theorem.Scheme.ModulesSectionsTensor
+
+@[expose] public section
 
 set_option autoImplicit false
 

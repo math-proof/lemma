@@ -12,7 +12,7 @@ module
 
 public import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
 public import Theorem.Complex.IsStronglyContinuousToMonoidHom
-public import Lemma.Complex.IsKFinite0
+public import Theorem.Complex.IsKFinite0
 public import Def.v1.Atlas.LieGroups.code.KFinite.Part3
 public import Mathlib.Algebra.Lie.Basic
 public import Mathlib.Algebra.Lie.Subalgebra

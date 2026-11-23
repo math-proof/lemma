@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.NumberTheoryI.code.RayClassFields.Part28
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.RayClassFields
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.RayClassFields
 import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ValuationBijection
 import Theorem.v1.Atlas.NumberTheoryI.code.ValuationBijection
 import Def.v1.Atlas.NumberTheoryI.code.Ch22NormGroup

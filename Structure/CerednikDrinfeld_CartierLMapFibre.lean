@@ -3,13 +3,13 @@ module
 public import Mathlib
 public import Instance.MvFormalGroup_NegV2
 public import Instance.MvFormalGroup_CartierModule
-public import Lemma.PowerSeries.CartierModuleHomothety
+public import Theorem.PowerSeries.CartierModuleHomothety
 public import Structure.CerednikDrinfeld_SpecialFormalModule
 public import Instance.MvFormalGroup_CartierModuleWittAction
 public import Instance.MvFormalGroup_CartierModuleBaseChange
 public import Def.CerednikDrinfeld_CartierGradedPiece
-public import Lemma.FormalGroup.CriticalIndexChart
-public import Lemma.Int.CartierNModule
+public import Theorem.FormalGroup.CriticalIndexChart
+public import Theorem.Int.CartierNModule
 public import Abbrev.CerednikDrinfeld_CartierLMapFibre
 public import Def.CerednikDrinfeld_CartierLMapFibre
 

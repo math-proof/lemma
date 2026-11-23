@@ -1,13 +1,15 @@
-import Mathlib
-import Def.ModularCurve_JqCoeff
-import Instance.AlgebraicCurve_RatFuncPlaces
+module
+
+public import Mathlib
+public import Def.ModularCurve_JqCoeff
+public import Instance.AlgebraicCurve_RatFuncPlaces
 
 namespace ModularCurve
 end ModularCurve
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open AlgebraicCurve
 

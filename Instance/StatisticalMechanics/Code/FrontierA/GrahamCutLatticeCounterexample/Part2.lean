@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Def.StatisticalMechanics.Code.FrontierA.GrahamCutLatticeCounterexample.Part2
+module
+
+public import Mathlib
+public import Def.StatisticalMechanics.Code.FrontierA.GrahamCutLatticeCounterexample.Part2
+@[expose] public section
+
 open Finset
 
 

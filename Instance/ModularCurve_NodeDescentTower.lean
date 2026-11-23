@@ -1,6 +1,10 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_NodeDescentTower.lean: instance decls only.
-import Mathlib
-import Def.ModularCurve_NodeDescent
+module
+
+public import Mathlib
+public import Def.ModularCurve_NodeDescent
+@[expose] public section
+
 set_option autoImplicit false
 
 noncomputable section

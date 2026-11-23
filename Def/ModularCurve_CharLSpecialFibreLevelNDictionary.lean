@@ -1,8 +1,12 @@
-import Mathlib
-import Lemma.HahnSeries.QAdicPlaceMod
-import Lemma.LaurentSeries.CharLFrobeniusGeomLevel
-import Lemma.Finsupp.SpecializeModuli
-import Def.AlgebraicCurve_PlaceEvaluation
+module
+
+public import Mathlib
+public import Theorem.HahnSeries.QAdicPlaceMod
+public import Theorem.LaurentSeries.CharLFrobeniusGeomLevel
+public import Theorem.Finsupp.SpecializeModuli
+public import Def.AlgebraicCurve_PlaceEvaluation
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 400000

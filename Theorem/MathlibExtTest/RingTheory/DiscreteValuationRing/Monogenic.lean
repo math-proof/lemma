@@ -3,12 +3,15 @@
 /-
 Author: Muse Code
 -/
+module
 
-import Mathlib.RingTheory.PowerSeries.Inverse
-import Theorem.RingTheory.DiscreteValuationRing.Monogenic
-import Theorem.Int.DiscreteValuationRing.Monogenic
+public import Mathlib.RingTheory.PowerSeries.Inverse
+public import Theorem.RingTheory.DiscreteValuationRing.Monogenic
+public import Theorem.Int.DiscreteValuationRing.Monogenic
 open IsLocalRing IsDiscreteValuationRing
 open scoped PowerSeries
+
+public section
 
 variable {A B : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
   [CommRing B] [IsDomain B] [IsDiscreteValuationRing B]

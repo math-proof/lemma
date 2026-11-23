@@ -1,7 +1,8 @@
 module
 
-public import Lemma.ResidueField.GluedPic0
-public import Lemma.Scheme.GluedPic0Functoriality
+public import Def.AlgebraicCurve_GluedPic0
+public import Theorem.ResidueField.GluedPic0
+public import Theorem.Scheme.GluedPic0Functoriality
 public import Instance.ModularCurve_ArithmeticGalois
 public import Def.ModularCurve_JqCoeff
 public import Structure.HeckeGalois_EichlerShimura

@@ -1,12 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/ZeroDivisorGraph.lean -/
 
 -- MathlibExtTest/RingTheory/ZeroDivisorGraph.lean
-import Def.RingTheory.ZeroDivisorGraph
-import Theorem.Int.ZeroDivisorGraph
-import Mathlib.Data.ZMod.Basic
-import Def.MathlibExtTest.RingTheory.ZeroDivisorGraph
+module
+
+public import Def.RingTheory.ZeroDivisorGraph
+public import Theorem.Int.ZeroDivisorGraph
+public import Mathlib.Data.ZMod.Basic
+public import Def.MathlibExtTest.RingTheory.ZeroDivisorGraph
 open ZeroDivisorGraph
 
+public section
 
 -- `2` lifts to a vertex, characterizing vertex membership.
 example : ∃ v : Vertex (ZMod 6), (v : ZMod 6) = 2 :=

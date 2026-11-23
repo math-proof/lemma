@@ -2,7 +2,7 @@ module
 
 public import Mathlib.Tactic
 public import Def.Lean.Expr.Parser
-public import Def.Lean.PrettyPrinter.Latex.Part2
+public import Def.Lean.PrettyPrinter.Latex.Expr
 
 @[expose] public section
 

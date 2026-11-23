@@ -4,7 +4,7 @@ public import Structure.AlgebraicCurve_SemistableCharts
 public import Def.AlgebraicCurve_ChordalProximity
 public import Def.ModularCurve_SupersingularModuli
 public import Structure.ModularCurve_LevelOneProlongationPair
-public import Lemma.AlgEquiv.SemistableChartsComap
+public import Theorem.AlgEquiv.SemistableChartsComap
 public import Structure.ModularCurve_LevelOneChartFst
 public import Instance.ModularCurve_MultCoveringCharts
 

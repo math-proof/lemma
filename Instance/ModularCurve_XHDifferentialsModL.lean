@@ -2,7 +2,8 @@
 import Mathlib
 import Instance.ModularCurve_HeckeDifferential
 import Instance.CuspForm_TwoCuspLattice
-import Lemma.CuspForm.XHDifferentialsModL
+import Theorem.CuspForm.XHDifferentialsModL
+import Def.ModularCurve_XHDifferentialsModL
 
 set_option autoImplicit false
 

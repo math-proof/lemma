@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Logic/HilbertBernaysLob.lean -/
+module
 
+public import Theorem.Set.HilbertBernaysLob
+public import Inductive.MathlibExtTest.Logic.HilbertBernaysLob
 
-import Theorem.Set.HilbertBernaysLob
-import Inductive.MathlibExtTest.Logic.HilbertBernaysLob
-
+public section
 
 namespace HilbertBernaysLobTest
 

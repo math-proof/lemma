@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.CombinatorialOptimization.code.Matching.EdmondsProgress
-import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Matching.EdmondsProgress
-import Structure.v1.Atlas.CombinatorialOptimization.code.Matching.EdmondsRuntime
+module
+
+public import Def.v1.Atlas.CombinatorialOptimization.code.Matching.EdmondsProgress
+public import Theorem.Finset.Atlas.v1.CombinatorialOptimization.code.Matching.EdmondsProgress
+public import Structure.v1.Atlas.CombinatorialOptimization.code.Matching.EdmondsRuntime
+
+@[expose] public section
+
 open SimpleGraph
 
 

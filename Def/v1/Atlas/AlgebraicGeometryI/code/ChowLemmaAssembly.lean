@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Instance.v1.Atlas.AlgebraicGeometryI.code.ChowLemmaHelper
-import Def.v1.Atlas.AlgebraicGeometryI.code.ChowHelperBlowupProjective
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ChowHelperBlowupProjective
-import Class.v1.Atlas.AlgebraicGeometryI.code.ChowLemmaAssembly
+module
+
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.ChowLemmaHelper
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ChowHelperBlowupProjective
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ChowHelperBlowupProjective
+public import Class.v1.Atlas.AlgebraicGeometryI.code.ChowLemmaAssembly
+
+@[expose] public section
+
 open AlgebraicGeometry CategoryTheory Limits
 
 universe u

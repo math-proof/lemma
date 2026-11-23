@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.NumberTheoryI.code.CompleteFields.Part2
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.CompleteFields
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.CompleteFields
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Def.v1.Atlas.NumberTheoryI.code.FinitePlaceAbsValue
 open NumberField IsDedekindDomain

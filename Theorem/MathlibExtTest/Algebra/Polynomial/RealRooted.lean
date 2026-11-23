@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/Polynomial/RealRooted.lean -/
+module
 
-
-import Def.Algebra.Polynomial.RealRooted.Part2
-import Theorem.Polynomial.RealRooted
-import Def.MathlibExtTest.Algebra.Polynomial.RealRooted
+public import Def.Algebra.Polynomial.RealRooted.Part2
+public import Theorem.Polynomial.RealRooted
+public import Def.MathlibExtTest.Algebra.Polynomial.RealRooted
 open scoped ComplexOrder
 
+public section
 
 namespace MathlibExtTest.Algebra.Polynomial.RealRooted
 

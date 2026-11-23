@@ -3,7 +3,7 @@ module
 public import Def.QuaternionAlgebra_EichlerOrder
 public import Def.QuaternionAlgebra_ReducedNorm
 public import Structure.ModularCurve_UniformizedHeckeCurve
-public import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
+public import Theorem.Scheme.AlgebraicCurveBaseChangeGalois
 public import Instance.AlgebraicCurve_IsCurveOver
 public import Structure.CerednikDrinfeld_TwoPlaceTorsionDatum
 public import Instance.Compat_Mathlib430

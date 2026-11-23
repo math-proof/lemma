@@ -7,23 +7,25 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.LinearAlgebra.Alternating.Basic
-import Mathlib.LinearAlgebra.Alternating.Curry
-import Mathlib.LinearAlgebra.Alternating.Uncurry.Fin
-import Mathlib.Topology.Algebra.Module.Alternating.Basic
-import Mathlib.Analysis.Normed.Module.Alternating.Basic
-import Mathlib.Analysis.Calculus.FDeriv.Basic
-import Mathlib.Analysis.Calculus.FDeriv.Add
-import Mathlib.Analysis.Normed.Module.Alternating.Curry
-import Mathlib.LinearAlgebra.Multilinear.Curry
-import Mathlib.Analysis.Calculus.FDeriv.Mul
-import Mathlib.Analysis.Calculus.DifferentialForm.Basic
-import Def.v1.Atlas.GeometryOfManifolds.code.DifferentialForms.Part2
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialForms
-import Instance.v1.Atlas.GeometryOfManifolds.code.EuclideanDFS
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.LinearAlgebra.Alternating.Basic
+public import Mathlib.LinearAlgebra.Alternating.Curry
+public import Mathlib.LinearAlgebra.Alternating.Uncurry.Fin
+public import Mathlib.Topology.Algebra.Module.Alternating.Basic
+public import Mathlib.Analysis.Normed.Module.Alternating.Basic
+public import Mathlib.Analysis.Calculus.FDeriv.Basic
+public import Mathlib.Analysis.Calculus.FDeriv.Add
+public import Mathlib.Analysis.Normed.Module.Alternating.Curry
+public import Mathlib.LinearAlgebra.Multilinear.Curry
+public import Mathlib.Analysis.Calculus.FDeriv.Mul
+public import Mathlib.Analysis.Calculus.DifferentialForm.Basic
+public import Def.v1.Atlas.GeometryOfManifolds.code.DifferentialForms.Part2
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialForms
+public import Instance.v1.Atlas.GeometryOfManifolds.code.EuclideanDFS
 
+public section
 
 noncomputable section
 

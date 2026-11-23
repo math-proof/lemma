@@ -1,0 +1,31 @@
+module
+
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Abbrev.Analysis.Section_3_3_fn
+public import Theorem.Set.Eq_F333c.is.EqAdd_1
+
+public section
+
+open Chapter3 hiding Nat Set
+open Chapter3.SetTheory
+open Chapter3.SetTheory.Set
+open Set
+
+
+/--
+[SetTheory.Set.f_3_3_3c_eval'](https://github.com/teorth/analysis/blob/main/Analysis/Section_3_3.lean)
+-/
+@[path]
+public theorem main
+  [SetTheory]
+  {n: ℕ} :
+-- imply
+  f_3_3_3c (coe_nonzero (n+1) (by positivity)) = n :=
+-- proof
+  by
+    symm; simp [Eq_F333c.is.EqAdd_1]
+
+
+-- created on 2026-10-22
+-- updated on 2026-10-26

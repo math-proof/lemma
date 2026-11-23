@@ -1,12 +1,15 @@
-import Mathlib
-import Theorem.Analysis.Section_5_3.Part12
-import Instance.Analysis.Section_5_4
-import Theorem.Analysis.Section_5_4.Part2
-import Theorem.Analysis.Section_5_3.Part9
-import Theorem.Analysis.Section_5_3.Part11
-import Theorem.Analysis.Section_5_3.Part4
-import Theorem.Analysis.Section_5_3.Part7
-import Theorem.Analysis.Section_5_1.Part8
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_5_3.Part12
+public import Instance.Analysis.Section_5_4
+public import Theorem.Analysis.Section_5_4.Part2
+public import Theorem.Analysis.Section_5_3.Part9
+public import Theorem.Analysis.Section_5_3.Part11
+public import Theorem.Analysis.Section_5_3.Part4
+public import Theorem.Analysis.Section_5_3.Part7
+public import Theorem.Analysis.Section_5_1.Part8
+
 /-!
 # Analysis I, Section 5.4: Ordering the reals
 
@@ -27,6 +30,8 @@ Users of the companion who have completed the exercises in this section are welc
 - (Add tip here)
 
 -/
+
+public section
 
 
 namespace Chapter5

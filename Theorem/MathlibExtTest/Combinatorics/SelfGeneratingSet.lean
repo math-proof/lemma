@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SelfGeneratingSet.lean -/
+module
 
-
-import Def.Combinatorics.SelfGeneratingSet.Part2
-import Theorem.Finset.SelfGeneratingSet
+public import Def.Combinatorics.SelfGeneratingSet.Part2
+public import Theorem.Finset.SelfGeneratingSet
 open scoped Classical
 
+public section
 
 namespace MetaMathlibExt.SelfGeneratingSet
 

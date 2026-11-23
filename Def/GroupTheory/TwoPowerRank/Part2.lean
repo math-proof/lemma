@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/TwoPowerRank.lean -/
 
-import Mathlib.Algebra.Module.ZMod
-import Mathlib.LinearAlgebra.BilinearMap
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Instance.GroupTheory.TwoPowerRank
+module
+
+public import Mathlib.Algebra.Module.ZMod
+public import Mathlib.LinearAlgebra.BilinearMap
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Instance.GroupTheory.TwoPowerRank
+
+@[expose] public section
+
 /-!
 # Higher two-power ranks of finite abelian groups
 

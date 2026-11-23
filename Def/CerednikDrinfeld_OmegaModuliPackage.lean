@@ -2,7 +2,7 @@ import Mathlib
 import Instance.MvFormalGroup_NegV2
 import Lemma.MvPowerSeries.SpecialFormalModule
 import Def.CerednikDrinfeld_FormalUpperHalfPlaneDatum
-import Lemma.Submodule.FormalUpperHalfPlaneFunctor
+import Theorem.Submodule.FormalUpperHalfPlaneFunctor
 
 set_option autoImplicit false
 

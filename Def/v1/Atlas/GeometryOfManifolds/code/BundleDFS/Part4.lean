@@ -8,14 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Geometry.Manifold.VectorBundle.Basic
-import Mathlib.Geometry.Manifold.VectorBundle.Tangent
-import Mathlib.Geometry.Manifold.VectorBundle.CovariantDerivative.Basic
-import Mathlib.Topology.VectorBundle.Basic
-import Mathlib.LinearAlgebra.Alternating.Basic
-import Mathlib.Analysis.Complex.Basic
-import Instance.v1.Atlas.GeometryOfManifolds.code.BundleDFS.Part3
+module
 
+public import Mathlib.Geometry.Manifold.VectorBundle.Basic
+public import Mathlib.Geometry.Manifold.VectorBundle.Tangent
+public import Mathlib.Geometry.Manifold.VectorBundle.CovariantDerivative.Basic
+public import Mathlib.Topology.VectorBundle.Basic
+public import Mathlib.LinearAlgebra.Alternating.Basic
+public import Mathlib.Analysis.Complex.Basic
+public import Instance.v1.Atlas.GeometryOfManifolds.code.BundleDFS.Part3
+
+@[expose] public section
 
 noncomputable section
 

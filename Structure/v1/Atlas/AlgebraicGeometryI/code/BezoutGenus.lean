@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutIntersection
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutIntersection
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutIntersection
 public import Mathlib.RingTheory.Polynomial.Resultant.Basic
 public import Mathlib.RingTheory.RegularLocalRing.Defs
 public import Mathlib.RingTheory.KrullDimension.Basic

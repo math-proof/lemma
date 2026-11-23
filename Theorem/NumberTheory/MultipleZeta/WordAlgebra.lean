@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/WordAlgebra.lean -/
+module
 
-import Mathlib.Algebra.FreeAlgebra
-import Theorem.NumberTheory.MultipleZeta.Index.Part2
-import Theorem.Nat.MultipleZeta.Index
-import Def.NumberTheory.MultipleZeta.WordAlgebra
+public import Mathlib.Algebra.FreeAlgebra
+public import Theorem.NumberTheory.MultipleZeta.Index.Part2
+public import Theorem.Nat.MultipleZeta.Index
+public import Def.NumberTheory.MultipleZeta.WordAlgebra
 
+public section
 
 namespace MetaMathlibExt.MultipleZeta
 

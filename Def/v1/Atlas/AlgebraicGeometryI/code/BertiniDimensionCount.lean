@@ -8,10 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Tactic
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.ChevalleyImage
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ChevalleyImage
+module
 
+public import Mathlib.Tactic
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.ChevalleyImage
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ChevalleyImage
+
+@[expose] public section
 
 namespace BertiniArithmetic
 

@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/ODE/ExplicitEuler.lean -/
+module
 
-
-import Theorem.Real.ODE.ExplicitEuler
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Theorem.Real.ODE.ExplicitEuler
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
 open Set
 open MathlibExt.Analysis.ODE.ExplicitEulerWanted
 
+public section
 
 -- The exponential solution has a uniform quadratic explicit-Euler local error.
 example :

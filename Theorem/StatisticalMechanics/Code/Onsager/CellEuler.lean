@@ -7,11 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.CellCount.Part2
-import Def.StatisticalMechanics.Code.Onsager.CellEuler
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.CellCount.Part2
+public import Def.StatisticalMechanics.Code.Onsager.CellEuler
 
+public section
 
 namespace StatMech.Onsager.CellEuler
 

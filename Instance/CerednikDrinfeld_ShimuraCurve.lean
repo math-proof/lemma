@@ -1,12 +1,15 @@
 -- Carved from Lemma/Definitions/Def_CerednikDrinfeld_ShimuraCurve.lean: instance decls only.
-import Lemma.QuaternionAlgebra.EichlerOrder
-import Theorem.QuaternionAlgebra.ReducedNorm
-import Def.ModularCurve_UniformizedHeckeCurve
-import Instance.AlgebraicCurve_BaseChangeGalois
-import Instance.AlgebraicCurve_IsCurveOver
-import Structure.CerednikDrinfeld_TwoPlaceTorsionDatum
-import Instance.Compat_Mathlib430
-import Lemma.MvPolynomial.ShimuraCurve
+module
+
+public import Theorem.QuaternionAlgebra.EichlerOrder
+public import Theorem.QuaternionAlgebra.ReducedNorm
+public import Def.ModularCurve_UniformizedHeckeCurve
+public import Instance.AlgebraicCurve_BaseChangeGalois
+public import Instance.AlgebraicCurve_IsCurveOver
+public import Structure.CerednikDrinfeld_TwoPlaceTorsionDatum
+public import Instance.Compat_Mathlib430
+public import Theorem.MvPolynomial.ShimuraCurve
+@[expose] public section
 
 set_option autoImplicit false
 

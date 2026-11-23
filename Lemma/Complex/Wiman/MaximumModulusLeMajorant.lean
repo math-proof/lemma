@@ -4,8 +4,6 @@ import Theorem.Analysis.Complex.Wiman.MaximumModulusLeMajorant
 open Complex
 
 
-namespace Complex
-
 /--
 [wimanMaximumModulus_le_wimanMajorant](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/MaximumModulusLeMajorant.lean)
 -/
@@ -34,9 +32,8 @@ lemma wimanMaximumModulus_le_wimanMajorant
       intro n
       rw [norm_mul, norm_pow, mem_sphere_zero_iff_norm.mp hz, wimanTerm,
         abs_of_nonneg hr]
-end Complex
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-22

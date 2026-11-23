@@ -1,5 +1,5 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_SpecializationMap.lean: instance decls only.
-import Lemma.HahnSeries.JqCoeff
+import Theorem.HahnSeries.JqCoeff
 import Theorem.LaurentSeries.LaurentCoeff
 import Instance.ModularCurve_PhiGen
 import Class.AlgebraicCurve_DivisorClassGroup
@@ -26,7 +26,7 @@ import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
 import Def.ModularCurve_FibreModel
 import Instance.ModularCurve_ArithmeticGalois
 import Structure.ModularCurve_PlaceSpecialization
-import Lemma.IntermediateField.SpecializationMap
+import Theorem.IntermediateField.SpecializationMap
 
 set_option autoImplicit false
 

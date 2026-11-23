@@ -5,10 +5,14 @@ Author: @toskua, Avocado
 -/
 
 
-import Theorem.RingTheory.Polynomial.Eisenstein.AdjoinRoot
-import Theorem.Int.Polynomial.Eisenstein.AdjoinRoot
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Instance.MathlibExtTest.RingTheory.Polynomial.Eisenstein.AdjoinRoot
+module
+
+public import Theorem.RingTheory.Polynomial.Eisenstein.AdjoinRoot
+public import Theorem.Int.Polynomial.Eisenstein.AdjoinRoot
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Instance.MathlibExtTest.RingTheory.Polynomial.Eisenstein.AdjoinRoot
+@[expose] public section
+
 open Polynomial
 
 variable {A : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]

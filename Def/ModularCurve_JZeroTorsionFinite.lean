@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.WeierstrassCurve.FreyPackage
+import Theorem.WeierstrassCurve.FreyPackage
 import Instance.ModularCurve_ArithmeticGalois
 
 set_option autoImplicit false

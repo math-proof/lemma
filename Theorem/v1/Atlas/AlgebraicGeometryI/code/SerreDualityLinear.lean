@@ -7,11 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.CohomologyP1.Part2
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyP1
-import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityLinear
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.CohomologyP1.Part2
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyP1
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityLinear
 
+public section
 
 namespace SerreDualityP1
 

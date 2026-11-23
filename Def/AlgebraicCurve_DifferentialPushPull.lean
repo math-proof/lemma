@@ -1,5 +1,9 @@
-import Mathlib
-import Lemma.Scheme.Correspondence
+module
+
+public import Mathlib
+public import Theorem.Scheme.Correspondence
+
+@[expose] public section
 
 set_option autoImplicit false
 

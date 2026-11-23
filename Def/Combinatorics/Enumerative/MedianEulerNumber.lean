@@ -4,26 +4,31 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Nat.ModEq
-import Def.Combinatorics.Enumerative.EulerSeidelMatrix
-import Theorem.Finset.Enumerative.EulerSeidelMatrix
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Algebra.BigOperators.NatAntidiagonal
-import Mathlib.Algebra.Ring.Parity
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Data.Int.ModEq
-import Mathlib.Data.List.GetD
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Nat.Choose.Sum
-import Mathlib.Data.ZMod.Basic
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.RingTheory.PowerSeries.Derivative
-import Mathlib.RingTheory.PowerSeries.Exp
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Nat.ModEq
+public import Def.Combinatorics.Enumerative.EulerSeidelMatrix
+public import Theorem.Finset.Enumerative.EulerSeidelMatrix
+public import Mathlib.Algebra.BigOperators.Field
+public import Mathlib.Algebra.BigOperators.NatAntidiagonal
+public import Mathlib.Algebra.Ring.Parity
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Data.Int.ModEq
+public import Mathlib.Data.List.GetD
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Nat.Choose.Sum
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.RingTheory.PowerSeries.Basic
+public import Mathlib.RingTheory.PowerSeries.Derivative
+public import Mathlib.RingTheory.PowerSeries.Exp
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # Median Euler numbers
 

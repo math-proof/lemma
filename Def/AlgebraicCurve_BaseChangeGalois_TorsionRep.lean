@@ -3,8 +3,13 @@
 -- This module imports Instance; Instance must NOT import this module (would cycle).
 -- The three public entangled defs smulValuationSubringEquiv / smulResidueRingEquiv /
 -- degZeroSMulHom stay in Instance (used inside instance bodies).
-import Instance.AlgebraicCurve_BaseChangeGalois
-import Mathlib.Algebra.Module.ZMod
+
+module
+
+public import Instance.AlgebraicCurve_BaseChangeGalois
+public import Mathlib.Algebra.Module.ZMod
+
+@[expose] public section
 
 set_option autoImplicit false
 

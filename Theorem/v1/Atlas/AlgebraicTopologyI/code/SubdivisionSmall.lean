@@ -7,19 +7,21 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section11
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section11
-import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section6
-import Structure.v1.Atlas.AlgebraicTopologyI.code.Section6
-import Mathlib.Algebra.FreeAbelianGroup.Finsupp
-import Mathlib.GroupTheory.Perm.Sign
-import Mathlib.Order.Interval.Finset.Fin
-import Mathlib.Topology.UniformSpace.Compact
-import Mathlib.Topology.MetricSpace.Pseudo.Lemmas
-import Mathlib.Topology.MetricSpace.Bounded
-import Mathlib.Algebra.Order.Archimedean.Basic
+public import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section11
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section11
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section6
+public import Structure.v1.Atlas.AlgebraicTopologyI.code.Section6
+public import Mathlib.Algebra.FreeAbelianGroup.Finsupp
+public import Mathlib.GroupTheory.Perm.Sign
+public import Mathlib.Order.Interval.Finset.Fin
+public import Mathlib.Topology.UniformSpace.Compact
+public import Mathlib.Topology.MetricSpace.Pseudo.Lemmas
+public import Mathlib.Topology.MetricSpace.Bounded
+public import Mathlib.Algebra.Order.Archimedean.Basic
 
+public section
 
 noncomputable section
 

@@ -2,6 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.LinearAlgebra.Matrix.Determinant.DeterminantsBasic
 import Syntax.LinearAlgebra.Matrix.Notation
+open scoped Matrix
 
 
 section
@@ -190,7 +191,7 @@ lemma det_outerProduct_eq_zero (x y : Fin n → K) (hn : 2 ≤ n) :
 /-- Corollary: Matrix with all entries equal has det = 0 for n ≥ 2.
     Label: eq.prop.det.xiyj.cor-x -/
 lemma det_const_matrix_eq_zero (c : K) (hn : 2 ≤ n) :
-    ([i < n, j < n] c).det = 0 := by
+    ([i < n][j < n] c).det = 0 := by
   have h : Nontrivial (Fin n) := Fin.nontrivial_iff_two_le.mpr hn
   convert det_vecMulVec (fun _ : Fin n => 1) (fun _ : Fin n => c)
   ext i j
@@ -396,8 +397,8 @@ lemma det_eq_cols (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j)
 /-- Scaling a column by λ scales the determinant by λ.
     Label: thm.det.colop (d) -/
 lemma det_scale_col (A : Matrix (Fin n) (Fin n) K) (j : Fin n) (c : K) :
-    ([i < n, k < n] if k = j then c * A i k else A i k).det = c * A.det := by
-  have h1 : ([i < n, k < n] if k = j then c * A i k else A i k) =
+    ([i < n][k < n] if k = j then c * A i k else A i k).det = c * A.det := by
+  have h1 : ([i < n][k < n] if k = j then c * A i k else A i k) =
             updateCol A j (fun i => c * A i j) := by
     ext i k
     by_cases hk : k = j <;> simp [hk, updateCol_self, updateCol_ne]
@@ -472,13 +473,13 @@ lemma det_mul' (A B : Matrix (Fin n) (Fin n) K) : (A * B).det = A.det * B.det :=
 /-- Scaling row i by d_i multiplies determinant by ∏ d_i.
     Label: eq.cor.det.scale-row-col.row -/
 lemma det_scale_rows (A : Matrix (Fin n) (Fin n) K) (d : Fin n → K) :
-    ([i < n, j < n] (d i * A i j)).det = (∏ i, d i) * A.det := by
+    ([i < n][j < n] (d i * A i j)).det = (∏ i, d i) * A.det := by
   exact det_mul_column d A
 
 /-- Scaling column j by d_j multiplies determinant by ∏ d_j.
     Label: eq.cor.det.scale-row-col.col -/
 lemma det_scale_cols (A : Matrix (Fin n) (Fin n) K) (d : Fin n → K) :
-    ([i < n, j < n] (d j * A i j)).det = (∏ j, d j) * A.det :=
+    ([i < n][j < n] (d j * A i j)).det = (∏ j, d j) * A.det :=
   det_mul_row d A
 
 
@@ -664,7 +665,7 @@ private lemma det_const_matrix_eq_zero_eq
   (hn : 2 ≤ n)
   (c : K) :
 -- imply
-  ([i < n, j < n] c).det = 0 := by
+  ([i < n][j < n] c).det = 0 := by
 -- proof
   apply AlgebraicCombinatorics.Det.det_const_matrix_eq_zero c hn
 
@@ -959,7 +960,7 @@ private lemma det_scale_col_eq
   (j : Fin n)
   (c : K) :
 -- imply
-  ([i < n, k < n] if k = j then c * A i k else A i k).det = c * A.det := by
+  ([i < n][k < n] if k = j then c * A i k else A i k).det = c * A.det := by
 -- proof
   apply AlgebraicCombinatorics.Det.det_scale_col A j c
 
@@ -1061,7 +1062,7 @@ private lemma det_scale_rows_eq
   (A : Matrix (Fin n) (Fin n) K)
   (d : Fin n → K) :
 -- imply
-  ([i < n, j < n] (d i * A i j)).det = (∏ i, d i) * A.det := by
+  ([i < n][j < n] (d i * A i j)).det = (∏ i, d i) * A.det := by
 -- proof
   apply AlgebraicCombinatorics.Det.det_scale_rows A d
 
@@ -1075,7 +1076,7 @@ private lemma det_scale_cols_eq
   (A : Matrix (Fin n) (Fin n) K)
   (d : Fin n → K) :
 -- imply
-  ([i < n, j < n] (d j * A i j)).det = (∏ j, d j) * A.det := by
+  ([i < n][j < n] (d j * A i j)).det = (∏ j, d j) * A.det := by
 -- proof
   apply AlgebraicCombinatorics.Det.det_scale_cols A d
 

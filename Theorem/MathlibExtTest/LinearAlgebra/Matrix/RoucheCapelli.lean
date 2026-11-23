@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/RoucheCapelli.lean -/
+module
 
-
-import Theorem.Matrix.RoucheCapelli
+public import Theorem.Matrix.RoucheCapelli
 open scoped Matrix
 
+public section
 
 -- The explicit solution `[1, 1]` gives equal ranks for this singular rational system.
 example :

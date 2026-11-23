@@ -1,11 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/IsogenyVolcano.lean -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Finset.Filter
-import Mathlib.Data.Fintype.Basic
-import Mathlib.Data.Fin.Basic
-import Mathlib.Data.Nat.Prime.Basic
-import Instance.Combinatorics.IsogenyVolcano
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Finset.Filter
+public import Mathlib.Data.Fintype.Basic
+public import Mathlib.Data.Fin.Basic
+public import Mathlib.Data.Nat.Prime.Basic
+public import Instance.Combinatorics.IsogenyVolcano
+
+@[expose] public section
+
 set_option autoImplicit false
 
 open BigOperators

@@ -7,15 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.WordSigmaInvariance
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.SimpleReflectionInversions
-import Structure.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionGenuine
-import Mathlib.GroupTheory.Coxeter.Length
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.WordSigmaInvariance
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.SimpleReflectionInversions
+public import Structure.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionGenuine
+public import Mathlib.GroupTheory.Coxeter.Length
 set_option maxHeartbeats 400000
 
 open Finset BigOperators CoxeterGroup CoxeterExchangeGenuine
 
+public section
 
 namespace CoxeterGroup
 

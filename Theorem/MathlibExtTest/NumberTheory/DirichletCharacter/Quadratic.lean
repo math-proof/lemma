@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/Quadratic.lean -/
+module
 
-
-import Def.NumberTheory.DirichletCharacter.Quadratic
-import Theorem.Nat.DirichletCharacter.Quadratic
-import Mathlib.Tactic.NormNum.LegendreSymbol
+public import Def.NumberTheory.DirichletCharacter.Quadratic
+public import Theorem.Nat.DirichletCharacter.Quadratic
+public import Mathlib.Tactic.NormNum.LegendreSymbol
 open MetaMathlibExt
 
+public section
 
 example : kroneckerSym 1 0 = 1 := by norm_num [kroneckerSym_zero]
 

@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/LocalRing/ResidueField/DVR.lean -/
+module
 
+public import Theorem.RingTheory.LocalRing.ResidueField.DVR.Part2
+public import Theorem.AlgHom.LocalRing.ResidueField.DVR
 
-import Theorem.RingTheory.LocalRing.ResidueField.DVR.Part2
-import Theorem.AlgHom.LocalRing.ResidueField.DVR
+public section
+
 variable {A B C D : Type*}
 variable [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
 variable [CommRing B] [IsDomain B] [IsDiscreteValuationRing B]

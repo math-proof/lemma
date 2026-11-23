@@ -11,7 +11,7 @@ import Mathlib.SetTheory.Cardinal.Finite
 import Def.Combinatorics.Enumerative.Partition.Overpartition
 import Theorem.Nat.Enumerative.Partition.Overpartition
 import Theorem.Nat.QuadraticForms.ThreeSquares
-import Lemma.Real.SpecialFunctions.JacobiTripleProduct
+import Theorem.Real.SpecialFunctions.JacobiTripleProduct
 import Def.NumberTheory.QuadraticForms.ThreeSquares
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Combinatorics.Enumerative.Partition.Basic

@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ProdigiousNumber.lean -/
+module
 
+public import Instance.NumberTheory.ProdigiousNumber
 
-import Instance.NumberTheory.ProdigiousNumber
-
+public section
 
 example : ¬ MetaMathlibExt.IsProdigious 0 12 := by decide
 

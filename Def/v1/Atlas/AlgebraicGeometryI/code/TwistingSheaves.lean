@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec14QCohProjective
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec14QCohProjective
+module
+
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec14QCohProjective
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec14QCohProjective
+
+@[expose] public section
+
 open CategoryTheory Limits TopologicalSpace AlgebraicGeometry
 
 universe u

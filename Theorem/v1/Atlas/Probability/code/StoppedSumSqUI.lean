@@ -7,10 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.Probability.WaldSecondEquation
-import Theorem.Measure.Atlas.v1.Probability.code.WaldSecondEquation
+public import Def.Probability.WaldSecondEquation
+public import Theorem.Measure.Atlas.v1.Probability.code.WaldSecondEquation
 open MeasureTheory ProbabilityTheory MeasureTheory.Measure Finset ENNReal Filter
+
+public section
 
 /-- Let `X₁, X₂, …` be i.i.d. with `E[X₁] = 0` and `E[X₁²] < ∞`, and let `T` be a
 stopping time (relative to the natural filtration) with `E[T] < ∞`. Writing

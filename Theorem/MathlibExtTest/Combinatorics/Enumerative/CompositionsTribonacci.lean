@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/CompositionsTribonacci.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.CompositionsTribonacci
+public import Theorem.Finset.Enumerative.CompositionsTribonacci
 
-import Def.Combinatorics.Enumerative.CompositionsTribonacci
-import Theorem.Finset.Enumerative.CompositionsTribonacci
-
+public section
 
 namespace MetaMathlibExt
 

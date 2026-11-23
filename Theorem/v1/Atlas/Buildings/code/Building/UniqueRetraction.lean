@@ -12,7 +12,7 @@ import Def.v1.Atlas.Buildings.code.Building.RetractionDef
 import Lemma.Finset.GalleryDist.le.Length.of.Connects
 import Def.v1.Atlas.Buildings.code.Building.Labels
 import Theorem.Finset.LabelMap.eq.ImageLabelMap.of.EqLabelMap_Head_ImageLabelMap_Head.IsChainAdjacent.Ne.All_EqLabelMap_ImageLabelMap
-import Lemma.Finset.EqImageRefl.of.Ne.EqImageToFun.EqImageToFun.IsMaximalToSimplicialComplex
+import Theorem.Finset.EqImageRefl.of.Ne.EqImageToFun.EqImageToFun.IsMaximalToSimplicialComplex
 import Theorem.v1.Atlas.Buildings.code.Building.VertexActionHelper
 set_option maxHeartbeats 0
 

@@ -1,6 +1,10 @@
-import Mathlib.NumberTheory.Padics.PadicVal.Basic
-import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
-import Def.ModularCurve_AtPPackage
+module
+
+public import Mathlib.NumberTheory.Padics.PadicVal.Basic
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
+public import Def.ModularCurve_AtPPackage
+
+@[expose] public section
 
 open scoped Classical in
 section

@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/MedianGenocchiDivisibility.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.MedianGenocchiDivisibility
+public import Theorem.Finset.Enumerative.MedianGenocchiDivisibility
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum.BigOperators
 
-import Def.Combinatorics.Enumerative.MedianGenocchiDivisibility
-import Lemma.Finset.Enumerative.MedianGenocchiDivisibility
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum.BigOperators
-
+public section
 
 namespace MathlibExtTest.Combinatorics.Enumerative.MedianGenocchiDivisibility
 

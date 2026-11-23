@@ -12,7 +12,7 @@ module
 
 public import Class.v1.Atlas.Buildings.code.Valuation.LatticesValuations
 public import Theorem.Nat.IsInO
-public import Lemma.Fin.SquareDetV'.eq.One.of.All_Eq.Nondegenerate
+public import Theorem.Fin.SquareDetV'.eq.One.of.All_Eq.Nondegenerate
 public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.BilinearForms
 public import Def.v1.Atlas.Buildings.code.Building.Affine.Part2
 public import Def.v1.Atlas.Buildings.code.SphericalBuilding.IsometryGroups.Part3

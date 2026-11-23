@@ -2,11 +2,12 @@ module
 
 public import Mathlib
 public import Def.ModularCurve_LevelOneGlueData
-public import Lemma.Finset.SupersingularNodes
+public import Theorem.Finset.SupersingularNodes
 public import Def.ModularCurve_SupersingularModuli
 public import Structure.AlgebraicCurve_RegularProlongation
-public import Lemma.LaurentSeries.CharPReduction
-public import Lemma.Finsupp.CuspidalClass
+public import Theorem.LaurentSeries.CharPReduction
+public import Def.ModularCurve_CuspidalClass
+public import Theorem.Finsupp.CuspidalClass
 public import Def.ModularCurve_X0ModL
 
 set_option autoImplicit false

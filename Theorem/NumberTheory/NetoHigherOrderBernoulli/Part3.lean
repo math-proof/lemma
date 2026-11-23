@@ -3,19 +3,23 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
+module
 
-import Mathlib.Basic.Complex.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.NumberTheory.Bernoulli
-import Mathlib.RingTheory.PowerSeries.Binomial
-import Mathlib.RingTheory.PowerSeries.Substitution
-import Mathlib.Algebra.Polynomial.Roots
-import Def.NumberTheory.NetoHigherOrderBernoulli.Part2
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.RingTheory.PowerSeries.Binomial
+public import Mathlib.RingTheory.PowerSeries.Substitution
+public import Mathlib.Algebra.Polynomial.Roots
+public import Def.NumberTheory.NetoHigherOrderBernoulli.Part2
+
 /-! # Neto's symmetry identity for higher-order Bernoulli numbers
 
 This file defines higher-order Bernoulli numbers through their formal exponential generating
 series and proves Neto's symmetry identity for them.
 -/
+
+public section
 
 
 namespace MetaMathlibExt

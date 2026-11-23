@@ -1,5 +1,9 @@
-import Mathlib
-import Lemma.LaurentSeries.CharPReduction
+module
+
+public import Mathlib
+public import Theorem.LaurentSeries.CharPReduction
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -19,7 +19,7 @@ import Mathlib.Algebra.Algebra.Bilinear
 import Mathlib.LinearAlgebra.Eigenspace.Basic
 import Mathlib.FieldTheory.IsAlgClosed.Basic
 import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutMultiplicitySum.Part2
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutMultiplicitySum
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutMultiplicitySum
 import Def.v1.Atlas.AlgebraicGeometryI.code.Lec5BezoutPascal.Part2
 open MvPolynomial Classical
 

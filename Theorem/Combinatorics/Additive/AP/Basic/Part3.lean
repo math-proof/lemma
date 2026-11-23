@@ -13,13 +13,17 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -/
+module
 
-import Mathlib.Algebra.Module.NatInt
-import Mathlib.Combinatorics.Additive.AP.Three.Defs
-import Mathlib.Data.ENat.Lattice
-import Mathlib.Data.Set.Card
-import Mathlib.Tactic
-import Def.Combinatorics.Additive.AP.Basic.Part3
+public import Mathlib.Algebra.Module.NatInt
+public import Mathlib.Combinatorics.Additive.AP.Three.Defs
+public import Mathlib.Data.ENat.Lattice
+public import Mathlib.Data.Set.Card
+public import Mathlib.Tactic
+public import Def.Combinatorics.Additive.AP.Basic.Part3
+
+public section
+
 variable {α : Type*} [AddCommMonoid α]
 
 /-! # Arithmetic progressions -/

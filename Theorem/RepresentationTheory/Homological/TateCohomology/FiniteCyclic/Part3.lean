@@ -1,10 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RepresentationTheory/Homological/TateCohomology/FiniteCyclic.lean -/
+module
 
-import Mathlib.RepresentationTheory.Homological.TateCohomology.Basic
-import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
-import Mathlib.RepresentationTheory.Homological.GroupCohomology.FiniteCyclic
-import Mathlib.RepresentationTheory.Homological.GroupHomology.FiniteCyclic
-import Def.RepresentationTheory.Homological.TateCohomology.FiniteCyclic.Part3
+public import Mathlib.RepresentationTheory.Homological.TateCohomology.Basic
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
+public import Mathlib.RepresentationTheory.Homological.GroupCohomology.FiniteCyclic
+public import Mathlib.RepresentationTheory.Homological.GroupHomology.FiniteCyclic
+public import Def.RepresentationTheory.Homological.TateCohomology.FiniteCyclic.Part3
+
+public section
+
 @[expose] noncomputable section
 
 open CategoryTheory Limits ModuleCat Rep

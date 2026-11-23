@@ -1,11 +1,16 @@
-import Mathlib.Tactic
-import Theorem.Bool.Or.of.Or.Imp
-import Theorem.Bool.And.of.And.Imp
-import Theorem.Bool.Imp.is.ImpNotS
-import Theorem.Bool.Imp.of.Imp.Imp
-import Def.Lean.Meta.Expr -- using Lean.Expr.is_Prop
-import Def.Lean.FVarId
-import Syntax.Tactic.Logic.Part3
+module
+
+public import Mathlib.Tactic
+public import Theorem.Bool.Or.of.Or.Imp
+public import Theorem.Bool.And.of.And.Imp
+public import Theorem.Bool.Imp.is.ImpNotS
+public import Theorem.Bool.Imp.of.Imp.Imp
+public import Def.Lean.Meta.Expr -- using Lean.Expr.is_Prop
+public import Def.Lean.FVarId
+public import Syntax.Tactic.Logic.Part3
+
+@[expose] public meta section
+
 open Lean Elab.Tactic Meta Parser.Tactic
 
 

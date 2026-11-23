@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Data.Fintype.Perm
-import Mathlib.LinearAlgebra.Matrix.Permanent
-import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.Permanent
-import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter10.Permanent
-import Structure.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.TournamentHamiltonPaths
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.Data.Fintype.Perm
+public import Mathlib.LinearAlgebra.Matrix.Permanent
+public import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.Permanent
+public import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter10.Permanent
+public import Structure.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.TournamentHamiltonPaths
+
+@[expose] public section
+
 set_option maxHeartbeats 3200000
 
 open Real Finset BigOperators

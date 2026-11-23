@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Farey.lean -/
+module
 
-
-import Def.NumberTheory.Farey
-import Theorem.Nat.Farey
-import Mathlib.Tactic
+public import Def.NumberTheory.Farey
+public import Theorem.Nat.Farey
+public import Mathlib.Tactic
 open Farey
 
+public section
 
 example : (0 : ℚ) ∈ fareySeq 1 ∧ (1 : ℚ) ∈ fareySeq 1 := by
   constructor <;> rw [mem_fareySeq_iff, mem_fareyFinset_iff] <;> norm_num

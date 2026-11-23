@@ -4,10 +4,15 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Def.NumberTheory.Ramanujan.Part1Ch3Entry9IiGeneralizedbellgeneratingDefining
-import Theorem.Nat.Ramanujan.Part1Ch3Entry9IiGeneralizedbellgeneratingDefining
-import Mathlib.Algebra.Order.Ring.Star
+module
+
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Def.NumberTheory.Ramanujan.Part1Ch3Entry9IiGeneralizedbellgeneratingDefining
+public import Theorem.Nat.Ramanujan.Part1Ch3Entry9IiGeneralizedbellgeneratingDefining
+public import Mathlib.Algebra.Order.Ring.Star
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 3, Section 8, Example 4
 

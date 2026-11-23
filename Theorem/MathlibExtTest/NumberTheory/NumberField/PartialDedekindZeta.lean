@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/PartialDedekindZeta.lean -/
+module
 
+public import Def.NumberTheory.NumberField.PartialDedekindZeta
+public import Theorem.Nat.NumberField.PartialDedekindZeta
 
-import Def.NumberTheory.NumberField.PartialDedekindZeta
-import Theorem.Nat.NumberField.PartialDedekindZeta
-
+public section
 
 namespace NumberField
 

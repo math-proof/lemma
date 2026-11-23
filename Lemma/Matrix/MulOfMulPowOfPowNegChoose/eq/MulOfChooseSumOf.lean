@@ -3,6 +3,7 @@ import Mathlib.Data.Matrix.ColumnRowPartitioned
 import Mathlib.LinearAlgebra.Vandermonde
 import Initialize.Tactic.Attr.Basic
 import Syntax.LinearAlgebra.Matrix.Notation
+open scoped Matrix
 
 
 @[path]
@@ -11,12 +12,12 @@ private lemma main
   {n m d : ℕ}
   {x δ l : R} :
 -- imply
-  ([i < n, j < m] x ^ (j : ℕ) * ((j : R) + δ) ^ (i : ℕ)) *
-    ([i < m, j < m - d]
+  ([i < n][j < m] x ^ (j : ℕ) * ((j : R) + δ) ^ (i : ℕ)) *
+    ([i < m][j < m - d]
       (-l) ^ ((d : ℤ) + (j : ℕ) - (i : ℕ)) * (if (j : ℕ) ≤ i then (d.choose ((i : ℕ) - j) : R) else 0)) =
-    ([i < n, j < n] (((i : ℕ).choose j : R) *
+    ([i < n][j < n] (((i : ℕ).choose j : R) *
       ∑ h ∈ Finset.range (d + 1), (d.choose h : R) * (-l) ^ (d - h) * x ^ h * (h : R) ^ ((i : ℤ) - (j : ℕ)))) *
-    ([i < n, j < m - d] ((j : R) + δ) ^ (i : ℕ) * x ^ (j : ℕ)) := by
+    ([i < n][j < m - d] ((j : R) + δ) ^ (i : ℕ) * x ^ (j : ℕ)) := by
 -- proof
   ext i j
   have hj := j.isLt

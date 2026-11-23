@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/PowerSeries/TaylorFormula.lean -/
 
 -- Author: @toskua, Avocado
+module
 
-import Theorem.PowerSeries.TaylorFormula
+public import Theorem.PowerSeries.TaylorFormula
 
+public section
 
 namespace PowerSeriesTaylorFormulaTest
 

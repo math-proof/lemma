@@ -1,11 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/Log/IntegralDerivative.lean -/
+module
 
+public import Def.Analysis.SpecialFunctions.Log.IntegralDerivative
+public import Theorem.Real.SpecialFunctions.Log.IntegralDerivative
 
-import Def.Analysis.SpecialFunctions.Log.IntegralDerivative
-import Lemma.Real.SpecialFunctions.Log.IntegralDerivative
 /-!
 # Tests for the logarithmic integral derivative bridge
 -/
+
+public section
 
 
 namespace Real

@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Normed/Module/JamesReflexivity.lean -/
+module
 
+public import Def.Analysis.Normed.Module.JamesReflexivity
+public import Theorem.Real.Normed.Module.JamesReflexivity
+public import Mathlib.Analysis.InnerProductSpace.EuclideanDist
+public import Mathlib.Analysis.Normed.Operator.NNNorm
 
-import Def.Analysis.Normed.Module.JamesReflexivity
-import Theorem.Real.Normed.Module.JamesReflexivity
-import Mathlib.Analysis.InnerProductSpace.EuclideanDist
-import Mathlib.Analysis.Normed.Operator.NNNorm
-
+public section
 
 namespace MathlibExtTest.Analysis.Normed.Module.JamesReflexivity
 

@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Structure.v1.Atlas.DifferentialAnalysis.code.WavefrontSet.Part3
 import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontSet
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.ConeSupportCorollary
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ConeSupportCorollary
 import Theorem.v1.Atlas.DifferentialAnalysis.code.ConeSupportCorollary
 import Structure.v1.Atlas.DifferentialAnalysis.code.MicrolocalRegularity
 

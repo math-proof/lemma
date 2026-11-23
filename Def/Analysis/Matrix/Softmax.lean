@@ -1,7 +1,10 @@
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Matrix.Basic
-import Class.Analysis.SpecialFunctions.Exponential
+module
 
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Matrix.Basic
+public import Class.Analysis.SpecialFunctions.Exponential
+
+@[expose] public section
 
 /-!
 # Softmax of a matrix

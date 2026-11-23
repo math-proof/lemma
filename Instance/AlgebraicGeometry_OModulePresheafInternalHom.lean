@@ -2,7 +2,8 @@
 import Mathlib
 
 import Def.AlgebraicGeometry_OModulePresheafHom
-import Lemma.Scheme.OModulePresheafInternalHom
+import Theorem.Scheme.OModulePresheafInternalHom
+import Def.AlgebraicGeometry_OModulePresheafInternalHom
 
 set_option autoImplicit false
 

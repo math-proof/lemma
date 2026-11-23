@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/BookNumber.lean -/
+module
 
+public import Def.Combinatorics.SimpleGraph.BookNumber
+public import Theorem.SimpleGraph.BookNumber
 
-import Def.Combinatorics.SimpleGraph.BookNumber
-import Theorem.SimpleGraph.BookNumber
-
+public section
 
 namespace SimpleGraph
 

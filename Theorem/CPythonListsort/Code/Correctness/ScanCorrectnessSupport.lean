@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/ScanCorrectnessSupport.lean -/
 
 import Def.CPythonListsort.Code.Correctness.ScanRemainder.Part3
-import Lemma.List.Atlas.CPythonListsort.Code.Policy.MergeTopPowerPreservation
+import Theorem.List.Atlas.CPythonListsort.Code.Policy.MergeTopPowerPreservation
 /-!
 # Support lemmas for forward scan correctness
 

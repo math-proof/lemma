@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PellLucasSequence.lean -/
+module
 
+public import Def.NumberTheory.PellLucasSequence
+public import Theorem.Nat.PellLucasSequence
 
-import Def.NumberTheory.PellLucasSequence
-import Theorem.Nat.PellLucasSequence
-
+public section
 
 namespace MetaMathlibExt
 

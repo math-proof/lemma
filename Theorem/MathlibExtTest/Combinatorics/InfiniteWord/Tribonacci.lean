@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/InfiniteWord/Tribonacci.lean -/
+module
 
+public import Def.Combinatorics.InfiniteWord.Tribonacci.Part2
+public import Theorem.Finset.InfiniteWord.Tribonacci
 
-import Def.Combinatorics.InfiniteWord.Tribonacci.Part2
-import Theorem.Finset.InfiniteWord.Tribonacci
-
+public section
 
 namespace InfiniteWord
 

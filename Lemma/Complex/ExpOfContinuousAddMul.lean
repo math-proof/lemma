@@ -2,9 +2,8 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.SpecialFunctions.ExpOfContinuousAddMul
 open scoped Interval Topology
+open MetaMathlibExt
 
-
-namespace MetaMathlibExt
 
 /--
 [ExpOfContinuousAddMul](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/ExpOfContinuousAddMul.lean)
@@ -21,8 +20,7 @@ private lemma main
 -- proof
   exists_eq_exp_mul_of_continuous_add_mul f hf hzero hadd
 
-end MetaMathlibExt
 
 
 -- created on 2026-10-11
--- updated on 2026-10-26
+-- updated on 2026-11-22

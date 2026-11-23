@@ -227,9 +227,25 @@ export class LeanToken extends Lean {
         return /^[a-zA-Z_][a-zA-Z_0-9]*$/.test(this.text);
     }
 
-    /** JSON keeps numeric literals only; every other token is an anonymous slot. */
-    toJSON() {
-        return /^\d+$/.test(this.text) ? this.text : "_";
+    /**
+     * Numeric literals stay literal; every other free leaf becomes `$n`, numbered by first appearance
+     * (`√a + a²` → `Add(Sqrt($1))(Square($1))`). Names bound by a surrounding big operator or
+     * quantifier become De Bruijn `?0`, `?1`, … when `ctx.binders` is present (`?0` is nearest).
+     * Regex generation turns `$n` back into `_`.
+     * @param {{ leaves: Map<string, number>, binders?: string[] }} [ctx]
+     */
+    toJSON(ctx = { leaves: new Map() }) {
+        if (this.text === '') return '';
+        if (/^\d+$/.test(this.text)) return this.text;
+        const binders = ctx.binders;
+        if (Array.isArray(binders)) {
+            for (let i = binders.length - 1; i >= 0; i--) {
+                if (binders[i] === this.text) return `?${binders.length - 1 - i}`;
+            }
+        }
+        const leaves = ctx.leaves;
+        if (!leaves.has(this.text)) leaves.set(this.text, leaves.size + 1);
+        return `$${leaves.get(this.text)}`;
     }
 
     latexArgs(_syntax) {

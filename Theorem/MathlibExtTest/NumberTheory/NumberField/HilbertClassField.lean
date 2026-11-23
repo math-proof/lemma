@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/HilbertClassField.lean -/
+module
 
-
-import Structure.NumberTheory.NumberField.HilbertClassField
-import Theorem.Nat.NumberField.HilbertClassField
+public import Structure.NumberTheory.NumberField.HilbertClassField
+public import Theorem.Nat.NumberField.HilbertClassField
 open scoped NumberField
+
+public section
 
 universe u
 

@@ -7,13 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib.Topology.Algebra.Order.LiminfLimsup
-import Theorem.StatisticalMechanics.Code.Sharpness.IsingSharpness
-import Def.StatisticalMechanics.Code.FrontierA.RandomWalkHighDimensionalReduction
+public import Mathlib.Topology.Algebra.Order.LiminfLimsup
+public import Theorem.StatisticalMechanics.Code.Sharpness.IsingSharpness
+public import Def.StatisticalMechanics.Code.FrontierA.RandomWalkHighDimensionalReduction
 open Filter Finset Topology
 
+public section
 
 namespace StatMech.FrontierA
 

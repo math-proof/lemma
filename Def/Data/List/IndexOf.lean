@@ -1,5 +1,8 @@
-import Initialize.Tactic.Attr.Basic
+module
 
+public import Initialize.Tactic.Attr.Basic
+
+@[expose] public section
 
 /-!
 SymPy's `index[v](x[:n])` (`Lemma/Finset/Eq/of/Eq/index/indexOf_Get.py`): the first position of the value `v`

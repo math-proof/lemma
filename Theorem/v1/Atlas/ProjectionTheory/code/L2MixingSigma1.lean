@@ -7,12 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib
-import Def.v1.Atlas.ProjectionTheory.code.SelbergExpansion.Part2
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.SelbergExpansion
+public import Mathlib
+public import Def.v1.Atlas.ProjectionTheory.code.SelbergExpansion.Part2
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.SelbergExpansion
 open Matrix Finset BigOperators
 
+public section
 
 noncomputable section
 

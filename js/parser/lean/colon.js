@@ -30,11 +30,11 @@ export class LeanColon extends LeanBinary {
      * Anywhere else it is only a type ascription, so the type is dropped and the
      * JSON is just the variable's.
      */
-    toJSON() {
+    toJSON(ctx = { leaves: new Map() }) {
         const parent = this.parent;
         if (parent instanceof L.LeanGet && parent.rhs === this)
-            return { Slice: [this.lhs.toJSON(), this.rhs.toJSON()] };
-        return this.lhs.toJSON();
+            return { Slice: [this.lhs.toJSON(ctx), this.rhs.toJSON(ctx)] };
+        return this.lhs.toJSON(ctx);
     }
 
     insert(caret, func, type) {
@@ -210,9 +210,5 @@ export class LeanColon extends LeanBinary {
             }
         }
         return `${first}${this.operator}${sep}%s`;
-    }
-
-    pathChoices(opts = {}) {
-        return this.lhs?.pathChoices?.(opts) ?? [""];
     }
 }

@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/DombNumber.lean -/
+module
 
-
-import Def.Combinatorics.Enumerative.DombNumber
-import Theorem.Finset.Enumerative.DombNumber
+public import Def.Combinatorics.Enumerative.DombNumber
+public import Theorem.Finset.Enumerative.DombNumber
 open scoped BigOperators
 
+public section
 
 namespace MetaMathlibExt
 

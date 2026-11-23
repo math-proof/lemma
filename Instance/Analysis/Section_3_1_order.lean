@@ -1,7 +1,9 @@
-import Instance.Analysis.Section_3_1.Part5
-import Lemma.Set.Subset.of.Subset.Subset_SetTheory_Set_subset_trans
-import Abbrev.Analysis.Section_3_1_order
+module
 
+public import Instance.Analysis.Section_3_1.Part5
+public import Theorem.Set.Subset.of.Subset.Subset_SetTheory_Set_subset_trans
+public import Abbrev.Analysis.Section_3_1_order
+@[expose] public section
 
 namespace Chapter3
 

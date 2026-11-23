@@ -1,7 +1,8 @@
 -- Carved from Lemma/Definitions/Def_PDivisibleGroup_PrimaryTorsion.lean: instance decls only.
 import Mathlib
 import Instance.EllipticCurve_TateModule
-import Lemma.LinearMap.PrimaryTorsion
+import Theorem.LinearMap.PrimaryTorsion
+import Def.LinearMap_PrimaryTorsion
 
 set_option autoImplicit false
 

@@ -11,9 +11,9 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
-public import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticStandardBasis
-public import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.HamiltonianVectorFields
-public import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticEvenDim
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticStandardBasis
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.HamiltonianVectorFields
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticEvenDim
 public import Theorem.v1.Atlas.GeometryOfManifolds.code.SymplecticStandardBasis
 public import Def.v1.Atlas.GeometryOfManifolds.code.HamiltonianVectorFields.Part3
 public import Def.v1.Atlas.GeometryOfManifolds.code.MoserDarboux
@@ -56,4 +56,3 @@ structure MoserFlow {Ω : ℕ → Type*} {VF : Type*}
   flow_ode : ∀ t, t ∈ Set.Icc (0 : ℝ) 1 → pullback_deriv t = (ρ t).pullback (inst.L (setup.X_t t) (setup.ω_t t) + setup.dω_dt t)
   deriv_zero_const : (∀ t, t ∈ Set.Icc (0 : ℝ) 1 → pullback_deriv t = 0) →
     ∀ t, t ∈ Set.Icc (0 : ℝ) 1 → (ρ t).pullback (setup.ω_t t) = setup.ω_t 0
-

@@ -12,9 +12,9 @@ module
 
 public import Mathlib
 public import Def.v1.Atlas.NumberTheoryI.code.KroneckerWeber.Part5
-public import Lemma.Nat.Atlas.v1.NumberTheoryI.code.KroneckerWeber
-public import Lemma.Nat.Atlas.v1.NumberTheoryI.code.IdealFactorization
-public import Lemma.Nat.Atlas.v1.NumberTheoryI.code.FinitePlaceAbsValue
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.KroneckerWeber
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.IdealFactorization
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.FinitePlaceAbsValue
 public import Theorem.v1.Atlas.NumberTheoryI.code.IdealFactorization.Part3
 public import Theorem.v1.Atlas.NumberTheoryI.code.FinitePlaceAbsValue
 public import Def.v1.Atlas.NumberTheoryI.code.RayClassFields.Part2

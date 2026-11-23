@@ -1,12 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/BilinearForm/DualLocalization.lean -/
+module
 
-
-import Theorem.Matrix.BilinearForm.DualLocalization
-import Mathlib.Algebra.Algebra.Bilinear
-import Mathlib.Tactic.NormNum
+public import Theorem.Matrix.BilinearForm.DualLocalization
+public import Mathlib.Algebra.Algebra.Bilinear
+public import Mathlib.Tactic.NormNum
 
 
 open LinearMap.BilinForm in
+
+public section
+
 /-- Generic theorem applies with `S = ⊥`, the trivial localization at 1. -/
 example {A K V : Type*} [CommRing A] [IsDomain A] [Field K] [Algebra A K]
     [IsFractionRing A K] [AddCommGroup V] [Module A V] [Module K V]

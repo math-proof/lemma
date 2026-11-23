@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.Buildings.code.Building.Infinity.Sectors.Part3
-public import Lemma.Fin.All_All_Any_And_InAndAll_In_Vertices
+public import Theorem.Fin.All_All_Any_And_InAndAll_In_Vertices
 public import Def.v1.Atlas.Buildings.code.Building.Infinity.AffineFunc
 public section
 

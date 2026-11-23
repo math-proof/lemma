@@ -1,6 +1,10 @@
-import Instance.Data.Tensor.Tensor.Part2
-import Instance.Data.Vector.Functions
-import Instance.Analysis.SpecialFunctions.Logarithm
+module
+
+public import Instance.Data.Tensor.Tensor.Part2
+public import Instance.Data.Vector.Functions
+public import Instance.Analysis.SpecialFunctions.Logarithm
+@[expose] public section
+
 open Tensor
 
 

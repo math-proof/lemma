@@ -5,10 +5,13 @@ All rights reserved.
 /-
 Copyright (c) 2025. All rights reserved.
 -/
-import Mathlib
-import Def.GroupTheory.Perm.Inversions1
-import Instance.GroupTheory.Perm.Basics.Part2
-import Def.GroupTheory.Perm.Inversions2.Part3
+module
+
+public import Mathlib
+public import Def.GroupTheory.Perm.Inversions1
+public import Instance.GroupTheory.Perm.Basics.Part2
+public import Def.GroupTheory.Perm.Inversions2.Part3
+
 /-!
 # More about lengths and simples
 
@@ -85,6 +88,8 @@ rewrite between the two forms automatically.
 
 permutation, inversion, length, simple transposition, reduced word, Lehmer code
 -/
+
+public section
 
 
 namespace Equiv.Perm

@@ -1,10 +1,13 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_JZeroGoodReductionV2.lean: instance decls only.
-import Mathlib
-import Lemma.MvPolynomial.HeckeModule
-import Instance.ModularCurve_SpecializationWitness
-import Lemma.HahnSeries.JqCoeff
-import Instance.EllipticCurve_FrobeniusTrace
-import Structure.ModularCurve_JZeroGoodReductionV2
+module
+
+public import Mathlib
+public import Theorem.MvPolynomial.HeckeModule
+public import Instance.ModularCurve_SpecializationWitness
+public import Theorem.HahnSeries.JqCoeff
+public import Instance.EllipticCurve_FrobeniusTrace
+public import Structure.ModularCurve_JZeroGoodReductionV2
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -11,8 +11,8 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbedding.Part5
-public import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbedding
-public import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.WeightedSobolevSchwartz
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbedding
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WeightedSobolevSchwartz
 public import Def.v1.Atlas.DifferentialAnalysis.code.WeightedSobolevSchwartz
 public import Instance.v1.Atlas.DifferentialAnalysis.code.CompactSobolevEmbedding
 open MeasureTheory Filter Topology

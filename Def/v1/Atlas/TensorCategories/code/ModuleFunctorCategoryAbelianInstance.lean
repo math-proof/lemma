@@ -8,7 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Class.v1.Atlas.TensorCategories.code.ModuleFunctorAbelianDefs
+module
+
+public import Class.v1.Atlas.TensorCategories.code.ModuleFunctorAbelianDefs
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 set_option linter.all false

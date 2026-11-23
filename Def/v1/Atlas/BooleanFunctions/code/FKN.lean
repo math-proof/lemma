@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
-import Def.v1.Atlas.BooleanFunctions.code.Definitions
-import Mathlib.Tactic
+module
+
+public import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
+public import Def.v1.Atlas.BooleanFunctions.code.Definitions
+public import Mathlib.Tactic
+
+@[expose] public section
+
 open Finset BigOperators
 
 

@@ -1,8 +1,11 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_AdicThickening.lean: instance decls only.
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Lemma.Scheme.AdicThickening
+module
+
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Theorem.Scheme.AdicThickening
+@[expose] public section
 
 set_option autoImplicit false
 

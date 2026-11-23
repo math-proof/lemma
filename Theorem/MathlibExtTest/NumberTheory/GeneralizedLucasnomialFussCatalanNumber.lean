@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/GeneralizedLucasnomialFussCatalanNumber.lean -/
+module
 
+public import Def.NumberTheory.GeneralizedLucasnomialFussCatalanNumber
+public import Theorem.Nat.GeneralizedLucasnomialFussCatalanNumber
+public import Mathlib.Tactic
 
-import Def.NumberTheory.GeneralizedLucasnomialFussCatalanNumber
-import Theorem.Nat.GeneralizedLucasnomialFussCatalanNumber
-import Mathlib.Tactic
-
+public section
 
 namespace MetaMathlibExt
 

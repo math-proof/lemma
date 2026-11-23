@@ -3,11 +3,13 @@ module
 public import Mathlib
 public import Def.FLTPrelim_Ramification
 public import Instance.EllipticCurve_FrobeniusTrace
-public import Lemma.ResidueField.GluedPic0
-public import Lemma.Scheme.Correspondence
+public import Def.AlgebraicCurve_GluedPic0
+public import Theorem.ResidueField.GluedPic0
+public import Theorem.Scheme.Correspondence
 public import Structure.AlgebraicCurve_WeilDatum
 public import Instance.ModularCurve_ArithmeticGalois
-public import Lemma.Finsupp.QExpReductionModL
+public import Def.ModularCurve_QExpReductionModL
+public import Theorem.Finsupp.QExpReductionModL
 public import Structure.ModularCurve_QExpSemistableSpecializationPinned
 
 set_option autoImplicit false

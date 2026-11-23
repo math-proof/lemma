@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnGapAnalysis.Part2
-import Lemma.List.InsertIdx.eq.Take.of.Le_Length
+import Theorem.List.InsertIdx.eq.Take.of.Le_Length
 import Mathlib.LinearAlgebra.Dimension.Finite
 import Def.v1.Atlas.Buildings.code.SphericalBuilding.FinsetGapCorrespondenceProof
 

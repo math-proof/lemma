@@ -7,18 +7,21 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Combinatorics.SimpleGraph.Coloring
-import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.Data.Fintype.Card
-import Mathlib.Order.Filter.AtTopBot.Basic
-import Mathlib.Data.Nat.Log
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Tactic.Linarith
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.ChromaticNumber
-import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.ChromaticNumber
+public import Mathlib.Combinatorics.SimpleGraph.Coloring
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Order.Filter.AtTopBot.Basic
+public import Mathlib.Data.Nat.Log
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.ChromaticNumber
+public import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.ChromaticNumber
 set_option maxHeartbeats 400000
+
+public section
 
 /-- Property $\star$ for $G(n, 1/2)$ holds with high probability: for every $\varepsilon > 0$
 and all large $n$, the probability that $G(n,1/2)$ contains a subset $S$ of size

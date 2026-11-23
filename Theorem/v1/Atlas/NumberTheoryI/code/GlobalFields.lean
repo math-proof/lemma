@@ -20,8 +20,8 @@ import Mathlib.RingTheory.Unramified.Field
 import Mathlib.RingTheory.Etale.Field
 import Mathlib.RingTheory.Artinian.Module
 import Theorem.v1.Atlas.NumberTheoryI.code.CompleteFields.Part2
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.CompleteFields
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.KroneckerWeber
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.CompleteFields
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.KroneckerWeber
 import Def.v1.Atlas.NumberTheoryI.code.KroneckerWeber.Part5
 import Def.v1.Atlas.NumberTheoryI.code.GlobalFields.Part4
 

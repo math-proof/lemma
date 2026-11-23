@@ -1,0 +1,266 @@
+/-
+Copyright: the vendored blocks below are verbatim copies from Mathlib (Apache-2.0; see Mathlib's LICENSE),
+release v4.30.0 = leanprover-community/mathlib4 commit c5ea00351c28e24afc9f0f84379aa41082b1188f, with declarations
+RENAMED (suffix `Finsupp` / trailing prime) so they do not clash with Mathlib v4.33.0. Bodies are the Mathlib v4.30.0 text
+with its docstrings omitted, otherwise byte-identical unless a line is marked `-- [port]`.
+-/
+
+module
+
+public import Mathlib.RepresentationTheory.Rep.Basic
+public import Mathlib.Algebra.Group.End
+public import Mathlib.Algebra.GroupWithZero.Action.Basic
+public import Mathlib.Algebra.Ring.AddAut
+public import Mathlib.Algebra.Ring.Action.Submonoid
+public import Mathlib.NumberTheory.RamificationInertia.Galois
+public import Mathlib.RingTheory.Invariant.Galois
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Ring
+public import Notation.Algebra.Ring.Action.Submonoid
+public import Instance.Compat_Mathlib430
+
+public section
+
+set_option autoImplicit false
+
+/-! ## Block A — Mathlib v4.30.0 Mathlib/RepresentationTheory/Basic.lean:391-419 (section MulAction), names suffixed `Finsupp` -/
+
+namespace Representation
+
+section MulAction
+
+variable (k : Type*) [Semiring k] (G : Type*) [Monoid G] (H : Type*) [MulAction G H]
+
+
+public theorem ofMulActionFinsupp_def (g : G) : ofMulActionFinsupp k G H g = Finsupp.lmapDomain k k (g • ·) :=
+  rfl
+
+
+@[simp]
+public theorem ofMulActionFinsupp_single (g : G) (x : H) (r : k) :
+    ofMulActionFinsupp k G H g (Finsupp.single x r) = Finsupp.single (g • x) r :=
+  Finsupp.mapDomain_single
+
+end MulAction
+
+/-! ## Block B — Mathlib v4.30.0 Mathlib/RepresentationTheory/Basic.lean:472-483 (section Group) -/
+
+section Group
+
+variable {k G V : Type*} [Semiring k] [Group G] [AddCommMonoid V] [Module k V]
+  (ρ : Representation k G V)
+
+@[simp]
+public theorem ofMulActionFinsupp_apply {H : Type*} [MulAction G H] (g : G) (f : H →₀ k) (h : H) :
+    ofMulActionFinsupp k G H g f h = f (g⁻¹ • h) := by
+  conv_lhs => rw [← smul_inv_smul g h]
+  let h' := g⁻¹ • h
+  change ofMulActionFinsupp k G H g f (g • h') = f h'
+  have hg : Function.Injective (g • · : H → H) := by
+    intro h₁ h₂
+    simp
+  simp only [ofMulActionFinsupp_def, Finsupp.lmapDomain_apply]
+  exact Finsupp.mapDomain_apply_of_injective hg f h'
+
+end Group
+
+section Bridge
+
+variable (k : Type*) [Semiring k] (G : Type*) [Monoid G] (H : Type*) [MulAction G H]
+
+
+public theorem leftRegularHomFinsupp_hom_single {A : Rep k G} (g : G) (x : A) (r : k) :
+    (leftRegularHomFinsupp A x).hom (.single g r) = r • A.ρ g x := by
+  simp [leftRegularHomFinsupp]
+
+end Rep
+
+/-! ## Block D — AddAut: Mathlib v4.30.0 Mathlib/Algebra/Group/End.lean:746-801 (+ GroupWithZero/Action/Basic.lean:89-92 and :104-112, Ring/AddAut.lean:32), lemma names primed -/
+
+namespace AddAut
+
+section Compat430
+
+variable (A : Type*) [Add A]
+
+
+@[simp]
+public theorem coe_mul' (e₁ e₂ : AddAut A) : ⇑(e₁ * e₂) = e₁ ∘ e₂ :=
+  rfl
+
+
+@[simp]
+public theorem coe_one' : ⇑(1 : AddAut A) = id :=
+  rfl
+
+
+@[simp]
+public theorem coe_inv' (e : AddAut A) : ⇑e⁻¹ = e.symm := rfl
+
+
+public theorem mul_def' (e₁ e₂ : AddAut A) : e₁ * e₂ = e₂.trans e₁ :=
+  rfl
+
+
+public theorem one_def' : (1 : AddAut A) = AddEquiv.refl _ :=
+  rfl
+
+
+public theorem inv_def' (e₁ : AddAut A) : e₁⁻¹ = e₁.symm :=
+  rfl
+
+
+@[simp]
+public theorem mul_apply' (e₁ e₂ : AddAut A) (a : A) : (e₁ * e₂) a = e₁ (e₂ a) :=
+  rfl
+
+
+@[simp]
+public theorem one_apply' (a : A) : (1 : AddAut A) a = a :=
+  rfl
+
+
+@[simp]
+public theorem inv_symm' (e : AddAut A) : e⁻¹.symm = e := rfl
+
+
+@[simp]
+public theorem symm_inv' (e : AddAut A) : e.symm⁻¹ = e := rfl
+
+
+@[simp]
+public theorem inv_apply' (e : AddAut A) (a : A) : e⁻¹ a = e.symm a := rfl
+
+
+public theorem inv_apply_self' (e : AddAut A) (a : A) : e⁻¹ (e a) = a :=
+  AddEquiv.apply_symm_apply _ _
+
+
+public theorem apply_inv_self' (e : AddAut A) (a : A) : e (e⁻¹ a) = a :=
+  AddEquiv.apply_symm_apply _ _
+
+example (e₁ e₂ : AddAut A) : e₁ * e₂ = e₁ + e₂ := rfl
+example : (1 : AddAut A) = 0 := rfl
+example (e : AddAut A) : e⁻¹ = -e := rfl
+
+end Compat430
+
+end AddAut
+
+
+@[simp] public protected theorem smul_def' {A : Type*} [AddMonoid A] (f : AddAut A) (a : A) : f • a = f a := rfl
+
+end AddAut
+
+/-! ## Block E — elliptic (divisibility) sequence predicates: Mathlib v4.30.0
+Mathlib/NumberTheory/EllipticDivisibilitySequence.lean:78-110 (verbatim; names primed). Vendored because Mathlib v4.33.0 (db584cd6,
+same file :286-295) RENAMED AND REDEFINED them (`IsEllipticSequence W := ∀ p q r, IsEllipticNet.rel W p q r 0 = 0`,
+`IsDvdSequence` over ℤ instead of ℕ) and kept the 4.30 names only as deprecated aliases of the NEW predicates. -/
+
+section IsEllDivSequence430
+
+universe u
+
+variable {R : Type u} [CommRing R]
+
+variable (W : ℤ → R)
+
+
+public theorem isEllSequence'_id : IsEllSequence' id :=
+  fun _ _ _ => by simp_rw [id_eq]; ring1
+
+
+public theorem isDivSequence'_id : IsDivSequence' id :=
+  fun _ _ => Int.ofNat_dvd.mpr
+
+
+public theorem isEllDivSequence'_id : IsEllDivSequence' id :=
+  ⟨isEllSequence'_id, isDivSequence'_id⟩
+
+variable {W}
+
+
+public theorem IsEllSequence'.smul (h : IsEllSequence' W) (x : R) : IsEllSequence' (x • W) :=
+  fun m n r => by
+    linear_combination (norm := (simp_rw [Pi.smul_apply, smul_eq_mul]; ring1)) x ^ 4 * h m n r
+
+
+public theorem IsDivSequence'.smul (h : IsDivSequence' W) (x : R) : IsDivSequence' (x • W) :=
+  fun m n r => mul_dvd_mul_left x <| h m n r
+
+
+public theorem IsEllDivSequence'.smul (h : IsEllDivSequence' W) (x : R) : IsEllDivSequence' (x • W) :=
+  ⟨h.left.smul x, h.right.smul x⟩
+
+end IsEllDivSequence430
+
+
+/-! ## Block G — ramification/inertia cardinality lemmas under the separability hypothesis (adapted from Mathlib v4.30.0,
+Mathlib/NumberTheory/RamificationInertia/Galois.lean; v4.33.0 restates them assuming PerfectField of the residue field). Theorems only,
+primed names; no definitions involved. -/
+
+namespace Ideal
+
+section inertia430
+
+variable {R S G : Type*} [CommRing R] [CommRing S] [Algebra R S] [Group G]
+  [MulSemiringAction G S] [IsGaloisGroup G R S] [Finite G]
+
+open scoped Pointwise
+
+
+attribute [local instance] Ideal.Quotient.field in
+
+public theorem card_stabilizer_eq_card_inertia_mul_finrank' (p : Ideal R) [p.IsMaximal]
+    (P : Ideal S) [P.LiesOver p] [P.IsMaximal] [Algebra.IsSeparable (R ⧸ p) (S ⧸ P)] :
+    Nat.card (MulAction.stabilizer G P) = Nat.card (inertia G P) *
+      Module.finrank (R ⧸ p) (S ⧸ P) := by
+  have : IsGalois (R ⧸ p) (S ⧸ P) := { __ := Ideal.Quotient.normal (A := R) G p P }
+  have := Ideal.Quotient.finite_of_isInvariant G p P
+  have : Subgroup.index _ = _ := Nat.card_congr
+    (Quotient.stabilizerQuotientInertiaEquiv G p P).toEquiv
+  rw [← IsGalois.card_aut_eq_finrank, ← this,
+    ← ((inertia G P).subgroupOf (MulAction.stabilizer G P)).card_mul_index,
+    Nat.card_congr (Subgroup.subgroupOfEquivOfLe (inertia_le_stabilizer (M := G) P)).toEquiv,
+    AddSubgroup.subgroupOf_inertia]
+
+
+public theorem ncard_primesOver_mul_card_inertia_mul_finrank' (p : Ideal R) [p.IsMaximal]
+    (P : Ideal S) [P.LiesOver p] [P.IsMaximal] [Algebra.IsSeparable (R ⧸ p) (S ⧸ P)] :
+    (p.primesOver S).ncard * Nat.card (P.inertia G) *
+      Module.finrank (R ⧸ p) (S ⧸ P) = Nat.card G := by
+  rw [mul_assoc, ← card_stabilizer_eq_card_inertia_mul_finrank',
+    ← Algebra.IsInvariant.orbit_eq_primesOver R S G p P]
+  simpa using Nat.card_congr (MulAction.orbitProdStabilizerEquivGroup G P)
+
+attribute [local instance] Ideal.Quotient.field in
+
+public theorem card_inertia_eq_ramificationIdxIn'
+    [IsDedekindDomain R] [IsDedekindDomain S] [Module.Finite R S]
+    [Module.IsTorsionFree R S]
+    (p : Ideal R) (hp : p ≠ ⊥)
+    (P : Ideal S) [P.LiesOver p] [P.IsMaximal] [Algebra.IsSeparable (R ⧸ p) (S ⧸ P)] :
+    Nat.card (P.inertia G) = Ideal.ramificationIdxIn p S := by
+  have := (show p.IsPrime from P.over_def p ▸ inferInstance).isMaximal hp
+  have H := ncard_primesOver_mul_card_inertia_mul_finrank' (G := G) p P
+  refine mul_right_injective₀ (IsDedekindDomain.primesOver_ncard_ne_zero p S) ?_
+  refine mul_left_injective₀ (b := Module.finrank (R ⧸ p) (S ⧸ P)) ?_ ?_
+  · intro e; simp [e, eq_comm, Nat.card_eq_zero, ‹Finite G›.not_infinite] at H
+  dsimp only
+  rw [H, mul_assoc, ← inertiaDeg_eq_of_isMaximal p P, ← inertiaDegIn_eq_inertiaDeg p P G,
+    ncard_primesOver_mul_ramificationIdxIn_mul_inertiaDegIn p S G]
+
+attribute [local instance] Ideal.Quotient.field in
+
+public theorem card_stabilizer_eq' [IsDedekindDomain R] [IsDedekindDomain S] [Module.Finite R S]
+    [Module.IsTorsionFree R S] (p : Ideal R) (hp : p ≠ ⊥) (P : Ideal S) [P.LiesOver p] [P.IsMaximal]
+    [Algebra.IsSeparable (R ⧸ p) (S ⧸ P)] :
+    Nat.card (MulAction.stabilizer G P) = p.ramificationIdxIn S * p.inertiaDegIn S := by
+  have := (show p.IsPrime from P.over_def p ▸ inferInstance).isMaximal hp
+  rw [card_stabilizer_eq_card_inertia_mul_finrank' p P, card_inertia_eq_ramificationIdxIn' p hp,
+    inertiaDegIn_eq_inertiaDeg p P G, inertiaDeg_eq_of_isMaximal p P]
+
+end inertia430
+
+end Ideal

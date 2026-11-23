@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/EulerSeidelMatrix.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.EulerSeidelMatrix
+public import Theorem.Finset.Enumerative.EulerSeidelMatrix
 
-import Def.Combinatorics.Enumerative.EulerSeidelMatrix
-import Theorem.Finset.Enumerative.EulerSeidelMatrix
-
+public section
 
 namespace MetaMathlibExt
 

@@ -10,9 +10,9 @@ module
 
 public import Mathlib
 public import Def.RingTheory.LaurentSeries.Part11
-public import Lemma.PowerSeries.InfiniteProducts2
-public import Lemma.LaurentSeries.LaurentSeries
-public import Lemma.Partition.NPartition
+public import Theorem.PowerSeries.InfiniteProducts2
+public import Theorem.LaurentSeries.LaurentSeries
+public import Theorem.Partition.NPartition
 public import Def.RingTheory.HahnSeries.LaurentSeries.Part2
 open scoped LaurentPolynomial Polynomial
 open LaurentPolynomial HahnSeries

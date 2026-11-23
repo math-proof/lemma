@@ -6,6 +6,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { REPO_ROOT, moduleToLeanPath } from './modulePath.mjs';
 import { leanEchoPath, getMysqlPool } from './fetchLemmaMysql.mjs';
+import { deleteLemmaRowsAndInverted } from '../leanInvertedIndex.mjs';
 
 function normalizePackage(pkg) {
   let s = String(pkg ?? '')
@@ -16,11 +17,10 @@ function normalizePackage(pkg) {
 }
 
 /**
- * @param {string} projectUser
  * @param {import('express').Request} req
  * @param {import('express').Response} res
  */
-export async function handleDeleteLemma(projectUser, req, res) {
+export async function handleDeleteLemma(req, res) {
   const body = req.body && typeof req.body === 'object' ? req.body : {};
   const lemma = String(body.lemma ?? '').trim();
   const pkg = normalizePackage(body.package);
@@ -62,7 +62,7 @@ export async function handleDeleteLemma(projectUser, req, res) {
   const pool = getMysqlPool();
   if (pool) {
     try {
-      await pool.query('DELETE FROM lemma WHERE user = ? AND module = ?', [projectUser, module]);
+      await deleteLemmaRowsAndInverted(pool, { modules: [module] });
     } catch (err) {
       console.warn('[delete-lemma mysql]', err.message);
     }

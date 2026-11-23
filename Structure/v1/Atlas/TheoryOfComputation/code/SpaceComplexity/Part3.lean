@@ -13,7 +13,7 @@ module
 public import Mathlib.Computability.DFA
 public import Mathlib.Data.Fintype.BigOperators
 public import Def.v1.Atlas.TheoryOfComputation.code.Complexity.Part2
-public import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
 public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.TuringMachines
 public import Def.v1.Atlas.TheoryOfComputation.code.TuringMachines.Part4
 public import Def.v1.Atlas.TheoryOfComputation.code.SharpSAT

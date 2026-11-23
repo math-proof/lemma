@@ -1,14 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Geometry/Euclidean/Viviani.lean -/
+module
 
+public import Theorem.Set.Euclidean.Viviani
+public import Mathlib.Analysis.Normed.Affine.AddTorsorBases
+public import Mathlib.Geometry.Euclidean.PerpBisector
+public import Mathlib.Geometry.Euclidean.Projection
+public import Mathlib.LinearAlgebra.AffineSpace.MidpointZero
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.NormNum
 
-import Theorem.Set.Euclidean.Viviani
-import Mathlib.Analysis.Normed.Affine.AddTorsorBases
-import Mathlib.Geometry.Euclidean.PerpBisector
-import Mathlib.Geometry.Euclidean.Projection
-import Mathlib.LinearAlgebra.AffineSpace.MidpointZero
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-
+public section
 
 example
     (A B C P Q : EuclideanSpace ℝ (Fin 2))

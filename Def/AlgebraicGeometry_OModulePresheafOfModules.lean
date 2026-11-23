@@ -1,6 +1,10 @@
-import Instance.AlgebraicGeometry_OrderedAffineCoverCech
-import Lemma.Scheme.TwoChartCechSectionsOf
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
+module
+
+public import Instance.AlgebraicGeometry_OrderedAffineCoverCech
+public import Theorem.Scheme.TwoChartCechSectionsOf
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+
+@[expose] public section
 
 set_option autoImplicit false
 

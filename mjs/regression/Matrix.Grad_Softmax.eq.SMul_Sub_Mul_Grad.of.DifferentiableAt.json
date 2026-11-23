@@ -8,17 +8,58 @@
   ],
   "dag": [
     [
-      {"token":"SMul"},
-      {"token":"Softmax"},
-      {"token":"_"},
-      {"group":[1,2]},
-      {"token":"Sub"},
-      {"token":"Grad"},
-      {"group":[5,2,2]},
-      {"token":"Mul"},
-      {"group":[7,3,6]},
-      {"group":[4,6,8]},
-      {"sequence":[0,3,9]}
+      {
+        "token": "SMul"
+      },
+      {
+        "token": "Softmax"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "group": [
+          1,
+          2
+        ]
+      },
+      {
+        "token": "Sub"
+      },
+      {
+        "token": "Grad"
+      },
+      {
+        "group": [
+          5,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "group": [
+          7,
+          3,
+          6
+        ]
+      },
+      {
+        "group": [
+          4,
+          6,
+          8
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          3,
+          9
+        ]
+      }
     ]
   ],
   "json": {
@@ -32,7 +73,7 @@
         "Sub": [
           {
             "Grad": [
-              "_",
+              "$1",
               "_"
             ]
           },
@@ -45,7 +86,7 @@
               },
               {
                 "Grad": [
-                  "_",
+                  "$1",
                   "_"
                 ]
               }
@@ -54,5 +95,6 @@
         ]
       }
     ]
-  }
+  },
+  "fingerprint": "SMul(Softmax(_))(Sub(Grad($1)(_))(Mul(Softmax(_))(Grad($1)(_))))"
 }

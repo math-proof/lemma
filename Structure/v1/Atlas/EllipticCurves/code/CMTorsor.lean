@@ -27,7 +27,7 @@ public import Mathlib.Data.ZMod.Basic
 public import Mathlib.Data.ZMod.QuotientRing
 public import Mathlib.RingTheory.ClassGroup
 public import Def.v1.Atlas.EllipticCurves.code.ComplexMultiplication.Part6
-public import Lemma.Complex.Atlas.v1.EllipticCurves.code.ComplexMultiplication
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.ComplexMultiplication
 public import Mathlib.Algebra.Module.Torsion.Basic
 public import Mathlib.RingTheory.Ideal.Colon
 public import Mathlib.LinearAlgebra.FreeModule.IdealQuotient

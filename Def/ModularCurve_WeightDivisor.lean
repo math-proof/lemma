@@ -1,6 +1,10 @@
-import Mathlib
-import Class.AlgebraicCurve_DivisorClassGroup
-import Def.ModularCurve_JqCoeff
+module
+
+public import Mathlib
+public import Class.AlgebraicCurve_DivisorClassGroup
+public import Def.ModularCurve_JqCoeff
+
+@[expose] public section
 
 set_option autoImplicit false
 

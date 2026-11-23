@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DiophantineApproximation/ThreeGap.lean -/
+module
 
+public import Def.NumberTheory.DiophantineApproximation.ThreeGap
+public import Theorem.Nat.DiophantineApproximation.ThreeGap
 
-import Def.NumberTheory.DiophantineApproximation.ThreeGap
-import Theorem.Nat.DiophantineApproximation.ThreeGap
-
+public section
 
 namespace MetaMathlibExt
 

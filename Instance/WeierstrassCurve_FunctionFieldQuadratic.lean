@@ -1,6 +1,7 @@
 -- Carved from Lemma/Definitions/Def_WeierstrassCurve_FunctionFieldQuadratic.lean: instance decls only.
 import Mathlib
-import Lemma.WeierstrassCurve.FunctionFieldQuadratic
+import Theorem.WeierstrassCurve.FunctionFieldQuadratic
+import Def.WeierstrassCurve_FunctionFieldQuadratic
 
 set_option autoImplicit false
 

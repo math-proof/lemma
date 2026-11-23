@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/GeneralizedCatalanSchroeder.lean -/
+module
 
-
-import Theorem.Finset.Enumerative.GeneralizedCatalanSchroeder
-import Mathlib.Tactic.NormNum
+public import Theorem.Finset.Enumerative.GeneralizedCatalanSchroeder
+public import Mathlib.Tactic.NormNum
 open scoped BigOperators
 
+public section
 
 namespace MathlibExtTest.Combinatorics.Enumerative.GeneralizedCatalanSchroeder
 

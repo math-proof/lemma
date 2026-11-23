@@ -3,16 +3,20 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
+module
 
-import Theorem.Combinatorics.SimpleGraph.VertexConnectivity
-import Theorem.SimpleGraph.VertexConnectivity
-import Def.Combinatorics.SimpleGraph.Contraction
+public import Theorem.Combinatorics.SimpleGraph.VertexConnectivity
+public import Theorem.SimpleGraph.VertexConnectivity
+public import Def.Combinatorics.SimpleGraph.Contraction
+
 /-!
 # Contracting the complement of a vertex set
 
 This file contracts every vertex outside a set to one new vertex. The construction is used by
 the induction in Fleischner's theorem.
 -/
+
+public section
 
 
 namespace SimpleGraph

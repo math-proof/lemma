@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Computability/Complexity.lean -/
+module
 
+public import Def.Computability.Complexity.Part3
+public import Theorem.Nat.Complexity
 
-import Def.Computability.Complexity.Part3
-import Lemma.Nat.Complexity
-
+public section
 
 namespace MetaMathlibExt
 

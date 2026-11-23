@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Probability/KolmogorovMaximal.lean -/
+module
 
-
-import Def.Probability.KolmogorovMaximal
-import Theorem.Measure.KolmogorovMaximal
+public import Def.Probability.KolmogorovMaximal
+public import Theorem.Measure.KolmogorovMaximal
 open Finset BigOperators
 
+public section
 
 namespace MathlibExtTest.Probability.KolmogorovMaximal
 

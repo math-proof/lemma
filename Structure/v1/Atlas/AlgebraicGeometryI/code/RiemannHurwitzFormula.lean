@@ -15,9 +15,9 @@ public import Mathlib.RingTheory.DiscreteValuationRing.Basic
 public import Mathlib.RingTheory.DedekindDomain.Basic
 public import Mathlib.RingTheory.Discriminant
 public import Def.v1.Atlas.AlgebraicGeometryI.code.CoherentSheavesCurves.Part2
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSheavesCurves
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitz
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalDivisorDecomposition
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSheavesCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitz
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalDivisorDecomposition
 public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitz
 public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalDivisorDecomposition.Part4
 public import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzFormula

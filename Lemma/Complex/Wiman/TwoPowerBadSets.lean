@@ -6,8 +6,6 @@ open scoped ENNReal
 open Complex
 
 
-namespace Complex
-
 /--
 [exists_finite_wimanExceptionalSet](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/TwoPowerBadSets.lean)
 -/
@@ -86,9 +84,8 @@ lemma exists_finite_wimanExceptionalSet
     _ = wimanGrowth f x ^ ((9 / 8 : ℝ) * (9 / 8 : ℝ)) :=
       (Real.rpow_mul hgx.le (9 / 8 : ℝ) (9 / 8 : ℝ)).symm
     _ = wimanGrowth f x ^ (81 / 64 : ℝ) := by norm_num
-end Complex
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-22

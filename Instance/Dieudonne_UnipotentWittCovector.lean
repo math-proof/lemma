@@ -2,7 +2,8 @@
 import Mathlib
 import Instance.Dieudonne_WittVectorHom
 import Instance.Dieudonne_WittHomColimit
-import Lemma.Int.UnipotentWittCovector
+import Theorem.Int.UnipotentWittCovector
+import Def.Int_UnipotentWittCovector
 
 set_option autoImplicit false
 

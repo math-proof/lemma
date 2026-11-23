@@ -1,12 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/GroupTheory/ClassFunction.lean -/
+module
 
-
-import Def.GroupTheory.ClassFunction.Part2
-import Theorem.Fin.IsClassFunctionCharacter
-import Mathlib.Data.ZMod.Basic
-import Mathlib.SetTheory.Cardinal.Finite
+public import Def.GroupTheory.ClassFunction.Part2
+public import Theorem.Fin.IsClassFunctionCharacter
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.SetTheory.Cardinal.Finite
 open MathlibExt.GroupTheory.ClassFunctionWanted
 
+public section
 
 -- Every function on this finite abelian group factors and is constant on conjugate elements.
 example (f : Multiplicative (ZMod 3) → ℚ) (x y : Multiplicative (ZMod 3))

@@ -19,7 +19,7 @@ public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
 public import Mathlib.CategoryTheory.Monoidal.Preadditive
 public import Mathlib.CategoryTheory.Monoidal.Linear
 public import Abbrev.v1.Atlas.TensorCategories.code.TensorCategoryDef.Part3
-public import Lemma.Category.Atlas.v1.TensorCategories.code.TensorCategoryDef
+public import Theorem.Category.Atlas.v1.TensorCategories.code.TensorCategoryDef
 public section
 
 set_option maxHeartbeats 800000

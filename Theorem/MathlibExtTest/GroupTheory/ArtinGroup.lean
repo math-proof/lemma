@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/GroupTheory/ArtinGroup.lean -/
+module
 
-
-import Def.GroupTheory.ArtinGroup.Part2
-import Lemma.Nat.AlternatingWord0.eq.One
-
+public import Def.GroupTheory.ArtinGroup.Part2
+public import Theorem.Nat.AlternatingWord0.eq.One
 
 /-! ### Examples -/
+
+public section
 
 /-- Ordinary case: the type `A₂` Coxeter matrix `!![1, 3; 3, 1]` on `Fin 2`. Its Artin group is the
 braid group on `3` strands, `⟨a, b | a b a = b a b⟩`; the braid relation is `braid_relation`. -/

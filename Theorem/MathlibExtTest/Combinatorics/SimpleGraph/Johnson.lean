@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/Johnson.lean -/
+module
 
+public import Def.Combinatorics.SimpleGraph.Johnson
+public import Theorem.SimpleGraph.Johnson
 
-import Def.Combinatorics.SimpleGraph.Johnson
-import Theorem.SimpleGraph.Johnson
-
+public section
 
 namespace SimpleGraph
 

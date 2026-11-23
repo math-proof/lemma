@@ -1,6 +1,7 @@
 module
 
-public import Lemma.Matrix.CubicInduction_Carrier
+public import Def.LanglandsTunnell_CubicInduction_Carrier
+public import Theorem.Matrix.CubicInduction_Carrier
 public import Def.LanglandsTunnell_CubicInduction_HeckeDatum
 public import Def.LanglandsTunnell_CubicInduction_Growth
 public import Instance.LanglandsTunnell_CubicInduction_IotaTorus
@@ -8,7 +9,8 @@ public import Def.LanglandsTunnell_CubicInduction_Congruence
 public import Def.LanglandsTunnell_CubicInduction_TorusValues
 public import Structure.AutomorphicForm_WhittakerCoefficient
 public import Def.NumberField_TateGlobalZeta
-public import Lemma.Matrix.SmoothingKernel
+public import Def.AutomorphicForm_SmoothingKernel
+public import Theorem.Matrix.SmoothingKernel
 
 set_option autoImplicit false
 

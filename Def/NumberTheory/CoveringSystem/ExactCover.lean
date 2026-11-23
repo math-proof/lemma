@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/CoveringSystem/ExactCover.lean -/
 
-import Def.NumberTheory.CoveringSystem
-import Theorem.Int.CoveringSystem
+module
 
+public import Def.NumberTheory.CoveringSystem
+public import Theorem.Int.CoveringSystem
+
+@[expose] public section
 
 namespace Int
 

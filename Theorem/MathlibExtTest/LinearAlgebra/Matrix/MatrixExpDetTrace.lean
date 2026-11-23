@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/MatrixExpDetTrace.lean -/
+module
 
-
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
-import Def.LinearAlgebra.Matrix.MatrixExpDetTrace
-import Theorem.Matrix.MatrixExpDetTrace
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Coeff
+public import Def.LinearAlgebra.Matrix.MatrixExpDetTrace
+public import Theorem.Matrix.MatrixExpDetTrace
 open MathlibExt.LinearAlgebra.Matrix.MatrixExpDetTraceWanted
+
+public section
 
 variable {n : Type*} [Fintype n] [DecidableEq n]
 

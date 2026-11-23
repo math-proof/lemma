@@ -6,8 +6,6 @@ open scoped ENNReal
 open Complex
 
 
-namespace Complex
-
 /--
 [wimanCoefficientMeasure_singleton](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CoefficientExponentialFamily.lean)
 -/
@@ -18,11 +16,7 @@ lemma wimanCoefficientMeasure_singleton
 -- imply
   wimanCoefficientMeasure f {n} = ENNReal.ofReal ‖wimanTaylorCoefficient f n‖ :=
 -- proof
-Measure.sum_smul_dirac_singleton
-
-end Complex
-
-namespace Complex
+  (Measure.sum_smul_dirac_singleton)
 
 /--
 [integrable_exp_mul_wimanCoefficientMeasure](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CoefficientExponentialFamily.lean)
@@ -43,10 +37,6 @@ lemma integrable_exp_mul_wimanCoefficientMeasure
     abs_of_pos (Real.exp_pos _), mul_comm x (n : ℝ), Real.exp_nat_mul,
     abs_of_nonneg (pow_nonneg (Real.exp_pos x).le n)]
 
-end Complex
-
-namespace Complex
-
 /--
 [integrableExpSet_wimanCoefficientMeasure_eq_univ](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CoefficientExponentialFamily.lean)
 -/
@@ -62,10 +52,6 @@ lemma integrableExpSet_wimanCoefficientMeasure_eq_univ
   simp only [integrableExpSet, Set.mem_ofPred_eq, Set.mem_univ, iff_true]
   exact integrable_exp_mul_wimanCoefficientMeasure (f := f) (x := x) hf
 
-end Complex
-
-namespace Complex
-
 /--
 [mem_interior_integrableExpSet_wimanCoefficientMeasure](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CoefficientExponentialFamily.lean)
 -/
@@ -80,10 +66,6 @@ lemma mem_interior_integrableExpSet_wimanCoefficientMeasure
     (wimanCoefficientMeasure f)) := by
 -- proof
   simp [integrableExpSet_wimanCoefficientMeasure_eq_univ (f := f) hf]
-
-end Complex
-
-namespace Complex
 
 /--
 [integral_exp_mul_wimanCoefficientMeasure](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CoefficientExponentialFamily.lean)
@@ -113,10 +95,6 @@ lemma integral_exp_mul_wimanCoefficientMeasure
   rw [ENNReal.toReal_ofReal (norm_nonneg _), smul_eq_mul, wimanTerm,
     abs_of_pos (Real.exp_pos x), mul_comm x (n : ℝ), Real.exp_nat_mul]
 
-end Complex
-
-namespace Complex
-
 /--
 [wiman_mgf_eq_majorant](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CoefficientExponentialFamily.lean)
 -/
@@ -132,10 +110,6 @@ lemma wiman_mgf_eq_majorant
 -- proof
   rw [mgf, integral_exp_mul_wimanCoefficientMeasure (f := f) (x := x) hf]
 
-end Complex
-
-namespace Complex
-
 /--
 [wiman_cgf_eq_growth](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CoefficientExponentialFamily.lean)
 -/
@@ -150,10 +124,6 @@ lemma wiman_cgf_eq_growth
     (wimanCoefficientMeasure f) x = wimanGrowth f x := by
 -- proof
   rw [cgf, wimanGrowth, wiman_mgf_eq_majorant (f := f) (x := x) hf]
-
-end Complex
-
-namespace Complex
 
 /--
 [wimanCoefficientMeasure_ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CoefficientExponentialFamily.lean)
@@ -174,10 +144,6 @@ lemma wimanCoefficientMeasure_ne_zero
   rw [← wimanCoefficientMeasure_singleton (f := f) (n := n), hzero]
   simp
 
-end Complex
-
-namespace Complex
-
 /--
 [isProbabilityMeasure_wimanTiltedMeasure](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CoefficientExponentialFamily.lean)
 -/
@@ -194,10 +160,6 @@ lemma isProbabilityMeasure_wimanTiltedMeasure
   let _ : NeZero (wimanCoefficientMeasure f) :=
     ⟨wimanCoefficientMeasure_ne_zero (f := f) hne⟩
   exact isProbabilityMeasure_tilted (integrable_exp_mul_wimanCoefficientMeasure (f := f) (x := x) hf)
-
-end Complex
-
-namespace Complex
 
 /--
 [wimanTiltedMeasure_singleton](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CoefficientExponentialFamily.lean)
@@ -228,10 +190,6 @@ lemma wimanTiltedMeasure_singleton
   rw [wimanTerm, abs_of_pos (Real.exp_pos x), mul_comm x (n : ℝ), Real.exp_nat_mul]
   ring
 
-end Complex
-
-namespace Complex
-
 /--
 [wimanTiltedMeasure_eq_sum](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CoefficientExponentialFamily.lean)
 -/
@@ -252,9 +210,7 @@ lemma wimanTiltedMeasure_eq_sum
   intro n
   rw [wimanTiltedMeasure_singleton (f := f) (x := x) (n := n) hf,
     Measure.sum_smul_dirac_singleton]
-end Complex
-
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-22

@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM16.FourierTransform
-import Theorem.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM16.FourierTransform
-import Mathlib.Analysis.Distribution.SchwartzSpace.Fourier
-import Mathlib.Analysis.Distribution.FourierMultiplier
-import Abbrev.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM17.Schrodinger
+module
+
+public import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM16.FourierTransform
+public import Theorem.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM16.FourierTransform
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Fourier
+public import Mathlib.Analysis.Distribution.FourierMultiplier
+public import Abbrev.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM17.Schrodinger
+
+@[expose] public section
+
 open MeasureTheory Complex FourierTransform
 
 

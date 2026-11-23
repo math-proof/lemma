@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/Ideal/PrimeExtension.lean -/
+module
 
+public import Mathlib.RingTheory.Int.Basic
+public import Theorem.Ideal.PrimeExtension
 
-import Mathlib.RingTheory.Int.Basic
-import Theorem.Ideal.PrimeExtension
-
+public section
 
 -- Identity algebra over `ℤ`: every denominator is already cleared, with `c = ⊤`.
 example : ((⊥ : Ideal ℤ).map (algebraMap ℤ ℤ)).IsPrime :=

@@ -1,8 +1,12 @@
-import Mathlib
-import Lemma.Rep.RepPi
-import Abbrev.GroupCohomology_RepCokernel
-import Lemma.Rep.SIdeleClassModule
-import Abbrev.NumberField_ArchimedeanIdeleModule
+module
+
+public import Mathlib
+public import Theorem.Rep.RepPi
+public import Abbrev.GroupCohomology_RepCokernel
+public import Theorem.Rep.SIdeleClassModule
+public import Abbrev.NumberField_ArchimedeanIdeleModule
+
+@[expose] public section
 
 set_option autoImplicit false
 

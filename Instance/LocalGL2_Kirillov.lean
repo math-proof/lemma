@@ -1,19 +1,22 @@
 -- Carved from Lemma/Definitions/Def_LocalGL2_Kirillov.lean: instance decls only.
-import Mathlib
-import Def.AutomorphicForm_ConstantTerm
-import Instance.NumberField_Completion_Finite
-import Def.LocalGL2_Kirillov
-import Notation.LocalGL2_Kirillov
-import Abbrev.LocalGL2_Kirillov
-import Lemma.Int.V.eq.R
-import Lemma.Nat.IsCompactIntegers
-import Lemma.Nat.IsCompactValuationEqOne
-import Lemma.Complex.isOpen_radiusBall
-import Lemma.Int.IsOpenUnitBall
-import Lemma.Int.U.in.UmV.is.UFnSub.lt.WithZero_Multiplicative
-import Lemma.Int.X.eq.U
-import Lemma.Int.SetOfLtUFnSubR.in.NhdsY
-import Lemma.Nat.VU.eq.One
+module
+
+public import Mathlib
+public import Def.AutomorphicForm_ConstantTerm
+public import Instance.NumberField_Completion_Finite
+public import Def.LocalGL2_Kirillov
+public import Notation.LocalGL2_Kirillov
+public import Abbrev.LocalGL2_Kirillov
+public import Theorem.Int.V.eq.R
+public import Theorem.Nat.IsCompactIntegers
+public import Theorem.Nat.IsCompactValuationEqOne
+public import Theorem.Complex.isOpen_radiusBall
+public import Theorem.Int.IsOpenUnitBall
+public import Theorem.Int.U.in.UmV.is.UFnSub.lt.WithZero_Multiplicative
+public import Theorem.Int.X.eq.U
+public import Theorem.Int.SetOfLtUFnSubR.in.NhdsY
+public import Theorem.Nat.VU.eq.One
+@[expose] public section
 
 set_option autoImplicit false
 set_option linter.unusedVariables false

@@ -8,12 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.BooleanFunctions.code.Influence
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Influence
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Linarith
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
+module
 
+public import Def.v1.Atlas.BooleanFunctions.code.Influence
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Influence
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+
+@[expose] public section
 
 namespace BooleanFourier
 

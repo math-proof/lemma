@@ -8,14 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.Order
-import Mathlib.Analysis.Normed.Group.Tannery
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzComplete
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzComplete
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzSeminormsFix
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzSeminormsFix
+module
+
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.Order
+public import Mathlib.Analysis.Normed.Group.Tannery
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzComplete
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzComplete
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzSeminormsFix
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzSeminormsFix
+
+@[expose] public section
+
 open scoped SchwartzMap
 open Filter
 

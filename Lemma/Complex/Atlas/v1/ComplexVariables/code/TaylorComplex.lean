@@ -96,14 +96,15 @@ lemma taylor_complex
   ∃ fₙ : ℂ → ℂ, DifferentiableOn ℂ fₙ Ω ∧ ∀ z ∈ Ω, f z = complexTaylorPoly f a n z + fₙ z * (z - a) ^ n := by
 -- proof
   refine ⟨(Function.swap dslope a)^[n] f,
-    iterate_dslope_differentiableOn hΩ ha hf n, fun z _ => ?_⟩
-  rw [dslope_expansion_identity f a z n]
+    iterate_dslope_differentiableOn hΩ ha hf, fun z _ => ?_⟩
+  rw [dslope_expansion_identity (f := f) (a := a) (z := z) (n := n)]
   congr 1
   simp only [complexTaylorPoly]
   congr 1; ext k; congr 1
   have hfa : AnalyticAt ℂ f a := hf.analyticAt (hΩ.mem_nhds ha)
   obtain ⟨p, hp⟩ := hfa
-  exact iterate_dslope_eq_iteratedDeriv_div_factorial hp k
+  exact iterate_dslope_eq_iteratedDeriv_div_factorial (k := k) hp
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-22

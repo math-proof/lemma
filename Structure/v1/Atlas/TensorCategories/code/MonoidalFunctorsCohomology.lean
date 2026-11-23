@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Theorem.v1.Atlas.TensorCategories.code.GradedVec.Part6
-public import Lemma.Category.Atlas.v1.TensorCategories.code.GradedVec
+public import Theorem.Category.Atlas.v1.TensorCategories.code.GradedVec
 public import Mathlib.GroupTheory.GroupAction.Basic
 public import Theorem.v1.Atlas.TensorCategories.code.MonoidalFunctorsCohomology.Part4
 public section

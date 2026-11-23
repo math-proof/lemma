@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/RamificationInertia/MaximalUnramified.lean -/
+module
 
-
-import Def.NumberTheory.RamificationInertia.MaximalUnramified
-import Theorem.Nat.RamificationInertia.MaximalUnramified
+public import Def.NumberTheory.RamificationInertia.MaximalUnramified
+public import Theorem.Nat.RamificationInertia.MaximalUnramified
 open IntermediateField
+
+public section
 
 variable (A K L : Type*) [CommRing A] [Field K] [Field L]
 variable [Algebra A K] [Algebra A L] [Algebra K L] [IsScalarTower A K L]

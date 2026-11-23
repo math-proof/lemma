@@ -1,6 +1,10 @@
-import Def.HeckeGalois_EichlerShimura
-import Instance.FLTPrelim_Modularity
-import Def.FreyPackage_LevelRaising
+module
+
+public import Def.HeckeGalois_EichlerShimura
+public import Instance.FLTPrelim_Modularity
+public import Def.FreyPackage_LevelRaising
+
+@[expose] public section
 
 namespace ModularCurve
 

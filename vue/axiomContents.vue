@@ -12,6 +12,7 @@
       :wholeWord="wholeWord"
       :regularExpression="regularExpression"
       :nlp="nlp"
+      :lean="lean"
       :fullText="fullText"
     />
 
@@ -157,6 +158,7 @@ const self = new Vue({
     wholeWord: false,
     regularExpression: false,
     nlp: false,
+    lean: false,
     fullText: false,
     folderSearchOpen: false,
     folderSearchQuery: '',
@@ -479,6 +481,7 @@ const {
   wholeWord,
   regularExpression,
   nlp,
+  lean,
   fullText,
   folderSearchOpen,
   folderSearchQuery,

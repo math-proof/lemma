@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part3
-public import Lemma.Category.Atlas.v1.TensorCategories.code.HopfAlgebra
+public import Theorem.Category.Atlas.v1.TensorCategories.code.HopfAlgebra
 public section
 
 set_option autoImplicit false

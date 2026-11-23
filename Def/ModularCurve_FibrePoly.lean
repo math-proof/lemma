@@ -1,5 +1,9 @@
-import Mathlib
-import Def.ModularCurve_KroneckerTransport
+module
+
+public import Mathlib
+public import Def.ModularCurve_KroneckerTransport
+
+@[expose] public section
 
 noncomputable section
 

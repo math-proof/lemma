@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.BooleanFunctions.code.MultilinearExtension
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.MultilinearExtension
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.MultilinearExtension
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
 import Def.v1.Atlas.BooleanFunctions.code.Talagrand
 import Def.v1.Atlas.BooleanFunctions.code.GaussianHypercontractivity
 import Mathlib.Analysis.Calculus.IteratedDeriv.Defs

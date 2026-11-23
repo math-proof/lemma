@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicGeometryI.code.DedekindCurve
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.DedekindCurve
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DedekindCurve
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology.Part2
 open scoped TensorProduct
 open nonZeroDivisors

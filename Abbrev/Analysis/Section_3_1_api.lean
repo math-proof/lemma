@@ -1,48 +1,52 @@
-import Instance.Analysis.Section_3_1_order
-import Lemma.Set.Eq.of.Object
-import Lemma.Set.Object.is.Eq
-import Lemma.Set.Eq.of.All_In
-import Lemma.Set.All_Empty
-import Lemma.Set.Any_In.of.Ne_Empty
-import Lemma.Set.NeEmpty.of.In
-import Lemma.Set.In_Set.is.Eq
-import Lemma.Set.In_Union.is.InOrIn
-import Lemma.Set.In_Insert.is.EqOrIn
-import Lemma.Set.Set.eq.Union
-import Lemma.Set.In_Set.is.EqOrEq
-import Lemma.Set.In_Set.is.EqOrEqOrEq
-import Lemma.Set.Eq_UnionSet
-import Lemma.Set.EqUnionSet
-import Lemma.Set.IffSubsetAllIn
-import Lemma.Set.Iff_SubsetAndNe
-import Lemma.Set.InVal
-import Lemma.Set.EqVal
-import Lemma.Set.Val.is.Eq
-import Lemma.Set.EqSubtypeMk.of.In
-import Lemma.Set.In.of.In_Specify
-import Lemma.Set.IffVal.in.Specify
-import Lemma.Set.In_Specify.is.Any
-import Lemma.Set.In_Inter.is.InAndIn
-import Lemma.Set.IffIn
-import Lemma.Set.Disjoint.is.Inter.eq.Empty
-import Lemma.Set.In_Replace.is.Any.of.All_Eq
-import Lemma.Nat.Nat.eq.Object
-import Lemma.Nat.OfNat.eq.Object
-import Lemma.Nat.Object
-import Lemma.Nat.EqObject
-import Lemma.Nat.Nat.eq.OfNat
-import Lemma.Nat.Nat.is.Eq
-import Lemma.Nat.IffEqEq
-import Lemma.Nat.EqOfSNat
-import Lemma.Nat.IffOfSNat
-import Lemma.Nat.Object.eq.OfNat.is.Eq
-import Lemma.Nat.Object.is.Eq
-import Lemma.Nat.EqNat
-import Lemma.Nat.Eq_Nat
-import Lemma.Nat.Eq_OfNat
-import Lemma.Nat.Object.eq.OfNat.is.Eq_OfNat
-import Lemma.Set.SetObject.is.Eq
-import Lemma.Set.In_SetObject.is.In
+module
+
+public import Instance.Analysis.Section_3_1_order
+public import Theorem.Set.Eq.of.Object
+public import Theorem.Set.Object.is.Eq
+public import Theorem.Set.Eq.of.All_In
+public import Theorem.Set.All_Empty
+public import Theorem.Set.Any_In.of.Ne_Empty
+public import Theorem.Set.NeEmpty.of.In
+public import Theorem.Set.In_Set.is.Eq
+public import Theorem.Set.In_Union.is.InOrIn
+public import Theorem.Set.In_Insert.is.EqOrIn
+public import Theorem.Set.Set.eq.Union
+public import Theorem.Set.In_Set.is.EqOrEq
+public import Theorem.Set.In_Set.is.EqOrEqOrEq
+public import Theorem.Set.Eq_UnionSet
+public import Theorem.Set.EqUnionSet
+public import Theorem.Set.IffSubsetAllIn
+public import Theorem.Set.Iff_SubsetAndNe
+public import Theorem.Set.InVal
+public import Theorem.Set.EqVal
+public import Theorem.Set.Val.is.Eq
+public import Theorem.Set.EqSubtypeMk.of.In
+public import Theorem.Set.In.of.In_Specify
+public import Theorem.Set.IffVal.in.Specify
+public import Theorem.Set.In_Specify.is.Any
+public import Theorem.Set.In_Inter.is.InAndIn
+public import Theorem.Set.IffIn
+public import Theorem.Set.Disjoint.is.Inter.eq.Empty
+public import Theorem.Set.In_Replace.is.Any.of.All_Eq
+public import Theorem.Nat.Nat.eq.Object
+public import Theorem.Nat.OfNat.eq.Object
+public import Theorem.Nat.Object
+public import Theorem.Nat.EqObject
+public import Theorem.Nat.Nat.eq.OfNat
+public import Theorem.Nat.Nat.is.Eq
+public import Theorem.Nat.IffEqEq
+public import Theorem.Nat.EqOfSNat
+public import Theorem.Nat.IffOfSNat
+public import Theorem.Nat.Object.eq.OfNat.is.Eq
+public import Theorem.Nat.Object.is.Eq
+public import Theorem.Nat.EqNat
+public import Theorem.Nat.Eq_Nat
+public import Theorem.Nat.Eq_OfNat
+public import Theorem.Nat.Object.eq.OfNat.is.Eq_OfNat
+public import Theorem.Set.SetObject.is.Eq
+public import Theorem.Set.In_SetObject.is.In
+
+@[expose] public section
 
 
 namespace Chapter3

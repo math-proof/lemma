@@ -1,7 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Transcription/MergeMemory.lean -/
 
-import Def.CPythonListsort.Code.Transcription.TempStorageInvariant
-import Inductive.CPythonListsort.Code.Transcription.MergeMemory.Part2
+module
+
+public import Def.CPythonListsort.Code.Transcription.TempStorageInvariant
+public import Inductive.CPythonListsort.Code.Transcription.MergeMemory.Part2
+
+@[expose] public section
+
 /-!
 # Observable temporary-storage transitions
 

@@ -12,7 +12,7 @@ module
 
 public import Structure.v1.Atlas.GeometryOfManifolds.code.AlmostComplexManifolds.Part4
 public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.AlmostComplexManifolds
-public import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ArnoldConjecture
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ArnoldConjecture
 public import Class.v1.Atlas.GeometryOfManifolds.code.ArnoldConjecture.Part4
 public import Mathlib.Geometry.Manifold.VectorField.LieBracket
 public import Mathlib.Geometry.Manifold.IsManifold.Basic

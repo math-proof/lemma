@@ -25,7 +25,7 @@ import Mathlib.Algebra.Polynomial.Splits
 import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
 import Mathlib.Algebra.Polynomial.Bivariate
 import Def.v1.Atlas.EllipticCurves.code.ComplexMultiplication.Part6
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.ComplexMultiplication
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.ComplexMultiplication
 import Def.v1.Atlas.EllipticCurves.code.HilbertClassPolynomial
 
 

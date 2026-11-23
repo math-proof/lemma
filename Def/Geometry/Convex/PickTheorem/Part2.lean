@@ -3,18 +3,24 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
-import Mathlib.Algebra.Module.ZLattice.Basic
-import Mathlib.Analysis.Convex.Between
-import Mathlib.Analysis.Convex.Independent
-import Mathlib.Analysis.Convex.KreinMilman
-import Mathlib.Analysis.Convex.Radon
-import Mathlib.Analysis.Convex.Strict.Extreme
-import Mathlib.Analysis.Normed.Affine.AddTorsorBases
-import Mathlib.LinearAlgebra.FreeModule.Finite.CardQuotient
-import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
-import Mathlib.Topology.Instances.ZMultiples
-import Theorem.Geometry.Convex.PickTheorem.Part2
+
+module
+
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+public import Mathlib.Algebra.Module.ZLattice.Basic
+public import Mathlib.Analysis.Convex.Between
+public import Mathlib.Analysis.Convex.Independent
+public import Mathlib.Analysis.Convex.KreinMilman
+public import Mathlib.Analysis.Convex.Radon
+public import Mathlib.Analysis.Convex.Strict.Extreme
+public import Mathlib.Analysis.Normed.Affine.AddTorsorBases
+public import Mathlib.LinearAlgebra.FreeModule.Finite.CardQuotient
+public import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
+public import Mathlib.Topology.Instances.ZMultiples
+public import Theorem.Geometry.Convex.PickTheorem.Part2
+
+@[expose] public section
+
 /-!
 # Pick's theorem for convex lattice polygons
 

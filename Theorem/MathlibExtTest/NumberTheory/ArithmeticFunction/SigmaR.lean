@@ -1,13 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ArithmeticFunction/SigmaR.lean -/
+module
 
-
-import Def.NumberTheory.ArithmeticFunction.SigmaR
-import Theorem.Nat.ArithmeticFunction.SigmaR
+public import Def.NumberTheory.ArithmeticFunction.SigmaR
+public import Theorem.Nat.ArithmeticFunction.SigmaR
 open ArithmeticFunction
 
 /-!
 # Tests for complex-exponent divisor sums
 -/
+
+public section
 
 
 example (s : ℂ) : sigmaR s 0 = 0 := by

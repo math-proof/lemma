@@ -1,14 +1,17 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/PeakStatistic231.lean -/
 
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.GroupTheory.Perm.Fin
-import Mathlib.Combinatorics.Enumerative.Catalan.Basic
-import Mathlib.Data.Fintype.Perm
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.Tactic.Ring
-import Mathlib.Order.Interval.Finset.Fin
-import Theorem.Combinatorics.Enumerative.PeakStatistic231.Part2
+module
 
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.GroupTheory.Perm.Fin
+public import Mathlib.Combinatorics.Enumerative.Catalan.Basic
+public import Mathlib.Data.Fintype.Perm
+public import Mathlib.RingTheory.PowerSeries.Basic
+public import Mathlib.Tactic.Ring
+public import Mathlib.Order.Interval.Finset.Fin
+public import Theorem.Combinatorics.Enumerative.PeakStatistic231.Part2
+
+@[expose] public section
 
 section
 

@@ -7,14 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib
-import Def.v1.Atlas.NumberTheoryI.code.DirectLimits.Part2
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DirectLimits
-import Def.v1.Atlas.NumberTheoryI.code.Prop255
+public import Mathlib
+public import Def.v1.Atlas.NumberTheoryI.code.DirectLimits.Part2
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DirectLimits
+public import Def.v1.Atlas.NumberTheoryI.code.Prop255
 open scoped RestrictedProduct
 open Filter Set Topology
 
+public section
 
 noncomputable section
 

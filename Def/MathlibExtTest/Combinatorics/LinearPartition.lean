@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/LinearPartition.lean -/
 
+module
 
-import Structure.Combinatorics.LinearPartition
-import Theorem.Finset.LinearPartition
-import Mathlib.Tactic
+public import Structure.Combinatorics.LinearPartition
+public import Theorem.Finset.LinearPartition
+public import Mathlib.Tactic
 
+@[expose] public section
 
 namespace MetaMathlibExt
 

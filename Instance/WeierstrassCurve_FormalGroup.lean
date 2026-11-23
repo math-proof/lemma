@@ -1,11 +1,14 @@
 -- Carved from Lemma/Definitions/Def_WeierstrassCurve_FormalGroup.lean: instance decls only.
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.FormalGroup.Basic
-import Mathlib.Algebra.BigOperators.Finprod
-import Mathlib.RingTheory.MvPowerSeries.NoZeroDivisors
-import Mathlib.RingTheory.MvPowerSeries.Evaluation
-import Lemma.WeierstrassCurve.FormalGroup
+module
+
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.FormalGroup.Basic
+public import Mathlib.Algebra.BigOperators.Finprod
+public import Mathlib.RingTheory.MvPowerSeries.NoZeroDivisors
+public import Mathlib.RingTheory.MvPowerSeries.Evaluation
+public import Theorem.WeierstrassCurve.FormalGroup
+@[expose] public section
 
 set_option autoImplicit false
 set_option linter.unusedSectionVars false

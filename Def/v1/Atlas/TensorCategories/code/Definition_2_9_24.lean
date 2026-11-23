@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Abbrev.v1.Atlas.TensorCategories.code.IndecomposableModuleCat
-import Mathlib.CategoryTheory.Monoidal.Bimod
-import Mathlib.CategoryTheory.Monoidal.Mod_
-import Abbrev.v1.Atlas.TensorCategories.code.Definition_2_9_24
+module
+
+public import Abbrev.v1.Atlas.TensorCategories.code.IndecomposableModuleCat
+public import Mathlib.CategoryTheory.Monoidal.Bimod
+public import Mathlib.CategoryTheory.Monoidal.Mod_
+public import Abbrev.v1.Atlas.TensorCategories.code.Definition_2_9_24
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 universe v u

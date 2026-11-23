@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/AlgebraicGeometry/EllipticCurve/ManinProjectiveDegree.lean -/
+module
 
+public import Def.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree
+public import Theorem.Polynomial.PrimitiveTripleManinProjectiveDegreeEllipticCurve.of.All_False.Ne_0
+public import Mathlib.Tactic.Ring
 
-import Def.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree
-import Theorem.Polynomial.PrimitiveTripleManinProjectiveDegreeEllipticCurve.of.All_False.Ne_0
-import Mathlib.Tactic.Ring
-
+public section
 
 namespace MathlibExtTest.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree
 

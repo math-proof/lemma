@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.AdvancedKahler
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.AdvancedKahler
 import Class.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part11
 import Theorem.v1.Atlas.GeometryOfManifolds.code.Counterexamples.Part4
 set_option autoImplicit false

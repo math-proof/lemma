@@ -1,14 +1,19 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/CobhamGapTheorem.lean -/
 
-import Def.NumberTheory.BaseRecognizable
-import Theorem.Nat.BaseRecognizable
-import Mathlib.Basic.ENNReal.Operations
-import Mathlib.Order.LiminfLimsup
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Basic.ENNReal.Inv
-import Mathlib.Data.Nat.Digits.Lemmas
-import Mathlib.Tactic.Bound
-import Mathlib.Tactic.Ring
+module
+
+public import Def.NumberTheory.BaseRecognizable
+public import Theorem.Nat.BaseRecognizable
+public import Mathlib.Basic.ENNReal.Operations
+public import Mathlib.Order.LiminfLimsup
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Basic.ENNReal.Inv
+public import Mathlib.Data.Nat.Digits.Lemmas
+public import Mathlib.Tactic.Bound
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # Cobham's gap theorem
 

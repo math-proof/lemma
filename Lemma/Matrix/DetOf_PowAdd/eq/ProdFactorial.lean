@@ -3,6 +3,7 @@ import Mathlib.Data.Matrix.ColumnRowPartitioned
 import Mathlib.LinearAlgebra.Vandermonde
 import Initialize.Tactic.Attr.Basic
 import Syntax.LinearAlgebra.Matrix.Notation
+open scoped Matrix
 open Nat
 
 
@@ -11,12 +12,12 @@ private lemma main
   {n : ℕ}
   {δ : ℝ} :
 -- imply
-  ([i < n, j < n] (((j : ℝ) + δ) ^ (i : ℕ))).det = ∏ i : Fin n, ((i : ℕ)! : ℝ) := by
+  ([i < n][j < n] (((j : ℝ) + δ) ^ (i : ℕ))).det = ∏ i : Fin n, ((i : ℕ)! : ℝ) := by
 -- proof
   rw [← Matrix.det_transpose]
-  have h : ([i < n, j < n] (((j : ℝ) + δ) ^ (i : ℕ))).transpose = Matrix.vandermonde fun j : Fin n => (j : ℝ) + δ := by
+  have h : ([i < n][j < n] (((j : ℝ) + δ) ^ (i : ℕ))).transpose = Matrix.vandermonde fun j : Fin n => (j : ℝ) + δ := by
     ext i j
-    simp [Matrix.vandermonde, Matrix.ofFun_apply]
+    simp [Matrix.vandermonde]
   have hc : ∏ x : Fin n, ∏ y ∈ Finset.Ioi x, (((y : ℕ) : ℝ) + δ - (((x : ℕ) : ℝ) + δ)) = ∏ y : Fin n, ∏ x ∈ Finset.Iio y, (((y : ℕ) : ℝ) + δ - (((x : ℕ) : ℝ) + δ)) :=
     Finset.prod_comm' (by intro x y; simp)
   rw [h, Matrix.det_vandermonde, hc]

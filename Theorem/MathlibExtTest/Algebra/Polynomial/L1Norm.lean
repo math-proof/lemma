@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/Polynomial/L1Norm.lean -/
+module
 
+public import Def.Algebra.Polynomial.L1Norm
+public import Theorem.Polynomial.L1Norm
 
-import Def.Algebra.Polynomial.L1Norm
-import Theorem.Polynomial.L1Norm
-
+public section
 
 namespace Polynomial
 

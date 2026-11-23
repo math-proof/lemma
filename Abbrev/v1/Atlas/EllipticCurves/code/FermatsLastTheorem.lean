@@ -8,12 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Def.v1.Atlas.EllipticCurves.code.Isogenies.Part13
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.Isogenies
+module
+
+public import Mathlib
+public import Def.v1.Atlas.EllipticCurves.code.Isogenies.Part13
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Isogenies
 
 
-noncomputable section GaloisRepInfra
+@[expose] public noncomputable section GaloisRepInfra
 
 open Matrix CongruenceSubgroup
 

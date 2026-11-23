@@ -1,13 +1,17 @@
-import Structure.Dynamics.MarkovDecisionProcess
-import Class.Probability.Rv
-import Mathlib.Analysis.Calculus.Gradient.Basic
-import Mathlib.Probability.Kernel.WithDensity
-import Def.Order.Miscellaneous
-import Theorem.Random.SinglePSpace.of.Eq_WithDensity.Measurable.AEMeasurable
-import Theorem.Random.SinglePSpace.of.AEMeasurable.Distributed
-import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
-import Class.Dynamics.PolicyTrajectory
-import Def.Dynamics.PolicyTrajectory.ContinuousAction
+module
+
+public import Structure.Dynamics.MarkovDecisionProcess
+public import Class.Probability.Rv
+public import Mathlib.Analysis.Calculus.Gradient.Basic
+public import Mathlib.Probability.Kernel.WithDensity
+public import Def.Order.Miscellaneous
+public import Theorem.Random.SinglePSpace.of.Eq_WithDensity.Measurable.AEMeasurable
+public import Theorem.Random.SinglePSpace.of.AEMeasurable.Distributed
+public import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
+public import Class.Dynamics.PolicyTrajectory
+public import Def.Dynamics.PolicyTrajectory.ContinuousAction
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Finset
 open scoped ENNReal
 

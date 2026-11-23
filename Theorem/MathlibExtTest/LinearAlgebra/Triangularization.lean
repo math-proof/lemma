@@ -1,14 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Triangularization.lean -/
+module
 
-
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Mathlib.LinearAlgebra.Determinant
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Theorem.Matrix.Triangularization
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.LinearAlgebra.Determinant
+public import Mathlib.LinearAlgebra.Matrix.Trace
+public import Theorem.Matrix.Triangularization
 open scoped BigOperators
 
 open MathlibExt.LinearAlgebra.TriangularizationWanted
 
+public section
 
 -- Triangular similarity over an algebraically closed field exposes determinant and trace.
 example {K n : Type*} [Field K] [IsAlgClosed K]

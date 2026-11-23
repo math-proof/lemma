@@ -4,15 +4,20 @@
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
-import Def.Combinatorics.Enumerative.MedianGenocchiNumber
-import Theorem.Finset.Enumerative.MedianGenocchiNumber
-import Theorem.Finset.Enumerative.EulerSeidelMatrix
-import Def.Combinatorics.Enumerative.EulerSeidelMatrix
-import Mathlib.Algebra.Ring.Parity
-import Mathlib.Data.Int.ModEq
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.NormNum.BigOperators
-import Mathlib.Tactic.Ring
+module
+
+public import Def.Combinatorics.Enumerative.MedianGenocchiNumber
+public import Theorem.Finset.Enumerative.MedianGenocchiNumber
+public import Theorem.Finset.Enumerative.EulerSeidelMatrix
+public import Def.Combinatorics.Enumerative.EulerSeidelMatrix
+public import Mathlib.Algebra.Ring.Parity
+public import Mathlib.Data.Int.ModEq
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.NormNum.BigOperators
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 open scoped BigOperators
 
 /-!

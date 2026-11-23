@@ -1,7 +1,10 @@
 -- Carved from Lemma/Definitions/Def_ValuationSubring_RatPlaceCenterHelpers.lean: instance decls only.
-import Mathlib
-import Def.FLTPrelim_Ramification
-import Instance.Deformations_ContinuousSMulDiscrete
+module
+
+public import Mathlib
+public import Def.FLTPrelim_Ramification
+public import Instance.Deformations_ContinuousSMulDiscrete
+@[expose] public section
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false

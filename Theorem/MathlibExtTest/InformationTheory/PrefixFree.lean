@@ -1,12 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/InformationTheory/PrefixFree.lean -/
+module
 
-
-import Def.InformationTheory.PrefixFree
-import Theorem.Real.PrefixFree
-import Mathlib.Tactic.FinCases
-import Mathlib.Data.Fintype.Card
+public import Def.InformationTheory.PrefixFree
+public import Theorem.Real.PrefixFree
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Data.Fintype.Card
 open MathlibExt.InformationTheory
 
+public section
 
 /-- A code on a subsingleton source is trivially prefix-free. -/
 example : IsPrefixFree (fun _ : Fin 1 => [true]) := by

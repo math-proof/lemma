@@ -1,9 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/FieldTheory/Galois/AdditiveHilbert90.lean -/
+module
 
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic
+public import Theorem.FieldTheory.Galois.AdditiveHilbert90
+public import Theorem.Int.Galois.AdditiveHilbert90
 
-import Mathlib.GroupTheory.SpecificGroups.Cyclic
-import Theorem.FieldTheory.Galois.AdditiveHilbert90
-import Theorem.Int.Galois.AdditiveHilbert90
+public section
+
 variable {K L : Type*} [Field K] [Field L] [Algebra K L] [FiniteDimensional K L]
   [IsGalois K L]
 

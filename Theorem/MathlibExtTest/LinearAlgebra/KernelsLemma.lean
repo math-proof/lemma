@@ -1,11 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/KernelsLemma.lean -/
+module
 
-
-import Theorem.Matrix.KernelsLemma
+public import Theorem.Matrix.KernelsLemma
 open Polynomial
 open scoped BigOperators
 
 open MathlibExt.LinearAlgebra.KernelsLemmaWanted
+
+public section
 
 variable {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
 

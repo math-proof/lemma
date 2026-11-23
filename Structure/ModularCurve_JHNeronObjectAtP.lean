@@ -6,7 +6,8 @@ public import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
 public import Def.AlgebraicGeometry_NeronSpecialFibreRestriction
 public import Instance.ModularCurve_XHDifferentialsModL
 public import Def.ModularCurve_XHOperators
-public import Lemma.ResidueField.GluedPic0
+public import Def.AlgebraicCurve_GluedPic0
+public import Theorem.ResidueField.GluedPic0
 public import Def.GaloisRep_Flat
 public import Def.FLTPrelim_Ramification
 public import Instance.ModularCurve_JHNeronObjectAtP

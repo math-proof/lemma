@@ -1,9 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.SpecialFunctions.Elliptic.FundamentalParallelogram
+open PeriodPair
 
-
-namespace PeriodPair
 
 /--
 [FundamentalParallelogram](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Elliptic/FundamentalParallelogram.lean)
@@ -17,9 +16,6 @@ private lemma fundamentalParallelogram_zero_eq
 -- proof
   fundamentalParallelogram_zero L
 
-end PeriodPair
-
-namespace PeriodPair
 
 /--
 [FundamentalParallelogram](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Elliptic/FundamentalParallelogram.lean)
@@ -35,9 +31,6 @@ private lemma basis_repr_omega_eq
 -- proof
   basis_repr_omega L t₁ t₂ i
 
-end PeriodPair
-
-namespace PeriodPair
 
 /--
 [FundamentalParallelogram](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Elliptic/FundamentalParallelogram.lean)
@@ -54,8 +47,6 @@ private lemma mem_fundamentalParallelogram_iff_eq
 -- proof
   mem_fundamentalParallelogram_iff L
 
-end PeriodPair
-
 
 -- created on 2026-10-11
--- updated on 2026-10-26
+-- updated on 2026-11-22

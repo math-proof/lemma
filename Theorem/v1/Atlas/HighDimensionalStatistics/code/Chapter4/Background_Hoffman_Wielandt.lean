@@ -7,10 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Background_Weyl
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Background_Weyl
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Background_Weyl
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Background_Weyl
 open Matrix Real Finset
+
+public section
 
 /-- **Hoffman-Wielandt inequality.** For matrices `A`, `B : Fin d × Fin T → ℝ` with
 ordered singular value decompositions `S_A` and `S_B` of the same rank, the sum of squared

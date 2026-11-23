@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Geometry/Manifold/ImmersionComp.lean -/
+module
 
-
-import Def.Geometry.Manifold.ImmersionComp
-import Theorem.Set.Manifold.ImmersionComp
+public import Def.Geometry.Manifold.ImmersionComp
+public import Theorem.Set.Manifold.ImmersionComp
 open Manifold
 open scoped ContDiff Manifold
+
+public section
 
 universe u
 

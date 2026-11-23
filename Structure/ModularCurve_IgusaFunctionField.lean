@@ -1,7 +1,7 @@
 module
 
 public import Mathlib
-public import Lemma.Scheme.Correspondence
+public import Theorem.Scheme.Correspondence
 public import Def.AlgebraicCurve_Differentials
 
 set_option autoImplicit false

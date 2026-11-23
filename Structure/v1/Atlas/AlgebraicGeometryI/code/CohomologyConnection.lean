@@ -11,8 +11,8 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohDerived
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohDerived
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohDerived
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
 public import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology.Part2
 public import Mathlib.CategoryTheory.Sites.SheafCohomology.Basic
 

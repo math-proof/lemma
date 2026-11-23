@@ -4,17 +4,22 @@
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
 
-import Def.NumberTheory.PrimitiveDivisor
-import Theorem.Nat.PrimitiveDivisor
-import Mathlib.Algebra.Polynomial.Eval.Degree
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.NumberTheory.Multiplicity
-import Mathlib.NumberTheory.Padics.PadicVal.Basic
-import Mathlib.RingTheory.Polynomial.Cyclotomic.Basic
-import Mathlib.RingTheory.Polynomial.Cyclotomic.Eval
-import Mathlib.RingTheory.Polynomial.Cyclotomic.Expand
-import Mathlib.RingTheory.RootsOfUnity.Complex
-import Mathlib.Tactic
+module
+
+public import Def.NumberTheory.PrimitiveDivisor
+public import Theorem.Nat.PrimitiveDivisor
+public import Mathlib.Algebra.Polynomial.Eval.Degree
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.NumberTheory.Multiplicity
+public import Mathlib.NumberTheory.Padics.PadicVal.Basic
+public import Mathlib.RingTheory.Polynomial.Cyclotomic.Basic
+public import Mathlib.RingTheory.Polynomial.Cyclotomic.Eval
+public import Mathlib.RingTheory.Polynomial.Cyclotomic.Expand
+public import Mathlib.RingTheory.RootsOfUnity.Complex
+public import Mathlib.Tactic
+
+@[expose] public section
+
 /-!
 # Bang–Zsigmondy theorem
 

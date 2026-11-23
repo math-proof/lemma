@@ -1,7 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/HenselFactorization.lean -/
+module
 
+public import Theorem.Polynomial.HenselFactorization
 
-import Theorem.Polynomial.HenselFactorization
 /-!
 # Tests for monic Hensel factor lifting
 
@@ -9,6 +10,8 @@ Generic API-use tests: with all hypotheses assumed, apply the
 factor-lifting theorem and its degree corollary and reuse every conclusion
 component at proof level.
 -/
+
+public section
 
 
 namespace Polynomial

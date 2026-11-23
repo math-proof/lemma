@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.TensorCategories.code.InternalHom.Part4
-import Lemma.Category.Atlas.v1.TensorCategories.code.InternalHom
+import Theorem.Category.Atlas.v1.TensorCategories.code.InternalHom
 set_option maxHeartbeats 800000
 
 universe v₁ v₂ u₁ u₂

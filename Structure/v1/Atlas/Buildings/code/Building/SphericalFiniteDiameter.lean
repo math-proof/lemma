@@ -12,7 +12,7 @@ module
 
 public import Def.v1.Atlas.Buildings.code.Building.Spherical
 public import Theorem.Finset.AreOpposite.of.AreOpposite
-public import Lemma.List.Any.of.Not.In_A.IsChainA
+public import Theorem.List.Any.of.Not.In_A.IsChainA
 public import Theorem.Finset.OppositeSides.of.EqToSimplicialComplex.AreOppositeToSimplicialComplexToChamberComplex.IsMaximal.IsMaximal.In_Faces.In_Faces.In_Apartments.OppositeChamberHyp
 public import Def.v1.Atlas.Buildings.code.Building.Convexity
 public import Structure.v1.Atlas.Buildings.code.Building.OppositeChambers

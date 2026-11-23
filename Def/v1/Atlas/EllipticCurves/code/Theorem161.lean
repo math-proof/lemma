@@ -8,15 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.EllipticCurves.code.Lattice.Part2
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.Lattice
-import Mathlib.Analysis.Complex.CauchyIntegral
-import Mathlib.Analysis.Calculus.ContDiff.Deriv
-import Mathlib.Analysis.Calculus.Deriv.Shift
-import Mathlib.Analysis.Calculus.MeanValue
-import Mathlib.Topology.Algebra.Group.Quotient
-import Abbrev.v1.Atlas.EllipticCurves.code.Theorem161
+module
 
+public import Def.v1.Atlas.EllipticCurves.code.Lattice.Part2
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Lattice
+public import Mathlib.Analysis.Complex.CauchyIntegral
+public import Mathlib.Analysis.Calculus.ContDiff.Deriv
+public import Mathlib.Analysis.Calculus.Deriv.Shift
+public import Mathlib.Analysis.Calculus.MeanValue
+public import Mathlib.Topology.Algebra.Group.Quotient
+public import Abbrev.v1.Atlas.EllipticCurves.code.Theorem161
+
+@[expose] public section
 
 namespace ComplexLattice
 

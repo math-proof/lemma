@@ -1,4 +1,8 @@
-import Instance.Data.Tensor.Tensor.Part2
+module
+
+public import Instance.Data.Tensor.Tensor.Part2
+@[expose] public section
+
 open Tensor
 
 

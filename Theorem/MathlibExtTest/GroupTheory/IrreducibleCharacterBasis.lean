@@ -1,12 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/GroupTheory/IrreducibleCharacterBasis.lean -/
+module
 
-
-import Def.GroupTheory.IrreducibleCharacterBasis.Part2
-import Lemma.Representation.Simple_Of
-import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Def.GroupTheory.IrreducibleCharacterBasis.Part2
+public import Theorem.Representation.Simple_Of
+public import Mathlib.Analysis.Complex.Polynomial.Basic
 open CategoryTheory
 open MathlibExt.GroupTheory.IrreducibleCharacterBasisWanted
 
+public section
 
 noncomputable section
 

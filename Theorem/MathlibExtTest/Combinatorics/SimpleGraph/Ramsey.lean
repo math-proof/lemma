@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/Ramsey.lean -/
+module
 
+public import Def.Combinatorics.SimpleGraph.Ramsey
+public import Theorem.SimpleGraph.Ramsey
 
-import Def.Combinatorics.SimpleGraph.Ramsey
-import Theorem.SimpleGraph.Ramsey
-
+public section
 
 namespace SimpleGraph
 

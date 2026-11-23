@@ -1,8 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SetFamily/TuranSystem.lean -/
 
-import Mathlib.Data.Fintype.Basic
-import Def.Combinatorics.SetFamily.UniformHypergraph
-import Theorem.Finset.SetFamily.UniformHypergraph
+module
+
+public import Mathlib.Data.Fintype.Basic
+public import Def.Combinatorics.SetFamily.UniformHypergraph
+public import Theorem.Finset.SetFamily.UniformHypergraph
+
+@[expose] public section
+
 /-!
 Turan systems after Liu and Pikhurko,
 "A note on the minimum size of Turán systems" (arXiv:2501.15457v2).

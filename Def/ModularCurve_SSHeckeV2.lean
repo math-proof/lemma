@@ -1,11 +1,15 @@
-import Mathlib
-import Def.ModularCurve_PlaceWidth
-import Lemma.LaurentSeries.CharLDegeneracyHecke
-import Def.ModularCurve_QExpansionDiff
-import Lemma.Scheme.Correspondence
-import Def.ModularCurve_CharLSpecialFibreLevelNDictionary
-import Def.ModularCurve_WeightDivisor
-import Def.ModularCurve_SSCarrier
+module
+
+public import Mathlib
+public import Def.ModularCurve_PlaceWidth
+public import Theorem.LaurentSeries.CharLDegeneracyHecke
+public import Def.ModularCurve_QExpansionDiff
+public import Theorem.Scheme.Correspondence
+public import Def.ModularCurve_CharLSpecialFibreLevelNDictionary
+public import Def.ModularCurve_WeightDivisor
+public import Def.ModularCurve_SSCarrier
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 400000

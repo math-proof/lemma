@@ -11,9 +11,9 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.AlgebraicTopologyI.code.Section26.Part8
-public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
-public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section32
-public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Lemma32_4
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section32
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Lemma32_4
 public import Def.v1.Atlas.AlgebraicTopologyI.code.Section32.Part2
 public import Def.v1.Atlas.AlgebraicTopologyI.code.Lemma32_4
 public import Mathlib.Topology.Covering.Quotient

@@ -2,7 +2,8 @@ module
 
 public import Mathlib
 public import Structure.ModularCurve_IgusaFunctionField
-public import Lemma.UpperHalfPlane.X1
+public import Def.ModularCurve_X1
+public import Theorem.UpperHalfPlane.X1
 
 set_option autoImplicit false
 

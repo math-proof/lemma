@@ -1,9 +1,13 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicCurve_PlaceCompletion.lean: instance decls only.
-import Mathlib
-import Class.AlgebraicCurve_DivisorClassGroup
-import Class.AlgebraicCurve_DivisorPushPull
-import Instance.DedekindDomain_AdicValuation_InlineSpecific
-import Lemma.Valuation.PlaceCompletion
+module
+
+public import Mathlib
+public import Class.AlgebraicCurve_DivisorClassGroup
+public import Class.AlgebraicCurve_DivisorPushPull
+public import Instance.DedekindDomain_AdicValuation_InlineSpecific
+public import Theorem.Valuation.PlaceCompletion
+public import Def.AlgebraicCurve_PlaceCompletion
+@[expose] public section
 
 set_option synthInstance.maxHeartbeats 400000
 set_option maxHeartbeats 1600000

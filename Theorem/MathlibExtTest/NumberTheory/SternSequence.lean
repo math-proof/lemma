@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/SternSequence.lean -/
+module
 
+public import Def.NumberTheory.SternSequence
+public import Theorem.Nat.SternSequence
 
-import Def.NumberTheory.SternSequence
-import Theorem.Nat.SternSequence
-
+public section
 
 namespace MetaMathlibExt
 

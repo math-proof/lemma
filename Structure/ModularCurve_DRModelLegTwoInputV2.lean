@@ -9,10 +9,10 @@ public import Def.AlgebraicGeometry_RelPicardAlgEquivZeroCut
 public import Def.AlgebraicGeometry_RelPicardChartSections
 public import Instance.AlgebraicGeometry_SmoothProperCurveBase
 public import Structure.AlgebraicGeometry_TwoAffineOpenCover
-public import Lemma.Scheme.TwoChartCechSectionsOf
+public import Theorem.Scheme.TwoChartCechSectionsOf
 public import Structure.AlgebraicCurve_CurveModel
 public import Instance.AlgebraicCurve_RatFuncPlaces
-public import Lemma.Valuation.RatFuncPlaceInfty
+public import Theorem.Valuation.RatFuncPlaceInfty
 public import Structure.JacJ1Iface
 public import Instance.SheafOfModules_Monoidal
 

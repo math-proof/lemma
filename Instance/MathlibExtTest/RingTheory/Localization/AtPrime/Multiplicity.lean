@@ -1,9 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/Localization/AtPrime/Multiplicity.lean -/
 
 
-import Theorem.Int.Localization.AtPrime.Multiplicity
-import Mathlib.RingTheory.DedekindDomain.Different
-import Theorem.MathlibExtTest.RingTheory.Localization.AtPrime.Multiplicity
+module
+
+public import Theorem.Int.Localization.AtPrime.Multiplicity
+public import Mathlib.RingTheory.DedekindDomain.Different
+public import Theorem.MathlibExtTest.RingTheory.Localization.AtPrime.Multiplicity
+@[expose] public section
+
 set_option autoImplicit false
 
 /-!

@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.AlgebraicCombinatorics.code.NormalOrderCoeff.Part2
 import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.NormalOrderCoeff
-import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.WalkCountOps
+import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.WalkCountOps
 import Def.v1.Atlas.AlgebraicCombinatorics.code.WalkCountOps
 import Def.v1.Atlas.AlgebraicCombinatorics.code.WalkCountBridge
 

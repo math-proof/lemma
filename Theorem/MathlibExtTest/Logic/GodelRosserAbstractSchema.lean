@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Logic/GodelRosserAbstractSchema.lean -/
+module
 
-
-import Theorem.Set.GodelRosserAbstractSchema
+public import Theorem.Set.GodelRosserAbstractSchema
 open MetaMathlibExt
 
+public section
 
 -- The public theorem produces an undecidable truth from the abstract Rosser hypotheses.
 example

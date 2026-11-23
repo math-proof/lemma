@@ -1,7 +1,10 @@
 -- Carved from Lemma/Definitions/Def_NumberField_LevelArithmeticModP.lean: instance decls only.
-import Mathlib
-import Abbrev.NumberField_LevelArithmeticModP
-import Lemma.ClassGroup.GaloisAction
+module
+
+public import Mathlib
+public import Abbrev.NumberField_LevelArithmeticModP
+public import Theorem.ClassGroup.GaloisAction
+@[expose] public section
 
 set_option autoImplicit false
 

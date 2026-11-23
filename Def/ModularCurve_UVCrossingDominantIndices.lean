@@ -1,6 +1,10 @@
-import Mathlib
-import Lemma.MvPowerSeries.UVCrossingModel
-import Def.ModularCurve_UVCrossingGaussOrder
+module
+
+public import Mathlib
+public import Theorem.MvPowerSeries.UVCrossingModel
+public import Def.ModularCurve_UVCrossingGaussOrder
+
+@[expose] public section
 
 set_option autoImplicit false
 

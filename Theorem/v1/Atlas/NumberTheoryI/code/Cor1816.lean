@@ -7,12 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.NumberTheoryI.code.DirichletCharacters
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.DirichletCharacters
-import Structure.v1.Atlas.NumberTheoryI.code.Cor1816
+public import Def.v1.Atlas.NumberTheoryI.code.DirichletCharacters
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DirichletCharacters
+public import Structure.v1.Atlas.NumberTheoryI.code.Cor1816
 open DirichletCharacter
 
+public section
 
 namespace PrimCharDvd
 

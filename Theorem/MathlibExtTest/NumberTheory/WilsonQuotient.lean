@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/WilsonQuotient.lean -/
+module
 
-import Def.NumberTheory.WilsonQuotient
-import Theorem.Int.WilsonQuotient
+public import Def.NumberTheory.WilsonQuotient
+public import Theorem.Int.WilsonQuotient
 
+public section
 
 example : Int.wilsonQuotient 3 = 1 := by
   simp only [Int.wilsonQuotient, Nat.factorial]

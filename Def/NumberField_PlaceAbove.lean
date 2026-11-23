@@ -1,5 +1,9 @@
-import Mathlib
-import Theorem.Matrix.Any_EqComapAsIdealAsIdeal
+module
+
+public import Mathlib
+public import Theorem.Matrix.Any_EqComapAsIdealAsIdeal
+
+@[expose] public section
 
 set_option autoImplicit false
 open IsDedekindDomain NumberField

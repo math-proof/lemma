@@ -1,12 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/EgyptianFraction.lean -/
+module
 
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Tactic.NormNum
+public import Def.NumberTheory.EgyptianFraction
+public import Theorem.Nat.EgyptianFraction
+public import Def.MathlibExtTest.NumberTheory.EgyptianFraction
 
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Tactic.NormNum
-import Def.NumberTheory.EgyptianFraction
-import Theorem.Nat.EgyptianFraction
-import Def.MathlibExtTest.NumberTheory.EgyptianFraction
-
+public section
 
 namespace EgyptianFractionTest
 

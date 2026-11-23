@@ -6,6 +6,7 @@ import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 import Mathlib.LinearAlgebra.Vandermonde
 import Theorem.Function
+import Initialize.Tactic.Attr.Basic
 open Polynomial
 set_option maxHeartbeats 800000
 
@@ -895,3 +896,4 @@ private lemma main
 
 
 -- created on 2026-10-25
+-- updated on 2026-11-22

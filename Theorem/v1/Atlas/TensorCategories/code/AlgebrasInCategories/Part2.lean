@@ -7,12 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.CategoryTheory.Monoidal.Mon_
-import Mathlib.CategoryTheory.Limits.Shapes.Equalizers
-import Abbrev.v1.Atlas.TensorCategories.code.ModuleCategory.Part5
-import Instance.v1.Atlas.TensorCategories.code.AlgebrasInCategories
+public import Mathlib.CategoryTheory.Monoidal.Mon_
+public import Mathlib.CategoryTheory.Limits.Shapes.Equalizers
+public import Abbrev.v1.Atlas.TensorCategories.code.ModuleCategory.Part5
+public import Instance.v1.Atlas.TensorCategories.code.AlgebrasInCategories
 set_option maxHeartbeats 800000
+
+public section
 
 universe v u
 

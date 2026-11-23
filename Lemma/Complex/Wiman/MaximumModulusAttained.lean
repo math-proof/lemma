@@ -5,8 +5,6 @@ open Set
 open Complex
 
 
-namespace Complex
-
 /--
 [exists_mem_sphere_eq_wimanMaximumModulus](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/MaximumModulusAttained.lean)
 -/
@@ -26,9 +24,8 @@ lemma exists_mem_sphere_eq_wimanMaximumModulus
     (isCompact_sphere (0 : ℂ) r).exists_sSup_image_eq_and_ge
       (NormedSpace.sphere_nonempty.mpr hr) hf.continuous.norm.continuousOn
   exact ⟨z, hz, by simpa [wimanMaximumModulus, abs_of_nonneg hr] using hsup, hmax⟩
-end Complex
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-22

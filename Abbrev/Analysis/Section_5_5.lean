@@ -1,6 +1,10 @@
-import Mathlib
-import Theorem.Analysis.Section_5_4.Part4
-import Instance.Analysis.Section_5_5
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_5_4.Part4
+public import Instance.Analysis.Section_5_5
+@[expose] public section
+
 /-!
 # Analysis I, Section 5.5: The least upper bound property
 

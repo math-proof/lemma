@@ -3,15 +3,17 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
+module
 
-import Def.MeasureTheory.Integral.LyapunovConvexity
-import Lemma.Measure.Integral.LyapunovConvexity
-import Theorem.Measure.Atomless
-import Theorem.MeasureTheory.Measure.Atomless.Part3
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+public import Def.MeasureTheory.Integral.LyapunovConvexity
+public import Theorem.Measure.Integral.LyapunovConvexity
+public import Theorem.Measure.Atomless
+public import Theorem.MeasureTheory.Measure.Atomless.Part3
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 open MeasureTheory
 open MathlibExt.MeasureTheory.Integral.LyapunovConvexityWanted
 
+public section
 
 /-- Restriction preserves atomlessness with no finiteness hypothesis. -/
 example {α : Type*} [MeasurableSpace α] {μ : Measure α}

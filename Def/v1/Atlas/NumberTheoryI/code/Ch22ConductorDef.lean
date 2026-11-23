@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.NumberTheoryI.code.Cor227.Part2
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Cor227
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor227
 
 
 noncomputable section

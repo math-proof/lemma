@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Dynamics/SymbolicDynamics/FullShift.lean -/
+module
 
-import Def.Dynamics.SymbolicDynamics.FullShift
-import Theorem.Set.SymbolicDynamics.FullShift
+public import Def.Dynamics.SymbolicDynamics.FullShift
+public import Theorem.Set.SymbolicDynamics.FullShift
 open SymbolicDynamics.FullShift
 
+public section
 
 example (N : ℕ) (x : FullShiftSpace N) (i : ℤ) :
     unitShift N x i = x (1 + i) := by

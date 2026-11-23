@@ -1,9 +1,11 @@
-import Instance.AlgebraicCurve_DivisorPushPull
-import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
+module
+
+public import Instance.AlgebraicCurve_DivisorPushPull
+public import Theorem.Scheme.AlgebraicCurveBaseChangeGalois
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace AlgebraicCurve
 

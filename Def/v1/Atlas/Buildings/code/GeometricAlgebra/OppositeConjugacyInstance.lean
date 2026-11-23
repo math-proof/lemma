@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Instance.v1.Atlas.Buildings.code.GeometricAlgebra.FlagEquivalenceInstance
-import Lemma.Submodule.Any_EqMapToLinearMap.of.FinrankK
+import Theorem.Submodule.Any_EqMapToLinearMap.of.FinrankK
 
 
 namespace GeometricAlgebra

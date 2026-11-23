@@ -8,12 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
-import Theorem.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
-import Lemma.Category.Atlas.v1.TensorCategories.code.GrothendieckRingCategorical
-import Theorem.Category.Atlas.v1.TensorCategories.code.TensorCategoryDef
-import Def.v1.Atlas.TensorCategories.code.GrothendieckRingCategorical.Part4
-import Abbrev.v1.Atlas.TensorCategories.code.TensorCategoryDef.Part3
+module
+
+public import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
+public import Theorem.Category.Atlas.v1.TensorCategories.code.GrothendieckRingCategorical
+public import Theorem.Category.Atlas.v1.TensorCategories.code.TensorCategoryDef
+public import Def.v1.Atlas.TensorCategories.code.GrothendieckRingCategorical.Part4
+public import Abbrev.v1.Atlas.TensorCategories.code.TensorCategoryDef.Part3
+
+@[expose] public section
+
 open CategoryTheory MonoidalCategory
 open TensorCategories
 

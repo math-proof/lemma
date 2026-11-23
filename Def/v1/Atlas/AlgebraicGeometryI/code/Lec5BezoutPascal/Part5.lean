@@ -8,19 +8,24 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.MvPolynomial.Basic
-import Mathlib.Algebra.MvPolynomial.CommRing
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.LinearAlgebra.Projectivization.Basic
-import Mathlib.RingTheory.Ideal.Quotient.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.Algebra.Module.LinearMap.End
-import Mathlib.Algebra.Algebra.Bilinear
-import Mathlib.LinearAlgebra.Eigenspace.Basic
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutMultiplicitySum.Part2
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutMultiplicitySum
-import Structure.v1.Atlas.AlgebraicGeometryI.code.Lec5BezoutPascal.Part2
+module
+
+public import Mathlib.Algebra.MvPolynomial.Basic
+public import Mathlib.Algebra.MvPolynomial.CommRing
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.LinearAlgebra.Projectivization.Basic
+public import Mathlib.RingTheory.Ideal.Quotient.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.Algebra.Module.LinearMap.End
+public import Mathlib.Algebra.Algebra.Bilinear
+public import Mathlib.LinearAlgebra.Eigenspace.Basic
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutMultiplicitySum.Part2
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutMultiplicitySum
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.Lec5BezoutPascal.Part2
+
+@[expose] public section
+
 open MvPolynomial Classical
 
 

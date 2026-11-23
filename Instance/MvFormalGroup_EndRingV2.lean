@@ -1,7 +1,11 @@
 -- Carved from Lemma/Definitions/Def_MvFormalGroup_EndRingV2.lean: instance decls only.
-import Class.MvFormalGroup_BasicV2
-import Def.MvFormalGroup_BasicV2
-import Lemma.MvPowerSeries.EndRingV2
+module
+
+public import Class.MvFormalGroup_BasicV2
+public import Def.MvFormalGroup_BasicV2
+public import Theorem.MvPowerSeries.EndRingV2
+public import Def.FormalGroup_EndRingV2
+@[expose] public section
 
 set_option autoImplicit false
 

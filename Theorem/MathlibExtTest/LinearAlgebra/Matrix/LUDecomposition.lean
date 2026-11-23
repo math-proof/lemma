@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/LUDecomposition.lean -/
+module
 
-
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.NormNum
-import Theorem.Matrix.LUDecomposition
+public import Mathlib.Tactic.IntervalCases
+public import Mathlib.Tactic.NormNum
+public import Theorem.Matrix.LUDecomposition
 open MathlibExt.LinearAlgebra.Matrix.LUDecompositionWanted
 
+public section
 
 -- The leading minors of this concrete matrix are `1`, `2`, and `6`.
 example :

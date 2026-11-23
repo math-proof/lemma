@@ -1,5 +1,6 @@
 -- Carved from Lemma/Definitions/Def_LocalNewvector_PrincipalSeriesCarrier.lean: instance decls only.
-import Lemma.Matrix.PrincipalSeriesCarrier
+import Theorem.Matrix.PrincipalSeriesCarrier
+import Def.Matrix_PrincipalSeriesCarrier
 
 set_option autoImplicit false
 

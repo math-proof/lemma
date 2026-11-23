@@ -15,7 +15,7 @@ public import Mathlib.Analysis.InnerProductSpace.PiL2
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
 public import Mathlib.Geometry.Euclidean.Angle.Unoriented.Affine
 public import Class.v1.Atlas.DifferentialGeometry.code.Geodesics
-public import Lemma.Real.Atlas.v1.DifferentialGeometry.code.Geodesics
+public import Theorem.Real.Atlas.v1.DifferentialGeometry.code.Geodesics
 open scoped InnerProductSpace
 open EuclideanGeometry
 

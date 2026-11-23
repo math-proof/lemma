@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Cyclotomic/IntermediateField.lean -/
+module
 
-import Mathlib.NumberTheory.NumberField.Cyclotomic.Galois
-import Mathlib.Order.ModularLattice
-import Mathlib.RingTheory.ZMod.UnitsCyclic
-import Theorem.FieldTheory.Galois.Abelian
-import Theorem.Rat.Galois.Abelian
+public import Mathlib.NumberTheory.NumberField.Cyclotomic.Galois
+public import Mathlib.Order.ModularLattice
+public import Mathlib.RingTheory.ZMod.UnitsCyclic
+public import Theorem.FieldTheory.Galois.Abelian
+public import Theorem.Rat.Galois.Abelian
 open scoped IntermediateField IsMulCommutative
 
 /-!
@@ -41,6 +42,8 @@ final N390 theorem are not addressed here.
   J. C. Interlando, *Algebraic Lattices Arising from Congruence Submodules in Subfields of p-th
   Cyclotomic Fields*, arXiv:2608.17056v1
 -/
+
+public section
 
 
 theorem uniqueSubgroupOfIndex (G : Type*) [Group G] [Finite G] [IsCyclic G]

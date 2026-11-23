@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/ContinuedFractions/Computation/Approximations.lean -/
+module
 
+public import Theorem.Real.ContinuedFractions.Computation.Approximations
 
-import Theorem.Real.ContinuedFractions.Computation.Approximations
-
+public section
 
 namespace GenContFract
 

@@ -1,12 +1,14 @@
-import Structure.ModularCurve_X0
-import Theorem.HahnSeries.X0
-import Def.ModularCurve_LaurentCoeff
-import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+module
+
+public import Structure.ModularCurve_X0
+public import Theorem.HahnSeries.X0
+public import Def.ModularCurve_LaurentCoeff
+public import Theorem.Scheme.AlgebraicCurveBaseChangeGalois
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open IntermediateField HahnSeries AlgebraicCurve Rat
 

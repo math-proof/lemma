@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.Buildings.code.Building.AptIsCoxeterProof
-public import Lemma.Set.ApartmentsToApartmentSystem.eq.Apartments.of.IsThick
+public import Theorem.Set.ApartmentsToApartmentSystem.eq.Apartments.of.IsThick
 public import Theorem.Nat.Any_And_EqAdd_1AndAll_Eq_Add_1.of.Gt.All_Eq_Add_1OrEqAdd_1.Eq_0
 public import Def.v1.Atlas.Buildings.code.CoxeterGroup.DeletionCondition
 public import Mathlib.GroupTheory.Coxeter.Length

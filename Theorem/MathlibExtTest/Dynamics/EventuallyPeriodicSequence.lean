@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Dynamics/EventuallyPeriodicSequence.lean -/
+module
 
+public import Abbrev.Dynamics.EventuallyPeriodicSequence
+public import Theorem.Set.EventuallyPeriodicSequence
+public import Mathlib.Data.ZMod.Defs
 
-import Abbrev.Dynamics.EventuallyPeriodicSequence
-import Theorem.Set.EventuallyPeriodicSequence
-import Mathlib.Data.ZMod.Defs
-
+public section
 
 namespace MetaMathlibExt
 

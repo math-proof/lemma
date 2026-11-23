@@ -7,10 +7,12 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM18.NoetherEnergy.Part2
-import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM18.NoetherEnergy
+public import Def.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM18.NoetherEnergy.Part2
+public import Theorem.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM18.NoetherEnergy
 
+public section
 
 namespace CM18
 

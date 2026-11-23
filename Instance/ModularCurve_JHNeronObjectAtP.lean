@@ -5,7 +5,7 @@ import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
 import Theorem.Scheme.NeronSpecialFibreRestriction
 import Instance.ModularCurve_XHDifferentialsModL
 import Lemma.UpperHalfPlane.XHOperators
-import Lemma.ResidueField.GluedPic0
+import Theorem.ResidueField.GluedPic0
 import Def.GaloisRep_Flat
 import Def.FLTPrelim_Ramification
 import Def.ModularCurve_JHNeronObjectAtP

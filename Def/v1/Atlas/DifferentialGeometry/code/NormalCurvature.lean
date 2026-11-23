@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.DifferentialGeometry.code.Manifolds.Part6
-import Theorem.Real.Atlas.v1.DifferentialGeometry.code.Manifolds
+module
 
+public import Structure.v1.Atlas.DifferentialGeometry.code.Manifolds.Part6
+public import Theorem.Real.Atlas.v1.DifferentialGeometry.code.Manifolds
+
+@[expose] public section
 
 noncomputable section
 

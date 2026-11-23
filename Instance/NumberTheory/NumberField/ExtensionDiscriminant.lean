@@ -1,8 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/ExtensionDiscriminant.lean -/
 
-import Def.NumberTheory.NumberField.LatticeDiscriminant
-import Theorem.Nat.NumberField.LatticeDiscriminant
-import Theorem.NumberTheory.NumberField.ExtensionDiscriminant
+module
+
+public import Def.NumberTheory.NumberField.LatticeDiscriminant
+public import Theorem.Nat.NumberField.LatticeDiscriminant
+public import Theorem.NumberTheory.NumberField.ExtensionDiscriminant
+@[expose] public section
+
 set_option autoImplicit false
 
 universe u

@@ -1,6 +1,10 @@
-import Mathlib
-import Mathlib.Algebra.Field.Power
-import Theorem.Analysis.Section_7_2.Part2
+module
+
+public import Mathlib
+public import Mathlib.Algebra.Field.Power
+public import Theorem.Analysis.Section_7_2.Part2
+@[expose] public section
+
 /-!
 # Analysis I, Section 7.2: Infinite series
 

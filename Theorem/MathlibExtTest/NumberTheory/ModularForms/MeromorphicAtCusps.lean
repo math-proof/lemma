@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ModularForms/MeromorphicAtCusps.lean -/
+module
 
-
-import Def.NumberTheory.ModularForms.MeromorphicAtCusps
-import Theorem.Nat.ModularForms.MeromorphicAtCusps
+public import Def.NumberTheory.ModularForms.MeromorphicAtCusps
+public import Theorem.Nat.ModularForms.MeromorphicAtCusps
 open scoped UpperHalfPlane MatrixGroups
 
+public section
 
 example (c : ℂ) : ModularFunction.IsMeromorphicAtInfty (fun _ ↦ c) :=
   ⟨1, Nat.one_pos, fun _ ↦ c, MeromorphicAt.const c 0,

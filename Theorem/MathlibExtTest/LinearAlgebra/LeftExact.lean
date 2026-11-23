@@ -1,6 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/LeftExact.lean -/
+module
 
-import Theorem.Matrix.LeftExact
+public import Theorem.Matrix.LeftExact
+
+public section
+
 universe u v w
 
 variable {R : Type u} [CommRing R]

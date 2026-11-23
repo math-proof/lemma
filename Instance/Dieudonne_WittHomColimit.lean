@@ -1,7 +1,11 @@
 -- Carved from Lemma/Definitions/Def_Dieudonne_WittHomColimit.lean: instance decls only.
-import Mathlib
-import Instance.Dieudonne_WittVectorHom
-import Lemma.RingHom.WittVectorHom
+module
+
+public import Mathlib
+public import Instance.Dieudonne_WittVectorHom
+public import Theorem.RingHom.WittVectorHom
+public import Def.RingHom_WittVectorHom
+@[expose] public section
 
 set_option autoImplicit false
 

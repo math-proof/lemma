@@ -1,7 +1,12 @@
-import Mathlib
-import Abbrev.Analysis.Section_2_1
-import Abbrev.Analysis.Section_2_1_api
-import Instance.Analysis.Section_2_2
+module
+
+public import Mathlib
+public import Abbrev.Analysis.Section_2_1
+public import Abbrev.Analysis.Section_2_1_api
+public import Instance.Analysis.Section_2_2
+
+@[expose] public section
+
 /-!
 # Analysis I, Section 2.2: Addition
 

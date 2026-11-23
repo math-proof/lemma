@@ -2,7 +2,7 @@ import Mathlib
 import Structure.ExtEndgame_ChainAdm
 import Instance.GaloisRep_ComplexConjugation
 import Instance.GaloisRep_CompletionBridge
-import Lemma.ClassGroup.GaloisAction
+import Theorem.ClassGroup.GaloisAction
 
 set_option autoImplicit false
 

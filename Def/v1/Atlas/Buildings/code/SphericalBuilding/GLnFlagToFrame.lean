@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnSimultaneousRefinement
-import Structure.v1.Atlas.Buildings.code.SphericalBuilding.GLnFlagToFrame
+module
 
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnSimultaneousRefinement
+public import Structure.v1.Atlas.Buildings.code.SphericalBuilding.GLnFlagToFrame
+
+@[expose] public section
 
 namespace GLnBuilding
 

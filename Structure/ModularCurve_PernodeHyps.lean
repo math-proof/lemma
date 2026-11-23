@@ -1,16 +1,16 @@
 module
 
 public import Structure.ModularCurve_FullLevelSemistableCovering
-public import Lemma.Finset.SupersingularNodePlaces
+public import Theorem.Finset.SupersingularNodePlaces
 public import Structure.AlgebraicCurve_ConstantReduction
 public import Def.FLTPrelim_Ramification
 public import Structure.AlgebraicCurve_RegularProlongation
-public import Lemma.ResidueField.ResidueDiscs
+public import Theorem.ResidueField.ResidueDiscs
 public import Def.ModularCurve_PlaceWidthChar
 public import Def.ModularCurve_FullLevelSemistableCoveringW2
-public import Lemma.MvPowerSeries.UVCrossingModel
+public import Theorem.MvPowerSeries.UVCrossingModel
 public import Instance.AlgebraicCurve_TwoChartIntegralModel
-public import Lemma.UpperHalfPlane.X1
+public import Theorem.UpperHalfPlane.X1
 public import Def.ModularCurve_SupersingularModuli
 public import Instance.ModularCurve_FullLevelJacobian
 public import Instance.DrinfeldCurve_CoordRing

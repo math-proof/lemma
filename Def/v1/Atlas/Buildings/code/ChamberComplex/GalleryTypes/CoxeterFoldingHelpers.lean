@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.ChamberComplex.Folding.Part3
-import Theorem.List.All.of.All.IsChain.Ne
-import Theorem.Nat.NotChamberAdjacent
-import Def.v1.Atlas.Buildings.code.ChamberComplex.CoxeterComplex.Part2
-import Mathlib.GroupTheory.Coxeter.Length
+module
+
+public import Def.v1.Atlas.Buildings.code.ChamberComplex.Folding.Part3
+public import Theorem.List.All.of.All.IsChain.Ne
+public import Theorem.Nat.NotChamberAdjacent
+public import Def.v1.Atlas.Buildings.code.ChamberComplex.CoxeterComplex.Part2
+public import Mathlib.GroupTheory.Coxeter.Length
+
+@[expose] public section
+
 open scoped Classical
 
 variable {V : Type*} [DecidableEq V]

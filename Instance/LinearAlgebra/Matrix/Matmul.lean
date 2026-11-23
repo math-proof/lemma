@@ -1,14 +1,18 @@
-import Theorem.List.Append.of.Eq
-import Theorem.List.AppendAppend.eq.Append_Append
-import Theorem.List.Drop.eq.ListGet.of.GtLength_0
-import Theorem.List.DropLast.eq.Take_SubLength_1
-import Theorem.List.EqAppendTake__ListGet.of.GeLength_2
-import Theorem.List.EraseIdx.eq.Append_Drop_Add_1
-import Theorem.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
-import Theorem.List.ZipWith_Append.eq.AppendZipWithS
-import Theorem.List.ZipWith__Append.eq.AppendZipWithS
-import Instance.Data.Tensor.Tensor.Part2
-import Def.LinearAlgebra.Matrix.Matmul
+module
+
+public import Theorem.List.Append.of.Eq
+public import Theorem.List.AppendAppend.eq.Append_Append
+public import Theorem.List.Drop.eq.ListGet.of.GtLength_0
+public import Theorem.List.DropLast.eq.Take_SubLength_1
+public import Theorem.List.EqAppendTake__ListGet.of.GeLength_2
+public import Theorem.List.EraseIdx.eq.Append_Drop_Add_1
+public import Theorem.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
+public import Theorem.List.ZipWith_Append.eq.AppendZipWithS
+public import Theorem.List.ZipWith__Append.eq.AppendZipWithS
+public import Instance.Data.Tensor.Tensor.Part2
+public import Def.LinearAlgebra.Matrix.Matmul
+@[expose] public section
+
 open List Tensor
 
 

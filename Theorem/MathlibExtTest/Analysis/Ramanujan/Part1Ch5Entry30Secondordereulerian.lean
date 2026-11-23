@@ -1,14 +1,17 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Ramanujan/Part1Ch5Entry30Secondordereulerian.lean -/
+module
 
+public import Theorem.Analysis.SpecialFunctions.Part1Ch5Entry30Secondordereulerian.Part3
+public import Mathlib.NumberTheory.EulerProduct.DirichletLSeries
 
-import Theorem.Analysis.SpecialFunctions.Part1Ch5Entry30Secondordereulerian.Part3
-import Mathlib.NumberTheory.EulerProduct.DirichletLSeries
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 5, Entry 30 API checks
 
 Local factors, coefficients at small arguments, and direct uses of the exported Euler product and
 zeta identities.
 -/
+
+public section
 
 
 namespace MathlibExtTest.Analysis.Ramanujan.Part1Ch5Entry30Secondordereulerian

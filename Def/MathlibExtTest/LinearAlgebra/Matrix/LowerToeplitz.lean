@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/LowerToeplitz.lean -/
 
+module
 
-import Mathlib.Tactic.NormNum
-import Def.LinearAlgebra.Matrix.LowerToeplitz
-import Theorem.Matrix.LowerToeplitz
+public import Mathlib.Tactic.NormNum
+public import Def.LinearAlgebra.Matrix.LowerToeplitz
+public import Theorem.Matrix.LowerToeplitz
 
+@[expose] public section
 
 /-- A concrete coefficient sequence over `ℕ` for the tests below. -/
 def testSeqN : ℕ → ℕ := fun k => k + 1

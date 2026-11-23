@@ -1,7 +1,6 @@
-import Initialize.Tactic.Attr.Basic
-import Lemma.List.Cons.eq.Append
-import Lemma.List.AppendAppend.eq.Append_Append
-import Lemma.List.Append.of.Eq
+import Theorem.List.Cons.eq.Append
+import Theorem.List.AppendAppend.eq.Append_Append
+import Theorem.List.Append.of.Eq
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Lemma.List.EqPermute
 import Lemma.Int.NegSucc.eq.NegAdd_1
@@ -91,4 +90,4 @@ private lemma main
 
 
 -- created on 2025-06-17
--- updated on 2025-06-19
+-- updated on 2026-11-22

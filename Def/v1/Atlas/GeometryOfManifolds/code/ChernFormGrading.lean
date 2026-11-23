@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part7
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ConnectionsCurvature
-import Structure.v1.Atlas.GeometryOfManifolds.code.ChernFormGrading
+module
+
+public import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part7
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ConnectionsCurvature
+public import Structure.v1.Atlas.GeometryOfManifolds.code.ChernFormGrading
+
+@[expose] public section
+
 open Bundle NormedSpace Matrix Complex
 
 

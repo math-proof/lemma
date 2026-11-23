@@ -8,16 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
-import Mathlib.CategoryTheory.Preadditive.Projective.Basic
-import Mathlib.CategoryTheory.Simple
-import Mathlib.CategoryTheory.Adjunction.Unique
-import Mathlib.CategoryTheory.Limits.Preserves.Finite
-import Mathlib.CategoryTheory.Limits.Constructions.EpiMono
-import Mathlib.CategoryTheory.Yoneda
-import Instance.v1.Atlas.TensorCategories.code.InvertibleObjects
-import Theorem.Category.Atlas.v1.TensorCategories.code.InvertibleObjects
-import Def.v1.Atlas.TensorCategories.code.Corollary_1_51_3.Part2
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+public import Mathlib.CategoryTheory.Preadditive.Projective.Basic
+public import Mathlib.CategoryTheory.Simple
+public import Mathlib.CategoryTheory.Adjunction.Unique
+public import Mathlib.CategoryTheory.Limits.Preserves.Finite
+public import Mathlib.CategoryTheory.Limits.Constructions.EpiMono
+public import Mathlib.CategoryTheory.Yoneda
+public import Instance.v1.Atlas.TensorCategories.code.InvertibleObjects
+public import Theorem.Category.Atlas.v1.TensorCategories.code.InvertibleObjects
+public import Def.v1.Atlas.TensorCategories.code.Corollary_1_51_3.Part2
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open CategoryTheory MonoidalCategory Category

@@ -1,7 +1,9 @@
-import Structure.LanglandsTunnell_JLConverse
-import Structure.AutomorphicForm_CarrierPins
-import Def.NumberField_AdelicBox
-import Def.AutomorphicForm_CentreCutSiegelSet
+module
+
+public import Structure.LanglandsTunnell_JLConverse
+public import Structure.AutomorphicForm_CarrierPins
+public import Def.NumberField_AdelicBox
+public import Def.AutomorphicForm_CentreCutSiegelSet
 
 set_option autoImplicit false
 
@@ -10,7 +12,7 @@ open NumberField.AdelicLevel NumberField.AdelicBox
 open AutomorphicForm.WindowedSiegel
 open LanglandsTunnell.Converse
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace LanglandsTunnell.Converse.CuspSynthesis
 

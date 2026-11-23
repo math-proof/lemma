@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/InformationTheory/LogSum.lean -/
+module
 
+public import Theorem.Real.LogSum
 
-import Theorem.Real.LogSum
-
+public section
 
 /-- Gibbs' inequality for probability vectors on a finset. -/
 example {ι : Type*} (s : Finset ι) (p q : ι → ℝ) (hp : ∀ i ∈ s, 0 ≤ p i)

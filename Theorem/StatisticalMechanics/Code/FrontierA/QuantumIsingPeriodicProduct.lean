@@ -7,12 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingAntiperiodicProduct.Part2
-import Def.StatisticalMechanics.Code.FrontierA.QuantumIsingPeriodicProduct
+public import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingAntiperiodicProduct.Part2
+public import Def.StatisticalMechanics.Code.FrontierA.QuantumIsingPeriodicProduct
 open scoped BigOperators
 
+public section
 
 namespace StatMech.FrontierA
 

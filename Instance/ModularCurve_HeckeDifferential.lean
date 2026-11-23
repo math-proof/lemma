@@ -1,8 +1,11 @@
 -- Carved from Lemma/Definitions/Def_ModularCurve_HeckeDifferential.lean: instance decls only.
-import Mathlib
-import Lemma.LaurentSeries.HeckeOperator
-import Def.AlgebraicCurve_DifferentialPushPull
-import Def.AlgebraicCurve_RegularDifferentials
+module
+
+public import Mathlib
+public import Theorem.LaurentSeries.HeckeOperator
+public import Def.AlgebraicCurve_DifferentialPushPull
+public import Def.AlgebraicCurve_RegularDifferentials
+@[expose] public section
 
 set_option autoImplicit false
 

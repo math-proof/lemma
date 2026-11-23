@@ -8,9 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.DifferentialAnalysis.code.WavefrontSet.Part3
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontSet
+module
 
+public import Structure.v1.Atlas.DifferentialAnalysis.code.WavefrontSet.Part3
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontSet
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,6 @@
+import Lemma.Vector.SEq.of.All_EqGetS.Eq
 import Lemma.List.ProdTakeDropInsertIdx.eq.One
 import Def.Data.Tensor.Sum
-import Def.Data.Tensor.Unsqueeze
-import Def.Data.Tensor.Prod
 import Lemma.Nat.Eq_Div.Eq_Mod.of.Eq_AddMul
 import Lemma.Tensor.DataSum.as.FlattenMapSplitAtData
 import Lemma.Tensor.DataUnsqueeze.as.Data
@@ -28,7 +27,9 @@ private lemma main
   erw [DataSum.eq.Cast_FlattenMapSplitAtData]
   unfold List.Vector.splitAt
   simp
-  apply Bool.SEqCast.of.SEq.Eq (by simp [MulProdS.eq.ProdEraseIdx])
+  have h_prod : ((s.insertIdx i 1).take i).prod * ((s.insertIdx i 1).drop (i + 1)).prod = s.prod := by
+    induction s generalizing i <;> cases i <;> simp_all [_root_.mul_assoc]
+  apply Bool.SEqCast.of.SEq.Eq (by simp [h_prod])
   apply SEq.of.All_EqGetS.Eq.fin
   ·
     intro t
@@ -59,7 +60,8 @@ private lemma main
     rw [Prod.eq.MulProdS (s := (s.insertIdx i 1).drop i) 1]
     simp [ProdTakeDropInsertIdx.eq.One]
   ·
-    simp [MulProdS.eq.ProdEraseIdx]
+    simp [h_prod]
 
 
 -- created on 2026-07-22
+-- updated on 2026-11-22

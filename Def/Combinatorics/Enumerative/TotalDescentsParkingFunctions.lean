@@ -1,13 +1,16 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/TotalDescentsParkingFunctions.lean -/
 
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Nat.Choose.Basic
-import Instance.Combinatorics.Enumerative.ParkingFunction
-import Theorem.Finset.Enumerative.ParkingFunction
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.Ring
+module
 
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Nat.Choose.Basic
+public import Instance.Combinatorics.Enumerative.ParkingFunction
+public import Theorem.Finset.Enumerative.ParkingFunction
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

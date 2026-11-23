@@ -11,8 +11,8 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.OppositeConjugacyProof
-public import Lemma.Fin.Len
-public import Lemma.Fin.IsCompl
+public import Theorem.Fin.Len
+public import Theorem.Fin.IsCompl
 public import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.SemidirectExistence
 
 

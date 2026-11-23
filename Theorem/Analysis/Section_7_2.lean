@@ -1,6 +1,9 @@
-import Mathlib
-import Mathlib.Algebra.Field.Power
-import Instance.Analysis.Section_7_2
+module
+
+public import Mathlib
+public import Mathlib.Algebra.Field.Power
+public import Instance.Analysis.Section_7_2
+
 /-!
 # Analysis I, Section 7.2: Infinite series
 
@@ -16,6 +19,8 @@ Main constructions and results of this section:
 - Absolute convergence; basic series laws.
 
 -/
+
+public section
 
 
 namespace Chapter7

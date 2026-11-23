@@ -6,8 +6,6 @@ open scoped ENNReal
 open Complex
 
 
-namespace Complex
-
 /--
 [wimanMajorant_bound_off_exceptionalSet](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CorrectedMajorantBoundOffExceptionalSet.lean)
 -/
@@ -76,9 +74,8 @@ lemma wimanMajorant_bound_off_exceptionalSet
     _ = 8 * wimanMaximumTerm f (Real.exp x) *
       (1 + wimanGrowth f x ^ (81 / 128 : ℝ)) := by
       rw [hsqrt]
-end Complex
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-22

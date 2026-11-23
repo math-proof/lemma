@@ -1,4 +1,4 @@
-import Lemma.Nat.Sub.gt.Zero.is.Gt
+import Theorem.Nat.Sub.gt.Zero.is.Gt
 import Lemma.List.LengthDrop.eq.SubLength
 import Lemma.List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0
 import Lemma.List.SliceDrop.eq.Slice_AddS
@@ -26,3 +26,4 @@ private lemma main
 
 
 -- created on 2025-06-17
+-- updated on 2026-11-22

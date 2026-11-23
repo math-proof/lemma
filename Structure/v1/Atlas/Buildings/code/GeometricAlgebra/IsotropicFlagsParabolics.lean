@@ -12,8 +12,8 @@ module
 
 public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.ExtendingIsometries
 public import Theorem.Submodule.OfEq.eq.M.of.Eq
-public import Lemma.Fin.Eq.of.Ne_0.All_Eq
-public import Lemma.Submodule.Any_EqMapToLinearMap.of.FinrankK
+public import Theorem.Fin.Eq.of.Ne_0.All_Eq
+public import Theorem.Submodule.Any_EqMapToLinearMap.of.FinrankK
 public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.WittTheorem.Part2
 public import Instance.v1.Atlas.Buildings.code.GeometricAlgebra.FlagEquivalenceInstance
 public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.IsotropicFlagsParabolics

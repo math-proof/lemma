@@ -91,8 +91,8 @@ export class LeanArgs extends Lean {
         return this.insert_word(caret, func);
     }
 
-    toJSON() {
-        const mapped = this.args.map((a) => (a == null ? a : a.toJSON()));
+    toJSON(ctx = { leaves: new Map() }) {
+        const mapped = this.args.map((a) => (a == null ? a : a.toJSON(ctx)));
         let i = 0;
         while (i < mapped.length && mapped[i] === '') i++;
         let j = mapped.length;
@@ -186,8 +186,8 @@ export class LeanUnary extends LeanArgs {
         throw new Error(`insert_if is unexpected for ${this.constructor.name}`);
     }
 
-    toJSON() {
-        return this.arg.toJSON();
+    toJSON(ctx = { leaves: new Map() }) {
+        return this.arg.toJSON(ctx);
     }
 
     replace(oldNode, newNode) {
@@ -258,8 +258,8 @@ export class LeanBinary extends LeanArgs {
         return this.insert_word(caret, func);
     }
 
-    toJSON() {
-        return { [this.pathToken]: [this.lhs.toJSON(), this.rhs.toJSON()] };
+    toJSON(ctx = { leaves: new Map() }) {
+        return { [this.pathToken]: [this.lhs.toJSON(ctx), this.rhs.toJSON(ctx)] };
     }
 
     latexFormat() {

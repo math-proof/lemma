@@ -1,10 +1,10 @@
 module
 
 public import Mathlib
-public import Lemma.Scheme.ResolvedModelGlueComponents
+public import Theorem.Scheme.ResolvedModelGlueComponents
 public import Structure.ModularCurve_DRResolvedModelPackageLevel
 public import Abbrev.ModularCurve_DRModelPackageLevel
-public import Lemma.Scheme.DRModelPackageLevelAPI
+public import Theorem.Scheme.DRModelPackageLevelAPI
 public import Instance.MvPolynomial_CrossingResolutionScheme
 public import Instance.MvPolynomial_CrossingResolutionFibrePoints
 

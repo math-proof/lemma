@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/RamificationInertia/Inseparable.lean -/
+module
 
-
-import Theorem.NumberTheory.RamificationInertia.Inseparable
-import Theorem.Ideal.RamificationInertia.Inseparable
+public import Theorem.NumberTheory.RamificationInertia.Inseparable
+public import Theorem.Ideal.RamificationInertia.Inseparable
 open Ideal
+
+public section
 
 attribute [local instance] Ideal.Quotient.field
 

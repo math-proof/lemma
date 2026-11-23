@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.TheoryOfComputation.code.SpaceComplexity.Part7
-public import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity
 public section
 
 open SpaceComplexity

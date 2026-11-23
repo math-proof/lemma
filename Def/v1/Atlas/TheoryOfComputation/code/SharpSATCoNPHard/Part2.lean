@@ -8,13 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TheoryOfComputation.code.SharpSAT
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Finset.Lattice.Fold
-import Structure.v1.Atlas.TheoryOfComputation.code.SharpSATCoNPHard
+module
 
+public import Def.v1.Atlas.TheoryOfComputation.code.SharpSAT
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Finset.Lattice.Fold
+public import Structure.v1.Atlas.TheoryOfComputation.code.SharpSATCoNPHard
+
+@[expose] public section
 
 namespace NPCompleteness
 

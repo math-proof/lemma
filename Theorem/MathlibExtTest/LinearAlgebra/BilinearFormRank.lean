@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/BilinearFormRank.lean -/
+module
 
+public import Def.LinearAlgebra.BilinearFormRank
+public import Theorem.Matrix.BilinearFormRank
 
-import Def.LinearAlgebra.BilinearFormRank
-import Theorem.Matrix.BilinearFormRank
-
+public section
 
 noncomputable section
 

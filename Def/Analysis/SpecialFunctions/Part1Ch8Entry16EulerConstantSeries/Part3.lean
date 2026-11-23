@@ -2,10 +2,15 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.NumberTheory.Harmonic.EulerMascheroni
-import Mathlib.NumberTheory.Harmonic.Bounds
-import Mathlib.Tactic.NormNum.Parity
-import Theorem.Analysis.SpecialFunctions.Part1Ch8Entry16EulerConstantSeries.Part2
+module
+
+public import Mathlib.NumberTheory.Harmonic.EulerMascheroni
+public import Mathlib.NumberTheory.Harmonic.Bounds
+public import Mathlib.Tactic.NormNum.Parity
+public import Theorem.Analysis.SpecialFunctions.Part1Ch8Entry16EulerConstantSeries.Part2
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 8
 

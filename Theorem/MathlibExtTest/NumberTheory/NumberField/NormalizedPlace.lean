@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/NormalizedPlace.lean -/
+module
 
-
-import Def.NumberTheory.NumberField.NormalizedPlace
-import Lemma.Nat.NumberField.NormalizedPlace
+public import Def.NumberTheory.NumberField.NormalizedPlace
+public import Theorem.Nat.NumberField.NormalizedPlace
 open NumberField
 
+public section
 
 namespace MathlibExtTest.NumberTheory.NormalizedPlace
 

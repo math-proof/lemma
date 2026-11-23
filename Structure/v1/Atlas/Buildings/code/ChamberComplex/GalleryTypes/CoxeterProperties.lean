@@ -13,8 +13,8 @@ module
 public import Def.v1.Atlas.Buildings.code.ChamberComplex.Folding.Part3
 public import Theorem.List.All.of.All.IsChain.Ne
 public import Theorem.List.ImageGalleryStutters.is.GalleryStuttersUnderToFun
-public import Lemma.Fin.Simple
-public import Lemma.Set.EqSimpleDeletionImpliesCoxeterSystem.of.SatisfiesDeletionConditionGen.EqClosure_Range_Top.All_NeMul_1.All_EqMul_1
+public import Theorem.Fin.Simple
+public import Theorem.Set.EqSimpleDeletionImpliesCoxeterSystem.of.SatisfiesDeletionConditionGen.EqClosure_Range_Top.All_NeMul_1.All_EqMul_1
 public import Def.v1.Atlas.Buildings.code.ChamberComplex.UniquenessBook
 public import Def.v1.Atlas.Buildings.code.Building.CoxeterComplexFoldings
 public import Theorem.Finset.Any_All_IsFacetToSimplicialComplex.of.IsMaximalToSimplicialComplex.IsFacetToSimplicialComplex.All_Any_And_IsMaximalToSimplicialComplexAndIsFacetToSimplicialComplex.All_AdjacentToSimplicialComplex.All_ChamberAdjacent.All_Any_And_Eq.All_All_Eq

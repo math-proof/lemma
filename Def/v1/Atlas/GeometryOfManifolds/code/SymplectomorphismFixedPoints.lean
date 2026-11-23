@@ -8,19 +8,24 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Geometry.Manifold.Diffeomorph
-import Mathlib.Geometry.Manifold.MFDeriv.Basic
-import Mathlib.Geometry.Manifold.MFDeriv.FDeriv
-import Mathlib.Geometry.Manifold.IsManifold.Basic
-import Mathlib.Geometry.Manifold.IsManifold.ExtChartAt
-import Mathlib.Geometry.Manifold.MFDeriv.SpecificFunctions
-import Mathlib.Topology.Order
-import Mathlib.Topology.Order.Compact
-import Mathlib.Topology.Compactness.Compact
-import Mathlib.Analysis.Calculus.LocalExtr.Basic
-import Structure.v1.Atlas.GeometryOfManifolds.code.WeinsteinNeighborhood.Part7
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.WeinsteinNeighborhood
-import Structure.v1.Atlas.GeometryOfManifolds.code.SymplectomorphismFixedPoints
+module
+
+public import Mathlib.Geometry.Manifold.Diffeomorph
+public import Mathlib.Geometry.Manifold.MFDeriv.Basic
+public import Mathlib.Geometry.Manifold.MFDeriv.FDeriv
+public import Mathlib.Geometry.Manifold.IsManifold.Basic
+public import Mathlib.Geometry.Manifold.IsManifold.ExtChartAt
+public import Mathlib.Geometry.Manifold.MFDeriv.SpecificFunctions
+public import Mathlib.Topology.Order
+public import Mathlib.Topology.Order.Compact
+public import Mathlib.Topology.Compactness.Compact
+public import Mathlib.Analysis.Calculus.LocalExtr.Basic
+public import Structure.v1.Atlas.GeometryOfManifolds.code.WeinsteinNeighborhood.Part7
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.WeinsteinNeighborhood
+public import Structure.v1.Atlas.GeometryOfManifolds.code.SymplectomorphismFixedPoints
+
+@[expose] public section
+
 set_option autoImplicit false
 
 

@@ -8,11 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
+module
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.NoDoubleWind2.Part2
-import Theorem.StatisticalMechanics.Code.Onsager.UmlaufsatzStrip
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.NoDoubleWind2.Part2
+public import Theorem.StatisticalMechanics.Code.Onsager.UmlaufsatzStrip
 
+@[expose] public section
 
 namespace StatMech.Onsager.UmlaufsatzStrip
 

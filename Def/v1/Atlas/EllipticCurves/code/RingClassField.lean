@@ -10,10 +10,10 @@ LICENSE file in the root directory of this source tree.
 
 import Mathlib
 import Def.v1.Atlas.EllipticCurves.code.PointCounting.Part2
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.PointCounting
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.OrdinarySupersingular
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.HilbertClassPolynomial
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.CMTorsor
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.PointCounting
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.OrdinarySupersingular
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.HilbertClassPolynomial
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.CMTorsor
 import Def.v1.Atlas.EllipticCurves.code.OrdinarySupersingular
 import Def.v1.Atlas.EllipticCurves.code.HilbertClassPolynomial.Part2
 import Def.v1.Atlas.EllipticCurves.code.CMTorsor.Part7

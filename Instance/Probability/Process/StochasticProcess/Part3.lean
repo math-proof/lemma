@@ -6,7 +6,7 @@ import Mathlib.Topology.Sequences
 import Mathlib.Analysis.Normed.Module.FiniteDimension
 import Mathlib.Analysis.Normed.Lp.WithLp
 import Mathlib.Analysis.Normed.Lp.PiLp
-import Lemma.Matrix.L1Norm.eq.One.of.StochasticVec
+import Theorem.Matrix.L1Norm.eq.One.of.StochasticVec
 import Mathlib.Topology.Instances.Matrix
 import Def.Probability.Process.StochasticProcess
 open Finset WithLp Matrix Filter Metric Bornology Topology Function PiLp

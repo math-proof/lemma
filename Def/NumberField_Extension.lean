@@ -1,7 +1,11 @@
-import Mathlib
-import Abbrev.NumberField_Extension
-import Instance.NumberField_Extension
-import Class.NumberField_Extension
+module
+
+public import Mathlib
+public import Abbrev.NumberField_Extension
+public import Instance.NumberField_Extension
+public import Class.NumberField_Extension
+
+@[expose] public section
 
 section
 

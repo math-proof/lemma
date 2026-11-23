@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.LieGroups.code.SL2Representations.Part2
-import Lemma.Complex.IsIsomorphicGK.of.IsIsomorphicGK.IsIsomorphicGK
+import Theorem.Complex.IsIsomorphicGK.of.IsIsomorphicGK.IsIsomorphicGK
 import Def.v1.Atlas.LieGroups.code.SL2Classification.Part2
 open SL2SimpleModule
 

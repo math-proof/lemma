@@ -1,19 +1,23 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
-import Mathlib.MeasureTheory.Measure.CharacteristicFunction.Basic
-import Mathlib.MeasureTheory.Measure.LevyConvergence
-import Mathlib.MeasureTheory.Measure.Prokhorov
-import Mathlib.MeasureTheory.Measure.LevyProkhorovMetric
-import Mathlib.MeasureTheory.Measure.CharacteristicFunction.TaylorExpansion
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
-import Mathlib.RingTheory.RootsOfUnity.Complex
-import Mathlib.Algebra.Order.Round
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Separation.CompletelyRegular
-import Theorem.Analysis.Fourier.Bochner.Part2
 
+module
+
+public import Mathlib.MeasureTheory.Measure.CharacteristicFunction.Basic
+public import Mathlib.MeasureTheory.Measure.LevyConvergence
+public import Mathlib.MeasureTheory.Measure.Prokhorov
+public import Mathlib.MeasureTheory.Measure.LevyProkhorovMetric
+public import Mathlib.MeasureTheory.Measure.CharacteristicFunction.TaylorExpansion
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
+public import Mathlib.RingTheory.RootsOfUnity.Complex
+public import Mathlib.Algebra.Order.Round
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Separation.CompletelyRegular
+public import Theorem.Analysis.Fourier.Bochner.Part2
+
+@[expose] public section
 
 section
 

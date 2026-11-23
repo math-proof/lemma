@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DedekindDomain/AdicCompletionResidueField.lean -/
 
-import Theorem.RingTheory.DedekindDomain.AdicCompletionIntegers
-import Theorem.Int.DedekindDomain.AdicCompletionIntegers
-import Mathlib.Tactic.GCongr
-import Mathlib.Tactic.Ring
+module
+
+public import Theorem.RingTheory.DedekindDomain.AdicCompletionIntegers
+public import Theorem.Int.DedekindDomain.AdicCompletionIntegers
+public import Mathlib.Tactic.GCongr
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # Residue field of the adic completion integers
 

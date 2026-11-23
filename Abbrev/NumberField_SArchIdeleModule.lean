@@ -1,5 +1,9 @@
-import Mathlib
-import Abbrev.NumberField_SIdeleModule
+module
+
+public import Mathlib
+public import Abbrev.NumberField_SIdeleModule
+
+@[expose] public section
 
 set_option autoImplicit false
 

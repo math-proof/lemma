@@ -7,15 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Order.DirectedInverseSystem
-import Mathlib.Data.ZMod.Basic
-import Mathlib.NumberTheory.Padics.RingHoms
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib
-import Instance.v1.Atlas.ArithmeticGeometry.code.PadicNumbers.Part3
+public import Mathlib.Order.DirectedInverseSystem
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.NumberTheory.Padics.RingHoms
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Mathlib
+public import Instance.v1.Atlas.ArithmeticGeometry.code.PadicNumbers.Part3
 
+public section
 
 namespace DiscreteValuation
 

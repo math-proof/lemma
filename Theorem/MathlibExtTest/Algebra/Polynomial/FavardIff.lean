@@ -3,9 +3,11 @@
 /-
 Author: @akiezun, Avocado
 -/
+module
 
-import Theorem.Int.Polynomial.FavardIff
+public import Theorem.Int.Polynomial.FavardIff
 
+public section
 
 namespace MetaMathlibExt
 

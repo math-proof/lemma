@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochCurves
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
 import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves.Part2
 import Structure.v1.Atlas.AlgebraicGeometryI.code.DedekindCurve
 set_option maxHeartbeats 1600000

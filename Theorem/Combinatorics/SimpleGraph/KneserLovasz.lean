@@ -3,21 +3,25 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
+module
 
-import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
-import Mathlib.Combinatorics.SimpleGraph.DegreeSum
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Finset.Max
-import Mathlib.Data.Finset.Powerset
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Tactic
-import Def.Combinatorics.SimpleGraph.KneserLovasz.Part2
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.Vertex
+public import Mathlib.Combinatorics.SimpleGraph.DegreeSum
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Finset.Max
+public import Mathlib.Data.Finset.Powerset
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Tactic
+public import Def.Combinatorics.SimpleGraph.KneserLovasz.Part2
+
 /-!
 # Kneser–Lovász theorem
 
 For `0 < k` and `2 * k ≤ n`, the Kneser graph on the `k`-subsets of an
 `n`-element set has chromatic number `n - 2 * k + 2`.
 -/
+
+public section
 
 
 namespace MathlibExt.Combinatorics.SimpleGraph.KneserLovaszWanted

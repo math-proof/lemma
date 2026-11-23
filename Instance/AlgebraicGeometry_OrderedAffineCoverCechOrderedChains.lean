@@ -1,7 +1,10 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_OrderedAffineCoverCechOrderedChains.lean: instance decls only.
-import Mathlib
-import Instance.AlgebraicGeometry_OrderedAffineCoverCech
-import Abbrev.AlgebraicGeometry_OrderedAffineCoverCechOrdered
+module
+
+public import Mathlib
+public import Instance.AlgebraicGeometry_OrderedAffineCoverCech
+public import Abbrev.AlgebraicGeometry_OrderedAffineCoverCechOrdered
+@[expose] public section
 
 set_option autoImplicit false
 

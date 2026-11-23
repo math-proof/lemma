@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ImaginaryQuadraticDiscriminant.lean -/
+module
 
-import Def.NumberTheory.DirichletCharacter.Quadratic
-import Theorem.Nat.DirichletCharacter.Quadratic
-import Structure.NumberTheory.ImaginaryQuadraticDiscriminant
+public import Def.NumberTheory.DirichletCharacter.Quadratic
+public import Theorem.Nat.DirichletCharacter.Quadratic
+public import Structure.NumberTheory.ImaginaryQuadraticDiscriminant
 set_option autoImplicit false
 
 /-!
@@ -11,6 +12,8 @@ set_option autoImplicit false
 This file specializes the canonical predicate `MetaMathlibExt.IsFundamentalDiscriminant` to
 negative discriminants and packages conductor--fundamental-discriminant decompositions.
 -/
+
+public section
 
 
 namespace ImaginaryQuadraticDiscriminant

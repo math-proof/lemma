@@ -1,7 +1,7 @@
 module
 
 public import Mathlib
-public import Lemma.MvPolynomial.ProjSpaceCover
+public import Theorem.MvPolynomial.ProjSpaceCover
 public import Instance.AlgebraicGeometry_ProjSpaceCechGradedModule
 public import Instance.AlgebraicGeometry_ProjTwistDatum
 

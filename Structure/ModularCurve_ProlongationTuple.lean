@@ -1,14 +1,15 @@
 module
 
 public import Def.ModularCurve_GlueData
-public import Lemma.Finset.SupersingularNodePlaces
-public import Lemma.LaurentSeries.CoeffSemilinearAut
+public import Theorem.Finset.SupersingularNodePlaces
+public import Def.ModularCurve_CoeffSemilinearAut
+public import Theorem.LaurentSeries.CoeffSemilinearAut
 public import Def.ModularCurve_AtkinLehnerPartial
-public import Lemma.Finsupp.CuspidalClass
+public import Theorem.Finsupp.CuspidalClass
 public import Def.ModularCurve_X0ModL
-public import Lemma.LaurentSeries.CharPReduction
+public import Theorem.LaurentSeries.CharPReduction
 public import Structure.AlgebraicCurve_RegularProlongation
-public import Lemma.Submodule.Repartitions
+public import Theorem.Submodule.Repartitions
 set_option synthInstance.maxHeartbeats 400000
 set_option maxHeartbeats 800000
 set_option Elab.async false

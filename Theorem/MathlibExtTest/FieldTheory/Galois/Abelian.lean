@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/FieldTheory/Galois/Abelian.lean -/
+module
 
+public import Mathlib.NumberTheory.Cyclotomic.Basic
+public import Theorem.FieldTheory.Galois.Abelian
+public import Theorem.Rat.Galois.Abelian
 
-import Mathlib.NumberTheory.Cyclotomic.Basic
-import Theorem.FieldTheory.Galois.Abelian
-import Theorem.Rat.Galois.Abelian
 /-!
 # Tests for the abelian Galois modular-lattice constructor
 
@@ -13,6 +14,8 @@ structural hypothesis, and a source-shaped cyclotomic-field example matching the
 ATLAS `cyclotomicIntermediateFieldModular` use case
 (`Atlas/NumberTheoryI/code/AnalyticClassNumber.lean`, lines 1640--1651).
 -/
+
+public section
 
 
 namespace MathlibExtTest.FieldTheory.Galois.Abelian

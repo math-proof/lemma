@@ -4,9 +4,14 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Analysis.Meromorphic.Basic
-import Mathlib.NumberTheory.LSeries.RiemannZeta
-import Theorem.Nat.LSeries.RiemannZeta
+module
+
+public import Mathlib.Analysis.Meromorphic.Basic
+public import Mathlib.NumberTheory.LSeries.RiemannZeta
+public import Theorem.Nat.LSeries.RiemannZeta
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 7, Entry 10: the zeta side
 

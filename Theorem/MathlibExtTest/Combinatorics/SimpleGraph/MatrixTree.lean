@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/MatrixTree.lean -/
+module
 
+public import Def.Combinatorics.SimpleGraph.MatrixTree.Part2
+public import Theorem.Finset.SimpleGraph.MatrixTree
 
-import Def.Combinatorics.SimpleGraph.MatrixTree.Part2
-import Theorem.Finset.SimpleGraph.MatrixTree
 /-!
 # Tests for the matrix-tree theorem public API
 
@@ -10,6 +11,8 @@ Exercises the reduced-Laplacian entries and the determinant/count agreement on
 boundary cases (singleton, single edge, disconnected graph), using only public
 declarations.
 -/
+
+public section
 
 
 namespace MathlibExt.Combinatorics.SimpleGraph.MatrixTreeWanted

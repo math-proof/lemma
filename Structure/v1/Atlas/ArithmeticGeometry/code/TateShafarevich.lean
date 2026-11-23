@@ -12,9 +12,9 @@ module
 
 public import Mathlib
 public import Def.v1.Atlas.ArithmeticGeometry.code.WeilChatelet.Part2
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.WeilChatelet
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.GaloisCohomology
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.WCGroupH1
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.WeilChatelet
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.GaloisCohomology
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.WCGroupH1
 public import Abbrev.v1.Atlas.ArithmeticGeometry.code.GaloisCohomology.Part3
 public import Def.v1.Atlas.ArithmeticGeometry.code.WCGroupH1
 

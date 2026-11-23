@@ -5,8 +5,6 @@ open Filter MeasureTheory Set
 open Complex
 
 
-namespace Complex
-
 /--
 [tendsto_wimanMaximumTerm_exp_atTop](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/Filevych.lean)
 -/
@@ -21,9 +19,6 @@ lemma tendsto_wimanMaximumTerm_exp_atTop
 -- proof
   (tendsto_wimanMaximumTerm_atTop (f := f) hf htrans).comp Real.tendsto_exp_atTop
 
-end Complex
-
-namespace Complex
 
 /--
 [exists_wiman_radius_two_thirds](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/Filevych.lean)
@@ -84,9 +79,8 @@ lemma exists_wiman_radius_two_thirds
     habsorb (wimanMaximumTerm f r) (wimanMajorant f r)
       hUterm htermMajorant hcorrected
   exact ⟨r, by simpa only [r] using hR, hmodulusMajorant.trans habsorbed⟩
-end Complex
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-22

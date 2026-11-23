@@ -1,7 +1,11 @@
-import Mathlib
-import Def.Submodule_FiniteAdeleBox
-import Def.QuaternionAlgebra_Order_FiniteIdele
-import Instance.Submodule_LocalBox
+module
+
+public import Mathlib
+public import Def.Submodule_FiniteAdeleBox
+public import Def.QuaternionAlgebra_Order_FiniteIdele
+public import Instance.Submodule_LocalBox
+
+@[expose] public section
 
 set_option autoImplicit false
 

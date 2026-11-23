@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/Circumference.lean -/
+module
 
-
-import Theorem.Combinatorics.SimpleGraph.Circumference.Part2
-import Theorem.SimpleGraph.Circumference
+public import Theorem.Combinatorics.SimpleGraph.Circumference.Part2
+public import Theorem.SimpleGraph.Circumference
 open SimpleGraph
 
+public section
 
 -- Normal API use: cycle-length sets accept a graph.
 noncomputable example (G : SimpleGraph (Fin 5)) : Set ℕ :=

@@ -1,10 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/BilinearForm/Prod.lean -/
 
 
-import Instance.LinearAlgebra.BilinearForm.Prod
-import Theorem.Matrix.BilinearForm.Prod
-import Mathlib.RingTheory.Localization.FractionRing
-import Theorem.MathlibExtTest.LinearAlgebra.BilinearForm.Prod
+module
+
+public import Instance.LinearAlgebra.BilinearForm.Prod
+public import Theorem.Matrix.BilinearForm.Prod
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Theorem.MathlibExtTest.LinearAlgebra.BilinearForm.Prod
+@[expose] public section
+
 open LinearMap (BilinForm)
 open Module
 

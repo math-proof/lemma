@@ -1,8 +1,9 @@
 -- Carved from Lemma/Definitions/Def_MvPolynomial_CrossingResolutionScheme.lean: instance decls only.
 import Mathlib
-import Lemma.MvPolynomial.CrossingResolution
+import Theorem.MvPolynomial.CrossingResolution
 import Inductive.MvPolynomial_GlueIndex
-import Lemma.MvPolynomial.CrossingResolutionScheme
+import Theorem.MvPolynomial.CrossingResolutionScheme
+import Def.MvPolynomial_CrossingResolutionScheme
 
 set_option autoImplicit false
 

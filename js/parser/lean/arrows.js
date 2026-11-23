@@ -8,7 +8,6 @@
  */
 import { LeanBinary, LeanUnary } from './abstract.js';
 import { Lean } from './base.js';
-import { pathImpInfixChoices } from './pathChoices.js';
 
 const L = Lean.classes;
 
@@ -164,18 +163,6 @@ export class Lean_rightarrow extends LeanBinary {
 
     get operator() {
         return '→';
-    }
-
-    /**
-     * Imp as a binary path op (like And): LHS/imp/RHS and Imp(LHS)(RHS).
-     * @param {object} [opts]
-     * @returns {string[]}
-     */
-    pathChoices(opts = {}) {
-        return pathImpInfixChoices(
-            this.lhs?.pathChoices?.(opts) ?? [""],
-            this.rhs?.pathChoices?.(opts) ?? [""],
-        ).stems;
     }
 
     /** `→ₗ` or `→L` rendered with the subscript attached (for echo / str). */

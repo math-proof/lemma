@@ -1,9 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Graph/GraphMinor.lean -/
 
 
-import Def.Combinatorics.Graph.GraphMinor
-import Theorem.Finset.Graph.GraphMinor
-import Theorem.MathlibExtTest.Combinatorics.Graph.GraphMinor
+module
+
+public import Def.Combinatorics.Graph.GraphMinor
+public import Theorem.Finset.Graph.GraphMinor
+public import Theorem.MathlibExtTest.Combinatorics.Graph.GraphMinor
+
+@[expose] public section
 
 
 namespace MathlibExtTest.Combinatorics.Graph.GraphMinor

@@ -1,13 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/RelativePDerivation.lean -/
+module
 
-
-import Instance.RingTheory.RelativePDerivation
-import Theorem.Int.RelativePDerivation
-import Mathlib.Data.Nat.Choose.Dvd
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Tactic.Ring
+public import Instance.RingTheory.RelativePDerivation
+public import Theorem.Int.RelativePDerivation
+public import Mathlib.Data.Nat.Choose.Dvd
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Tactic.Ring
 open MetaMathlibExt
 
+public section
 
 -- Tests for C_p at p=2 and p=3, and end-to-end RelativePDerivation into ZMod 1.
 

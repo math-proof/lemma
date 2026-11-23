@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/FibonacciPAPAvoidance.lean -/
+module
 
-import Mathlib.Data.Fintype.Perm
-import Mathlib.Data.Nat.Fib.Basic
-import Mathlib.Tactic.Push
-import Instance.Combinatorics.Enumerative.FibonacciPAPAvoidance
+public import Mathlib.Data.Fintype.Perm
+public import Mathlib.Data.Nat.Fib.Basic
+public import Mathlib.Tactic.Push
+public import Instance.Combinatorics.Enumerative.FibonacciPAPAvoidance
 
+public section
 
 namespace MetaMathlibExt
 

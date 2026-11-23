@@ -1,6 +1,11 @@
-import Def.Data.Tensor.Defs.Part4
-import Def.Analysis.SpecialFunctions.TensorFunctions
-import Def.Data.Tensor.Stack.Part2
+module
+
+public import Def.Data.Tensor.Defs.Part4
+public import Def.Analysis.SpecialFunctions.TensorFunctions
+public import Def.Data.Tensor.Stack.Part2
+
+@[expose] public section
+
 open List Tensor
 
 

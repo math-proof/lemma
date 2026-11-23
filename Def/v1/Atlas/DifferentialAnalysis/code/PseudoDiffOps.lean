@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.ConvolutionTheorem
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ConvolutionTheorem
 import Def.v1.Atlas.DifferentialAnalysis.code.ConvolutionTheorem
 import Mathlib.Topology.Algebra.Monoid
 import Mathlib.Geometry.Manifold.PartitionOfUnity

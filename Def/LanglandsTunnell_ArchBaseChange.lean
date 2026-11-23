@@ -1,4 +1,8 @@
-import Def.LanglandsTunnell_ConverseData
+module
+
+public import Def.LanglandsTunnell_ConverseData
+
+@[expose] public section
 
 noncomputable section
 

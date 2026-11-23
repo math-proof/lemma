@@ -4,14 +4,17 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
 -/
 
-import Mathlib.Combinatorics.SimpleGraph.Acyclic
-import Mathlib.Combinatorics.SimpleGraph.LapMatrix
-import Def.Combinatorics.SimpleGraph.MatrixTree.Part2
-import Theorem.Finset.SimpleGraph.MatrixTree
-import Mathlib.Data.Nat.Choose.Sum
-import Mathlib.LinearAlgebra.Matrix.Defs
-import Mathlib.Tactic.Ring
+module
 
+public import Mathlib.Combinatorics.SimpleGraph.Acyclic
+public import Mathlib.Combinatorics.SimpleGraph.LapMatrix
+public import Def.Combinatorics.SimpleGraph.MatrixTree.Part2
+public import Theorem.Finset.SimpleGraph.MatrixTree
+public import Mathlib.Data.Nat.Choose.Sum
+public import Mathlib.LinearAlgebra.Matrix.Defs
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 section
 

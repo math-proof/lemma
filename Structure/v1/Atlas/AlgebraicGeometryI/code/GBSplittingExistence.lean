@@ -11,10 +11,10 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRoch
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRoch
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRoch
 public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyP1
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSheavesCurves
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckBirkhoff
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSheavesCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckBirkhoff
 public import Theorem.v1.Atlas.AlgebraicGeometryI.code.CohomologyP1.Part2
 public import Def.v1.Atlas.AlgebraicGeometryI.code.CoherentSheavesCurves.Part2
 public import Def.v1.Atlas.AlgebraicGeometryI.code.GrothendieckBirkhoff

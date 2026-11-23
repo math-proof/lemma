@@ -9,7 +9,7 @@ import '../../../js/py.js';
 import { compile, Lean, LeanModule } from '../../../js/parser/lean.js';
 
 /** rule ids implemented here; their text-scan versions only run when the AST is unavailable */
-export const AST_RULES = new Set(['have-inline-once', 'have-underscore', 'given-prop-first', 'given-prop-consecutive', 'given-implicit-dep', 'tactic-haveI', 'tactic-letI', 'calc-after-assign', 'decl-keyword-dir', 'public-section', 'paren-getelem', 'fin-index-val', 'paren-apparg', 'paren-redundant-type', 'paren-redundant-sum-sub', 'paren-redundant-pow', 'paren-redundant-arith', 'paren-redundant-ascription', 'prefer-unicode-type', 'prefer-unicode-pow']);
+export const AST_RULES = new Set(['have-inline-once', 'have-underscore', 'given-prop-first', 'given-prop-consecutive', 'given-implicit-dep', 'tactic-haveI', 'tactic-letI', 'calc-after-assign', 'decl-keyword-dir', 'public-section', 'paren-getelem', 'fin-index-val', 'paren-apparg', 'paren-redundant-type', 'paren-redundant-sum-sub', 'paren-redundant-pow', 'paren-redundant-arith', 'paren-redundant-ascription', 'prefer-unicode-type', 'prefer-unicode-pow', 'literal-left-comparison']);
 
 /**
  * Term forms whose parentheses are load-bearing inside an ascription: `(fun y => F y : T)`
@@ -494,10 +494,50 @@ function finIndexVal(ctx, node) {
 
 
 /**
+ * Operators whose body is written `op[…](body)`. Those parentheses are the
+ * notation's own delimiter and cannot be dropped (`𝔼[x[k]: π](x[k])`).
+ */
+const RANDOM_NOTATION_OPS = new Set(['𝔼', 'ℙ', '𝕍𝕒𝕣', 'ℂ𝕠𝕧']);
+
+/**
+ * Parentheses that close a ℙ / 𝔼 / 𝕍𝕒𝕣 / ℂ𝕠𝕧 notation body.
+ * After promote, the paren is `LeanRandomBigOp.scope`. Before promote (ℂ𝕠𝕧 is
+ * not promoted today), it is the argument immediately after a GetElem whose
+ * head token is one of those operators. Same parent walk as
+ * `LeanParenthesis.isProbExpectEventParen`, plus 𝕍𝕒𝕣 / ℂ𝕠𝕧.
+ */
+function isRandomNotationBodyParen(node) {
+    const {
+        LeanRandomBigOp,
+        LeanGet,
+        LeanToken,
+        LeanArgsSpaceSeparated,
+        LeanProperty,
+    } = Lean.classes;
+    let self = node;
+    let p = node.parent;
+    // trailing projection on an unpromoted body: `op[…](x[k]).toReal`
+    if (LeanProperty && p instanceof LeanProperty && p.args[0] === node) {
+        self = p;
+        p = p.parent;
+    }
+    if (LeanRandomBigOp && p instanceof LeanRandomBigOp && p.scope === self) return true;
+    if (!(p instanceof LeanArgsSpaceSeparated)) return false;
+    const i = p.args.indexOf(self);
+    if (i <= 0) return false;
+    const head = p.args[i - 1];
+    if (!(head instanceof LeanGet)) return false;
+    const base = head.lhs ?? head.args?.[0];
+    if (!(base instanceof LeanToken)) return false;
+    return RANDOM_NOTATION_OPS.has(base.text);
+}
+
+/**
  * `(x[t])` / `(x[t:])` / `(name[t])`: a single parenthesis pair whose only content is a
  * GetElem / slice. GetElem binds tightly enough that the parens never change the parse
  * (`f (x[t])` == `f x[t]`; contrast `(f x)[t]`, whose arg is an application, not GetElem).
- * Not an AGENTS.md rule (user request).
+ * Skips the body delimiters of ℙ / 𝔼 / 𝕍𝕒𝕣 / ℂ𝕠𝕧 (`𝔼[x[k]: π](x[k])` does not parse
+ * without them). Not an AGENTS.md rule (user request).
  */
 function parenGetElem(ctx, node) {
     const { LeanParenthesis, LeanGet } = Lean.classes;
@@ -506,13 +546,14 @@ function parenGetElem(ctx, node) {
     if (!(arg instanceof LeanGet)) return;
     // tuples / cdot sections keep their parentheses even if nested oddly
     if (typeof node.latexParenRequired === 'function' && node.latexParenRequired()) return;
+    // macro body delimiters: `latexParenRequired` covers 𝔼 / ℙ only, not 𝕍𝕒𝕣 / ℂ𝕠𝕧
+    if (isRandomNotationBodyParen(node)) return;
     const inner = String(arg).replace(/^\s+|\s+$/g, '').replace(/\s+/g, ' ');
     const show = (s) => (s.length > 60 ? `${s.slice(0, 57)}…` : s);
     ctx.warnAst('paren-getelem', node,
         `\`(${show(inner)})\` → \`${show(inner)}\`: parentheses around a GetElem / slice are redundant`,
         1);
 }
-
 function isBareName(node) {
     const { LeanToken, LeanProperty } = Lean.classes;
     if (node instanceof LeanToken) return true;
@@ -614,6 +655,35 @@ function preferUnicodePow(ctx, node) {
     const show = (s) => (s.length > 60 ? `${s.slice(0, 57)}…` : s);
     ctx.warnAst('prefer-unicode-pow', node,
         `\`${show(`${base} ^ ${exp.text}`)}\` → \`${show(base + sup)}\`: write \`… ^ ${exp.text}\` with the postfix \`${sup}\``,
+        1);
+}
+
+/**
+ * `literal-left-comparison`: a comparison whose left operand is a numeric literal and whose right
+ * operand is a variable (`2 ≤ n`) — write `n ≥ 2` instead. Only the four inequalities are
+ * reversible (`≤ ↔ ≥`, `< ↔ >`); `=` / `≠` and filtered relations (`≤ᵐ[μ]`) stay quiet, and so
+ * do compound operands (`2 ≤ n + 1`, `(1 : ℝ) < n`). Only lemma/theorem signatures
+ * (given hypotheses and the conclusion) are inspected — proof bodies are ignored.
+ * Warn only; the source is not rewritten.
+ * Not an AGENTS.md rule (user request via Random).
+ */
+const FLIP_COMPARISON = { '≤': '≥', '≥': '≤', '<': '>', '>': '<' };
+const NOT_A_VARIABLE = new Set(['this', '_']);
+
+function literalLeftComparison(ctx, node) {
+    const { LeanRelational, LeanToken } = Lean.classes;
+    if (!(node instanceof LeanRelational)) return;
+    const flip = FLIP_COMPARISON[node.operator];
+    if (!flip || node.superscript) return;
+    const lhs = unwrapParens(node.lhs);
+    const rhs = unwrapParens(node.rhs);
+    if (!(lhs instanceof LeanToken) || !(rhs instanceof LeanToken)) return;
+    const digit = lhs.text;
+    if (!/^\d+$/.test(digit)) return;
+    const name = rhs.text;
+    if (!/^\p{Ll}[\p{L}\p{N}_'!?]*$/u.test(name) || NOT_A_VARIABLE.has(name)) return;
+    ctx.warnAst('literal-left-comparison', node,
+        `\`${digit} ${node.operator} ${name}\` → \`${name} ${flip} ${digit}\`: write comparisons as \`(variable operator digit)\`; put the variable before the operator and the digit after it`,
         1);
 }
 
@@ -984,6 +1054,9 @@ export function astRules(ctx, tree) {
             givenImplicitDep(sink, node, bs);
             // one finding per lemma: the consecutive check only when no independent proposition can simply move up
             if (!givenPropFirst(sink, node, bs)) givenPropConsecutive(sink, node, bs);
+            // comparisons are style, so only the signature (given hypotheses + conclusion) is checked; proof
+            // bodies (`have`, `show`, `rw`, `simp`, `exact`, …) may legitimately compare against a literal
+            for (const signatureNode of walk(node.assignment?.lhs)) literalLeftComparison(sink, signatureNode);
         }
         else if (node instanceof LeanStatements || node instanceof LeanArgsNewLineSeparated) haveInlineOnce(sink, node);
         else if (node instanceof Lean_let) {

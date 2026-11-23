@@ -1,5 +1,8 @@
-import Mathlib
-import Theorem.Analysis.Section_5_4.Part4
+module
+
+public import Mathlib
+public import Theorem.Analysis.Section_5_4.Part4
+
 /-!
 # Analysis I, Section 5.5: The least upper bound property
 
@@ -20,6 +23,8 @@ Users of the companion who have completed the exercises in this section are welc
 - (Add tip here)
 
 -/
+
+public section
 
 
 namespace Chapter5

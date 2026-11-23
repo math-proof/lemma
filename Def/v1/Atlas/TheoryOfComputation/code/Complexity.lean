@@ -8,13 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TheoryOfComputation.code.TuringMachines.Part4
-import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.TuringMachines
-import Def.v1.Atlas.TheoryOfComputation.code.NondeterministicTM
-import Notation.v1.Atlas.TheoryOfComputation.code.Reductions
-import Mathlib.Data.Fintype.Basic
-import Mathlib.Data.Fintype.Sum
+module
 
+public import Def.v1.Atlas.TheoryOfComputation.code.TuringMachines.Part4
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.TuringMachines
+public import Def.v1.Atlas.TheoryOfComputation.code.NondeterministicTM
+public import Notation.v1.Atlas.TheoryOfComputation.code.Reductions
+public import Mathlib.Data.Fintype.Basic
+public import Mathlib.Data.Fintype.Sum
+
+@[expose] public section
 
 namespace TuringMachine
 

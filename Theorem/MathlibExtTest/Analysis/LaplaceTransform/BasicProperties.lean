@@ -1,7 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/LaplaceTransform/BasicProperties.lean -/
+module
 
+public import Theorem.Real.LaplaceTransform.BasicProperties
 
-import Theorem.Real.LaplaceTransform.BasicProperties
+public section
+
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
 
 /-!

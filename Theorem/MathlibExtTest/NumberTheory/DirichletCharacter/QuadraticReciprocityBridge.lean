@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/DirichletCharacter/QuadraticReciprocityBridge.lean -/
+module
 
-
-import Theorem.Nat.DirichletCharacter.QuadraticReciprocityBridge
-import Mathlib.Tactic.NormNum.LegendreSymbol
-import Mathlib.Tactic.NormNum.Prime
+public import Theorem.Nat.DirichletCharacter.QuadraticReciprocityBridge
+public import Mathlib.Tactic.NormNum.LegendreSymbol
+public import Mathlib.Tactic.NormNum.Prime
 open MetaMathlibExt
 
+public section
 
 example : kroneckerSym 5 (2 * 3) = kroneckerSym 5 2 * kroneckerSym 5 3 :=
   kroneckerSym_mul 5 (by decide) 2 3

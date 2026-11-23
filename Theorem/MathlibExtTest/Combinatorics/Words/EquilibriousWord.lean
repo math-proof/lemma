@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Words/EquilibriousWord.lean -/
+module
 
-
-import Instance.Combinatorics.Words.EquilibriousWord
-import Theorem.Finset.Words.EquilibriousWord
+public import Instance.Combinatorics.Words.EquilibriousWord
+public import Theorem.Finset.Words.EquilibriousWord
 open MetaMathlibExt
 
+public section
 
 example : IsEquilibriousWord [] := by decide
 

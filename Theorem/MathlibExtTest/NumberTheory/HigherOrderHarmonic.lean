@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/HigherOrderHarmonic.lean -/
+module
 
+public import Def.NumberTheory.HigherOrderHarmonic
+public import Theorem.Nat.HigherOrderHarmonic
 
-import Def.NumberTheory.HigherOrderHarmonic
-import Theorem.Nat.HigherOrderHarmonic
-
+public section
 
 example : higherHarmonic 0 2 = 0 :=
   higherHarmonic_zero 2

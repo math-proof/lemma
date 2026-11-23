@@ -1,5 +1,9 @@
-import Mathlib
-import Instance.Mathlib_RingTheory_Valuation_LowerRamificationGroup
+module
+
+public import Mathlib
+public import Instance.Mathlib_RingTheory_Valuation_LowerRamificationGroup
+
+@[expose] public section
 
 set_option autoImplicit false
 

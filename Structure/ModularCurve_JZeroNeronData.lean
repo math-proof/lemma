@@ -1,7 +1,8 @@
 module
 
 public import Mathlib
-public import Lemma.MvPolynomial.HeckeModule
+public import Def.ModularCurve_HeckeModule
+public import Theorem.MvPolynomial.HeckeModule
 public import Def.ModularCurve_HeckeInputsAll
 public import Def.FLTPrelim_Ramification
 public import Def.ModularCurve_ToricMonodromyPart

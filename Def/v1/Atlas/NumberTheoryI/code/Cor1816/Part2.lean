@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.NumberTheoryI.code.DirichletCharacters
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.DirichletCharacters
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DirichletCharacters
 import Theorem.v1.Atlas.NumberTheoryI.code.Cor1816.Part2
 open DirichletCharacter
 

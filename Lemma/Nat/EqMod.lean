@@ -1,4 +1,4 @@
-import Lemma.Nat.EqMod.of.Lt
+import Theorem.Nat.EqMod.of.Lt
 open Nat
 
 
@@ -14,3 +14,4 @@ private lemma main
 
 
 -- created on 2025-07-07
+-- updated on 2026-11-22

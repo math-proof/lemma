@@ -1,6 +1,9 @@
 -- Carved from Lemma/Definitions/Def_CuspForm_Newforms.lean: instance decls only.
-import Def.FreyPackage_LevelRaising
-import Instance.FLTPrelim_GaloisRep
+module
+
+public import Def.FreyPackage_LevelRaising
+public import Instance.FLTPrelim_GaloisRep
+@[expose] public section
 
 set_option autoImplicit false
 

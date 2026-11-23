@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Instance.v1.Atlas.DifferentialAnalysis.code.TestFunctions
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TestFunctions
-import Mathlib.Analysis.Calculus.BumpFunction.FiniteDimension
+module
+
+public import Instance.v1.Atlas.DifferentialAnalysis.code.TestFunctions
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TestFunctions
+public import Mathlib.Analysis.Calculus.BumpFunction.FiniteDimension
+
+@[expose] public section
+
 open TestFunctions
 open scoped ZeroAtInfty
 open Filter Topology Metric

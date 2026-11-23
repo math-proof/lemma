@@ -8,8 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Abbrev.v1.Atlas.TensorCategories.code.QuasiTensorFunctor.Part5
-import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
+module
+
+public import Abbrev.v1.Atlas.TensorCategories.code.QuasiTensorFunctor.Part5
+public import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
+@[expose] public section
+
 open CategoryTheory MonoidalCategory
 
 universe v u w

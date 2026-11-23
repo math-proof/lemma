@@ -8,10 +8,12 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Tilde
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohTildeFunctor
-import Def.v1.Atlas.AlgebraicGeometryI.code.QCohMathlib
+module
 
+public import Mathlib.AlgebraicGeometry.Modules.Tilde
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohTildeFunctor
+public import Def.v1.Atlas.AlgebraicGeometryI.code.QCohMathlib
+@[expose] public section
 
 noncomputable section
 

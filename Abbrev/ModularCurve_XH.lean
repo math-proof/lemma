@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.UpperHalfPlane.X1
+import Theorem.UpperHalfPlane.X1
 import Instance.CohCarrier_Level
 import Instance.EllipticCurve_TateModule
 

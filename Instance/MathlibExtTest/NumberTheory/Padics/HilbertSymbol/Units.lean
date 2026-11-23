@@ -1,8 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Padics/HilbertSymbol/Units.lean -/
 
 
-import Def.NumberTheory.Padics.HilbertSymbol.Units
-import Lemma.Nat.Padics.HilbertSymbol.Units
+module
+
+public import Def.NumberTheory.Padics.HilbertSymbol.Units
+public import Theorem.Nat.Padics.HilbertSymbol.Units
+@[expose] public section
+
 set_option autoImplicit false
 
 

@@ -4,19 +4,24 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
 
-import Def.AlgebraicGeometry.EllipticCurve.ManinSequence
-import Theorem.Int.EllipticCurve.ManinSequence
-import Mathlib.AlgebraicGeometry.EllipticCurve.NormalForms
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Def.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree
-import Def.AlgebraicGeometry.EllipticCurve.PointCount
-import Mathlib.Data.Nat.Log
-import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.FieldTheory.RatFunc.Degree
-import Mathlib.Tactic.ComputeDegree
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Ring
+module
+
+public import Def.AlgebraicGeometry.EllipticCurve.ManinSequence
+public import Theorem.Int.EllipticCurve.ManinSequence
+public import Mathlib.AlgebraicGeometry.EllipticCurve.NormalForms
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Def.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree
+public import Def.AlgebraicGeometry.EllipticCurve.PointCount
+public import Mathlib.Data.Nat.Log
+public import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.FieldTheory.RatFunc.Degree
+public import Mathlib.Tactic.ComputeDegree
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
+
 /-!
 # Manin's elementary proof in characteristic two
 

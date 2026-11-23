@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/LSeries/RiemannXi.lean -/
+module
 
+public import Def.NumberTheory.LSeries.RiemannXi
+public import Theorem.Nat.LSeries.RiemannXi
 
-import Def.NumberTheory.LSeries.RiemannXi
-import Theorem.Nat.LSeries.RiemannXi
 /-!
 # Tests for the Riemann xi function
 
@@ -11,6 +12,8 @@ functional equation, agreement with the completed zeta function away from
 `s = 0, 1`, nonvanishing on `1 ≤ s.re`, the critical-strip location of zeros,
 and the packaged corollary.
 -/
+
+public section
 
 
 namespace RiemannXiTest

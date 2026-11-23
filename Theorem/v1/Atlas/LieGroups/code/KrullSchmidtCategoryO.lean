@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.LieGroups.code.ProjectiveFunctors.Part7
-import Lemma.Int.IsDirectSummand
+import Theorem.Int.IsDirectSummand
 
 
 section KrullSchmidtCategoryO

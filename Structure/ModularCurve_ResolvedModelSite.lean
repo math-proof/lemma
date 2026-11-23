@@ -1,7 +1,7 @@
 module
 
 public import Mathlib
-public import Lemma.Scheme.ResolvedModelGlueComponents
+public import Theorem.Scheme.ResolvedModelGlueComponents
 public import Structure.ModularCurve_DRResolvedModelPackageV4
 public import Abbrev.ModularCurve_DRModelPackage
 public import Instance.MvPolynomial_CrossingResolutionScheme

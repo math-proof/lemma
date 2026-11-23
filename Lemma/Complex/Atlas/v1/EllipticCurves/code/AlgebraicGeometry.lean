@@ -11,9 +11,6 @@ open Cardinal
 @[path]
 lemma isGalois_iff_normal_and_separable
   [Field k]
-  [Field K]
-  [Algebra k K]
-  [Field k]
   [Field L]
   [Algebra k L] :
 -- imply
@@ -140,7 +137,7 @@ lemma zeroLocusOfSet_eq
 -- imply
   zeroLocusOfSet K S = {x : σ → K | ∀ p ∈ S, aeval x p = 0} := by
 -- proof
-  ext x; simp
+  ext x; exact mem_zeroLocusOfSet_iff (k := k)
 
 /--
 [mem_lRationalPoints_iff](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/AlgebraicGeometry.lean)
@@ -156,7 +153,8 @@ lemma mem_lRationalPoints_iff
 -- imply
   x ∈ lRationalPoints K S L ↔ (∀ f ∈ S, aeval x f = 0) ∧ (∀ i : σ, x i ∈ L) := by
 -- proof
-  simp [lRationalPoints]
+  simp only [lRationalPoints, Set.mem_inter_iff]
+  rw [mem_zeroLocusOfSet_iff (k := k), mem_affineRationalPoints_iff]
 
 /--
 [isAffineAlgebraicSet_zeroLocus](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/AlgebraicGeometry.lean)
@@ -199,7 +197,7 @@ lemma vanishingIdealOfSet_eq
 -- imply
   (vanishingIdealOfSet K V : Set (MvPolynomial σ K)) = {f | ∀ x ∈ V, aeval x f = 0} := by
 -- proof
-  ext f; simp
+  ext f; exact mem_vanishingIdealOfSet_iff (k := k)
 
 /--
 [coordinateRing_eq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/AlgebraicGeometry.lean)
@@ -251,9 +249,7 @@ lemma hilbert_basis_theorem
 -/
 @[path]
 lemma radical_eq_setOf
-  [Field k]
-  [Field K]
-  [Algebra k K]
+  {R : Type*}
   [CommSemiring R]
   {I : Ideal R} :
 -- imply
@@ -272,9 +268,7 @@ lemma radical_eq_setOf
 -/
 @[path]
 lemma radical_is_ideal
-  [Field k]
-  [Field K]
-  [Algebra k K]
+  {R : Type*}
   [CommSemiring R]
   {I : Ideal R} :
 -- imply
@@ -319,7 +313,7 @@ lemma vanishingIdealOfSet_union
   vanishingIdealOfSet K (V₁ ∪ V₂) = vanishingIdealOfSet K V₁ ⊓ vanishingIdealOfSet K V₂ := by
 -- proof
   ext f
-  simp only [mem_vanishingIdealOfSet_iff, Ideal.mem_inf, Set.mem_union]
+  simp only [Ideal.mem_inf]
   exact ⟨fun h => ⟨fun x hx => h x (.inl hx), fun x hx => h x (.inr hx)⟩,
     fun ⟨h1, h2⟩ x hx => hx.elim (h1 x) (h2 x)⟩
 
@@ -363,7 +357,7 @@ lemma zeroLocus_vanishingIdealOfSet_zeroLocus
   [Field K]
   [Algebra k K]
   [IsAlgClosed K]
-  [Empty.Finite σ]
+  [Finite σ]
   {J : Ideal (MvPolynomial σ K)} :
 -- imply
   MvPolynomial.zeroLocus K (vanishingIdealOfSet K (MvPolynomial.zeroLocus K J)) = MvPolynomial.zeroLocus K J := by
@@ -378,10 +372,10 @@ lemma zeroLocus_vanishingIdealOfSet_zeroLocus
   exact (pow_eq_zero_iff'.mp this).1
 
 /--
-[IsIrreducibleAffineAlgebraicSet.vanishingIdeal_isPrime](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/AlgebraicGeometry.lean)
+[isIrreducibleAffineAlgebraicSet_vanishingIdeal_isPrime](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/AlgebraicGeometry.lean)
 -/
 @[path]
-lemma IsIrreducibleAffineAlgebraicSet.vanishingIdeal_isPrime
+lemma isIrreducibleAffineAlgebraicSet_vanishingIdeal_isPrime
   [Field k]
   [Field K]
   [Algebra k K]
@@ -395,7 +389,8 @@ lemma IsIrreducibleAffineAlgebraicSet.vanishingIdeal_isPrime
   constructor
   · intro h
     obtain ⟨x, hx⟩ := hNe
-    have := (mem_vanishingIdealOfSet_iff V 1).mp (h ▸ Submodule.mem_top) x hx
+    have := (mem_vanishingIdealOfSet_iff (k := k) (f := (1 : MvPolynomial σ K))).mp
+      (h ▸ Submodule.mem_top) x hx
     simp at this
   · intro f g hfg
     let V₁ := V ∩ {x | aeval x f = 0}
@@ -405,22 +400,22 @@ lemma IsIrreducibleAffineAlgebraicSet.vanishingIdeal_isPrime
       simp only [V₁, V₂, Set.mem_union, Set.mem_inter_iff, Set.mem_ofPred_eq]
       constructor
       · intro hx
-        have := (mem_vanishingIdealOfSet_iff V (f * g)).mp hfg x hx
+        have := (mem_vanishingIdealOfSet_iff (k := k)).mp hfg x hx
         rw [map_mul] at this
         obtain h | h := mul_eq_zero.mp this
         · exact .inl ⟨hx, h⟩
         · exact .inr ⟨hx, h⟩
       · rintro (⟨hx, -⟩ | ⟨hx, -⟩) <;> exact hx
     rcases hIrr V₁ V₂
-      (isAffineAlgebraicSet_inter_zeroLocus_singleton V f hAlg)
-      (isAffineAlgebraicSet_inter_zeroLocus_singleton V g hAlg)
+      (isAffineAlgebraicSet_inter_zeroLocus_singleton (k := k) (f := f) hAlg)
+      (isAffineAlgebraicSet_inter_zeroLocus_singleton (k := k) (f := g) hAlg)
       hVunion with h | h
     · left
-      rw [mem_vanishingIdealOfSet_iff]
+      rw [mem_vanishingIdealOfSet_iff (k := k)]
       intro x hx
       exact (h ▸ hx : x ∈ V₁).2
     · right
-      rw [mem_vanishingIdealOfSet_iff]
+      rw [mem_vanishingIdealOfSet_iff (k := k)]
       intro x hx
       exact (h ▸ hx : x ∈ V₂).2
 
@@ -433,7 +428,7 @@ lemma prime_vanishingIdeal_implies_irreducible
   [Field K]
   [Algebra k K]
   [IsAlgClosed K]
-  [Empty.Finite σ]
+  [Finite σ]
   {V : Set (σ → K)}
 -- given
   (hAlg : IsAffineAlgebraicSet K V)
@@ -448,7 +443,7 @@ lemma prime_vanishingIdeal_implies_irreducible
     simp only [h, vanishingIdealOfSet, MvPolynomial.vanishingIdeal_empty] at hPrime
     exact hPrime.ne_top rfl
   · intro V₁ V₂ ⟨J₁, hV₁⟩ ⟨J₂, hV₂⟩ hunion
-    have hIV := hunion ▸ vanishingIdealOfSet_union V₁ V₂
+    have hIV := hunion ▸ vanishingIdealOfSet_union (k := k) (V₁ := V₁) (V₂ := V₂)
     have hprod : vanishingIdealOfSet K V₁ * vanishingIdealOfSet K V₂ ≤
       vanishingIdealOfSet K (MvPolynomial.zeroLocus K I) := hIV ▸ Ideal.mul_le_inf
     obtain h₁ | h₂ := hPrime.mul_le.mp hprod
@@ -459,8 +454,8 @@ lemma prime_vanishingIdeal_implies_irreducible
       have : MvPolynomial.zeroLocus K (vanishingIdealOfSet K V₁) =
         MvPolynomial.zeroLocus K (vanishingIdealOfSet K (MvPolynomial.zeroLocus K I)) := by
         rw [heq]
-      rw [hV₁, zeroLocus_vanishingIdealOfSet_zeroLocus,
-        zeroLocus_vanishingIdealOfSet_zeroLocus] at this
+      rw [hV₁, zeroLocus_vanishingIdealOfSet_zeroLocus (k := k),
+        zeroLocus_vanishingIdealOfSet_zeroLocus (k := k)] at this
       exact this.symm
     · right
       rw [hV₂]
@@ -469,8 +464,8 @@ lemma prime_vanishingIdeal_implies_irreducible
       have : MvPolynomial.zeroLocus K (vanishingIdealOfSet K V₂) =
         MvPolynomial.zeroLocus K (vanishingIdealOfSet K (MvPolynomial.zeroLocus K I)) := by
         rw [heq]
-      rw [hV₂, zeroLocus_vanishingIdealOfSet_zeroLocus,
-        zeroLocus_vanishingIdealOfSet_zeroLocus] at this
+      rw [hV₂, zeroLocus_vanishingIdealOfSet_zeroLocus (k := k),
+        zeroLocus_vanishingIdealOfSet_zeroLocus (k := k)] at this
       exact this.symm
 
 /--
@@ -482,15 +477,15 @@ lemma algebraicSet_irreducible_iff_prime
   [Field K]
   [Algebra k K]
   [IsAlgClosed K]
-  [Empty.Finite σ]
+  [Finite σ]
   {V : Set (σ → K)}
 -- given
   (hAlg : IsAffineAlgebraicSet K V) :
 -- imply
   IsIrreducibleAffineAlgebraicSet K V ↔ (vanishingIdealOfSet K V).IsPrime :=
 -- proof
-  ⟨IsIrreducibleAffineAlgebraicSet.vanishingIdeal_isPrime,
-    prime_vanishingIdeal_implies_irreducible hAlg⟩
+  ⟨isIrreducibleAffineAlgebraicSet_vanishingIdeal_isPrime (k := k),
+    prime_vanishingIdeal_implies_irreducible (k := k) hAlg⟩
 
 /--
 [isAffineAlgebraicSet_singleton](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/AlgebraicGeometry.lean)
@@ -501,7 +496,7 @@ lemma isAffineAlgebraicSet_singleton
   [Field K]
   [Algebra k K]
   [IsAlgClosed K]
-  [Empty.Finite σ]
+  [Finite σ]
   {P : σ → K} :
 -- imply
   IsAffineAlgebraicSet K ({P} : Set (σ → K)) :=
@@ -545,7 +540,7 @@ lemma maximal_iff_vanishingIdealOfSet_singleton
   [Field K]
   [Algebra k K]
   [IsAlgClosed K]
-  [Empty.Finite σ]
+  [Finite σ]
   {I : Ideal (MvPolynomial σ K)} :
 -- imply
   I.IsMaximal ↔ ∃ P : σ → K, I = vanishingIdealOfSet K ({P} : Set (σ → K)) :=
@@ -646,3 +641,4 @@ private lemma isAffineAlgebraicSet_sInter_eq
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-22

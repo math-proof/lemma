@@ -12,7 +12,7 @@ module
 
 public import Abbrev.v1.Atlas.TensorCategories.code.QuasiTensorFunctor.Part5
 public import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
-public import Lemma.Category.Atlas.v1.TensorCategories.code.MonoidalFunctorsCohomology
+public import Theorem.Category.Atlas.v1.TensorCategories.code.MonoidalFunctorsCohomology
 public import Abbrev.v1.Atlas.TensorCategories.code.QuasiBialgebra
 public import Def.v1.Atlas.TensorCategories.code.MonoidalFunctorsCohomology.Part5
 public import Def.v1.Atlas.TensorCategories.code.Twists

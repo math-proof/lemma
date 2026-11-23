@@ -13,7 +13,7 @@ module
 public import Structure.v1.Atlas.AlgebraicTopologyI.code.Section6
 public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section6
 public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.CrossProductExistence
-public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section8
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section8
 public import Def.v1.Atlas.AlgebraicTopologyI.code.CrossProductExistence.Part3
 public import Instance.v1.Atlas.AlgebraicTopologyI.code.Section8.Part3
 public import Def.v1.Atlas.AlgebraicTopologyI.code.Section7

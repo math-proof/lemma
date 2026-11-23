@@ -7,9 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Instance.v1.Atlas.LieGroups.code.MaximalQuotients
-import Def.v1.Atlas.LieGroups.code.HarishChandraCorollaries
+public import Instance.v1.Atlas.LieGroups.code.MaximalQuotients
+public import Def.v1.Atlas.LieGroups.code.HarishChandraCorollaries
+
+public section
+
 universe u_hc_bim
 
 

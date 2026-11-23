@@ -1,0 +1,27 @@
+module
+
+public import Initialize.Tactic.Attr.Basic
+public import Instance.Probability.Process.StochasticProcessTypes.Part3
+public import Mathlib.Topology.Instances.Matrix
+
+public section
+
+open WithLp PiLp
+open scoped Matrix
+
+
+@[path]
+public theorem main
+  {S : Type*} [Fintype S]
+-- given
+  (P : Matrix S S ℝ) :
+-- imply
+  Continuous fun v : l1Space S => ofL1 (WithLp.ofLp v ᵥ* P) := by
+-- proof
+  apply (continuous_toLp (p := (1 : ENNReal)) (β := fun _ : S => ℝ)).comp
+  apply (Continuous.matrix_vecMul continuous_id continuous_const).comp
+  apply continuous_ofLp (p := (1 : ENNReal)) (β := fun _ : S => ℝ)
+
+
+-- created on 2026-09-22
+-- updated on 2026-10-26

@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/JacobiStirlingFirstKind.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.JacobiStirlingFirstKind
+public import Theorem.Finset.Enumerative.JacobiStirlingFirstKind
+public import Mathlib.Tactic.NormNum
 
-import Def.Combinatorics.Enumerative.JacobiStirlingFirstKind
-import Theorem.Finset.Enumerative.JacobiStirlingFirstKind
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MetaMathlibExt
 

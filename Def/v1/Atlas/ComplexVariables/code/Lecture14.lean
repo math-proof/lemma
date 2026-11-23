@@ -8,14 +8,19 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Complex.CauchyIntegral
-import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
-import Mathlib.Analysis.Analytic.Order
-import Mathlib.Analysis.Complex.RemovableSingularity
-import Mathlib.MeasureTheory.Integral.Prod
-import Def.v1.Atlas.ComplexVariables.code.Lecture13.Part2
-import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture13
-import Theorem.Complex.Atlas.v1.ComplexVariables.code.CauchyTransformDiff
+module
+
+public import Mathlib.Analysis.Complex.CauchyIntegral
+public import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
+public import Mathlib.Analysis.Analytic.Order
+public import Mathlib.Analysis.Complex.RemovableSingularity
+public import Mathlib.MeasureTheory.Integral.Prod
+public import Def.v1.Atlas.ComplexVariables.code.Lecture13.Part2
+public import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture13
+public import Theorem.Complex.Atlas.v1.ComplexVariables.code.CauchyTransformDiff
+
+@[expose] public section
+
 open Complex MeasureTheory Metric Set Filter Topology
 
 

@@ -8,16 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter4.Monotonicity
-import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter4.Monotonicity
-import Mathlib.Topology.Instances.Real.Lemmas
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Order.Filter.AtTopBot.Tendsto
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.GCongr
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.Analysis.Complex.ExponentialBounds
-import Mathlib.Topology.MetricSpace.Basic
+module
+
+public import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter4.Monotonicity
+public import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter4.Monotonicity
+public import Mathlib.Topology.Instances.Real.Lemmas
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Order.Filter.AtTopBot.Tendsto
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.GCongr
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Mathlib.Analysis.Complex.ExponentialBounds
+public import Mathlib.Topology.MetricSpace.Basic
+
+@[expose] public section
+
 set_option maxHeartbeats 1600000
 
 open Filter Finset BigOperators

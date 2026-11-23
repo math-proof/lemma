@@ -7,12 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Universality.HexBoundary.Part4
+public import Def.StatisticalMechanics.Code.Universality.HexContourDecomp
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Universality.HexBoundary.Part4
-import Def.StatisticalMechanics.Code.Universality.HexContourDecomp
-
+public section
 
 namespace StatMech.Universality
 

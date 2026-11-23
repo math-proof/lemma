@@ -6,7 +6,7 @@ import Structure.AlgebraicCurve_CurveModel
 import Instance.ModularCurve_GeometricBaseChange
 import Instance.ModularCurve_ArithmeticGalois
 import Def.ModularCurve_PlaceWidthChar
-import Lemma.LaurentSeries.CoeffSemilinearAut
+import Theorem.LaurentSeries.CoeffSemilinearAut
 import Structure.AlgebraicGeometry_NeronModelPropertyBundleCarrier
 import Instance.ModularCurve_IgusaScheme
 import Structure.ModularCurve_DRModelPackageLevel

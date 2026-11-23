@@ -1,5 +1,9 @@
-import Mathlib
-import Lemma.MvPowerSeries.UVCrossingModel
+module
+
+public import Mathlib
+public import Theorem.MvPowerSeries.UVCrossingModel
+
+@[expose] public section
 
 set_option autoImplicit false
 

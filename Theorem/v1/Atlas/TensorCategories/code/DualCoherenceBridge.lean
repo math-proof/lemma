@@ -7,14 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib
-import Abbrev.v1.Atlas.TensorCategories.code.VecInstances.Part2
-import Lemma.Category.Atlas.v1.TensorCategories.code.VecInstances
+public import Mathlib
+public import Abbrev.v1.Atlas.TensorCategories.code.VecInstances.Part2
+public import Theorem.Category.Atlas.v1.TensorCategories.code.VecInstances
 set_option maxHeartbeats 800000
 
 open CategoryTheory MonoidalCategory
 
+public section
 
 namespace FGModuleCat
 

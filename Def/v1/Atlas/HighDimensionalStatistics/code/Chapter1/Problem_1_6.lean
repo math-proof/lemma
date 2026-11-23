@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_2
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_2
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_17
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_17
-import Mathlib.Analysis.InnerProductSpace.EuclideanDist
+module
+
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_2
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_2
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_17
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_17
+public import Mathlib.Analysis.InnerProductSpace.EuclideanDist
+
+@[expose] public section
+
 open MeasureTheory Real Set Metric
 open scoped ENNReal NNReal
 

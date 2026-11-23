@@ -1,8 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Rat/Place.lean -/
 
-import Mathlib.NumberTheory.Ostrowski
-import Mathlib.NumberTheory.Padics.PadicNumbers
-import Abbrev.NumberTheory.Rat.Place
+module
+
+public import Mathlib.NumberTheory.Ostrowski
+public import Mathlib.NumberTheory.Padics.PadicNumbers
+public import Abbrev.NumberTheory.Rat.Place
 /-!
 # Rational places and completed fields
 
@@ -16,7 +18,7 @@ Source: arXiv:2607.14033, `pq-work-rank0-sha1.tex`, lines 237--240:
 (`ℝ` at infinity, `ℚ_[p]` at a prime), reusing
 `Rat.AbsoluteValue.real` and `Rat.AbsoluteValue.padic`.
 -/
-
+@[expose] public section
 
 namespace Rat
 

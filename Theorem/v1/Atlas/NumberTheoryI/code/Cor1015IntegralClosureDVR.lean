@@ -7,10 +7,12 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Theorem.v1.Atlas.NumberTheoryI.code.HenselFactorization
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.HenselFactorization
+public import Theorem.v1.Atlas.NumberTheoryI.code.HenselFactorization
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.HenselFactorization
 
+public section
 
 noncomputable section
 

@@ -1,8 +1,12 @@
-import Mathlib
-import Def.AutomorphicForm_ConstantTerm
-import Instance.NumberField_Completion_Finite
-import Abbrev.LocalGL2_Kirillov
-import Notation.LocalGL2_Kirillov
+module
+
+public import Mathlib
+public import Def.AutomorphicForm_ConstantTerm
+public import Instance.NumberField_Completion_Finite
+public import Abbrev.LocalGL2_Kirillov
+public import Notation.LocalGL2_Kirillov
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option linter.unusedVariables false

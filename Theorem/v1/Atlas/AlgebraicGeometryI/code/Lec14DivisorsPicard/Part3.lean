@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicGeometryI.code.CartierDivisorScheme.Part3
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CartierDivisorScheme
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CartierDivisorGroup
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CartierDivisorScheme
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CartierDivisorGroup
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.LocallyFactorialDivisors
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.DivisorsPicard
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.WeilDivisor

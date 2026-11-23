@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.LieGroups.code.CategoryO.Part3
-import Lemma.Int.IsInQPlus0
-import Lemma.Int.Surjective_Comp.of.Surjective
+import Theorem.Int.IsInQPlus0
+import Theorem.Int.Surjective_Comp.of.Surjective
 import Def.v1.Atlas.LieGroups.code.TensorHomAxiom
 
 

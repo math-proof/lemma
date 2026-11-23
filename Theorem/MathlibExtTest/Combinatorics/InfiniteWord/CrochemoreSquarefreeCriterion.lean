@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/InfiniteWord/CrochemoreSquarefreeCriterion.lean -/
+module
 
+public import Theorem.Finset.InfiniteWord.CrochemoreSquarefreeCriterion
+public import Mathlib.Tactic
+public import Def.MathlibExtTest.Combinatorics.InfiniteWord.CrochemoreSquarefreeCriterion
 
-import Theorem.Finset.InfiniteWord.CrochemoreSquarefreeCriterion
-import Mathlib.Tactic
-import Def.MathlibExtTest.Combinatorics.InfiniteWord.CrochemoreSquarefreeCriterion
-
+public section
 
 namespace MathlibExtTest.Combinatorics.InfiniteWord.CrochemoreSquarefreeCriterion
 

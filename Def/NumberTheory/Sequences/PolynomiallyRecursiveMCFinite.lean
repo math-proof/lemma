@@ -1,12 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Sequences/PolynomiallyRecursiveMCFinite.lean -/
 
-import Def.NumberTheory.PRecursiveSequence
-import Mathlib.Algebra.MvPolynomial.Eval
-import Abbrev.Dynamics.EventuallyPeriodicSequence
-import Theorem.Set.EventuallyPeriodicSequence
-import Mathlib.Algebra.Polynomial.Eval.Coeff
-import Mathlib.Data.ZMod.Basic
+module
 
+public import Def.NumberTheory.PRecursiveSequence
+public import Mathlib.Algebra.MvPolynomial.Eval
+public import Abbrev.Dynamics.EventuallyPeriodicSequence
+public import Theorem.Set.EventuallyPeriodicSequence
+public import Mathlib.Algebra.Polynomial.Eval.Coeff
+public import Mathlib.Data.ZMod.Basic
+
+@[expose] public section
 
 namespace MetaMathlibExt
 

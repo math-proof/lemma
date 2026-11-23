@@ -6,9 +6,12 @@ Exercises every public declaration, checks boundary cases `n = 1`, `n = 2`,
 and nonmonic `0`, and gives concrete gcmd examples including the composite
 ring `ZMod 6`. No nontrivial Frobenius pseudoprime is exhibited.
 -/
-import Def.NumberTheory.FrobeniusPseudoprime
-import Theorem.Nat.FrobeniusPseudoprime
+module
 
+public import Def.NumberTheory.FrobeniusPseudoprime
+public import Theorem.Nat.FrobeniusPseudoprime
+
+public section
 
 /-- `n = 1` cannot satisfy the probable-prime predicate. -/
 example (f : Polynomial ℤ) : ¬ Nat.IsFrobeniusProbablePrime 1 f := by

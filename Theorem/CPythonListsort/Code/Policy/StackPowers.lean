@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Policy/StackPowers.lean -/
+module
 
-import Def.CPythonListsort.Code.Policy.PendingLayout
-import Def.CPythonListsort.Code.Transcription.Powerloop
-import Mathlib.Data.List.Pairwise
-import Def.CPythonListsort.Code.Policy.StackPowers
+public import Def.CPythonListsort.Code.Policy.PendingLayout
+public import Def.CPythonListsort.Code.Transcription.Powerloop
+public import Mathlib.Data.List.Pairwise
+public import Def.CPythonListsort.Code.Policy.StackPowers
+
 /-!
 # Pending-stack power invariants
 
@@ -14,6 +16,8 @@ and powers on older runs strictly increase in C array order and lie in the
 concrete interval `1 .. 60`.  There is deliberately no
 `MAX_MERGE_PENDING` guard in either invariant.
 -/
+
+public section
 
 
 namespace CPythonListsort

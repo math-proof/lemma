@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.ULDMotzkinNumberOfRankR.Part2
-import Lemma.Finset.Enumerative.ULDMotzkinNumberOfRankR
+import Theorem.Finset.Enumerative.ULDMotzkinNumberOfRankR
 import Def.MathlibExtTest.Combinatorics.Enumerative.ULDMotzkinNumberOfRankR
 
 

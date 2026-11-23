@@ -1,8 +1,13 @@
-import Mathlib
-import Lemma.ResidueField.GluedPic0
-import Def.ModularCurve_NodeDepth
-import Def.ModularCurve_ProlongationTuple
-import Structure.ModularCurve_AnnulusSpecializationLevel
+module
+
+public import Mathlib
+public import Theorem.ResidueField.GluedPic0
+public import Def.ModularCurve_NodeDepth
+public import Def.ModularCurve_ProlongationTuple
+public import Structure.ModularCurve_AnnulusSpecializationLevel
+
+@[expose] public section
+
 set_option autoImplicit false
 
 noncomputable section

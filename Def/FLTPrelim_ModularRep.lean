@@ -1,11 +1,15 @@
-import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
-import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
-import Mathlib.RingTheory.Ideal.Maximal
-import Mathlib.Analysis.SpecialFunctions.Complex.Circle
-import Lemma.WeierstrassCurve.FreyPackage
-import Instance.FLTPrelim_GaloisRep
-import Instance.FLTPrelim_Modularity
-import Def.FLTPrelim_GaloisRep
+module
+
+public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+public import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
+public import Mathlib.RingTheory.Ideal.Maximal
+public import Mathlib.Analysis.SpecialFunctions.Complex.Circle
+public import Theorem.WeierstrassCurve.FreyPackage
+public import Instance.FLTPrelim_GaloisRep
+public import Instance.FLTPrelim_Modularity
+public import Def.FLTPrelim_GaloisRep
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -2,8 +2,14 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Theorem.Combinatorics.Enumerative.Partition.NPartition.Part6
+
+module
+
+public import Mathlib
+public import Theorem.Combinatorics.Enumerative.Partition.NPartition.Part6
+
+@[expose] public section
+
 open Finset BigOperators
 
 variable {N : ℕ}

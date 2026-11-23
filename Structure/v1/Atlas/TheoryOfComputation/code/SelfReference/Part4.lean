@@ -12,7 +12,7 @@ module
 
 public import Notation.v1.Atlas.TheoryOfComputation.code.Reductions
 public import Def.v1.Atlas.TheoryOfComputation.code.Decidability.Part13
-public import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.Decidability
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.Decidability
 public import Mathlib.Data.Set.Basic
 public import Mathlib.Data.Fintype.Basic
 public import Mathlib.Order.RelClasses

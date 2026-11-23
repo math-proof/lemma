@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PrimeCounting/Chebyshev.lean -/
+module
 
-
-import Theorem.Nat.PrimeCounting.Chebyshev
+public import Theorem.Nat.PrimeCounting.Chebyshev
 open scoped Asymptotics
 
+public section
 
 -- The little-o bridge between `π` and `θ / log`.
 example : (fun x : ℝ => (Nat.primeCounting ⌊x⌋₊ : ℝ) - Chebyshev.theta x / Real.log x)

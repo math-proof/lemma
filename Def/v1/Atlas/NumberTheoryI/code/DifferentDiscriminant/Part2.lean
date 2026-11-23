@@ -8,18 +8,21 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.DedekindDomain.Different
-import Mathlib.RingTheory.DedekindDomain.Factorization
-import Mathlib.RingTheory.Discriminant
-import Mathlib.RingTheory.Polynomial.Resultant.Basic
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.RingTheory.Ideal.Norm.RelNorm
-import Instance.v1.Atlas.NumberTheoryI.code.EtaleAlgebrasProps
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.EtaleAlgebrasProps
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.IdealNorms
-import Def.v1.Atlas.NumberTheoryI.code.IdealNorms
-import Abbrev.v1.Atlas.NumberTheoryI.code.DifferentDiscriminant
+module
 
+public import Mathlib.RingTheory.DedekindDomain.Different
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Mathlib.RingTheory.Discriminant
+public import Mathlib.RingTheory.Polynomial.Resultant.Basic
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Mathlib.RingTheory.Ideal.Norm.RelNorm
+public import Instance.v1.Atlas.NumberTheoryI.code.EtaleAlgebrasProps
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.EtaleAlgebrasProps
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.IdealNorms
+public import Def.v1.Atlas.NumberTheoryI.code.IdealNorms
+public import Abbrev.v1.Atlas.NumberTheoryI.code.DifferentDiscriminant
+
+@[expose] public section
 
 noncomputable section
 

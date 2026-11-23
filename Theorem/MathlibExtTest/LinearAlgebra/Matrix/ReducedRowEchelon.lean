@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/ReducedRowEchelon.lean -/
+module
 
+public import Def.LinearAlgebra.Matrix.ReducedRowEchelon
+public import Theorem.Matrix.ReducedRowEchelon
 
-import Def.LinearAlgebra.Matrix.ReducedRowEchelon
-import Theorem.Matrix.ReducedRowEchelon
-
+public section
 
 namespace MathlibExt.LinearAlgebra.Matrix.ReducedRowEchelonWanted
 

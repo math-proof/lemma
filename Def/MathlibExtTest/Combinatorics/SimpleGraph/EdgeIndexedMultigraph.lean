@@ -1,9 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/EdgeIndexedMultigraph.lean -/
 
+module
 
-import Def.Combinatorics.SimpleGraph.EdgeIndexedMultigraph.Part4
-import Theorem.SimpleGraph.EdgeIndexedMultigraph
-import Mathlib.Tactic.FinCases
+public import Def.Combinatorics.SimpleGraph.EdgeIndexedMultigraph.Part4
+public import Theorem.SimpleGraph.EdgeIndexedMultigraph
+public import Mathlib.Tactic.FinCases
+
+@[expose] public section
+
 open scoped BigOperators
 
 

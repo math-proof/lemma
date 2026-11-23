@@ -1,12 +1,14 @@
-import Mathlib
-import Def.ExtCitation_KummerBridge
-import Abbrev.Compat_Mathlib430
-import Abbrev.GroupCohomology_Selmer
-import Abbrev.Rep_QuotientRightTranslation
+module
+
+public import Mathlib
+public import Def.ExtCitation_KummerBridge
+public import Abbrev.Compat_Mathlib430
+public import Abbrev.GroupCohomology_Selmer
+public import Abbrev.Rep_QuotientRightTranslation
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace groupCohomology
 

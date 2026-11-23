@@ -1,6 +1,6 @@
 module
 
-public import Lemma.WeierstrassCurve.ReductionMap
+public import Theorem.WeierstrassCurve.ReductionMap
 public import Structure.AlgebraicCurve_ConstantReduction
 public import Def.AlgebraicCurve_PlaceEvaluation
 

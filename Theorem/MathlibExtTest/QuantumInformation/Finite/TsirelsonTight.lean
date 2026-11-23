@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/QuantumInformation/Finite/TsirelsonTight.lean -/
+module
 
+public import Def.QuantumInformation.Finite.TsirelsonTight
+public import Theorem.Matrix.Finite.TsirelsonTight
 
-import Def.QuantumInformation.Finite.TsirelsonTight
-import Theorem.Matrix.Finite.TsirelsonTight
-
+public section
 
 namespace MetaMathlibExt
 

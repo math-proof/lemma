@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/ConductorIdeal.lean -/
+module
 
+public import Def.RingTheory.ConductorIdeal
+public import Theorem.Int.ConductorIdeal
 
-import Def.RingTheory.ConductorIdeal
-import Theorem.Int.ConductorIdeal
-
+public section
 
 -- Conductor of the top subalgebra.
 example : (⊤ : Subalgebra ℤ ℤ).conductorIdeal = ⊤ :=

@@ -12,7 +12,7 @@ module
 
 public import Def.v1.Atlas.LieGroups.code.KFinite.Part3
 public import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
-public import Lemma.Complex.IsKFinite0
+public import Theorem.Complex.IsKFinite0
 public import Def.v1.Atlas.LieGroups.code.KFiniteProps.Part4
 public import Mathlib.MeasureTheory.Integral.Bochner.Basic
 public import Mathlib.Analysis.InnerProductSpace.Basic

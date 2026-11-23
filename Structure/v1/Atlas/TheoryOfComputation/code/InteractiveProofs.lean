@@ -12,7 +12,7 @@ module
 
 public import Def.v1.Atlas.TheoryOfComputation.code.BPP.Part3
 public import Def.v1.Atlas.TheoryOfComputation.code.SpaceComplexity.Part7
-public import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity
 public import Def.v1.Atlas.TheoryOfComputation.code.InteractiveProofs
 
 

@@ -2,7 +2,7 @@
 
 
 import Theorem.Combinatorics.SimpleGraph.Contraction.Part3
-import Lemma.SimpleGraph.Contraction
+import Theorem.SimpleGraph.Contraction
 import Def.MathlibExtTest.Combinatorics.SimpleGraph.Contraction
 
 

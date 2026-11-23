@@ -1,7 +1,7 @@
 import Def.LanglandsTunnell_JLData
 import Lemma.Complex.ArchEpsilon
 import Def.UnramifiedWhittaker_HeckeRecursion
-import Lemma.Ideal.ArithCuspRealization
+import Theorem.Ideal.ArithCuspRealization
 import Lemma.Filter.StandardLocalConstantsAt
 import Structure.LanglandsTunnell_JLConverse
 

@@ -7,14 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib
-import Instance.StatisticalMechanics.Code.Sharpness.RandomCurrent
+public import Mathlib
+public import Instance.StatisticalMechanics.Code.Sharpness.RandomCurrent
 open SimpleGraph Finset
 
 set_option linter.unusedSectionVars false
 
+public section
 
 namespace StatMech
 

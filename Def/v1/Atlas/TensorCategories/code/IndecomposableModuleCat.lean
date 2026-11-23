@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TensorCategories.code.DirectSumModuleCategory.Part2
-import Mathlib.CategoryTheory.Limits.Shapes.ZeroObjects
+module
+
+public import Def.v1.Atlas.TensorCategories.code.DirectSumModuleCategory.Part2
+public import Mathlib.CategoryTheory.Limits.Shapes.ZeroObjects
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 open CategoryTheory

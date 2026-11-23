@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/InfiniteWord/PureMorphicWord.lean -/
+module
 
+public import Mathlib.Tactic
+public import Def.Combinatorics.InfiniteWord.PureMorphicWord
+public import Theorem.Finset.InfiniteWord.PureMorphicWord
+public import Def.MathlibExtTest.Combinatorics.InfiniteWord.PureMorphicWord
 
-import Mathlib.Tactic
-import Def.Combinatorics.InfiniteWord.PureMorphicWord
-import Theorem.Finset.InfiniteWord.PureMorphicWord
-import Def.MathlibExtTest.Combinatorics.InfiniteWord.PureMorphicWord
-
+public section
 
 namespace MetaMathlibExt
 

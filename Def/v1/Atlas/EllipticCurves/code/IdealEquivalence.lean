@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.EllipticCurves.code.ComplexMultiplication.Part6
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.ComplexMultiplication
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.ComplexMultiplication
 
 
 namespace IdealEquivalence

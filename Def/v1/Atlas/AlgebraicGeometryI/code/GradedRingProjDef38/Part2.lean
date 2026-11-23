@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.GradedAlgebra.Basic
-import Mathlib.RingTheory.ReesAlgebra
-import Mathlib.RingTheory.Ideal.Operations
-import Mathlib.AlgebraicGeometry.Scheme
-import Instance.v1.Atlas.AlgebraicGeometryI.code.GradedRingProjDef38
+module
+
+public import Mathlib.RingTheory.GradedAlgebra.Basic
+public import Mathlib.RingTheory.ReesAlgebra
+public import Mathlib.RingTheory.Ideal.Operations
+public import Mathlib.AlgebraicGeometry.Scheme
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.GradedRingProjDef38
+
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 

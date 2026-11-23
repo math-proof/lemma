@@ -1,12 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Ramanujan/Part1Ch7Entry1Powersum.lean -/
+module
 
+public import Def.Analysis.Ramanujan.Part1Ch7Entry1Powersum
+public import Theorem.Real.Ramanujan.Part1Ch7Entry1Powersum
+public import Mathlib.Analysis.Asymptotics.Lemmas
+public import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+public import Mathlib.Tactic.NormNum
 
-import Def.Analysis.Ramanujan.Part1Ch7Entry1Powersum
-import Lemma.Real.Ramanujan.Part1Ch7Entry1Powersum
-import Mathlib.Analysis.Asymptotics.Lemmas
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MathlibExtTest.Analysis.Ramanujan.Part1Ch7Entry1Powersum
 

@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/Hankel.lean -/
+module
 
+public import Def.LinearAlgebra.Matrix.Hankel
+public import Theorem.Matrix.Hankel
 
-import Def.LinearAlgebra.Matrix.Hankel
-import Theorem.Matrix.Hankel
-
+public section
 
 namespace Matrix
 

@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TheoryOfComputation.code.ContextFree.Part4
-import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.ContextFree
-import Inductive.v1.Atlas.TheoryOfComputation.code.CFGtoPDA
+module
+
+public import Def.v1.Atlas.TheoryOfComputation.code.ContextFree.Part4
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.ContextFree
+public import Inductive.v1.Atlas.TheoryOfComputation.code.CFGtoPDA
+
+@[expose] public section
+
 universe u_pda
 
 

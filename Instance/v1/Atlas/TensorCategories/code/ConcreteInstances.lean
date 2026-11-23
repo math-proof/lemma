@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Theorem.v1.Atlas.TensorCategories.code.NicholsZoeller
 import Lemma.Category.Atlas.v1.TensorCategories.code.NicholsZoeller
-import Lemma.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctorProjective
+import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctorProjective
 import Class.v1.Atlas.TensorCategories.code.QuasiTensorFunctorProjective.Part3
 import Def.v1.Atlas.TensorCategories.code.ConcreteInstances
 set_option maxHeartbeats 400000

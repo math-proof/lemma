@@ -1,6 +1,10 @@
-import Instance.Data.Tensor.Tensor.Part2
-import Instance.Data.Vector.Functions
-import Theorem.Analysis.Real.Relational
+module
+
+public import Instance.Data.Tensor.Tensor.Part2
+public import Instance.Data.Vector.Functions
+public import Theorem.Analysis.Real.Relational
+@[expose] public section
+
 open Tensor
 
 

@@ -1,11 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/JaccardLattice.lean -/
 
+module
 
-import Def.Combinatorics.JaccardLattice
-import Theorem.Finset.JaccardLattice
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
+public import Def.Combinatorics.JaccardLattice
+public import Theorem.Finset.JaccardLattice
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
 
+@[expose] public section
 
 namespace JaccardLatticeTest
 

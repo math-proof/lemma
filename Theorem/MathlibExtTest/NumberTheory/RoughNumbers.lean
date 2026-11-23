@@ -1,8 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/RoughNumbers.lean -/
+module
 
+public import Instance.NumberTheory.RoughNumbers
+public import Theorem.Nat.RoughNumbers
 
-import Instance.NumberTheory.RoughNumbers
-import Theorem.Nat.RoughNumbers
 /-!
 # Examples for rough natural numbers
 
@@ -10,6 +11,8 @@ Focused checks of the source boundaries (`1`, primes, a composite rough number,
 a rejected small-prime factor, zero), divisor closure, bound antitonicity, and
 the smooth-number bridge.
 -/
+
+public section
 
 
 namespace Nat

@@ -7,9 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Structure.v1.Atlas.DifferentialAnalysis.code.WavefrontSet.Part3
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontSet
+public import Structure.v1.Atlas.DifferentialAnalysis.code.WavefrontSet.Part3
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontSet
+
+public section
+
 /-- Decomposition of a tempered distribution `u` away from a closed conic set `Γ` disjoint from the
 conic singular support: `u` can be written as `u₁' + u₁'' + u₂` where `u₁'` is compactly supported,
 `u₁''` vanishes on test functions supported far from the origin and supported in directions in `Γ`,

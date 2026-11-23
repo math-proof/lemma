@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochApplications
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochApplications
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochApplications
 set_option maxHeartbeats 800000
 
 open CanonicalSheafCurves RiemannRochEulerCurves RiemannRochRiemannForm

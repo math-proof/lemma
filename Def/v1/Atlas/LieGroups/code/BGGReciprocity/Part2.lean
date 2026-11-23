@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.LieGroups.code.CompositionSeries
-import Lemma.Int.StandardFiltrationMultiplicity.eq.DimHomProjectiveContragredientVerma
+import Theorem.Int.StandardFiltrationMultiplicity.eq.DimHomProjectiveContragredientVerma
 import Def.v1.Atlas.LieGroups.code.DualityFunctorDefs
 import Theorem.v1.Atlas.LieGroups.code.BGGReciprocity
 

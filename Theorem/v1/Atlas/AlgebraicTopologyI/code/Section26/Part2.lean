@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section1.Part3
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section1
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section1
 import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.CupProductHelpers
 import Mathlib.AlgebraicTopology.SingularHomology.Basic
 import Mathlib.AlgebraicTopology.SimplicialSet.TopAdj

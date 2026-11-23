@@ -3,7 +3,8 @@ import Lemma.ModularForm.HeckeOperatorForms
 import Theorems.Thm_CuspForm_heckeTLin_comm
 import Theorems.Thm_CuspForm_heckeTLin_heckeULin_comm
 import Theorems.Thm_CuspForm_heckeULin_comm
-import Lemma.CuspForm.HeckeAlgebra
+import Theorem.CuspForm.HeckeAlgebra
+import Def.CuspForm_HeckeAlgebra
 
 set_option autoImplicit false
 

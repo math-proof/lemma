@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.TheoryOfComputation.code.Complexity.Part2
-public import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
 public import Mathlib.Data.Fintype.Pi
 public import Mathlib.Algebra.Order.Ring.Unbundled.Rat
 

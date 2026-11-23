@@ -7,21 +7,23 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Instance.v1.Atlas.NumberTheoryI.code.HenselLemmas
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.HenselLemmas
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.ScalingStep
-import Instance.v1.Atlas.NumberTheoryI.code.ScalingStep
-import Mathlib.RingTheory.DiscreteValuationRing.TFAE
-import Mathlib.RingTheory.Ideal.IntegralClosure
-import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
-import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
-import Mathlib.RingTheory.Ideal.Over
-import Mathlib.RingTheory.Ideal.GoingUp
-import Mathlib.RingTheory.Norm.Basic
-import Mathlib.RingTheory.Norm.Transitivity
+public import Instance.v1.Atlas.NumberTheoryI.code.HenselLemmas
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.HenselLemmas
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ScalingStep
+public import Instance.v1.Atlas.NumberTheoryI.code.ScalingStep
+public import Mathlib.RingTheory.DiscreteValuationRing.TFAE
+public import Mathlib.RingTheory.Ideal.IntegralClosure
+public import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
+public import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
+public import Mathlib.RingTheory.Ideal.Over
+public import Mathlib.RingTheory.Ideal.GoingUp
+public import Mathlib.RingTheory.Norm.Basic
+public import Mathlib.RingTheory.Norm.Transitivity
 open Polynomial IsLocalRing
 
+public section
 
 section HenselIII
 

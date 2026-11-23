@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 import Mathlib.Algebra.FiveLemma
 import Mathlib.Algebra.Homology.HomologySequence
 import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section11
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section11
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section11
 import Structure.v1.Atlas.AlgebraicTopologyI.code.Section9
 open CategoryTheory
 

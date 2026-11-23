@@ -1,12 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Probability/NumberTheory/RandomMultiplicativeFunction.lean -/
+module
 
-
-import Def.Probability.NumberTheory.RandomMultiplicativeFunction.Part2
-import Lemma.Measure.NumberTheory.RandomMultiplicativeFunction
-import Mathlib.Tactic.NormNum
+public import Def.Probability.NumberTheory.RandomMultiplicativeFunction.Part2
+public import Theorem.Measure.NumberTheory.RandomMultiplicativeFunction
+public import Mathlib.Tactic.NormNum
 open MeasureTheory ProbabilityTheory ArithmeticFunction
 open MetaMathlibExt.RandomMultiplicativeFunction
 
+public section
 
 example (x : ℤˣ) : rademacherMeasure {x} = (2 : ENNReal)⁻¹ :=
   rademacherMeasure_singleton x

@@ -7,16 +7,18 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ConnectionsCurvature
-import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part7
-import Def.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part4
+public import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ConnectionsCurvature
+public import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part7
+public import Def.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part4
 set_option autoImplicit false
 
 open DifferentialFormSpace
 
+public section
 
 /-- Positivity of the Weitzenböck constant: $c_G > 0$. -/
 theorem weitzenbock_uniform_constant_pos

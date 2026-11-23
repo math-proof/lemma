@@ -5,8 +5,6 @@ open Filter MeasureTheory Set
 open Complex
 
 
-namespace Complex
-
 /--
 [eventually_wimanGrowth_regular](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/LogMajorantRegularity.lean)
 -/
@@ -107,9 +105,8 @@ lemma eventually_wimanGrowth_regular
   obtain ⟨x₀, hx₀⟩ := eventually_atTop.1 hEventuallyPos
   exact ⟨x₀, hx₀, hGrowthMono.monotoneOn (Set.Ici x₀),
     hDerivMono.monotoneOn (Set.Ici x₀), hC2, hDerivAtTop⟩
-end Complex
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-22

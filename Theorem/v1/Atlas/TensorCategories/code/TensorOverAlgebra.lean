@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.TensorCategories.code.AlgebrasInCategories.Part4
-import Lemma.Category.Atlas.v1.TensorCategories.code.AlgebrasInCategories
+import Theorem.Category.Atlas.v1.TensorCategories.code.AlgebrasInCategories
 universe v u
 
 /-- Definition 2.9.22: the tensor product `M ⊗_A N` of a right `A`-module `M` and a left

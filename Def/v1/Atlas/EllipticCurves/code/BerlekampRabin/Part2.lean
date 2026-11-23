@@ -8,12 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.FieldTheory.Finite.Polynomial
-import Mathlib.FieldTheory.Perfect
-import Mathlib.RingTheory.Polynomial.Basic
-import Mathlib.Algebra.Polynomial.Div
-import Instance.v1.Atlas.EllipticCurves.code.BerlekampRabin
+module
+
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.FieldTheory.Finite.Polynomial
+public import Mathlib.FieldTheory.Perfect
+public import Mathlib.RingTheory.Polynomial.Basic
+public import Mathlib.Algebra.Polynomial.Div
+public import Instance.v1.Atlas.EllipticCurves.code.BerlekampRabin
+
+@[expose] public section
+
 open Polynomial Finset
 
 

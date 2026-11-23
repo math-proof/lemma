@@ -7,10 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Instance.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM8.RepresentationFormulas
-import Lemma.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM8.RepresentationFormulas
+public import Instance.v1.Atlas.IntroductionToPartialDifferentialEquations.code.CM8.RepresentationFormulas
+public import Theorem.Real.Atlas.v1.IntroductionToPartialDifferentialEquations.code.CM8.RepresentationFormulas
 open Real Set MeasureTheory Classical
+
+public section
 
 /-- Theorem 2.1 (basic existence and uniqueness for the Dirichlet problem):
 on a bounded Lipschitz domain $\Omega \subset \mathbb{R}^n$ ($n \geq 2$) with

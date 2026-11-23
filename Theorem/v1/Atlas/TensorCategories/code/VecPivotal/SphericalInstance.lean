@@ -7,12 +7,15 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Theorem.v1.Atlas.TensorCategories.code.VecPivotal.PivotalInstance
-import Mathlib.LinearAlgebra.Dual.Lemmas
+public import Theorem.v1.Atlas.TensorCategories.code.VecPivotal.PivotalInstance
+public import Mathlib.LinearAlgebra.Dual.Lemmas
 set_option maxHeartbeats 1600000
 
 open CategoryTheory MonoidalCategory Module Category
+
+public section
 
 universe u
 

@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
+module
+
+public import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
+
+@[expose] public section
+
 open Finset BigOperators
 
 

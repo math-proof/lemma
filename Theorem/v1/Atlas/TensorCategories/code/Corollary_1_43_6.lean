@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.TensorCategories.code.StarAlgebraCorollaries.Part3
-import Lemma.Category.Atlas.v1.TensorCategories.code.StarAlgebraCorollaries
+import Theorem.Category.Atlas.v1.TensorCategories.code.StarAlgebraCorollaries
 open FusionRing
 
 

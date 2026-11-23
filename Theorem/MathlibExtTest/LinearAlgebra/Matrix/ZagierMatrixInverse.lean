@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/ZagierMatrixInverse.lean -/
+module
 
+public import Def.LinearAlgebra.Matrix.ZagierMatrixInverse
+public import Theorem.Matrix.ZagierMatrixInverse
 
-import Def.LinearAlgebra.Matrix.ZagierMatrixInverse
-import Theorem.Matrix.ZagierMatrixInverse
-
+public section
 
 example (K : ℕ) : Matrix (Fin (K - 1)) (Fin (K - 1)) ℚ := MetaMathlibExt.zagierMatrix K
 

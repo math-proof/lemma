@@ -1,10 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/InformationTheory/KraftMcMillan.lean -/
 
-import Mathlib.InformationTheory.Coding.KraftMcMillan
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Def.InformationTheory.PrefixFree
-import Theorem.Real.PrefixFree
+module
+
+public import Mathlib.InformationTheory.Coding.KraftMcMillan
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+public import Def.InformationTheory.PrefixFree
+public import Theorem.Real.PrefixFree
+
+@[expose] public section
+
 open scoped BigOperators
 
 

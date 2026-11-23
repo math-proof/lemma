@@ -2,7 +2,7 @@ module
 
 public import Mathlib.Topology.KrullDimension
 public import Structure.JacJ1Iface
-public import Lemma.Scheme.RelativeGroupLawKernel
+public import Theorem.Scheme.RelativeGroupLawKernel
 public import Instance.AlgebraicGeometry_RelativePicardFunctor
 public import Structure.AlgebraicGeometry_ModulesProjPresentation
 

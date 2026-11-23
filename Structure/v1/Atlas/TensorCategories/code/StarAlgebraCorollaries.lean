@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Theorem.v1.Atlas.TensorCategories.code.StarAlgebra
-public import Lemma.Category.Atlas.v1.TensorCategories.code.StarAlgebra
+public import Theorem.Category.Atlas.v1.TensorCategories.code.StarAlgebra
 public import Theorem.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
 public import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
 public import Mathlib.RingTheory.Polynomial.Basic

@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/FractionalIdeal/PrimeTo.lean -/
+module
 
-
-import Def.RingTheory.FractionalIdeal.PrimeTo.Part2
-import Lemma.Int.FractionalIdeal.PrimeTo
+public import Def.RingTheory.FractionalIdeal.PrimeTo.Part2
+public import Theorem.Int.FractionalIdeal.PrimeTo
 open scoped nonZeroDivisors
 
+public section
 
 noncomputable section
 

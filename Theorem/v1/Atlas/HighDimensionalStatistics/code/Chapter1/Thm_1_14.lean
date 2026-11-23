@@ -7,14 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
-import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
-import Mathlib.Analysis.Convex.Integral
-import Mathlib.Analysis.Convex.SpecificFunctions.Basic
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
+public import Mathlib.Topology.Algebra.InfiniteSum.ENNReal
+public import Mathlib.Analysis.Convex.Integral
+public import Mathlib.Analysis.Convex.SpecificFunctions.Basic
 open MeasureTheory Real ProbabilityTheory ENNReal Finset Set
 
+public section
 
 noncomputable section
 

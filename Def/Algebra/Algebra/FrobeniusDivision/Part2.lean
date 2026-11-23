@@ -1,20 +1,25 @@
-import Mathlib.Algebra.Quaternion
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Basic
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Algebra.QuaternionBasis
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.LinearAlgebra.FreeModule.PID
-import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
-import Mathlib.RingTheory.Flat.TorsionFree
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.Tactic.ComputeDegree
-import Mathlib.Tactic.NoncommRing
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Push
-import Mathlib.Tactic.Ring
-import Theorem.Algebra.Algebra.FrobeniusDivision.Part2
+module
+
+public import Mathlib.Algebra.Quaternion
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Algebra.QuaternionBasis
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.LinearAlgebra.FreeModule.PID
+public import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
+public import Mathlib.RingTheory.Flat.TorsionFree
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.Tactic.ComputeDegree
+public import Mathlib.Tactic.NoncommRing
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Push
+public import Mathlib.Tactic.Ring
+public import Theorem.Algebra.Algebra.FrobeniusDivision.Part2
+
+@[expose] public section
+
 /-!
 # Frobenius theorem on real division algebras
 

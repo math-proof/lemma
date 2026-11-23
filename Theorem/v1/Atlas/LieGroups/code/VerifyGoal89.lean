@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.LieGroups.code.CategoryOII.Part3
-import Lemma.Int.WeightLE.of.BruhatLE
+import Theorem.Int.WeightLE.of.BruhatLE
 
 
 example {R : Type*} [CommRing R]

@@ -15,8 +15,8 @@ public import Mathlib.Analysis.InnerProductSpace.PiL2
 public import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
 public import Mathlib.Analysis.Calculus.MeanValue
 public import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
-public import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
-public import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.LaplacianExistence
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.LaplacianExistence
 
 
 public noncomputable section

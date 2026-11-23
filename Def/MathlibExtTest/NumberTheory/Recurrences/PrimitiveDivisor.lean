@@ -1,10 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Recurrences/PrimitiveDivisor.lean -/
 
+module
 
-import Mathlib.Tactic
-import Def.NumberTheory.Recurrences.PrimitiveDivisor
-import Theorem.Nat.Recurrences.PrimitiveDivisor
+public import Mathlib.Tactic
+public import Def.NumberTheory.Recurrences.PrimitiveDivisor
+public import Theorem.Nat.Recurrences.PrimitiveDivisor
 
+@[expose] public section
 
 namespace LucasSequenceTest
 

@@ -1,10 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/BilinearForm/Prod.lean -/
+module
 
-
-import Instance.LinearAlgebra.BilinearForm.Prod
-import Theorem.Matrix.BilinearForm.Prod
-import Mathlib.RingTheory.Localization.FractionRing
-import Abbrev.MathlibExtTest.LinearAlgebra.BilinearForm.Prod
+public import Instance.LinearAlgebra.BilinearForm.Prod
+public import Theorem.Matrix.BilinearForm.Prod
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Abbrev.MathlibExtTest.LinearAlgebra.BilinearForm.Prod
 open LinearMap (BilinForm)
 open Module
 
@@ -15,6 +15,8 @@ Examples exercising `BilinForm.prod` and its nondegeneracy, perfectness,
 and dual-submodule API, including a source-shaped Noetherian-domain
 fraction-field case.
 -/
+
+public section
 
 
 namespace LinearMap

@@ -1,30 +1,5 @@
-import Lemma.Int.EqFloor.is.Le.Lt
-import Lemma.Rat.Div.ge.Zero
-import Lemma.Rat.LtDiv.is.Lt_Mul.of.Gt_0
-open Rat Int
-
-
-@[path]
-private lemma main
-  [Field α] [LinearOrder α] [IsStrictOrderedRing α]
-  [FloorRing α]
-  {n k : ℕ}
--- given
-  (h : k < n) :
--- imply
-  ⌊(k : α) / n⌋ = 0 := by
--- proof
-  apply EqFloor.of.Le.Lt
-  ·
-    simp [Div.ge.Zero]
-  ·
-    simp
-    apply LtDiv.of.Lt_Mul.Gt_0
-    ·
-      simp
-      linarith
-    ·
-      simpa
+import Theorem.Rat.FloorDiv.eq.Zero.of.Lt
 
 
 -- created on 2025-07-07
+-- updated on 2026-11-22

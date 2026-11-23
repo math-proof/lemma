@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Probability/PaleyZygmund.lean -/
+module
 
-
-import Theorem.Measure.PaleyZygmund
+public import Theorem.Measure.PaleyZygmund
 open MeasureTheory
 
+public section
 
 /-- The backported theorem exposes the exact upstream API and namespace. -/
 example {Ω : Type*} [MeasurableSpace Ω] {μ : Measure Ω} [IsProbabilityMeasure μ]

@@ -6,7 +6,7 @@ Author: @toskua, Avocado
 
 
 import Def.NumberTheory.NumberField.Completion.FinitePlacesOverTensorProductSurjective
-import Lemma.Nat.NumberField.Completion.FinitePlacesOverTensorProductSurjective
+import Theorem.Nat.NumberField.Completion.FinitePlacesOverTensorProductSurjective
 open IsDedekindDomain
 open IsDedekindDomain.HeightOneSpectrum
 open scoped NumberField

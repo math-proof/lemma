@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/DedekindDomain/AdicValuation.lean -/
+module
 
-
-import Mathlib.NumberTheory.FunctionField
-import Theorem.RingTheory.DedekindDomain.AdicValuation
-import Theorem.Int.DedekindDomain.AdicValuation
+public import Mathlib.NumberTheory.FunctionField
+public import Theorem.RingTheory.DedekindDomain.AdicValuation
+public import Theorem.Int.DedekindDomain.AdicValuation
 open IsDedekindDomain
 
+public section
 
 namespace MathlibExtTest.RingTheory.DedekindDomain.AdicValuation
 

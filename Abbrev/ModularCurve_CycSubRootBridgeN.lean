@@ -1,9 +1,11 @@
-import Lemma.WeierstrassCurve.CycSubRootBridge
-import Def.WeierstrassCurve_FullKernelQuotient
+module
+
+public import Theorem.WeierstrassCurve.CycSubRootBridge
+public import Def.WeierstrassCurve_FullKernelQuotient
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open ModularCurve WeierstrassCurve Polynomial
 open scoped Classical

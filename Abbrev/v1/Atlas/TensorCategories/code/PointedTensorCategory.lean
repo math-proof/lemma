@@ -8,12 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.TensorCategories.code.ChevalleyProperty.Part2
-import Theorem.Category.Atlas.v1.TensorCategories.code.ChevalleyProperty
-import Lemma.Category.Atlas.v1.TensorCategories.code.CoradicalFiltration
-import Lemma.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
-import Def.v1.Atlas.TensorCategories.code.CoradicalFiltration.Part8
-import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
+module
+
+public import Structure.v1.Atlas.TensorCategories.code.ChevalleyProperty.Part2
+public import Theorem.Category.Atlas.v1.TensorCategories.code.ChevalleyProperty
+public import Theorem.Category.Atlas.v1.TensorCategories.code.CoradicalFiltration
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
+public import Def.v1.Atlas.TensorCategories.code.CoradicalFiltration.Part8
+public import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
+@[expose] public section
+
 set_option maxHeartbeats 400000
 
 open scoped TensorProduct

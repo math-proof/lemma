@@ -8,10 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
-import Theorem.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
-import Mathlib.CategoryTheory.Monoidal.Rigid.Braided
-import Abbrev.v1.Atlas.TensorCategories.code.ModuleRigidityCompat
+module
+
+public import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
+public import Theorem.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Braided
+public import Abbrev.v1.Atlas.TensorCategories.code.ModuleRigidityCompat
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 universe v₁ v₂ u₁ u₂

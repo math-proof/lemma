@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/Unramified.lean -/
+module
 
-
-import Def.NumberTheory.NumberField.Unramified.Part2
-import Lemma.Nat.NumberField.Unramified
+public import Def.NumberTheory.NumberField.Unramified.Part2
+public import Theorem.Nat.NumberField.Unramified
 open scoped NumberField
 
+public section
 
 noncomputable section
 

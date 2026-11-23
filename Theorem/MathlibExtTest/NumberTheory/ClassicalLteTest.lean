@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ClassicalLteTest.lean -/
+module
 
+public import Theorem.Nat.ClassicalLte
+public import Mathlib.Tactic
 
-import Theorem.Nat.ClassicalLte
-import Mathlib.Tactic
-
+public section
 
 namespace MetaMathlibExt
 

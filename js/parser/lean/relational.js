@@ -13,7 +13,6 @@
 import { escapeSpecialsForLatex } from './utility.js';
 import { LeanBinaryBoolean } from './boolean.js';
 import { Lean } from './base.js';
-import { pathEqCombineChoices, pathCombineIndepChoices, pathEqInfixChoices, pathStripTrailingHoles } from './pathChoices.js';
 
 const L = Lean.classes;
 
@@ -197,40 +196,6 @@ export class LeanEq extends LeanRelational {
         return `{%s} ${this.opLatex()}${sep}{%s}`;
     }
 
-    /**
-     * Lemma-path imply stems at an Eq root (infix): both LHS.eq.RHS and flat Op(LHS)(RHS).
-     * Trailing `_` stripped only here. Mul×Mul flat (EqMulS) skipped — Mul/eq/Mul covers it.
-     * Returns null when not the MulInvSqrt / MulSqrt_Div family.
-     * @param {object} [opts]
-     * @param {string} [house]
-     * @returns {{ left: string[], right: string[], stems: string[], soft: string } | null}
-     */
-    pathImplyStems(opts = {}, house = "") {
-        const left = this.lhs?.pathChoices?.(opts) ?? [""];
-        const right = this.rhs?.pathChoices?.(opts) ?? [""];
-        const combined = pathEqCombineChoices(left, right, house);
-        if (!combined.left.includes("MulInvSqrt") || !combined.right.includes("MulSqrt_Div"))
-            return null;
-        return combined;
-    }
-
-    /**
-     * `𝔼(x * y) = 𝔼 x * 𝔼 y`. Side choices come from `pathChoices`:
-     * LHS `Expect_Mul | Expect | _`, RHS `MulExpectS | MulExpect | Mul_Expect | Mul | _`.
-     * Stems are `LHS.eq.RHS` and flat `Eq(LHS)(RHS)` only.
-     * @param {object} [opts]
-     * @param {string} [house]
-     * @returns {{ left: string[], right: string[], stems: string[], soft: string } | null}
-     */
-    pathExpectEqStems(opts = {}, house = "") {
-        const left = this.lhs?.pathChoices?.(opts) ?? [""];
-        const right = this.rhs?.pathChoices?.(opts) ?? [""];
-        if (!left.some((s) => pathStripTrailingHoles(s) === "Expect_Mul") || !right.includes("MulExpectS")) return null;
-        const canon = "Expect_Mul/eq/MulExpectS";
-        const h = String(house || "").replace(/\\/g, "/");
-        return pathEqInfixChoices(left, right, h === canon ? h : canon);
-    }
-
 }
 
 /**
@@ -277,20 +242,6 @@ export class Lean_perp extends LeanRelational {
     /** `⟂ᵢ` is (conditional) independence: both operands are random variables. */
     get isIndependence() {
         return this.subscript === 'ᵢ';
-    }
-
-    /**
-     * IndepFun as binary infix for lemma-path (like Mul/Eq): walk LHS/RHS pathChoices.
-     * `x[k] ⟂ᵢ x[:k]` → Indep_GetSlice; pairwise holes → Indep.
-     * @param {object} [opts]
-     * @returns {string[]}
-     */
-    pathChoices(opts = {}) {
-        if (!this.isIndependence) return super.pathChoices?.(opts) ?? [""];
-        return pathCombineIndepChoices(
-            this.lhs?.pathChoices?.(opts) ?? [""],
-            this.rhs?.pathChoices?.(opts) ?? [""],
-        );
     }
 
     /**

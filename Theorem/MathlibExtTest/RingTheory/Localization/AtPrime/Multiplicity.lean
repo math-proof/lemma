@@ -1,8 +1,8 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/Localization/AtPrime/Multiplicity.lean -/
+module
 
-
-import Theorem.Int.Localization.AtPrime.Multiplicity
-import Mathlib.RingTheory.DedekindDomain.Different
+public import Theorem.Int.Localization.AtPrime.Multiplicity
+public import Mathlib.RingTheory.DedekindDomain.Different
 set_option autoImplicit false
 
 /-!
@@ -13,6 +13,8 @@ the generic canonical-localization application, the number-theory
 specialization to `differentIdeal A B`, the correction-term specialization to
 `Ideal.span {(e : B)}`, and a concrete integer localization at the prime `(5)`.
 -/
+
+public section
 
 
 /-- Generic ideal at the canonical localization `Localization.AtPrime p`. -/

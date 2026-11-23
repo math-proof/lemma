@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Theorem.v1.Atlas.ProjectionTheory.code.PolyKGrowth
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.ContagiousStructure
-import Def.v1.Atlas.ProjectionTheory.code.DoubleCountingFF
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.DoubleCountingFF
+module
+
+public import Mathlib
+public import Theorem.v1.Atlas.ProjectionTheory.code.PolyKGrowth
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.ContagiousStructure
+public import Def.v1.Atlas.ProjectionTheory.code.DoubleCountingFF
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.DoubleCountingFF
+
+@[expose] public section
+
 open Pointwise
 
 

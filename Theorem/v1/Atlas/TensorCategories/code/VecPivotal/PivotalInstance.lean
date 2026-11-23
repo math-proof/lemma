@@ -7,14 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.TensorCategories.code.VecPivotal.DoubleDualIso
-import Def.v1.Atlas.TensorCategories.code.VecPivotal.MonoidalCoherence
-import Structure.v1.Atlas.TensorCategories.code.PivotalSpherical.Part3
-import Theorem.Category.Atlas.v1.TensorCategories.code.PivotalSpherical
+public import Def.v1.Atlas.TensorCategories.code.VecPivotal.DoubleDualIso
+public import Def.v1.Atlas.TensorCategories.code.VecPivotal.MonoidalCoherence
+public import Structure.v1.Atlas.TensorCategories.code.PivotalSpherical.Part3
+public import Theorem.Category.Atlas.v1.TensorCategories.code.PivotalSpherical
 set_option maxHeartbeats 800000
 
 open CategoryTheory MonoidalCategory Module Category
+
+public section
 
 universe u
 

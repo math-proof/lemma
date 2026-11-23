@@ -1,4 +1,8 @@
-import Def.LanglandsTunnell_CubicInduction_Growth
+module
+
+public import Def.LanglandsTunnell_CubicInduction_Growth
+
+@[expose] public section
 
 set_option autoImplicit false
 

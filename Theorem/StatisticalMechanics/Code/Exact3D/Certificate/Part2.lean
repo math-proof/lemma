@@ -7,11 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib
-import Def.StatisticalMechanics.Code.Exact3D.RG.Part2
-import Def.StatisticalMechanics.Code.Exact3D.Certificate.Part2
+public import Mathlib
+public import Def.StatisticalMechanics.Code.Exact3D.RG.Part2
+public import Def.StatisticalMechanics.Code.Exact3D.Certificate.Part2
 
+public section
 
 namespace StatMech
 

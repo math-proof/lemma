@@ -8,13 +8,18 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Tactic
-import Mathlib.Probability.Distributions.Uniform
-import Mathlib.MeasureTheory.Measure.MeasureSpace
-import Mathlib.Combinatorics.Digraph.Basic
-import Mathlib.Data.Fintype.Card
-import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6.LovaszLocalLemma
-import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter6.LovaszLocalLemma
+module
+
+public import Mathlib.Tactic
+public import Mathlib.Probability.Distributions.Uniform
+public import Mathlib.MeasureTheory.Measure.MeasureSpace
+public import Mathlib.Combinatorics.Digraph.Basic
+public import Mathlib.Data.Fintype.Card
+public import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter6.LovaszLocalLemma
+public import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter6.LovaszLocalLemma
+
+@[expose] public section
+
 open MeasureTheory ProbabilityTheory Set Finset ENNReal
 
 

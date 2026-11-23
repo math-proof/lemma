@@ -1,12 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Probability/Statistics/NeymanPearson.lean -/
+module
 
-
-import Theorem.Measure.Statistics.NeymanPearson
+public import Theorem.Measure.Statistics.NeymanPearson
 open MeasureTheory MathlibExt.Probability.Statistics.NeymanPearson
 
 /-!
 # Tests for the Neyman–Pearson lemma (dominated two-simple-hypothesis form)
 -/
+
+public section
 
 
 /-- The exact former Wanted statement follows from the stronger public theorem:

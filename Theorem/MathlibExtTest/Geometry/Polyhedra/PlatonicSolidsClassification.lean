@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Geometry/Polyhedra/PlatonicSolidsClassification.lean -/
+module
 
+public import Def.Geometry.Polyhedra.PlatonicSolidsClassification.Part2
+public import Theorem.Set.Polyhedra.PlatonicSolidsClassification
 
-import Def.Geometry.Polyhedra.PlatonicSolidsClassification.Part2
-import Theorem.Set.Polyhedra.PlatonicSolidsClassification
-
+public section
 
 namespace MetaMathlibExt
 

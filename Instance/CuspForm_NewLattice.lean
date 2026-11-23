@@ -1,5 +1,8 @@
 -- Carved from Lemma/Definitions/Def_CuspForm_NewLattice.lean: instance decls only.
-import Def.CuspForm_IntegralStructure
+module
+
+public import Def.CuspForm_IntegralStructure
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,9 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Topology/MetricSpace/HausdorffDimensionFunction.lean -/
 
+module
 
-import Instance.Topology.MetricSpace.HausdorffDimensionFunction
-import Theorem.Set.MetricSpace.HausdorffDimensionFunction
-import Mathlib.Topology.Instances.NNReal.Lemmas
+public import Instance.Topology.MetricSpace.HausdorffDimensionFunction
+public import Theorem.Set.MetricSpace.HausdorffDimensionFunction
+public import Mathlib.Topology.Instances.NNReal.Lemmas
+
+@[expose] public section
+
 open scoped NNReal Topology
 open Filter
 

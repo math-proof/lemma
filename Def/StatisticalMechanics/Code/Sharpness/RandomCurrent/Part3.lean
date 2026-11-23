@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
+module
 
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Sharpness.RandomCurrent.Part2
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Sharpness.RandomCurrent.Part2
+
+@[expose] public section
+
 open SimpleGraph Finset
 
 set_option linter.unusedSectionVars false

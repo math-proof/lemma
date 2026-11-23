@@ -4,7 +4,8 @@ import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Functor
 import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
 import Mathlib.RingTheory.MvPolynomial.Homogeneous
 import Mathlib.RingTheory.MvPolynomial.Ideal
-import Lemma.MvPolynomial.ProjSpace
+import Theorem.MvPolynomial.ProjSpace
+import Def.AlgebraicGeometry_ProjSpace
 
 set_option autoImplicit false
 set_option linter.unusedVariables false

@@ -1,4 +1,8 @@
-import Def.LanglandsTunnell_CubicInduction_ArchSmooth3
+module
+
+public import Def.LanglandsTunnell_CubicInduction_ArchSmooth3
+
+@[expose] public section
 
 set_option autoImplicit false
 

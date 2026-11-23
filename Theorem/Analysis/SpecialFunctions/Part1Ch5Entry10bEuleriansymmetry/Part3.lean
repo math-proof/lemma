@@ -1,19 +1,23 @@
 /-
 Author: @akiezun, Avocado
 -/
+module
 
-import Mathlib.Data.Finset.Defs
-import Mathlib.Data.Finset.Range
-import Mathlib.NumberTheory.Bernoulli
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Int.Star
-import Def.Analysis.SpecialFunctions.Part1Ch5Entry10bEuleriansymmetry.Part3
+public import Mathlib.Data.Finset.Defs
+public import Mathlib.Data.Finset.Range
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Int.Star
+public import Def.Analysis.SpecialFunctions.Part1Ch5Entry10bEuleriansymmetry.Part3
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 5
 
 Statements of entries from B. C. Berndt, *Ramanujan's Notebooks, Part I*
 (Springer, 1985), with proofs.
 -/
+
+public section
 
 
 section

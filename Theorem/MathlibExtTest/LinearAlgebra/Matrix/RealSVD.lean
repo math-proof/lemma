@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/RealSVD.lean -/
+module
 
-
-import Def.LinearAlgebra.Matrix.RealSVD
-import Theorem.Matrix.RealSVD
+public import Def.LinearAlgebra.Matrix.RealSVD
+public import Theorem.Matrix.RealSVD
 open MathlibExt.LinearAlgebra.Matrix.RealSVDWanted
 
+public section
 
 -- The full SVD has nonincreasing singular values that vanish beyond the codomain dimension.
 example (A : Matrix (Fin 2) (Fin 3) ℝ) :

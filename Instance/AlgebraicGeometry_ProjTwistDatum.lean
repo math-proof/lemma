@@ -1,7 +1,8 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ProjTwistDatum.lean: instance decls only.
 import Mathlib
 import Instance.AlgebraicGeometry_ProjSpaceCechGradedModule
-import Lemma.Scheme.ProjTwistDatum
+import Theorem.Scheme.ProjTwistDatum
+import Def.AlgebraicGeometry_ProjTwistDatum
 
 set_option autoImplicit false
 

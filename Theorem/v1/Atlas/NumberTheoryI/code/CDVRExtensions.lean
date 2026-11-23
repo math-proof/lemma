@@ -7,18 +7,20 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.Analysis.Normed.Unbundled.SpectralNorm
-import Mathlib.Analysis.Normed.Module.FiniteDimension
-import Mathlib.Topology.Algebra.Module.FiniteDimension
-import Mathlib.RingTheory.Ideal.IntegralClosure
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
-import Mathlib.RingTheory.Norm.Basic
-import Mathlib.RingTheory.AdicCompletion.Basic
-import Theorem.v1.Atlas.NumberTheoryI.code.HenselFactorization
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.HenselFactorization
+public import Mathlib.Analysis.Normed.Unbundled.SpectralNorm
+public import Mathlib.Analysis.Normed.Module.FiniteDimension
+public import Mathlib.Topology.Algebra.Module.FiniteDimension
+public import Mathlib.RingTheory.Ideal.IntegralClosure
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
+public import Mathlib.RingTheory.Norm.Basic
+public import Mathlib.RingTheory.AdicCompletion.Basic
+public import Theorem.v1.Atlas.NumberTheoryI.code.HenselFactorization
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.HenselFactorization
 
+public section
 
 noncomputable section
 

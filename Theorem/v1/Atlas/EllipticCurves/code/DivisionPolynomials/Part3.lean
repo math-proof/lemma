@@ -16,7 +16,7 @@ import Mathlib.FieldTheory.SeparableDegree
 import Def.v1.Atlas.EllipticCurves.code.IsogenyKernels.Part4
 import Theorem.Complex.Atlas.v1.EllipticCurves.code.IsogenyKernels
 import Theorem.Complex.Atlas.v1.EllipticCurves.code.Isogenies
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.TorsionEndomorphism
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.TorsionEndomorphism
 import Def.v1.Atlas.EllipticCurves.code.Isogenies.Part13
 import Theorem.Complex.Atlas.v1.EllipticCurves.code.Lemma53
 import Def.v1.Atlas.EllipticCurves.code.TorsionEndomorphism.Part3

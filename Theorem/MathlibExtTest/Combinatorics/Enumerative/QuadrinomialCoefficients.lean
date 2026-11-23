@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/QuadrinomialCoefficients.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.QuadrinomialCoefficients
+public import Theorem.Finset.Enumerative.QuadrinomialCoefficients
 
-import Def.Combinatorics.Enumerative.QuadrinomialCoefficients
-import Theorem.Finset.Enumerative.QuadrinomialCoefficients
-
+public section
 
 namespace MetaMathlibExt
 

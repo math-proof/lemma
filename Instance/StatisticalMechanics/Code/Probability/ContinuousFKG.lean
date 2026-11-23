@@ -9,8 +9,12 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib
-import Def.StatisticalMechanics.Code.Probability.ContinuousFKG.Part2
+module
+
+public import Mathlib
+public import Def.StatisticalMechanics.Code.Probability.ContinuousFKG.Part2
+@[expose] public section
+
 open MeasureTheory
 open scoped BigOperators ENNReal
 

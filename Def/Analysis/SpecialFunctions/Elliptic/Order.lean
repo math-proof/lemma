@@ -1,10 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Elliptic/Order.lean -/
 
-import Mathlib.Analysis.Meromorphic.Divisor
-import Structure.Analysis.SpecialFunctions.Elliptic.Function
-import Theorem.Complex.Function
-import Theorem.Complex.FundamentalParallelogram
-import Def.Analysis.SpecialFunctions.Elliptic.FundamentalParallelogram
+module
+
+public import Mathlib.Analysis.Meromorphic.Divisor
+public import Structure.Analysis.SpecialFunctions.Elliptic.Function
+public import Theorem.Complex.Function
+public import Theorem.Complex.FundamentalParallelogram
+public import Def.Analysis.SpecialFunctions.Elliptic.FundamentalParallelogram
+
+@[expose] public section
+
 /-!
 # Pole sets and elliptic order of meromorphic elliptic functions
 

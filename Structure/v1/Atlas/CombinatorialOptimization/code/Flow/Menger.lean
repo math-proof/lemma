@@ -11,9 +11,9 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.CombinatorialOptimization.code.Flow.MaxFlowMinCut.Part2
-public import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.MaxFlowMinCut
-public import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.MaxFlowAugPath
-public import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.FlowDecomposition
+public import Theorem.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.MaxFlowMinCut
+public import Theorem.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.MaxFlowAugPath
+public import Theorem.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.FlowDecomposition
 public import Instance.v1.Atlas.CombinatorialOptimization.code.Flow.MaxFlowAugPath
 public import Def.v1.Atlas.CombinatorialOptimization.code.Flow.FlowDecomposition.Part3
 open Finset BigOperators Classical

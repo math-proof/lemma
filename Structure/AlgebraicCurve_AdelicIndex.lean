@@ -1,7 +1,7 @@
 module
 
 public import Mathlib
-public import Lemma.Submodule.Repartitions
+public import Theorem.Submodule.Repartitions
 
 set_option autoImplicit false
 

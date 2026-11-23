@@ -8,7 +8,7 @@ import Mathlib.Analysis.CStarAlgebra.Classes
 import Mathlib.Analysis.Meromorphic.Basic
 import Mathlib.NumberTheory.LSeries.RiemannZeta
 import Def.Analysis.Ramanujan.Part1Ch7Entry10ZetaSide
-import Lemma.Real.Ramanujan.Part1Ch7Entry10ZetaSide
+import Theorem.Real.Ramanujan.Part1Ch7Entry10ZetaSide
 import Theorem.Complex.Part1Ch7PowerDifference
 import Def.Analysis.Ramanujan.Part1Ch7PowerDifference
 import Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected

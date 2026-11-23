@@ -1,38 +1,43 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/JacobiTripleProduct.lean -/
 
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Algebra.Field.GeomSum
-import Mathlib.Algebra.Group.Nat.Even
-import Mathlib.Algebra.GroupWithZero.Basic
-import Mathlib.Algebra.GroupWithZero.Units.Basic
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Algebra.Ring.Int.Parity
-import Mathlib.Algebra.Ring.Parity
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Normed.Group.Tannery
-import Mathlib.Analysis.Normed.Ring.Basic
-import Mathlib.Analysis.SpecialFunctions.Exp
-import Mathlib.Analysis.SpecialFunctions.Log.Summable
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Analysis.SpecificLimits.Normed
-import Mathlib.Data.Int.Star
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Order.Filter.AtTopBot.Basic
-import Mathlib.Order.Interval.Finset.Basic
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Lean.Elab.Tactic.Omega
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Algebra.InfiniteSum.NatInt
-import Mathlib.Topology.Algebra.InfiniteSum.Ring
-import Def.Combinatorics.Enumerative.GaussianBinomial
-import Theorem.Finset.Enumerative.GaussianBinomial
+module
+
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.BigOperators.Intervals
+public import Mathlib.Algebra.Field.GeomSum
+public import Mathlib.Algebra.Group.Nat.Even
+public import Mathlib.Algebra.GroupWithZero.Basic
+public import Mathlib.Algebra.GroupWithZero.Units.Basic
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Algebra.Ring.Int.Parity
+public import Mathlib.Algebra.Ring.Parity
+public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Normed.Group.Tannery
+public import Mathlib.Analysis.Normed.Ring.Basic
+public import Mathlib.Analysis.SpecialFunctions.Exp
+public import Mathlib.Analysis.SpecialFunctions.Log.Summable
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Mathlib.Analysis.SpecificLimits.Normed
+public import Mathlib.Data.Int.Star
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Order.Filter.AtTopBot.Basic
+public import Mathlib.Order.Interval.Finset.Basic
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Lean.Elab.Tactic.Omega
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Algebra.InfiniteSum.NatInt
+public import Mathlib.Topology.Algebra.InfiniteSum.Ring
+public import Def.Combinatorics.Enumerative.GaussianBinomial
+public import Theorem.Finset.Enumerative.GaussianBinomial
+
+@[expose] public section
+
 /-!
 # Jacobi triple product identity
 

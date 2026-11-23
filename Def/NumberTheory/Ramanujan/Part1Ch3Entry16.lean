@@ -4,9 +4,14 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Analysis.SpecialFunctions.Complex.Log
-import Def.NumberTheory.Ramanujan.Part1Ch3Entry12
-import Theorem.Nat.Ramanujan.Part1Ch3Entry12
+module
+
+public import Mathlib.Analysis.SpecialFunctions.Complex.Log
+public import Def.NumberTheory.Ramanujan.Part1Ch3Entry12
+public import Theorem.Nat.Ramanujan.Part1Ch3Entry12
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 3, Entry 16(a)
 

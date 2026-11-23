@@ -1,9 +1,13 @@
-import Lemma.WeierstrassCurve.FreyPackage
-import Instance.FLTPrelim_GaloisRep
-import Instance.FLTPrelim_Modularity
-import Def.FLTPrelim_ModularRep
-import Def.FreyPackage_LevelRaising
-import Def.FLTPrelim_Ramification
+module
+
+public import Theorem.WeierstrassCurve.FreyPackage
+public import Instance.FLTPrelim_GaloisRep
+public import Instance.FLTPrelim_Modularity
+public import Def.FLTPrelim_ModularRep
+public import Def.FreyPackage_LevelRaising
+public import Def.FLTPrelim_Ramification
+
+@[expose] public section
 
 set_option autoImplicit false
 

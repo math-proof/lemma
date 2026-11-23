@@ -4,8 +4,13 @@
   Author: Muse Code powered by Meta Muse Spark
 -/
 
-import Structure.RingTheory.GradedAlgebra.MultigradedBettiResolutionInvariance
-import Theorem.Int.GradedAlgebra.MultigradedBettiResolutionInvariance
+module
+
+public import Structure.RingTheory.GradedAlgebra.MultigradedBettiResolutionInvariance
+public import Theorem.Int.GradedAlgebra.MultigradedBettiResolutionInvariance
+
+@[expose] public section
+
 /-!
 # Multigraded Poincaré-series coefficient family
 

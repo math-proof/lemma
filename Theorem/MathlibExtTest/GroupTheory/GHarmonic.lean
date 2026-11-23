@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/GroupTheory/GHarmonic.lean -/
+module
 
-
-import Def.GroupTheory.GHarmonic
-import Theorem.Set.IsGHarmonicG.of.PairwiseDisjoint.All_EqIndex.All_Gt_0
-import Mathlib.Algebra.Group.TypeTags.Finite
+public import Def.GroupTheory.GHarmonic
+public import Theorem.Set.IsGHarmonicG.of.PairwiseDisjoint.All_EqIndex.All_Gt_0
+public import Mathlib.Algebra.Group.TypeTags.Finite
 open scoped Pointwise
 
+public section
 
 -- The empty tuple is `G`-harmonic.
 example (G : Type*) [Group G] : IsGHarmonic G (n := 0) Fin.elim0 :=

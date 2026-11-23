@@ -1,7 +1,7 @@
 module
 
 public import Structure.FullLevelTate_Datum
-public import Lemma.Matrix.TateProdRep.eq.TateRep
+public import Theorem.Matrix.TateProdRep.eq.TateRep
 
 set_option autoImplicit false
 

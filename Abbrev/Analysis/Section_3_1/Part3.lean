@@ -1,5 +1,9 @@
-import Mathlib
-import Def.Analysis.Section_3_1
+module
+
+public import Mathlib
+public import Def.Analysis.Section_3_1
+@[expose] public section
+
 set_option doc.verso.suggestions false
 
 /-!

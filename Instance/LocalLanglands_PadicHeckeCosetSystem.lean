@@ -1,8 +1,11 @@
 -- Carved from Lemma/Definitions/Def_LocalLanglands_PadicHeckeCosetSystem.lean: instance decls only.
-import Mathlib
-import Lemma.Matrix.HeckeCosetLocal
-import Structure.LocalLanglands_HeckeCosetSystem
-import Lemma.PadicInt.PadicHeckeCosetSystem
+module
+
+public import Mathlib
+public import Theorem.Matrix.HeckeCosetLocal
+public import Structure.LocalLanglands_HeckeCosetSystem
+public import Theorem.PadicInt.PadicHeckeCosetSystem
+@[expose] public section
 
 set_option autoImplicit false
 

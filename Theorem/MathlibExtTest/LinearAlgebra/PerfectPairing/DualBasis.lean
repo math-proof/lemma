@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/PerfectPairing/DualBasis.lean -/
+module
 
-
-import Def.LinearAlgebra.PerfectPairing.DualBasis
-import Theorem.Matrix.PerfectPairing.DualBasis
+public import Def.LinearAlgebra.PerfectPairing.DualBasis
+public import Theorem.Matrix.PerfectPairing.DualBasis
 open Module
 
+public section
 
 namespace LinearMap.IsPerfPair
 

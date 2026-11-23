@@ -1,6 +1,10 @@
-import Mathlib
-import Instance.Submodule_LocalBox
-import Def.QuaternionAlgebra_Order
+module
+
+public import Mathlib
+public import Instance.Submodule_LocalBox
+public import Def.QuaternionAlgebra_Order
+
+@[expose] public section
 
 set_option autoImplicit false
 

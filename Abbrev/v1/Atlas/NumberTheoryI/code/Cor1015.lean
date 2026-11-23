@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.NumberTheoryI.code.ResidueFieldFunctor
 import Lemma.Nat.Atlas.v1.NumberTheoryI.code.ResidueFieldFunctor
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.HenselFactorization
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.HenselFactorization
 import Theorem.v1.Atlas.NumberTheoryI.code.HenselFactorization
 import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
 import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic

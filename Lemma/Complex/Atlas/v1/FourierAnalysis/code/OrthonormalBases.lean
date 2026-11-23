@@ -6,10 +6,10 @@ open scoped InnerProductSpace ComplexConjugate
 
 
 /--
-[IsOrthonormalSequence.norm_eq_one](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/FourierAnalysis/code/OrthonormalBases.lean)
+[isOrthonormalSequence_norm_eq_one](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/FourierAnalysis/code/OrthonormalBases.lean)
 -/
 @[path]
-private lemma IsOrthonormalSequence.norm_eq_one
+private lemma isOrthonormalSequence_norm_eq_one
   [RCLike 𝕜]
   [SeminormedAddCommGroup E]
   [InnerProductSpace 𝕜 E]
@@ -23,10 +23,10 @@ private lemma IsOrthonormalSequence.norm_eq_one
   h.1 n
 
 /--
-[IsOrthonormalSequence.inner_eq_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/FourierAnalysis/code/OrthonormalBases.lean)
+[isOrthonormalSequence_inner_eq_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/FourierAnalysis/code/OrthonormalBases.lean)
 -/
 @[path]
-private lemma IsOrthonormalSequence.inner_eq_zero
+private lemma isOrthonormalSequence_inner_eq_zero
   [RCLike 𝕜]
   [SeminormedAddCommGroup E]
   [InnerProductSpace 𝕜 E]
@@ -186,4 +186,4 @@ private lemma inner_hasSum_of_orthonormal_series
 
 
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-22

@@ -7,14 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Mathlib.RingTheory.ReesAlgebra
-import Mathlib.Algebra.GroupWithZero.NonZeroDivisors
-import Instance.v1.Atlas.AlgebraicGeometryI.code.GradedRingQuotient
+public import Mathlib.RingTheory.ReesAlgebra
+public import Mathlib.Algebra.GroupWithZero.NonZeroDivisors
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.GradedRingQuotient
 set_option maxHeartbeats 400000
 
 open Polynomial
 
+public section
 
 namespace GradedRingQuotient
 

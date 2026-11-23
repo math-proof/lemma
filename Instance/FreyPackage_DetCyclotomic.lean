@@ -1,10 +1,13 @@
 -- Carved from Lemma/Definitions/Def_FreyPackage_DetCyclotomic.lean: instance decls only.
-import Instance.FreyPackage_GaloisRep
-import Def.FLTPrelim_Ramification
-import Mathlib.NumberTheory.Cyclotomic.CyclotomicCharacter
-import Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed
-import Mathlib.LinearAlgebra.Determinant
-import Def.ExtCitation_AdmissibleExtension
+module
+
+public import Instance.FreyPackage_GaloisRep
+public import Def.FLTPrelim_Ramification
+public import Mathlib.NumberTheory.Cyclotomic.CyclotomicCharacter
+public import Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed
+public import Mathlib.LinearAlgebra.Determinant
+public import Def.ExtCitation_AdmissibleExtension
+@[expose] public section
 
 set_option autoImplicit false
 

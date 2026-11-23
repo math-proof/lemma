@@ -8,17 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.Dimension.Basic
-import Mathlib.LinearAlgebra.Dimension.RankNullity
-import Mathlib.LinearAlgebra.LinearIndependent.Defs
-import Mathlib.SetTheory.Cardinal.Basic
-import Mathlib.RingTheory.SimpleModule.Basic
-import Mathlib.RingTheory.Algebraic.Basic
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Mathlib.Algebra.Algebra.Subalgebra.Basic
-import Instance.v1.Atlas.LieGroups.code.DixmierLemma
+module
 
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.Dimension.Basic
+public import Mathlib.LinearAlgebra.Dimension.RankNullity
+public import Mathlib.LinearAlgebra.LinearIndependent.Defs
+public import Mathlib.SetTheory.Cardinal.Basic
+public import Mathlib.RingTheory.SimpleModule.Basic
+public import Mathlib.RingTheory.Algebraic.Basic
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.Algebra.Algebra.Subalgebra.Basic
+public import Instance.v1.Atlas.LieGroups.code.DixmierLemma
+
+@[expose] public section
 
 noncomputable section
 

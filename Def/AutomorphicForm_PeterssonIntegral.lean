@@ -1,4 +1,8 @@
-import Def.NumberField_TateGlobalZeta
+module
+
+public import Def.NumberField_TateGlobalZeta
+
+@[expose] public section
 
 set_option autoImplicit false
 

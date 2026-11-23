@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
-import Mathlib.Probability.ProbabilityMassFunction.Constructions
+module
+
+public import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
+public import Mathlib.Probability.ProbabilityMassFunction.Constructions
+
+@[expose] public section
+
 open Finset BigOperators ENNReal
 
 

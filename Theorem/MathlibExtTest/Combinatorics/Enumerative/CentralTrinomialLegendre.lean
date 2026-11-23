@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/CentralTrinomialLegendre.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.CentralTrinomialLegendre
+public import Theorem.Finset.Enumerative.CentralTrinomialLegendre
 
-import Def.Combinatorics.Enumerative.CentralTrinomialLegendre
-import Theorem.Finset.Enumerative.CentralTrinomialLegendre
-
+public section
 
 namespace MetaMathlibExt
 

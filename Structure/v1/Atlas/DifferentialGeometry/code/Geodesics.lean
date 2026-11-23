@@ -18,7 +18,7 @@ public import Mathlib.Analysis.Calculus.Deriv.Shift
 public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
 public import Structure.v1.Atlas.DifferentialGeometry.code.Manifolds.Part6
 public import Theorem.Real.Atlas.v1.DifferentialGeometry.code.Manifolds
-public import Lemma.Real.Atlas.v1.DifferentialGeometry.code.Intrinsic
+public import Theorem.Real.Atlas.v1.DifferentialGeometry.code.Intrinsic
 public import Mathlib.Analysis.Convex.StrictConvexSpace
 public import Mathlib.Analysis.InnerProductSpace.Convex
 public import Def.v1.Atlas.DifferentialGeometry.code.Intrinsic.Part4

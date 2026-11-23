@@ -1,7 +1,9 @@
-import Mathlib
-import Instance.AutomorphicForm_Gamma0FundamentalSet
-import Abbrev.AutomorphicForm_L2AutomorphicCarrier
-import Lemma.UpperHalfPlane.TruncatedDomainPartition
+module
+
+public import Mathlib
+public import Instance.AutomorphicForm_Gamma0FundamentalSet
+public import Abbrev.AutomorphicForm_L2AutomorphicCarrier
+public import Theorem.UpperHalfPlane.TruncatedDomainPartition
 
 set_option autoImplicit false
 
@@ -9,7 +11,7 @@ open Matrix Matrix.SpecialLinearGroup UpperHalfPlane ModularGroup CongruenceSubg
 open MeasureTheory
 open scoped Modular MatrixGroups Pointwise ENNReal
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace FLT.L2ProductionInstance
 

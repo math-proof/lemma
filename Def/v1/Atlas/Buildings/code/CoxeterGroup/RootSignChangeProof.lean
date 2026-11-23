@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.CoxeterHomomorphism.Part2
-import Structure.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionGenuine
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.SigmaOrder
-import Mathlib.GroupTheory.Coxeter.Inversion
+module
+
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.CoxeterHomomorphism.Part2
+public import Structure.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionGenuine
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.SigmaOrder
+public import Mathlib.GroupTheory.Coxeter.Inversion
+
+@[expose] public section
+
 open Finset BigOperators CoxeterGroup CoxeterExchangeGenuine
 
 set_option maxHeartbeats 800000

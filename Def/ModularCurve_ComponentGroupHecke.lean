@@ -1,9 +1,13 @@
-import Theorem.Finset.ComponentGroup
-import Mathlib.LinearAlgebra.Dual.Defs
-import Mathlib.Data.Matrix.Basic
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring
-import Abbrev.ModularCurve_ComponentGroupHecke
+module
+
+public import Theorem.Finset.ComponentGroup
+public import Mathlib.LinearAlgebra.Dual.Defs
+public import Mathlib.Data.Matrix.Basic
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Ring
+public import Abbrev.ModularCurve_ComponentGroupHecke
+
+@[expose] public section
 
 set_option autoImplicit false
 

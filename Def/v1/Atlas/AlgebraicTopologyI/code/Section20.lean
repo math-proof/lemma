@@ -14,7 +14,7 @@ import Mathlib.LinearAlgebra.TensorProduct.RightExactness
 import Mathlib.LinearAlgebra.DirectSum.TensorProduct
 import Mathlib.RingTheory.Flat.Basic
 import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section11
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section11
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section11
 import Abbrev.v1.Atlas.AlgebraicTopologyI.code.Section20
 
 

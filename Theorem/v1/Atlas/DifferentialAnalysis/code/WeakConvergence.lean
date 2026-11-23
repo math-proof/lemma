@@ -12,7 +12,7 @@ import Mathlib.Analysis.Distribution.FourierMultiplier
 import Mathlib.Analysis.Distribution.Support
 import Mathlib.Algebra.MvPolynomial.Eval
 import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
+import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
 open scoped SchwartzMap
 open TemperedDistribution MvPolynomial Filter Topology
 

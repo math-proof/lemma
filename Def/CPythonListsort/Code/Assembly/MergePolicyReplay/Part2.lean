@@ -1,9 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/MergePolicyReplay.lean -/
 
-import Inductive.CPythonListsort.Code.Assembly.MergeTreeCost
-import Def.CPythonListsort.Code.Transcription.Powerloop
-import Mathlib.Tactic
-import Instance.CPythonListsort.Code.Assembly.MergePolicyReplay
+module
+
+public import Inductive.CPythonListsort.Code.Assembly.MergeTreeCost
+public import Def.CPythonListsort.Code.Transcription.Powerloop
+public import Mathlib.Tactic
+public import Instance.CPythonListsort.Code.Assembly.MergePolicyReplay
+
+@[expose] public section
+
 /-!
 # Checked replay of the interleaved PowerSort policy trace
 

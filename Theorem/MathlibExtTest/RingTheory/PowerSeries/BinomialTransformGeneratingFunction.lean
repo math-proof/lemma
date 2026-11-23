@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/PowerSeries/BinomialTransformGeneratingFunction.lean -/
+module
 
+public import Theorem.Int.PowerSeries.BinomialTransformGeneratingFunction
+public import Mathlib.Algebra.Field.ZMod
 
-import Theorem.Int.PowerSeries.BinomialTransformGeneratingFunction
-import Mathlib.Algebra.Field.ZMod
-
+public section
 
 namespace MetaMathlibExt
 

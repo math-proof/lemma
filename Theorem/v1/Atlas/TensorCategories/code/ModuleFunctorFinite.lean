@@ -7,15 +7,18 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Class.v1.Atlas.TensorCategories.code.ModuleFunctorDefs
-import Lemma.Category.Atlas.v1.TensorCategories.code.ModuleFunctorDefs
-import Lemma.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
-import Abbrev.v1.Atlas.TensorCategories.code.FiniteAbelianCategoryDef
-import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
+public import Class.v1.Atlas.TensorCategories.code.ModuleFunctorDefs
+public import Theorem.Category.Atlas.v1.TensorCategories.code.ModuleFunctorDefs
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
+public import Abbrev.v1.Atlas.TensorCategories.code.FiniteAbelianCategoryDef
+public import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
 set_option maxHeartbeats 800000
 
 open CategoryTheory
+
+public section
 
 universe w v₁ v₂ v₃ u₁ u₂ u₃
 

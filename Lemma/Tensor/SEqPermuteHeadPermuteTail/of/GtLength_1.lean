@@ -1,3 +1,4 @@
+import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
 import Lemma.Nat.EqAddSub.of.Gt
 import Def.Data.Tensor.Prod
 import Notation.Data.Tensor.Permute
@@ -105,3 +106,4 @@ private lemma main
 
 
 -- created on 2025-10-26
+-- updated on 2026-11-22

@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Instance.v1.Atlas.Buildings.code.GeometricAlgebra.FlagEquivalenceInstance
-public import Lemma.Submodule.Any_EqMapToLinearMap.of.FinrankK
+public import Theorem.Submodule.Any_EqMapToLinearMap.of.FinrankK
 public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.OppositeConjugacyInstance
 
 

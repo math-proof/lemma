@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/HypercubeExtremal.lean -/
+module
 
+public import Def.Combinatorics.SimpleGraph.HypercubeExtremal
+public import Theorem.SimpleGraph.HypercubeExtremal
 
-import Def.Combinatorics.SimpleGraph.HypercubeExtremal
-import Theorem.SimpleGraph.HypercubeExtremal
-
+public section
 
 namespace SimpleGraph
 

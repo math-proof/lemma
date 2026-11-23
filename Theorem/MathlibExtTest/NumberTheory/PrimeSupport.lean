@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PrimeSupport.lean -/
+module
 
+public import Def.NumberTheory.PrimeSupport
+public import Theorem.Nat.PrimeSupport
+public import Mathlib.Tactic.NormNum
 
-import Def.NumberTheory.PrimeSupport
-import Theorem.Nat.PrimeSupport
-import Mathlib.Tactic.NormNum
-
+public section
 
 example (n : ℕ) : Nat.SamePrimeSupport n n :=
   Nat.samePrimeSupport_refl n

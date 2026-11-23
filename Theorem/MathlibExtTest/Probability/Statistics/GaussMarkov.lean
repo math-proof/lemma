@@ -1,7 +1,7 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Probability/Statistics/GaussMarkov.lean -/
+module
 
-
-import Theorem.Measure.Statistics.GaussMarkov
+public import Theorem.Measure.Statistics.GaussMarkov
 open Matrix MathlibExt.Probability.Statistics.GaussMarkov
 
 /-!
@@ -9,6 +9,8 @@ open Matrix MathlibExt.Probability.Statistics.GaussMarkov
 
 Authors: Muse Spark 1.3
 -/
+
+public section
 
 
 /-- The `1 × 1` identity design matrix satisfies the invertibility hypothesis. -/

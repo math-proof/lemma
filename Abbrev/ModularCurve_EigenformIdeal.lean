@@ -1,10 +1,12 @@
-import Structure.HeckeGalois_EichlerShimura
-import Instance.FLTPrelim_Modularity
-import Def.ModularCurve_EigenformIdeal
+module
+
+public import Structure.HeckeGalois_EichlerShimura
+public import Instance.FLTPrelim_Modularity
+public import Def.ModularCurve_EigenformIdeal
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 namespace ModularCurve
 

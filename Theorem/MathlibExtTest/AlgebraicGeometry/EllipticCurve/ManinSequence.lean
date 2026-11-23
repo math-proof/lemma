@@ -1,12 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/AlgebraicGeometry/EllipticCurve/ManinSequence.lean -/
+module
 
+public import Def.AlgebraicGeometry.EllipticCurve.ManinSequence
+public import Theorem.Int.EllipticCurve.ManinSequence
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Ring
 
-import Def.AlgebraicGeometry.EllipticCurve.ManinSequence
-import Theorem.Int.EllipticCurve.ManinSequence
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
-
+public section
 
 namespace MathlibExtTest.AlgebraicGeometry.EllipticCurve.ManinSequence
 

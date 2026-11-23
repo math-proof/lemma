@@ -1,7 +1,12 @@
-import Def.Lean.Expr.Parser
-import Def.Lean.PrettyPrinter.Latex.Part2
-import Def.Lean.Json
-import Def.Data.Array.Array
+module
+
+public import Def.Lean.Expr.Parser
+public import Def.Lean.PrettyPrinter.Latex.Expr
+public import Def.Lean.Json
+public import Def.Data.Array.Array
+
+@[expose] public section
+
 open Lean.Meta
 open Lean (Name Json getConstInfoInduct)
 

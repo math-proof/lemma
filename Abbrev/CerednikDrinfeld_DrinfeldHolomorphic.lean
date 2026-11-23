@@ -1,13 +1,15 @@
-import Instance.CerednikDrinfeld_DrinfeldUpperHalfPlane
-import Instance.CerednikDrinfeld_MumfordQuotient
-import Structure.CerednikDrinfeld_DrinfeldHolomorphic
-import Mathlib.Topology.Algebra.Valued.ValuationTopology
-import Mathlib.Topology.UniformSpace.UniformConvergence
-import Mathlib.Algebra.Polynomial.Eval.Defs
+module
+
+public import Instance.CerednikDrinfeld_DrinfeldUpperHalfPlane
+public import Instance.CerednikDrinfeld_MumfordQuotient
+public import Structure.CerednikDrinfeld_DrinfeldHolomorphic
+public import Mathlib.Topology.Algebra.Valued.ValuationTopology
+public import Mathlib.Topology.UniformSpace.UniformConvergence
+public import Mathlib.Algebra.Polynomial.Eval.Defs
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open scoped MatrixGroups
 open Filter CerednikDrinfeld.Omega CerednikDrinfeld.Mumford

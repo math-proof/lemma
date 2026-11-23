@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/OrdinaryRiordanPascalLikeMatrix.lean -/
+module
 
+public import Def.LinearAlgebra.Matrix.OrdinaryRiordanPascalLikeMatrix
+public import Theorem.Matrix.OrdinaryRiordanPascalLikeMatrix
 
-import Def.LinearAlgebra.Matrix.OrdinaryRiordanPascalLikeMatrix
-import Theorem.Matrix.OrdinaryRiordanPascalLikeMatrix
-
+public section
 
 namespace MetaMathlibExt
 

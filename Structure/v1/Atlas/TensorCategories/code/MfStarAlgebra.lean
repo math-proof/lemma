@@ -11,8 +11,8 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Theorem.v1.Atlas.TensorCategories.code.StarAlgebra
-public import Lemma.Category.Atlas.v1.TensorCategories.code.StarAlgebra
-public import Lemma.Category.Atlas.v1.TensorCategories.code.BasedRings
+public import Theorem.Category.Atlas.v1.TensorCategories.code.StarAlgebra
+public import Theorem.Category.Atlas.v1.TensorCategories.code.BasedRings
 public import Abbrev.v1.Atlas.TensorCategories.code.BasedRings
 public import Mathlib.LinearAlgebra.Dimension.Finrank
 public import Def.v1.Atlas.TensorCategories.code.MfStarAlgebra

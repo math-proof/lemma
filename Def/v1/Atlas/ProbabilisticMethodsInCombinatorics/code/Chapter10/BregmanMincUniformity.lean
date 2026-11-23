@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.BregmanMincHelpers
-import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.Permanent
-import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter10.Permanent
-import Mathlib.Algebra.BigOperators.Intervals
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
+module
+
+public import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.BregmanMincHelpers
+public import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.Permanent
+public import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter10.Permanent
+public import Mathlib.Algebra.BigOperators.Intervals
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+
+@[expose] public section
+
 open Finset Equiv Classical BigOperators Real
 
 

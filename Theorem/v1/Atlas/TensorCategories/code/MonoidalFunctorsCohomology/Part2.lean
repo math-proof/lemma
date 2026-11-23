@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.TensorCategories.code.GradedVec.Part6
-import Lemma.Category.Atlas.v1.TensorCategories.code.GradedVec
+import Theorem.Category.Atlas.v1.TensorCategories.code.GradedVec
 import Mathlib.GroupTheory.GroupAction.Basic
 import Def.v1.Atlas.TensorCategories.code.MonoidalFunctorsCohomology.Part2
 set_option maxHeartbeats 800000

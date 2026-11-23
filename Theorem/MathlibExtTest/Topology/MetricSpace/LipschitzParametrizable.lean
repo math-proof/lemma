@@ -1,13 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Topology/MetricSpace/LipschitzParametrizable.lean -/
+module
 
-
-import Def.Topology.MetricSpace.LipschitzParametrizable
-import Theorem.Set.MetricSpace.LipschitzParametrizable
-
+public import Def.Topology.MetricSpace.LipschitzParametrizable
+public import Theorem.Set.MetricSpace.LipschitzParametrizable
 
 /-!
 # Tests for N384 (Definition 19.4): Lipschitz parametrizable sets
 -/
+
+public section
 
 -- The origin lies in the dimension-0 cube.
 example : (0 : Fin 0 → ℝ) ∈ unitCube 0 :=

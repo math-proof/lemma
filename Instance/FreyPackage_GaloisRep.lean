@@ -1,7 +1,10 @@
 -- Carved from Lemma/Definitions/Def_FreyPackage_GaloisRep.lean: instance decls only.
-import Instance.FLTPrelim_GaloisRep
-import Instance.EllipticCurve_FrobeniusTrace
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+module
+
+public import Instance.FLTPrelim_GaloisRep
+public import Instance.EllipticCurve_FrobeniusTrace
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+@[expose] public section
 
 set_option autoImplicit false
 

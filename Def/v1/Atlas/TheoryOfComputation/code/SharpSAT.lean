@@ -8,11 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TheoryOfComputation.code.NPCompleteness.Part8
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.NPCompleteness
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Fintype.Pi
+module
 
+public import Def.v1.Atlas.TheoryOfComputation.code.NPCompleteness.Part8
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.NPCompleteness
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Fintype.Pi
+
+@[expose] public section
 
 namespace NPCompleteness
 

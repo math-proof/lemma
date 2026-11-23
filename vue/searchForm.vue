@@ -14,7 +14,7 @@
 		
 		<input tabindex=-1 type=checkbox name=regularExpression :checked=regularExpression><u>R</u>egex
 		
-		<input tabindex=-1 type=checkbox name=latex :checked=latex><u>L</u>aTex
+		<input tabindex=-1 type=checkbox name=lean :checked=lean @change=change><u>L</u>ean
 
 		<input tabindex=-1 type=checkbox name=fullText :checked=fullText>F<u>u</u>llText
 		<br>
@@ -28,7 +28,7 @@ import Vue from "../js/vue.js";
 
 console.log('import searchForm.vue');
 
-const props = defineProps(['q', 'caseSensitive', 'wholeWord', 'regularExpression', 'fullText', 'latex', 'replacement', 'limit']);
+const props = defineProps(['q', 'caseSensitive', 'wholeWord', 'regularExpression', 'fullText', 'lean', 'replacement', 'limit']);
 
 const self = new Vue({
 	props,
@@ -48,6 +48,18 @@ const self = new Vue({
 			this.setAttribute(event.target.name, event.target.value);
 		},
 
+		change(event) {
+			var {name, checked} = event.target;
+			this.setAttribute(name, checked);
+			if (name == 'lean' && checked)
+				this.clearSearchOptions();
+		},
+
+		clearSearchOptions() {
+			for (var name of ['caseSensitive', 'wholeWord', 'regularExpression', 'fullText'])
+				this.setAttribute(name, false);
+		},
+
 		keydown(event) {
 			if (event.altKey){
 				switch(event.key){
@@ -60,9 +72,13 @@ const self = new Vue({
 				case 'r':
 					this.setAttribute('regularExpression', !this.regularExpression);
 					break;
-				case 'l':
-					this.setAttribute('latex', !this.latex);
+				case 'l': {
+					var lean = !this.lean;
+					this.setAttribute('lean', lean);
+					if (lean)
+						this.clearSearchOptions();
 					break;
+				}
 				case 'u':
 					this.setAttribute('fullText', !this.fullText);
 					break;
@@ -96,7 +112,7 @@ const self = new Vue({
 	},
 });
 
-const { action, keydown, input, replace, replaceAll } = self.globals;
+const { action, keydown, input, change, replace, replaceAll } = self.globals;
 </script>
 
 <style scoped>

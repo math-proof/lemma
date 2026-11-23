@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/Partition/PartitionPolynomial.lean -/
+module
 
+public import Def.Combinatorics.Enumerative.Partition.PartitionPolynomial
+public import Theorem.Finset.Enumerative.Partition.PartitionPolynomial
+public import Def.MathlibExtTest.Combinatorics.Enumerative.Partition.PartitionPolynomial
 
-import Def.Combinatorics.Enumerative.Partition.PartitionPolynomial
-import Theorem.Finset.Enumerative.Partition.PartitionPolynomial
-import Def.MathlibExtTest.Combinatorics.Enumerative.Partition.PartitionPolynomial
-
+public section
 
 namespace MetaMathlibExt
 

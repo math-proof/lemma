@@ -1,9 +1,13 @@
 -- Carved from Lemma/Definitions/Def_MvFormalGroup_PointsV2.lean: instance decls only.
-import Mathlib.RingTheory.AdicCompletion.Topology
-import Mathlib.RingTheory.Finiteness.Ideal
-import Class.MvFormalGroup_BasicV2
-import Structure.MvFormalGroup_PointsV2
-import Lemma.MvPowerSeries.PointsV2
+module
+
+public import Mathlib.RingTheory.AdicCompletion.Topology
+public import Mathlib.RingTheory.Finiteness.Ideal
+public import Class.MvFormalGroup_BasicV2
+public import Structure.MvFormalGroup_PointsV2
+public import Theorem.MvPowerSeries.PointsV2
+public import Def.FormalGroup_PointsV2
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Coding/HammingSpherePacking.lean -/
+module
 
-
-import Theorem.Finset.Coding.HammingSpherePacking
+public import Theorem.Finset.Coding.HammingSpherePacking
 open MathlibExt.Combinatorics.Coding.HammingSpherePacking
 
+public section
 
 -- Generic public API: the exact former Wanted signature.
 example {α : Type*} [Fintype α] [DecidableEq α] {n t : ℕ}

@@ -11,7 +11,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.NumberTheoryI.code.DirichletCharacters
-public import Lemma.Nat.Atlas.v1.NumberTheoryI.code.DirichletCharacters
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DirichletCharacters
 public section
 
 open DirichletCharacter

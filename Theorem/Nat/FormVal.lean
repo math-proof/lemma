@@ -1,0 +1,67 @@
+module
+
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.Basic.Part3
+
+public section
+
+open Finset BigOperators CoxeterGroup
+
+
+namespace Definitions
+end Definitions
+/--
+[formVal_symm](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/Basic.lean)
+-/
+@[path]
+public theorem formVal_symm_eq
+  {M : CoxeterMatrix B}
+  {s t : B} :
+-- imply
+  formVal M s t = formVal M t s := by
+-- proof
+  apply CoxeterGroup.formVal_symm M s t
+
+/--
+[formVal_diag](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/Basic.lean)
+-/
+@[path]
+public theorem formVal_diag_eq
+  {M : CoxeterMatrix B}
+  {s : B} :
+-- imply
+  formVal M s s = 1 := by
+-- proof
+  apply CoxeterGroup.formVal_diag M s
+
+/--
+[bilinForm_e_e](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/Basic.lean)
+-/
+@[path]
+public theorem bilinForm_e_e_eq
+  [DecidableEq B]
+  [Fintype B]
+  {M : CoxeterMatrix B}
+  {s t : B} :
+-- imply
+  bilinForm M (e s) (e t) = formVal M s t := by
+-- proof
+  apply CoxeterGroup.bilinForm_e_e M s t
+
+/--
+[sigma_e_self](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/Basic.lean)
+-/
+@[path]
+public theorem sigma_e_self_eq
+  [DecidableEq B]
+  [Fintype B]
+  {M : CoxeterMatrix B}
+  {s : B} :
+-- imply
+  sigma M s (e s) = fun t => -(e s t) := by
+-- proof
+  apply CoxeterGroup.sigma_e_self M s
+
+
+-- created on 2026-10-24

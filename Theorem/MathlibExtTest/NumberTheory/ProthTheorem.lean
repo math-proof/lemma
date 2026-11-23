@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ProthTheorem.lean -/
+module
 
+public import Theorem.Nat.ProthTheorem
+public import Mathlib.Tactic.NormNum
 
-import Theorem.Nat.ProthTheorem
-import Mathlib.Tactic.NormNum
-
+public section
 
 namespace MetaMathlibExt
 

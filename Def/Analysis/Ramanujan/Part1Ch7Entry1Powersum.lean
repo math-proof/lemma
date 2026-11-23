@@ -4,24 +4,29 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @akiezun, Avocado, Codex
 -/
 
-import Mathlib.NumberTheory.Bernoulli
-import Mathlib.NumberTheory.LSeries.RiemannZeta
-import Mathlib.Analysis.Analytic.Uniqueness
-import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
-import Mathlib.Analysis.Complex.Convex
-import Mathlib.Analysis.MellinTransform
-import Mathlib.Analysis.PSeriesComplex
-import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
-import Mathlib.Analysis.SpecialFunctions.Complex.Analytic
-import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
-import Mathlib.NumberTheory.ZetaValues
-import Mathlib.Tactic.FunProp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Def.Analysis.Calculus.EulerMaclaurinFormula
-import Theorem.Real.Calculus.EulerMaclaurinFormula
+module
+
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.NumberTheory.LSeries.RiemannZeta
+public import Mathlib.Analysis.Analytic.Uniqueness
+public import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
+public import Mathlib.Analysis.Complex.Convex
+public import Mathlib.Analysis.MellinTransform
+public import Mathlib.Analysis.PSeriesComplex
+public import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
+public import Mathlib.Analysis.SpecialFunctions.Complex.Analytic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Deriv
+public import Mathlib.NumberTheory.ZetaValues
+public import Mathlib.Tactic.FunProp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Def.Analysis.Calculus.EulerMaclaurinFormula
+public import Theorem.Real.Calculus.EulerMaclaurinFormula
+
+@[expose] public section
+
 /-!
 # Ramanujan's asymptotic expansion for power sums
 

@@ -1,0 +1,49 @@
+module
+
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation
+public import Mathlib.RingTheory.Valuation.Discrete.Basic
+public import Mathlib.RingTheory.Valuation.Discrete.IsDiscreteValuationRing
+public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+public import Structure.AlgebraicCurve_Place
+public import Abbrev.AlgebraicCurve_DivisorClassGroup
+public import Class.AlgebraicCurve_DivisorClassGroup
+public import Instance.AlgebraicCurve_DivisorClassGroup
+
+@[expose] public section
+
+set_option autoImplicit false
+
+noncomputable section
+
+open IsDedekindDomain WithZero IsLocalRing
+
+namespace AlgebraicCurve
+
+variable (K F : Type*) [Field K] [Field F] [Algebra K F]
+
+namespace Place
+
+variable {K F}
+variable {R : Type*} [CommRing R] [IsDedekindDomain R] [Algebra R F] [IsFractionRing R F]
+
+open IsDedekindDomain.HeightOneSpectrum in
+
+def ofHeightOneSpectrum [Algebra K R] [IsScalarTower K R F] (w : HeightOneSpectrum R) :
+    Place K F where
+  toValuationSubring := (w.valuation F).valuationSubring
+  algebraMap_mem' := fun a => by
+    rw [Valuation.mem_valuationSubring_iff, IsScalarTower.algebraMap_apply K R F]
+    exact w.valuation_le_one (algebraMap K R a)
+  ne_top' := by
+    simp only [ne_eq, Valuation.valuationSubring_eq_top_iff, not_not]
+    infer_instance
+  isPrincipalIdealRing' := by
+    rw [show (w.valuation F).valuationSubring = valuationSubringAtPrime F w from
+      (valuationSubringAtPrime_eq_valuationSubring (K := F) w).symm]
+    infer_instance
+
+end Place
+
+end AlgebraicCurve
+
+end

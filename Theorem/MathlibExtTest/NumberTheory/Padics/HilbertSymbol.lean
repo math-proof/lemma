@@ -1,8 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Padics/HilbertSymbol.lean -/
+module
 
+public import Def.NumberTheory.Padics.HilbertSymbol
+public import Theorem.Nat.Padics.HilbertSymbol
 
-import Def.NumberTheory.Padics.HilbertSymbol
-import Theorem.Nat.Padics.HilbertSymbol
+public section
+
 variable {F : Type*} [Field F]
 
 /-!

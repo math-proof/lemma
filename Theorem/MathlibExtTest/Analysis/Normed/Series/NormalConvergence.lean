@@ -1,9 +1,9 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Normed/Series/NormalConvergence.lean -/
+module
 
-
-import Def.Analysis.Normed.Series.NormalConvergence
-import Theorem.Real.NormalConvergence
-import Mathlib.Analysis.Normed.Field.Basic
+public import Def.Analysis.Normed.Series.NormalConvergence
+public import Theorem.Real.NormalConvergence
+public import Mathlib.Analysis.Normed.Field.Basic
 open Topology
 open scoped ENNReal
 
@@ -15,6 +15,8 @@ Exercises `supNormOn`, `ConvergesNormallyOn`, and
 monotonicity under shrinking the domain, projection from local convergence
 at a point, and a concrete nonzero one-term series on a singleton domain.
 -/
+
+public section
 
 
 -- `supNormOn` API: empty set, zero function, domain monotonicity.

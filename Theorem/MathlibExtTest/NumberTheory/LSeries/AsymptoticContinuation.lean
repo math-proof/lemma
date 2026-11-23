@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/LSeries/AsymptoticContinuation.lean -/
+module
 
-
-import Def.NumberTheory.LSeries.AsymptoticContinuation
-import Lemma.Nat.LSeries.AsymptoticContinuation
+public import Def.NumberTheory.LSeries.AsymptoticContinuation
+public import Theorem.Nat.LSeries.AsymptoticContinuation
 open Filter Asymptotics Topology
 
+public section
 
 /-- Constant coefficients: the remainder continuation vanishes, leaving
 the normalized pole part `ρ * riemannZeta`. -/

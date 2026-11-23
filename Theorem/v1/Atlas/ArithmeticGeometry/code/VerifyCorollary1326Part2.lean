@@ -9,6 +9,6 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.ArithmeticGeometry.code.ProjectiveVarieties.Part7
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.ProjectiveVarieties
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.ProjectiveVarieties
 
 

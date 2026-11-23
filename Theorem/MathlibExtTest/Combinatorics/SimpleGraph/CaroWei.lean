@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/CaroWei.lean -/
+module
 
+public import Mathlib.Algebra.BigOperators.Fin
+public import Theorem.SimpleGraph.CaroWei
+public import Mathlib.Tactic.NormNum
 
-import Mathlib.Algebra.BigOperators.Fin
-import Theorem.SimpleGraph.CaroWei
-import Mathlib.Tactic.NormNum
-
+public section
 
 example : (3 : ℝ) ≤ (⊥ : SimpleGraph (Fin 3)).indepNum := by
   classical

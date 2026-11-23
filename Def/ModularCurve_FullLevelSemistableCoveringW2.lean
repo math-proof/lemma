@@ -1,7 +1,7 @@
 import Lemma.ResidueField.FullLevelSemistableCovering
-import Lemma.AlgEquiv.SemistableChartsComap
+import Theorem.AlgEquiv.SemistableChartsComap
 import Lemma.ResidueField.ConstantReduction
-import Lemma.RingHom.FunctionField
+import Theorem.RingHom.FunctionField
 import Def.GaloisRep_TameCharacter
 import Def.FLTPrelim_Ramification
 import Lemma.LaurentSeries.ArithmeticGalois

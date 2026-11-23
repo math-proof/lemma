@@ -4,13 +4,18 @@
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
 
-import Def.Algebra.Polynomial.RealRooted.Part2
-import Theorem.Polynomial.RealRooted
-import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Analysis.Normed.Field.Approximation
-import Mathlib.Analysis.Polynomial.CauchyBound
-import Mathlib.Algebra.Polynomial.RuleOfSigns
+module
+
+public import Def.Algebra.Polynomial.RealRooted.Part2
+public import Theorem.Polynomial.RealRooted
+public import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.Analysis.Normed.Field.Approximation
+public import Mathlib.Analysis.Polynomial.CauchyBound
+public import Mathlib.Algebra.Polynomial.RuleOfSigns
+
+@[expose] public section
+
 open scoped ComplexOrder NNReal
 
 /-!

@@ -7,14 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Structure.v1.Atlas.DifferentialAnalysis.code.WavefrontSet.Part3
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontSet
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzSingularSupport
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SmoothPartitionOfUnity
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzSingularSupport
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SmoothPartitionOfUnity
+public import Structure.v1.Atlas.DifferentialAnalysis.code.WavefrontSet.Part3
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontSet
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzSingularSupport
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SmoothPartitionOfUnity
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzSingularSupport
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SmoothPartitionOfUnity
 
+public section
 
 noncomputable section
 

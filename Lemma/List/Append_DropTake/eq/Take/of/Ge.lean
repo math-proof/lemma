@@ -1,13 +1,13 @@
-import Lemma.List.TakeTake.eq.Take.of.Ge
+import Initialize.Tactic.Attr.Basic
+import Theorem.List.TakeTake.eq.Take.of.Ge
 open List
 
 
 @[path]
 private lemma main
 -- given
-  
-  (h : m ≥ n) 
-  (s : List α):
+  (h : m ≥ n)
+  (s : List α) :
 -- imply
   s.take n ++ (s.take m).drop n = s.take m := by
 -- proof
@@ -16,3 +16,4 @@ private lemma main
 
 
 -- created on 2025-10-28
+-- updated on 2026-11-22

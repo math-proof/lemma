@@ -1,13 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/PollakPartialParkingFunctions.lean -/
+module
 
-import Mathlib.Data.Finset.Card
-import Mathlib.SetTheory.Cardinal.Finite
-import Instance.Combinatorics.Enumerative.ParkingFunction
-import Theorem.Finset.Enumerative.ParkingFunction
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.Ring
+public import Mathlib.Data.Finset.Card
+public import Mathlib.SetTheory.Cardinal.Finite
+public import Instance.Combinatorics.Enumerative.ParkingFunction
+public import Theorem.Finset.Enumerative.ParkingFunction
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.Ring
 
+public section
 
 namespace MetaMathlibExt.PollakPartialParking
 

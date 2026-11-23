@@ -3,14 +3,16 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
+module
 
-import Mathlib.Combinatorics.SimpleGraph.Basic
-import Mathlib.Combinatorics.SimpleGraph.Maps
-import Mathlib.GroupTheory.Perm.Basic
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Order.Interval.Finset.Fin
-import Instance.Combinatorics.SimpleGraph.Frucht.Part2
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Maps
+public import Mathlib.GroupTheory.Perm.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Order.Interval.Finset.Fin
+public import Instance.Combinatorics.SimpleGraph.Frucht.Part2
 
+public section
 
 section
 

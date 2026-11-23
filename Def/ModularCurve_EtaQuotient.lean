@@ -1,7 +1,11 @@
-import Theorem.HahnSeries.ModularUnit
-import Def.ModularForm_HeckeOperator
-import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
-import Mathlib.NumberTheory.ModularForms.Discriminant
+module
+
+public import Theorem.HahnSeries.ModularUnit
+public import Def.ModularForm_HeckeOperator
+public import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
+public import Mathlib.NumberTheory.ModularForms.Discriminant
+
+@[expose] public section
 
 set_option autoImplicit false
 

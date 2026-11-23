@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/ConsecutiveCyclicPrimeLabeling.lean -/
+module
 
+public import Instance.Combinatorics.ConsecutiveCyclicPrimeLabeling.Part2
+public import Theorem.Finset.ConsecutiveCyclicPrimeLabeling
 
-import Instance.Combinatorics.ConsecutiveCyclicPrimeLabeling.Part2
-import Lemma.Finset.ConsecutiveCyclicPrimeLabeling
-
+public section
 
 namespace MetaMathlibExt
 

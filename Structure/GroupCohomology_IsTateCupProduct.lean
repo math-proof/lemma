@@ -2,7 +2,7 @@ module
 
 public import Mathlib
 public import Abbrev.GroupCohomology_TateCohomology
-public import Lemma.Rep.TateSeam
+public import Theorem.Rep.TateSeam
 public import Def.GroupCohomology_TateShiftMaps
 public import Abbrev.GroupCohomology_CochainCup
 public import Structure.GroupCohomology_IsGradedCupProduct

@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 
 import Def.v1.Atlas.TheoryOfComputation.code.InteractiveProofs.Part2
 import Def.v1.Atlas.TheoryOfComputation.code.Probabilistic.Part5
-import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.Probabilistic
+import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.Probabilistic
 import Mathlib.Tactic
 import Structure.v1.Atlas.TheoryOfComputation.code.GraphNonIsoIP
 

@@ -2,10 +2,16 @@
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.Data.Fin.SkipTwo
-import Def.LinearAlgebra.Matrix.Determinant.PermFinset
-import Theorem.Finset.PermFinset
+
+module
+
+public import Mathlib
+public import Def.Data.Fin.SkipTwo
+public import Def.LinearAlgebra.Matrix.Determinant.PermFinset
+public import Theorem.Finset.PermFinset
+
+@[expose] public section
+
 open Matrix BigOperators Finset
 
 /-!

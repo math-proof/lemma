@@ -7,10 +7,11 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Structure.v1.Atlas.AlgebraicCombinatorics.code.YoungEigenvalues
-import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungEigenvalues
-import Theorem.v1.Atlas.AlgebraicCombinatorics.code.PartitionEquiv
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+public import Structure.v1.Atlas.AlgebraicCombinatorics.code.YoungEigenvalues
+public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungEigenvalues
+public import Theorem.v1.Atlas.AlgebraicCombinatorics.code.PartitionEquiv
+public import Mathlib.LinearAlgebra.Finsupp.LinearCombination
 
-
+public section

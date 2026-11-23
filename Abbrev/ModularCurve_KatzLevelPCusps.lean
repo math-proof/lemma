@@ -1,11 +1,13 @@
-import Mathlib
-import Instance.ModularCurve_TateSlots
-import Instance.ModularCurve_PhiGen
-import Instance.ModularCurve_KatzLevelP
+module
+
+public import Mathlib
+public import Instance.ModularCurve_TateSlots
+public import Instance.ModularCurve_PhiGen
+public import Instance.ModularCurve_KatzLevelP
 
 set_option autoImplicit false
 
-noncomputable section
+@[expose] public noncomputable section
 
 open HahnSeries Polynomial
 

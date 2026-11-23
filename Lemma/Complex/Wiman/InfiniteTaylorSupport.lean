@@ -4,8 +4,6 @@ import Theorem.Analysis.Complex.Wiman.InfiniteTaylorSupport
 open Complex
 
 
-namespace Complex
-
 /--
 [infinite_support_wimanTaylorCoefficient](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/InfiniteTaylorSupport.lean)
 -/
@@ -32,9 +30,8 @@ lemma infinite_support_wimanTaylorCoefficient
   have hs := hasSum_wimanTaylorCoefficient_mul_pow (f := f) (z := z) hf
   rw [← hs.tsum_eq, tsum_eq_sum hzero]
   simp [p, Polynomial.eval_finsetSum]
-end Complex
 
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-22

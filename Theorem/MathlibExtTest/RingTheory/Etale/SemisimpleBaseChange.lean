@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/Etale/SemisimpleBaseChange.lean -/
+module
 
-
-import Theorem.Int.Etale.SemisimpleBaseChange
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Theorem.Int.Etale.SemisimpleBaseChange
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 open scoped TensorProduct
+
+public section
 
 variable {K Ω B : Type*} [Field K] [Field Ω] [Algebra K Ω] [IsAlgClosed Ω]
   [CommRing B] [Algebra K B] [Module.Finite K B]

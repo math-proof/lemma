@@ -8,9 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.Entropy
-import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter10.Entropy
-import Mathlib.Data.Finset.Card
+module
+
+public import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.Entropy
+public import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter10.Entropy
+public import Mathlib.Data.Finset.Card
+
+@[expose] public section
+
 open Finset BigOperators ShannonEntropy Real
 
 

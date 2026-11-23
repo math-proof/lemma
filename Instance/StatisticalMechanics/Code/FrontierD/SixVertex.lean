@@ -9,10 +9,14 @@ LICENSE file in the root directory of this source tree.
 -/
 
 
-import Mathlib.Analysis.Matrix.Spectrum
-import Mathlib.Data.Fintype.Fin
-import Mathlib.Order.Hom.PowersetCard
-import Def.StatisticalMechanics.Code.FrontierD.SixVertex.Part3
+module
+
+public import Mathlib.Analysis.Matrix.Spectrum
+public import Mathlib.Data.Fintype.Fin
+public import Mathlib.Order.Hom.PowersetCard
+public import Def.StatisticalMechanics.Code.FrontierD.SixVertex.Part3
+@[expose] public section
+
 open Finset Matrix
 
 

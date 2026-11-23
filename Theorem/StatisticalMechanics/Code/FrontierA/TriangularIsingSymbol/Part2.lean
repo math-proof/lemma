@@ -7,12 +7,14 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Theorem.StatisticalMechanics.Code.Onsager.RiemannPeriodic2D
-import Def.StatisticalMechanics.Code.FrontierA.TriangularIsingSymbol.Part2
+public import Theorem.StatisticalMechanics.Code.Onsager.RiemannPeriodic2D
+public import Def.StatisticalMechanics.Code.FrontierA.TriangularIsingSymbol.Part2
 open scoped BigOperators
 open MeasureTheory
 
+public section
 
 namespace StatMech.FrontierA
 

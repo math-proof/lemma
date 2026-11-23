@@ -1,7 +1,7 @@
 module
 
 public import Mathlib
-public import Lemma.Submodule.FormalUpperHalfPlaneFunctor
+public import Theorem.Submodule.FormalUpperHalfPlaneFunctor
 public import Def.CerednikDrinfeld_OmegaTubes
 
 set_option autoImplicit false

@@ -8,17 +8,20 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Analysis.Normed.Algebra.Spectrum
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.CStarAlgebra.Spectrum
-import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Basic
-import Mathlib.Analysis.CStarAlgebra.ContinuousLinearMap
-import Mathlib.Analysis.InnerProductSpace.Rayleigh
-import Mathlib.Analysis.InnerProductSpace.StarOrder
-import Mathlib.Analysis.InnerProductSpace.Positive
-import Class.v1.Atlas.DifferentialAnalysis.code.HilbertSpace
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.HilbertSpace
+module
 
+public import Mathlib.Analysis.Normed.Algebra.Spectrum
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.CStarAlgebra.Spectrum
+public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Basic
+public import Mathlib.Analysis.CStarAlgebra.ContinuousLinearMap
+public import Mathlib.Analysis.InnerProductSpace.Rayleigh
+public import Mathlib.Analysis.InnerProductSpace.StarOrder
+public import Mathlib.Analysis.InnerProductSpace.Positive
+public import Class.v1.Atlas.DifferentialAnalysis.code.HilbertSpace
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.HilbertSpace
+
+@[expose] public section
 
 noncomputable section
 

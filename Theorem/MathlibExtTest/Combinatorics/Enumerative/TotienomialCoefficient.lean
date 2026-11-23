@@ -1,9 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/TotienomialCoefficient.lean -/
+module
 
-import Def.Combinatorics.Enumerative.TotienomialCoefficient
-import Theorem.Finset.Enumerative.TotienomialCoefficient
-import Mathlib.Tactic.NormNum
+public import Def.Combinatorics.Enumerative.TotienomialCoefficient
+public import Theorem.Finset.Enumerative.TotienomialCoefficient
+public import Mathlib.Tactic.NormNum
 
+public section
 
 -- Empty products.
 example : MetaMathlibExt.generalizedFactorial (fun i => i) 0 = 1 := by decide

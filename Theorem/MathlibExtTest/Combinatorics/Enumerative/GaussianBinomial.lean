@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/GaussianBinomial.lean -/
+module
 
-
-import Def.Combinatorics.Enumerative.GaussianBinomial
-import Theorem.Finset.Enumerative.GaussianBinomial
-import Mathlib.Algebra.Ring.Nat
+public import Def.Combinatorics.Enumerative.GaussianBinomial
+public import Theorem.Finset.Enumerative.GaussianBinomial
+public import Mathlib.Algebra.Ring.Nat
 open MathlibExt
 
+public section
 
 -- small case: G(2, 1) unfolds by one Pascal step to 1 + Q
 example {R : Type*} [CommRing R] (Q : R) : gaussBinom Q 2 1 = 1 + Q := by

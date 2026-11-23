@@ -8,9 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.IndependenceOfValuations
-import Def.v1.Atlas.ArithmeticGeometry.code.Corollary_20_4
+module
+
+public import Mathlib
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.IndependenceOfValuations
+public import Def.v1.Atlas.ArithmeticGeometry.code.Corollary_20_4
+@[expose] public section
+
 open Finset
 
 variable {F : Type*} [Field F]

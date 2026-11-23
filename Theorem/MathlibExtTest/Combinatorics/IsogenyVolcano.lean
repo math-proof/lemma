@@ -2,7 +2,7 @@
 
 
 import Instance.Combinatorics.IsogenyVolcano.Part2
-import Lemma.Finset.IsogenyVolcano
+import Theorem.Finset.IsogenyVolcano
 import Mathlib.Tactic.FinCases
 import Def.MathlibExtTest.Combinatorics.IsogenyVolcano
 set_option autoImplicit false

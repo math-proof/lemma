@@ -12,9 +12,9 @@ module
 
 public import Mathlib.GroupTheory.FreeAbelianGroup
 public import Instance.v1.Atlas.AlgebraicTopologyI.code.Section15
-public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section15
-public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section1
-public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section10
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section15
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section1
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section10
 public import Def.v1.Atlas.AlgebraicTopologyI.code.Section1.Part3
 public import Def.v1.Atlas.AlgebraicTopologyI.code.Section10.Part24
 public import Mathlib.CategoryTheory.Limits.Shapes.ZeroObjects

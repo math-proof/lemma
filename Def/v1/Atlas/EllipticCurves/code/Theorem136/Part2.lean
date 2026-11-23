@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.EllipticCurves.code.OrdinarySupersingular
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.OrdinarySupersingular
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.PointCounting
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.OrdinarySupersingular
+import Theorem.Complex.Atlas.v1.EllipticCurves.code.PointCounting
 import Lemma.Complex.Atlas.v1.EllipticCurves.code.EndAlgebra
 import Def.v1.Atlas.EllipticCurves.code.PointCounting.Part2
 import Instance.v1.Atlas.EllipticCurves.code.EndAlgebra.Part5

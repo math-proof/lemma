@@ -1,9 +1,11 @@
-import Mathlib
-import Theorem.ModularForm.HeckeOperator
-import Lemma.ModularForm.AtkinLehnerDatum
+module
+
+public import Mathlib
+public import Theorem.ModularForm.HeckeOperator
+public import Theorem.ModularForm.AtkinLehnerDatum
 
 set_option autoImplicit false
-noncomputable section
+@[expose] public noncomputable section
 open Matrix UpperHalfPlane CongruenceSubgroup ModularForm OnePoint
 open scoped MatrixGroups ModularForm Manifold
 

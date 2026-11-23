@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/GeneralizedFibonacciPolynomial.lean -/
+module
 
+public import Def.NumberTheory.GeneralizedFibonacciPolynomial
+public import Theorem.Nat.GeneralizedFibonacciPolynomial
+public import Mathlib.Tactic
 
-import Def.NumberTheory.GeneralizedFibonacciPolynomial
-import Theorem.Nat.GeneralizedFibonacciPolynomial
-import Mathlib.Tactic
-
+public section
 
 namespace MetaMathlibExt
 

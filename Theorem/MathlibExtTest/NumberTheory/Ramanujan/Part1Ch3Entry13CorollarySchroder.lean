@@ -1,12 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Ramanujan/Part1Ch3Entry13CorollarySchroder.lean -/
+module
 
-
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.NormNum
-import Def.NumberTheory.Ramanujan.Part1Ch3Entry13CorollarySchroder
-import Theorem.Nat.Ramanujan.Part1Ch3Entry13CorollarySchroder
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.NormNum
+public import Def.NumberTheory.Ramanujan.Part1Ch3Entry13CorollarySchroder
+public import Theorem.Nat.Ramanujan.Part1Ch3Entry13CorollarySchroder
 open MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry13CorollarySchroder
 
+public section
 
 -- At `w = 0`, the theorem recovers the ordinary exponential series at `z = 2`.
 example : HasSum (fun k : ℕ => (2 : ℂ) ^ k / (Nat.factorial k : ℂ)) (Complex.exp 2) := by

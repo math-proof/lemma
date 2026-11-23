@@ -1,6 +1,6 @@
 import Initialize.Tactic.Attr.Basic
 import Def.Data.List.List.Basic
-import Lemma.List.Slice.eq.Nil.of.Ge
+import Theorem.List.Slice.eq.Nil.of.Ge
 open List
 
 
@@ -17,3 +17,4 @@ private lemma main
 
 
 -- created on 2025-06-10
+-- updated on 2026-11-22

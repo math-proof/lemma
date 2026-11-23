@@ -4,17 +4,22 @@
 Author: @toskua, Avocado
 -/
 
-import Theorem.RingTheory.LocalRing.ResidueField.DVR.Part2
-import Theorem.AlgHom.LocalRing.ResidueField.DVR
-import Theorem.Polynomial.AdjoinRoot.LocalMaximal
-import Mathlib.RingTheory.AdjoinRoot
-import Mathlib.FieldTheory.Separable
-import Theorem.RingTheory.AdjoinRoot.LocalMaximal
-import Mathlib.Algebra.Polynomial.Lifts
-import Mathlib.Algebra.Polynomial.Eval.Irreducible
-import Mathlib.RingTheory.DiscreteValuationRing.TFAE
-import Mathlib.FieldTheory.PrimitiveElement
-import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
+module
+
+public import Theorem.RingTheory.LocalRing.ResidueField.DVR.Part2
+public import Theorem.AlgHom.LocalRing.ResidueField.DVR
+public import Theorem.Polynomial.AdjoinRoot.LocalMaximal
+public import Mathlib.RingTheory.AdjoinRoot
+public import Mathlib.FieldTheory.Separable
+public import Theorem.RingTheory.AdjoinRoot.LocalMaximal
+public import Mathlib.Algebra.Polynomial.Lifts
+public import Mathlib.Algebra.Polynomial.Eval.Irreducible
+public import Mathlib.RingTheory.DiscreteValuationRing.TFAE
+public import Mathlib.FieldTheory.PrimitiveElement
+public import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
+
+@[expose] public section
+
 open Polynomial
 
 /-!

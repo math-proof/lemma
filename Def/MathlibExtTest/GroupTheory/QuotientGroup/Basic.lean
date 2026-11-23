@@ -1,9 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/GroupTheory/QuotientGroup/Basic.lean -/
 
+module
 
-import Theorem.GroupTheory.QuotientGroup.Basic
-import Theorem.Nat.EqQuotientEquivRangeQuotient.of.LeKer
-import Mathlib.Data.ZMod.Basic
+public import Theorem.GroupTheory.QuotientGroup.Basic
+public import Theorem.Nat.EqQuotientEquivRangeQuotient.of.LeKer
+public import Mathlib.Data.ZMod.Basic
+
+@[expose] public section
+
 /-!
 # Tests for `QuotientGroup.quotientEquivRangeQuotient`
 

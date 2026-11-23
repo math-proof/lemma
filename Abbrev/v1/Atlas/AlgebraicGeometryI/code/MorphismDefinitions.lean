@@ -8,13 +8,17 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.RingTheory.Spectrum.Prime.Topology
-import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
-import Mathlib.RingTheory.Ideal.GoingUp
-import Mathlib.RingTheory.QuasiFinite.Basic
-import Mathlib.Order.KrullDimension
-import Mathlib.RingTheory.KrullDimension.Basic
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.FiniteMorphismDimension
+module
+
+public import Mathlib.RingTheory.Spectrum.Prime.Topology
+public import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
+public import Mathlib.RingTheory.Ideal.GoingUp
+public import Mathlib.RingTheory.QuasiFinite.Basic
+public import Mathlib.Order.KrullDimension
+public import Mathlib.RingTheory.KrullDimension.Basic
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.FiniteMorphismDimension
+@[expose] public section
+
 open PrimeSpectrum
 
 

@@ -1,5 +1,9 @@
-import Def.CerednikDrinfeld_JPrimeTorsionDatum
-import Instance.Compat_Mathlib430
+module
+
+public import Def.CerednikDrinfeld_JPrimeTorsionDatum
+public import Instance.Compat_Mathlib430
+
+@[expose] public section
 
 set_option autoImplicit false
 

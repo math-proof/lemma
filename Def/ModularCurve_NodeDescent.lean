@@ -1,5 +1,9 @@
-import Mathlib
-import Def.ModularCurve_NodeLocalized
+module
+
+public import Mathlib
+public import Def.ModularCurve_NodeLocalized
+
+@[expose] public section
 
 set_option autoImplicit false
 

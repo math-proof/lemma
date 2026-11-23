@@ -7,14 +7,16 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.Buildings.code.GeometricAlgebra.ExtendingIsometries
-import Theorem.Submodule.OfEq.eq.M.of.Eq
-import Theorem.Fin.Nondegenerate.of.EqOrthogonalBilinFormTop_Bot.IsRefl
-import Theorem.Submodule.Any_EqAndAll_Eq_V.of.IsSubspaceIsometry.EqOrthogonalBilinFormTop
-import Def.v1.Atlas.Buildings.code.GeometricAlgebra.WittTheorem
+public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.ExtendingIsometries
+public import Theorem.Submodule.OfEq.eq.M.of.Eq
+public import Theorem.Fin.Nondegenerate.of.EqOrthogonalBilinFormTop_Bot.IsRefl
+public import Theorem.Submodule.Any_EqAndAll_Eq_V.of.IsSubspaceIsometry.EqOrthogonalBilinFormTop
+public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.WittTheorem
 set_option maxHeartbeats 4000000
 
+public section
 
 namespace Garrett
 

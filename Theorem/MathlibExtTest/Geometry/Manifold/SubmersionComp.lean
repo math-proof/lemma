@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Geometry/Manifold/SubmersionComp.lean -/
+module
 
-
-import Def.Geometry.Manifold.SubmersionComp
-import Theorem.Set.Manifold.SubmersionComp
+public import Def.Geometry.Manifold.SubmersionComp
+public import Theorem.Set.Manifold.SubmersionComp
 open scoped ContDiff Manifold Topology
 open Manifold
 
+public section
 
 noncomputable section
 

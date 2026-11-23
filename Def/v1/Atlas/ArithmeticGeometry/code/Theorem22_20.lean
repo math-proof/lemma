@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.ArithmeticGeometry.code.RiemannRoch.Part6
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.RiemannRoch
+import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.RiemannRoch
 
 
 namespace Theorem22_20

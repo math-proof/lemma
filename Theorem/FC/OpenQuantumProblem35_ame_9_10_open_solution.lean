@@ -7,12 +7,13 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-
-import Mathlib
-import Def.FC.OpenQuantumProblem35_ame_9_10_open_solution.Part2
+public import Mathlib
+public import Def.FC.OpenQuantumProblem35_ame_9_10_open_solution.Part2
 open scoped BigOperators
 
+public section
 
 namespace OpenQuantumProblem35
 

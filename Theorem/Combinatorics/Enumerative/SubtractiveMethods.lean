@@ -6,8 +6,10 @@ All rights reserved.
 Copyright (c) 2025 AlgebraicCombinatorics contributors. All rights reserved.
 Authors: AlgebraicCombinatorics contributors
 -/
-import Mathlib
-import Def.Combinatorics.Enumerative.SubtractiveMethods.Part2
+module
+
+public import Mathlib
+public import Def.Combinatorics.Enumerative.SubtractiveMethods.Part2
 open Finset BigOperators
 
 /-!
@@ -43,6 +45,8 @@ achieve cancellation.
 
 * Source: `AlgebraicCombinatorics/tex/SignedCounting/SubtractiveMethods.tex`
 -/
+
+public section
 
 
 namespace AlgebraicCombinatorics.SubtractiveMethods

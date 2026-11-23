@@ -1,8 +1,13 @@
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.RingTheory.MvPolynomial.EulerIdentity
-import Mathlib.Algebra.MvPolynomial.PDeriv
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Theorem.AlgebraicGeometry.CubicSurface.Part2
+module
+
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.RingTheory.MvPolynomial.EulerIdentity
+public import Mathlib.Algebra.MvPolynomial.PDeriv
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Theorem.AlgebraicGeometry.CubicSurface.Part2
+
+@[expose] public section
+
 /-!
 # Cubic surfaces in ℙ³
 

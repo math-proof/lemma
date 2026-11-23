@@ -1,5 +1,5 @@
 import Structure.ModularCurve_FullLevelSemistableCovering
-import Lemma.AlgEquiv.SemistableChartsComap
+import Theorem.AlgEquiv.SemistableChartsComap
 import Structure.AlgebraicCurve_ConstantReduction
 import Abbrev.DrinfeldCurve_FunctionField
 import Def.GaloisRep_TameCharacter

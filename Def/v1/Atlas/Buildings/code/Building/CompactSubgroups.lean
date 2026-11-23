@@ -8,10 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.Building.Affine.Part2
-import Def.v1.Atlas.Buildings.code.BNPair.ParabolicDefs.Part2
-import Theorem.Nat.NonemptyBruhatCell
-import Structure.v1.Atlas.Buildings.code.Building.CompactSubgroups
+module
+
+public import Def.v1.Atlas.Buildings.code.Building.Affine.Part2
+public import Def.v1.Atlas.Buildings.code.BNPair.ParabolicDefs.Part2
+public import Theorem.Nat.NonemptyBruhatCell
+public import Structure.v1.Atlas.Buildings.code.Building.CompactSubgroups
+
+@[expose] public section
+
 set_option maxHeartbeats 800000
 
 set_option linter.unusedSectionVars false

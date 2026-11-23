@@ -6,7 +6,8 @@ import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
 import Mathlib.AlgebraicGeometry.IdealSheaf.Subscheme
 import Mathlib.AlgebraicGeometry.Noetherian
 import Mathlib.AlgebraicGeometry.Properties
-import Lemma.LinearMap.OModulePresheafConstructions
+import Theorem.LinearMap.OModulePresheafConstructions
+import Def.AlgebraicGeometry_OModulePresheafConstructions
 
 set_option autoImplicit false
 

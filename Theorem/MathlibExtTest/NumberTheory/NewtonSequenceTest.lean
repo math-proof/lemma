@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NewtonSequenceTest.lean -/
+module
 
+public import Def.NumberTheory.NewtonSequence
+public import Theorem.Nat.NewtonSequence
 
-import Def.NumberTheory.NewtonSequence
-import Theorem.Nat.NewtonSequence
-
+public section
 
 namespace MetaMathlibExt
 

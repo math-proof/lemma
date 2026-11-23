@@ -6,7 +6,7 @@ public import Def.CPythonListsort.Code.Assembly.AlphabeticCostBound.Part2
 public import Def.CPythonListsort.Code.Assembly.ListSortCollapseCost
 public import Structure.CPythonListsort.Code.Assembly.ListSortPolicyEndpoints
 public import Theorem.List.Atlas.CPythonListsort.Code.Assembly.ListSortPolicyBridge
-public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.ListSortScanPolicy
+public import Theorem.List.Atlas.CPythonListsort.Code.Assembly.ListSortScanPolicy
 public import Inductive.CPythonListsort.Code.Assembly.ListSortScanReached
 /-!
 # Public PowerSort merge-cost bound for the real top-level evaluator

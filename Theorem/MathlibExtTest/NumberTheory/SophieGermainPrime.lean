@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/SophieGermainPrime.lean -/
+module
 
+public import Def.NumberTheory.SophieGermainPrime
+public import Theorem.Nat.SophieGermainPrime
 
-import Def.NumberTheory.SophieGermainPrime
-import Theorem.Nat.SophieGermainPrime
-
+public section
 
 -- `2` is prime and `2 * 2 + 1 = 5` is prime.
 example : Nat.IsSophieGermainPrime 2 := by

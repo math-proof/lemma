@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Computability/RiceTheorem.lean -/
+module
 
+public import Mathlib.Computability.PartrecCode
+public import Theorem.Nat.RiceTheorem
+public import Abbrev.MathlibExtTest.Computability.RiceTheorem
 
-import Mathlib.Computability.PartrecCode
-import Theorem.Nat.RiceTheorem
-import Abbrev.MathlibExtTest.Computability.RiceTheorem
-
+public section
 
 -- The standard numbering has a fixed point for the successor index transformer.
 example : ∃ e, ∀ n, riceTheoremTest_standardNumbering e n =

@@ -1,13 +1,14 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Probability/BerryEsseen.lean -/
+module
 
-
-import Def.Probability.BerryEsseen
-import Theorem.Measure.BerryEsseen
+public import Def.Probability.BerryEsseen
+public import Theorem.Measure.BerryEsseen
 open MeasureTheory ProbabilityTheory Finset Set
 open scoped ProbabilityTheory ENNReal NNReal
 
 open MathlibExt.Probability.BerryEsseenWanted
 
+public section
 
 /-- The finite-sum public API exposes the exact `gaussianReal` signature. -/
 example {Ω : Type*} [MeasurableSpace Ω] {P : Measure Ω} [IsProbabilityMeasure P]

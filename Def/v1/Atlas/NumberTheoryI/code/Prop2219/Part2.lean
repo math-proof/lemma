@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Instance.v1.Atlas.NumberTheoryI.code.Ch22WeberLFunction
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Ch22WeberLFunction
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.AnalyticClassNumber
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Ch22WeberLFunction
+import Theorem.Nat.Atlas.v1.NumberTheoryI.code.AnalyticClassNumber
 import Instance.v1.Atlas.NumberTheoryI.code.AnalyticClassNumber.Part3
 import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor1838
 import Structure.v1.Atlas.NumberTheoryI.code.Prop2219

@@ -9,9 +9,9 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section10.Part24
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section10
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section27
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section10
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
+import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section27
 import Def.v1.Atlas.AlgebraicTopologyI.code.Section26.Part8
 import Abbrev.v1.Atlas.AlgebraicTopologyI.code.Section27
 import Mathlib.Algebra.DirectSum.Ring

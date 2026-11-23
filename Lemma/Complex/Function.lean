@@ -1,9 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Theorem.Analysis.SpecialFunctions.Elliptic.Function
+open PeriodPair
 
-
-namespace PeriodPair
 
 /--
 [Function](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Elliptic/Function.lean)
@@ -18,15 +17,12 @@ private lemma isLatticePeriodic_const_eq
 -- proof
   isLatticePeriodic_const L c
 
-end PeriodPair
-
-namespace PeriodPair
 
 /--
 [Function](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Elliptic/Function.lean)
 -/
 @[path]
-private lemma IsEllipticFunction.const_eq
+private lemma isEllipticFunction_const_eq
 -- given
   (L : PeriodPair)
   (c : ℂ) :
@@ -35,15 +31,12 @@ private lemma IsEllipticFunction.const_eq
 -- proof
   IsEllipticFunction.const L c
 
-end PeriodPair
-
-namespace PeriodPair
 
 /--
 [Function](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Elliptic/Function.lean)
 -/
 @[path]
-private lemma IsEllipticFunction.add_eq
+private lemma isEllipticFunction_add_eq
 -- given
   (L : PeriodPair)
   (f g : ℂ → ℂ)
@@ -54,15 +47,12 @@ private lemma IsEllipticFunction.add_eq
 -- proof
   IsEllipticFunction.add hf hg
 
-end PeriodPair
-
-namespace PeriodPair
 
 /--
 [Function](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/SpecialFunctions/Elliptic/Function.lean)
 -/
 @[path]
-private lemma IsEllipticFunction.mul_eq
+private lemma isEllipticFunction_mul_eq
 -- given
   (L : PeriodPair)
   (f g : ℂ → ℂ)
@@ -73,8 +63,7 @@ private lemma IsEllipticFunction.mul_eq
 -- proof
   IsEllipticFunction.mul hf hg
 
-end PeriodPair
 
 
 -- created on 2026-10-11
--- updated on 2026-10-26
+-- updated on 2026-11-22

@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/KFull.lean -/
+module
 
+public import Theorem.NumberTheory.KFull
+public import Theorem.Nat.KFull
+public import Mathlib.Tactic.IntervalCases
+public import Mathlib.Tactic.NormNum
 
-import Theorem.NumberTheory.KFull
-import Theorem.Nat.KFull
-import Mathlib.Tactic.IntervalCases
-import Mathlib.Tactic.NormNum
-
+public section
 
 -- The powerful part handles the degenerate inputs and keeps only prime powers
 -- with exponent at least two.

@@ -8,29 +8,66 @@
   ],
   "dag": [
     [
-      {"token":"All"},
-      {"token":"_"},
-      {"token":"Measurable"},
-      {"token":"Get"},
-      {"token":"Slice"},
-      {"group":[4,1]},
-      {"group":[3,1,5]},
-      {"group":[2,6]},
-      {"sequence":[0,1,7]}
+      {
+        "token": "All"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Measurable"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "group": [
+          4,
+          1
+        ]
+      },
+      {
+        "group": [
+          3,
+          1,
+          5
+        ]
+      },
+      {
+        "group": [
+          2,
+          6
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          1,
+          7
+        ]
+      }
     ]
   ],
   "json": {
     "All": [
-      "_",
+      {
+        "Colon": [
+          "?0",
+          "$1"
+        ]
+      },
       {
         "Measurable": [
           {
             "Get": [
-              "_",
+              "$2",
               {
                 "Slice": [
                   "",
-                  "_"
+                  "?0"
                 ]
               }
             ]
@@ -38,5 +75,6 @@
         ]
       }
     ]
-  }
+  },
+  "fingerprint": "All(Colon(?0)($1))(Measurable(Get($2)(Slice(?0))))"
 }

@@ -2,7 +2,7 @@ module
 
 public import Mathlib
 public import Def.ModularCurve_LevelOneGlueData
-public import Lemma.ResidueField.GluedPic0
+public import Theorem.ResidueField.GluedPic0
 public import Def.ModularCurve_NodeDepth
 public import Structure.ModularCurve_NodeLocalizedPlaces
 public import Structure.ModularCurve_ProlongationTuple

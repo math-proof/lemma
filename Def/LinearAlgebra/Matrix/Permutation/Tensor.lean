@@ -1,6 +1,9 @@
-import Def.Analysis.SpecialFunctions.TensorFunctions
-import Def.Data.Tensor.Stack.Part2
+module
 
+public import Def.Analysis.SpecialFunctions.TensorFunctions
+public import Def.Data.Tensor.Stack.Part2
+
+@[expose] public section
 
 /--
 Elementary row-scale matrix

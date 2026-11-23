@@ -9,7 +9,7 @@ import Mathlib.GroupTheory.Perm.Cycle.Type
 import Mathlib.Algebra.Polynomial.Taylor
 import Mathlib.GroupTheory.Perm.Fin
 import Def.Combinatorics.Enumerative.Stirling.Part4
-import Lemma.Finset.Enumerative.Stirling
+import Theorem.Finset.Enumerative.Stirling
 import Theorem.Combinatorics.Enumerative.ZagierCyclicPermutationProduct.Part11
 /-!
 # Products of two cyclic permutations

@@ -5,7 +5,7 @@ Author: Muse Code
 -/
 
 import Def.RingTheory.DiscreteValuationRing.MaximalIdealGradedPieceMul
-import Lemma.Int.DiscreteValuationRing.MaximalIdealGradedPieceMul
+import Theorem.Int.DiscreteValuationRing.MaximalIdealGradedPieceMul
 open IsLocalRing IsDiscreteValuationRing
 
 variable (R : Type*) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]

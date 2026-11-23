@@ -13,7 +13,7 @@ module
 public import Mathlib.RingTheory.TensorProduct.Basic
 public import Mathlib.RingTheory.RingInvo
 public import Def.v1.Atlas.EllipticCurves.code.TorsionEndomorphism.Part3
-public import Lemma.Complex.Atlas.v1.EllipticCurves.code.TorsionEndomorphism
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.TorsionEndomorphism
 
 
 public section

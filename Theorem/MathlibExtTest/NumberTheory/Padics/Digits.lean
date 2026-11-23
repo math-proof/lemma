@@ -1,12 +1,13 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Padics/Digits.lean -/
+module
 
-
-import Theorem.NumberTheory.Padics.Digits.Part2
-import Theorem.Nat.Padics.Digits
+public import Theorem.NumberTheory.Padics.Digits.Part2
+public import Theorem.Nat.Padics.Digits
 set_option autoImplicit false
 
 open PadicInt Finset
 
+public section
 
 namespace PadicIntTest
 

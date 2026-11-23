@@ -1,9 +1,10 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/KPerfect.lean -/
+module
 
+public import Instance.NumberTheory.KPerfect
+public import Theorem.Nat.KPerfect
 
-import Instance.NumberTheory.KPerfect
-import Theorem.Nat.KPerfect
-
+public section
 
 example : Nat.IsKPerfect 2 6 := by
   rw [Nat.IsKPerfect]

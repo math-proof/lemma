@@ -1,10 +1,11 @@
 -- Carved from Lemma/Definitions/Def_CerednikDrinfeld_StandardFormalODModule.lean: instance decls only.
 import Mathlib
 import Instance.MvFormalGroup_NegV2
-import Lemma.MvPowerSeries.SpecialFormalModule
+import Theorem.MvPowerSeries.SpecialFormalModule
 import Instance.CerednikDrinfeld_LubinTateModule
-import Lemma.MvPowerSeries.StandardFormalODModule
+import Theorem.MvPowerSeries.StandardFormalODModule
 import Notation.CerednikDrinfeld_StandardFormalODModule
+import Def.CerednikDrinfeld_StandardFormalODModule
 
 section BoxBasisLemmaAppendix
 

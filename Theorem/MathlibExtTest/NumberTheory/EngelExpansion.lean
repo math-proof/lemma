@@ -1,14 +1,15 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/EngelExpansion.lean -/
+module
 
-
-import Def.NumberTheory.EngelExpansion.Part3
-import Lemma.Nat.EngelExpansion
-import Mathlib.Tactic.IntervalCases
-
+public import Def.NumberTheory.EngelExpansion.Part3
+public import Theorem.Nat.EngelExpansion
+public import Mathlib.Tactic.IntervalCases
 
 /-!
 # Tests for Engel expansion trajectories
 -/
+
+public section
 
 
 example : EngelExpansion.negRem 7 3 = 2 := rfl

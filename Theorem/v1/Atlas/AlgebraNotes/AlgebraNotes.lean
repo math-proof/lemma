@@ -42,10 +42,10 @@ import Theorem.Matrix.IsSeparable.is.All_SeparableMinpoly
 import Theorem.Matrix.Card.le.Finrank
 import Theorem.Nat.Card.eq.Sum_CardOrbit
 import Theorem.Nat.Eq_1.of.All_Eq_Mul
-import Lemma.Ideal.All_PrimeAndAssociatedProdNormalizedFactors.of.Ne_Bot
+import Theorem.Ideal.All_PrimeAndAssociatedProdNormalizedFactors.of.Ne_Bot
 import Theorem.Ideal.IsMaximal.is.Ne_TopAndAll_EqOrEq_Top
 import Theorem.Real.Plane.eq.AddLinearIsometryEquiv
-import Lemma.MvPolynomial.All_Eq.Unique
+import Theorem.MvPolynomial.All_Eq.Unique
 import Theorem.Nat.EqMulS
 import Theorem.MonoidAlgebra.Any_IsCompl
 import Theorem.Int.Eq_1.of.IsUnit

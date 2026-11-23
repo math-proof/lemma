@@ -1,13 +1,14 @@
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_RelSubPicGroupV2.lean: instance decls only.
 import Mathlib
 import Instance.AlgebraicGeometry_RelativePicardFunctor
-import Lemma.Scheme.RepresentsRelSubPic
+import Theorem.Scheme.RepresentsRelSubPic
 import Def.AlgebraicGeometry_RelSubPicPresheaf
 import Lemma.Scheme.RelativeGroupLawGrpObj
 import Structure.JacJ1Iface
 import Abbrev.SheafOfModules_MonoidalV2
-import Lemma.Scheme.RelSubPicGroup
-import Lemma.Scheme.RelSubPicGroupV2
+import Theorem.Scheme.RelSubPicGroup
+import Theorem.Scheme.RelSubPicGroupV2
+import Def.AlgebraicGeometry_RelSubPicGroupV2
 
 section InlinedTheorems
 

@@ -1,7 +1,11 @@
-import Mathlib.NumberTheory.NumberField.Basic
-import Mathlib.RingTheory.Ideal.Basic
-import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
-import Def.FLTPrelim_ModularRep
+module
+
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.RingTheory.Ideal.Basic
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
+public import Def.FLTPrelim_ModularRep
+
+@[expose] public section
 
 set_option autoImplicit false
 

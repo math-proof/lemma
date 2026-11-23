@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
-import Lemma.Category.Atlas.v1.TensorCategories.code.GrothendieckRing
+import Theorem.Category.Atlas.v1.TensorCategories.code.GrothendieckRing
 import Mathlib.Algebra.Module.Defs
 import Mathlib.Algebra.Group.Opposite
 import Theorem.v1.Atlas.TensorCategories.code.K0Bimodule

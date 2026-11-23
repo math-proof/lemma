@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.CombinatorialOptimization.code.Flow.FlowDecomposition.Part3
-import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.FlowDecomposition
+import Theorem.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.FlowDecomposition
 import Lemma.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.ResidualGraph
 import Def.v1.Atlas.CombinatorialOptimization.code.Flow.ResidualGraph.Part2
 import Def.v1.Atlas.CombinatorialOptimization.code.Flow.LargeAugPath.Part2

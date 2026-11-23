@@ -1,7 +1,11 @@
 -- Carved from Lemma/Definitions/Def_MvFormalGroup_CartierModule.lean: instance decls only.
-import Mathlib
-import Instance.MvFormalGroup_NegV2
-import Lemma.MvPowerSeries.CartierModule
+module
+
+public import Mathlib
+public import Instance.MvFormalGroup_NegV2
+public import Theorem.MvPowerSeries.CartierModule
+public import Def.FormalGroup_CartierModule
+@[expose] public section
 
 set_option autoImplicit false
 

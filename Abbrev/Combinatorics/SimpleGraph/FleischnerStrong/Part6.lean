@@ -5,11 +5,11 @@ Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
 
 import Def.Combinatorics.SimpleGraph.StrongSquareCycle
-import Lemma.SimpleGraph.StrongSquareCycle
+import Theorem.SimpleGraph.StrongSquareCycle
 import Theorem.SimpleGraph.VertexConnectivity
-import Lemma.SimpleGraph.Contraction
+import Theorem.SimpleGraph.Contraction
 import Theorem.SimpleGraph.EdgeIndexedMultigraph
-import Lemma.SimpleGraph.Riha
+import Theorem.SimpleGraph.Riha
 import Theorem.Combinatorics.SimpleGraph.VertexConnectivity
 import Theorem.Combinatorics.SimpleGraph.Contraction.Part3
 import Def.Combinatorics.SimpleGraph.EdgeIndexedMultigraph.Part4

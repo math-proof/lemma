@@ -9,10 +9,10 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticLinearAlgebra
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticStandardBasis
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.HamiltonianVectorFields
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticEvenDim
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticLinearAlgebra
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticStandardBasis
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.HamiltonianVectorFields
+import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticEvenDim
 import Theorem.v1.Atlas.GeometryOfManifolds.code.SymplecticStandardBasis
 import Def.v1.Atlas.GeometryOfManifolds.code.HamiltonianVectorFields.Part3
 import Class.v1.Atlas.GeometryOfManifolds.code.MoserDarboux

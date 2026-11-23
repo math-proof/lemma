@@ -10,23 +10,8 @@
 import '../../py.js';
 import { LeanBinary, LeanUnary } from './abstract.js';
 import { Lean, jsonHead } from './base.js';
-import { pathCombineMulChoices, pathStripTrailingHoles, pathUniqKeepEmpty } from './pathChoices.js';
 
 const L = Lean.classes;
-
-/** Numeric literal under parentheses, for Pow_2 / Sub1. */
-function pathDigitText(node) {
-    let n = node;
-    for (let i = 0; i < 4 && n; i++) {
-        if ((n.constructor?.name || "") === "LeanParenthesis") {
-            n = n.arg ?? n.args?.[0];
-            continue;
-        }
-        break;
-    }
-    if ((n?.constructor?.name || "") === "LeanToken" && /^-?\d+$/.test(n.text || "")) return n.text;
-    return "";
-}
 
 export class LeanArithmetic extends LeanBinary {
     static { this.register(); }
@@ -85,29 +70,6 @@ export class LeanSub extends LeanArithmetic {
 
     get operator() {
         return '-';
-    }
-
-    /**
-     * Path choices: Sub(LHS)(RHS). A numeric LHS stays (`1` → Sub1Div).
-     * Omit is `""`. One side omitted keeps the hole `_`.
-     * @param {object} [opts]
-     * @returns {string[]}
-     */
-    pathChoices(opts = {}) {
-        const lit = pathDigitText(this.lhs);
-        const L = this.lhs?.pathChoices?.(opts) ?? [""];
-        const R = this.rhs?.pathChoices?.(opts) ?? [""];
-        const left = lit ? pathUniqKeepEmpty([...L, lit]) : L;
-        const out = [""];
-        for (const l of left) {
-            for (const r of R) {
-                if (!l && !r) out.push("Sub__");
-                else if (l && r) out.push("Sub" + l + r);
-                else if (l) out.push("Sub" + l + "_");
-                else out.push("Sub_" + r);
-            }
-        }
-        return pathUniqKeepEmpty(out);
     }
 
 }
@@ -202,23 +164,6 @@ export class LeanMul extends LeanArithmetic {
     latexFormat() {
         const {command} = this;
         return `%s ${command} %s`;
-    }
-
-    /**
-     * Path choices: non-infix binary — Op(LHS)(RHS) factor forms only (keep trailing `_`).
-     * @param {object} [opts]
-     * @returns {string[]}
-     */
-    pathChoices(opts = {}) {
-        const combined = pathCombineMulChoices(
-            this.lhs?.pathChoices?.(opts) ?? [""],
-            this.rhs?.pathChoices?.(opts) ?? [""],
-        );
-        // 𝔼 * 𝔼: plural MulExpectS, one-side omit MulExpect / Mul_Expect, both operands omit Mul, whole mul omit.
-        // Trailing holes are stripped here because this product is an Eq side (Eq root also strips).
-        if (combined.includes("MulExpectS"))
-            return pathUniqKeepEmpty([...combined.map(pathStripTrailingHoles), ""]);
-        return combined;
     }
 
 }
@@ -400,15 +345,6 @@ export class LeanDiv extends LeanArithmetic {
             return '\\left. {%s} \\right/ {%s}';
         }
         return '\\frac {%s} {%s}';
-    }
-
-    /**
-     * Path choices: Div fragment (+ omit). Mid `_` appears at MulSqrt_Div in Mul combine.
-     * @param {object} [_opts]
-     * @returns {string[]}
-     */
-    pathChoices(_opts = {}) {
-        return ["Div", ""];
     }
 
 }
@@ -636,24 +572,6 @@ export class LeanPow extends LeanArithmetic {
             : rhs.toLatex(syntax);
         return [lhsLatex, rhsLatex];
     }
-
-    /**
-     * Path choices: `^ n` is Pow_n (`^ 2` → Pow_2). Base hole stays the `_` in Pow_.
-     * @param {object} [opts]
-     * @returns {string[]}
-     */
-    pathChoices(opts = {}) {
-        const exp = pathDigitText(this.rhs);
-        const left = this.lhs?.pathChoices?.(opts) ?? [""];
-        const out = [""];
-        if (exp) out.push("Pow_" + exp);
-        else out.push("Pow_");
-        for (const l of left) {
-            if (!l) continue;
-            out.push(exp ? "Pow" + l + "_" + exp : "Pow" + l + "_");
-        }
-        return pathUniqKeepEmpty(out);
-    }
 }
 
 export class Lean_lll extends LeanArithmetic {
@@ -838,8 +756,8 @@ export class LeanUnaryArithmetic extends LeanUnary {
     }
 
     /** Keep the operator head instead of unwrapping: `x²` → `{Square: [x]}`. */
-    toJSON() {
-        return { [this.pathToken]: [this.arg.toJSON()] };
+    toJSON(ctx = { leaves: new Map() }) {
+        return { [this.pathToken]: [this.arg.toJSON(ctx)] };
     }
 }
 
@@ -1001,13 +919,6 @@ export class LeanInv extends LeanUnaryArithmeticPost {
         return [this.arg.peelLatexCoe().toLatex(syntax)];
     }
 
-    pathChoices(opts = {}) {
-        const kids = this.arg?.pathChoices?.(opts) ?? [""];
-        const out = [""];
-        for (const k of kids) out.push(k ? "Inv" + k : "Inv_");
-        return pathUniqKeepEmpty(out);
-    }
-
 }
 
 /** Mathlib `infixl:80 " ⁻¹' "` — preimage `f ⁻¹' s`. */
@@ -1096,10 +1007,6 @@ export class Lean_sqrt extends LeanUnaryArithmeticPre {
         let arg = this.arg.peelLatexCoe();
         if (arg instanceof L.LeanParenthesis) arg = arg.arg;
         return [arg.toLatex(syntax)];
-    }
-
-    pathChoices(_opts = {}) {
-        return ["Sqrt_", ""];
     }
 
 }
@@ -1227,6 +1134,11 @@ export class LeanTesseract extends LeanUnaryArithmeticPost {
 /** Postfix transpose `ᵀ`. */
 export class LeanTranspose extends LeanUnaryArithmeticPost {
     static { this.register(); }
+
+    /** The LaTeX renders `ᵀ` as `T`, so the JSON head matches the visible notation. */
+    get pathToken() {
+        return 'T';
+    }
 
     get operator() {
         return 'ᵀ';

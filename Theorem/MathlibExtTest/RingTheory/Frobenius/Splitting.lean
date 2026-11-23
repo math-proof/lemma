@@ -1,11 +1,12 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/Frobenius/Splitting.lean -/
+module
 
-
-import Theorem.RingTheory.Frobenius.Splitting
-import Theorem.Ideal.Frobenius.Splitting
+public import Theorem.RingTheory.Frobenius.Splitting
+public import Theorem.Ideal.Frobenius.Splitting
 open Ideal
 open scoped Pointwise
 
+public section
 
 example {A B : Type*} [CommRing A] [CommRing B] [Algebra A B]
     {G : Type*} [Group G] [Finite G] [MulSemiringAction G B]

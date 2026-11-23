@@ -1,10 +1,17 @@
 /**
  * Port of php/search.php: MySQL (type / like / regex) + filesystem full-text under Lemma/.
- * LaTeX similarity (?latex=) is still unimplemented in Node (empty data).
+ * `?lean=<expression>` (or the search box's Lean checkbox) is an exact
+ * subtree-match over lemma conclusions: shortlist via axiom.inverted, then
+ * match stored axiom.lemma.meta.fingerprint trees (mjs/leanInvertedIndex.mjs).
+ * When the exact query has no hit, expanded queries (`∑`/`∏` binder forms,
+ * `x²` <-> `x ^ 2`, …) are tried and returned separately as `similar`.
  */
 import { getMysqlPool } from './fetchLemmaMysql.mjs';
 import { searchLemmaFullText } from './lemmaFullTextSearch.mjs';
 import { moduleToLeanPath, fileExists } from './modulePath.mjs';
+
+/** `lean` values that mean "the checkbox is on"; the expression is in `q`. */
+const LEAN_OPTION_FLAGS = new Set(['on', 'true', '1', '']);
 
 /** True when `Lemma/…/Module.lean` exists for a dotted module name. */
 function moduleFileExists(module) {
@@ -19,26 +26,24 @@ function hasKey(o, k) {
 
 /**
  * @param {import('mysql2/promise').Pool} pool
- * @param {string} user
  * @param {number} limit
  */
-async function queryMissing(pool, user, limit) {
+async function queryMissing(pool, limit) {
   const sql = `
 SELECT module
 FROM lemma
-WHERE user = ? AND json_length(imports) > 0 AND json_length(lemma) = 0
+WHERE json_length(imports) > 0 AND json_length(lemma) = 0
 LIMIT ?`;
-  const [rows] = await pool.query(sql, [user, limit]);
+  const [rows] = await pool.query(sql, [limit]);
   return Array.isArray(rows) ? /** @type {{ module: string }[]} */ (rows) : [];
 }
 
 /**
  * @param {import('mysql2/promise').Pool} pool
- * @param {string} user
  * @param {string} type
  * @param {number} limit
  */
-async function queryByType(pool, user, type, limit) {
+async function queryByType(pool, type, limit) {
   const sql = `
 WITH _t_matrix AS (
   SELECT module, jt.type AS type
@@ -47,49 +52,46 @@ WITH _t_matrix AS (
     JSON_EXTRACT(meta, '$.error'),
     '$[*]' COLUMNS (type VARCHAR(191) PATH '$.type')
   ) AS jt
-  WHERE user = ?
 )
 SELECT DISTINCT module
 FROM _t_matrix
 WHERE type = ?
 ORDER BY module
 LIMIT ?`;
-  const [rows] = await pool.query(sql, [user, type, limit]);
+  const [rows] = await pool.query(sql, [type, limit]);
   return Array.isArray(rows) ? /** @type {{ module: string }[]} */ (rows) : [];
 }
 
 /**
  * @param {import('mysql2/promise').Pool} pool
- * @param {string} user
  * @param {string} keyword
  * @param {boolean} binary
  * @param {number} limit
  */
-async function queryByLike(pool, user, keyword, binary, limit) {
+async function queryByLike(pool, keyword, binary, limit) {
   const esc = String(keyword).replace(/\\/g, '\\\\').replace(/_/g, '\\_').replace(/%/g, '\\%');
   const pattern = `%${esc}%`;
   const sql = binary
-    ? 'SELECT module FROM lemma WHERE user = ? AND module LIKE BINARY ? LIMIT ?'
-    : 'SELECT module FROM lemma WHERE user = ? AND module LIKE ? LIMIT ?';
-  const [rows] = await pool.query(sql, [user, pattern, limit]);
+    ? 'SELECT module FROM lemma WHERE module LIKE BINARY ? LIMIT ?'
+    : 'SELECT module FROM lemma WHERE module LIKE ? LIMIT ?';
+  const [rows] = await pool.query(sql, [pattern, limit]);
   return Array.isArray(rows) ? /** @type {{ module: string }[]} */ (rows) : [];
 }
 
 /**
  * @param {import('mysql2/promise').Pool} pool
- * @param {string} user
  * @param {string} pattern
  * @param {boolean} binary
  * @param {number} limit
  * @param {boolean} requireImports
  */
-async function queryByRegexp(pool, user, pattern, binary, limit, requireImports) {
+async function queryByRegexp(pool, pattern, binary, limit, requireImports) {
   let where = binary
-    ? 'user = ? AND module REGEXP ? COLLATE utf8mb4_bin'
-    : 'user = ? AND module REGEXP ?';
+    ? 'module REGEXP ? COLLATE utf8mb4_bin'
+    : 'module REGEXP ?';
   if (requireImports) where += ' AND json_length(imports) > 0';
   const sql = `SELECT module FROM lemma WHERE ${where} LIMIT ?`;
-  const [rows] = await pool.query(sql, [user, pattern, limit]);
+  const [rows] = await pool.query(sql, [pattern, limit]);
   return Array.isArray(rows) ? /** @type {{ module: string }[]} */ (rows) : [];
 }
 
@@ -105,28 +107,30 @@ export async function buildSearchPayload(rawDict, projectUser) {
   /** @type {string | null} */
   let fullTextPattern = null;
   /** @type {string | null} */
-  let latex = null;
+  let lean = null;
   /** @type {string | undefined} */
   let type;
+
+  // `?lean=<expression>` (URL) or `?q=<expression>&lean=on` (search-box checkbox):
+  // exact subtree-match over lemma conclusions, see mjs/leanInvertedIndex.mjs.
+  const leanFlag = hasKey(dict, 'lean') ? String(dict.lean ?? '').trim() : null;
+  if (leanFlag !== null) {
+    const expression = LEAN_OPTION_FLAGS.has(leanFlag) ? String(dict.q ?? '').trim() : leanFlag;
+    if (expression) {
+      lean = expression;
+      dict.q = expression;
+    }
+  }
 
   if (hasKey(dict, 'q')) {
     if (dict.fullText === 'on') {
       fullText = true;
       fullTextPattern = String(dict.q);
-    } else if (dict.latex === 'on') {
-      latex = String(dict.q);
     }
   } else {
     if (hasKey(dict, 'type')) {
       type = String(dict.type);
       dict.q = null;
-    } else if (hasKey(dict, 'latex')) {
-      latex = String(dict.latex);
-      if (dict.q) {
-        latex = String(dict.q);
-      } else {
-        dict.q = null;
-      }
     } else {
       dict.q = '.*';
       dict.regularExpression = true;
@@ -154,8 +158,24 @@ export async function buildSearchPayload(rawDict, projectUser) {
 
   /** @type {{ module: string }[]} */
   let data = [];
+  /** @type {{ module: string, id?: number, match?: string }[]} */
+  let exact = [];
+  /** @type {{ module: string, id?: number, match?: string }[]} */
+  let similar = [];
 
-  if (fullText && fullTextPattern) {
+  if (lean) {
+    try {
+      const { searchLeanSimilar } = await import('../leanInvertedIndex.mjs');
+      const pool = getMysqlPool();
+      const result = await searchLeanSimilar(lean, { limit, pool });
+      exact = result.exact.map((hit) => ({ ...hit, match: 'exact' }));
+      similar = result.similar;
+      data = exact.length > 0 ? exact : similar;
+    } catch (e) {
+      console.warn('[lean-search]', e.message);
+      data = [];
+    }
+  } else if (fullText && fullTextPattern) {
     const qt = fullTextPattern.trim();
     data = qt
       ? searchLemmaFullText({
@@ -166,8 +186,6 @@ export async function buildSearchPayload(rawDict, projectUser) {
           limit,
         })
       : [];
-  } else if (latex) {
-    data = [];
   } else {
     const pool = getMysqlPool();
     if (pool) {
@@ -175,23 +193,23 @@ export async function buildSearchPayload(rawDict, projectUser) {
         if (like) {
           if (regex == null || regex === '') {
             if (type === 'missing') {
-              data = await queryMissing(pool, projectUser, limit);
+              data = await queryMissing(pool, limit);
             } else if (type != null) {
-              data = await queryByType(pool, projectUser, type, limit);
+              data = await queryByType(pool, type, limit);
             }
           } else {
-            data = await queryByLike(pool, projectUser, regex, caseSensitive, limit);
+            data = await queryByLike(pool, regex, caseSensitive, limit);
             if (
               data.length === 0 &&
               !caseSensitive &&
               regex.includes(' ')
             ) {
               const alt = regex.replace(/ /g, '.*');
-              data = await queryByRegexp(pool, projectUser, alt, caseSensitive, limit, !!replacement);
+              data = await queryByRegexp(pool, alt, caseSensitive, limit, !!replacement);
             }
           }
         } else if (regex != null) {
-          data = await queryByRegexp(pool, projectUser, regex, caseSensitive, limit, !!replacement);
+          data = await queryByRegexp(pool, regex, caseSensitive, limit, !!replacement);
         }
       } catch (e) {
         console.warn('[search]', e.message);
@@ -224,9 +242,11 @@ export async function buildSearchPayload(rawDict, projectUser) {
     wholeWord,
     caseSensitive,
     fullText: !!fullText,
-    latex,
+    lean,
     replacement,
     limit,
+    exact,
+    similar,
   };
 }
 
@@ -239,7 +259,7 @@ export function leanGetWantsSearch(q, moduleRaw) {
   if (moduleRaw != null && String(moduleRaw).trim() !== '') return false;
   if (q.type != null && String(q.type).trim() !== '') return true;
   if (q.q != null && String(q.q).trim() !== '') return true;
-  if (q.latex != null && String(q.latex).trim() !== '') return true;
+  if (q.lean != null && String(q.lean).trim() !== '') return true;
   if (q.fullText === 'on' && q.q != null && String(q.q).trim() !== '') return true;
   return false;
 }

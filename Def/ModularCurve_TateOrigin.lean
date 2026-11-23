@@ -1,5 +1,9 @@
-import Mathlib
-import Instance.ModularCurve_TateFormal
+module
+
+public import Mathlib
+public import Instance.ModularCurve_TateFormal
+
+@[expose] public section
 
 set_option autoImplicit false
 

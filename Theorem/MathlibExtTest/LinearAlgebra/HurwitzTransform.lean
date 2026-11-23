@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/HurwitzTransform.lean -/
+module
 
-
-import Def.LinearAlgebra.HurwitzTransform
-import Theorem.Matrix.HurwitzTransform
+public import Def.LinearAlgebra.HurwitzTransform
+public import Theorem.Matrix.HurwitzTransform
 open MetaMathlibExt
 
+public section
 
 example {R : Type*} [CommRing R] (a b : ℕ → R) :
     hurwitzTransform a b 0 = a 0 :=

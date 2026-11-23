@@ -9,7 +9,7 @@ LICENSE file in the root directory of this source tree.
 -/
 
 import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part3
-import Lemma.Category.Atlas.v1.TensorCategories.code.HopfAlgebra
+import Theorem.Category.Atlas.v1.TensorCategories.code.HopfAlgebra
 import Lemma.Category.Atlas.v1.TensorCategories.code.CoradicalFiltration
 import Def.v1.Atlas.TensorCategories.code.CoradicalFiltration.Part8
 import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots

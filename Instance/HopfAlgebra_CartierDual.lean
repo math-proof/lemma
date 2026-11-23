@@ -1,6 +1,7 @@
 -- Carved from Lemma/Definitions/Def_HopfAlgebra_CartierDual.lean: instance decls only.
 import Mathlib
-import Lemma.LinearMap.CartierDual
+import Theorem.LinearMap.CartierDual
+import Def.LinearMap_CartierDual
 
 set_option autoImplicit false
 set_option maxHeartbeats 1600000

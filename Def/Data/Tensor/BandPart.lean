@@ -1,7 +1,12 @@
-import Def.Data.Tensor.Tril
-import Def.Data.Tensor.Triu
-import Def.Data.Tensor.Inv
-import Def.Data.Tensor.Det
+module
+
+public import Def.Data.Tensor.Tril
+public import Def.Data.Tensor.Triu
+public import Def.Data.Tensor.Inv
+public import Def.Data.Tensor.Det
+
+@[expose] public section
+
 open Tensor
 
 

@@ -1,7 +1,9 @@
 module
 
-public import Lemma.LaurentSeries.HeckeOperator
-public import Lemma.LaurentSeries.CharLFrobeniusGeomLevel
+public import Def.ModularCurve_HeckeOperator
+public import Theorem.LaurentSeries.HeckeOperator
+public import Def.ModularCurve_CharLFrobeniusGeomLevel
+public import Theorem.LaurentSeries.CharLFrobeniusGeomLevel
 public import Structure.HeckeGalois_EichlerShimura
 
 public section

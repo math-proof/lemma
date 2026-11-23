@@ -8,11 +8,15 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.GroupTheory.Coxeter.Basic
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.TypeACoxeterSystem.Part2
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.TypeAInjectivityHelper
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.SignedPermGroup.Part2
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.TypeCInjectivityHelper
+module
+
+public import Mathlib.GroupTheory.Coxeter.Basic
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.TypeACoxeterSystem.Part2
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.TypeAInjectivityHelper
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.SignedPermGroup.Part2
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.TypeCInjectivityHelper
+
+@[expose] public section
 
 
 namespace CoxeterMatrix

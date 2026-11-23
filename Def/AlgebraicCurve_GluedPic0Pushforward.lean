@@ -1,5 +1,9 @@
-import Lemma.ResidueField.GluedPic0
-import Lemma.Scheme.Correspondence
+module
+
+public import Theorem.ResidueField.GluedPic0
+public import Theorem.Scheme.Correspondence
+
+@[expose] public section
 
 noncomputable section
 

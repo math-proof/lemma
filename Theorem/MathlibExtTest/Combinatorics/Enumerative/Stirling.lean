@@ -2,7 +2,7 @@
 
 
 import Def.Combinatorics.Enumerative.Stirling.Part4
-import Lemma.Finset.Enumerative.Stirling
+import Theorem.Finset.Enumerative.Stirling
 
 
 namespace MathlibExtTest.Combinatorics.Enumerative.Stirling

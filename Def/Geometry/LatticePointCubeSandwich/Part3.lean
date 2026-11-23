@@ -8,11 +8,16 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Mathlib.Algebra.Order.Floor.Ring
-import Mathlib.Analysis.Normed.Group.Constructions
-import Mathlib.Data.Set.Card.Arithmetic
-import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
-import Theorem.Geometry.LatticePointCubeSandwich.Part2
+module
+
+public import Mathlib.Algebra.Order.Floor.Ring
+public import Mathlib.Analysis.Normed.Group.Constructions
+public import Mathlib.Data.Set.Card.Arithmetic
+public import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
+public import Theorem.Geometry.LatticePointCubeSandwich.Part2
+
+@[expose] public section
+
 open MeasureTheory Set ENNReal Pointwise
 
 /-!

@@ -8,7 +8,7 @@ open scoped Topology
 [Complex.betaIntegral_eq_Gamma_mul_div_Lecture18](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture18.lean)
 -/
 @[path]
-lemma Complex.betaIntegral_eq_Gamma_mul_div_Lecture18
+lemma main
   {z w : ℂ}
 -- given
   (hz : 0 < z.re)
@@ -20,3 +20,4 @@ lemma Complex.betaIntegral_eq_Gamma_mul_div_Lecture18
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-22

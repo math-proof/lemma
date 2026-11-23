@@ -7,17 +7,20 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Abbrev.v1.Atlas.TensorCategories.code.IntegralsDefs
-import Lemma.Category.Atlas.v1.TensorCategories.code.IntegralsDefs
-import Mathlib.RingTheory.SimpleModule.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+public import Abbrev.v1.Atlas.TensorCategories.code.IntegralsDefs
+public import Theorem.Category.Atlas.v1.TensorCategories.code.IntegralsDefs
+public import Mathlib.RingTheory.SimpleModule.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 set_option maxHeartbeats 400000
 
 set_option autoImplicit false
 
 open Coalgebra Submodule
 open scoped TensorProduct
+
+public section
 
 universe u v
 

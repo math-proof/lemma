@@ -13,7 +13,7 @@ module
 public import Mathlib.Algebra.FiveLemma
 public import Mathlib.Algebra.Homology.HomologySequence
 public import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section11
-public import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section11
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section11
 public import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section9
 public section
 

@@ -3,16 +3,18 @@
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
+module
 
-import Mathlib.Geometry.Manifold.Instances.Real
-import Mathlib.Analysis.Normed.Lp.MeasurableSpace
-import Mathlib.Geometry.Manifold.Algebra.LieGroup
-import Mathlib.Geometry.Manifold.MFDeriv.SpecificFunctions
-import Mathlib.Geometry.Manifold.Sheaf.Basic
-import Mathlib.MeasureTheory.Measure.Haar.OfBasis
-import Def.Geometry.Manifold.Sard
-import Lemma.Set.Manifold.Sard
+public import Mathlib.Geometry.Manifold.Instances.Real
+public import Mathlib.Analysis.Normed.Lp.MeasurableSpace
+public import Mathlib.Geometry.Manifold.Algebra.LieGroup
+public import Mathlib.Geometry.Manifold.MFDeriv.SpecificFunctions
+public import Mathlib.Geometry.Manifold.Sheaf.Basic
+public import Mathlib.MeasureTheory.Measure.Haar.OfBasis
+public import Def.Geometry.Manifold.Sard
+public import Theorem.Set.Manifold.Sard
 
+public section
 
 namespace MathlibExt.Geometry.Manifold.ThomTransversalityWanted
 

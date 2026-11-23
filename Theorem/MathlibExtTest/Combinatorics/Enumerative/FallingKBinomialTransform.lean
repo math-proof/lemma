@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/FallingKBinomialTransform.lean -/
+module
 
+public import Mathlib.Tactic.NormNum
+public import Def.Combinatorics.Enumerative.FallingKBinomialTransform
+public import Theorem.Finset.Enumerative.FallingKBinomialTransform
 
-import Mathlib.Tactic.NormNum
-import Def.Combinatorics.Enumerative.FallingKBinomialTransform
-import Theorem.Finset.Enumerative.FallingKBinomialTransform
-
+public section
 
 namespace MetaMathlibExt
 

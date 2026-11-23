@@ -2,12 +2,17 @@
 Author: @akiezun, Avocado
 -/
 
-import Mathlib.Data.Finset.Defs
-import Mathlib.Data.Finset.Range
-import Mathlib.NumberTheory.Bernoulli
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Data.Int.Star
-import Theorem.Analysis.SpecialFunctions.Part1Ch5Entry10bEuleriansymmetry.Part2
+module
+
+public import Mathlib.Data.Finset.Defs
+public import Mathlib.Data.Finset.Range
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Data.Int.Star
+public import Theorem.Analysis.SpecialFunctions.Part1Ch5Entry10bEuleriansymmetry.Part2
+
+@[expose] public section
+
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 5
 

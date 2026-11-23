@@ -7,15 +7,17 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
+module
 
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section1.Part3
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section1
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section5
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section5.Part6
-import Mathlib.Topology.Constructions
-import Mathlib.Topology.UnitInterval
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section1.Part3
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section1
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section5
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section5.Part6
+public import Mathlib.Topology.Constructions
+public import Mathlib.Topology.UnitInterval
 open Finset BigOperators
 
+public section
 
 namespace AlgebraicTopologyI
 

@@ -8,8 +8,13 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Structure.v1.Atlas.TensorCategories.code.Twists.Part2
-import Theorem.Category.Atlas.v1.TensorCategories.code.Twists
+module
+
+public import Structure.v1.Atlas.TensorCategories.code.Twists.Part2
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Twists
+
+@[expose] public section
+
 open CategoryTheory TensorCategories
 
 universe u

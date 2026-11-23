@@ -22,8 +22,8 @@ import {
   moduleToLeanPath,
   fileExists,
 } from './lean/modulePath.mjs';
-
-const USER = process.env.LEAN_PROJECT_USER || path.basename(REPO_ROOT);
+import { conclusionSearchJson } from './lemmaPath.mjs';
+import { refreshInvertedForLemma } from './leanInvertedIndex.mjs';
 
 function jsonCol(v) {
   return JSON.stringify(v ?? (Array.isArray(v) ? [] : {}));
@@ -88,26 +88,64 @@ function resolveLeanFile(input) {
   return { abs, module: raw };
 }
 
-async function replaceLemmaRow(conn, module, code) {
+async function replaceLemmaRow(conn, module, code, abs) {
   const errs = Array.isArray(code.error) ? code.error : [];
-  const metaJson = errs.length ? jsonCol({ error: errs }) : null;
-  const [result] = await conn.query(
-    `REPLACE INTO lemma
-      (user, module, imports, \`open\`, set_option, preamble, lemma, meta, date)
-     VALUES (?, ?, CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON))`,
-    [
-      USER,
-      module,
-      jsonCol(code.imports ?? []),
-      jsonCol(code.open ?? []),
-      jsonCol(code.set_option ?? []),
-      jsonCol(code.preamble ?? []),
-      jsonCol(code.lemma ?? []),
-      metaJson,
-      jsonCol(code.date ?? {}),
-    ]
-  );
-  return result;
+  let fingerprint = null;
+  try {
+    if (abs) fingerprint = conclusionSearchJson(abs);
+  } catch {
+    fingerprint = null;
+  }
+  const meta = {};
+  if (errs.length) meta.error = errs;
+  if (fingerprint != null) meta.fingerprint = fingerprint;
+  const metaJson = Object.keys(meta).length ? JSON.stringify(meta) : null;
+
+  const fields = [
+    jsonCol(code.imports ?? []),
+    jsonCol(code.open ?? []),
+    jsonCol(code.set_option ?? []),
+    jsonCol(code.preamble ?? []),
+    jsonCol(code.lemma ?? []),
+    metaJson,
+    jsonCol(code.date ?? {}),
+  ];
+
+  // UNIQUE `uq_lemma_module (module)` keeps `id` stable: UPDATE the existing
+  // row in place. INSERT only when the module is new, so inverted postings
+  // are not orphaned by a new AUTO_INCREMENT id.
+  const [existing] = await conn.query("SELECT id FROM lemma WHERE module = ?", [module]);
+  let id;
+  if (existing.length) {
+    id = existing[0].id;
+    await conn.query(
+      `UPDATE lemma
+       SET imports = CAST(? AS JSON),
+           \`open\` = CAST(? AS JSON),
+           set_option = CAST(? AS JSON),
+           preamble = CAST(? AS JSON),
+           lemma = CAST(? AS JSON),
+           meta = CAST(? AS JSON),
+           date = CAST(? AS JSON)
+       WHERE id = ?`,
+      [...fields, id],
+    );
+  } else {
+    const [result] = await conn.query(
+      `INSERT INTO lemma
+        (module, imports, \`open\`, set_option, preamble, lemma, meta, date)
+       VALUES (?, CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON))`,
+      [module, ...fields],
+    );
+    id = result.insertId;
+  }
+
+  await refreshInvertedForLemma(conn, {
+    id,
+    module,
+    json: fingerprint,
+  });
+  return { id };
 }
 
 export async function runLeanFile(leanInput) {
@@ -126,7 +164,7 @@ export async function runLeanFile(leanInput) {
   const code = await echo2vueFromSource(source, { leanAbsPath: abs, module });
   const conn = await connectMysql();
   try {
-    await replaceLemmaRow(conn, module, code);
+    await replaceLemmaRow(conn, module, code, abs);
   } finally {
     await conn.end();
   }
@@ -199,7 +237,7 @@ async function main() {
     return;
   }
 
-  // MySQL REPLACE is persistence, not success — Lean errors decide the exit status.
+  // MySQL write is persistence, not success — Lean errors decide the exit status.
   const errors = Array.isArray(code?.error) ? code.error : [];
   const isCrlf = (e) => /Carriage return/i.test(String(e?.info ?? ''));
   const crlf = errors.filter(isCrlf);
@@ -224,11 +262,11 @@ async function main() {
 
   if (errors.length) {
     console.error(
-      `FAILED: wrote axiom.lemma user=${USER} module=${module} (${errors.length} Lean error(s))`,
+      `FAILED: wrote axiom.lemma module=${module} (${errors.length} Lean error(s))`,
     );
     process.exitCode = 1;
   } else {
-    console.log(`OK: replaced axiom.lemma user=${USER} module=${module}`);
+    console.log(`OK: replaced axiom.lemma module=${module}`);
   }
 }
 

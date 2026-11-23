@@ -14,7 +14,7 @@ import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NakayamaApplications
 import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.NoetherNullstellensatzChain
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.LinearChangeVariables
 import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NoetherianTopological
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec2AffineVarieties
+import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec2AffineVarieties
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.NakayamaApplications
 import Theorem.v1.Atlas.AlgebraicGeometryI.code.NoetherNullstellensatzChain
 import Abbrev.v1.Atlas.AlgebraicGeometryI.code.LinearChangeVariables

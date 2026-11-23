@@ -1,10 +1,11 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/MultipleZeta/Index.lean -/
+module
 
+public import Theorem.NumberTheory.MultipleZeta.Index.Part2
+public import Theorem.Nat.MultipleZeta.Index
+public import Def.MathlibExtTest.NumberTheory.MultipleZeta.Index
 
-import Theorem.NumberTheory.MultipleZeta.Index.Part2
-import Theorem.Nat.MultipleZeta.Index
-import Def.MathlibExtTest.NumberTheory.MultipleZeta.Index
-
+public section
 
 namespace MetaMathlibExt.MultipleZeta
 

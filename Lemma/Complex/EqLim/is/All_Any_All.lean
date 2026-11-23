@@ -32,7 +32,7 @@ private lemma εδ
 
 
 @[path, comm, mp, mpr]
-private lemma εN.pos
+private lemma εN_pos
   [LinearOrder α]
   [Zero α]
   [One α]
@@ -61,7 +61,7 @@ private lemma εN.pos
 
 
 @[path, comm, mp, mpr]
-private lemma εN.neg
+private lemma εN_neg
   [AddCommGroup α]
   [LinearOrder α]
   [IsOrderedAddMonoid α]
@@ -93,3 +93,4 @@ private lemma εN.neg
 
 
 -- created on 2026-08-20
+-- updated on 2026-11-22
