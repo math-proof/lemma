@@ -2,6 +2,14 @@ import Lemma.Tensor.GetCast.as.Get.of.Eq.GtLength_0
 open Tensor
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.GetCast.as.Get.of.GtGet_0.Eq.GtLength_0 |
+| fin | Tensor.GetCast.as.Get.of.GtGet_0.Eq.GtLength_0.fin |
+| cast | Tensor.GetCast.eq.Cast_Get.of.GtGet_0.Eq.GtLength_0 |
+| cast.fin | Tensor.GetCast.eq.Cast_Get.of.GtGet_0.Eq.GtLength_0.fin |
+-/
 @[path, fin, cast, cast.fin]
 private lemma main
   {s s' : List ℕ}
@@ -20,3 +28,4 @@ private lemma main
 
 
 -- created on 2025-07-04
+-- updated on 2026-11-23

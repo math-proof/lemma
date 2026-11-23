@@ -12,9 +12,8 @@ Closed form of the Catalan recurrence: if `C` satisfies `C[0] = 1` and
 | attributes | lemma |
 | :---: | :---: |
 | path | Finset.Eq_DivBinomMul2.of.All_Eq_Sum_Mul.Eq_1 |
-| Fun | Finset.Eq_DivBinomMul2.of.All_Eq_Sum_Mul.Eq_1.fun |
 -/
-@[path, Fun]
+@[path]
 private lemma main
   {C : ℕ → ℤ}
   {n : ℕ}

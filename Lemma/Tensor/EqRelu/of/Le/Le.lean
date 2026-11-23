@@ -17,10 +17,7 @@ private lemma main
     simp [min_eq_left hmn, max_eq_left (sub_nonneg.mpr hkm)]
   else
     have hnm : n ≤ m := le_of_not_ge hmn
-    have hk : k = n := by
-      have hkn : n ≤ k := by
-        simpa [min_eq_right hnm] using h₁
-      exact le_antisymm h₀ hkn
+    have hk : k = n := le_antisymm h₀ (by simpa [min_eq_right hnm] using h₁)
     rw [min_eq_right hnm, hk]
     have hkm : n - m ≤ 0 := by
       linarith
@@ -29,4 +26,4 @@ private lemma main
 
 
 -- created on 2021-12-25
--- updated on 2026-10-26
+-- updated on 2026-11-23
