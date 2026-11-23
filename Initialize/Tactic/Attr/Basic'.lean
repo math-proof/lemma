@@ -1,7 +1,6 @@
 module
 
 public meta import Def.Tactic.Attr.Basic'
-public meta import Initialize.Lean.Meta.Fun2Arrow
 public import Theorem.Lean.Meta.Expr
 public meta import Theorem.Lean.Meta.Expr
 public meta section
@@ -711,21 +710,3 @@ initialize registerBuiltinAttribute {
     }
 }
 
-initialize registerBuiltinAttribute {
-  name := `Fun'
-  descr := "Automatically generate the theorem with Fun/⇀ binders as bare arrows and GetElem as application (debug Fun')."
-  applicationTime := .afterCompilation
-  add := fun declName stx kind => do
-    let decl ← withoutExporting do getConstInfo declName
-    let levelParams := decl.levelParams
-    let ⟨type, value⟩ := Expr.substFun decl.type (.const declName (levelParams.map .param)) stx.getNum
-    let name := ((← getEnv).module.lemmaName declName).str "fun"
-    println! s!"Fun' name = {name}"
-    println! s!"Fun' type = {type}"
-    addAndCompile <| .thmDecl {
-      name := name
-      levelParams := levelParams
-      type := type
-      value := value
-    }
-}

@@ -1,3 +1,4 @@
+import Instance.Data.Nat.Fun
 import Mathlib.Analysis.Complex.Polynomial.Basic
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Data.Nat.Factorial.Basic
@@ -20,7 +21,7 @@ quadruple root `0` still frees `h[3]`.
 -/
 @[path]
 private lemma main
-  {h : ℕ ⇀ ℂ}
+  {h : ℕ → ℂ}
   {c₀ c₁ c₂ c₃ : ℂ}
 -- given
   (hrec : ∀ k : ℕ,
@@ -197,7 +198,7 @@ private lemma main
       set B : ℂ := h[1] / ρ - A with hB
       set C : ℂ := (h[2] / ρ ^ 2 - A - 2 * B) / 2 with hC
       set D : ℂ := (h[3] / ρ ^ 3 - A - 3 * B - 6 * C) / 6 with hD
-      have hpoly : ∀ n, h[n] =
+      have hpoly : ∀ n : ℕ, h[n] =
           (A + B * (n : ℂ) + C * (n : ℂ) * ((n : ℂ) - 1) +
             D * (n : ℂ) * ((n : ℂ) - 1) * ((n : ℂ) - 2)) * ρ ^ n := by
         intro n
@@ -252,22 +253,22 @@ private lemma main
         have hp3 : ρ ^ n = ρ ^ (n - 3) * ρ ^ 3 := calc
           _ = ρ ^ (n - 3 + 3) := by rw [Nat.sub_add_cancel hge3]
           _ = ρ ^ (n - 3) * ρ ^ 3 := by rw [pow_add]
-        have hBterm : (B * (n : ℂ)) * ρ ^ n = B * ρ * (n : ℂ) * ρ ^ (n - 1) := by
+        have hBterm : B * (n : ℂ) * ρ ^ n = B * ρ * (n : ℂ) * ρ ^ (n - 1) := by
           rw [hp1]
           ring
         have hCterm :
-          (C * (n : ℂ) * ((n : ℂ) - 1)) * ρ ^ n =
+          C * (n : ℂ) * ((n : ℂ) - 1) * ρ ^ n =
               C * ρ ^ 2 * ((n : ℂ) * ((n : ℂ) - 1)) * ρ ^ (n - 2) := by
           rw [hp2]
           ring
         have hDterm :
-          (D * (n : ℂ) * ((n : ℂ) - 1) * ((n : ℂ) - 2)) * ρ ^ n =
+          D * (n : ℂ) * ((n : ℂ) - 1) * ((n : ℂ) - 2) * ρ ^ n =
               D * ρ ^ 3 * ((n : ℂ) * ((n : ℂ) - 1) * ((n : ℂ) - 2)) * ρ ^ (n - 3) := by
           rw [hp3]
           ring
         calc
-          _ = A * ρ ^ n + (B * (n : ℂ)) * ρ ^ n + (C * (n : ℂ) * ((n : ℂ) - 1)) * ρ ^ n +
-              (D * (n : ℂ) * ((n : ℂ) - 1) * ((n : ℂ) - 2)) * ρ ^ n := by
+          _ = A * ρ ^ n + B * (n : ℂ) * ρ ^ n + C * (n : ℂ) * ((n : ℂ) - 1) * ρ ^ n +
+              D * (n : ℂ) * ((n : ℂ) - 1) * ((n : ℂ) - 2) * ρ ^ n := by
             ring
           _ = A * ρ ^ n + B * ρ * (n : ℂ) * ρ ^ (n - 1) +
               C * ρ ^ 2 * ((n : ℂ) * ((n : ℂ) - 1)) * ρ ^ (n - 2) +
@@ -402,7 +403,9 @@ private lemma main
         simp [hρ, Nat.descFactorial_zero, Nat.descFactorial_succ,
           zero_pow (show k + 3 ≠ 0 by omega), zero_pow (show k + 2 ≠ 0 by omega),
           zero_pow (show k + 1 ≠ 0 by omega)] at ih3
-        rw [hrec k, hc₀0, hc₁0, hc₂0, hc₃σ, ih3]
+        rw [hrec k, hc₀0, hc₁0, hc₂0, hc₃σ]
+        simp only [getElem_nat_apply]
+        rw [ih3]
         simp [hρ, Nat.descFactorial_zero, Nat.descFactorial_succ,
           zero_pow (show k + 4 ≠ 0 by omega), zero_pow (show k + 3 ≠ 0 by omega),
           zero_pow (show k + 2 ≠ 0 by omega), pow_succ]
@@ -413,7 +416,7 @@ private lemma main
       set A : ℂ := h[0] - G with hA
       set B : ℂ := (h[1] - G * σ) / ρ - A with hB
       set C : ℂ := (h[2] / ρ ^ 2 - G * σ ^ 2 / ρ ^ 2 - A - 2 * B) / 2 with hC
-      have hpoly : ∀ n, h[n] =
+      have hpoly : ∀ n : ℕ, h[n] =
           (A + B * (n : ℂ) + C * (n : ℂ) * ((n : ℂ) - 1)) * ρ ^ n + G * σ ^ n := by
         intro n
         induction n using Nat.stepInduction 4 with
@@ -462,15 +465,15 @@ private lemma main
         have hp2 : ρ ^ n = ρ ^ (n - 2) * ρ ^ 2 := calc
           _ = ρ ^ (n - 2 + 2) := by rw [Nat.sub_add_cancel hge2]
           _ = ρ ^ (n - 2) * ρ ^ 2 := by rw [pow_add]
-        have hBterm : (B * (n : ℂ)) * ρ ^ n = B * ρ * (n : ℂ) * ρ ^ (n - 1) := by
+        have hBterm : B * (n : ℂ) * ρ ^ n = B * ρ * (n : ℂ) * ρ ^ (n - 1) := by
           rw [hp1]
           ring
-        have hCterm : (C * (n : ℂ) * ((n : ℂ) - 1)) * ρ ^ n =
+        have hCterm : C * (n : ℂ) * ((n : ℂ) - 1) * ρ ^ n =
             C * ρ ^ 2 * ((n : ℂ) * ((n : ℂ) - 1)) * ρ ^ (n - 2) := by
           rw [hp2]
           ring
         calc
-          _ = A * ρ ^ n + (B * (n : ℂ)) * ρ ^ n + (C * (n : ℂ) * ((n : ℂ) - 1)) * ρ ^ n +
+          _ = A * ρ ^ n + B * (n : ℂ) * ρ ^ n + C * (n : ℂ) * ((n : ℂ) - 1) * ρ ^ n +
               G * σ ^ n := by
             ring
           _ = A * ρ ^ n + B * ρ * (n : ℂ) * ρ ^ (n - 1) +
@@ -484,11 +487,11 @@ private lemma main
             c₂ * (((k + 2 : ℕ) : ℂ) * z ^ (k + 2)) +
             c₃ * (((k + 3 : ℕ) : ℂ) * z ^ (k + 3)))
       (k : ℕ) :
-      ((k + 4 : ℕ) : ℂ) * z ^ ((k + 4) - 1) =
+      ((k + 4 : ℕ) : ℂ) * z ^ (k + 4 - 1) =
         c₀ * ((k : ℂ) * z ^ (k - 1)) +
-          c₁ * (((k + 1 : ℕ) : ℂ) * z ^ ((k + 1) - 1)) +
-          c₂ * (((k + 2 : ℕ) : ℂ) * z ^ ((k + 2) - 1)) +
-          c₃ * (((k + 3 : ℕ) : ℂ) * z ^ ((k + 3) - 1)) := by
+          c₁ * (((k + 1 : ℕ) : ℂ) * z ^ (k + 1 - 1)) +
+          c₂ * (((k + 2 : ℕ) : ℂ) * z ^ (k + 2 - 1)) +
+          c₃ * (((k + 3 : ℕ) : ℂ) * z ^ (k + 3 - 1)) := by
     have hs (n : ℕ) : ((n : ℕ) : ℂ) * z ^ n = z * (((n : ℕ) : ℂ) * z ^ (n - 1)) := by
       if hn : n = 0 then
         simp [hn]

@@ -17,7 +17,7 @@ private lemma main
   {γ : ℝ}
   {R : ℝ}
 -- given
-  (h : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2))
+  (h : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π θ z.1 z.2))
   (hγ : γ ∈ Set.Ico 0 1)
   (hQA : ∀ x u,
     (M θ).real

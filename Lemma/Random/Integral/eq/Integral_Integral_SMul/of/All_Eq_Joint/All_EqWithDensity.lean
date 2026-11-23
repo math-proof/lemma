@@ -32,7 +32,7 @@ private lemma main
   (t : ℕ) :
 -- imply
   ∫ ω, φ (s t ω) (a t ω) ∂(M θ) =
-    ∫ y, (∫ u, M.π[θ] y u • φ y u ∂μ.measure) ∂((M θ).map (s t)) := by
+    ∫ y, (∫ u, M.π θ y u • φ y u ∂μ.measure) ∂((M θ).map (s t)) := by
 -- proof
   have hs : Measurable (s t) := Random.Measurable.of.All_Eq.snd.fst h₀ t
   have ha : Measurable (a t) := Random.Measurable.of.All_Eq.snd.snd h₀ t

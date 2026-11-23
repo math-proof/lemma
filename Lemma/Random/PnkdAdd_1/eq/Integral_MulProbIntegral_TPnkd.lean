@@ -22,7 +22,7 @@ private lemma main
   (sₜ y : 𝒮) :
 -- imply
   M.Pnkd θ (n + 1) sₜ y =
-    ∫ u, M.π[θ] sₜ u *
+    ∫ u, M.π θ sₜ u *
       (∫ y', M.Pnkd θ n y' y ∂(M.trans (sₜ, u)))
       ∂ReferenceMeasure.measure := by
 -- proof

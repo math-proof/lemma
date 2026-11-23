@@ -35,13 +35,13 @@ private lemma main
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ℓ ∈ Set.Icc 0 1)
   (hfactor : Model.IsConditionalProbability M r s a)
-  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2))
-  (h₂ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
-  (h₃ : sup[sₜ] (∑ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) < ∞)
-  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖))
+  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π θ z.1 z.2))
+  (h₂ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π θ sₜ aₜ))
+  (h₃ : sup[sₜ] (∑ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖)) < ∞)
+  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖))
   (hφ : StronglyMeasurable
-    (fun z : 𝒮 × 𝒜 => ∇[θ] Real.log (M.π[θ] z.1 z.2)))
-  (hMs : sup[y, u] ‖∇[θ] Real.log (M.π[θ] y u)‖ < ∞)
+    (fun z : 𝒮 × 𝒜 => ∇[θ] Real.log (M.π θ z.1 z.2)))
+  (hMs : sup[y, u] ‖∇[θ] Real.log (M.π θ y u)‖ < ∞)
   (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1) :
 -- imply
   letI : Model.IsPolicyTrajectory M r s a := hfactor.htr
@@ -63,25 +63,25 @@ private lemma main
   have hInst : ∀ θ' (t : ℕ), SinglePSpace (M θ') (fun ω => (a t ω, s t ω)) := fun θ' t =>
     Model.IsPolicyTrajectory.singlePSpace_as (M := M) (r := r) (s := s) (a := a) θ' t
   have hfac : ∀ (θ' : Θ) (t : ℕ) (sₜ : 𝒮) (aₜ : 𝒜),
-      M.π[θ'] sₜ aₜ = ((ℙ[M θ'](a[t] = aₜ | s[t] = sₜ) : ℝ)) := by
+      M.π θ' sₜ aₜ = ((ℙ[M θ'](a[t] = aₜ | s[t] = sₜ) : ℝ)) := by
     intro θ' t sₜ aₜ
     have : SinglePSpace (M θ') (fun ω => (a t ω, s t ω)) := hInst θ' t
     exact hfactor.factor θ' t sₜ aₜ
-  have hMsle : ∀ y u, ‖∇[θ] Real.log (M.π[θ] y u)‖ ≤ Ms :=
+  have hMsle : ∀ y u, ‖∇[θ] Real.log (M.π θ y u)‖ ≤ Ms :=
     fun y u => hMsb ⟨(y, u), rfl⟩
   have hVm : ∀ k, Measurable (M.V θ γ k) := fun _ => Measurable.of_discrete
   have hfe : ∀ sₜ aₜ,
-      (fun θ => M.π[θ] sₜ aₜ) =
+      (fun θ => M.π θ sₜ aₜ) =
         (fun θ => (ℙ[M θ](a[0] = aₜ | s[0] = sₜ) : ℝ)) :=
     fun sₜ aₜ => funext fun θ' => hfac θ' 0 sₜ aₜ
   have hnorm : ∀ sₜ aₜ,
-      (fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖) =
+      (fun θ => ‖∇[θ] M.π θ sₜ aₜ‖) =
         (fun θ => ‖∇[θ] (ℙ[M θ](a[0] = aₜ | s[0] = sₜ) : ℝ)‖) :=
     fun sₜ aₜ => funext fun θ =>
       congrArg (fun φ : Θ → ℝ => ‖gradient φ θ‖) (hfe sₜ aₜ)
   have h₃sum : sup[sₜ] (∑ aₜ, sSup (Set.range fun θ => ‖∇[θ] (ℙ[M θ](a[0] = aₜ | s[0] = sₜ) : ℝ)‖)) < ∞ := by
     have hf :
-        (fun sₜ => ∑ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) =
+        (fun sₜ => ∑ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖)) =
           (fun sₜ => ∑ aₜ, sSup (Set.range fun θ => ‖∇[θ] (ℙ[M θ](a[0] = aₜ | s[0] = sₜ) : ℝ)‖)) :=
       funext fun sₜ =>
         congrArg (fun f => ∑ aₜ, f aₜ)

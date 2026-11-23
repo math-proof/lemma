@@ -28,16 +28,16 @@ private lemma main
 -- given
   (θ : Θ)
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
-  (h₁ : ∀ y u, Differentiable ℝ (fun θ => M.π[θ] y u))
-  (h₂ : ∀ y, Integrable (fun u => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] y u‖)) μ.measure)
-  (hBdd : ∀ y u, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] y u‖))
+  (h₁ : ∀ y u, Differentiable ℝ (fun θ => M.π θ y u))
+  (h₂ : ∀ y, Integrable (fun u => sSup (Set.range fun θ => ‖∇[θ] M.π θ y u‖)) μ.measure)
+  (hBdd : ∀ y u, BddAbove (Set.range fun θ => ‖∇[θ] M.π θ y u‖))
   (hφ : StronglyMeasurable
-    (fun z : 𝒮 × 𝒜 => fderiv ℝ (fun θ' => Real.log (M.π[θ'] z.1 z.2)) θ))
-  (hB : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.π[θ'] y u)) θ‖ ≤ B)
+    (fun z : 𝒮 × 𝒜 => fderiv ℝ (fun θ' => Real.log (M.π θ' z.1 z.2)) θ))
+  (hB : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.π θ' y u)) θ‖ ≤ B)
   (t : ℕ)
   (sₜ : 𝒮) :
 -- imply
-  ∫ ω, fderiv ℝ (fun θ' => Real.log (M.π[θ'] sₜ (a t ω))) θ
+  ∫ ω, fderiv ℝ (fun θ' => Real.log (M.π θ' sₜ (a t ω))) θ
     ∂(M θ)[|s t ⁻¹' {sₜ}] = 0 := by
 -- proof
   have hS : MeasurableSet (s t ⁻¹' {sₜ}) :=
@@ -48,7 +48,7 @@ private lemma main
     have hψ : StronglyMeasurable
         (Function.uncurry fun y u =>
           (if y = sₜ then (1:ℝ) else 0) •
-            fderiv ℝ (fun θ' => Real.log (M.π[θ'] y u)) θ) := by
+            fderiv ℝ (fun θ' => Real.log (M.π θ' y u)) θ) := by
       have h' :=
         ((stronglyMeasurable_const (b := (1:ℝ))).indicator
           (measurableSet_singleton sₜ)).comp_measurable measurable_fst |>.smul hφ
@@ -57,41 +57,41 @@ private lemma main
       by_cases hz : z.1 = sₜ <;> simp [Function.uncurry, hz, Pi.single]
     have hψC : ∀ y u,
         ‖(if y = sₜ then (1:ℝ) else 0) •
-          fderiv ℝ (fun θ' => Real.log (M.π[θ'] y u)) θ‖ ≤ B :=
+          fderiv ℝ (fun θ' => Real.log (M.π θ' y u)) θ‖ ≤ B :=
       fun y u => by
         rw [norm_smul]
         have h1 : ‖(if y = sₜ then (1:ℝ) else 0)‖ ≤ (1:ℝ) := by
           by_cases h : y = sₜ <;> simp [h]
         calc
-          ‖(if y = sₜ then (1:ℝ) else 0)‖ * ‖fderiv ℝ (fun θ' => Real.log (M.π[θ'] y u)) θ‖
+          ‖(if y = sₜ then (1:ℝ) else 0)‖ * ‖fderiv ℝ (fun θ' => Real.log (M.π θ' y u)) θ‖
             ≤ 1 * B := mul_le_mul h1 (hB y u) (norm_nonneg _) zero_le_one
           _ = B := one_mul B
     rw [ProbabilityTheory.cond, integral_smul_measure, ← integral_indicator hS]
     have hind :
         (fun ω => (s t ⁻¹' {sₜ}).indicator
-          (fun ω => fderiv ℝ (fun θ' => Real.log (M.π[θ'] sₜ (a t ω))) θ) ω) =
+          (fun ω => fderiv ℝ (fun θ' => Real.log (M.π θ' sₜ (a t ω))) θ) ω) =
           fun ω => (if s t ω = sₜ then (1:ℝ) else 0) •
-            fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ := by
+            fderiv ℝ (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ := by
       funext ω
       by_cases h : s t ω = sₜ <;>
         simp [h, Set.indicator, Set.mem_preimage, Set.mem_singleton_iff]
     rw [hind,
       Integral.eq.Integral_Integral_SMul.of.All_Eq_Joint.All_EqWithDensity h₀ hψ hψC θ t]
     have hassoc : ∀ y u,
-        M.π[θ] y u •
+        M.π θ y u •
           ((if y = sₜ then (1:ℝ) else 0) •
-            fderiv ℝ (fun θ' => Real.log (M.π[θ'] y u)) θ) =
+            fderiv ℝ (fun θ' => Real.log (M.π θ' y u)) θ) =
           (if y = sₜ then (1:ℝ) else 0) •
-            (M.π[θ] y u •
-              fderiv ℝ (fun θ' => Real.log (M.π[θ'] y u)) θ) :=
+            (M.π θ y u •
+              fderiv ℝ (fun θ' => Real.log (M.π θ' y u)) θ) :=
       fun y u => by
-        simp only [smul_smul, mul_comm (M.π[θ] y u)]
+        simp only [smul_smul, mul_comm (M.π θ y u)]
     simp_rw [hassoc]
     refine smul_eq_zero.2 (Or.inr ?_)
     refine integral_eq_zero_of_ae (Filter.Eventually.of_forall fun y => ?_)
     change ∫ u, (if y = sₜ then (1:ℝ) else 0) •
-        (M.π[θ] y u •
-          fderiv ℝ (fun θ' => Real.log (M.π[θ'] y u)) θ) ∂ReferenceMeasure.measure = 0
+        (M.π θ y u •
+          fderiv ℝ (fun θ' => Real.log (M.π θ' y u)) θ) ∂ReferenceMeasure.measure = 0
     rw [integral_smul,
       Integral_SMulProbFderiv_FunLog_Prob.eq.Zero.of.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_EqWithDensity
         h₁ h₂ hBdd θ y,

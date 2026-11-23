@@ -100,7 +100,7 @@ private lemma integral_Wkd_map_s
   (t k : ℕ) :
   ∫ y, M.Wkd R θ k y ∂((M θ).map (s t)) =
     ∫ x, M.Wkd R θ (t + k) x ∂(M.init : Measure _) := by
-  have hπ : ∀ θ', Measurable (fun z : 𝒮 × 𝒜 => M.π[θ'] z.1 z.2) :=
+  have hπ : ∀ θ', Measurable (fun z : 𝒮 × 𝒜 => M.π θ' z.1 z.2) :=
     fun θ' => hStoch.measurable_π θ'
   induction t generalizing k with
   | zero =>
@@ -141,7 +141,7 @@ private lemma integral_Wkd_map_s
       Integral.eq.Integral_Integral_SMul.of.All_Eq_Joint.All_EqWithDensity
         (M := M) (φ := fun x u => ∫ y, M.Wkd R θ k y ∂(M.trans (x, u)))
         (C := |R|) h₀ hφ hC θ t
-    have hW : ∀ sₜ, ∫ aₜ, M.π[θ] sₜ aₜ •
+    have hW : ∀ sₜ, ∫ aₜ, M.π θ sₜ aₜ •
       ∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, aₜ)) ∂ReferenceMeasure.measure =
         M.Wkd R θ (k + 1) sₜ := by
       intro sₜ
@@ -153,7 +153,7 @@ private lemma integral_Wkd_map_s
         simp [Model.transK]
       _ = ∫ ω, ∫ y, M.Wkd R θ k y ∂(M.trans (s t ω, a t ω)) ∂(M θ) :=
         hpath.symm
-      _ = ∫ sₜ, (∫ aₜ, M.π[θ] sₜ aₜ •
+      _ = ∫ sₜ, (∫ aₜ, M.π θ sₜ aₜ •
         ∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, aₜ)) ∂ReferenceMeasure.measure)
         ∂((M θ).map (s t)) := hdecomp
       _ = ∫ x, M.Wkd R θ (k + 1) x ∂((M θ).map (s t)) :=

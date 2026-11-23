@@ -231,7 +231,7 @@ private lemma rotary'_neg
 -- imply
   Matrix.rotary' (-φ) = (Matrix.rotary' φ)ᵀ := by
 -- proof
-  simpa [Matrix.rotary'] using rotaryOn_neg (u := ropeEven) (v := ropeOdd) φ
+  simpa [Matrix.rotary'] using rotaryOn_neg (u := stepEven) (v := stepOdd) φ
 
 private lemma rotary'_zero
   {d : ℕ} :

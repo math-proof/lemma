@@ -35,12 +35,12 @@ private lemma main
   {γ : ℝ}
   {R : ℝ}
 -- given
-  (h₀ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
-  (h₁ : sup[sₜ] (∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖) ∂μ.measure) < ∞)
-  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖))
-  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) μ.measure)
+  (h₀ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π θ sₜ aₜ))
+  (h₁ : sup[sₜ] (∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖) ∂μ.measure) < ∞)
+  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖))
+  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖)) μ.measure)
   (h₄ : γ ∈ Set.Ico 0 1)
-  (h₅ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2))
+  (h₅ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π θ z.1 z.2))
   (hQA : ∀ θ x u,
     (M θ).real
       (((fun ω : ℕ → ℝ × 𝒮 × 𝒜 => (ω 0).2.1) ⁻¹' {x}) ∩
@@ -50,16 +50,16 @@ private lemma main
   (θ : Θ) :
 -- imply
   fderiv ℝ (fun θ => M.V0 R θ γ sₜ) θ =
-    ∫ u, M.Q0 θ γ sₜ u • fderiv ℝ (fun θ => M.π[θ] sₜ u) θ ∂μ.measure +
-      γ • ∫ u, M.π[θ] sₜ u • ∫ y, fderiv ℝ (fun θ => M.V0 R θ γ y) θ ∂(M.trans (sₜ, u)) ∂μ.measure := by
+    ∫ u, M.Q0 θ γ sₜ u • fderiv ℝ (fun θ => M.π θ sₜ u) θ ∂μ.measure +
+      γ • ∫ u, M.π θ sₜ u • ∫ y, fderiv ℝ (fun θ => M.V0 R θ γ y) θ ∂(M.trans (sₜ, u)) ∂μ.measure := by
 -- proof
   let g : 𝒮 → 𝒜 → ℝ :=
-    fun sₜ aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)
+    fun sₜ aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖)
   obtain ⟨Cg, hCg⟩ := id h₁
   have hg : ∀ x, ∫ u, g x u ∂ReferenceMeasure.measure ≤ Cg := fun x => hCg ⟨x, rfl⟩
   have h₂ : ∀ x, Integrable (g x) ReferenceMeasure.measure := hIntg
-  have hC : ∀ θ sₜ aₜ, ‖fderiv ℝ (fun θ => M.π[θ] sₜ aₜ) θ‖ ≤ g sₜ aₜ := fun θ sₜ aₜ => by
-    have : ‖∇[θ] M.π[θ] sₜ aₜ‖ ≤ g sₜ aₜ := le_csSup (hBdd sₜ aₜ) ⟨θ, rfl⟩
+  have hC : ∀ θ sₜ aₜ, ‖fderiv ℝ (fun θ => M.π θ sₜ aₜ) θ‖ ≤ g sₜ aₜ := fun θ sₜ aₜ => by
+    have : ‖∇[θ] M.π θ sₜ aₜ‖ ≤ g sₜ aₜ := le_csSup (hBdd sₜ aₜ) ⟨θ, rfl⟩
     simpa [gradient, LinearIsometryEquiv.norm_map] using this
   obtain ⟨C, hCV⟩ := GtInftySup.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob (M := M) h₀ h₁ hBdd hIntg h₄ h₅ R
   have hQ := fun u θ => DifferentiableAt.Fderiv.eq.SMul.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob (M := M) h₀ h₁ hBdd hIntg h₄ h₅ hQA hR sₜ u θ
@@ -78,7 +78,7 @@ private lemma main
     rw [(hQ u θ).2, norm_smul, Real.norm_of_nonneg h₄.1]
     exact mul_le_mul_of_nonneg_left (by simpa using h) h₄.1
   have hD := HasFDerivAt.LeNorm.of.All_LeNormFderiv.All_LeNorm.All_Differentiable.All_Measurable.Integrable.All_LeNormFderiv.All_EqIntegral_1.All_Ge_0.All_Differentiable.All_Measurable
-    (ν := ReferenceMeasure.measure) (f := fun θ u => M.π[θ] sₜ u)
+    (ν := ReferenceMeasure.measure) (f := fun θ u => M.π θ sₜ u)
     (G := fun θ u => M.Q0 θ γ (sₜ, u).1 (sₜ, u).2) (g := g sₜ)
     (B₀ := |R| + γ * ((1 - γ)⁻¹ * |R|)) (B₁ := γ * C)
     (fun θ => (h₅ θ).comp (measurable_prodMk_left (x := sₜ))) (h₀ sₜ) (fun θ u => hStoch.nonneg θ sₜ u)
@@ -86,13 +86,13 @@ private lemma main
     (fun θ => (Measurable_Qkd.of.All_Measurable_Prob (M := M) h₅ h₄
       (fun y u => hQA θ y u) hR).comp (measurable_prodMk_left (x := sₜ)))
     (fun u θ => (hQ u θ).1) hQb hQ' θ
-  have hb : (fun θ => M.V0 R θ γ sₜ) = fun θ => ∫ u, M.π[θ] sₜ u * M.Q0 θ γ sₜ u ∂ReferenceMeasure.measure := by
+  have hb : (fun θ => M.V0 R θ γ sₜ) = fun θ => ∫ u, M.π θ sₜ u * M.Q0 θ γ sₜ u ∂ReferenceMeasure.measure := by
     funext θ'
     have hB := Vkd.eq.Integral_MulProbQkd.of.In_Ico.All_Measurable_Prob (M := M) h₅ h₄ R θ' sₜ
-    have hπi : Integrable (M.π[θ'] sₜ) ReferenceMeasure.measure :=
+    have hπi : Integrable (M.π θ' sₜ) ReferenceMeasure.measure :=
       Integrable.of_integral_ne_zero (by erw [hStoch.integral_eq_one θ' sₜ]; exact one_ne_zero)
-    have hπm : Measurable (M.π[θ'] sₜ) := (h₅ θ').comp measurable_prodMk_left
-    have hr : Integrable (fun u => M.π[θ'] sₜ u * M.rkd R sₜ u) ReferenceMeasure.measure :=
+    have hπm : Measurable (M.π θ' sₜ) := (h₅ θ').comp measurable_prodMk_left
+    have hr : Integrable (fun u => M.π θ' sₜ u * M.rkd R sₜ u) ReferenceMeasure.measure :=
       (hπi.mul_const |R|).mono'
         (hπm.mul ((MeasurableRkd (M := M) R).comp measurable_prodMk_left)).aestronglyMeasurable
         (Filter.Eventually.of_forall fun u => by
@@ -103,7 +103,7 @@ private lemma main
         (f := fun z : (𝒮 × 𝒜) × 𝒮 => M.V0 R θ' γ z.2)
         ((Measurable_Vkd.of.All_Measurable_Prob (M := M) h₅ R θ' γ).stronglyMeasurable.comp_measurable
           measurable_snd)).measurable).comp measurable_prodMk_left
-    have hv : Integrable (fun u => M.π[θ'] sₜ u * ∫ y, M.V0 R θ' γ y ∂(M.trans (sₜ, u)))
+    have hv : Integrable (fun u => M.π θ' sₜ u * ∫ y, M.V0 R θ' γ y ∂(M.trans (sₜ, u)))
         ReferenceMeasure.measure :=
       (hπi.mul_const ((1 - γ)⁻¹ * |R|)).mono' (hπm.mul hTm).aestronglyMeasurable
         (Filter.Eventually.of_forall fun u => by
@@ -111,21 +111,21 @@ private lemma main
             (Filter.Eventually.of_forall fun y => NormVkd.le.MulInvSub1Abs_R.of.In_Ico (M := M) h₄ R θ' y)
           rw [norm_mul]; erw [Real.norm_of_nonneg (hStoch.nonneg θ' sₜ u)]
           exact mul_le_mul_of_nonneg_left (by simpa using h) (hStoch.nonneg θ' sₜ u))
-    have e : (fun u => M.π[θ'] sₜ u * M.Q0 θ' γ sₜ u) =
-        fun u => M.π[θ'] sₜ u * M.rkd R sₜ u +
-          γ * (M.π[θ'] sₜ u * ∫ y, M.V0 R θ' γ y ∂(M.trans (sₜ, u))) := by
+    have e : (fun u => M.π θ' sₜ u * M.Q0 θ' γ sₜ u) =
+        fun u => M.π θ' sₜ u * M.rkd R sₜ u +
+          γ * (M.π θ' sₜ u * ∫ y, M.V0 R θ' γ y ∂(M.trans (sₜ, u))) := by
       funext u
       rw [Qkd.eq.AddRkd_MulIntegral_Vkd.of.Ne0Real_Joint.In_Ico
         (M := M) h₄ (hQA θ' sₜ u) hR]
       ring
     rw [hB, e, integral_add hr (hv.const_mul γ), integral_const_mul]
   have hV : HasFDerivAt (fun θ => M.V0 R θ γ sₜ)
-      (∫ u, M.π[θ] sₜ u • fderiv ℝ (fun θ => M.Q0 θ γ sₜ u) θ ∂ReferenceMeasure.measure +
-        ∫ u, M.Q0 θ γ sₜ u • fderiv ℝ (fun θ => M.π[θ] sₜ u) θ ∂ReferenceMeasure.measure) θ := by
+      (∫ u, M.π θ sₜ u • fderiv ℝ (fun θ => M.Q0 θ γ sₜ u) θ ∂ReferenceMeasure.measure +
+        ∫ u, M.Q0 θ γ sₜ u • fderiv ℝ (fun θ => M.π θ sₜ u) θ ∂ReferenceMeasure.measure) θ := by
     rw [hb]
     exact hD.1
-  have hπQ : ∫ u, M.π[θ] sₜ u • fderiv ℝ (fun θ => M.Q0 θ γ sₜ u) θ ∂ReferenceMeasure.measure =
-      γ • ∫ u, M.π[θ] sₜ u • ∫ y, fderiv ℝ (fun θ => M.V0 R θ γ y) θ ∂(M.trans (sₜ, u)) ∂ReferenceMeasure.measure := by
+  have hπQ : ∫ u, M.π θ sₜ u • fderiv ℝ (fun θ => M.Q0 θ γ sₜ u) θ ∂ReferenceMeasure.measure =
+      γ • ∫ u, M.π θ sₜ u • ∫ y, fderiv ℝ (fun θ => M.V0 R θ γ y) θ ∂(M.trans (sₜ, u)) ∂ReferenceMeasure.measure := by
     rw [← integral_smul]
     congr 1
     funext u
@@ -143,26 +143,26 @@ lemma bellmanFderivClosed
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {γ : ℝ}
   {R : ℝ}
-  (h₀ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
-  (h₁ : sup[sₜ] (∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖) ∂ReferenceMeasure.measure) < ∞)
-  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖))
-  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) ReferenceMeasure.measure)
+  (h₀ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π θ sₜ aₜ))
+  (h₁ : sup[sₜ] (∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖) ∂ReferenceMeasure.measure) < ∞)
+  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖))
+  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖)) ReferenceMeasure.measure)
   (h₄ : γ ∈ Set.Ico 0 1)
-  (h₅ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2))
+  (h₅ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π θ z.1 z.2))
   (sₜ : 𝒮)
   (θ : Θ) :
   fderiv ℝ (fun θ => M.V0 R θ γ sₜ) θ =
     ∫ u, (M.rkd R sₜ u + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (sₜ, u))) •
-        fderiv ℝ (fun θ => M.π[θ] sₜ u) θ ∂ReferenceMeasure.measure +
-      γ • ∫ u, M.π[θ] sₜ u •
+        fderiv ℝ (fun θ => M.π θ sₜ u) θ ∂ReferenceMeasure.measure +
+      γ • ∫ u, M.π θ sₜ u •
         ∫ y, fderiv ℝ (fun θ => M.V0 R θ γ y) θ ∂(M.trans (sₜ, u)) ∂ReferenceMeasure.measure := by
   let g : 𝒮 → 𝒜 → ℝ :=
-    fun sₜ aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)
+    fun sₜ aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖)
   obtain ⟨Cg, hCg⟩ := id h₁
   have hg : ∀ x, ∫ u, g x u ∂ReferenceMeasure.measure ≤ Cg := fun x => hCg ⟨x, rfl⟩
   have h₂ : ∀ x, Integrable (g x) ReferenceMeasure.measure := hIntg
-  have hC : ∀ θ sₜ aₜ, ‖fderiv ℝ (fun θ => M.π[θ] sₜ aₜ) θ‖ ≤ g sₜ aₜ := fun θ sₜ aₜ => by
-    have : ‖∇[θ] M.π[θ] sₜ aₜ‖ ≤ g sₜ aₜ := le_csSup (hBdd sₜ aₜ) ⟨θ, rfl⟩
+  have hC : ∀ θ sₜ aₜ, ‖fderiv ℝ (fun θ => M.π θ sₜ aₜ) θ‖ ≤ g sₜ aₜ := fun θ sₜ aₜ => by
+    have : ‖∇[θ] M.π θ sₜ aₜ‖ ≤ g sₜ aₜ := le_csSup (hBdd sₜ aₜ) ⟨θ, rfl⟩
     simpa [gradient, LinearIsometryEquiv.norm_map] using this
   obtain ⟨C, hCV⟩ :=
     GtInftySup.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob
@@ -224,7 +224,7 @@ lemma bellmanFderivClosed
         ((Measurable_Vkd.of.All_Measurable_Prob (M := M) h₅ R θ' γ).stronglyMeasurable.comp_measurable
           measurable_snd)).measurable).comp measurable_prodMk_left
   have hD := HasFDerivAt.LeNorm.of.All_LeNormFderiv.All_LeNorm.All_Differentiable.All_Measurable.Integrable.All_LeNormFderiv.All_EqIntegral_1.All_Ge_0.All_Differentiable.All_Measurable
-    (ν := ReferenceMeasure.measure) (f := fun θ' u => M.π[θ'] sₜ u)
+    (ν := ReferenceMeasure.measure) (f := fun θ' u => M.π θ' sₜ u)
     (G := fun θ' u => Qf θ' u) (g := g sₜ)
     (B₀ := |R| + γ * ((1 - γ)⁻¹ * |R|)) (B₁ := γ * C)
     (fun θ' => (h₅ θ').comp (measurable_prodMk_left (x := sₜ))) (h₀ sₜ) (fun θ' u => hStoch.nonneg θ' sₜ u)
@@ -232,13 +232,13 @@ lemma bellmanFderivClosed
     hQm
     (fun u θ' => (hQ u θ').1) hQb hQ' θ
   have hb : (fun θ' => M.V0 R θ' γ sₜ) =
-      fun θ' => ∫ u, M.π[θ'] sₜ u * Qf θ' u ∂ReferenceMeasure.measure := by
+      fun θ' => ∫ u, M.π θ' sₜ u * Qf θ' u ∂ReferenceMeasure.measure := by
     funext θ'
     have hB := Vkd.eq.Integral_MulProbQkd.of.In_Ico.All_Measurable_Prob (M := M) h₅ h₄ R θ' sₜ
-    have hπi : Integrable (M.π[θ'] sₜ) ReferenceMeasure.measure :=
+    have hπi : Integrable (M.π θ' sₜ) ReferenceMeasure.measure :=
       Integrable.of_integral_ne_zero (by erw [hStoch.integral_eq_one θ' sₜ]; exact one_ne_zero)
-    have hπm : Measurable (M.π[θ'] sₜ) := (h₅ θ').comp measurable_prodMk_left
-    have hr : Integrable (fun u => M.π[θ'] sₜ u * M.rkd R sₜ u) ReferenceMeasure.measure :=
+    have hπm : Measurable (M.π θ' sₜ) := (h₅ θ').comp measurable_prodMk_left
+    have hr : Integrable (fun u => M.π θ' sₜ u * M.rkd R sₜ u) ReferenceMeasure.measure :=
       (hπi.mul_const |R|).mono'
         (hπm.mul ((MeasurableRkd (M := M) R).comp measurable_prodMk_left)).aestronglyMeasurable
         (Filter.Eventually.of_forall fun u => by
@@ -249,7 +249,7 @@ lemma bellmanFderivClosed
         (f := fun z : (𝒮 × 𝒜) × 𝒮 => M.V0 R θ' γ z.2)
         ((Measurable_Vkd.of.All_Measurable_Prob (M := M) h₅ R θ' γ).stronglyMeasurable.comp_measurable
           measurable_snd)).measurable).comp measurable_prodMk_left
-    have hv : Integrable (fun u => M.π[θ'] sₜ u * ∫ y, M.V0 R θ' γ y ∂(M.trans (sₜ, u)))
+    have hv : Integrable (fun u => M.π θ' sₜ u * ∫ y, M.V0 R θ' γ y ∂(M.trans (sₜ, u)))
         ReferenceMeasure.measure :=
       (hπi.mul_const ((1 - γ)⁻¹ * |R|)).mono' (hπm.mul hTm).aestronglyMeasurable
         (Filter.Eventually.of_forall fun u => by
@@ -257,19 +257,19 @@ lemma bellmanFderivClosed
             (Filter.Eventually.of_forall fun y => NormVkd.le.MulInvSub1Abs_R.of.In_Ico (M := M) h₄ R θ' y)
           rw [norm_mul]; erw [Real.norm_of_nonneg (hStoch.nonneg θ' sₜ u)]
           exact mul_le_mul_of_nonneg_left (by simpa using h) (hStoch.nonneg θ' sₜ u))
-    have e : (fun u => M.π[θ'] sₜ u * Qf θ' u) =
-        fun u => M.π[θ'] sₜ u * M.rkd R sₜ u +
-          γ * (M.π[θ'] sₜ u * ∫ y, M.V0 R θ' γ y ∂(M.trans (sₜ, u))) := by
+    have e : (fun u => M.π θ' sₜ u * Qf θ' u) =
+        fun u => M.π θ' sₜ u * M.rkd R sₜ u +
+          γ * (M.π θ' sₜ u * ∫ y, M.V0 R θ' γ y ∂(M.trans (sₜ, u))) := by
       funext u
       ring
     rw [hB, e, integral_add hr (hv.const_mul γ), integral_const_mul]
   have hVf : HasFDerivAt (fun θ' => M.V0 R θ' γ sₜ)
-      (∫ u, M.π[θ] sₜ u • fderiv ℝ (fun θ' => Qf θ' u) θ ∂ReferenceMeasure.measure +
-        ∫ u, Qf θ u • fderiv ℝ (fun θ' => M.π[θ'] sₜ u) θ ∂ReferenceMeasure.measure) θ := by
+      (∫ u, M.π θ sₜ u • fderiv ℝ (fun θ' => Qf θ' u) θ ∂ReferenceMeasure.measure +
+        ∫ u, Qf θ u • fderiv ℝ (fun θ' => M.π θ' sₜ u) θ ∂ReferenceMeasure.measure) θ := by
     rw [hb]
     exact hD.1
-  have hπQ : ∫ u, M.π[θ] sₜ u • fderiv ℝ (fun θ' => Qf θ' u) θ ∂ReferenceMeasure.measure =
-      γ • ∫ u, M.π[θ] sₜ u •
+  have hπQ : ∫ u, M.π θ sₜ u • fderiv ℝ (fun θ' => Qf θ' u) θ ∂ReferenceMeasure.measure =
+      γ • ∫ u, M.π θ sₜ u •
         ∫ y, fderiv ℝ (fun θ' => M.V0 R θ' γ y) θ ∂(M.trans (sₜ, u)) ∂ReferenceMeasure.measure := by
     rw [← integral_smul]
     congr 1

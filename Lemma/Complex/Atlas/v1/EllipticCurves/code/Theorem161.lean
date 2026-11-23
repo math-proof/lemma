@@ -10,7 +10,6 @@ namespace ComplexLattice
 /--
 [proj_eq_iff](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Theorem161.lean)
 -/
-@[path]
 lemma proj_eq_iff
   {L : ComplexLattice}
   {z w : ℂ} :
@@ -26,7 +25,6 @@ namespace ComplexLattice
 /--
 [proj_eq_zero_iff](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Theorem161.lean)
 -/
-@[path]
 lemma proj_eq_zero_iff
   {L : ComplexLattice}
   {z : ℂ} :
@@ -42,7 +40,6 @@ namespace ComplexLattice
 /--
 [mem_latticeMulSet_iff](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Theorem161.lean)
 -/
-@[path]
 lemma mem_latticeMulSet_iff
   {L₁ L₂ : ComplexLattice}
   {α : ℂ} :
@@ -58,7 +55,6 @@ namespace ComplexLattice
 /--
 [inducedMap_proj](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Theorem161.lean)
 -/
-@[path]
 lemma inducedMap_proj
   {L₁ L₂ : ComplexLattice}
   {α : ℂ}
@@ -79,7 +75,6 @@ namespace ComplexLattice
 /--
 [const_of_continuous_latticeValued](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Theorem161.lean)
 -/
-@[path]
 lemma const_of_continuous_latticeValued
   {L : ComplexLattice}
   {g : ℂ → ℂ}
@@ -102,7 +97,6 @@ namespace ComplexLattice
 /--
 [deriv_periodic_of_shift_const](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Theorem161.lean)
 -/
-@[path]
 lemma deriv_periodic_of_shift_const
   {f : ℂ → ℂ}
   {ω : ℂ}
@@ -125,7 +119,6 @@ namespace ComplexLattice
 /--
 [affine_of_const_deriv](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Theorem161.lean)
 -/
-@[path]
 lemma affine_of_const_deriv
   {f : ℂ → ℂ}
   {α : ℂ}
@@ -143,15 +136,17 @@ lemma affine_of_const_deriv
   apply is_const_of_deriv_eq_zero
   · exact hf.sub ((differentiable_const α).mul differentiable_id |>.add (differentiable_const _))
   · intro w
-    have hfw : HasDerivAt f α w := by rw [← hderiv_eq]; exact (hf w).hasDerivAt
-    have haw : HasDerivAt (fun z => α * z + f 0) α w := by
-      have h1 : HasDerivAt (fun z => α * z) α w := by
-        have := (hasDerivAt_id w).const_mul α
-        simp only [mul_one] at this; exact this
-      simpa only [add_zero] using h1.add (hasDerivAt_const w (f 0))
-    have : HasDerivAt g 0 w := by
-      simpa only [sub_self] using hfw.sub haw
-    exact this.deriv
+    have hfw : deriv f w = α := hderiv_eq w
+    have hd : DifferentiableAt ℂ (fun z : ℂ => α * z + f 0) w :=
+      ((differentiable_const α).mul differentiable_id |>.add (differentiable_const _)) w
+    have h2 : deriv (fun z : ℂ => α * z + f 0) w = α := by
+      have h1 : deriv (fun z : ℂ => α * z) w = α := by
+        rw [deriv_const_mul_field]
+        simp [deriv_id'']
+      rw [deriv_add_const, h1]
+    dsimp only [g]
+    show deriv (f - fun z : ℂ => α * z + f 0) w = 0
+    rw [deriv_sub (hf w) hd, hfw, h2, sub_self]
 
 end ComplexLattice
 
@@ -160,7 +155,6 @@ namespace ComplexLattice
 /--
 [periodic_of_generators](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Theorem161.lean)
 -/
-@[path]
 lemma periodic_of_generators
   {f : ℂ → ℂ}
   {L : ComplexLattice}
@@ -187,7 +181,6 @@ namespace ComplexLattice
 /--
 [entire_periodic_isBounded_range](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Theorem161.lean)
 -/
-@[path]
 lemma entire_periodic_isBounded_range
   {f : ℂ → ℂ}
   {L : ComplexLattice}
@@ -199,7 +192,7 @@ lemma entire_periodic_isBounded_range
   Bornology.IsBounded (Set.range f) := by
 -- proof
   have hper : ∀ z w, w ∈ L.lattice → f (z + w) = f z :=
-    periodic_of_generators f L hp1 hp2
+    periodic_of_generators (f := f) (L := L) hp1 hp2
   exact (IsZLattice.isCompact_range_of_periodic L.lattice f hf.continuous hper).isBounded
 
 end ComplexLattice
@@ -209,7 +202,6 @@ namespace ComplexLattice
 /--
 [theorem_16_1_existence](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Theorem161.lean)
 -/
-@[path]
 lemma theorem_16_1_existence
   {L₁ L₂ : ComplexLattice}
   {φ : ComplexTorusHolMap L₁ L₂}
@@ -225,7 +217,7 @@ lemma theorem_16_1_existence
     intro ω hω z
     have hπ : proj L₁ (z + ω) = proj L₁ z := by
       rw [map_add]
-      have : proj L₁ ω = 0 := (proj_eq_zero_iff L₁ ω).mpr hω
+      have : proj L₁ ω = 0 := (proj_eq_zero_iff (L := L₁) (z := ω)).mpr hω
       rw [this, add_zero]
     have : proj L₂ (f (z + ω)) = proj L₂ (f z) := by
       rw [← hcomm (z + ω), ← hcomm z, hπ]
@@ -234,25 +226,26 @@ lemma theorem_16_1_existence
     intro ω hω z
     have hcont : Continuous (fun z => f (z + ω) - f z) :=
       (hf.comp (differentiable_id.add (differentiable_const ω))).continuous.sub hf.continuous
-    have := const_of_continuous_latticeValued L₂ _ hcont (hshift ω hω) z 0
+    have := const_of_continuous_latticeValued (L := L₂) (g := fun z => f (z + ω) - f z)
+      hcont (hshift ω hω) z 0
     simp only [zero_add] at this
     exact this
   have hderiv_per : ∀ ω ∈ (L₁.lattice : Set ℂ), ∀ z, deriv f (z + ω) = deriv f z := by
     intro ω hω z
-    apply deriv_periodic_of_shift_const f ω (f ω - f 0) (fun w => ?_) z
+    apply deriv_periodic_of_shift_const (f := f) (ω := ω) (c := f ω - f 0) (fun w => ?_) z
     have := hconst ω hω w
     linear_combination this
   have hp1 : Periodic (deriv f) L₁.ω₁ :=
-    fun z => hderiv_per L₁.ω₁ (ComplexLattice.ω₁_mem L₁) z
+    fun z => hderiv_per L₁.ω₁ (ω₁_mem L₁) z
   have hp2 : Periodic (deriv f) L₁.ω₂ :=
-    fun z => hderiv_per L₁.ω₂ (ComplexLattice.ω₂_mem L₁) z
+    fun z => hderiv_per L₁.ω₂ (ω₂_mem L₁) z
   have hdf : Differentiable ℂ (deriv f) :=
     (hf.contDiff (n := 2)).differentiable_deriv_two
-  have hbdd := entire_periodic_isBounded_range (deriv f) hdf L₁ hp1 hp2
+  have hbdd := entire_periodic_isBounded_range (f := deriv f) (L := L₁) hdf hp1 hp2
   have hconst_deriv : ∀ z w, deriv f z = deriv f w :=
     fun z w => hdf.apply_eq_apply_of_bounded hbdd z w
   set α := deriv f 0
-  have haffine := affine_of_const_deriv f hf α (fun w => hconst_deriv w 0)
+  have haffine := affine_of_const_deriv (f := f) (α := α) hf (fun w => hconst_deriv w 0)
   have hf0 : f 0 ∈ (L₂.lattice : Set ℂ) := by
     have : proj L₂ (f 0) = 0 := by rw [← hcomm 0, map_zero, hφ0]
     rwa [proj_eq_zero_iff] at this
@@ -268,7 +261,7 @@ lemma theorem_16_1_existence
   rw [hcomm z, inducedMap_proj]
   have hfz : φ.lift z = α * z + f 0 := haffine z
   rw [hfz, map_add]
-  have : proj L₂ (f 0) = 0 := (proj_eq_zero_iff L₂ (f 0)).mpr hf0
+  have : proj L₂ (f 0) = 0 := (proj_eq_zero_iff (L := L₂) (z := f 0)).mpr hf0
   rw [this, add_zero]
 
 end ComplexLattice
@@ -278,7 +271,6 @@ namespace ComplexLattice
 /--
 [inducedMap_unique](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Theorem161.lean)
 -/
-@[path]
 lemma inducedMap_unique
   {L₁ L₂ : ComplexLattice}
   {α γ : ℂ}
@@ -290,7 +282,8 @@ lemma inducedMap_unique
   α = γ := by
 -- proof
   have hproj : ∀ z, proj L₂ (α * z) = proj L₂ (γ * z) := by
-    intro z; rw [← inducedMap_proj L₁ L₂ α hα, ← inducedMap_proj L₁ L₂ γ hγ]; exact heq z
+    intro z; rw [← inducedMap_proj (L₁ := L₁) (L₂ := L₂) (α := α) hα,
+      ← inducedMap_proj (L₁ := L₁) (L₂ := L₂) (α := γ) hγ]; exact heq z
   have hdiff : ∀ z, (α - γ) * z ∈ (L₂.lattice : Set ℂ) := by
     intro z
     have h := hproj z
@@ -301,7 +294,7 @@ lemma inducedMap_unique
       rw [this]; ring
     rw [hv_eq]
     exact L₂.lattice.toAddSubgroup.neg_mem hv
-  have hconst := const_of_continuous_latticeValued L₂ (fun z => (α - γ) * z)
+  have hconst := const_of_continuous_latticeValued (L := L₂) (g := fun z => (α - γ) * z)
     (continuous_const.mul continuous_id) hdiff
   have h0 := hconst 1 0
   simp only [mul_one, mul_zero] at h0
@@ -314,7 +307,6 @@ namespace ComplexLattice
 /--
 [theorem_16_1](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Theorem161.lean)
 -/
-@[path]
 lemma theorem_16_1
   {L₁ L₂ : ComplexLattice}
   {φ : ComplexTorusHolMap L₁ L₂}
@@ -323,10 +315,11 @@ lemma theorem_16_1
 -- imply
   ∃! α : ℂ, ∃ hα : α ∈ latticeMulSet L₁ L₂, ∀ z : ℂ, φ.toFun (proj L₁ z) = inducedMap L₁ L₂ α hα (proj L₁ z) := by
 -- proof
-  obtain ⟨α, hα, hφα⟩ := theorem_16_1_existence L₁ L₂ φ hφ0
+  obtain ⟨α, hα, hφα⟩ := theorem_16_1_existence (L₁ := L₁) (L₂ := L₂) (φ := φ) hφ0
   refine ⟨α, ⟨hα, hφα⟩, ?_⟩
   intro γ ⟨hγ, hφγ⟩
-  exact (inducedMap_unique L₁ L₂ α γ hα hγ (fun z => by rw [← hφα z, ← hφγ z])).symm
+  exact (inducedMap_unique (L₁ := L₁) (L₂ := L₂) (α := α) (γ := γ) hα hγ
+    (fun z => by rw [← hφα z, ← hφγ z])).symm
 
 end ComplexLattice
 
@@ -335,7 +328,6 @@ namespace ComplexLattice
 /--
 [add_mem_latticeMulSet](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Theorem161.lean)
 -/
-@[path]
 lemma add_mem_latticeMulSet
   {L₁ L₂ : ComplexLattice}
   {α β : ℂ}
@@ -357,7 +349,6 @@ namespace ComplexLattice
 /--
 [inducedMap_add_proj](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Theorem161.lean)
 -/
-@[path]
 lemma inducedMap_add_proj
   {L₁ L₂ : ComplexLattice}
   {α β : ℂ}
@@ -365,7 +356,7 @@ lemma inducedMap_add_proj
   (hα : α ∈ latticeMulSet L₁ L₂)
   (hβ : β ∈ latticeMulSet L₁ L₂) :
 -- imply
-  ∀ z : ℂ, inducedMap L₁ L₂ (α + β) (add_mem_latticeMulSet L₁ L₂ α β hα hβ) (proj L₁ z) = inducedMap L₁ L₂ α hα (proj L₁ z) + inducedMap L₁ L₂ β hβ (proj L₁ z) := by
+  ∀ z : ℂ, inducedMap L₁ L₂ (α + β) (add_mem_latticeMulSet (L₁ := L₁) (L₂ := L₂) hα hβ) (proj L₁ z) = inducedMap L₁ L₂ α hα (proj L₁ z) + inducedMap L₁ L₂ β hβ (proj L₁ z) := by
 -- proof
   intro z
   simp only [inducedMap_proj]
@@ -379,15 +370,14 @@ namespace ComplexLattice
 /--
 [latticeMulSet_to_torusMorphism_addGroupIso](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Theorem161.lean)
 -/
-@[path]
 lemma latticeMulSet_to_torusMorphism_addGroupIso
   {L₁ L₂ : ComplexLattice} :
 -- imply
-  (∀ (α β : ℂ) (hα : α ∈ latticeMulSet L₁ L₂) (hβ : β ∈ latticeMulSet L₁ L₂), ∀ z : ℂ, inducedMap L₁ L₂ (α + β) (add_mem_latticeMulSet L₁ L₂ α β hα hβ) (proj L₁ z) = inducedMap L₁ L₂ α hα (proj L₁ z) + inducedMap L₁ L₂ β hβ (proj L₁ z)) ∧ (∀ z : ℂ, inducedMap L₁ L₂ 0 (zero_mem_latticeMulSet L₁ L₂) (proj L₁ z) = 0) ∧ (∀ (α γ : ℂ) (hα : α ∈ latticeMulSet L₁ L₂) (hγ : γ ∈ latticeMulSet L₁ L₂), (∀ z : ℂ, inducedMap L₁ L₂ α hα (proj L₁ z) = inducedMap L₁ L₂ γ hγ (proj L₁ z)) → α = γ) ∧ (∀ (φ : ComplexTorusHolMap L₁ L₂), φ.toFun 0 = 0 → ∃ α : ℂ, ∃ hα : α ∈ latticeMulSet L₁ L₂, ∀ z : ℂ, φ.toFun (proj L₁ z) = inducedMap L₁ L₂ α hα (proj L₁ z)) := by
+  (∀ (α β : ℂ) (hα : α ∈ latticeMulSet L₁ L₂) (hβ : β ∈ latticeMulSet L₁ L₂), ∀ z : ℂ, inducedMap L₁ L₂ (α + β) (add_mem_latticeMulSet (L₁ := L₁) (L₂ := L₂) hα hβ) (proj L₁ z) = inducedMap L₁ L₂ α hα (proj L₁ z) + inducedMap L₁ L₂ β hβ (proj L₁ z)) ∧ (∀ z : ℂ, inducedMap L₁ L₂ 0 (zero_mem_latticeMulSet L₁ L₂) (proj L₁ z) = 0) ∧ (∀ (α γ : ℂ) (hα : α ∈ latticeMulSet L₁ L₂) (hγ : γ ∈ latticeMulSet L₁ L₂), (∀ z : ℂ, inducedMap L₁ L₂ α hα (proj L₁ z) = inducedMap L₁ L₂ γ hγ (proj L₁ z)) → α = γ) ∧ (∀ (φ : ComplexTorusHolMap L₁ L₂), φ.toFun 0 = 0 → ∃ α : ℂ, ∃ hα : α ∈ latticeMulSet L₁ L₂, ∀ z : ℂ, φ.toFun (proj L₁ z) = inducedMap L₁ L₂ α hα (proj L₁ z)) := by
 -- proof
-  refine ⟨fun α β hα hβ => inducedMap_add_proj L₁ L₂ α β hα hβ, fun z => ?_,
-    fun α γ hα hγ => inducedMap_unique L₁ L₂ α γ hα hγ,
-    fun φ hφ0 => theorem_16_1_existence L₁ L₂ φ hφ0⟩
+  refine ⟨fun α β hα hβ => inducedMap_add_proj (L₁ := L₁) (L₂ := L₂) hα hβ, fun z => ?_,
+    fun α γ hα hγ => inducedMap_unique (L₁ := L₁) (L₂ := L₂) hα hγ,
+    fun φ hφ0 => theorem_16_1_existence (L₁ := L₁) (L₂ := L₂) (φ := φ) hφ0⟩
   simp only [inducedMap_proj, zero_mul, map_zero]
 
 end ComplexLattice
@@ -397,7 +387,6 @@ namespace ComplexLattice
 /--
 [mul_mem_latticeMulSet](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Theorem161.lean)
 -/
-@[path]
 lemma mul_mem_latticeMulSet
   {L : ComplexLattice}
   {α β : ℂ}
@@ -419,7 +408,6 @@ namespace ComplexLattice
 /--
 [one_mem_latticeMulSet](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Theorem161.lean)
 -/
-@[path]
 lemma one_mem_latticeMulSet
   {L : ComplexLattice} :
 -- imply
@@ -434,7 +422,6 @@ namespace ComplexLattice
 /--
 [inducedMap_comp](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Theorem161.lean)
 -/
-@[path]
 lemma inducedMap_comp
   {L : ComplexLattice}
   {α β : ℂ}
@@ -442,12 +429,12 @@ lemma inducedMap_comp
   (hα : α ∈ latticeMulSet L L)
   (hβ : β ∈ latticeMulSet L L) :
 -- imply
-  ∀ z : ℂ, inducedMap L L (α * β) (mul_mem_latticeMulSet L α β hα hβ) (proj L z) = (inducedMap L L α hα) (inducedMap L L β hβ (proj L z)) := by
+  ∀ z : ℂ, inducedMap L L (α * β) (mul_mem_latticeMulSet (L := L) hα hβ) (proj L z) = (inducedMap L L α hα) (inducedMap L L β hβ (proj L z)) := by
 -- proof
   intro z
   simp only [inducedMap_proj]
   rw [show α * β * z = α * (β * z) from mul_assoc α β z]
-end
+end ComplexLattice
 
 
 /--
@@ -463,3 +450,4 @@ private lemma zero_mem_latticeMulSet_eq
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-23

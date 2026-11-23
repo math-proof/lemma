@@ -8,11 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TheoryOfComputation.code.InteractiveProofs.Part2
-import Def.v1.Atlas.TheoryOfComputation.code.SharpSAT
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Tactic.Ring
+module
 
+public import Def.v1.Atlas.TheoryOfComputation.code.InteractiveProofs.Part2
+public import Def.v1.Atlas.TheoryOfComputation.code.SharpSAT
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Tactic.Ring
+
+@[expose] public section
 
 namespace NPCompleteness
 

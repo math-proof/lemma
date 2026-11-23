@@ -20,7 +20,7 @@ private lemma main
   (sₜ : 𝒮) :
 -- imply
   ∫ z, f z ∂(M.stageK θ sₜ) =
-    ∫ (aₜ : 𝒜), (M.π[θ] sₜ aₜ * ∫ ρ, f (ρ, sₜ, aₜ) ∂(M.reward (sₜ, aₜ)))
+    ∫ (aₜ : 𝒜), (M.π θ sₜ aₜ * ∫ ρ, f (ρ, sₜ, aₜ) ∂(M.reward (sₜ, aₜ)))
       ∂μ.measure := by
 -- proof
   rw [Integral.eq.Integral_SMul.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity (M := M) h₀ h₁ θ]

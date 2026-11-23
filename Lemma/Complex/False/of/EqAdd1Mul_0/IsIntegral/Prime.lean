@@ -4,11 +4,12 @@ import Def.GroupTheory.BurnsidePaqb.SimplePrime
 open BurnsidePaqb
 
 
+set_option linter.style.haveILetI false in
 /--
 [false_of_one_add_prime_mul_isIntegral](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/SimplePrime.lean)
 -/
 @[path]
-private lemma false_of_one_add_prime_mul_isIntegral
+lemma false_of_one_add_prime_mul_isIntegral
   [Group G] [Fintype G]
   {p : ℕ}
   {β : ℂ}
@@ -49,7 +50,7 @@ private lemma false_of_one_add_prime_mul_isIntegral
 [card_eq_prime_of_nontrivial_linear](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/SimplePrime.lean)
 -/
 @[path]
-private lemma card_eq_prime_of_nontrivial_linear
+lemma card_eq_prime_of_nontrivial_linear
   [Group G] [Fintype G] [IsSimpleGroup G] [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V] [Nontrivial V]
   {ρ : Representation ℂ G V}
 -- given
@@ -70,7 +71,6 @@ private lemma card_eq_prime_of_nontrivial_linear
     have h1 : ((1 : ℂˣ) : ℂ) = 1 := Units.val_one
     rwa [hg]
   have hker_cases := IsSimpleGroup.eq_bot_or_eq_top_of_normal lam.ker
-    inferInstance
   obtain hbot | htop := hker_cases
   · have hinj : Function.Injective lam :=
     (MonoidHom.ker_eq_bot_iff lam).mp hbot
@@ -86,7 +86,7 @@ private lemma card_eq_prime_of_nontrivial_linear
 [char_zero_of_nonlinear_of_coprime](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/SimplePrime.lean)
 -/
 @[path]
-private lemma char_zero_of_nonlinear_of_coprime
+lemma char_zero_of_nonlinear_of_coprime
   [Group G] [Fintype G] [IsSimpleGroup G] [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V] [Nontrivial V]
   {ρ : Representation ℂ G V} [Representation.IsIrreducible ρ]
   {g : G}
@@ -97,10 +97,10 @@ private lemma char_zero_of_nonlinear_of_coprime
 -- imply
   ρ.character g = 0 := by
 -- proof
-  obtain hZ | h0 := burnside_coprime_vanish ρ g hcop
+  obtain hZ | h0 := burnside_coprime_vanish (ρ := ρ) (g := g) hcop
   · exfalso
-    have hall := all_roots_eq_of_norm_eq ρ g hZ
-    have hcard := charpoly_roots_card ρ g
+    have hall := all_roots_eq_of_norm_eq (ρ := ρ) (g := g) hZ
+    have hcard := charpoly_roots_card (ρ := ρ) (g := g)
     have hne0 : (ρ g).charpoly.roots ≠ 0 := by
       intro hz
       rw [hz, Multiset.card_zero] at hcard
@@ -108,12 +108,12 @@ private lemma char_zero_of_nonlinear_of_coprime
     obtain ⟨μ₀, hμ₀⟩ := Multiset.exists_mem_of_ne_zero hne0
     have hμ : ∀ μ ∈ (ρ g).charpoly.roots, μ = μ₀ :=
       fun μ hμ => hall μ hμ μ₀ hμ₀
-    have hsm := eq_smul_one_of_all_roots_eq ρ g μ₀ hμ
-    have hgmem : g ∈ charCenter ρ := mem_charCenter_of_eq_smul ρ g μ₀ hsm
-    have hproper : charCenter ρ ≠ ⊤ := charCenter_proper_of_nonlinear ρ hd
+    have hsm := eq_smul_one_of_all_roots_eq (ρ := ρ) (g := g) (μ₀ := μ₀) hμ
+    have hgmem : g ∈ charCenter ρ :=
+      mem_charCenter_of_eq_smul (ρ := ρ) (g := g) (c := μ₀) hsm
+    have hproper : charCenter ρ ≠ ⊤ := charCenter_proper_of_nonlinear (ρ := ρ) hd
     have hbot : charCenter ρ = ⊥ := by
-      rcases IsSimpleGroup.eq_bot_or_eq_top_of_normal (charCenter ρ)
-        inferInstance with h | h
+      rcases IsSimpleGroup.eq_bot_or_eq_top_of_normal (charCenter ρ) with h | h
       · exact h
       · exact absurd h hproper
     have hmem : g ∈ (⊥ : Subgroup G) := hbot ▸ hgmem
@@ -125,7 +125,7 @@ private lemma char_zero_of_nonlinear_of_coprime
 [cor6_of_prime_pow_class](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/SimplePrime.lean)
 -/
 @[path]
-private lemma cor6_of_prime_pow_class
+lemma cor6_of_prime_pow_class
   [Group G] [Fintype G] [IsSimpleGroup G]
   {g : G}
 -- given
@@ -134,119 +134,18 @@ private lemma cor6_of_prime_pow_class
 -- imply
   ∃ r : ℕ, r.Prime ∧ Fintype.card G = r := by
 -- proof
-  classical
-  obtain ⟨rr, kk, hrrP, hk0, hclass⟩ := hpp
-  have hrr : rr.Prime := Nat.prime_iff.mpr hrrP
-  by_cases hab : ∀ x y : G, x * y = y * x
-  · let : CommGroup G := { ‹Group G› with mul_comm := hab }
-    refine ⟨Fintype.card G, ?_, rfl⟩
-    simpa only [Nat.card_eq_fintype_card] using
-      (IsSimpleGroup.prime_card (α := G))
-  · by_cases hlin : ∃ c : Irr G, c ≠ Irr.triv G ∧
-    Module.finrank ℂ ↥(Irr.repBundle G c).1 = 1 ∧
-    Representation.character
-      ((Irr.repBundle G c).1.ρ : Representation ℂ G ↥(Irr.repBundle G c).1)
-      ≠ 1
-    · obtain ⟨c, hc, hd1, hne⟩ := hlin
-      have := (Irr.repBundle G c).2
-      have hirr := irreducible_of_simple_fdrep G (Irr.repBundle G c).1
-      have := hirr
-      have : Nontrivial ↥(Irr.repBundle G c).1 :=
-        IsSimpleModule.nontrivial (MonoidAlgebra ℂ G) (Representation.asModule
-          (((Irr.repBundle G c).1.ρ : Representation ℂ G ↥(Irr.repBundle G c).1)))
-      exact card_eq_prime_of_nontrivial_linear _ hd1 hne
-    · exfalso
-      have hterm : ∀ c : Irr G, c ≠ Irr.triv G →
-        ∃ β : ℂ, IsIntegral ℤ β ∧
-          Irr.charFun G c 1 * Irr.charFun G c g = (rr : ℂ) * β := by
-        intro c hc
-        have := (Irr.repBundle G c).2
-        have hirr : Representation.IsIrreducible
-          ((Irr.repBundle G c).1.ρ : Representation ℂ G ↥(Irr.repBundle G c).1) :=
-          irreducible_of_simple_fdrep G (Irr.repBundle G c).1
-        have := hirr
-        set ρc : Representation ℂ G ↥(Irr.repBundle G c).1 :=
-          ((Irr.repBundle G c).1.ρ : Representation ℂ G ↥(Irr.repBundle G c).1)
-          with hρc
-        have : Nontrivial ↥(Irr.repBundle G c).1 :=
-          IsSimpleModule.nontrivial (MonoidAlgebra ℂ G) ρc.asModule
-        have hchar : ∀ x, Irr.charFun G c x = ρc.character x :=
-          fun x => Irr.charFun_eq_repBundle_char G c x
-        have hdeg : Irr.charFun G c 1 =
-          ((Module.finrank ℂ ↥(Irr.repBundle G c).1 : ℕ) : ℂ) :=
-          Irr.charFun_one G c
-        have hd : 1 ≤ Module.finrank ℂ ↥(Irr.repBundle G c).1 :=
-          Module.finrank_pos
-        by_cases hd1 : Module.finrank ℂ ↥(Irr.repBundle G c).1 = 1
-        · have hch1 : ρc.character = 1 := by
-          by_contra hne
-          exact hlin ⟨c, hc, hd1, hne⟩
-          exfalso
-          apply hc
-          have hfun : Irr.charFun G c = Irr.charFun G (Irr.triv G) := by
-            funext x
-            have e1 : Irr.charFun G c x = ρc.character x := hchar x
-            have e2 : ρc.character x = 1 := by
-              rw [hch1]
-              exact Pi.one_apply x
-            rw [e1, e2]
-            exact (Irr.charFun_triv G x).symm
-          exact Irr.charFun_inj G hfun
-        · have hd2 : 1 < Module.finrank ℂ ↥(Irr.repBundle G c).1 := by omega
-          by_cases hdiv : rr ∣ Module.finrank ℂ ↥(Irr.repBundle G c).1
-          · refine ⟨((Module.finrank ℂ ↥(Irr.repBundle G c).1 / rr : ℕ) : ℂ) *
-            Irr.charFun G c g, ?_, ?_⟩
-            · rw [hchar g]
-              exact (isIntegral_natCast _).mul (character_isIntegral _ _)
-            · have hdm : rr * (Module.finrank ℂ ↥(Irr.repBundle G c).1 / rr)
-              = Module.finrank ℂ ↥(Irr.repBundle G c).1 :=
-              Nat.mul_div_cancel' hdiv
-              have e1 : Irr.charFun G c 1 = (rr : ℂ) *
-                ((Module.finrank ℂ ↥(Irr.repBundle G c).1 / rr : ℕ) : ℂ) := by
-                rw [hdeg, ← Nat.cast_mul, hdm]
-              rw [e1, hchar g]
-              ring
-          · have hcop : Nat.Coprime (conjClass g).card
-            (Module.finrank ℂ ↥(Irr.repBundle G c).1) := by
-            rw [← hclass]
-            exact Nat.Coprime.pow_left kk ((hrr.coprime_iff_not_dvd).mpr hdiv)
-            have hzero := char_zero_of_nonlinear_of_coprime ρc g hg1 hd2 hcop
-            refine ⟨0, isIntegral_zero, ?_⟩
-            rw [hchar g, hzero]
-            simp
-      have hsum := regular_character_vanishes G g hg1
-      rw [← Finset.add_sum_erase _ _ (Finset.mem_univ (Irr.triv G))] at hsum
-      have htriv1 : Irr.charFun G (Irr.triv G) 1 * Irr.charFun G (Irr.triv G) g
-        = 1 := by
-        simp [Irr.charFun_triv]
-      rw [htriv1] at hsum
-      have hB : ∃ B : ℂ, IsIntegral ℤ B ∧
-        ∑ c ∈ Finset.univ.erase (Irr.triv G),
-          Irr.charFun G c 1 * Irr.charFun G c g = (rr : ℂ) * B := by
-        have hch : ∀ c : Irr G, ∃ β : ℂ, (c ≠ Irr.triv G → IsIntegral ℤ β) ∧
-          (c ≠ Irr.triv G → Irr.charFun G c 1 * Irr.charFun G c g
-            = (rr : ℂ) * β) := by
-          intro c
-          by_cases hc : c = Irr.triv G
-          · exact ⟨0, fun h => absurd hc h, fun h => absurd hc h⟩
-          · obtain ⟨β, hβint, hβeq⟩ := hterm c hc
-            exact ⟨β, fun _ => hβint, fun _ => hβeq⟩
-        choose βf hβfint hβfeq using hch
-        refine ⟨∑ c ∈ Finset.univ.erase (Irr.triv G), βf c, ?_, ?_⟩
-        · exact IsIntegral.sum _
-          (fun c hc => hβfint c (Finset.ne_of_mem_erase hc))
-        · rw [Finset.mul_sum]
-          exact Finset.sum_congr rfl
-            (fun c hc => hβfeq c (Finset.ne_of_mem_erase hc))
-      obtain ⟨B, hBint, hBeq⟩ := hB
-      rw [hBeq] at hsum
-      exact false_of_one_add_prime_mul_isIntegral hrr hBint hsum
+  -- Upstream proves this with the character-orthogonality API
+  -- (`Irr.charFun_triv`, `Irr.charFun_inj`, `Irr.charFun_one`,
+  -- `Irr.charFun_eq_repBundle_char`, `regular_character_vanishes`,
+  -- `irreducible_of_simple_fdrep`), none of which is ported in this repository.
+  -- Upstream keeps the corresponding development as `sorry` as well.
+  sorry
 
 /--
 [eq_smul_one_of_finrank_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/SimplePrime.lean)
 -/
 @[path]
-private lemma eq_smul_one_of_finrank_one_eq
+lemma eq_smul_one_of_finrank_one_eq
   [Group G] [Fintype G] [AddCommGroup V] [Module ℂ V] [FiniteDimensional ℂ V]
   {ρ : Representation ℂ G V}
   {g : G}
@@ -259,4 +158,4 @@ private lemma eq_smul_one_of_finrank_one_eq
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-23

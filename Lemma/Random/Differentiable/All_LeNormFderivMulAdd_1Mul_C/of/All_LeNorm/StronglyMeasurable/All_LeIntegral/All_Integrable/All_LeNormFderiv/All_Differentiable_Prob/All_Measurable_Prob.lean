@@ -109,11 +109,11 @@ private lemma main
   {f : ℝ × 𝒮 × 𝒜 → ℝ}
   {Cf : ℝ}
 -- given
-  (h₀ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2))
-  (h₁ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
-  (h₂ : ∀ sₜ, ∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖) ∂ReferenceMeasure.measure ≤ Cg)
-  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖))
-  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) ReferenceMeasure.measure)
+  (h₀ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π θ z.1 z.2))
+  (h₁ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π θ sₜ aₜ))
+  (h₂ : ∀ sₜ, ∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖) ∂ReferenceMeasure.measure ≤ Cg)
+  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖))
+  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖)) ReferenceMeasure.measure)
   (hf : StronglyMeasurable f)
   (hC : ∀ z, ‖f z‖ ≤ Cf)
   (hCf : 0 ≤ Cf)
@@ -125,10 +125,10 @@ private lemma main
       (j + 1) * (Cg * Cf) := by
 -- proof
   let g : 𝒮 → 𝒜 → ℝ :=
-    fun sₜ aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)
-  have hBound : ∀ θ sₜ aₜ, ‖fderiv ℝ (fun θ => M.π[θ] sₜ aₜ) θ‖ ≤ g sₜ aₜ := by
+    fun sₜ aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖)
+  have hBound : ∀ θ sₜ aₜ, ‖fderiv ℝ (fun θ => M.π θ sₜ aₜ) θ‖ ≤ g sₜ aₜ := by
     intro θ sₜ aₜ
-    have : ‖∇[θ] M.π[θ] sₜ aₜ‖ ≤ g sₜ aₜ := by
+    have : ‖∇[θ] M.π θ sₜ aₜ‖ ≤ g sₜ aₜ := by
       refine le_csSup ?_ ⟨θ, rfl⟩
       exact hBdd sₜ aₜ
     simpa [gradient, LinearIsometryEquiv.norm_map] using this
@@ -141,7 +141,7 @@ private lemma main
   induction j generalizing sₜ with
   | zero =>
     have e : (fun θ => ∫ z, M.Kf θ f 0 z ∂(M.stageK θ sₜ)) =
-        fun θ => ∫ u, M.π[θ] sₜ u *
+        fun θ => ∫ u, M.π θ sₜ u *
           (∫ ρ, f (ρ, sₜ, u) ∂(M.reward (sₜ, u))) ∂ReferenceMeasure.measure :=
       funext fun θ => by
         change ∫ z, f z ∂(M.stageK θ sₜ) = _
@@ -151,7 +151,7 @@ private lemma main
     rw [e]
     have hD := fun θ =>
       HasFDerivAt.LeNorm.of.All_LeNormFderiv.All_LeNorm.All_Differentiable.All_Measurable.Integrable.All_LeNormFderiv.All_EqIntegral_1.All_Ge_0.All_Differentiable.All_Measurable
-        (ν := ReferenceMeasure.measure) (f := fun θ u => M.π[θ] sₜ u)
+        (ν := ReferenceMeasure.measure) (f := fun θ u => M.π θ sₜ u)
         (G := fun _ u => ∫ ρ, f (ρ, sₜ, u) ∂(M.reward (sₜ, u))) (g := g sₜ)
         (B₀ := Cf) (B₁ := 0)
         (fun θ => (h₀ θ).comp measurable_prodMk_left) (h₁ sₜ)
@@ -162,7 +162,7 @@ private lemma main
         (fun _ u => reward_int_bdd (M := M) hC sₜ u)
         (fun θ u => by simp) θ
     have hW : ∀ θ, HasFDerivAt
-      (fun θ => ∫ u, M.π[θ] sₜ u *
+      (fun θ => ∫ u, M.π θ sₜ u *
         (∫ ρ, f (ρ, sₜ, u) ∂(M.reward (sₜ, u))) ∂ReferenceMeasure.measure) _ θ :=
       fun θ => (hD θ).1
     refine ⟨fun θ => (hW θ).differentiableAt, fun θ => ?_⟩
@@ -170,7 +170,7 @@ private lemma main
     linarith [(hD θ).2, hR sₜ]
   | succ j ih =>
     have e : (fun θ => ∫ z, M.Kf θ f (j + 1) z ∂(M.stageK θ sₜ)) =
-        fun θ => ∫ u, M.π[θ] sₜ u *
+        fun θ => ∫ u, M.π θ sₜ u *
           (∫ y, (∫ z, M.Kf θ f j z ∂(M.stageK θ y)) ∂(M.trans (sₜ, u)))
           ∂ReferenceMeasure.measure :=
       funext fun θ =>
@@ -227,7 +227,7 @@ private lemma main
       simpa using h
     have hD := fun θ =>
       HasFDerivAt.LeNorm.of.All_LeNormFderiv.All_LeNorm.All_Differentiable.All_Measurable.Integrable.All_LeNormFderiv.All_EqIntegral_1.All_Ge_0.All_Differentiable.All_Measurable
-        (ν := ReferenceMeasure.measure) (f := fun θ u => M.π[θ] sₜ u)
+        (ν := ReferenceMeasure.measure) (f := fun θ u => M.π θ sₜ u)
         (G := fun θ u =>
           ∫ y, (∫ z, M.Kf θ f j z ∂(M.stageK θ y)) ∂(M.trans (sₜ, u)))
         (g := g sₜ) (B₀ := Cf) (B₁ := ((j : ℝ) + 1) * (Cg * Cf))
@@ -235,7 +235,7 @@ private lemma main
         (fun θ u => hStoch.nonneg θ sₜ u) (fun θ => hStoch.integral_eq_one θ sₜ)
         (fun θ u => hBound θ sₜ u) (hInt sₜ)
         hT (fun u θ => (hI u θ).differentiableAt) hgb hg' θ
-    have hW : ∀ θ, HasFDerivAt (fun θ => ∫ u, M.π[θ] sₜ u *
+    have hW : ∀ θ, HasFDerivAt (fun θ => ∫ u, M.π θ sₜ u *
         (∫ y, (∫ z, M.Kf θ f j z ∂(M.stageK θ y)) ∂(M.trans (sₜ, u)))
         ∂ReferenceMeasure.measure) _ θ := fun θ => (hD θ).1
     refine ⟨fun θ => (hW θ).differentiableAt, fun θ => ?_⟩

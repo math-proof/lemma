@@ -2,6 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.GroupTheory.BurnsidePaqb.SimplePrime
 import Lemma.Complex.False.of.EqAdd1Mul_0.IsIntegral.Prime
+import Lemma.Nat.Any_Eq_MulPowS.of.Prime.Prime
 
 
 namespace BurnsidePaqb
@@ -9,7 +10,6 @@ namespace BurnsidePaqb
 /--
 [burnside_paqb_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb.lean)
 -/
-@[path]
 private lemma burnside_paqb_zero
   [Group G] [Fintype G]
   {p q a b : ℕ}
@@ -24,24 +24,16 @@ private lemma burnside_paqb_zero
     (fun hH hg => by
       have := hH
       obtain ⟨g, hg1, hpp⟩ := hg
-      exact cor6_of_prime_pow_class g hg1 hpp)
-    p q a b hp hq hcard
-attribute [-instance] Fin.instMul in
-attribute [-instance] Fin.instHPowNatOfNeZero_mathlib in
-attribute [-instance] Lean.Grind.Fin.instHPowFinNatOfNeZero in
-
-end BurnsidePaqb
-
-namespace BurnsidePaqb
+      exact cor6_of_prime_pow_class (g := g) hg1 hpp)
+    (p := p) (q := q) (a := a) (b := b) hp hq hcard
 
 /--
 [burnside_paqb](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb.lean)
 -/
-@[path]
-private lemma burnside_paqb
+lemma burnside_paqb
   [Group G] [Fintype G]
-  {p q a b : ℕ}
 -- given
+  (p q a b : ℕ)
   (hp : Nat.Prime p)
   (hq : Nat.Prime q)
   (hcard : Fintype.card G = p ^ a * q ^ b) :
@@ -78,7 +70,8 @@ private lemma burnside_paqb
     e.symm.injective hone hmul hinv hdiv hnpow hzpow
   have hcardH : Fintype.card (Fin n) = p ^ a * q ^ b := by
     rwa [Fintype.card_fin]
-  have hsolH : Group.IsSolvable (Fin n) := burnside_paqb_zero p q a b hp hq hcardH
+  have hsolH : Group.IsSolvable (Fin n) :=
+    burnside_paqb_zero (p := p) (q := q) (a := a) (b := b) hp hq hcardH
   let E : (Fin n) →* G :=
     { toFun := e.symm, map_one' := hone, map_mul' := hmul }
   have hEsurj : Function.Surjective E := fun b => ⟨e b, e.symm_apply_apply b⟩
@@ -90,7 +83,8 @@ private lemma burnside_paqb
   let T : G →* Unit :=
     { toFun := fun _ => (), map_one' := rfl, map_mul' := fun _ _ => rfl }
   have hle : T.ker ≤ E.range := by
-    rwa [hrange]
+    rw [hrange]
+    exact le_top
   have := hsolH
   exact Group.isSolvable_of_ker_le_range E T hle
 
@@ -98,4 +92,4 @@ end BurnsidePaqb
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-23

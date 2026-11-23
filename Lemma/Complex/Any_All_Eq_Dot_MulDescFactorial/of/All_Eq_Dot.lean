@@ -42,10 +42,10 @@ private lemma main
   (hrec : ∀ k : ℕ, h[k + n] = c ⬝ᵥ h[k: k + n]) :
 -- imply
   ∃ (e : Fin n → ℕ) (r : Fin n → ℂ) (A : Fin n → ℂ), ∀ t : ℕ,
-    h[t] = A ⬝ᵥ fun i => t.descFactorial e[i] * r[i] ^ (t - e[i]) := by
+    h[t] = A ⬝ᵥ fun (i : Fin n) => t.descFactorial e[i] * r[i] ^ (t - e[i]) := by
 -- proof
   classical
-  let E : LinearRecurrence ℂ := ⟨n, fun i => c.toFun i⟩
+  let E : LinearRecurrence ℂ := ⟨n, c⟩
   let p : ℂ[X] := E.charPoly
   have hpdeg : p.natDegree = n := by
     simpa [p, E] using natDegree_eq_of_degree_eq_some E.charPoly_degree_eq_order
@@ -125,14 +125,14 @@ private lemma main
     simpa [d, Finset.card_univ] using hcard.symm
   have hdet :=
     DetOf_Sum_In_Ico_SumIio_SumIic.ne.Zero.of.EqSum.All_Ne
-      (x := Fun.mk x) (d := Fun.mk d)
-      (fun i j hij => by simpa [Fun.getElem_eq] using hdist i j hij)
-      (by simpa [Fun.getElem_eq] using hsum)
+      (x := x) (d := d)
+      (fun i j hij => by simpa using hdist i j hij)
+      (by simpa using hsum)
   have hblock (i : Fin n) :
     ∃ k : Fin rd, (i : ℕ) ∈ Finset.Ico (∑ j ∈ Finset.Iio k, d j) (∑ j ∈ Finset.Iic k, d j) := by
-    have hsumd : ∑ k : Fin rd, (Fun.mk d)[k] = n := by
-      simpa [Fun.getElem_eq] using hsum
-    obtain ⟨k, hk⟩ := Any_In_IcoSumIio_SumIic.of.Eq_Sum hsumd i
+    have hsumd : ∑ k : Fin rd, d[k] = n := by
+      simpa using hsum
+    obtain ⟨k, hk⟩ := Any_In_IcoSumIio_SumIic.of.Eq_Sum (d := d) hsumd i
     refine ⟨k, ?_⟩
     dsimp only [GetElem.getElem] at hk
     apply hk
@@ -146,7 +146,7 @@ private lemma main
     have hle : ∑ j ∈ Finset.Iio (block i), d j ≤ i := by
       simpa [block] using hi.1
     have hlt : i < ∑ j ∈ Finset.Iio (block i), d j + d (block i) := by
-      have h := AddSumIio.eq.SumIic (Fun.mk d) (block i)
+      have h := AddSumIio.eq.SumIic d (block i)
       dsimp only [GetElem.getElem] at h
       rw [h]
       simpa [block] using hi.2
@@ -177,7 +177,7 @@ private lemma main
           intro hkmem
           apply hk'
           refine Eq.of.In_IcoSumIio_SumIic.In_IcoSumIio_SumIic
-            (d := Fun.mk d) (t := i) (k₁ := k') (k₂ := block i) ?_ ?_
+            (d := d) (t := i) (k₁ := k') (k₂ := block i) ?_ ?_
           ·
             dsimp only [GetElem.getElem]
             apply hkmem
@@ -216,12 +216,12 @@ private lemma main
       omega
     have hzero : (Nat.iterate derivative e (X ^ m * p)).eval ρ = 0 := by
       simpa [IsRoot] using isRoot_iterate_derivative_of_lt_rootMultiplicity hmult
-    have hpX : p = X ^ n - ∑ i : Fin n, C (c.toFun i) * X ^ (i : ℕ) := by
+    have hpX : p = X ^ n - ∑ i : Fin n, C (c i) * X ^ (i : ℕ) := by
       simp only [p, LinearRecurrence.charPoly, E]
       simp_rw [← C_mul_X_pow_eq_monomial]
       simp
     have hq : X ^ m * p =
-        X ^ (m + n) - ∑ i : Fin n, C (c.toFun i) * X ^ (m + i) := by
+        X ^ (m + n) - ∑ i : Fin n, C (c i) * X ^ (m + i) := by
       rw [hpX, mul_sub, Finset.mul_sum]
       congr 1
       · rw [← pow_add]
@@ -230,7 +230,7 @@ private lemma main
         ring
     have hderiv : Nat.iterate derivative e (X ^ m * p) =
         C (((m + n).descFactorial e : ℂ)) * X ^ ((m + n) - e) -
-          ∑ i : Fin n, C (c.toFun i) *
+          ∑ i : Fin n, C (c i) *
             (C (((m + i).descFactorial e : ℂ)) * X ^ ((m + i) - e)) := by
       rw [hq, iterate_derivative_sub, iterate_derivative_sum]
       simp_rw [iterate_derivative_C_mul, iterate_derivative_X_pow_eq_C_mul]
@@ -272,9 +272,9 @@ private lemma main
     simpa [u] using hrow ⟨t, ht⟩
   have hu : (fun t => h[t]) = u :=
     (E.eq_iff_eqOn_range_order (fun t => h[t]) u hEsol hcombo).mpr hagree
-  refine ⟨⟨ex⟩, ⟨root⟩, ⟨cvec⟩, ?_⟩
+  refine ⟨ex, root, cvec, ?_⟩
   intro t
-  simpa [u, basis, Fun.getElem_eq, Dot.fun_fin_eq] using congr_fun hu t
+  simpa [u, basis] using congr_fun hu t
 
 
 -- created on 2026-10-25

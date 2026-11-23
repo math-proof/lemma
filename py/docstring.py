@@ -35,7 +35,7 @@ CUSTOM_ATTR_HEADS = frozenset({
     "mt", "mp.mt", "mpr.mt", "Or.inl", "Or.inr", "mpr.left", "mpr.right",
     "mp.left", "mp.right",
     "And.left", "And.right",
-    "fin", "fin.comm", "fin.mp", "fin.mpr", "val", "Fun", "subst", "cast", "cast.fin",
+    "fin", "fin.comm", "fin.mp", "fin.mpr", "val", "subst", "cast", "cast.fin",
     "mp and", "mpr and", "mp.comm and", "mpr.comm and",
 })
 

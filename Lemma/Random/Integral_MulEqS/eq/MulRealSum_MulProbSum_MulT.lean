@@ -56,7 +56,7 @@ private lemma main
 -- imply
   ∫ ω, (if s t ω = sₜ then (1:ℝ) else 0) * f (s (t + 1) ω) ∂(M θ) =
     (M θ).real (s t ⁻¹' {sₜ}) *
-      ∫ u, M.π[θ] sₜ u * (∫ y, f y ∂(M.trans (sₜ, u))) ∂μ.measure := by
+      ∫ u, M.π θ sₜ u * (∫ y, f y ∂(M.trans (sₜ, u))) ∂μ.measure := by
 -- proof
   obtain rfl : s = fun t ω ↦ (ω t).2.1 :=
     funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₀ t) ω)).symm
@@ -77,7 +77,7 @@ private lemma main
     (M := M) hf hC θ 0 sₜ]
   congr 1
   funext u
-  refine congrArg (fun inner => M.π[θ] sₜ u * inner) ?_
+  refine congrArg (fun inner => M.π θ sₜ u * inner) ?_
   congr 1
   funext y
   exact w0 (M := M) θ f y

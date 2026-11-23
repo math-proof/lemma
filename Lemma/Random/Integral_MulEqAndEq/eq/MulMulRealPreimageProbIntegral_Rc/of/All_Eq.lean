@@ -30,7 +30,7 @@ private lemma main
   (aₜ : 𝒜) :
 -- imply
   ∫ ω, (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) * r t ω ∂(M θ) =
-    (M θ).real (s t ⁻¹' {sₜ}) * (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) *
+    (M θ).real (s t ⁻¹' {sₜ}) * (M.π θ sₜ aₜ * μ.measure.real {aₜ}) *
       ∫ ρ, clip (ρ, sₜ, aₜ).1 (-R) R ∂(M.reward (sₜ, aₜ)) := by
 -- proof
   have hclip : StronglyMeasurable
@@ -72,16 +72,16 @@ private lemma main
   have hinner :
     ∫ z, (if z.2.2 = aₜ then (1:ℝ) else 0) * clip z.1 (-R) R
       ∂(M.stageK θ sₜ) =
-      M.π[θ] sₜ aₜ * μ.measure.real {aₜ} *
+      M.π θ sₜ aₜ * μ.measure.real {aₜ} *
         ∫ ρ, clip (ρ, sₜ, aₜ).1 (-R) R ∂(M.reward (sₜ, aₜ)) := by
     rw [Integral.eq.Integral_SMul.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
       (M := M) hgu (LeNorm_Mul1.of.All_LeNorm
         (p := (fun z : ℝ × 𝒮 × 𝒜 => z.2.2 = aₜ)) hbound) θ sₜ]
     have hv : ∀ v,
-      M.π[θ] sₜ v •
+      M.π θ sₜ v •
         ∫ ρ, (if v = aₜ then (1:ℝ) else 0) *
           clip (ρ, sₜ, v).1 (-R) R ∂(M.reward (sₜ, v)) =
-      (if v = aₜ then (1:ℝ) else 0) * M.π[θ] sₜ v *
+      (if v = aₜ then (1:ℝ) else 0) * M.π θ sₜ v *
         ∫ ρ, clip (ρ, sₜ, aₜ).1 (-R) R ∂(M.reward (sₜ, aₜ)) := by
       intro v
       if hv : v = aₜ then
@@ -91,8 +91,8 @@ private lemma main
         simp [hv, smul_eq_mul]
     simp_rw [hv, integral_mul_const]
     have hfun :
-      (fun v => (if v = aₜ then (1:ℝ) else 0) * M.π[θ] sₜ v) =
-        ({aₜ} : Set 𝒜).indicator (M.π[θ] sₜ) := by
+      (fun v => (if v = aₜ then (1:ℝ) else 0) * M.π θ sₜ v) =
+        ({aₜ} : Set 𝒜).indicator (M.π θ sₜ) := by
       funext v
       by_cases hv : v = aₜ <;> simp [hv, Set.indicator]
     rw [hfun, integral_indicator (measurableSet_singleton aₜ),

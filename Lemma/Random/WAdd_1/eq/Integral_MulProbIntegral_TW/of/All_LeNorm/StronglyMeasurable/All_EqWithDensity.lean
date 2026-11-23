@@ -26,7 +26,7 @@ private lemma main
   (sₜ : 𝒮) :
 -- imply
   ∫ z, M.Kf θ f (j + 1) z ∂(M.stageK θ sₜ) =
-    ∫ u, M.π[θ] sₜ u *
+    ∫ u, M.π θ sₜ u *
       (∫ y, (∫ z, M.Kf θ f j z ∂(M.stageK θ y)) ∂(M.trans (sₜ, u)))
       ∂ReferenceMeasure.measure := by
 -- proof

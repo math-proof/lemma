@@ -67,7 +67,7 @@ private lemma joint_disint
   (aₜ : 𝒜) :
 -- imply
   ∫ ω, (if (ω t).2.1 = sₜ ∧ (ω t).2.2 = aₜ then (1 : ℝ) else 0) * g (ω t) ∂(M θ) =
-    ((M θ).map (s t)).real {sₜ} * M.π[θ] sₜ aₜ *
+    ((M θ).map (s t)).real {sₜ} * M.π θ sₜ aₜ *
       ReferenceMeasure.measure.real {aₜ} *
       ∫ ρ, g (ρ, sₜ, aₜ) ∂(M.reward (sₜ, aₜ)) := by
 -- proof
@@ -104,7 +104,7 @@ private lemma joint_disint
   rw [e1, hmap, Integral.eq.Integral_Integral.of.Integrable_Bind hInt]
   have hinner : ∀ y, ∫ z, ι z * g z ∂(M.stageK θ y) =
       if y = sₜ then
-        M.π[θ] sₜ aₜ * ReferenceMeasure.measure.real {aₜ} *
+        M.π θ sₜ aₜ * ReferenceMeasure.measure.real {aₜ} *
           ∫ ρ, g (ρ, sₜ, aₜ) ∂(M.reward (sₜ, aₜ))
       else 0 := by
     intro y
@@ -130,10 +130,10 @@ private lemma joint_disint
     simp_rw [hρ, smul_eq_mul]
     if hy : y = sₜ then
       have hfun : (fun u' : 𝒜 =>
-          M.π[θ] y u' * (if y = sₜ ∧ u' = aₜ then
+          M.π θ y u' * (if y = sₜ ∧ u' = aₜ then
             ∫ ρ, g (ρ, sₜ, aₜ) ∂(M.reward (sₜ, aₜ)) else 0)) =
           ({aₜ} : Set 𝒜).indicator (fun _ =>
-            M.π[θ] sₜ aₜ * ∫ ρ, g (ρ, sₜ, aₜ) ∂(M.reward (sₜ, aₜ))) := by
+            M.π θ sₜ aₜ * ∫ ρ, g (ρ, sₜ, aₜ) ∂(M.reward (sₜ, aₜ))) := by
         funext u'
         by_cases hu : u' = aₜ <;> simp [hu, hy, Set.indicator]
       rw [hfun, integral_indicator (measurableSet_singleton aₜ), MeasureTheory.setIntegral_const,
@@ -145,11 +145,11 @@ private lemma joint_disint
   simp_rw [hinner]
   have hI : (fun y : 𝒮 =>
       if y = sₜ then
-        M.π[θ] sₜ aₜ * ReferenceMeasure.measure.real {aₜ} *
+        M.π θ sₜ aₜ * ReferenceMeasure.measure.real {aₜ} *
           ∫ ρ, g (ρ, sₜ, aₜ) ∂(M.reward (sₜ, aₜ))
       else 0) =
       ({sₜ} : Set 𝒮).indicator (fun _ =>
-        M.π[θ] sₜ aₜ * ReferenceMeasure.measure.real {aₜ} *
+        M.π θ sₜ aₜ * ReferenceMeasure.measure.real {aₜ} *
           ∫ ρ, g (ρ, sₜ, aₜ) ∂(M.reward (sₜ, aₜ))) := by
     funext y
     by_cases hy : y = sₜ <;> simp [hy, Set.indicator]
@@ -346,7 +346,7 @@ private lemma main
       rw [happ]
       have hslice := joint_disint (M := M) h₀ hKf.1 hKf.2 θ t sₜ aₜ
       have hreal : (M θ).real B =
-          ((M θ).map (s t)).real {sₜ} * M.π[θ] sₜ aₜ *
+          ((M θ).map (s t)).real {sₜ} * M.π θ sₜ aₜ *
             ReferenceMeasure.measure.real {aₜ} := by
         have hone := joint_disint (M := M) h₀
           (g := fun _ : ℝ × 𝒮 × 𝒜 => (1 : ℝ)) (C := 1)

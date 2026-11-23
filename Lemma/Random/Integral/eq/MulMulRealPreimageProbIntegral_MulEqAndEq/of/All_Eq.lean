@@ -26,7 +26,7 @@ private lemma main
   (f : (ℕ → ℝ × 𝒮 × 𝒜) → ℝ) :
 -- imply
   ∫ ω, f ω ∂(M θ)[|s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}] =
-    ((M θ).real (s t ⁻¹' {sₜ}) * (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}))⁻¹ *
+    ((M θ).real (s t ⁻¹' {sₜ}) * (M.π θ sₜ aₜ * μ.measure.real {aₜ}))⁻¹ *
       ∫ ω, (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) * f ω ∂(M θ) := by
 -- proof
   have hS : MeasurableSet (s t ⁻¹' {sₜ}) :=
@@ -35,7 +35,7 @@ private lemma main
     Random.Measurable.of.All_Eq.snd.snd h₀ t (measurableSet_singleton aₜ)
   have hB : MeasurableSet (s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}) := hS.inter hA
   have hP : (M θ).real (s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}) =
-      (M θ).real (s t ⁻¹' {sₜ}) * (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) :=
+      (M θ).real (s t ⁻¹' {sₜ}) * (M.π θ sₜ aₜ * μ.measure.real {aₜ}) :=
     ProbJoint.eq.Mul_Prob_Pr (M := M) h₀ sₜ aₜ
   have hind :
     (s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}).indicator f =

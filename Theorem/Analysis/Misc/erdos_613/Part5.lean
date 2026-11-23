@@ -1,8 +1,12 @@
-import Mathlib
-import Instance.Analysis.Misc.erdos_613.Part2
+module
+
+public import Mathlib
+public import Instance.Analysis.Misc.erdos_613.Part2
 open Classical
 open scoped BigOperators
 
+
+public section
 
 namespace PikhurkoN5
 

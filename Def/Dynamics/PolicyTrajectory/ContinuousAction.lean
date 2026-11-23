@@ -52,7 +52,7 @@ variable {Θ 𝒮 𝒜 : Type*} [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
 
 /-- ENNReal density of `π_θ(· | x)` w.r.t. the reference measure of `𝒜` -/
 noncomputable def pdf (p : Policy Θ 𝒮 𝒜) (θ : Θ) : 𝒮 → 𝒜 → ENNReal :=
-  fun sₜ aₜ => ENNReal.ofReal (p.π[θ] sₜ aₜ)
+  fun sₜ aₜ => ENNReal.ofReal (p.π θ sₜ aₜ)
 
 /-- the action law `π_θ(· | x)` as a Markov kernel `𝒮 → 𝒜` (density w.r.t. `ReferenceMeasure.measure`) -/
 noncomputable def kernel (p : Policy Θ 𝒮 𝒜) (θ : Θ) : Kernel 𝒮 𝒜 :=
@@ -60,7 +60,7 @@ noncomputable def kernel (p : Policy Θ 𝒮 𝒜) (θ : Θ) : Kernel 𝒮 𝒜 
 
 theorem measurable_pdf (p : Policy Θ 𝒮 𝒜) [hp : StochasticPolicy p] (θ : Θ) :
     Measurable (Function.uncurry (p.pdf θ)) :=
-  show Measurable fun z : 𝒮 × 𝒜 => ENNReal.ofReal (p.π[θ] z.1 z.2) from
+  show Measurable fun z : 𝒮 × 𝒜 => ENNReal.ofReal (p.π θ z.1 z.2) from
     ENNReal.measurable_ofReal.comp (hp.measurable_π θ)
 
 instance (p : Policy Θ 𝒮 𝒜) [hp : StochasticPolicy p] (θ : Θ) : IsMarkovKernel (p.kernel θ) := by
@@ -68,15 +68,15 @@ instance (p : Policy Θ 𝒮 𝒜) [hp : StochasticPolicy p] (θ : Θ) : IsMarko
   have hmeas : Measurable (Function.uncurry (p.pdf θ)) := p.measurable_pdf θ
   rw [kernel, Kernel.withDensity_apply _ hmeas, MeasureTheory.withDensity_apply _ MeasurableSet.univ,
     Measure.restrict_univ]
-  have hnn : 0 ≤ᵐ[ReferenceMeasure.measure] (p.π[θ] sₜ) :=
+  have hnn : 0 ≤ᵐ[ReferenceMeasure.measure] (p.π θ sₜ) :=
     Filter.Eventually.of_forall fun aₜ => hp.nonneg θ sₜ aₜ
   have h1 := hp.integral_eq_one θ sₜ
-  have hint : Integrable (p.π[θ] sₜ) ReferenceMeasure.measure :=
+  have hint : Integrable (p.π θ sₜ) ReferenceMeasure.measure :=
     integrable_of_integral_eq_one h1
   have : ∫⁻ aₜ, p.pdf θ sₜ aₜ ∂ReferenceMeasure.measure = 1 := by
     simp only [pdf]
     rw [← ofReal_integral_eq_lintegral_ofReal hint hnn]
-    rw [show ∫ x, p.π[θ] sₜ x ∂ReferenceMeasure.measure = 1 from h1,
+    rw [show ∫ x, p.π θ sₜ x ∂ReferenceMeasure.measure = 1 from h1,
       ENNReal.ofReal_one]
   simp [this]
 
@@ -93,13 +93,13 @@ noncomputable def rkd (M : Model Θ 𝒮 𝒜) (R : ℝ) (sₜ : 𝒮) (aₜ : �
 /-- `Wkd θ k sₜ = 𝔼[r[t+k] | s[t] = sₜ]` with a density policy: one policy step (an integral over the actions) and one
 transition per `k` -/
 noncomputable def Wkd (M : Model Θ 𝒮 𝒜) (R : ℝ) (θ : Θ) : ℕ → 𝒮 → ℝ
-  | 0 => fun sₜ => ∫ aₜ, M.π[θ] sₜ aₜ * M.rkd R sₜ aₜ ∂ReferenceMeasure.measure
-  | k + 1 => fun sₜ => ∫ aₜ, M.π[θ] sₜ aₜ * ∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, aₜ)) ∂ReferenceMeasure.measure
+  | 0 => fun sₜ => ∫ aₜ, M.π θ sₜ aₜ * M.rkd R sₜ aₜ ∂ReferenceMeasure.measure
+  | k + 1 => fun sₜ => ∫ aₜ, M.π θ sₜ aₜ * ∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, aₜ)) ∂ReferenceMeasure.measure
 
 /-- `P1kd θ p sₜ y = ℙ(s[t+1] = y | s[t] = sₜ) = ∫ aₜ, π_θ(aₜ | sₜ) * p(y | sₜ, aₜ) daₜ`, the next-state density
 when `p sₜ aₜ` is a density of the transition `M.trans (sₜ, aₜ)` -/
 noncomputable def P1kd (M : Model Θ 𝒮 𝒜) (θ : Θ) (p : 𝒮 → 𝒜 → 𝒮 → ℝ) (sₜ y : 𝒮) : ℝ :=
-  ∫ aₜ, M.π[θ] sₜ aₜ * p sₜ aₜ y ∂ReferenceMeasure.measure
+  ∫ aₜ, M.π θ sₜ aₜ * p sₜ aₜ y ∂ReferenceMeasure.measure
 
 /-- Measurability of `M.trans` and `M.reward` as measure-valued maps.
 `StochasticMDP` stores these as `ProbabilityMeasure`-valued functions and does not record

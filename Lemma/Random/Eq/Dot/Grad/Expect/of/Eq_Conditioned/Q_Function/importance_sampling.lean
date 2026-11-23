@@ -33,15 +33,15 @@ private lemma smul_fderiv_log
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy]
 -- given
-  (hdiff : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
+  (hdiff : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π θ sₜ aₜ))
   (θ : Θ)
   (sₜ : 𝒮)
   (aₜ : 𝒜) :
 -- imply
-  M.π[θ] sₜ aₜ • fderiv ℝ (fun κ => Real.log (M.π[κ] sₜ aₜ)) θ =
-    fderiv ℝ (fun κ => M.π[κ] sₜ aₜ) θ := by
+  M.π θ sₜ aₜ • fderiv ℝ (fun κ => Real.log (M.π κ sₜ aₜ)) θ =
+    fderiv ℝ (fun κ => M.π κ sₜ aₜ) θ := by
 -- proof
-  if h : M.π[θ] sₜ aₜ = 0 then
+  if h : M.π θ sₜ aₜ = 0 then
     rw [h, zero_smul]
     exact (IsLocalMin.fderiv_eq_zero (Filter.Eventually.of_forall fun κ => by
       rw [h]
@@ -244,7 +244,7 @@ private lemma integral_kernel
   (sₜ : 𝒮) :
 -- imply
   ∫ u, f u ∂(M[sₜ] θ) =
-    ∫ u, M.π[θ] sₜ u • f u ∂μ.measure := by
+    ∫ u, M.π θ sₜ u • f u ∂μ.measure := by
 -- proof
   have hπm : Measurable (M.pdf θ sₜ) :=
     (M.measurable_pdf θ).comp measurable_prodMk_left
@@ -254,7 +254,7 @@ private lemma integral_kernel
   rw [hker, integral_withDensity_eq_integral_toReal_smul hπm
     (Filter.Eventually.of_forall fun _ => ENNReal.ofReal_lt_top)]
   refine integral_congr_ae (Filter.Eventually.of_forall fun u => ?_)
-  have hnn : 0 ≤ M.π[θ] sₜ u := hStoch.nonneg θ sₜ u
+  have hnn : 0 ≤ M.π θ sₜ u := hStoch.nonneg θ sₜ u
   simp only [Policy.pdf]
   rw [ENNReal.toReal_ofReal hnn]
 
@@ -265,42 +265,42 @@ private lemma is_weight_eq_score
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy]
   {θ θ' : Θ}
 -- given
-  (hdiff : ∀ sₜ aₜ, Differentiable ℝ (fun κ => M.π[κ] sₜ aₜ))
-  (hvanish : ∀ sₜ aₜ, M.π[θ'] sₜ aₜ ≠ 0 ∨ M.π[θ] sₜ aₜ = 0)
+  (hdiff : ∀ sₜ aₜ, Differentiable ℝ (fun κ => M.π κ sₜ aₜ))
+  (hvanish : ∀ sₜ aₜ, M.π θ' sₜ aₜ ≠ 0 ∨ M.π θ sₜ aₜ = 0)
   (sₜ : 𝒮)
   (aₜ : 𝒜)
   (c : ℝ) :
 -- imply
-  M.π[θ'] sₜ aₜ •
-      (c • ((∇[θ] (M.π[θ] sₜ aₜ)) / M.π[θ'] sₜ aₜ)) =
-    M.π[θ] sₜ aₜ • (c • ∇[θ] Real.log (M.π[θ] sₜ aₜ)) := by
+  M.π θ' sₜ aₜ •
+      (c • ((∇[θ] (M.π θ sₜ aₜ)) / M.π θ' sₜ aₜ)) =
+    M.π θ sₜ aₜ • (c • ∇[θ] Real.log (M.π θ sₜ aₜ)) := by
 -- proof
   let e : StrongDual ℝ Θ ≃ₗᵢ[ℝ] Θ := (InnerProductSpace.toDual ℝ Θ).symm
-  if hq : M.π[θ'] sₜ aₜ = 0 then
-    have hp : M.π[θ] sₜ aₜ = 0 := (hvanish sₜ aₜ).resolve_left (not_ne_iff.mpr hq)
+  if hq : M.π θ' sₜ aₜ = 0 then
+    have hp : M.π θ sₜ aₜ = 0 := (hvanish sₜ aₜ).resolve_left (not_ne_iff.mpr hq)
     simp [hq, hp, HDiv.hDiv]
   else
     have hgrad := smul_fderiv_log (M := M) hdiff θ sₜ aₜ
     calc
-      _ = c • ∇[θ] (M.π[θ] sₜ aₜ) := by
+      _ = c • ∇[θ] (M.π θ sₜ aₜ) := by
         simp only [HDiv.hDiv]
         rw [smul_smul, smul_smul]
-        refine congrArg (fun t => t • ∇[θ] (M.π[θ] sₜ aₜ)) ?_
+        refine congrArg (fun t => t • ∇[θ] (M.π θ sₜ aₜ)) ?_
         rw [mul_assoc, mul_comm c, ← mul_assoc, mul_inv_cancel₀ hq, one_mul]
-      _ = c • e (fderiv ℝ (fun κ => M.π[κ] sₜ aₜ) θ) := by
+      _ = c • e (fderiv ℝ (fun κ => M.π κ sₜ aₜ) θ) := by
         simp [e, gradient]
-      _ = e (c • fderiv ℝ (fun κ => M.π[κ] sₜ aₜ) θ) := by
+      _ = e (c • fderiv ℝ (fun κ => M.π κ sₜ aₜ) θ) := by
         rw [map_smul]
-      _ = e (c • (M.π[θ] sₜ aₜ •
-          fderiv ℝ (fun κ => Real.log (M.π[κ] sₜ aₜ)) θ)) := by
+      _ = e (c • (M.π θ sₜ aₜ •
+          fderiv ℝ (fun κ => Real.log (M.π κ sₜ aₜ)) θ)) := by
         rw [← hgrad]
-      _ = e ((M.π[θ] sₜ aₜ * c) •
-          fderiv ℝ (fun κ => Real.log (M.π[κ] sₜ aₜ)) θ) := by
+      _ = e ((M.π θ sₜ aₜ * c) •
+          fderiv ℝ (fun κ => Real.log (M.π κ sₜ aₜ)) θ) := by
         rw [smul_smul, mul_comm]
-      _ = M.π[θ] sₜ aₜ • (c •
-          e (fderiv ℝ (fun κ => Real.log (M.π[κ] sₜ aₜ)) θ)) := by
+      _ = M.π θ sₜ aₜ • (c •
+          e (fderiv ℝ (fun κ => Real.log (M.π κ sₜ aₜ)) θ)) := by
         rw [smul_smul, map_smul]
-      _ = M.π[θ] sₜ aₜ • (c • ∇[θ] Real.log (M.π[θ] sₜ aₜ)) := by
+      _ = M.π θ sₜ aₜ • (c • ∇[θ] Real.log (M.π θ sₜ aₜ)) := by
         simp [e, gradient]
 
 
@@ -415,7 +415,7 @@ private lemma kernel_pdf
   (hSP : SinglePSpace (M[sₜ] θ') (id : 𝒜 → 𝒜)) :
 -- imply
   (fun u => ((M[sₜ] θ').prob (id : 𝒜 → 𝒜) u).toReal) =ᵐ[μ.measure]
-    M.π[θ'] sₜ := by
+    M.π θ' sₜ := by
 -- proof
   have hmap : (M[sₜ] θ').map (id : 𝒜 → 𝒜) =
       (μ.measure : Measure 𝒜).withDensity (M.pdf θ' sₜ) := by
@@ -427,7 +427,7 @@ private lemma kernel_pdf
     exact Measure.rnDeriv_withDensity (ν := (μ.measure : Measure 𝒜)) hpdf
   filter_upwards [hrn] with u hu
   simp only [Measure.prob]
-  have hnn : 0 ≤ M.π[θ'] sₜ u := hStoch.nonneg θ' sₜ u
+  have hnn : 0 ≤ M.π θ' sₜ u := hStoch.nonneg θ' sₜ u
   rw [hu]
   simp only [Policy.pdf]
   rw [ENNReal.toReal_ofReal hnn]
@@ -602,17 +602,17 @@ private lemma main
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ (t : ℕ), (· t) = (r[t], s[t], a[t]))
   (h₂ : ∀ θ t («\sf{s}» : ℕ → 𝒮) («\sf{a}» : ℕ → 𝒜), Q θ t «\sf{s}»[t] «\sf{a}»[t] = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s[t] = «\sf{s}»[t] ∧ a[t] = «\sf{a}»[t]))
-  (h₃ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
-  (h₄ : ∀ sₜ aₜ, M.π[θ'] sₜ aₜ ≠ 0 ∨ M.π[θ] sₜ aₜ = 0)
-  (hg : sup[sₜ] (∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖) ∂μ.measure) < ∞)
-  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖))
-  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) μ.measure)
-  (hφ : StronglyMeasurable (fun z : 𝒮 × 𝒜 => fderiv ℝ (fun κ => Real.log (M.π[κ] z.1 z.2)) θ))
-  (hMs : sup[y, u] ‖fderiv ℝ (fun κ => Real.log (M.π[κ] y u)) θ‖ < ∞)
+  (h₃ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π θ sₜ aₜ))
+  (h₄ : ∀ sₜ aₜ, M.π θ' sₜ aₜ ≠ 0 ∨ M.π θ sₜ aₜ = 0)
+  (hg : sup[sₜ] (∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖) ∂μ.measure) < ∞)
+  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖))
+  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖)) μ.measure)
+  (hφ : StronglyMeasurable (fun z : 𝒮 × 𝒜 => fderiv ℝ (fun κ => Real.log (M.π κ z.1 z.2)) θ))
+  (hMs : sup[y, u] ‖fderiv ℝ (fun κ => Real.log (M.π κ y u)) θ‖ < ∞)
   (hVm : ∀ k, Measurable (M.V θ γ k))
   (hQm : ∀ k, StronglyMeasurable (fun z : 𝒮 × 𝒜 => Q θ k z.1 z.2))
   (hSPas : ∀ κ (t : ℕ), SinglePSpace (M κ) (a t, s t))
-  (hpieq : ∀ κ (t : ℕ) sₜ aₜ, ((M κ).condProb (a t, s t) (aₜ, sₜ)).toReal = M.π[κ] sₜ aₜ)
+  (hpieq : ∀ κ (t : ℕ) sₜ aₜ, ((M κ).condProb (a t, s t) (aₜ, sₜ)).toReal = M.π κ sₜ aₜ)
   (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1) :
 -- imply
   have : ∀ θ (t : ℕ), SinglePSpace (M θ) (a t, s t) := hSPas
@@ -643,18 +643,18 @@ private lemma main
 -- proof
   intro hSP hsP haP hrP hμker hpdf hPker hSPker s₀
   let g : 𝒮 → 𝒜 → ℝ :=
-    fun sₜ aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)
+    fun sₜ aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖)
   have hsupG := hg
-  have hg : ∀ κ sₜ aₜ, ‖fderiv ℝ (fun θ => M.π[θ] sₜ aₜ) κ‖ ≤ g sₜ aₜ := by
+  have hg : ∀ κ sₜ aₜ, ‖fderiv ℝ (fun θ => M.π θ sₜ aₜ) κ‖ ≤ g sₜ aₜ := by
     intro κ sₜ aₜ
-    have : ‖∇[κ] M.π[κ] sₜ aₜ‖ ≤ g sₜ aₜ := le_csSup (hBdd sₜ aₜ) ⟨κ, rfl⟩
+    have : ‖∇[κ] M.π κ sₜ aₜ‖ ≤ g sₜ aₜ := le_csSup (hBdd sₜ aₜ) ⟨κ, rfl⟩
     simpa [gradient, LinearIsometryEquiv.norm_map] using this
   have hintg : ∀ x, Integrable (g x) μ.measure := fun x => hIntg x
   have hcg := hsupG
   obtain ⟨Cg, hcgbound⟩ := id hcg
   have hcgle : ∀ x, ∫ u, g x u ∂μ.measure ≤ Cg := fun x => hcgbound ⟨x, rfl⟩
   obtain ⟨Ms, hMsb⟩ := id hMs
-  have hMsle : ∀ y u, ‖fderiv ℝ (fun κ => Real.log (M.π[κ] y u)) θ‖ ≤ Ms :=
+  have hMsle : ∀ y u, ‖fderiv ℝ (fun κ => Real.log (M.π κ y u)) θ‖ ≤ Ms :=
     fun y u => hMsb ⟨(y, u), rfl⟩
   have hQeq : ∀ t x u, Q θ t x u = M.Q θ γ t x u := fun t x u =>
     (h₂ θ t (fun _ => x) (fun _ => u)).trans
@@ -662,7 +662,7 @@ private lemma main
   let A : Θ → ℕ → 𝒮 → 𝒜 → ℝ := fun θ t x u => Q θ t x u - M.V θ γ t x
   have hAeq : ∀ θ t x u, A θ t x u = Q θ t x u - M.V θ γ t x :=
     fun _ _ _ _ => rfl
-  have hmeas : ∀ κ, Measurable (fun z : 𝒮 × 𝒜 => M.π[κ] z.1 z.2) :=
+  have hmeas : ∀ κ, Measurable (fun z : 𝒮 × 𝒜 => M.π κ z.1 z.2) :=
     hStoch.measurable_π
   have hGAE :=
     GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity.In_Ico
@@ -675,7 +675,7 @@ private lemma main
     ae_bound_V (M := M) h₀ h₁ hR θ
   let e : StrongDual ℝ Θ ≃ₗᵢ[ℝ] Θ := (InnerProductSpace.toDual ℝ Θ).symm
   let L := e.toContinuousLinearEquiv
-  have hgradLogB : ∀ y u, ‖∇[θ] Real.log (M.π[θ] y u)‖ ≤ Ms := fun y u => by
+  have hgradLogB : ∀ y u, ‖∇[θ] Real.log (M.π θ y u)‖ ≤ Ms := fun y u => by
     simpa [gradient, e, LinearIsometryEquiv.norm_map] using hMsle y u
   have hg0 : ∀ x u, 0 ≤ g x u := fun x u => (norm_nonneg _).trans (hg θ x u)
   have hs_meas : ∀ (t : ℕ), Measurable (s t) := fun t => Measurable.of.All_Eq.snd.fst h₁ t
@@ -745,20 +745,20 @@ private lemma main
     have hhi : Q θ t (s[t] ω) (a[t] ω) ≤ BG := (abs_le.mp hle).2
     change clip (Q θ t (s[t] ω) (a[t] ω)) (-BG) BG = Q θ t (s[t] ω) (a[t] ω)
     rw [clip, max_eq_left hlo, min_eq_left hhi]
-  have hgradPiB : ∀ y u, ‖∇[θ] (M.π[θ] y u)‖ ≤ g y u := fun y u => by
+  have hgradPiB : ∀ y u, ‖∇[θ] (M.π θ y u)‖ ≤ g y u := fun y u => by
     simpa [gradient, e, LinearIsometryEquiv.norm_map] using hg θ y u
   have hgradSm : StronglyMeasurable
-    (fun z : 𝒮 × 𝒜 => ∇[θ] Real.log (M.π[θ] z.1 z.2)) := by
+    (fun z : 𝒮 × 𝒜 => ∇[θ] Real.log (M.π θ z.1 z.2)) := by
     simp only [gradient]
     exact e.continuous.comp_stronglyMeasurable hφ
   have hgrad_eq : ∀ y u,
-      ∇[θ] (M.π[θ] y u) =
-        M.π[θ] y u • ∇[θ] Real.log (M.π[θ] y u) := fun y u => by
+      ∇[θ] (M.π θ y u) =
+        M.π θ y u • ∇[θ] Real.log (M.π θ y u) := fun y u => by
     have hfd := smul_fderiv_log (M := M) h₃ θ y u
     simp only [gradient]
     rw [← hfd, map_smul]
   have hgradPiSm : StronglyMeasurable
-    (fun z : 𝒮 × 𝒜 => ∇[θ] (M.π[θ] z.1 z.2)) := by
+    (fun z : 𝒮 × 𝒜 => ∇[θ] (M.π θ z.1 z.2)) := by
     convert (hStoch.measurable_π θ).stronglyMeasurable.smul hgradSm using 1
     funext z
     exact hgrad_eq z.1 z.2
@@ -777,43 +777,43 @@ private lemma main
   let ψπc : ℕ → 𝒮 → Θ := fun t x =>
     𝔼[a : M[x] θ'](
       ((Qclip t x a[t] •
-        ((∇[θ] (M.π[θ] x a[t])) /
+        ((∇[θ] (M.π θ x a[t])) /
           (ℙ[M[x] θ'](a[t] | s[t] = x) : ℝ)))))
   have hψπc_integral : ∀ t sₜ,
       ψπc t sₜ =
-        ∫ aₜ, M.π[θ] sₜ aₜ •
-          (Qclip t sₜ aₜ • ∇[θ] Real.log (M.π[θ] sₜ aₜ))
+        ∫ aₜ, M.π θ sₜ aₜ •
+          (Qclip t sₜ aₜ • ∇[θ] Real.log (M.π θ sₜ aₜ))
           ∂(μ.measure : Measure 𝒜) := by
     intro t sₜ
     have hx : Measurable (fun aₜ : 𝒜 => (sₜ, aₜ)) :=
       Measurable.prodMk measurable_const measurable_id
     have hA : StronglyMeasurable (fun aₜ : 𝒜 => Qclip t sₜ aₜ) :=
       (hQclipm t).comp_measurable hx
-    have hπ' : Measurable (fun aₜ : 𝒜 => M.π[θ'] sₜ aₜ) :=
+    have hπ' : Measurable (fun aₜ : 𝒜 => M.π θ' sₜ aₜ) :=
       (hStoch.measurable_π θ').comp hx
-    have hgrad : StronglyMeasurable (fun aₜ : 𝒜 => ∇[θ] (M.π[θ] sₜ aₜ)) :=
+    have hgrad : StronglyMeasurable (fun aₜ : 𝒜 => ∇[θ] (M.π θ sₜ aₜ)) :=
       hgradPiSm.comp_measurable hx
     have hnum : StronglyMeasurable
-      (fun aₜ : 𝒜 => Qclip t sₜ aₜ • ∇[θ] (M.π[θ] sₜ aₜ)) :=
+      (fun aₜ : 𝒜 => Qclip t sₜ aₜ • ∇[θ] (M.π θ sₜ aₜ)) :=
       hA.smul hgrad
     have hSP : SinglePSpace (M[sₜ] θ') (id : 𝒜 → 𝒜) := hSPker sₜ
     have hpdf := kernel_pdf (M := M) θ' sₜ (hμker sₜ) (hpdf sₜ) hSP
     have hfπ : AEStronglyMeasurable
       (fun aₜ => Qclip t sₜ aₜ •
-        ((∇[θ] (M.π[θ] sₜ aₜ)) / M.π[θ'] sₜ aₜ))
+        ((∇[θ] (M.π θ sₜ aₜ)) / M.π θ' sₜ aₜ))
       (M[sₜ] θ' : Measure 𝒜) := by
       have heq :
           (fun aₜ => Qclip t sₜ aₜ •
-            ((∇[θ] (M.π[θ] sₜ aₜ)) / M.π[θ'] sₜ aₜ)) =
-          (fun aₜ => M.π[θ'] sₜ aₜ)⁻¹ •
-            (fun aₜ => Qclip t sₜ aₜ • ∇[θ] (M.π[θ] sₜ aₜ)) := by
+            ((∇[θ] (M.π θ sₜ aₜ)) / M.π θ' sₜ aₜ)) =
+          (fun aₜ => M.π θ' sₜ aₜ)⁻¹ •
+            (fun aₜ => Qclip t sₜ aₜ • ∇[θ] (M.π θ sₜ aₜ)) := by
         funext u
         exact smul_div_eq_inv_smul _ _ _
       rw [heq]
       exact ((hπ'.inv.stronglyMeasurable).smul hnum).aestronglyMeasurable
     have hfP : AEStronglyMeasurable
       (fun aₜ => Qclip t sₜ aₜ •
-        ((∇[θ] (M.π[θ] sₜ aₜ)) /
+        ((∇[θ] (M.π θ sₜ aₜ)) /
           ((M[sₜ] θ').prob (id : 𝒜 → 𝒜) aₜ).toReal))
       ((M[sₜ] θ').map (id : 𝒜 → 𝒜)) := by
       rw [Measure.map_id]
@@ -832,60 +832,60 @@ private lemma main
     rw [hu]
     exact is_weight_eq_score (M := M) h₃ h₄ sₜ u (Qclip t sₜ u)
   have hterm_clip : ∀ t sₜ aₜ,
-      ‖M.π[θ'] sₜ aₜ •
-        (Qclip t sₜ aₜ • ((∇[θ] (M.π[θ] sₜ aₜ)) / M.π[θ'] sₜ aₜ))‖ ≤
+      ‖M.π θ' sₜ aₜ •
+        (Qclip t sₜ aₜ • ((∇[θ] (M.π θ sₜ aₜ)) / M.π θ' sₜ aₜ))‖ ≤
         BG * g sₜ aₜ := by
     intro t sₜ aₜ
-    if hq : M.π[θ'] sₜ aₜ = 0 then
+    if hq : M.π θ' sₜ aₜ = 0 then
       simp [hq, HDiv.hDiv]
       exact mul_nonneg hBG (hg0 sₜ aₜ)
     else
       have hcancel :
-        M.π[θ'] sₜ aₜ •
-          (Qclip t sₜ aₜ • ((∇[θ] (M.π[θ] sₜ aₜ)) / M.π[θ'] sₜ aₜ)) =
-          Qclip t sₜ aₜ • ∇[θ] (M.π[θ] sₜ aₜ) := by
+        M.π θ' sₜ aₜ •
+          (Qclip t sₜ aₜ • ((∇[θ] (M.π θ sₜ aₜ)) / M.π θ' sₜ aₜ)) =
+          Qclip t sₜ aₜ • ∇[θ] (M.π θ sₜ aₜ) := by
         simp only [HDiv.hDiv]
         rw [smul_smul, smul_smul]
-        refine congrArg (fun t => t • ∇[θ] (M.π[θ] sₜ aₜ)) ?_
+        refine congrArg (fun t => t • ∇[θ] (M.π θ sₜ aₜ)) ?_
         rw [mul_assoc, mul_comm (Qclip t sₜ aₜ), ← mul_assoc, mul_inv_cancel₀ hq, one_mul]
       rw [hcancel, norm_smul, Real.norm_eq_abs]
       exact mul_le_mul (hQclip_bd t sₜ aₜ) (hgradPiB sₜ aₜ) (norm_nonneg _) hBG
   have hψπcB : ∀ t x, ‖ψπc t x‖ ≤ BG * max Cg 0 := by
     intro t sₜ
     have heq :
-        (fun aₜ => M.π[θ] sₜ aₜ •
-          (Qclip t sₜ aₜ • ∇[θ] Real.log (M.π[θ] sₜ aₜ))) =
-        fun aₜ => M.π[θ'] sₜ aₜ •
-          (Qclip t sₜ aₜ • ((∇[θ] (M.π[θ] sₜ aₜ)) / M.π[θ'] sₜ aₜ)) := by
+        (fun aₜ => M.π θ sₜ aₜ •
+          (Qclip t sₜ aₜ • ∇[θ] Real.log (M.π θ sₜ aₜ))) =
+        fun aₜ => M.π θ' sₜ aₜ •
+          (Qclip t sₜ aₜ • ((∇[θ] (M.π θ sₜ aₜ)) / M.π θ' sₜ aₜ)) := by
       funext u
       exact (is_weight_eq_score (M := M) h₃ h₄ sₜ u (Qclip t sₜ u)).symm
     rw [hψπc_integral, heq]
     have hinterm : Integrable
-      (fun aₜ => M.π[θ'] sₜ aₜ •
-        (Qclip t sₜ aₜ • ((∇[θ] (M.π[θ] sₜ aₜ)) / M.π[θ'] sₜ aₜ)))
+      (fun aₜ => M.π θ' sₜ aₜ •
+        (Qclip t sₜ aₜ • ((∇[θ] (M.π θ sₜ aₜ)) / M.π θ' sₜ aₜ)))
       (μ.measure : Measure 𝒜) := by
       have hx : Measurable (fun aₜ : 𝒜 => (sₜ, aₜ)) :=
         Measurable.prodMk measurable_const measurable_id
       have hA : StronglyMeasurable (fun aₜ : 𝒜 => Qclip t sₜ aₜ) :=
         (hQclipm t).comp_measurable hx
-      have hπ' : Measurable (fun aₜ : 𝒜 => M.π[θ'] sₜ aₜ) :=
+      have hπ' : Measurable (fun aₜ : 𝒜 => M.π θ' sₜ aₜ) :=
         (hStoch.measurable_π θ').comp hx
-      have hgrad : StronglyMeasurable (fun aₜ : 𝒜 => ∇[θ] (M.π[θ] sₜ aₜ)) :=
+      have hgrad : StronglyMeasurable (fun aₜ : 𝒜 => ∇[θ] (M.π θ sₜ aₜ)) :=
         hgradPiSm.comp_measurable hx
       have hnum : StronglyMeasurable
-        (fun aₜ : 𝒜 => Qclip t sₜ aₜ • ∇[θ] (M.π[θ] sₜ aₜ)) :=
+        (fun aₜ : 𝒜 => Qclip t sₜ aₜ • ∇[θ] (M.π θ sₜ aₜ)) :=
         hA.smul hgrad
       have hsm : StronglyMeasurable
-          (fun aₜ => M.π[θ'] sₜ aₜ •
-            (Qclip t sₜ aₜ • ((∇[θ] (M.π[θ] sₜ aₜ)) / M.π[θ'] sₜ aₜ))) := by
+          (fun aₜ => M.π θ' sₜ aₜ •
+            (Qclip t sₜ aₜ • ((∇[θ] (M.π θ sₜ aₜ)) / M.π θ' sₜ aₜ))) := by
         have hinner : StronglyMeasurable
             (fun aₜ => Qclip t sₜ aₜ •
-              ((∇[θ] (M.π[θ] sₜ aₜ)) / M.π[θ'] sₜ aₜ)) := by
+              ((∇[θ] (M.π θ sₜ aₜ)) / M.π θ' sₜ aₜ)) := by
           have heq :
               (fun aₜ => Qclip t sₜ aₜ •
-                ((∇[θ] (M.π[θ] sₜ aₜ)) / M.π[θ'] sₜ aₜ)) =
-              (fun aₜ => M.π[θ'] sₜ aₜ)⁻¹ •
-                (fun aₜ => Qclip t sₜ aₜ • ∇[θ] (M.π[θ] sₜ aₜ)) := by
+                ((∇[θ] (M.π θ sₜ aₜ)) / M.π θ' sₜ aₜ)) =
+              (fun aₜ => M.π θ' sₜ aₜ)⁻¹ •
+                (fun aₜ => Qclip t sₜ aₜ • ∇[θ] (M.π θ sₜ aₜ)) := by
             funext u
             exact smul_div_eq_inv_smul _ _ _
           rw [heq]
@@ -893,8 +893,8 @@ private lemma main
         exact hπ'.stronglyMeasurable.smul hinner
       exact ((hintg sₜ).smul (BG)).mono' hsm.aestronglyMeasurable
         (Filter.Eventually.of_forall (hterm_clip t sₜ))
-    have hle : ‖∫ aₜ, M.π[θ'] sₜ aₜ •
-        (Qclip t sₜ aₜ • ((∇[θ] (M.π[θ] sₜ aₜ)) / M.π[θ'] sₜ aₜ))
+    have hle : ‖∫ aₜ, M.π θ' sₜ aₜ •
+        (Qclip t sₜ aₜ • ((∇[θ] (M.π θ sₜ aₜ)) / M.π θ' sₜ aₜ))
         ∂(μ.measure : Measure 𝒜)‖ ≤
         ∫ u, BG * g sₜ u ∂(μ.measure : Measure 𝒜) :=
       norm_integral_le_of_norm_le ((hintg sₜ).smul (BG))
@@ -911,10 +911,10 @@ private lemma main
         mul_le_mul_of_nonneg_left hcg' hBG
   have hφAc : ∀ t, StronglyMeasurable
     (Function.uncurry fun y u =>
-      Qclip t y u • ∇[θ] Real.log (M.π[θ] y u)) := fun t =>
+      Qclip t y u • ∇[θ] Real.log (M.π θ y u)) := fun t =>
     ((hQclipm t).smul hgradSm)
   have hCφc : ∀ t y u,
-      ‖Qclip t y u • ∇[θ] Real.log (M.π[θ] y u)‖ ≤ BG * max Ms 0 :=
+      ‖Qclip t y u • ∇[θ] Real.log (M.π θ y u)‖ ≤ BG * max Ms 0 :=
     fun t y u => by
       rw [norm_smul, Real.norm_eq_abs]
       exact mul_le_mul (hQclip_bd t y u) ((hgradLogB y u).trans (le_max_left _ _))
@@ -922,8 +922,8 @@ private lemma main
   have hinnerC_m : ∀ t, StronglyMeasurable (ψπc t) := fun t => by
     have hf : StronglyMeasurable
       (Function.uncurry fun (y : 𝒮) (aₜ : 𝒜) =>
-        M.π[θ] y aₜ •
-          (Qclip t y aₜ • ∇[θ] Real.log (M.π[θ] y aₜ))) :=
+        M.π θ y aₜ •
+          (Qclip t y aₜ • ∇[θ] Real.log (M.π θ y aₜ))) :=
       ((hStoch.measurable_π θ).stronglyMeasurable.smul (hφAc t))
     convert hf.integral_prod_right (ν := (μ.measure : Measure 𝒜)) using 1
     funext y
@@ -961,28 +961,28 @@ private lemma main
           else
             simp [h]) θ t
     have hinter0 :
-      ∫ y, (∫ u, M.π[θ] y u •
+      ∫ y, (∫ u, M.π θ y u •
           (if |Q θ t y u| ≤ BG then (0 : ℝ) else 1)
         ∂(μ.measure : Measure 𝒜)) ∂((M θ).map s[t]) = 0 := by
       simpa [hbad] using hdis0.symm
     have hnn : ∀ y,
-        0 ≤ ∫ u, M.π[θ] y u •
+        0 ≤ ∫ u, M.π θ y u •
           (if |Q θ t y u| ≤ BG then (0 : ℝ) else 1)
           ∂(μ.measure : Measure 𝒜) := fun y =>
       integral_nonneg fun u =>
         mul_nonneg (hStoch.nonneg θ y u) (dite_nonneg (fun _ => le_rfl) (fun _ => zero_le_one))
     have hy0 : ∀ᵐ y ∂((M θ).map s[t]),
-        ∫ u, M.π[θ] y u •
+        ∫ u, M.π θ y u •
           (if |Q θ t y u| ≤ BG then (0 : ℝ) else 1)
           ∂(μ.measure : Measure 𝒜) = 0 := by
       apply (integral_eq_zero_iff_of_nonneg hnn _).1 hinter0
       have hfite : StronglyMeasurable
         (Function.uncurry fun (y : 𝒮) (aₜ : 𝒜) =>
-          M.π[θ] y aₜ *
+          M.π θ y aₜ *
             (if |Q θ t y aₜ| ≤ BG then (0 : ℝ) else 1)) :=
         ((hStoch.measurable_π θ).mul hφind.measurable).stronglyMeasurable
       have hsmY' : StronglyMeasurable
-        (fun y => ∫ u, M.π[θ] y u •
+        (fun y => ∫ u, M.π θ y u •
           (if |Q θ t y u| ≤ BG then (0 : ℝ) else 1)
           ∂(μ.measure : Measure 𝒜)) :=
         hfite.integral_prod_right (ν := (μ.measure : Measure 𝒜))
@@ -1027,13 +1027,13 @@ private lemma main
       (M.measurable_pdf θ).comp (Measurable.prodMk measurable_const measurable_id)
     filter_upwards [hy0] with y hy
     have hu : ∀ᵐ u ∂(μ.measure : Measure 𝒜),
-        M.π[θ] y u = 0 ∨ |Q θ t y u| ≤ BG := by
+        M.π θ y u = 0 ∨ |Q θ t y u| ≤ BG := by
       have hmul :
-        ∫ u, M.π[θ] y u * (if |Q θ t y u| ≤ BG then (0 : ℝ) else 1)
+        ∫ u, M.π θ y u * (if |Q θ t y u| ≤ BG then (0 : ℝ) else 1)
           ∂(μ.measure : Measure 𝒜) = 0 := by
         simpa [smul_eq_mul] using hy
       have hnn' : 0 ≤ fun u =>
-          M.π[θ] y u * (if |Q θ t y u| ≤ BG then (0 : ℝ) else 1) := fun u =>
+          M.π θ y u * (if |Q θ t y u| ≤ BG then (0 : ℝ) else 1) := fun u =>
         mul_nonneg (hStoch.nonneg θ y u) (dite_nonneg (fun _ => le_rfl) (fun _ => zero_le_one))
       have hAμ : Measurable fun aₜ : 𝒜 => Q θ t y aₜ :=
         (hQm t).measurable.comp (Measurable.prodMk measurable_const measurable_id)
@@ -1046,7 +1046,7 @@ private lemma main
       have hindμ : Measurable fun aₜ : 𝒜 =>
           (if |Q θ t y aₜ| ≤ BG then (0 : ℝ) else 1) :=
         measurable_const.ite hsetμ measurable_const
-      have hπint : Integrable (M.π[θ] y) μ.measure := by
+      have hπint : Integrable (M.π θ y) μ.measure := by
         have h1 : Integrable (fun _ : 𝒜 => (1 : ℝ)) (M[y] θ) := integrable_const 1
         rw [hμθ y] at h1
         have h' :=
@@ -1056,18 +1056,18 @@ private lemma main
               simp [Policy.pdf, ENNReal.ofReal_lt_top])).1 h1
         convert h' using 1
         funext aₜ
-        have hnn : 0 ≤ M.π[θ] y aₜ := hStoch.nonneg θ y aₜ
+        have hnn : 0 ≤ M.π θ y aₜ := hStoch.nonneg θ y aₜ
         simp only [Policy.pdf]
         rw [ENNReal.toReal_ofReal hnn, one_mul]
       have hprodint : Integrable
-        (fun u => M.π[θ] y u *
+        (fun u => M.π θ y u *
           (if |Q θ t y u| ≤ BG then (0 : ℝ) else 1))
         μ.measure :=
         Integrable.mono' hπint
           (((hStoch.measurable_π θ).comp
             (Measurable.prodMk measurable_const measurable_id)).mul hindμ).aestronglyMeasurable
           (Eventually.of_forall fun u => by
-            have hπ0 : 0 ≤ M.π[θ] y u := hStoch.nonneg θ y u
+            have hπ0 : 0 ≤ M.π θ y u := hStoch.nonneg θ y u
             if h : |Q θ t y u| ≤ BG then
               simp [h, hπ0]
             else
@@ -1075,28 +1075,28 @@ private lemma main
       have hz :=
         (integral_eq_zero_iff_of_nonneg hnn' hprodint).1 (by simpa using hmul)
       filter_upwards [hz] with u hu
-      if hπ0 : M.π[θ] y u = 0 then
+      if hπ0 : M.π θ y u = 0 then
         exact Or.inl hπ0
       else
         refine Or.inr ?_
         by_contra hgt
         have hite : (if |Q θ t y u| ≤ BG then (0 : ℝ) else 1) = 1 := by
           simp [hgt]
-        have : M.π[θ] y u * 1 = 0 := by simpa [hite] using hu
+        have : M.π θ y u * 1 = 0 := by simpa [hite] using hu
         exact hπ0 (by simpa using this)
     -- ψ y as unclipped OfRV, rewritten with hpieq / kernel_pdf, equals the clipped integral
     have hSP : SinglePSpace (M[y] θ') (id : 𝒜 → 𝒜) := hSPker y
     have hpdf := kernel_pdf (M := M) θ' y (hμker y) (hpdf y) hSP
     have hnum_eq : ∀ u,
         ∇[θ] ((M θ).condProb (a t, s[t]) (u, y)).toReal =
-          ∇[θ] (M.π[θ] y u) := fun u => by
+          ∇[θ] (M.π θ y u) := fun u => by
       refine congrArg (gradient · θ) ?_
       funext κ
       exact hpieq κ t y u
     have hψw :
       ψ t y =
         Expectation.ofRV (M[y] θ') (id : 𝒜 → 𝒜)
-          (fun u => (Q θ t y u • ∇[θ] (M.π[θ] y u)) /
+          (fun u => (Q θ t y u • ∇[θ] (M.π θ y u)) /
             ((M[y] θ').prob (id : 𝒜 → 𝒜) u).toReal) := by
       simp only [ψ]
       refine congrArg (Expectation.ofRV (M[y] θ') id) ?_
@@ -1107,22 +1107,22 @@ private lemma main
       Measurable.prodMk measurable_const measurable_id
     have hA : StronglyMeasurable (fun aₜ : 𝒜 => Qclip t y aₜ) :=
       (hQclipm t).comp_measurable hx
-    have hπ' : Measurable (fun aₜ : 𝒜 => M.π[θ'] y aₜ) :=
+    have hπ' : Measurable (fun aₜ : 𝒜 => M.π θ' y aₜ) :=
       (hStoch.measurable_π θ').comp hx
-    have hgrad : StronglyMeasurable (fun aₜ : 𝒜 => ∇[θ] (M.π[θ] y aₜ)) :=
+    have hgrad : StronglyMeasurable (fun aₜ : 𝒜 => ∇[θ] (M.π θ y aₜ)) :=
       hgradPiSm.comp_measurable hx
     have hnum : StronglyMeasurable
-      (fun aₜ : 𝒜 => Qclip t y aₜ • ∇[θ] (M.π[θ] y aₜ)) :=
+      (fun aₜ : 𝒜 => Qclip t y aₜ • ∇[θ] (M.π θ y aₜ)) :=
       hA.smul hgrad
     have hfπ : AEStronglyMeasurable
       (fun u => Qclip t y u •
-        ((∇[θ] (M.π[θ] y u)) / M.π[θ'] y u))
+        ((∇[θ] (M.π θ y u)) / M.π θ' y u))
       (M[y] θ' : Measure 𝒜) := by
       have heq :
           (fun u => Qclip t y u •
-            ((∇[θ] (M.π[θ] y u)) / M.π[θ'] y u)) =
-          (fun u => M.π[θ'] y u)⁻¹ •
-            (fun u => Qclip t y u • ∇[θ] (M.π[θ] y u)) := by
+            ((∇[θ] (M.π θ y u)) / M.π θ' y u)) =
+          (fun u => M.π θ' y u)⁻¹ •
+            (fun u => Qclip t y u • ∇[θ] (M.π θ y u)) := by
         funext u
         exact smul_div_eq_inv_smul _ _ _
       rw [heq]
@@ -1130,23 +1130,23 @@ private lemma main
     have hAuc : StronglyMeasurable (fun aₜ : 𝒜 => Q θ t y aₜ) :=
       (hQm t).comp_measurable hx
     have hnumu : StronglyMeasurable
-      (fun aₜ : 𝒜 => Q θ t y aₜ • ∇[θ] (M.π[θ] y aₜ)) :=
+      (fun aₜ : 𝒜 => Q θ t y aₜ • ∇[θ] (M.π θ y aₜ)) :=
       hAuc.smul hgrad
     have hfπu : AEStronglyMeasurable
-      (fun u => (Q θ t y u • ∇[θ] (M.π[θ] y u)) /
-        M.π[θ'] y u)
+      (fun u => (Q θ t y u • ∇[θ] (M.π θ y u)) /
+        M.π θ' y u)
       (M[y] θ' : Measure 𝒜) := by
       have heq :
-          (fun u => (Q θ t y u • ∇[θ] (M.π[θ] y u)) /
-            M.π[θ'] y u) =
-          (fun u => M.π[θ'] y u)⁻¹ •
-            (fun u => Q θ t y u • ∇[θ] (M.π[θ] y u)) := by
+          (fun u => (Q θ t y u • ∇[θ] (M.π θ y u)) /
+            M.π θ' y u) =
+          (fun u => M.π θ' y u)⁻¹ •
+            (fun u => Q θ t y u • ∇[θ] (M.π θ y u)) := by
         funext u
         simp [HDiv.hDiv]
       rw [heq]
       exact ((hπ'.inv.stronglyMeasurable).smul hnumu).aestronglyMeasurable
     have hfPu : AEStronglyMeasurable
-      (fun u => (Q θ t y u • ∇[θ] (M.π[θ] y u)) /
+      (fun u => (Q θ t y u • ∇[θ] (M.π θ y u)) /
         ((M[y] θ').prob (id : 𝒜 → 𝒜) u).toReal)
       ((M[y] θ').map (id : 𝒜 → 𝒜)) := by
       rw [Measure.map_id]
@@ -1162,13 +1162,13 @@ private lemma main
     refine (integral_congr_ae ?_).trans (hψπc_integral t y).symm
     filter_upwards [hpdf, hu] with u huP huA
     rw [huP, div_smul_eq_smul_div]
-    if hp : M.π[θ] y u = 0 then
+    if hp : M.π θ y u = 0 then
       have hscore := is_weight_eq_score (M := M) h₃ h₄ y u (Q θ t y u)
       have hscorec := is_weight_eq_score (M := M) h₃ h₄ y u (Qclip t y u)
-      have hgrad0 : ∇[θ] (M.π[θ] y u) = 0 := by
-        have : fderiv ℝ (fun κ => M.π[κ] y u) θ = 0 :=
+      have hgrad0 : ∇[θ] (M.π θ y u) = 0 := by
+        have : fderiv ℝ (fun κ => M.π κ y u) θ = 0 :=
           IsLocalMin.fderiv_eq_zero (Filter.Eventually.of_forall fun κ =>
-            show M.π[θ] y u ≤ M.π[κ] y u from
+            show M.π θ y u ≤ M.π κ y u from
               hp ▸ hStoch.nonneg κ y u)
         simpa [gradient] using this
       simp [hp, hgrad0, HDiv.hDiv]
@@ -1271,7 +1271,7 @@ private lemma main
       ∑' t, γ ^ t •
         ((∑' k, γ ^ k * (integ.1 (t + k) + γ * M.V θ γ (t + k + 1) (integ.2.1 (t + k + 1)) -
             M.V θ γ (t + k) (integ.2.1 (t + k)))) •
-          ∇[θ] Real.log (M.π[θ] (integ.2.1 t) (integ.2.2 t))))
+          ∇[θ] Real.log (M.π θ (integ.2.1 t) (integ.2.2 t))))
     ((M θ).map (Expectation.asRV r, Expectation.asRV s, Expectation.asRV a)) :=
     (StronglyMeasurable.tsum (L := SummationFilter.unconditional ℕ) fun t =>
       ((htd_meas t).stronglyMeasurable.smul
@@ -1283,12 +1283,12 @@ private lemma main
           ((integ.1)[t:] +
             γ • (fun k => M.V θ γ (t + 1 + k) ((integ.2.1)[t + 1:] k)) -
             fun k => M.V θ γ (t + k) ((integ.2.1)[t:] k))) •
-          ∇[θ] Real.log (M.π[θ] (integ.2.1 t) (integ.2.2 t)))) =
+          ∇[θ] Real.log (M.π θ (integ.2.1 t) (integ.2.2 t)))) =
     (fun integ =>
       ∑' t, γ ^ t •
         ((∑' k, γ ^ k * (integ.1 (t + k) + γ * M.V θ γ (t + k + 1) (integ.2.1 (t + k + 1)) -
             M.V θ γ (t + k) (integ.2.1 (t + k)))) •
-          ∇[θ] Real.log (M.π[θ] (integ.2.1 t) (integ.2.2 t)))) := by
+          ∇[θ] Real.log (M.π θ (integ.2.1 t) (integ.2.2 t)))) := by
     funext integ
     simp [Dot.dot, Function.hPow_apply, id_eq, Function.getSliceFrom, Pi.add_apply, Pi.sub_apply,
       Pi.smul_apply, smul_eq_mul]
@@ -1327,7 +1327,7 @@ private lemma main
     mul_nonneg (mul_nonneg (by norm_num) hBG) (le_max_right _ _)
   have hCψ0 : 0 ≤ Cψ :=
     mul_nonneg hBG (le_max_right _ _)
-  have hMs0 : ∀ y u, ‖∇[θ] Real.log (M.π[θ] y u)‖ ≤ max Ms 0 :=
+  have hMs0 : ∀ y u, ‖∇[θ] Real.log (M.π θ y u)‖ ≤ max Ms 0 :=
     fun y u => (hgradLogB y u).trans (le_max_left _ _)
 
   have hψπc_Fint : ∀ t, Integrable (fun ω => γ ^ t • ψπc t (s t ω)) (M θ) := by
@@ -1360,7 +1360,7 @@ private lemma main
   have hLterm_sm : ∀ t, StronglyMeasurable fun ω =>
       (∑' k, γ ^ k * (r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
           M.V θ γ (t + k) (s (t + k) ω))) •
-        ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω)) := by
+        ∇[θ] Real.log (M.π θ (s t ω) (a t ω)) := by
     intro t
     refine (Measurable.tsum fun k => ?_).stronglyMeasurable.smul
       (hgradSm.comp_measurable ((hs_meas t).prodMk (ha_meas t)))
@@ -1371,7 +1371,7 @@ private lemma main
       γ ^ t •
         ((∑' k, γ ^ k * (r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
             M.V θ γ (t + k) (s (t + k) ω))) •
-          ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω)))) (M θ) := by
+          ∇[θ] Real.log (M.π θ (s t ω) (a t ω)))) (M θ) := by
     intro t
     refine Integrable.of_bound ((hLterm_sm t).const_smul (γ ^ t)).aestronglyMeasurable
       (γ ^ t * Cl) ?_
@@ -1384,7 +1384,7 @@ private lemma main
       ‖γ ^ t •
         ((∑' k, γ ^ k * (r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
             M.V θ γ (t + k) (s (t + k) ω))) •
-          ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω)))‖ ≤
+          ∇[θ] Real.log (M.π θ (s t ω) (a t ω)))‖ ≤
         γ ^ t * Cl := by
     intro t
     filter_upwards [hTDbd t] with ω htd
@@ -1395,7 +1395,7 @@ private lemma main
   have hLsum : Summable fun t => ∫ ω, ‖γ ^ t •
       ((∑' k, γ ^ k * (r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
           M.V θ γ (t + k) (s (t + k) ω))) •
-        ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω)))‖ ∂(M θ) := by
+        ∇[θ] Real.log (M.π θ (s t ω) (a t ω)))‖ ∂(M θ) := by
     refine Summable.of_nonneg_of_le (fun _ => integral_nonneg fun _ => norm_nonneg _)
       (fun t => ?_) ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right Cl)
     calc
@@ -1408,11 +1408,11 @@ private lemma main
     ∫ ω, ∑' t, γ ^ t •
         ((∑' k, γ ^ k * (r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
             M.V θ γ (t + k) (s (t + k) ω))) •
-          ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω))) ∂(M θ) =
+          ∇[θ] Real.log (M.π θ (s t ω) (a t ω))) ∂(M θ) =
       ∑' t, γ ^ t • ∫ ω,
         ((∑' k, γ ^ k * (r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
             M.V θ γ (t + k) (s (t + k) ω))) •
-          ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω))) ∂(M θ) := by
+          ∇[θ] Real.log (M.π θ (s t ω) (a t ω))) ∂(M θ) := by
     rw [← integral_tsum_of_summable_integral_norm hLFint hLsum]
     refine tsum_congr fun t => integral_smul (γ ^ t) _
   -- If the previous simp already unfolded the LHS series, this rewrite applies;
@@ -1424,9 +1424,9 @@ private lemma main
   have htdG : ∀ᵐ ω ∂(M θ),
       (∑' k, γ ^ k * (r (t + k) ω + γ * M.V θ γ (t + k + 1) (s (t + k + 1) ω) -
           M.V θ γ (t + k) (s (t + k) ω))) •
-        ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω)) =
+        ∇[θ] Real.log (M.π θ (s t ω) (a t ω)) =
         (((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω - M.V θ γ t (s t ω)) •
-          ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω)) := by
+          ∇[θ] Real.log (M.π θ (s t ω) (a t ω)) := by
     filter_upwards [htd_ae] with ω hω
     rw [hω t]
   rw [integral_congr_ae htdG]
@@ -1434,13 +1434,13 @@ private lemma main
     (hfG t).comp hpR
   have hGscore_bd : ∀ᵐ ω ∂(M θ),
       ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω •
-        ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω))‖ ≤ BG * max Ms 0 := by
+        ∇[θ] Real.log (M.π θ (s t ω) (a t ω))‖ ≤ BG * max Ms 0 := by
     filter_upwards [hGbd t] with ω hG
     rw [norm_smul]
     exact mul_le_mul hG (hMs0 (s t ω) (a t ω)) (norm_nonneg _) hBG
   have hGscore : Integrable (fun ω =>
       ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω •
-        ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω))) (M θ) :=
+        ∇[θ] Real.log (M.π θ (s t ω) (a t ω))) (M θ) :=
     Integrable.of_bound
       (hGm.stronglyMeasurable.smul
         (hgradSm.comp_measurable ((hs_meas t).prodMk (ha_meas t)))).aestronglyMeasurable
@@ -1458,42 +1458,42 @@ private lemma main
     rw [clip, max_eq_left hlo, min_eq_left hhi]
   have hV0score_bd : ∀ᵐ ω ∂(M θ),
       ‖M.V θ γ t (s t ω) •
-        ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω))‖ ≤ BG * max Ms 0 := by
+        ∇[θ] Real.log (M.π θ (s t ω) (a t ω))‖ ≤ BG * max Ms 0 := by
     filter_upwards [hVbd] with ω hv
     rw [norm_smul]
     exact mul_le_mul (by simpa [Real.norm_eq_abs] using hv t)
       (hMs0 (s t ω) (a t ω)) (norm_nonneg _) hBG
   have hV0score : Integrable (fun ω =>
       M.V θ γ t (s t ω) •
-        ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω))) (M θ) :=
+        ∇[θ] Real.log (M.π θ (s t ω) (a t ω))) (M θ) :=
     Integrable.of_bound
       (((hVm t).comp (hs_meas t)).stronglyMeasurable.smul
         (hgradSm.comp_measurable ((hs_meas t).prodMk (ha_meas t)))).aestronglyMeasurable
       (BG * max Ms 0) hV0score_bd
   have hsplit :
     ∫ ω, ((((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω - M.V θ γ t (s t ω)) •
-        ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω))) ∂(M θ) =
+        ∇[θ] Real.log (M.π θ (s t ω) (a t ω))) ∂(M θ) =
       ∫ ω, (((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω •
-          ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω))) ∂(M θ) -
+          ∇[θ] Real.log (M.π θ (s t ω) (a t ω))) ∂(M θ) -
       ∫ ω, (M.V θ γ t (s t ω) •
-          ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω))) ∂(M θ) := by
+          ∇[θ] Real.log (M.π θ (s t ω) (a t ω))) ∂(M θ) := by
     simp only [sub_smul]
     exact integral_sub hGscore hV0score
   rw [hsplit]
   have hdrop (h : 𝒮 → ℝ) (hh : Measurable h) (hC : ∀ y, ‖h y‖ ≤ BG) :
-    ∫ ω, (h (s t ω) • ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω))) ∂(M θ) = 0 := by
+    ∫ ω, (h (s t ω) • ∇[θ] Real.log (M.π θ (s t ω) (a t ω))) ∂(M θ) = 0 := by
     simp only [gradient]
     have hfun :
       (fun ω => h (s t ω) •
-        e (fderiv ℝ (fun κ => Real.log (M.π[κ] (s t ω) (a t ω))) θ)) =
+        e (fderiv ℝ (fun κ => Real.log (M.π κ (s t ω) (a t ω))) θ)) =
       fun ω => L (h (s t ω) •
-        fderiv ℝ (fun κ => Real.log (M.π[κ] (s t ω) (a t ω))) θ) := by
+        fderiv ℝ (fun κ => Real.log (M.π κ (s t ω) (a t ω))) θ) := by
       funext ω
       exact (L.map_smul (h (s t ω)) _).symm
     rw [hfun]
     have hinter : Integrable (fun ω =>
         h (s t ω) •
-          fderiv ℝ (fun κ => Real.log (M.π[κ] (s t ω) (a t ω))) θ) (M θ) :=
+          fderiv ℝ (fun κ => Real.log (M.π κ (s t ω) (a t ω))) θ) (M θ) :=
       Integrable.of_bound
         ((hh.comp (hs_meas t)).stronglyMeasurable.smul
           (hφ.comp_measurable ((hs_meas t).prodMk (ha_meas t)))).aestronglyMeasurable
@@ -1503,21 +1503,21 @@ private lemma main
             (norm_nonneg _) hBG)
     have hz :
         ∫ ω, h (s t ω) •
-            fderiv ℝ (fun κ => Real.log (M.π[κ] (s t ω) (a t ω))) θ ∂(M θ) = 0 :=
+            fderiv ℝ (fun κ => Real.log (M.π κ (s t ω) (a t ω))) θ ∂(M θ) = 0 :=
       Integral_SMul.eq.Zero.of.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity
         (M := M) θ h₁ h₃ hintg hBdd h hh hC hφ hMsle t
     rw [L.integral_comp_comm (fun ω =>
         h (s t ω) •
-          fderiv ℝ (fun κ => Real.log (M.π[κ] (s t ω) (a t ω))) θ), hz, L.map_zero]
+          fderiv ℝ (fun κ => Real.log (M.π κ (s t ω) (a t ω))) θ), hz, L.map_zero]
   have hV0z :
     ∫ ω, (M.V θ γ t (s t ω) •
-        ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω))) ∂(M θ) = 0 := by
+        ∇[θ] Real.log (M.π θ (s t ω) (a t ω))) ∂(M θ) = 0 := by
     have hclipz := hdrop hVclip hVclipm (by simpa [hVclip] using fun y => hclip_le (M.V θ γ t y))
     have hae : ∀ᵐ ω ∂(M θ),
         M.V θ γ t (s t ω) •
-          ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω)) =
+          ∇[θ] Real.log (M.π θ (s t ω) (a t ω)) =
           hVclip (s t ω) •
-            ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω)) := by
+            ∇[θ] Real.log (M.π θ (s t ω) (a t ω)) := by
       filter_upwards [hV_eq_clip] with ω h
       rw [h]
     rw [integral_congr_ae hae, hclipz]
@@ -1525,50 +1525,50 @@ private lemma main
 
   have hQret :
     ∫ ω, (((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω •
-        ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω))) ∂(M θ) =
+        ∇[θ] Real.log (M.π θ (s t ω) (a t ω))) ∂(M θ) =
       ∫ ω, (M.Q θ γ t (s t ω) (a t ω) •
-        ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω))) ∂(M θ) := by
+        ∇[θ] Real.log (M.π θ (s t ω) (a t ω))) ∂(M θ) := by
     have hret := integral_return_smul_eq_cond (M := M) (ψ := fun sₜ aₜ =>
-        ∇[θ] Real.log (M.π[θ] sₜ aₜ)) h₀ h₁ hgradSm (fun x u => hMs0 x u) hR θ t
+        ∇[θ] Real.log (M.π θ sₜ aₜ)) h₀ h₁ hgradSm (fun x u => hMs0 x u) hR θ t
     refine hret.trans (integral_congr_ae (Eventually.of_forall fun ω => ?_))
     have hq := Q_eq_expect (M := M) h₁ θ γ t (s t ω) (a t ω)
     simp [hq, Expectation.asRV, AsPathRV.path_process]
   rw [hQret]
   have hIntA_bd : ∀ᵐ ω ∂(M θ),
       ‖A θ t (s t ω) (a t ω) •
-        ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω))‖ ≤ Cl := by
+        ∇[θ] Real.log (M.π θ (s t ω) (a t ω))‖ ≤ Cl := by
     filter_upwards [hAB_ae t] with ω hA
     rw [norm_smul]
     exact mul_le_mul hA (hMs0 (s t ω) (a t ω))
       (norm_nonneg _) (mul_nonneg (by norm_num) hBG)
   have hIntA : Integrable (fun ω =>
       A θ t (s t ω) (a t ω) •
-        ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω))) (M θ) :=
+        ∇[θ] Real.log (M.π θ (s t ω) (a t ω))) (M θ) :=
     Integrable.of_bound
       (((hAm t).smul hgradSm).comp_measurable
         ((hs_meas t).prodMk (ha_meas t))).aestronglyMeasurable
       Cl hIntA_bd
   have hIntV_bd : ∀ᵐ ω ∂(M θ),
       ‖M.V θ γ t (s t ω) •
-        ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω))‖ ≤ BG * max Ms 0 := by
+        ∇[θ] Real.log (M.π θ (s t ω) (a t ω))‖ ≤ BG * max Ms 0 := by
     filter_upwards [hVbd] with ω hV
     rw [norm_smul]
     exact mul_le_mul (by simpa [Real.norm_eq_abs] using hV t)
       (hMs0 (s t ω) (a t ω)) (norm_nonneg _) hBG
   have hIntV : Integrable (fun ω =>
       M.V θ γ t (s t ω) •
-        ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω))) (M θ) :=
+        ∇[θ] Real.log (M.π θ (s t ω) (a t ω))) (M θ) :=
     Integrable.of_bound
       (((hVm t).comp (hs_meas t)).stronglyMeasurable.smul
         (hgradSm.comp_measurable ((hs_meas t).prodMk (ha_meas t)))).aestronglyMeasurable
       (BG * max Ms 0) hIntV_bd
   have hfunQV :
     (fun ω => M.Q θ γ t (s t ω) (a t ω) •
-      ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω))) =
+      ∇[θ] Real.log (M.π θ (s t ω) (a t ω))) =
     fun ω => A θ t (s t ω) (a t ω) •
-        ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω)) +
+        ∇[θ] Real.log (M.π θ (s t ω) (a t ω)) +
       M.V θ γ t (s t ω) •
-        ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω)) := by
+        ∇[θ] Real.log (M.π θ (s t ω) (a t ω)) := by
     funext ω
     have : M.Q θ γ t (s t ω) (a t ω) =
         A θ t (s t ω) (a t ω) + M.V θ γ t (s t ω) := by
@@ -1578,16 +1578,16 @@ private lemma main
   rw [← integral_add hIntA hIntV, ← hfunQV]
   have hMQ : ∀ᵐ ω ∂(M θ),
       M.Q θ γ t (s t ω) (a t ω) •
-        ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω)) =
+        ∇[θ] Real.log (M.π θ (s t ω) (a t ω)) =
       Q θ t (s t ω) (a t ω) •
-        ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω)) :=
+        ∇[θ] Real.log (M.π θ (s t ω) (a t ω)) :=
     Eventually.of_forall fun ω => by rw [hQeq]
   rw [integral_congr_ae hMQ]
   have hQ_eq_clip : ∀ᵐ ω ∂(M θ),
       Q θ t (s t ω) (a t ω) •
-        ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω)) =
+        ∇[θ] Real.log (M.π θ (s t ω) (a t ω)) =
       Qclip t (s t ω) (a t ω) •
-        ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω)) := by
+        ∇[θ] Real.log (M.π θ (s t ω) (a t ω)) := by
     filter_upwards [hQclip_ae t] with ω h
     simp only [getElem_nat_apply] at h
     rw [h]

@@ -26,8 +26,3 @@ public section
     AsPathRV.path X = fun ω t ↦ X t ω :=
   rfl
 
-/-- `AsPathRV.path` flips a `Fun` process to its path-valued random variable. -/
-@[simp] theorem AsPathRV.path_fun {Ω α : Type*} (f : Fun ℕ (Ω → α)) :
-    AsPathRV.path f = fun ω t ↦ f.toFun t ω :=
-  rfl
-

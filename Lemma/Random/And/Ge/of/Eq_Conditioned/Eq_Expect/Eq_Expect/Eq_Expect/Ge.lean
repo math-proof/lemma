@@ -61,7 +61,7 @@ private lemma main
   (∀ x, M.V0 R θ' γ x ≥ M.V0 R θ γ x) ∧
     (∫ x, M.V0 R θ' γ x ∂(M.init : Measure _) ≥ ∫ x, M.V0 R θ γ x ∂(M.init : Measure _)) := by
 -- proof
-  have hπm : ∀ κ, Measurable (fun z : 𝒮 × 𝒜 => M.π[κ] z.1 z.2) :=
+  have hπm : ∀ κ, Measurable (fun z : 𝒮 × 𝒜 => M.π κ z.1 z.2) :=
     hStoch.measurable_π
   have hV : ∀ κ, Measurable (M.V0 R κ γ) := fun κ =>
     Measurable_Vkd.of.All_Measurable_Prob (M := M) hπm R κ γ
@@ -78,12 +78,12 @@ private lemma main
   let Q (κ : Θ) (sₜ : 𝒮) (aₜ : 𝒜) : ℝ :=
     M.rkd R sₜ aₜ + γ * T κ sₜ aₜ
   let backup (κ_π κ_bar : Θ) (sₜ : 𝒮) : ℝ :=
-    ∫ u, M.π[κ_bar] sₜ u * Q κ_π sₜ u ∂ReferenceMeasure.measure
-  have hπI : ∀ κ x, Integrable (M.π[κ] x) ReferenceMeasure.measure := by
+    ∫ u, M.π κ_bar sₜ u * Q κ_π sₜ u ∂ReferenceMeasure.measure
+  have hπI : ∀ κ x, Integrable (M.π κ x) ReferenceMeasure.measure := by
     intro κ x
     apply Integrable.of_integral_ne_zero
     exact (hStoch.integral_eq_one κ x).symm ▸ one_ne_zero
-  have hπu : ∀ κ x, Measurable (M.π[κ] x) :=
+  have hπu : ∀ κ x, Measurable (M.π κ x) :=
     fun κ x => (hπm κ).comp measurable_prodMk_left
   have hT : ∀ κ x, Measurable (T κ x) :=
     fun κ x =>
@@ -97,7 +97,7 @@ private lemma main
   have hmulI : ∀ {κ : Θ} {g : 𝒜 → ℝ} {C : ℝ} (sₜ : 𝒮),
       Measurable g →
         (∀ u, ‖g u‖ ≤ C) →
-          Integrable (fun u => M.π[κ] sₜ u * g u)
+          Integrable (fun u => M.π κ sₜ u * g u)
             ReferenceMeasure.measure := by
     intro κ g C sₜ hg hgC
     apply ((hπI κ sₜ).mul_const _).mono'
@@ -107,14 +107,14 @@ private lemma main
       intro u
       rw [norm_mul, Real.norm_eq_abs]
       calc
-        |M.π[κ] sₜ u| * ‖g u‖
-            = M.π[κ] sₜ u * ‖g u‖ := by
+        |M.π κ sₜ u| * ‖g u‖
+            = M.π κ sₜ u * ‖g u‖ := by
           congr 1
           exact abs_of_nonneg (hStoch.nonneg κ sₜ u)
-        _ ≤ M.π[κ] sₜ u * C :=
+        _ ≤ M.π κ sₜ u * C :=
           mul_le_mul_of_nonneg_left (hgC u) (hStoch.nonneg κ sₜ u)
   have hQI : ∀ κ_π κ_bar sₜ,
-      Integrable (fun aₜ => M.π[κ_bar] sₜ aₜ * Q κ_π sₜ aₜ)
+      Integrable (fun aₜ => M.π κ_bar sₜ aₜ * Q κ_π sₜ aₜ)
         ReferenceMeasure.measure := by
     intro κ_π κ_bar x
     apply hmulI (C := |R| + |γ| * ((1 - γ)⁻¹ * |R|)) x
@@ -144,24 +144,24 @@ private lemma main
       (Filter.Eventually.of_forall fun _ => ENNReal.ofReal_lt_top)]
     refine integral_congr_ae (Filter.Eventually.of_forall fun u => ?_)
     simp only [Policy.pdf, smul_eq_mul]
-    rw [show (ENNReal.ofReal (M.π[κ_bar] x u)).toReal =
-        M.π[κ_bar] x u from
+    rw [show (ENNReal.ofReal (M.π κ_bar x u)).toReal =
+        M.π κ_bar x u from
       ENNReal.toReal_ofReal (hStoch.nonneg κ_bar x u)]
   have hVQ : ∀ κ x, M.V0 R κ γ x = backup κ κ x := by
     intro κ sₜ
     have hBell :=
       Vkd.eq.Integral_MulProbQkd.of.In_Ico.All_Measurable_Prob (M := M) hπm hγ R κ sₜ
-    have hr : Integrable (fun aₜ => M.π[κ] sₜ aₜ * M.rkd R sₜ aₜ)
+    have hr : Integrable (fun aₜ => M.π κ sₜ aₜ * M.rkd R sₜ aₜ)
         ReferenceMeasure.measure :=
       hmulI sₜ ((MeasurableRkd (M := M) R).comp measurable_prodMk_left)
         fun u => NormRkd.le.Abs_R (M := M) R sₜ u
-    have hc : Integrable (fun aₜ => M.π[κ] sₜ aₜ * T κ sₜ aₜ)
+    have hc : Integrable (fun aₜ => M.π κ sₜ aₜ * T κ sₜ aₜ)
         ReferenceMeasure.measure :=
       hmulI sₜ (hT κ sₜ) fun u => hIntBound sₜ u (hBound κ)
     have hsum :
-      ∫ aₜ, M.π[κ] sₜ aₜ * M.rkd R sₜ aₜ ∂ReferenceMeasure.measure +
-          ∫ aₜ, γ * (M.π[κ] sₜ aₜ * T κ sₜ aₜ) ∂ReferenceMeasure.measure =
-        ∫ aₜ, M.π[κ] sₜ aₜ * Q κ sₜ aₜ ∂ReferenceMeasure.measure := by
+      ∫ aₜ, M.π κ sₜ aₜ * M.rkd R sₜ aₜ ∂ReferenceMeasure.measure +
+          ∫ aₜ, γ * (M.π κ sₜ aₜ * T κ sₜ aₜ) ∂ReferenceMeasure.measure =
+        ∫ aₜ, M.π κ sₜ aₜ * Q κ sₜ aₜ ∂ReferenceMeasure.measure := by
       rw [← integral_add hr (hc.const_mul γ)]
       apply integral_congr_ae
       apply Filter.Eventually.of_forall
@@ -184,7 +184,7 @@ private lemma main
     simpa [Real.norm_eq_abs] using hΔb y
   let infΔ : ℝ := ⨅ y, Δ y
   have hI : ∀ sₜ,
-      ∫ aₜ, M.π[θ'] sₜ aₜ * TΔ sₜ aₜ ∂ReferenceMeasure.measure ≥
+      ∫ aₜ, M.π θ' sₜ aₜ * TΔ sₜ aₜ ∂ReferenceMeasure.measure ≥
         infΔ := by
     intro sₜ
     have hinner : ∀ u, TΔ sₜ u ≥ infΔ := fun u => by
@@ -201,30 +201,30 @@ private lemma main
         (f := fun z => Δ z.2)
         (hΔm.stronglyMeasurable.comp_measurable measurable_snd)).measurable).comp
         measurable_prodMk_left
-    have hc : Integrable (fun aₜ => M.π[θ'] sₜ aₜ * TΔ sₜ aₜ)
+    have hc : Integrable (fun aₜ => M.π θ' sₜ aₜ * TΔ sₜ aₜ)
         ReferenceMeasure.measure :=
       hmulI sₜ hTΔ fun u => hIntBound sₜ u hΔb
-    have hconst : Integrable (fun aₜ => M.π[θ'] sₜ aₜ * infΔ)
+    have hconst : Integrable (fun aₜ => M.π θ' sₜ aₜ * infΔ)
         ReferenceMeasure.measure :=
       (hπI θ' sₜ).mul_const _
     calc
-      _ ≥ ∫ aₜ, M.π[θ'] sₜ aₜ * infΔ ∂ReferenceMeasure.measure :=
+      _ ≥ ∫ aₜ, M.π θ' sₜ aₜ * infΔ ∂ReferenceMeasure.measure :=
         integral_mono hconst hc (fun u =>
           mul_le_mul_of_nonneg_left (hinner u) (hStoch.nonneg θ' sₜ u))
-      _ = ∫ aₜ, infΔ * M.π[θ'] sₜ aₜ ∂ReferenceMeasure.measure :=
+      _ = ∫ aₜ, infΔ * M.π θ' sₜ aₜ ∂ReferenceMeasure.measure :=
         integral_congr_ae (Filter.Eventually.of_forall fun u => mul_comm _ _)
-      _ = infΔ * ∫ aₜ, M.π[θ'] sₜ aₜ ∂ReferenceMeasure.measure :=
-        integral_const_mul infΔ (M.π[θ'] sₜ)
+      _ = infΔ * ∫ aₜ, M.π θ' sₜ aₜ ∂ReferenceMeasure.measure :=
+        integral_const_mul infΔ (M.π θ' sₜ)
       _ = infΔ := by
-        rw [show ∫ aₜ, M.π[θ'] sₜ aₜ ∂ReferenceMeasure.measure = 1 from
+        rw [show ∫ aₜ, M.π θ' sₜ aₜ ∂ReferenceMeasure.measure = 1 from
           hStoch.integral_eq_one θ' sₜ, mul_one]
   have hleft : ∀ x, Δ x ≥ γ * infΔ := by
     intro sₜ
     let I : ℝ :=
-      ∫ aₜ, M.π[θ'] sₜ aₜ * TΔ sₜ aₜ ∂ReferenceMeasure.measure
+      ∫ aₜ, M.π θ' sₜ aₜ * TΔ sₜ aₜ ∂ReferenceMeasure.measure
     have hsub :
       backup θ' θ' sₜ - backup θ θ' sₜ =
-        ∫ aₜ, M.π[θ'] sₜ aₜ * (Q θ' sₜ aₜ - Q θ sₜ aₜ)
+        ∫ aₜ, M.π θ' sₜ aₜ * (Q θ' sₜ aₜ - Q θ sₜ aₜ)
           ∂ReferenceMeasure.measure := by
       rw [← integral_sub (hQI θ' θ' sₜ) (hQI θ θ' sₜ)]
       apply integral_congr_ae

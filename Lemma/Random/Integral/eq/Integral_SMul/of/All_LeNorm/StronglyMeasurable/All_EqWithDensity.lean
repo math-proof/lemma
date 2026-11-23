@@ -25,7 +25,7 @@ private lemma main
   (y : 𝒮) :
 -- imply
   ∫ z, f z ∂(M.stageK θ y) =
-    ∫ u, M.π[θ] y u • ∫ ρ, f (ρ, y, u) ∂(M.reward (y, u) : Measure ℝ)
+    ∫ u, M.π θ y u • ∫ ρ, f (ρ, y, u) ∂(M.reward (y, u) : Measure ℝ)
       ∂μ.measure := by
 -- proof
   have hπm : Measurable (M.pdf θ y) :=

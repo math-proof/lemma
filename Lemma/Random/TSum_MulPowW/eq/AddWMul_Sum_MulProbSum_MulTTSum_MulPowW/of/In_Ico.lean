@@ -24,7 +24,7 @@ private lemma main
 -- imply
   ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-R) R) k z ∂(M.stageK θ sₜ) =
     ∫ z, M.Kf θ (fun z ↦ clip z.1 (-R) R) 0 z ∂(M.stageK θ sₜ) +
-      γ * ∫ u, M.π[θ] sₜ u *
+      γ * ∫ u, M.π θ sₜ u *
         (∫ y, (∑' k, γ ^ k *
           ∫ z, M.Kf θ (fun z ↦ clip z.1 (-R) R) k z ∂(M.stageK θ y))
           ∂(M.trans (sₜ, u))) ∂μ.measure := by
@@ -88,10 +88,10 @@ private lemma main
       rwa [Measure.real, measure_univ, ENNReal.toReal_one, mul_one] at h
     exact (tsum_congr fun k => (integral_const_mul (γ ^ k) (W k)).symm).trans
       (integral_tsum_of_summable_integral_norm hri hsn)
-  have hπ : Integrable (M.π[θ] sₜ) μ.measure := by
+  have hπ : Integrable (M.π θ sₜ) μ.measure := by
     apply Integrable.of_integral_ne_zero
     exact (hStoch.integral_eq_one θ sₜ).symm ▸ one_ne_zero
-  have hπm : Measurable (M.π[θ] sₜ) :=
+  have hπm : Measurable (M.π θ sₜ) :=
     (hStoch.measurable_π θ).comp measurable_prodMk_left
   have hT : ∀ k, Measurable (fun u => ∫ y, W k y ∂(M.trans (sₜ, u))) :=
     fun k =>
@@ -100,28 +100,28 @@ private lemma main
         ((hWm k).stronglyMeasurable.comp_measurable measurable_snd)).measurable).comp
         measurable_prodMk_left
   have hFb : ∀ k u,
-    ‖M.π[θ] sₜ u * (γ ^ k * ∫ y, W k y ∂(M.trans (sₜ, u)))‖ ≤
-      M.π[θ] sₜ u * (γ ^ k * |R|) := fun k u => by
+    ‖M.π θ sₜ u * (γ ^ k * ∫ y, W k y ∂(M.trans (sₜ, u)))‖ ≤
+      M.π θ sₜ u * (γ ^ k * |R|) := fun k u => by
     have h :=
       norm_integral_le_of_norm_le_const (μ := M.trans (sₜ, u))
         (Filter.Eventually.of_forall fun y => hW y k)
     rw [Real.norm_eq_abs, abs_mul, abs_mul, abs_pow, abs_of_nonneg h₀.1]
     calc
-      |M.π[θ] sₜ u| * (γ ^ k * |∫ y, W k y ∂(M.trans (sₜ, u))|)
-          = M.π[θ] sₜ u * (γ ^ k * |∫ y, W k y ∂(M.trans (sₜ, u))|) := by
+      |M.π θ sₜ u| * (γ ^ k * |∫ y, W k y ∂(M.trans (sₜ, u))|)
+          = M.π θ sₜ u * (γ ^ k * |∫ y, W k y ∂(M.trans (sₜ, u))|) := by
         congr 1
         exact abs_of_nonneg (hStoch.nonneg θ sₜ u)
-      _ ≤ M.π[θ] sₜ u * (γ ^ k * |R|) := by
+      _ ≤ M.π θ sₜ u * (γ ^ k * |R|) := by
         apply mul_le_mul_of_nonneg_left _ (hStoch.nonneg θ sₜ u)
         apply mul_le_mul_of_nonneg_left _ (pow_nonneg h₀.1 k)
         simpa using h
   have hFi : ∀ k, Integrable
-    (fun u => M.π[θ] sₜ u * (γ ^ k * ∫ y, W k y ∂(M.trans (sₜ, u))))
+    (fun u => M.π θ sₜ u * (γ ^ k * ∫ y, W k y ∂(M.trans (sₜ, u))))
     μ.measure := fun k =>
     (hπ.mul_const _).mono' (hπm.mul ((hT k).const_mul _)).aestronglyMeasurable
       (Filter.Eventually.of_forall (hFb k))
   have hFs : Summable (fun k =>
-    ∫ u, ‖M.π[θ] sₜ u * (γ ^ k * ∫ y, W k y ∂(M.trans (sₜ, u)))‖
+    ∫ u, ‖M.π θ sₜ u * (γ ^ k * ∫ y, W k y ∂(M.trans (sₜ, u)))‖
       ∂μ.measure) := by
     refine Summable.of_norm_bounded
       ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right |R|) fun k => ?_
@@ -130,22 +130,22 @@ private lemma main
     rw [norm_norm]
     exact hFb k u
   calc
-    _ = ∑' k, ∫ (aₜ : 𝒜), (M.π[θ] sₜ aₜ *
+    _ = ∑' k, ∫ (aₜ : 𝒜), (M.π θ sₜ aₜ *
       (γ ^ k * ∫ y, W k y ∂(M.trans (sₜ, aₜ)))) ∂μ.measure :=
       tsum_congr fun k => by
         rw [← integral_const_mul]
         congr 1
         funext u
         ring
-    _ = ∫ (aₜ : 𝒜), (∑' k, M.π[θ] sₜ aₜ *
+    _ = ∫ (aₜ : 𝒜), (∑' k, M.π θ sₜ aₜ *
       (γ ^ k * ∫ y, W k y ∂(M.trans (sₜ, aₜ)))) ∂μ.measure :=
       integral_tsum_of_summable_integral_norm hFi hFs
-    _ = ∫ (aₜ : 𝒜), (M.π[θ] sₜ aₜ *
+    _ = ∫ (aₜ : 𝒜), (M.π θ sₜ aₜ *
       ∑' k, γ ^ k * ∫ y, W k y ∂(M.trans (sₜ, aₜ))) ∂μ.measure := by
       congr 1
       funext aₜ
       exact tsum_mul_left
-    _ = ∫ (aₜ : 𝒜), (M.π[θ] sₜ aₜ *
+    _ = ∫ (aₜ : 𝒜), (M.π θ sₜ aₜ *
       ∫ y, (∑' k, γ ^ k * W k y) ∂(M.trans (sₜ, aₜ))) ∂μ.measure := by
       congr 1
       funext aₜ

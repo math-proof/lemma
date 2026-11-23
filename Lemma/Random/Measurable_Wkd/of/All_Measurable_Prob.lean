@@ -13,7 +13,7 @@ private lemma main
   [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
 -- given
-  (h : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2))
+  (h : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π θ z.1 z.2))
   (R : ℝ)
   (θ : Θ)
   (k : ℕ) :
@@ -23,11 +23,11 @@ private lemma main
   induction k with
   | zero =>
     exact (StronglyMeasurable.integral_prod_right' (ν := ReferenceMeasure.measure)
-      (f := fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2 * M.rkd R z.1 z.2)
+      (f := fun z : 𝒮 × 𝒜 => M.π θ z.1 z.2 * M.rkd R z.1 z.2)
       ((h θ).mul (MeasurableRkd (M := M) R)).stronglyMeasurable).measurable
   | succ k ih =>
     apply (StronglyMeasurable.integral_prod_right' (ν := ReferenceMeasure.measure)
-      (f := fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2 * ∫ y, M.Wkd R θ k y ∂(M.trans z))
+      (f := fun z : 𝒮 × 𝒜 => M.π θ z.1 z.2 * ∫ y, M.Wkd R θ k y ∂(M.trans z))
       ((h θ).mul _).stronglyMeasurable).measurable
     apply (StronglyMeasurable.integral_kernel_prod_right' (κ := M.transK) (f := fun z : (𝒮 × 𝒜) × 𝒮 => M.Wkd R θ k z.2)
       (ih.stronglyMeasurable.comp_measurable measurable_snd)).measurable

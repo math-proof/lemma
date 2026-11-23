@@ -16,15 +16,15 @@ private lemma main
   [NormedAddCommGroup Θ] [NormedSpace ℝ Θ] [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy]
 -- given
-  (h₀ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
+  (h₀ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π θ sₜ aₜ))
   (θ : Θ)
   (sₜ : 𝒮)
   (aₜ : 𝒜) :
 -- imply
-  M.π[θ] sₜ aₜ • fderiv ℝ (fun θ' => Real.log (M.π[θ'] sₜ aₜ)) θ =
-    fderiv ℝ (fun θ' => M.π[θ'] sₜ aₜ) θ := by
+  M.π θ sₜ aₜ • fderiv ℝ (fun θ' => Real.log (M.π θ' sₜ aₜ)) θ =
+    fderiv ℝ (fun θ' => M.π θ' sₜ aₜ) θ := by
 -- proof
-  if h : M.π[θ] sₜ aₜ = 0 then
+  if h : M.π θ sₜ aₜ = 0 then
     rw [h, zero_smul, Fderiv_FunProbPol.eq.Zero.of.ProbPolEq0.All_EqWithDensity
       (π := M.toPolicy) θ sₜ aₜ h]
   else

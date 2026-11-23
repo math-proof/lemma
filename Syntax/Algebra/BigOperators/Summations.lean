@@ -17,7 +17,7 @@ Textbook sum over the *value* of a bound sequence at a fixed index.  In probabil
 It is purely syntactic: the index `t` may be any term, and an occurrence is replaced when its index /
 single argument is syntactically equal to `t`.  Other occurrences of `«\sf{y}»` (e.g.
 `«\sf{y}»[t + 1]`, `«\sf{y}» (t + 1)`, or a bare `«\sf{y}»`) are left alone and are then
-unbound-variable errors.  The sum is *not* over functions `ℕ → Y` / `ℕ ⇀ Y`.
+unbound-variable errors.  The sum is *not* over functions `ℕ → Y`.
 
 The body is parsed at precedence 67 (like Mathlib's `∑`).  Both syntaxes have high priority so that
 `∑ a[t], f` / `∑ a t, f` are read by this macro instead of as nested sums; when the body contains no

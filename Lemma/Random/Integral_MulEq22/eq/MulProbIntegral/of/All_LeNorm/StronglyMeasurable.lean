@@ -22,7 +22,7 @@ private lemma main
   (aₜ : 𝒜) :
 -- imply
   ∫ z, (if z.2.2 = aₜ then (1:ℝ) else 0) * g z ∂(M.stageK θ sₜ) =
-    M.π[θ] sₜ aₜ * μ.measure.real {aₜ} *
+    M.π θ sₜ aₜ * μ.measure.real {aₜ} *
       ∫ ρ, g (ρ, sₜ, aₜ) ∂(M.reward (sₜ, aₜ)) := by
 -- proof
   have hm : StronglyMeasurable
@@ -44,10 +44,10 @@ private lemma main
     rw [hite v]
     rw [smul_eq_mul]
   have hfun :
-    (fun v => M.π[θ] sₜ v *
+    (fun v => M.π θ sₜ v *
       ((if v = aₜ then (1:ℝ) else 0) * ∫ ρ, g (ρ, sₜ, v) ∂(M.reward (sₜ, v)))) =
     Set.indicator {aₜ}
-      (fun _ => M.π[θ] sₜ aₜ * ∫ ρ, g (ρ, sₜ, aₜ) ∂(M.reward (sₜ, aₜ))) := by
+      (fun _ => M.π θ sₜ aₜ * ∫ ρ, g (ρ, sₜ, aₜ) ∂(M.reward (sₜ, aₜ))) := by
     funext v
     if h : v = aₜ then
       simp [h, Set.indicator]

@@ -1,7 +1,6 @@
 module
 
 public meta import Def.Tactic.Attr.Basic.Part2
-public meta import Initialize.Lean.Meta.Fun2Arrow
 public import Theorem.Lean.Meta.Expr
 public meta import Theorem.Lean.Meta.Expr
 public meta section
@@ -747,40 +746,6 @@ initialize registerBuiltinAttribute {
     }
 }
 
-
-/--
-`@[Fun]` attribute automatically generates the bare-arrow / application form of a
-theorem that uses `Fun` / `⇀` binders and `GetElem` notation.
-
-* Binder types `ι ⇀ α` (`Fun ι α`) become `ι → α`.
-* `a[i]` on a `Fun` collection becomes `a i`.
-* The proof reapplies the original theorem with `Fun.mk` wrappers (`⟨a⟩`).
-
-Usage:
-```lean
-@[path, Fun]
-private lemma main
-  {s : Finset α}
-  {a : α ⇀ ℝ} :
-  ∑ i ∈ s, a[i] = ∑ i ∈ s, a[i] := by sorry
--- Generates `….fun` with `{a : α → ℝ}` and `a i` in place of `a[i]`.
-```
--/
-initialize registerBuiltinAttribute {
-  name := `Fun
-  descr := "Automatically generate the theorem with Fun/⇀ binders as bare arrows and GetElem as application"
-  applicationTime := .afterCompilation
-  add := fun declName stx kind => do
-    let decl ← withoutExporting do getConstInfo declName
-    let levelParams := decl.levelParams
-    let ⟨type, value⟩ := Expr.substFun decl.type (.const declName (levelParams.map .param)) stx.getNum
-    addAndCompile <| .thmDecl {
-      name := ((← getEnv).module.lemmaName declName).str "fun"
-      levelParams := levelParams
-      type := type
-      value := value
-    }
-}
 
 /--
 `@[subst]` automatically generates a theorem that replaces an `OfNat` literal by a variable.

@@ -37,8 +37,8 @@ private lemma main
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ℓ ∈ Set.Icc 0 1)
   (hπ : Model.IsConditionalProbability M r s a)
-  (h₂ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
-  (h₃ : sup[θ, sₜ, aₜ] ‖∇[θ] M.π[θ] sₜ aₜ‖ < ∞)
+  (h₂ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π θ sₜ aₜ))
+  (h₃ : sup[θ, sₜ, aₜ] ‖∇[θ] M.π θ sₜ aₜ‖ < ∞)
   (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1) :
 -- imply
   letI : Model.IsPolicyTrajectory M r s a := hπ.htr
@@ -56,37 +56,37 @@ private lemma main
       (((γ * ℓ) ^ (id : ℕ → ℕ) ⬝ᵥ (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:])) •
         ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log)) := by
 -- proof
-  have hmeas : ∀ θ', Measurable (fun z : 𝒮 × 𝒜 => M.π[θ'] z.1 z.2) :=
+  have hmeas : ∀ θ', Measurable (fun z : 𝒮 × 𝒜 => M.π θ' z.1 z.2) :=
     hStoch.measurable_π
   obtain ⟨C, hC⟩ := h₃
-  have hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖) :=
+  have hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖) :=
     fun sₜ aₜ => ⟨C, by
       rintro _ ⟨κ, rfl⟩
       exact hC ⟨(κ, (sₜ, aₜ)), rfl⟩⟩
-  have h₃sum : sup[sₜ] (∑ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) < ∞ := by
+  have h₃sum : sup[sₜ] (∑ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖)) < ∞ := by
     let Cg : ℝ := C * (Fintype.card 𝒜 : ℝ)
     refine ⟨Cg, ?_⟩
     rintro _ ⟨sₜ, rfl⟩
-    have hle : ∀ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖) ≤ C := by
+    have hle : ∀ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖) ≤ C := by
       intro u
       apply csSup_le (Set.range_nonempty _)
       rintro _ ⟨κ, rfl⟩
       simpa [gradient, LinearIsometryEquiv.norm_map] using hC ⟨(κ, (sₜ, u)), rfl⟩
     calc
-      ∑ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖) ≤ ∑ _u : 𝒜, C :=
+      ∑ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖) ≤ ∑ _u : 𝒜, C :=
         Finset.sum_le_sum fun u _ => hle u
       _ = Cg := by simp [Cg, Finset.sum_const, nsmul_eq_mul, mul_comm]
   have hφ : StronglyMeasurable
-    (fun z : 𝒮 × 𝒜 => ∇[θ] Real.log (M.π[θ] z.1 z.2)) :=
+    (fun z : 𝒮 × 𝒜 => ∇[θ] Real.log (M.π θ z.1 z.2)) :=
     StronglyMeasurable.of_discrete
-  have hMsEx : ∃ Ms, ∀ y u, ‖∇[θ] Real.log (M.π[θ] y u)‖ ≤ Ms := by
+  have hMsEx : ∃ Ms, ∀ y u, ‖∇[θ] Real.log (M.π θ y u)‖ ≤ Ms := by
     have hfin : BddAbove (Set.range fun z : 𝒮 × 𝒜 =>
-        ‖∇[θ] Real.log (M.π[θ] z.1 z.2)‖) :=
+        ‖∇[θ] Real.log (M.π θ z.1 z.2)‖) :=
       Set.Finite.bddAbove (Set.finite_range _)
     obtain ⟨Ms, hUB⟩ := hfin
     exact ⟨Ms, fun y u => hUB ⟨(y, u), rfl⟩⟩
   obtain ⟨Ms, hMs⟩ := hMsEx
-  have hMssup : sup[y, u] ‖∇[θ] Real.log (M.π[θ] y u)‖ < ∞ :=
+  have hMssup : sup[y, u] ‖∇[θ] Real.log (M.π θ y u)‖ < ∞ :=
     ⟨Ms, by rintro _ ⟨p, rfl⟩; exact hMs p.1 p.2⟩
   exact GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_LeSum.CountableMeasure.In_Icc.In_Ico
     (M := M) h₀ h₁ hπ hmeas h₂ h₃sum hBdd hφ hMssup hR

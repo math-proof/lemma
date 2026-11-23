@@ -28,7 +28,7 @@ private lemma main
   (aₜ : 𝒜) :
 -- imply
   ∫ ω, (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) * r (t + (j + 1)) ω ∂(M θ) =
-    (M θ).real (s t ⁻¹' {sₜ}) * (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) *
+    (M θ).real (s t ⁻¹' {sₜ}) * (M.π θ sₜ aₜ * μ.measure.real {aₜ}) *
       ∫ y, (∫ w, M.Kf θ (fun z ↦ clip z.1 (-R) R) j w ∂(M.stageK θ y))
         ∂(M.trans (sₜ, aₜ)) := by
 -- proof

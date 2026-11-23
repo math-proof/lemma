@@ -531,6 +531,70 @@ function hasComplexICues(node) {
   return found;
 }
 
+const COMPLEX_TYPE = new Set(["ℂ", "Complex"]);
+const COMPLEX_PROP = new Set(["re", "im", "conj"]);
+const CONTAINER_SECTIONS = new Set(["Finset", "Set", "List", "Multiset"]);
+
+/** Right-hand head of a (possibly iterated) arrow type, e.g. `ℕ → ℂ` → `ℂ`. */
+function typeCodomainHead(typeNode) {
+  let h = unwrapParen(typeNode);
+  while (cls(h) === "Lean_rightarrow" || cls(h) === "Lean_rightharpoonup") {
+    h = unwrapParen(h.args?.[h.args.length - 1]);
+  }
+  if (cls(h) === "LeanArgsSpaceSeparated") h = h.args?.[0];
+  return cls(h) === "LeanToken" ? (h.text || "") : "";
+}
+
+/**
+ * True when a free `{…}` / `(…)` data binder has type `ℂ` / `Complex`
+ * or an arrow type with that codomain. `Finset ℂ` is not a Complex
+ * codomain — the head is the container — so genuine Finset lemmas
+ * whose elements happen to be complex stay put. Instance binders
+ * (`[…]`) are ignored.
+ */
+function hasComplexDataParam(node) {
+  let found = false;
+  const walk = (n) => {
+    if (!n || typeof n !== "object" || found) return;
+    const c = cls(n);
+    if ((c === "LeanBrace" || c === "LeanParenthesis") && cls(n.args?.[0]) === "LeanColon") {
+      if (COMPLEX_TYPE.has(typeCodomainHead(n.args[0].args?.[1]))) { found = true; return; }
+    }
+    for (const a of n.args || []) walk(a);
+  };
+  walk(node);
+  return found;
+}
+
+/**
+ * Complex-specific operators in a node (typically the conclusion):
+ * conjugate `~`, `.re` / `.im` / `.conj`, and `Complex.*`. `‖·‖` is
+ * shared with Real and is not a cue on its own.
+ */
+function hasComplexOperatorCues(node) {
+  let found = false;
+  const walk = (n) => {
+    if (!n || typeof n !== "object" || found) return;
+    if (cls(n) === "LeanConj") { found = true; return; }
+    if (cls(n) === "LeanProperty") {
+      let head = unwrapParen(n.args?.[0]);
+      if (cls(head) === "LeanArgsSpaceSeparated") head = head.args?.[0];
+      if (cls(head) === "LeanToken" && head.text === "Complex") { found = true; return; }
+      let prop = n.args?.[1];
+      if (cls(prop) === "LeanArgsSpaceSeparated") prop = prop.args?.[0];
+      if (cls(prop) === "LeanToken" && COMPLEX_PROP.has(prop.text)) { found = true; return; }
+    }
+    if (cls(n) === "LeanToken" && typeof n.text === "string" &&
+        (/^Complex\./.test(n.text) || n.text === "starRingEnd")) {
+      found = true;
+      return;
+    }
+    for (const a of n.args || []) walk(a);
+  };
+  walk(node);
+  return found;
+}
+
 /**
  * Section namespaces that head the conclusion, e.g. `Matrix.rotaryOn u v 0 = 1`
  * → `["Matrix"]`. The signature may be dominated by index types (`Fin d`,
@@ -827,9 +891,21 @@ function pickSection(sigNode, sections, extra = {}) {
     add("Hyperreal", 5);
     if ((scores.get("Real") ?? 0) > 2) scores.set("Real", 2);
   }
-  if ((scores.get("Complex") ?? 0) > 0 && hasComplexICues(sigNode)) {
+  // Complex-valued subject: a free data parameter with codomain ℂ, or
+  // Complex-specific operators (including `I`) in the conclusion. Finset /
+  // Set / List in the signature are then only containers (e.g. Finset.sum)
+  // and must not outrank Complex. Genuine Finset lemmas with no ℂ
+  // codomain and no Complex operators are unchanged.
+  const complexSubject =
+    hasComplexDataParam(sigNode) ||
+    hasComplexOperatorCues(concl) ||
+    hasComplexICues(sigNode);
+  if (complexSubject && scores.has("Complex")) {
     add("Complex", 5);
     if ((scores.get("Real") ?? 0) > 2) scores.set("Real", 2);
+    for (const sec of CONTAINER_SECTIONS) {
+      if ((scores.get(sec) ?? 0) > 1) scores.set(sec, 1);
+    }
   }
   {
     const INTERVAL = /^(Set\.)?I(cc|co|oc|oo|ci|ic|oi|io)$/;

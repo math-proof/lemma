@@ -22,11 +22,11 @@ private lemma main
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {Cg : ℝ}
 -- given
-  (h₀ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2))
-  (h₁ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
-  (h₂ : ∀ sₜ, ∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖) ∂μ.measure ≤ Cg)
-  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖))
-  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) μ.measure)
+  (h₀ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π θ z.1 z.2))
+  (h₁ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π θ sₜ aₜ))
+  (h₂ : ∀ sₜ, ∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖) ∂μ.measure ≤ Cg)
+  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖))
+  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖)) μ.measure)
   (R : ℝ)
   (k : ℕ)
   (sₜ : 𝒮) :
@@ -35,10 +35,10 @@ private lemma main
     ∀ θ, ‖fderiv ℝ (fun θ => M.Wkd R θ k sₜ) θ‖ ≤ (k + 1) * (Cg * |R|) := by
 -- proof
   let g : 𝒮 → 𝒜 → ℝ :=
-    fun sₜ aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)
-  have hBound : ∀ θ sₜ aₜ, ‖fderiv ℝ (fun θ => M.π[θ] sₜ aₜ) θ‖ ≤ g sₜ aₜ := by
+    fun sₜ aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖)
+  have hBound : ∀ θ sₜ aₜ, ‖fderiv ℝ (fun θ => M.π θ sₜ aₜ) θ‖ ≤ g sₜ aₜ := by
     intro θ sₜ aₜ
-    have : ‖∇[θ] M.π[θ] sₜ aₜ‖ ≤ g sₜ aₜ := by
+    have : ‖∇[θ] M.π θ sₜ aₜ‖ ≤ g sₜ aₜ := by
       refine le_csSup ?_ ⟨θ, rfl⟩
       exact hBdd sₜ aₜ
     simpa [gradient, LinearIsometryEquiv.norm_map] using this
@@ -51,7 +51,7 @@ private lemma main
   induction k generalizing sₜ with
   | zero =>
     have hD := fun θ => HasFDerivAt.LeNorm.of.All_LeNormFderiv.All_LeNorm.All_Differentiable.All_Measurable.Integrable.All_LeNormFderiv.All_EqIntegral_1.All_Ge_0.All_Differentiable.All_Measurable
-      (ν := ReferenceMeasure.measure) (f := fun θ u => M.π[θ] sₜ u) (G := fun _ u => M.rkd R sₜ u) (g := g sₜ)
+      (ν := ReferenceMeasure.measure) (f := fun θ u => M.π θ sₜ u) (G := fun _ u => M.rkd R sₜ u) (g := g sₜ)
       (B₀ := |R|) (B₁ := 0)
       (fun θ => (h₀ θ).comp measurable_prodMk_left) (h₁ sₜ) (fun θ u => hStoch.nonneg θ sₜ u)
       (fun θ => hStoch.integral_eq_one θ sₜ) (fun θ u => hBound θ sₜ u) (hInt sₜ)
@@ -89,7 +89,7 @@ private lemma main
         (Filter.Eventually.of_forall fun y => NormWkd.le.Abs_R (M := M) R θ k y)
       simpa using h
     have hD := fun θ => HasFDerivAt.LeNorm.of.All_LeNormFderiv.All_LeNorm.All_Differentiable.All_Measurable.Integrable.All_LeNormFderiv.All_EqIntegral_1.All_Ge_0.All_Differentiable.All_Measurable
-      (ν := ReferenceMeasure.measure) (f := fun θ u => M.π[θ] sₜ u)
+      (ν := ReferenceMeasure.measure) (f := fun θ u => M.π θ sₜ u)
       (G := fun θ u => ∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, u))) (g := g sₜ)
       (B₀ := |R|) (B₁ := ((k : ℝ) + 1) * (Cg * |R|))
       (fun θ => (h₀ θ).comp measurable_prodMk_left) (h₁ sₜ) (fun θ u => hStoch.nonneg θ sₜ u)

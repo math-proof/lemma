@@ -28,7 +28,7 @@ private lemma main
   (aₜ : 𝒜) :
 -- imply
   (M θ).real (s t ⁻¹' {sₜ} ∩ a t ⁻¹' {aₜ}) =
-    (M θ).real (s t ⁻¹' {sₜ}) * (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) := by
+    (M θ).real (s t ⁻¹' {sₜ}) * (M.π θ sₜ aₜ * μ.measure.real {aₜ}) := by
 -- proof
   have hS : MeasurableSet (s t ⁻¹' {sₜ}) :=
     Random.Measurable.of.All_Eq.snd.fst h₀ t (measurableSet_singleton sₜ)
@@ -66,17 +66,17 @@ private lemma main
     Integral.eq.Integral_Integral_SMul.of.All_Eq_Joint.All_EqWithDensity
       h₀ hφ hφC θ t]
   have hinner : ∀ y,
-      ∫ v, M.π[θ] y v • (if y = sₜ ∧ v = aₜ then (1:ℝ) else 0)
+      ∫ v, M.π θ y v • (if y = sₜ ∧ v = aₜ then (1:ℝ) else 0)
         ∂μ.measure =
         (if y = sₜ then (1:ℝ) else 0) *
-          (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) := by
+          (M.π θ sₜ aₜ * μ.measure.real {aₜ}) := by
     intro y
     if hy : y = sₜ then
       subst hy
       simp only [true_and, smul_eq_mul]
       have hfun :
-        (fun v => M.π[θ] y v * (if v = aₜ then (1:ℝ) else 0)) =
-          ({aₜ} : Set 𝒜).indicator (M.π[θ] y) := by
+        (fun v => M.π θ y v * (if v = aₜ then (1:ℝ) else 0)) =
+          ({aₜ} : Set 𝒜).indicator (M.π θ y) := by
         funext v
         by_cases hv : v = aₜ <;> simp [hv, Set.indicator]
       rw [hfun, integral_indicator (measurableSet_singleton aₜ),

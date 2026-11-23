@@ -30,7 +30,7 @@ private lemma main
   (h₁ : Model.AbsContJointAS M a s)
   (hSm : Model.AbsContStateMarginal M s)
   (h₂ : ∀ θ t aₜ sₜ, (M θ).prob (a t, s t) (aₜ, sₜ) =
-    ENNReal.ofReal (M.π[θ] sₜ aₜ) *
+    ENNReal.ofReal (M.π θ sₜ aₜ) *
       ((M θ).map (s t)).rnDeriv ReferenceMeasure.measure sₜ)
   (h₃ : ∀ θ t x, ((M θ).map (s t)).rnDeriv ReferenceMeasure.measure x ≠ 0)
   (h₄ : ∀ θ t x, ((M θ).map (s t)).rnDeriv ReferenceMeasure.measure x ≠ ⊤) :
@@ -41,13 +41,13 @@ private lemma main
     h₀.singlePSpace_s (hac := hSm) θ t
   ∀ t, ∀ᵐ ω ∂(M θ),
       ∇[θ] (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log =
-        ∇[θ] (Real.log (M.π[θ] (s t ω) (a t ω))) := by
+        ∇[θ] (Real.log (M.π θ (s t ω) (a t ω))) := by
 -- proof
   intro hP _ t
   refine ae_of_all (M θ) fun ω => ?_
   have hfun :
     (fun θ' => (ℙ[M θ']((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) =
-        (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) := by
+        (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) := by
     funext θ'
     rw [ProbCond.eq.OfRealPol.of.NeDens_0.All_EqWithDensity.All_Eq_JointDens
       (M := M) h₀ h₁ (h₂ θ' t (a t ω) (s t ω)) (h₃ θ' t (s t ω)) (h₄ θ' t (s t ω))]

@@ -41,7 +41,7 @@ private lemma main
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 ↦ M.π[θ] z.1 z.2))
+  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 ↦ M.π θ z.1 z.2))
   (hψ : StronglyMeasurable (Function.uncurry ψ))
   (hMs : ∃ Ms : ℝ, ∀ y u, ‖ψ y u‖ ≤ Ms)
   (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1)

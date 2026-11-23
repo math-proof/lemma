@@ -21,36 +21,36 @@ private lemma main
   [MeasurableSpace 𝒮] [μ : ReferenceMeasure 𝒜]
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy]
 -- given
-  (h₀ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
-  (h₁ : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) μ.measure)
-  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖))
+  (h₀ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π θ sₜ aₜ))
+  (h₁ : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖)) μ.measure)
+  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖))
   (θ : Θ)
   (sₜ : 𝒮) :
 -- imply
-  ∫ u, M.π[θ] sₜ u • fderiv ℝ (fun θ' => Real.log (M.π[θ'] sₜ u)) θ
+  ∫ u, M.π θ sₜ u • fderiv ℝ (fun θ' => Real.log (M.π θ' sₜ u)) θ
     ∂μ.measure = 0 := by
 -- proof
   let g : 𝒮 → 𝒜 → ℝ :=
-    fun sₜ aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)
-  have hBound : ∀ θ sₜ aₜ, ‖fderiv ℝ (fun θ => M.π[θ] sₜ aₜ) θ‖ ≤ g sₜ aₜ := by
+    fun sₜ aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖)
+  have hBound : ∀ θ sₜ aₜ, ‖fderiv ℝ (fun θ => M.π θ sₜ aₜ) θ‖ ≤ g sₜ aₜ := by
     intro θ sₜ aₜ
-    have : ‖∇[θ] M.π[θ] sₜ aₜ‖ ≤ g sₜ aₜ := by
+    have : ‖∇[θ] M.π θ sₜ aₜ‖ ≤ g sₜ aₜ := by
       refine le_csSup ?_ ⟨θ, rfl⟩
       exact hBdd sₜ aₜ
     simpa [gradient, LinearIsometryEquiv.norm_map] using this
-  have hSf : StronglyMeasurable (fun u => fderiv ℝ (fun θ => M.π[θ] sₜ u) θ) :=
+  have hSf : StronglyMeasurable (fun u => fderiv ℝ (fun θ => M.π θ sₜ u) θ) :=
     StronglyMeasurable_Fderiv.of.All_DifferentiableAt.All_Measurable
       (fun θ' => (hStoch.measurable_π θ').comp measurable_prodMk_left)
       (fun u => (h₀ sₜ u) θ)
-  have h1 : ∫ aₜ, M.π[θ] sₜ aₜ ∂ReferenceMeasure.measure = 1 :=
+  have h1 : ∫ aₜ, M.π θ sₜ aₜ ∂ReferenceMeasure.measure = 1 :=
     hStoch.integral_eq_one θ sₜ
-  have hIπ : Integrable (M.π[θ] sₜ) ReferenceMeasure.measure :=
+  have hIπ : Integrable (M.π θ sₜ) ReferenceMeasure.measure :=
     Integrable.of_integral_ne_zero (by rw [h1]; exact one_ne_zero)
-  have hF : HasFDerivAt (fun θ' => ∫ u, M.π[θ'] sₜ u ∂ReferenceMeasure.measure)
-      (∫ u, fderiv ℝ (fun θ' => M.π[θ'] sₜ u) θ ∂ReferenceMeasure.measure) θ :=
+  have hF : HasFDerivAt (fun θ' => ∫ u, M.π θ' sₜ u ∂ReferenceMeasure.measure)
+      (∫ u, fderiv ℝ (fun θ' => M.π θ' sₜ u) θ ∂ReferenceMeasure.measure) θ :=
     hasFDerivAt_integral_of_dominated_of_fderiv_le
-      (F := fun θ' u => M.π[θ'] sₜ u)
-      (F' := fun θ' u => fderiv ℝ (fun θ'' => M.π[θ''] sₜ u) θ')
+      (F := fun θ' u => M.π θ' sₜ u)
+      (F' := fun θ' u => fderiv ℝ (fun θ'' => M.π θ'' sₜ u) θ')
       (s := Set.univ) (bound := g sₜ) Filter.univ_mem
       (Filter.Eventually.of_forall fun θ' =>
         ((hStoch.measurable_π θ').comp measurable_prodMk_left).aestronglyMeasurable)
@@ -62,7 +62,7 @@ private lemma main
   simp_rw [EqSMulProb_FderivLog_Prob_Fderiv_FunProb.of.All_All_Differentiable_FunPolProb.All_EqWithDensity
     (M := M) h₀ θ sₜ]
   have e := hF.fderiv
-  have hint : (fun θ' => ∫ u, M.π[θ'] sₜ u ∂ReferenceMeasure.measure) =
+  have hint : (fun θ' => ∫ u, M.π θ' sₜ u ∂ReferenceMeasure.measure) =
       fun _ => (1 : ℝ) := funext fun θ' => hStoch.integral_eq_one θ' sₜ
   rw [hint, fderiv_const_apply] at e
   exact e.symm

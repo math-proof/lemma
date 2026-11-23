@@ -44,9 +44,9 @@ structure StochasticMDP (𝒮 𝒜 : Type*) [MeasurableSpace 𝒮] [MeasurableSp
   reward : 𝒮 × 𝒜 → ProbabilityMeasure ℝ
   reward_bdd : ∃ R, ∀ p, (reward p : Measure ℝ) (Set.Icc (-R) R) = 1
 
-/-- A parameterized policy `π[θ] sₜ aₜ = π_θ(aₜ | sₜ)` on a general (e.g. continuous) action space. -/
+/-- A parameterized policy `π θ sₜ aₜ = π_θ(aₜ | sₜ)` on a general (e.g. continuous) action space. -/
 structure Policy (Θ 𝒮 𝒜 : Type*) [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜] where
-  π : Θ ⇀ 𝒮 → 𝒜 → ℝ
+  π : Θ → 𝒮 → 𝒜 → ℝ
 
 /-- A policy-gradient model is a `StochasticMDP` together with a density policy
 on a general action space. -/

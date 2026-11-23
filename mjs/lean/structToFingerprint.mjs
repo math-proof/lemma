@@ -85,7 +85,17 @@ const OP_HEAD = {
 
 const lastSegment = (name) => String(name ?? '').split('.').pop() || '';
 const cap = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : '');
-const isLowerHead = (s) => /^[\p{Ll}_]/u.test(s);
+// Subscript digits/letters (U+2080–U+209C, U+1D62–U+1D6A, U+2C7C). Superscripts
+// are notation (`x²` = `x ^ 2`), so they are not part of a variable name.
+const SUBSCRIPT_TAIL = /[\u2080-\u2089\u2090-\u209C\u1D62-\u1D6A\u2C7C]+$/u;
+// A single letter plus its subscript is a variable, never a global function
+// head: `r`, `rₐ`, `Rₘ`, and the ASCII form `A_length`, `a_min`, `a_t`, `𝒮_0`.
+const isVariableHead = (s) => {
+  const raw = String(s ?? '');
+  const base = raw.replace(SUBSCRIPT_TAIL, '');
+  if ([...base].length === 1 && /\p{L}/u.test(base)) return true;
+  return /^\p{L}_\S+$/u.test(raw);
+};
 const isNumeral = (s) => /^\d+$/.test(s);
 // JS only binds plain identifiers; `«\sf{a}»` / `c✝` stay free leaves.
 const isBinderName = (s) => /^[\p{L}_][\p{L}\p{N}_]*$/u.test(s);
@@ -165,8 +175,21 @@ function quantified(kind, struct, ctx) {
     }
   }
   const head = kind === 'forall' ? 'All' : kind === 'exists' ? 'Any' : LIMIT_HEAD[struct.op] ?? cap(struct.op);
-  const binders = kind === 'limits' ? (struct.args ?? []).slice(1) : struct.binders ?? [];
-  const bodyStruct = kind === 'limits' ? struct.args?.[0] : struct.body;
+  // The JS fingerprint folds directly nested same-head big operators into one
+  // node whose domains are conjoined innermost-first (`∑ i ∈ s, ∑ j ∈ t, f`);
+  // elaboration keeps them as nested `Finset.sum` applications.
+  const binders = [];
+  let bodyStruct;
+  if (kind === 'limits') {
+    bodyStruct = struct;
+    while (bodyStruct?.kind === 'limits' && bodyStruct.op === struct.op) {
+      binders.push(...(bodyStruct.args ?? []).slice(1));
+      bodyStruct = bodyStruct.args?.[0];
+    }
+  } else {
+    binders.push(...(struct.binders ?? []));
+    bodyStruct = struct.body;
+  }
   const depth = ctx.binders.length;
   try {
     const domains = binders.map((binder) => binderDomain(binder, ctx));
@@ -218,20 +241,21 @@ function application(name, args, ctx) {
     return integralApplication(args, ctx);
   }
   const seg = lastSegment(name);
-  if (isLowerHead(seg)) return '_';
+  if (isVariableHead(seg)) return '_';
   return node(cap(seg), (args ?? []).map((arg) => convert(arg, ctx)));
 }
 
 function special(struct, ctx) {
   const op = String(struct.op ?? '');
   const args = struct.args ?? [];
-  // Plain space-separated application: `f x` collapses to `_` when the head
-  // starts lowercase, exactly like `LeanArgsSpaceSeparated.toJSON`.
+  // Plain space-separated application: multi-letter heads keep the
+  // capitalised name (`range x` → `Range(x)`); single letters are variables
+  // and stay anonymous (`r x` → `_`), like `LeanArgsSpaceSeparated.toJSON`.
   if (op === '[anonymous]') {
     const head = args[0];
     if (!head) return '';
     const name = String(head.name ?? head.op ?? '');
-    if (head.kind === 'symbol' && isLowerHead(name)) return '_';
+    if (isVariableHead(name)) return '_';
     return node(cap(lastSegment(name) || 'Anonymous'), args.slice(1).map((arg) => convert(arg, ctx)));
   }
   if (op === 'Prod.mk') return args.map((arg) => convert(arg, ctx));

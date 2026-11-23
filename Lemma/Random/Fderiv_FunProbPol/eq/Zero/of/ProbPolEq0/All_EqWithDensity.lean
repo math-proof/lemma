@@ -17,12 +17,12 @@ private lemma main
   (θ : Θ)
   (sₜ : S)
   (aₜ : A)
-  (h₀ : π.π[θ] sₜ aₜ = 0) :
+  (h₀ : π.π θ sₜ aₜ = 0) :
 -- imply
-  fderiv ℝ (fun θ' => π.π[θ'] sₜ aₜ) θ = 0 := by
+  fderiv ℝ (fun θ' => π.π θ' sₜ aₜ) θ = 0 := by
 -- proof
   refine IsLocalMin.fderiv_eq_zero (Filter.Eventually.of_forall fun θ' => ?_)
-  show π.π[θ] sₜ aₜ ≤ π.π[θ'] sₜ aₜ
+  show π.π θ sₜ aₜ ≤ π.π θ' sₜ aₜ
   rw [h₀]
   exact hStoch.nonneg θ' sₜ aₜ
 

@@ -130,7 +130,7 @@ class Model.IsConditionalProbability
   /-- One stage of the policy density matches the trajectory conditional. -/
   factor : ∀ θ t (sₜ : 𝒮) (aₜ : 𝒜)
       [SinglePSpace (M.traj θ) (fun ω => (a t ω, s t ω))],
-    M.π[θ] sₜ aₜ = ℙ[M.traj θ](a[t] = aₜ | s[t] = sₜ)
+    M.π θ sₜ aₜ = ℙ[M.traj θ](a[t] = aₜ | s[t] = sₜ)
 
 instance [h : Model.IsConditionalProbability M r s a] :
     Model.IsPolicyTrajectory M r s a :=

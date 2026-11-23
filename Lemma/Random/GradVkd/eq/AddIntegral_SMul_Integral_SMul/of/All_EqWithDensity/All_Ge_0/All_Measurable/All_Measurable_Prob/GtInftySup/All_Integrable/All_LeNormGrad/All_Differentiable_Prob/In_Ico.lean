@@ -33,11 +33,11 @@ private lemma main
   {p : 𝒮 → 𝒜 → 𝒮 → ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
-  (h₁ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
-  (h₂ : sup[sₜ] (∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖) ∂ν.measure) < ∞)
-  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖))
-  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) ν.measure)
-  (h₅ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2))
+  (h₁ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π θ sₜ aₜ))
+  (h₂ : sup[sₜ] (∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖) ∂ν.measure) < ∞)
+  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖))
+  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖)) ν.measure)
+  (h₅ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π θ z.1 z.2))
   (h₆ : ∀ x, Measurable (fun z : 𝒜 × 𝒮 => p x z.1 z.2))
   (h₇ : ∀ x u y, p x u y ≥ 0)
   (h₈ : ∀ x u, M.trans (x, u) = (μ.measure : Measure 𝒮).withDensity (fun y => ENNReal.ofReal (p x u y)))
@@ -45,7 +45,7 @@ private lemma main
 -- imply
   ∇[θ] M.V0 R θ γ («\sf{s}» t) =
     ∫ u, ((M.rkd R («\sf{s}» t) u + γ * ∫ y, M.V0 R θ γ y ∂(M.trans («\sf{s}» t, u))) •
-        ∇[θ] M.π[θ] («\sf{s}» t) u) ∂ν.measure +
+        ∇[θ] M.π θ («\sf{s}» t) u) ∂ν.measure +
       γ • ∫ y, (M.P1kd θ p («\sf{s}» t) y • ∇[θ] M.V0 R θ γ y) ∂μ.measure := by
 -- proof
   set sₜ := «\sf{s}» t
@@ -58,13 +58,13 @@ private lemma main
     StronglyMeasurable_Fderiv.of.All_DifferentiableAt.All_Measurable
       (fun θ' => Measurable_Vkd.of.All_Measurable_Prob (M := M) h₅ R θ' γ)
       (fun y => (HasFDerivAt.of.All_Measurable_Prob.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob (M := M) h₁ h₂ hBdd hIntg h₀ h₅ R y θ).differentiableAt)
-  have hπ : Integrable (M.π[θ] sₜ) ReferenceMeasure.measure :=
+  have hπ : Integrable (M.π θ sₜ) ReferenceMeasure.measure :=
     Integrable.of_integral_ne_zero (by
-      have h1 : ∫ a, M.π[θ] sₜ a ∂ν.measure = 1 :=
+      have h1 : ∫ a, M.π θ sₜ a ∂ν.measure = 1 :=
         hStoch.integral_eq_one θ sₜ
       rw [h1]
       apply one_ne_zero)
-  have hπm : Measurable (M.π[θ] sₜ) := (h₅ θ).comp measurable_prodMk_left
+  have hπm : Measurable (M.π θ sₜ) := (h₅ θ).comp measurable_prodMk_left
   have hp : ∀ u, Measurable (p sₜ u) := fun u => (h₆ sₜ).comp measurable_prodMk_left
   have hd : ∀ u, ∫ y, fderiv ℝ (fun θ => M.V0 R θ γ y) θ ∂(M.trans (sₜ, u)) =
       ∫ y, p sₜ u y • fderiv ℝ (fun θ => M.V0 R θ γ y) θ ∂ReferenceMeasure.measure := fun u => by
@@ -77,15 +77,15 @@ private lemma main
     rw [h₈, integrable_withDensity_iff_integrable_smul' (hp u).ennreal_ofReal
       (Filter.Eventually.of_forall fun y => ENNReal.ofReal_lt_top)] at hI
     simpa [ENNReal.toReal_ofReal (h₇ sₜ u _)] using hI
-  have hn : ∀ aₜ, ∫ y, ‖M.π[θ] sₜ aₜ • (p sₜ aₜ y • fderiv ℝ (fun θ => M.V0 R θ γ y) θ)‖ ∂ReferenceMeasure.measure ≤
-      M.π[θ] sₜ aₜ * C := fun aₜ => by
-    have e : ∫ y, ‖M.π[θ] sₜ aₜ • (p sₜ aₜ y • fderiv ℝ (fun θ => M.V0 R θ γ y) θ)‖ ∂ReferenceMeasure.measure =
-        ∫ y, M.π[θ] sₜ aₜ * ‖fderiv ℝ (fun θ => M.V0 R θ γ y) θ‖ ∂(M.trans (sₜ, aₜ)) := by
+  have hn : ∀ aₜ, ∫ y, ‖M.π θ sₜ aₜ • (p sₜ aₜ y • fderiv ℝ (fun θ => M.V0 R θ γ y) θ)‖ ∂ReferenceMeasure.measure ≤
+      M.π θ sₜ aₜ * C := fun aₜ => by
+    have e : ∫ y, ‖M.π θ sₜ aₜ • (p sₜ aₜ y • fderiv ℝ (fun θ => M.V0 R θ γ y) θ)‖ ∂ReferenceMeasure.measure =
+        ∫ y, M.π θ sₜ aₜ * ‖fderiv ℝ (fun θ => M.V0 R θ γ y) θ‖ ∂(M.trans (sₜ, aₜ)) := by
       rw [h₈, integral_withDensity_eq_integral_toReal_smul (hp aₜ).ennreal_ofReal
         (Filter.Eventually.of_forall fun y => ENNReal.ofReal_lt_top)]
       congr 1
       funext y
-      have hπnn : 0 ≤ M.π[θ] sₜ aₜ := hStoch.nonneg θ sₜ aₜ
+      have hπnn : 0 ≤ M.π θ sₜ aₜ := hStoch.nonneg θ sₜ aₜ
       rw [ENNReal.toReal_ofReal (h₇ sₜ aₜ y), norm_smul, norm_smul,
         Real.norm_of_nonneg hπnn, Real.norm_of_nonneg (h₇ sₜ aₜ y), smul_eq_mul]
       ring
@@ -95,31 +95,31 @@ private lemma main
         exact hCb y)
     rw [e, integral_const_mul]
     exact mul_le_mul_of_nonneg_left ((Real.le_norm_self _).trans (by simpa using h)) (hStoch.nonneg θ sₜ aₜ)
-  have hFm : StronglyMeasurable (fun z : 𝒜 × 𝒮 => M.π[θ] sₜ z.1 • (p sₜ z.1 z.2 • fderiv ℝ (fun θ => M.V0 R θ γ z.2) θ)) :=
+  have hFm : StronglyMeasurable (fun z : 𝒜 × 𝒮 => M.π θ sₜ z.1 • (p sₜ z.1 z.2 • fderiv ℝ (fun θ => M.V0 R θ γ z.2) θ)) :=
     (hπm.comp measurable_fst).stronglyMeasurable.smul ((h₆ sₜ).stronglyMeasurable.smul (hgm.comp_measurable measurable_snd))
-  have hInt : Integrable (Function.uncurry fun aₜ y => M.π[θ] sₜ aₜ • (p sₜ aₜ y • fderiv ℝ (fun θ => M.V0 R θ γ y) θ))
+  have hInt : Integrable (Function.uncurry fun aₜ y => M.π θ sₜ aₜ • (p sₜ aₜ y • fderiv ℝ (fun θ => M.V0 R θ γ y) θ))
       (ReferenceMeasure.measure.prod ReferenceMeasure.measure) :=
-    (integrable_prod_iff hFm.aestronglyMeasurable).2 ⟨Filter.Eventually.of_forall fun aₜ => (hi aₜ).smul (M.π[θ] sₜ aₜ),
+    (integrable_prod_iff hFm.aestronglyMeasurable).2 ⟨Filter.Eventually.of_forall fun aₜ => (hi aₜ).smul (M.π θ sₜ aₜ),
       (hπ.mul_const C).mono' (hFm.norm.integral_prod_right' (ν := ReferenceMeasure.measure)).aestronglyMeasurable
         (Filter.Eventually.of_forall fun aₜ => by
           rw [Real.norm_of_nonneg (integral_nonneg fun _ => norm_nonneg _)]
           exact hn aₜ)⟩
-  have hsum : ∫ aₜ, (M.π[θ] sₜ aₜ • ∫ y, fderiv ℝ (fun θ => M.V0 R θ γ y) θ ∂(M.trans (sₜ, aₜ))) ∂ReferenceMeasure.measure =
+  have hsum : ∫ aₜ, (M.π θ sₜ aₜ • ∫ y, fderiv ℝ (fun θ => M.V0 R θ γ y) θ ∂(M.trans (sₜ, aₜ))) ∂ReferenceMeasure.measure =
       ∫ y, (M.P1kd θ p sₜ y • fderiv ℝ (fun θ => M.V0 R θ γ y) θ) ∂ReferenceMeasure.measure := calc
-    _ = ∫ aₜ, ∫ y, M.π[θ] sₜ aₜ • (p sₜ aₜ y • fderiv ℝ (fun θ => M.V0 R θ γ y) θ) ∂ReferenceMeasure.measure ∂ReferenceMeasure.measure := by
+    _ = ∫ aₜ, ∫ y, M.π θ sₜ aₜ • (p sₜ aₜ y • fderiv ℝ (fun θ => M.V0 R θ γ y) θ) ∂ReferenceMeasure.measure ∂ReferenceMeasure.measure := by
       congr 1
       funext u
       rw [hd u, integral_smul]
-    _ = ∫ y, ∫ aₜ, M.π[θ] sₜ aₜ • (p sₜ aₜ y • fderiv ℝ (fun θ => M.V0 R θ γ y) θ) ∂ReferenceMeasure.measure ∂ReferenceMeasure.measure :=
+    _ = ∫ y, ∫ aₜ, M.π θ sₜ aₜ • (p sₜ aₜ y • fderiv ℝ (fun θ => M.V0 R θ γ y) θ) ∂ReferenceMeasure.measure ∂ReferenceMeasure.measure :=
       integral_integral_swap hInt
     _ = _ := by
       congr 1
       funext y
       simp only [smul_smul, integral_smul_const, Model.P1kd]
-  have hint₁ : (InnerProductSpace.toDual ℝ Θ).symm (∫ aₜ, (M.rkd R sₜ aₜ + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (sₜ, aₜ))) • fderiv ℝ (fun θ => M.π[θ] sₜ aₜ) θ ∂ReferenceMeasure.measure) =
-      ∫ aₜ, (InnerProductSpace.toDual ℝ Θ).symm ((M.rkd R sₜ aₜ + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (sₜ, aₜ))) • fderiv ℝ (fun θ => M.π[θ] sₜ aₜ) θ) ∂ReferenceMeasure.measure := by
+  have hint₁ : (InnerProductSpace.toDual ℝ Θ).symm (∫ aₜ, (M.rkd R sₜ aₜ + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (sₜ, aₜ))) • fderiv ℝ (fun θ => M.π θ sₜ aₜ) θ ∂ReferenceMeasure.measure) =
+      ∫ aₜ, (InnerProductSpace.toDual ℝ Θ).symm ((M.rkd R sₜ aₜ + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (sₜ, aₜ))) • fderiv ℝ (fun θ => M.π θ sₜ aₜ) θ) ∂ReferenceMeasure.measure := by
     have h := (InnerProductSpace.toDual ℝ Θ).symm.toContinuousLinearEquiv.integral_comp_comm
-      (μ := ReferenceMeasure.measure) (fun aₜ => (M.rkd R sₜ aₜ + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (sₜ, aₜ))) • fderiv ℝ (fun θ => M.π[θ] sₜ aₜ) θ)
+      (μ := ReferenceMeasure.measure) (fun aₜ => (M.rkd R sₜ aₜ + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (sₜ, aₜ))) • fderiv ℝ (fun θ => M.π θ sₜ aₜ) θ)
     simpa using h.symm
   have hint₂ : (InnerProductSpace.toDual ℝ Θ).symm (∫ y, M.P1kd θ p sₜ y • fderiv ℝ (fun θ => M.V0 R θ γ y) θ ∂ReferenceMeasure.measure) =
       ∫ y, (InnerProductSpace.toDual ℝ Θ).symm (M.P1kd θ p sₜ y • fderiv ℝ (fun θ => M.V0 R θ γ y) θ) ∂ReferenceMeasure.measure := by

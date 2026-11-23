@@ -8,8 +8,11 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.DeletionInjectivityHelpers
+module
 
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.DeletionInjectivityHelpers
+
+@[expose] public section
 
 namespace CoxeterSystemFromDeletion
 

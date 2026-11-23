@@ -1,4 +1,4 @@
-import Def.Data.Fin.Rope
+import Def.Data.Fin.Step
 import Initialize.Tactic.Attr.Basic
 import Mathlib
 
@@ -9,12 +9,12 @@ private lemma main
 -- given
   (d : ℕ) :
 -- imply
-  Function.Injective (Fin.ropeOdd (d := d)) := by
+  Function.Injective (Fin.stepOdd (d := d)) := by
 -- proof
   intro a b h
   ext
   have := congrArg Fin.val h
-  simp [Fin.ropeOdd] at this
+  simp [Fin.stepOdd] at this
   omega
 
 

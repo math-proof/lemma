@@ -76,16 +76,16 @@ private lemma integral_rkd_smul
     exact e₁.trans (e₂.symm.trans (by rw [hmap, Integral.eq.Integral_Integral.of.Integrable_Bind hInt]))
   have hinner : ∀ y,
       ∫ z, clip z.1 (-R) R • ψ z.2.1 z.2.2 ∂(M.stageK θ y) =
-        ∫ u, M.π[θ] y u • (M.rkd R y u • ψ y u) ∂ReferenceMeasure.measure := by
+        ∫ u, M.π θ y u • (M.rkd R y u • ψ y u) ∂ReferenceMeasure.measure := by
     intro y
     have e :=
       Integral.eq.Integral_SMul.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
         (M := M) hf hCb θ y
     refine e.trans (integral_congr_ae (Filter.Eventually.of_forall fun u => ?_))
     -- stage integrand at (ρ, y, u) is clip ρ • ψ y u
-    change M.π[θ] y u •
+    change M.π θ y u •
         ∫ ρ, clip ρ (-R) R • ψ y u ∂(M.reward (y, u)) =
-      M.π[θ] y u • (M.rkd R y u • ψ y u)
+      M.π θ y u • (M.rkd R y u • ψ y u)
     have hr :
         ∫ ρ, clip ρ (-R) R • ψ y u ∂(M.reward (y, u)) =
           (∫ ρ, clip ρ (-R) R ∂(M.reward (y, u))) • ψ y u :=
@@ -116,7 +116,7 @@ private lemma integral_Vkd_succ_smul
   {ψ : 𝒮 → 𝒜 → Θ →L[ℝ] ℝ}
   {R : ℝ}
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2))
+  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π θ z.1 z.2))
   (hψ : StronglyMeasurable (Function.uncurry ψ))
   (hMs : ∀ y u, ‖ψ y u‖ ≤ Ms)
   (hBV : ∀ x, ‖M.V0 R θ γ x‖ ≤ BV)
@@ -243,25 +243,25 @@ private lemma main
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2))
-  (h₂ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
-  (h₃ : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) μ.measure)
-  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖))
+  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π θ z.1 z.2))
+  (h₂ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π θ sₜ aₜ))
+  (h₃ : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖)) μ.measure)
+  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖))
   (hφ : StronglyMeasurable
-    (fun z : 𝒮 × 𝒜 => fderiv ℝ (fun θ' => Real.log (M.π[θ'] z.1 z.2)) θ))
-  (hMs : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.π[θ'] y u)) θ‖ ≤ Ms)
+    (fun z : 𝒮 × 𝒜 => fderiv ℝ (fun θ' => Real.log (M.π θ' z.1 z.2)) θ))
+  (hMs : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.π θ' y u)) θ‖ ≤ Ms)
   (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1)
   (t : ℕ) :
 -- imply
   ∫ ω, (M.rkd R (s t ω) (a t ω) +
       γ * ∫ y, M.V0 R θ γ y ∂(M.trans (s t ω, a t ω))) •
-      fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ ∂(M θ) =
+      fderiv ℝ (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ ∂(M θ) =
     ∫ ω, (r t ω + γ * M.V0 R θ γ (s (t + 1) ω) - M.V0 R θ γ (s t ω)) •
-      fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ ∂(M θ) := by
+      fderiv ℝ (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ ∂(M θ) := by
 -- proof
   classical
   set ψ : 𝒮 → 𝒜 → Θ →L[ℝ] ℝ := fun y u =>
-    fderiv ℝ (fun θ' => Real.log (M.π[θ'] y u)) θ
+    fderiv ℝ (fun θ' => Real.log (M.π θ' y u)) θ
   have hψ : StronglyMeasurable (Function.uncurry ψ) := hφ
   have hBV : ∀ x, ‖M.V0 R θ γ x‖ ≤ (1 - γ)⁻¹ * |R| :=
     fun x => NormVkd.le.MulInvSub1Abs_R.of.In_Ico (M := M) h₀ R θ x

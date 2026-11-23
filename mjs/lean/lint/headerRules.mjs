@@ -389,7 +389,7 @@ export function openPrefix(ctx) {
 const CUSTOM_ATTR_HEADS = new Set([
     'main', 'comm', 'mp', 'mpr', 'mp.comm', 'mpr.comm', 'comm.is', 'is.comm',
     'mt', 'mp.mt', 'mpr.mt', 'Or.inl', 'Or.inr', 'mpr.left', 'mpr.right', 'mp.left', 'mp.right',
-    'And.left', 'And.right', 'fin', 'fin.comm', 'fin.mp', 'fin.mpr', 'val', 'Fun', 'subst', 'cast', 'cast.fin',
+    'And.left', 'And.right', 'fin', 'fin.comm', 'fin.mp', 'fin.mpr', 'val', 'subst', 'cast', 'cast.fin',
     'mp and', 'mpr and', 'mp.comm and', 'mpr.comm and',
 ]); // = py/docstring.py CUSTOM_ATTR_HEADS
 

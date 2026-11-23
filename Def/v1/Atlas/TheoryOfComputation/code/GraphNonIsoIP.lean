@@ -8,11 +8,14 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.TheoryOfComputation.code.InteractiveProofs.Part2
-import Def.v1.Atlas.TheoryOfComputation.code.Probabilistic.Part5
-import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.Probabilistic
-import Mathlib.Tactic
+module
 
+public import Def.v1.Atlas.TheoryOfComputation.code.InteractiveProofs.Part2
+public import Def.v1.Atlas.TheoryOfComputation.code.Probabilistic.Part5
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.Probabilistic
+public import Mathlib.Tactic
+
+@[expose] public section
 
 namespace GraphNonIsoIP
 

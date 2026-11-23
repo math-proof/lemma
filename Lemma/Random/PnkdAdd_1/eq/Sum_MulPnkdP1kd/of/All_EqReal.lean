@@ -12,7 +12,7 @@ private lemma pnkd_step_sum
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   (θ : Θ) (n : ℕ) (sₜ y : 𝒮) :
   M.Pnkd θ (n + 1) sₜ y =
-    ∫ u, M.π[θ] sₜ u *
+    ∫ u, M.π θ sₜ u *
       ∑ y', (M.trans (sₜ, u)).toMeasure.real {y'} * M.Pnkd θ n y' y
       ∂ReferenceMeasure.measure := by
   rw [PnkdAdd_1.eq.Integral_MulProbIntegral_TPnkd (M := M) θ n sₜ y]
@@ -30,10 +30,10 @@ private lemma integrable_prob_mul_sum
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   (θ : Θ) (n : ℕ) (sₜ y : 𝒮) :
   Integrable
-    (fun u => M.π[θ] sₜ u *
+    (fun u => M.π θ sₜ u *
       ∑ y', (M.trans (sₜ, u)).toMeasure.real {y'} * M.Pnkd θ n y' y)
     ReferenceMeasure.measure := by
-  have hπ : Integrable (M.π[θ] sₜ) ReferenceMeasure.measure :=
+  have hπ : Integrable (M.π θ sₜ) ReferenceMeasure.measure :=
     integrable_of_integral_eq_one (hStoch.integral_eq_one θ sₜ)
   have hTmeas : ∀ y', Measurable fun u => (M.trans (sₜ, u)).toMeasure.real {y'} :=
     fun y' =>
@@ -63,7 +63,7 @@ private lemma integrable_prob_mul_sum
           rwa [Real.norm_of_nonneg hnn]
         exact mul_le_of_le_one_left (norm_nonneg _) hTle
       _ = C := rfl
-  have hbound : Integrable (fun u => C * ‖M.π[θ] sₜ u‖) ReferenceMeasure.measure :=
+  have hbound : Integrable (fun u => C * ‖M.π θ sₜ u‖) ReferenceMeasure.measure :=
     hπ.norm.const_mul C
   refine Integrable.mono' hbound
     (hπ.aestronglyMeasurable.mul hg.aestronglyMeasurable)
@@ -97,12 +97,12 @@ private lemma main
     simp [Pnkd0.eq.Eq]
   | succ n ih =>
     have hI : ∀ y, Integrable
-        (fun u => M.π[θ] sₜ u *
+        (fun u => M.π θ sₜ u *
           ∑ y', (M.trans (sₜ, u)).toMeasure.real {y'} * M.Pnkd θ n y' y)
         ReferenceMeasure.measure :=
       fun y => integrable_prob_mul_sum (M := M) θ n sₜ y
     have hI2 : ∀ y, Integrable
-        (fun u => M.π[θ] sₜ u *
+        (fun u => M.π θ sₜ u *
           ∑ y', (M.trans (sₜ, u)).toMeasure.real {y'} *
             (M.Pnkd θ n y' y * M.P1kd θ p y z))
         ReferenceMeasure.measure := by
@@ -111,60 +111,60 @@ private lemma main
         (hI y).mul_const (M.P1kd θ p y z)
     calc
       M.Pnkd θ (n + 1 + 1) sₜ z
-        = ∫ u, M.π[θ] sₜ u *
+        = ∫ u, M.π θ sₜ u *
             ∑ y', (M.trans (sₜ, u)).toMeasure.real {y'} * M.Pnkd θ (n + 1) y' z
             ∂ReferenceMeasure.measure :=
           pnkd_step_sum (M := M) θ (n + 1) sₜ z
-      _ = ∫ u, M.π[θ] sₜ u *
+      _ = ∫ u, M.π θ sₜ u *
             ∑ y', (M.trans (sₜ, u)).toMeasure.real {y'} *
               ∑ y, M.Pnkd θ n y' y * M.P1kd θ p y z
             ∂ReferenceMeasure.measure := by
         congr 1
         funext u
         simp_rw [ih]
-      _ = ∫ u, ∑ y, M.π[θ] sₜ u *
+      _ = ∫ u, ∑ y, M.π θ sₜ u *
             ∑ y', (M.trans (sₜ, u)).toMeasure.real {y'} *
               (M.Pnkd θ n y' y * M.P1kd θ p y z)
             ∂ReferenceMeasure.measure := by
         congr 1
         funext u
         calc
-          M.π[θ] sₜ u *
+          M.π θ sₜ u *
             ∑ y', (M.trans (sₜ, u)).toMeasure.real {y'} *
               ∑ y, M.Pnkd θ n y' y * M.P1kd θ p y z
-            = ∑ y', M.π[θ] sₜ u *
+            = ∑ y', M.π θ sₜ u *
                 ((M.trans (sₜ, u)).toMeasure.real {y'} *
                   ∑ y, M.Pnkd θ n y' y * M.P1kd θ p y z) := by
               simp [Finset.mul_sum]
-          _ = ∑ y', ∑ y, M.π[θ] sₜ u *
+          _ = ∑ y', ∑ y, M.π θ sₜ u *
                 ((M.trans (sₜ, u)).toMeasure.real {y'} *
                   (M.Pnkd θ n y' y * M.P1kd θ p y z)) := by
               refine Finset.sum_congr rfl fun y' _ => ?_
               simp [Finset.mul_sum]
-          _ = ∑ y, ∑ y', M.π[θ] sₜ u *
+          _ = ∑ y, ∑ y', M.π θ sₜ u *
                 ((M.trans (sₜ, u)).toMeasure.real {y'} *
                   (M.Pnkd θ n y' y * M.P1kd θ p y z)) :=
               Finset.sum_comm
-          _ = ∑ y, M.π[θ] sₜ u *
+          _ = ∑ y, M.π θ sₜ u *
                 ∑ y', (M.trans (sₜ, u)).toMeasure.real {y'} *
                   (M.Pnkd θ n y' y * M.P1kd θ p y z) := by
               refine Finset.sum_congr rfl fun y _ => ?_
               simp [Finset.mul_sum]
-      _ = ∑ y, ∫ u, M.π[θ] sₜ u *
+      _ = ∑ y, ∫ u, M.π θ sₜ u *
             ∑ y', (M.trans (sₜ, u)).toMeasure.real {y'} *
               (M.Pnkd θ n y' y * M.P1kd θ p y z)
             ∂ReferenceMeasure.measure :=
         integral_finsetSum _ (fun y _ => hI2 y)
-      _ = ∑ y, (∫ u, M.π[θ] sₜ u *
+      _ = ∑ y, (∫ u, M.π θ sₜ u *
             ∑ y', (M.trans (sₜ, u)).toMeasure.real {y'} * M.Pnkd θ n y' y
             ∂ReferenceMeasure.measure) * M.P1kd θ p y z := by
         refine Finset.sum_congr rfl fun y _ => ?_
         have hfun :
-            (fun u => M.π[θ] sₜ u *
+            (fun u => M.π θ sₜ u *
               ∑ y', (M.trans (sₜ, u)).toMeasure.real {y'} *
                 (M.Pnkd θ n y' y * M.P1kd θ p y z)) =
             fun u =>
-              (M.π[θ] sₜ u *
+              (M.π θ sₜ u *
                 ∑ y', (M.trans (sₜ, u)).toMeasure.real {y'} * M.Pnkd θ n y' y) *
                 M.P1kd θ p y z := by
           funext u
@@ -172,7 +172,7 @@ private lemma main
         rw [hfun]
         simpa [smul_eq_mul] using
           integral_smul_const
-            (f := fun u => M.π[θ] sₜ u *
+            (f := fun u => M.π θ sₜ u *
               ∑ y', (M.trans (sₜ, u)).toMeasure.real {y'} * M.Pnkd θ n y' y)
             (c := M.P1kd θ p y z)
       _ = ∑ y, M.Pnkd θ (n + 1) sₜ y * M.P1kd θ p y z := by

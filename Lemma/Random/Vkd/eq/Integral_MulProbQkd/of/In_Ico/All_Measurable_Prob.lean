@@ -25,21 +25,21 @@ private lemma main
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {γ : ℝ}
 -- given
-  (h₀ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2))
+  (h₀ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π θ z.1 z.2))
   (h₁ : γ ∈ Set.Ico 0 1)
   (R : ℝ)
   (θ : Θ)
   (sₜ : 𝒮) :
 -- imply
   M.V0 R θ γ sₜ =
-    ∫ u, M.π[θ] sₜ u * M.rkd R sₜ u ∂μ.measure +
-      γ * ∫ u, M.π[θ] sₜ u * ∫ y, M.V0 R θ γ y ∂(M.trans (sₜ, u)) ∂μ.measure := by
+    ∫ u, M.π θ sₜ u * M.rkd R sₜ u ∂μ.measure +
+      γ * ∫ u, M.π θ sₜ u * ∫ y, M.V0 R θ γ y ∂(M.trans (sₜ, u)) ∂μ.measure := by
 -- proof
   have hVy : ∀ y, M.V0 R θ γ y = ∑' k, γ ^ k * M.Wkd R θ k y := fun y => rfl
-  have hπ : Integrable (M.π[θ] sₜ) ReferenceMeasure.measure :=
+  have hπ : Integrable (M.π θ sₜ) ReferenceMeasure.measure :=
     Integrable.of_integral_ne_zero
       ((hStoch.integral_eq_one θ sₜ).symm ▸ one_ne_zero)
-  have hπm : Measurable (M.π[θ] sₜ) := (h₀ θ).comp measurable_prodMk_left
+  have hπm : Measurable (M.π θ sₜ) := (h₀ θ).comp measurable_prodMk_left
   have hT : ∀ k, Measurable (fun u => ∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, u))) := fun k =>
     ((StronglyMeasurable.integral_kernel_prod_right' (κ := M.transK) (f := fun z : (𝒮 × 𝒜) × 𝒮 => M.Wkd R θ k z.2)
       ((Measurable_Wkd.of.All_Measurable_Prob (M := M) h₀ R θ k).stronglyMeasurable.comp_measurable
@@ -60,47 +60,47 @@ private lemma main
       ((Measurable_Wkd.of.All_Measurable_Prob (M := M) h₀ R θ k).const_mul _).aestronglyMeasurable
       (γ ^ k * |R|) (Filter.Eventually.of_forall (hb k))) hs
     simpa [integral_const_mul, hVy] using h
-  have hFb : ∀ k u, ‖M.π[θ] sₜ u * (γ ^ k * ∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, u)))‖ ≤
-      M.π[θ] sₜ u * (γ ^ k * |R|) := fun k u => by
+  have hFb : ∀ k u, ‖M.π θ sₜ u * (γ ^ k * ∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, u)))‖ ≤
+      M.π θ sₜ u * (γ ^ k * |R|) := fun k u => by
     have h := norm_integral_le_of_norm_le_const (μ := M.trans (sₜ, u)) (Filter.Eventually.of_forall fun y =>
       NormWkd.le.Abs_R (M := M) R θ k y)
     rw [Real.norm_eq_abs, abs_mul, abs_mul, abs_pow, abs_of_nonneg h₁.1]
     calc
-      |M.π[θ] sₜ u| * (γ ^ k * |∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, u))|)
-          = M.π[θ] sₜ u * (γ ^ k * |∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, u))|) := by
+      |M.π θ sₜ u| * (γ ^ k * |∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, u))|)
+          = M.π θ sₜ u * (γ ^ k * |∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, u))|) := by
         congr 1
         exact abs_of_nonneg (hStoch.nonneg θ sₜ u)
-      _ ≤ M.π[θ] sₜ u * (γ ^ k * |R|) :=
+      _ ≤ M.π θ sₜ u * (γ ^ k * |R|) :=
         mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left (by simpa using h) (pow_nonneg h₁.1 k)) (hStoch.nonneg θ sₜ u)
-  have hFi : ∀ k, Integrable (fun u => M.π[θ] sₜ u * (γ ^ k * ∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, u))))
+  have hFi : ∀ k, Integrable (fun u => M.π θ sₜ u * (γ ^ k * ∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, u))))
       ReferenceMeasure.measure := fun k =>
     (hπ.mul_const _).mono' (hπm.mul ((hT k).const_mul _)).aestronglyMeasurable (Filter.Eventually.of_forall (hFb k))
   have hFs : Summable fun k =>
-      ∫ u, ‖M.π[θ] sₜ u * (γ ^ k * ∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, u)))‖ ∂ReferenceMeasure.measure := by
+      ∫ u, ‖M.π θ sₜ u * (γ ^ k * ∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, u)))‖ ∂ReferenceMeasure.measure := by
     refine Summable.of_norm_bounded ((summable_geometric_of_lt_one h₁.1 h₁.2).mul_right |R|) fun k => ?_
     apply NormIntegral.le.of.All_LeNormMul.EqIntegral_1 (hStoch.integral_eq_one θ sₜ)
     intro u
     rw [norm_norm]
     exact hFb k u
-  have hk : ∀ k, ∫ u, M.π[θ] sₜ u * (γ ^ k * ∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, u))) ∂ReferenceMeasure.measure =
-      γ ^ k * ∫ u, M.π[θ] sₜ u * ∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, u)) ∂ReferenceMeasure.measure := fun k => by
+  have hk : ∀ k, ∫ u, M.π θ sₜ u * (γ ^ k * ∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, u))) ∂ReferenceMeasure.measure =
+      γ ^ k * ∫ u, M.π θ sₜ u * ∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, u)) ∂ReferenceMeasure.measure := fun k => by
     rw [← integral_const_mul]
     congr 1
     funext u
     ring
   have hS : HasSum (fun k => γ ^ (k + 1) * M.Wkd R θ (k + 1) sₜ)
-      (γ * ∫ u, M.π[θ] sₜ u * ∫ y, M.V0 R θ γ y ∂(M.trans (sₜ, u)) ∂ReferenceMeasure.measure) := by
+      (γ * ∫ u, M.π θ sₜ u * ∫ y, M.V0 R θ γ y ∂(M.trans (sₜ, u)) ∂ReferenceMeasure.measure) := by
     have h := (hasSum_integral_of_summable_integral_norm hFi hFs).mul_left γ
-    have e : ∫ u, ∑' k, M.π[θ] sₜ u * (γ ^ k * ∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, u))) ∂ReferenceMeasure.measure =
-        ∫ u, M.π[θ] sₜ u * ∫ y, M.V0 R θ γ y ∂(M.trans (sₜ, u)) ∂ReferenceMeasure.measure := by
+    have e : ∫ u, ∑' k, M.π θ sₜ u * (γ ^ k * ∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, u))) ∂ReferenceMeasure.measure =
+        ∫ u, M.π θ sₜ u * ∫ y, M.V0 R θ γ y ∂(M.trans (sₜ, u)) ∂ReferenceMeasure.measure := by
       congr 1
       funext u
       rw [tsum_mul_left, (hI u).tsum_eq]
     rw [e] at h
     have hf : (fun k => γ ^ (k + 1) * M.Wkd R θ (k + 1) sₜ) = fun k =>
-        γ * ∫ u, M.π[θ] sₜ u * (γ ^ k * ∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, u))) ∂ReferenceMeasure.measure := by
+        γ * ∫ u, M.π θ sₜ u * (γ ^ k * ∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, u))) ∂ReferenceMeasure.measure := by
       funext k
-      show γ ^ (k + 1) * ∫ u, M.π[θ] sₜ u * ∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, u)) ∂ReferenceMeasure.measure = _
+      show γ ^ (k + 1) * ∫ u, M.π θ sₜ u * ∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, u)) ∂ReferenceMeasure.measure = _
       rw [hk, pow_succ]
       ring
     rw [hf]

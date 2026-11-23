@@ -66,7 +66,7 @@ private lemma integral_stageK_indClip
     (if z.2 = (sₜ, aₜ) then (1 : ℝ) else 0) * clip z.1 (-R) R
     ∂(M.stageK θ y) =
     (if y = sₜ then (1 : ℝ) else 0) *
-      (∫ v, M.π[θ] y v * (if v = aₜ then (1 : ℝ) else 0)
+      (∫ v, M.π θ y v * (if v = aₜ then (1 : ℝ) else 0)
         ∂ReferenceMeasure.measure) *
       M.rkd R y aₜ := by
 -- proof
@@ -97,9 +97,9 @@ private lemma integral_stageK_indClip
     simp only [hy, ↓reduceIte, true_and, one_mul]
     have hcong :
       (fun v =>
-        M.π[θ] sₜ v * ((if v = aₜ then (1 : ℝ) else 0) * M.rkd R sₜ v)) =ᵐ[ReferenceMeasure.measure]
+        M.π θ sₜ v * ((if v = aₜ then (1 : ℝ) else 0) * M.rkd R sₜ v)) =ᵐ[ReferenceMeasure.measure]
         fun v =>
-          M.π[θ] sₜ v * (if v = aₜ then (1 : ℝ) else 0) * M.rkd R sₜ aₜ := by
+          M.π θ sₜ v * (if v = aₜ then (1 : ℝ) else 0) * M.rkd R sₜ aₜ := by
       apply Filter.Eventually.of_forall
       intro v
       if hv : v = aₜ then
@@ -121,7 +121,7 @@ private lemma integral_stageK_ind
 -- imply
   ∫ z, (if z.2 = (sₜ, aₜ) then (1 : ℝ) else 0) ∂(M.stageK θ y) =
     (if y = sₜ then (1 : ℝ) else 0) *
-      (∫ v, M.π[θ] y v * (if v = aₜ then (1 : ℝ) else 0)
+      (∫ v, M.π θ y v * (if v = aₜ then (1 : ℝ) else 0)
         ∂ReferenceMeasure.measure) := by
 -- proof
   have hf : StronglyMeasurable fun z : ℝ × 𝒮 × 𝒜 =>
@@ -229,7 +229,7 @@ private lemma main
   have hI : ∀ y,
     ∫ z, fClip z ∂(M.stageK θ y) =
       (if y = sₜ then (1 : ℝ) else 0) *
-        (∫ v, M.π[θ] y v * (if v = aₜ then (1 : ℝ) else 0)
+        (∫ v, M.π θ y v * (if v = aₜ then (1 : ℝ) else 0)
           ∂ReferenceMeasure.measure) *
         M.rkd R y aₜ :=
     fun y => integral_stageK_indClip (M := M) R θ y sₜ aₜ
@@ -274,12 +274,12 @@ private lemma main
     have hfactor :
       ∫ y,
         (if y = sₜ then (1 : ℝ) else 0) *
-          (∫ v, M.π[θ] y v * (if v = aₜ then (1 : ℝ) else 0)
+          (∫ v, M.π θ y v * (if v = aₜ then (1 : ℝ) else 0)
             ∂ReferenceMeasure.measure) *
           M.rkd R y aₜ ∂((M θ).map (s t)) =
         (∫ y,
           (if y = sₜ then (1 : ℝ) else 0) *
-            (∫ v, M.π[θ] y v * (if v = aₜ then (1 : ℝ) else 0)
+            (∫ v, M.π θ y v * (if v = aₜ then (1 : ℝ) else 0)
               ∂ReferenceMeasure.measure) ∂((M θ).map (s t))) *
           M.rkd R sₜ aₜ := by
       have hcong :=
@@ -287,11 +287,11 @@ private lemma main
           (Filter.Eventually.of_forall fun y =>
             show
               (if y = sₜ then (1 : ℝ) else 0) *
-                (∫ v, M.π[θ] y v * (if v = aₜ then (1 : ℝ) else 0)
+                (∫ v, M.π θ y v * (if v = aₜ then (1 : ℝ) else 0)
                   ∂ReferenceMeasure.measure) *
                 M.rkd R y aₜ =
               (if y = sₜ then (1 : ℝ) else 0) *
-                (∫ v, M.π[θ] y v * (if v = aₜ then (1 : ℝ) else 0)
+                (∫ v, M.π θ y v * (if v = aₜ then (1 : ℝ) else 0)
                   ∂ReferenceMeasure.measure) *
                 M.rkd R sₜ aₜ by
               if hy : y = sₜ then
@@ -303,13 +303,13 @@ private lemma main
     refine hfactor.trans ?_
     have : ∫ y,
       (if y = sₜ then (1 : ℝ) else 0) *
-        (∫ v, M.π[θ] y v * (if v = aₜ then (1 : ℝ) else 0)
+        (∫ v, M.π θ y v * (if v = aₜ then (1 : ℝ) else 0)
           ∂ReferenceMeasure.measure) ∂((M θ).map (s t)) =
       (M θ).real ((fun ω => (s t ω, a t ω)) ⁻¹' {(sₜ, aₜ)}) := by
       have hI1 : ∀ y,
         ∫ z, fInd z ∂(M.stageK θ y) =
           (if y = sₜ then (1 : ℝ) else 0) *
-            (∫ v, M.π[θ] y v * (if v = aₜ then (1 : ℝ) else 0)
+            (∫ v, M.π θ y v * (if v = aₜ then (1 : ℝ) else 0)
               ∂ReferenceMeasure.measure) :=
         fun y => integral_stageK_ind (M := M) θ y sₜ aₜ
       simp_rw [← hI1]

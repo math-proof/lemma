@@ -30,12 +30,22 @@ private lemma main
           x[k] ^ ((t : ℕ) - (i - ∑ j ∈ Finset.Iio k, d[j]))
       else 0).det ≠ 0 := by
 -- proof
-  have hsum' : ∑ k : Fin r, d.toFun k = n := by
-    simpa [Fun.getElem_eq] using hsum
-  have hdist' : ∀ i j : Fin r, i ≠ j → x.toFun i ≠ x.toFun j := by
+  have hsum' : ∑ k : Fin r, d k = n := by
+    simpa using hsum
+  have hdist' : ∀ i j : Fin r, i ≠ j → x i ≠ x j := by
     intro i j hij
-    simpa [Fun.getElem_eq] using hdist i j hij
-  rw [DetStack_Sum_In_Ico.eq.Prod_MulProdS.of.EqSum (x := x.toFun) (d := d.toFun) hsum']
+    simpa using hdist i j hij
+  have hmain :=
+    DetStack_Sum_In_Ico.eq.Prod_MulProdS.of.EqSum (x := x) (d := d) hsum'
+  rw [show
+    ([t < n][i < n]
+      ∑ k : Fin r,
+        if (i : ℕ) ∈ Finset.Ico (∑ j ∈ Finset.Iio k, d[j]) (∑ j ∈ Finset.Iic k, d[j]) then
+          (t : ℕ).descFactorial (i - ∑ j ∈ Finset.Iio k, d[j]) *
+            x[k] ^ ((t : ℕ) - (i - ∑ j ∈ Finset.Iio k, d[j]))
+        else 0).det =
+      ∏ k : Fin r, ((∏ j ∈ Finset.Iio k, (x k - x j) ^ (d k * d j)) *
+        (∏ j ∈ Finset.range (d k), (Nat.factorial j : ℂ))) from hmain]
   refine prod_ne_zero_iff.mpr ?_
   intro k _
   apply mul_ne_zero

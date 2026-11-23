@@ -35,14 +35,14 @@ private lemma main
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2))
-  (h₂ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
-  (h₃ : sup[sₜ] (∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖) ∂μ.measure) < ∞)
-  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖))
-  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) μ.measure)
+  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π θ z.1 z.2))
+  (h₂ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π θ sₜ aₜ))
+  (h₃ : sup[sₜ] (∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖) ∂μ.measure) < ∞)
+  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖))
+  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖)) μ.measure)
   (hφ : StronglyMeasurable
-    (fun z : 𝒮 × 𝒜 => fderiv ℝ (fun θ' => Real.log (M.π[θ'] z.1 z.2)) θ))
-  (hMs : sup[y, u] ‖fderiv ℝ (fun θ' => Real.log (M.π[θ'] y u)) θ‖ < ∞)
+    (fun z : 𝒮 × 𝒜 => fderiv ℝ (fun θ' => Real.log (M.π θ' z.1 z.2)) θ))
+  (hMs : sup[y, u] ‖fderiv ℝ (fun θ' => Real.log (M.π θ' y u)) θ‖ < ∞)
   (R : ℝ)
   (t : ℕ) :
 -- imply
@@ -50,21 +50,21 @@ private lemma main
     M.rkd R y u + γ * ∫ z, M.V0 R θ γ z ∂(M.trans (y, u))
   ∫ x, fderiv ℝ (fun θ => M.V0 R θ γ x) θ ∂((M θ).map (s t)) =
     ∫ ω, Qf (s t ω) (a t ω) •
-        fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ ∂(M θ) +
+        fderiv ℝ (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ ∂(M θ) +
       γ • ∫ x, fderiv ℝ (fun θ => M.V0 R θ γ x) θ ∂((M θ).map (s (t + 1))) := by
 -- proof
   let g : 𝒮 → 𝒜 → ℝ :=
-    fun sₜ aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)
+    fun sₜ aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖)
   obtain ⟨Cg, hCg⟩ := id h₃
   have h₅le : ∀ x, ∫ u, g x u ∂μ.measure ≤ Cg := fun x => hCg ⟨x, rfl⟩
   obtain ⟨Ms, hMsb⟩ := id hMs
-  have hMsle : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.π[θ'] y u)) θ‖ ≤ Ms :=
+  have hMsle : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.π θ' y u)) θ‖ ≤ Ms :=
     fun y u => hMsb ⟨(y, u), rfl⟩
   classical
   intro Qf
-  have hgrad : ∀ θ sₜ aₜ, ‖∇[θ] M.π[θ] sₜ aₜ‖ ≤ g sₜ aₜ :=
+  have hgrad : ∀ θ sₜ aₜ, ‖∇[θ] M.π θ sₜ aₜ‖ ≤ g sₜ aₜ :=
     fun θ x u => le_csSup (hBdd x u) ⟨θ, rfl⟩
-  have hπbd : ∀ θ sₜ aₜ, ‖fderiv ℝ (fun θ => M.π[θ] sₜ aₜ) θ‖ ≤ g sₜ aₜ :=
+  have hπbd : ∀ θ sₜ aₜ, ‖fderiv ℝ (fun θ => M.π θ sₜ aₜ) θ‖ ≤ g sₜ aₜ :=
     fun θ x u => by simpa [gradient, LinearIsometryEquiv.norm_map] using hgrad θ x u
   have hsup := h₃
   have hF := fun x =>
@@ -103,27 +103,27 @@ private lemma main
   set BQ : ℝ := |R| + γ * ((1 - γ)⁻¹ * |R|)
   have hφQ : StronglyMeasurable
     (Function.uncurry fun y u => Qf y u •
-        fderiv ℝ (fun θ' => Real.log (M.π[θ'] y u)) θ) :=
+        fderiv ℝ (fun θ' => Real.log (M.π θ' y u)) θ) :=
     hQm.stronglyMeasurable.smul hφ
   have hφQC : ∀ y u,
-      ‖Qf y u • fderiv ℝ (fun θ' => Real.log (M.π[θ'] y u)) θ‖ ≤ BQ * Ms :=
+      ‖Qf y u • fderiv ℝ (fun θ' => Real.log (M.π θ' y u)) θ‖ ≤ BQ * Ms :=
     fun y u => by
       rw [norm_smul]
       exact mul_le_mul (hQb y u) (hMsle y u) (norm_nonneg _) ((norm_nonneg _).trans (hQb y u))
   have hrew : ∀ y u,
-      Qf y u • fderiv ℝ (fun θ => M.π[θ] y u) θ =
-        M.π[θ] y u • (Qf y u •
-          fderiv ℝ (fun θ' => Real.log (M.π[θ'] y u)) θ) := by
+      Qf y u • fderiv ℝ (fun θ => M.π θ y u) θ =
+        M.π θ y u • (Qf y u •
+          fderiv ℝ (fun θ' => Real.log (M.π θ' y u)) θ) := by
     intro y u
     have e :=
       EqSMulProb_FderivLog_Prob_Fderiv_FunProb.of.All_All_Differentiable_FunPolProb.All_EqWithDensity
         (M := M) h₂ θ y u
     rw [← e, smul_smul, smul_smul, mul_comm (Qf y u)]
   have hscore :
-    ∫ sₜ, ∫ aₜ, Qf sₜ aₜ • fderiv ℝ (fun θ => M.π[θ] sₜ aₜ) θ
+    ∫ sₜ, ∫ aₜ, Qf sₜ aₜ • fderiv ℝ (fun θ => M.π θ sₜ aₜ) θ
         ∂ReferenceMeasure.measure ∂((M θ).map (s t)) =
       ∫ ω, Qf (s t ω) (a t ω) •
-        fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ ∂(M θ) :=
+        fderiv ℝ (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ ∂(M θ) :=
     (integral_congr_ae (Filter.Eventually.of_forall fun x =>
       integral_congr_ae (Filter.Eventually.of_forall fun u => hrew x u))).trans
       (Integral.eq.Integral_Integral_SMul.of.All_Eq_Joint.All_EqWithDensity
@@ -141,7 +141,7 @@ private lemma main
       simpa using norm_integral_le_of_norm_le_const
         (μ := M.trans (x, u)) (Filter.Eventually.of_forall hCb)
   have hnext :
-    ∫ sₜ, ∫ aₜ, M.π[θ] sₜ aₜ •
+    ∫ sₜ, ∫ aₜ, M.π θ sₜ aₜ •
           ∫ y, fderiv ℝ (fun θ => M.V0 R θ γ y) θ ∂(M.trans (sₜ, aₜ))
           ∂ReferenceMeasure.measure ∂((M θ).map (s t)) =
         ∫ x, fderiv ℝ (fun θ => M.V0 R θ γ x) θ ∂((M θ).map (s (t + 1))) := by
@@ -187,17 +187,17 @@ private lemma main
         (Integral.eq.Integral_Integral.of.Integrable_Bind hInt).symm
       _ = _ := by rw [hlaw]
   have hI₁ : Integrable
-    (fun sₜ => ∫ aₜ, Qf sₜ aₜ • fderiv ℝ (fun θ => M.π[θ] sₜ aₜ) θ
+    (fun sₜ => ∫ aₜ, Qf sₜ aₜ • fderiv ℝ (fun θ => M.π θ sₜ aₜ) θ
         ∂ReferenceMeasure.measure) ((M θ).map (s t)) := by
     have hsm : StronglyMeasurable
       (Function.uncurry fun y u =>
-          Qf y u • fderiv ℝ (fun θ => M.π[θ] y u) θ) :=
+          Qf y u • fderiv ℝ (fun θ => M.π θ y u) θ) :=
       hQm.stronglyMeasurable.smul
         (StronglyMeasurable_Fderiv.of.All_DifferentiableAt.All_Measurable
           (fun θ' => hπ θ') (fun z => (h₂ z.1 z.2).differentiableAt))
     refine Integrable.of_bound hsm.integral_prod_right'.aestronglyMeasurable (BQ * Cg) ?_
     filter_upwards with sₜ
-    have hbd : ∀ aₜ, ‖Qf sₜ aₜ • fderiv ℝ (fun θ => M.π[θ] sₜ aₜ) θ‖ ≤
+    have hbd : ∀ aₜ, ‖Qf sₜ aₜ • fderiv ℝ (fun θ => M.π θ sₜ aₜ) θ‖ ≤
         BQ * g sₜ aₜ := fun u => by
       rw [norm_smul]
       exact mul_le_mul (hQb sₜ u) (hπbd θ sₜ u) (norm_nonneg _)
@@ -213,57 +213,57 @@ private lemma main
       _ = BQ * ∫ u, g sₜ u ∂ReferenceMeasure.measure := integral_const_mul _ _
       _ ≤ BQ * Cg := mul_le_mul_of_nonneg_left (h₅le sₜ) hnonneg
   have hI₂ : Integrable
-    (fun sₜ => ∫ aₜ, M.π[θ] sₜ aₜ •
+    (fun sₜ => ∫ aₜ, M.π θ sₜ aₜ •
         ∫ y, fderiv ℝ (fun θ => M.V0 R θ γ y) θ ∂(M.trans (sₜ, aₜ))
         ∂ReferenceMeasure.measure) ((M θ).map (s t)) := by
     have hsm₂ : StronglyMeasurable
       (Function.uncurry fun sₜ aₜ =>
-          M.π[θ] sₜ aₜ •
+          M.π θ sₜ aₜ •
             ∫ y, fderiv ℝ (fun θ => M.V0 R θ γ y) θ ∂(M.trans (sₜ, aₜ))) :=
       ((hπ θ).stronglyMeasurable).smul hφV
     refine Integrable.of_bound hsm₂.integral_prod_right'.aestronglyMeasurable C ?_
     filter_upwards with sₜ
-    have hbd : ∀ aₜ, ‖M.π[θ] sₜ aₜ •
+    have hbd : ∀ aₜ, ‖M.π θ sₜ aₜ •
         ∫ y, fderiv ℝ (fun θ => M.V0 R θ γ y) θ ∂(M.trans (sₜ, aₜ))‖ ≤
-        M.π[θ] sₜ aₜ * C := fun u => by
-      have hπnn : 0 ≤ M.π[θ] sₜ u := hStoch.nonneg θ sₜ u
+        M.π θ sₜ aₜ * C := fun u => by
+      have hπnn : 0 ≤ M.π θ sₜ u := hStoch.nonneg θ sₜ u
       rw [norm_smul, Real.norm_of_nonneg hπnn]
       exact mul_le_mul_of_nonneg_left (hCV sₜ u) hπnn
     calc
-      _ ≤ ∫ aₜ, M.π[θ] sₜ aₜ * C ∂ReferenceMeasure.measure :=
+      _ ≤ ∫ aₜ, M.π θ sₜ aₜ * C ∂ReferenceMeasure.measure :=
         (norm_integral_le_integral_norm _).trans
           (integral_mono_of_nonneg (Filter.Eventually.of_forall fun _ => norm_nonneg _)
             ((Integrable.of_integral_ne_zero (by
-              have h1 : ∫ a, M.π[θ] sₜ a ∂μ.measure = 1 :=
+              have h1 : ∫ a, M.π θ sₜ a ∂μ.measure = 1 :=
                 hStoch.integral_eq_one θ sₜ
               rw [h1]
               apply one_ne_zero)).mul_const C)
             (Filter.Eventually.of_forall hbd))
-      _ = (∫ aₜ, M.π[θ] sₜ aₜ ∂ReferenceMeasure.measure) * C := by
+      _ = (∫ aₜ, M.π θ sₜ aₜ ∂ReferenceMeasure.measure) * C := by
         rw [← integral_mul_const]
       _ = C := by
-        have h1 : ∫ aₜ, M.π[θ] sₜ aₜ ∂μ.measure = 1 :=
+        have h1 : ∫ aₜ, M.π θ sₜ aₜ ∂μ.measure = 1 :=
           hStoch.integral_eq_one θ sₜ
         rw [h1, one_mul]
   have hL :
     ∫ x, fderiv ℝ (fun θ => M.V0 R θ γ x) θ ∂((M θ).map (s t)) =
-        ∫ sₜ, ∫ aₜ, Qf sₜ aₜ • fderiv ℝ (fun θ => M.π[θ] sₜ aₜ) θ
+        ∫ sₜ, ∫ aₜ, Qf sₜ aₜ • fderiv ℝ (fun θ => M.π θ sₜ aₜ) θ
             ∂ReferenceMeasure.measure ∂((M θ).map (s t)) +
-          γ • ∫ sₜ, ∫ aₜ, M.π[θ] sₜ aₜ •
+          γ • ∫ sₜ, ∫ aₜ, M.π θ sₜ aₜ •
             ∫ y, fderiv ℝ (fun θ => M.V0 R θ γ y) θ ∂(M.trans (sₜ, aₜ))
             ∂ReferenceMeasure.measure ∂((M θ).map (s t)) := by
     have hpt : ∀ sₜ,
         fderiv ℝ (fun θ => M.V0 R θ γ sₜ) θ =
-          (∫ aₜ, Qf sₜ aₜ • fderiv ℝ (fun θ => M.π[θ] sₜ aₜ) θ
+          (∫ aₜ, Qf sₜ aₜ • fderiv ℝ (fun θ => M.π θ sₜ aₜ) θ
             ∂ReferenceMeasure.measure) +
-          (γ • ∫ aₜ, M.π[θ] sₜ aₜ •
+          (γ • ∫ aₜ, M.π θ sₜ aₜ •
             ∫ y, fderiv ℝ (fun θ => M.V0 R θ γ y) θ ∂(M.trans (sₜ, aₜ))
             ∂ReferenceMeasure.measure) :=
       fun x => hF x
     refine (integral_congr_ae (Filter.Eventually.of_forall hpt)).trans ?_
     refine (integral_add hI₁ (hI₂.smul γ)).trans ?_
     exact congrArg _ (integral_smul (c := γ)
-      (f := fun sₜ => ∫ aₜ, M.π[θ] sₜ aₜ •
+      (f := fun sₜ => ∫ aₜ, M.π θ sₜ aₜ •
         ∫ y, fderiv ℝ (fun θ => M.V0 R θ γ y) θ ∂(M.trans (sₜ, aₜ))
         ∂ReferenceMeasure.measure)
       (μ := (M θ).map (s t)))

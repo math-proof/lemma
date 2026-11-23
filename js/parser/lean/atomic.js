@@ -102,6 +102,7 @@ export class LeanToken extends Lean {
         'ᵤ': 'u',
         'ᵥ': 'v',
         'ₓ': 'x',
+        'ₔ': 'ə',
         '₀': '0',
         '₁': '1',
         '₂': '2',

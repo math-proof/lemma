@@ -12,7 +12,3 @@ public section
 theorem Dot.fin_eq [Mul α] [AddCommMonoid α] [Fintype ι] (v w : ι → α) :
     v ⬝ᵥ w = ∑ i, v i * w i := rfl
 
-@[simp]
-theorem Dot.fun_fin_eq [Mul α] [AddCommMonoid α] [Fintype ι] (v : Fun ι α) (w : ι → α) :
-    v ⬝ᵥ w = ∑ i, v.toFun i * w i := rfl
-

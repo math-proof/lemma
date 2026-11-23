@@ -112,7 +112,7 @@ elab_rules : term
       let Ω := πty.appFn!.appArg!
       let predTy ← mkArrow Ω (mkSort Level.zero)
       -- Prefer `LiftRV` whenever the body names a local RV/process on `Ω` (e.g. `∑ i, x[i]`
-      -- with `x : ℕ ⇀ Ω → ℝ`). Plain elaboration often succeeds as a *closed* `Prop` via
+      -- with `x : ℕ → Ω → ℝ`). Plain elaboration often succeeds as a *closed* `Prop` via
       -- Pi/`∀` instances on `Ω → ℝ` and would skip lifting; `withoutErrToSorry` would also
       -- hide failures and block the lift path.
       let mut hasRV := false

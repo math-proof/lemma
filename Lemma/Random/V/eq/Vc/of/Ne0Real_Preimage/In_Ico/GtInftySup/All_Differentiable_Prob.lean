@@ -26,18 +26,18 @@ private lemma main
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2))
-  (h₂ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
-  (h₃ : sup[sₜ] (∫ u, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ u‖) ∂μ.measure) < ∞)
-  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖))
-  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) μ.measure)
+  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π θ z.1 z.2))
+  (h₂ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π θ sₜ aₜ))
+  (h₃ : sup[sₜ] (∫ u, sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ u‖) ∂μ.measure) < ∞)
+  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖))
+  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖)) μ.measure)
   (h₄ : (M θ).real (s t ⁻¹' {sₜ}) ≠ 0)
   (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1) :
 -- imply
   (fun θ' => M.V θ' γ t sₜ) =ᶠ[𝓝 θ] fun θ' => M.V0 R θ' γ sₜ := by
 -- proof
   obtain ⟨Cg, hCgbound⟩ := id h₃
-  have h₅le : ∀ sₜ, ∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖) ∂μ.measure ≤ Cg := fun x => hCgbound ⟨x, rfl⟩
+  have h₅le : ∀ sₜ, ∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖) ∂μ.measure ≤ Cg := fun x => hCgbound ⟨x, rfl⟩
   have hs : s = fun t ω => (ω t).2.1 :=
     funext₂ fun t ω => (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
   have hc : ContinuousAt (fun θ' => (M θ').real (s t ⁻¹' {sₜ})) θ :=

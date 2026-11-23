@@ -134,7 +134,7 @@ private lemma integral_delta_smul_eq_zero
   (t n : ℕ)
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 ↦ M.π[θ] z.1 z.2))
+  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 ↦ M.π θ z.1 z.2))
   (h₂ : t ≤ n)
   (θ : Θ)
   (hVm : ∀ k, Measurable (M.V θ γ k))
@@ -197,7 +197,7 @@ private lemma main
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 ↦ M.π[θ] z.1 z.2))
+  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 ↦ M.π θ z.1 z.2))
   (θ : Θ)
   (hVm : ∀ k, Measurable (M.V θ γ k))
   (h₂ : c ∈ Set.Ico 0 1)

@@ -173,7 +173,7 @@ private lemma main
       fun z => NormClip.le.Abs_R R z.1
     -- `∫ r[t] ∂cond(B) = ∫ π rkd = Wkd θ 0 x`
     have hr : ∫ ω, r t ω ∂(M θ)[|B] =
-        ∫ u, M.π[θ] sₜ u * M.rkd R sₜ u ∂μ.measure := by
+        ∫ u, M.π θ sₜ u * M.rkd R sₜ u ∂μ.measure := by
       rw [hcond]
       simp_rw [hι]
       have hcr : ∫ ω, (if (ω t).2.1 = sₜ then (1 : ℝ) else 0) * r t ω ∂(M θ) =
@@ -243,7 +243,7 @@ private lemma main
     -- `∫ V0(s[t+1]) ∂cond(B) = ∫ π ∫ V0 ∂trans`
     have hV :
       ∫ ω, M.V0 R θ γ (s (t + 1) ω) ∂(M θ)[|B] =
-        ∫ u, M.π[θ] sₜ u * ∫ y, M.V0 R θ γ y ∂(M.trans (sₜ, u))
+        ∫ u, M.π θ sₜ u * ∫ y, M.V0 R θ γ y ∂(M.trans (sₜ, u))
           ∂μ.measure := by
       rw [hcond]
       simp_rw [hι]
@@ -349,9 +349,9 @@ private lemma main
           (M := M) (ℰ := ℝ) h₁ hφm hφC θ t
       rw [hmarg]
       have hy : ∀ y,
-          (∫ u, M.π[θ] y u • φ y u ∂μ.measure) =
+          (∫ u, M.π θ y u • φ y u ∂μ.measure) =
             (if y = sₜ then (1 : ℝ) else 0) *
-              (∫ u, M.π[θ] sₜ u *
+              (∫ u, M.π θ sₜ u *
                 (∫ z, M.V0 R θ γ z ∂(M.trans (sₜ, u))) ∂μ.measure) := by
         intro y
         by_cases hy : y = sₜ
@@ -361,10 +361,10 @@ private lemma main
       simp_rw [hy]
       have hite : (fun y : 𝒮 =>
           (if y = sₜ then (1 : ℝ) else 0) *
-            (∫ u, M.π[θ] sₜ u *
+            (∫ u, M.π θ sₜ u *
               (∫ z, M.V0 R θ γ z ∂(M.trans (sₜ, u))) ∂μ.measure)) =
           ({sₜ} : Set 𝒮).indicator (fun _ =>
-            ∫ u, M.π[θ] sₜ u *
+            ∫ u, M.π θ sₜ u *
               (∫ z, M.V0 R θ γ z ∂(M.trans (sₜ, u))) ∂μ.measure) := by
         funext y
         by_cases hy : y = sₜ <;> simp [hy, Set.indicator]

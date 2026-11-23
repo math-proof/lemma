@@ -1,4 +1,4 @@
-import Def.Data.Fin.Rope
+import Def.Data.Fin.Step
 import Initialize.Tactic.Attr.Basic
 import Mathlib
 
@@ -10,7 +10,7 @@ private lemma main
   (d : ℕ)
   (i : Fin (d + d)) :
 -- imply
-  ∃ t : Fin d, i ∈ ({t.ropeEven, t.ropeOdd} : Set (Fin (d + d))) := by
+  ∃ t : Fin d, i ∈ ({t.stepEven, t.stepOdd} : Set (Fin (d + d))) := by
 -- proof
   if h : (i : ℕ) % 2 = 0 then
     refine ⟨⟨(i : ℕ) / 2, ?_⟩, ?_⟩
@@ -21,7 +21,7 @@ private lemma main
       simp only [Set.mem_insert_iff, Set.mem_singleton_iff]
       left
       ext
-      simp [Fin.ropeEven]
+      simp [Fin.stepEven]
       omega
   else
     refine ⟨⟨(i : ℕ) / 2, ?_⟩, ?_⟩
@@ -32,7 +32,7 @@ private lemma main
       simp only [Set.mem_insert_iff, Set.mem_singleton_iff]
       right
       ext
-      simp [Fin.ropeOdd]
+      simp [Fin.stepOdd]
       omega
 
 

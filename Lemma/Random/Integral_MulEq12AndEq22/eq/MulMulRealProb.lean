@@ -27,7 +27,7 @@ private lemma main
   (φ : 𝒮 → 𝒜 → ℝ) :
 -- imply
   ∫ ω, (if (ω t).2.1 = sₜ ∧ (ω t).2.2 = aₜ then (1:ℝ) else 0) * φ (ω t).2.1 (ω t).2.2 ∂(M θ) =
-    (M θ).real (s t ⁻¹' {sₜ}) * (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) * φ sₜ aₜ := by
+    (M θ).real (s t ⁻¹' {sₜ}) * (M.π θ sₜ aₜ * μ.measure.real {aₜ}) * φ sₜ aₜ := by
 -- proof
   have h₂ : ∀ ω : ℕ → ℝ × 𝒮 × 𝒜,
       (if (ω t).2.1 = sₜ ∧ (ω t).2.2 = aₜ then (1:ℝ) else 0) * φ (ω t).2.1 (ω t).2.2 =

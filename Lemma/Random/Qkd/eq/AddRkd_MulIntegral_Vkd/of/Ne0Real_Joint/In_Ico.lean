@@ -43,7 +43,7 @@ private lemma avg_Kf_clip
     have hKf :=
       StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
         (M := M) hf hC θ j
-    have hπ : ∀ θ', Measurable (fun z : 𝒮 × 𝒜 => M.π[θ'] z.1 z.2) :=
+    have hπ : ∀ θ', Measurable (fun z : 𝒮 × 𝒜 => M.π θ' z.1 z.2) :=
       fun θ' => hStoch.measurable_π θ'
     have hmeas : Measurable (M.Wkd R θ j) :=
       Measurable_Wkd.of.All_Measurable_Prob (M := M) hπ R θ j
@@ -127,7 +127,7 @@ private lemma joint_disint
   (aₜ : 𝒜) :
 -- imply
   ∫ ω, (if (ω 0).2.1 = sₜ ∧ (ω 0).2.2 = aₜ then (1 : ℝ) else 0) * g (ω 0) ∂(M θ) =
-    (M.init : Measure 𝒮).real {sₜ} * M.π[θ] sₜ aₜ *
+    (M.init : Measure 𝒮).real {sₜ} * M.π θ sₜ aₜ *
       (μ.measure : Measure 𝒜).real {aₜ} *
       ∫ ρ, g (ρ, sₜ, aₜ) ∂(M.reward (sₜ, aₜ)) := by
 -- proof
@@ -164,7 +164,7 @@ private lemma joint_disint
   rw [e1, hmap, Integral.eq.Integral_Integral.of.Integrable_Bind hInt]
   have hinner : ∀ y, ∫ z, ι z * g z ∂(M.stageK θ y) =
       if y = sₜ then
-        M.π[θ] sₜ aₜ * ReferenceMeasure.measure.real {aₜ} *
+        M.π θ sₜ aₜ * ReferenceMeasure.measure.real {aₜ} *
           ∫ ρ, g (ρ, sₜ, aₜ) ∂(M.reward (sₜ, aₜ))
       else 0 := by
     intro y
@@ -190,10 +190,10 @@ private lemma joint_disint
     simp_rw [hρ, smul_eq_mul]
     if hy : y = sₜ then
       have hfun : (fun u' : 𝒜 =>
-          M.π[θ] y u' * (if y = sₜ ∧ u' = aₜ then
+          M.π θ y u' * (if y = sₜ ∧ u' = aₜ then
             ∫ ρ, g (ρ, sₜ, aₜ) ∂(M.reward (sₜ, aₜ)) else 0)) =
           ({aₜ} : Set 𝒜).indicator (fun _ =>
-            M.π[θ] sₜ aₜ * ∫ ρ, g (ρ, sₜ, aₜ) ∂(M.reward (sₜ, aₜ))) := by
+            M.π θ sₜ aₜ * ∫ ρ, g (ρ, sₜ, aₜ) ∂(M.reward (sₜ, aₜ))) := by
         funext u'
         by_cases hu : u' = aₜ <;> simp [hu, hy, Set.indicator]
       rw [hfun, integral_indicator (measurableSet_singleton aₜ), MeasureTheory.setIntegral_const,
@@ -205,11 +205,11 @@ private lemma joint_disint
   simp_rw [hinner]
   have hI : (fun y : 𝒮 =>
       if y = sₜ then
-        M.π[θ] sₜ aₜ * ReferenceMeasure.measure.real {aₜ} *
+        M.π θ sₜ aₜ * ReferenceMeasure.measure.real {aₜ} *
           ∫ ρ, g (ρ, sₜ, aₜ) ∂(M.reward (sₜ, aₜ))
       else 0) =
       ({sₜ} : Set 𝒮).indicator (fun _ =>
-        M.π[θ] sₜ aₜ * ReferenceMeasure.measure.real {aₜ} *
+        M.π θ sₜ aₜ * ReferenceMeasure.measure.real {aₜ} *
           ∫ ρ, g (ρ, sₜ, aₜ) ∂(M.reward (sₜ, aₜ))) := by
     funext y
     by_cases hy : y = sₜ <;> simp [hy, Set.indicator]
@@ -400,7 +400,7 @@ private lemma main
       rw [happ]
       have hslice := joint_disint (M := M) hKf.1 hKf.2 θ sₜ aₜ
       have hreal : (M θ).real B =
-          (M.init : Measure 𝒮).real {sₜ} * M.π[θ] sₜ aₜ *
+          (M.init : Measure 𝒮).real {sₜ} * M.π θ sₜ aₜ *
             ReferenceMeasure.measure.real {aₜ} := by
         have h1 : (fun z : ℝ × 𝒮 × 𝒜 => (1 : ℝ)) = fun _ => 1 := rfl
         have hone := joint_disint (M := M)

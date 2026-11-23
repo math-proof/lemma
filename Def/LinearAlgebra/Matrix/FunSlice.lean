@@ -6,24 +6,24 @@ public import Syntax.Data.List
 
 @[expose] public section
 
-/-- Unit-step slice of `ℕ ⇀ Fin d ⇀ ℝ` as a real matrix.
+/-- Unit-step slice of `ℕ → Fin d → ℝ` as a real matrix.
 Rows are `Fin (stop.toNat - start.toNat)`. -/
 def Matrix.ofFunSlice {d : ℕ} {start stop : ℤ}
-    (s : FunSlice.Out (Fun (Fin d) ℝ) ⟨start, stop, (1 : ℤ)⟩) :
+    (s : FunSlice.Out (Fin d → ℝ) ⟨start, stop, (1 : ℤ)⟩) :
     Matrix (Fin (stop.toNat - start.toNat)) (Fin d) ℝ :=
   Matrix.of fun i a =>
-    let rows : Fin (stop.toNat - start.toNat) → Fun (Fin d) ℝ := s
-    (rows i).toFun a
+    let rows : Fin (stop.toNat - start.toNat) → (Fin d → ℝ) := s
+    rows i a
 
-/-- Prefix slice of `ℕ ⇀ Fin d ⇀ ℝ` as a real matrix. -/
+/-- Prefix slice of `ℕ → Fin d → ℝ` as a real matrix. -/
 def Matrix.ofFunSlicePrefix {n d : ℕ}
-    (s : FunSlice.Out (Fun (Fin d) ℝ) ⟨(0 : ℤ), (n : ℤ), (1 : ℤ)⟩) :
+    (s : FunSlice.Out (Fin d → ℝ) ⟨(0 : ℤ), (n : ℤ), (1 : ℤ)⟩) :
     Matrix (Fin n) (Fin d) ℝ :=
   Matrix.of fun i a =>
-    let rows : Fin ((n : ℤ).toNat - (0 : ℤ).toNat) → Fun (Fin d) ℝ := s
-    (rows ⟨(i : ℕ), by
+    let rows : Fin ((n : ℤ).toNat - (0 : ℤ).toNat) → (Fin d → ℝ) := s
+    rows ⟨(i : ℕ), by
       have h : (n : ℤ).toNat = n := Int.toNat_natCast n
-      simp [h]⟩).toFun a
+      simp [h]⟩ a
 
 /-- Length of the singleton integer slice `n:n+1`. -/
 theorem Matrix.funSlice_singleton_length (n : ℕ) :
@@ -37,10 +37,10 @@ theorem Matrix.funSlice_singleton_length (n : ℕ) :
 /-- Singleton slice `V[n:n+1]` as a 1-row real matrix.
 Used by the `CoeDep` instance; prefer the cast `(s : ℝ ^ [1, d])` at call sites. -/
 def Matrix.ofFunSliceSingleton {d n : ℕ}
-    (s : FunSlice.Out (Fun (Fin d) ℝ) ⟨(n : ℤ), (n : ℤ) + 1, (1 : ℤ)⟩) :
+    (s : FunSlice.Out (Fin d → ℝ) ⟨(n : ℤ), (n : ℤ) + 1, (1 : ℤ)⟩) :
     Matrix (Fin 1) (Fin d) ℝ :=
   Matrix.of fun i a =>
-    let rows : Fin (((n : ℤ) + 1).toNat - (n : ℤ).toNat) → Fun (Fin d) ℝ := s
-    (rows ⟨(i : ℕ), by
+    let rows : Fin (((n : ℤ) + 1).toNat - (n : ℤ).toNat) → (Fin d → ℝ) := s
+    rows ⟨(i : ℕ), by
       have h := Matrix.funSlice_singleton_length n
-      omega⟩).toFun a
+      omega⟩ a

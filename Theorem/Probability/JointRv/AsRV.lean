@@ -24,7 +24,3 @@ public section
 @[simp] theorem Expectation.asRV_process {Ω α : Type*} (X : ℕ → Ω → α) :
     Expectation.asRV X = fun ω t ↦ X t ω :=
   rfl
-
-@[simp] theorem Expectation.asRV_fun {Ω α : Type*} (f : Fun ℕ (Ω → α)) :
-    Expectation.asRV f = fun ω t ↦ f.toFun t ω :=
-  rfl

@@ -154,7 +154,7 @@ namespace BurnsidePaqb
 /--
 [burnside_paqb_of_simple_prime](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/SolvableInduction.lean)
 -/
-private lemma burnside_paqb_of_simple_prime
+lemma burnside_paqb_of_simple_prime
   {G : Type u} [Group G] [Fintype G]
   {p q a b : ℕ}
 -- given
@@ -314,4 +314,4 @@ end BurnsidePaqb
 
 
 -- created on 2026-10-20
--- updated on 2026-10-26
+-- updated on 2026-11-23

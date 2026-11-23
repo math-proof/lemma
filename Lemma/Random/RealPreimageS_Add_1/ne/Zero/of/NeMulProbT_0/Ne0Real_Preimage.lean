@@ -25,7 +25,7 @@ private lemma main
 -- given
   (h₀ : ∀ t, (· t) = (r t, s t, a t))
   (hP : (M θ).real (s t ⁻¹' {sₜ}) ≠ 0)
-  (hz : M.π[θ] sₜ aₜ * μ.measure.real {aₜ} *
+  (hz : M.π θ sₜ aₜ * μ.measure.real {aₜ} *
     (M.trans (sₜ, aₜ)).toMeasure.real {y} ≠ 0) :
 -- imply
   (M θ).real (s (t + 1) ⁻¹' {y}) ≠ 0 := by
@@ -55,7 +55,7 @@ private lemma main
     ∫ ω, (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) *
         (if s (t + 1) ω = y then (1:ℝ) else 0) ∂(M θ) =
       (M θ).real (s t ⁻¹' {sₜ}) *
-        (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) *
+        (M.π θ sₜ aₜ * μ.measure.real {aₜ}) *
         (M.trans (sₜ, aₜ)).toMeasure.real {y} := by
     rw [Integral_MulEqAndEq.eq.MulMulRealProbSum_MulT.of.All_Eq
       (M := M) h₀ hfY hCY θ t sₜ aₜ, hint]
@@ -96,7 +96,7 @@ private lemma main
     exact measureReal_mono (fun ω hω => hω.2)
   have hpos : 0 <
       (M θ).real (s t ⁻¹' {sₜ}) *
-        (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) *
+        (M.π θ sₜ aₜ * μ.measure.real {aₜ}) *
         (M.trans (sₜ, aₜ)).toMeasure.real {y} := by
     apply mul_pos
     ·

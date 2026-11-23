@@ -1,4 +1,4 @@
-import Def.Data.Fin.Rope
+import Def.Data.Fin.Step
 import Initialize.Tactic.Attr.Basic
 import Mathlib
 
@@ -10,11 +10,11 @@ private lemma main
   (d : ℕ)
   (t s : Fin d) :
 -- imply
-  t.ropeEven ≠ s.ropeOdd := by
+  t.stepEven ≠ s.stepOdd := by
 -- proof
   intro h
   have := congrArg Fin.val h
-  simp [Fin.ropeEven, Fin.ropeOdd] at this
+  simp [Fin.stepEven, Fin.stepOdd] at this
   omega
 
 

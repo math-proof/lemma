@@ -39,9 +39,9 @@ private lemma main
     ‖∑' k, c ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)‖ ≤ B)
   (hφ : StronglyMeasurable
     (fun z : 𝒮 × 𝒜 =>
-      gradient (fun θ' => Real.log (M.π[θ'] z.1 z.2)) θ))
+      gradient (fun θ' => Real.log (M.π θ' z.1 z.2)) θ))
   (hMs : ∀ y u,
-    ‖gradient (fun θ' => Real.log (M.π[θ'] y u)) θ‖ ≤ Ms) :
+    ‖gradient (fun θ' => Real.log (M.π θ' y u)) θ‖ ≤ Ms) :
 -- imply
   have hs : ∀ t, PSpace (M θ) (s t) := fun t =>
     ⟨(Random.Measurable.of.All_Eq.snd.fst h₁ t).aemeasurable⟩
@@ -59,11 +59,11 @@ private lemma main
   have : BorelSpace Θ := ⟨rfl⟩
   (InnerProductSpace.toDual ℝ Θ).symm (∑' t, γ ^ t • ∫ ω,
       (∑' k, c ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
-        fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ ∂(M θ)) =
+        fderiv ℝ (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ ∂(M θ)) =
     𝔼[r, s, a : M θ](
       ∑' t, γ ^ t •
         (((fun k : ℕ => c ^ k) ⬝ᵥ (fun k : ℕ => X s a r (t + k))) •
-          ∇[θ] Real.log (M.π[θ] (s t) (a t)))) := by
+          ∇[θ] Real.log (M.π θ (s t) (a t)))) := by
 -- proof
   intro _ _ _ _ _ _
   classical
@@ -88,7 +88,7 @@ private lemma main
   have hL : ∀ φ, (InnerProductSpace.toDual ℝ Θ).symm φ = L φ := fun _ => rfl
   let G : (ℕ → ℝ × 𝒮 × 𝒜) → Θ := fun ω => ∑' t, γ ^ t •
     ((∑' k, c ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
-      gradient (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ)
+      gradient (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ)
   have hg := fun t : ℕ =>
     StronglyMeasurable.smul
       (Measurable.tsum (L := SummationFilter.unconditional ℕ) fun k =>
@@ -99,7 +99,7 @@ private lemma main
   obtain ⟨K, hK⟩ : ∃ K : ℝ, K = B * Ms := ⟨_, rfl⟩
   have hFb : ∀ t, ∀ᵐ ω ∂(M θ),
       ‖γ ^ t • ((∑' k, c ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
-        gradient (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ)‖ ≤ γ ^ t * K := by
+        gradient (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ)‖ ≤ γ ^ t * K := by
     intro t
     filter_upwards [h₃] with ω h1
     rw [norm_smul, norm_smul, norm_pow, Real.norm_of_nonneg h₀.1, hK]
@@ -109,11 +109,11 @@ private lemma main
         (pow_nonneg h₀.1 t)
   have hint : ∀ t, Integrable (fun ω =>
       γ ^ t • ((∑' k, c ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
-        gradient (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ)) (M θ) :=
+        gradient (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ)) (M θ) :=
     fun t => Integrable.of_bound ((hg t).const_smul (γ ^ t)).aestronglyMeasurable _ (hFb t)
   have hsum : Summable fun t => ∫ ω,
       ‖γ ^ t • ((∑' k, c ^ k * X (fun j => s j ω) (fun j => a j ω) (fun j => r j ω) (t + k)) •
-        gradient (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ)‖ ∂(M θ) := by
+        gradient (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ)‖ ∂(M θ) := by
     refine Summable.of_nonneg_of_le (fun t => integral_nonneg fun _ => norm_nonneg _) (fun t => ?_)
       ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right K)
     calc
@@ -134,7 +134,7 @@ private lemma main
     𝔼[r, s, a : M θ](
       ∑' t, γ ^ t •
         (((fun k : ℕ => c ^ k) ⬝ᵥ (fun k : ℕ => X s a r (t + k))) •
-          ∇[θ] Real.log (M.π[θ] (s t) (a t)))) =
+          ∇[θ] Real.log (M.π θ (s t) (a t)))) =
       ∫ ω, G ω ∂(M θ) := by
     have hx : AEMeasurable
       (AsPathRV.path r, AsPathRV.path s, AsPathRV.path a) (M θ) :=

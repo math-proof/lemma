@@ -33,17 +33,17 @@ private lemma main
   {p : 𝒮 → 𝒜 → 𝒮 → ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
-  (h₁ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
-  (h₂ : sup[sₜ] (∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖) ∂μ.measure) < ∞)
-  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖))
-  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) μ.measure)
-  (h₅ : ∀ θ x, Measurable (M.π[θ] x))
+  (h₁ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π θ sₜ aₜ))
+  (h₂ : sup[sₜ] (∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖) ∂μ.measure) < ∞)
+  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖))
+  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖)) μ.measure)
+  (h₅ : ∀ θ x, Measurable (M.π θ x))
   (h₆ : ∀ x u y, (M.trans (x, u)).toMeasure.real {y} = p x u y)
   (R : ℝ) :
 -- imply
   ∇[θ] M.V0 R θ γ («\sf{s}» t) =
     ∫ u, ((M.rkd R («\sf{s}» t) u + γ * ∫ y, M.V0 R θ γ y ∂(M.trans («\sf{s}» t, u))) •
-        ∇[θ] M.π[θ] («\sf{s}» t) u) ∂μ.measure +
+        ∇[θ] M.π θ («\sf{s}» t) u) ∂μ.measure +
       γ • (∑ «\sf{s}» (t + 1), M.P1kd θ p («\sf{s}» t) («\sf{s}» (t + 1)) • ∇[θ] M.V0 R θ γ («\sf{s}» (t + 1))) := by
 -- proof
   let : ReferenceMeasure 𝒮 := ReferenceMeasure.of Measure.count

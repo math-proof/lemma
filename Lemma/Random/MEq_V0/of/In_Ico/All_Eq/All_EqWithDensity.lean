@@ -89,7 +89,7 @@ private lemma integral_Kf_clip_stage
         Integral.eq.Integral_Integral.of.Integrable_Bind hbind]
       exact integral_congr_ae (Filter.Eventually.of_forall fun y => ih y)
     refine eS.trans ?_
-    change ∫ u, M.π[θ] sₜ u •
+    change ∫ u, M.π θ sₜ u •
         (∫ ρ, M.Kf θ (fun w ↦ clip w.1 (-R) R) (j + 1) (ρ, sₜ, u)
           ∂(M.reward (sₜ, u)))
         ∂ReferenceMeasure.measure = _
@@ -183,16 +183,16 @@ private lemma integral_phi_r_eq_Wkd
             ∂(M.reward (sₜ, u)) := fun u =>
       integral_const_mul _ _
     refine eS.trans ?_
-    change ∫ aₜ, M.π[θ] sₜ aₜ •
+    change ∫ aₜ, M.π θ sₜ aₜ •
         (∫ ρ, φ sₜ * M.Kf θ (fun w ↦ clip w.1 (-R) R) j (ρ, sₜ, aₜ)
           ∂(M.reward (sₜ, aₜ)))
         ∂ReferenceMeasure.measure = _
     simp_rw [hinner]
     have hscale : ∀ aₜ,
-        M.π[θ] sₜ aₜ •
+        M.π θ sₜ aₜ •
           (φ sₜ * ∫ ρ, M.Kf θ (fun w ↦ clip w.1 (-R) R) j (ρ, sₜ, aₜ)
             ∂(M.reward (sₜ, aₜ))) =
-          φ sₜ * (M.π[θ] sₜ aₜ •
+          φ sₜ * (M.π θ sₜ aₜ •
             ∫ ρ, M.Kf θ (fun w ↦ clip w.1 (-R) R) j (ρ, sₜ, aₜ)
               ∂(M.reward (sₜ, aₜ))) := fun u => by
       simp [smul_eq_mul]; ring
@@ -222,7 +222,7 @@ private lemma main
 -- given
   (hγ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 ↦ M.π[θ] z.1 z.2))
+  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 ↦ M.π θ z.1 z.2))
   (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1)
   (θ : Θ)
   (k : ℕ) :

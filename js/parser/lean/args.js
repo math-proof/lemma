@@ -19,8 +19,18 @@ import { Lean } from './base.js';
 
 const L = Lean.classes;
 
-/** A single letter (ASCII or Greek) is a variable, never a global function head. */
-const isVariableHead = (text) => [...text].length === 1 && /\p{L}/u.test(text);
+/** Subscript digits/letters (U+2080–U+209C, U+1D62–U+1D6A, U+2C7C). Superscripts
+ *  are notation (`x²` = `x ^ 2`), so they are not part of a variable name. */
+const SUBSCRIPT_TAIL = /[\u2080-\u2089\u2090-\u209C\u1D62-\u1D6A\u2C7C]+$/u;
+
+/** A single letter plus its subscript is a variable, never a global function
+ *  head: `r`, `rₐ`, `Rₘ`, and the ASCII form `A_length`, `a_min`, `a_t`, `𝒮_0`. */
+const isVariableHead = (text) => {
+    const raw = String(text ?? '');
+    const base = raw.replace(SUBSCRIPT_TAIL, '');
+    if ([...base].length === 1 && /\p{L}/u.test(base)) return true;
+    return /^\p{L}_\S+$/u.test(raw);
+};
 
 export class LeanArgsSpaceSeparated extends LeanArgs {
     static { this.register(); }
@@ -39,8 +49,9 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
     /**
      * `obj.attribute a b` → `{Attribute: [obj?, a, b]}` (a capitalised object is a
      * namespace and is dropped); `Finset.range n` → `{Range: [n]}` for a capitalised
-     * token head. Lowercase heads (`f x`), single-letter heads (`F x`, `Δ x`) — they
-     * are variables, not global functions — and all other heads are anonymous: `"_"`.
+     * token head. A multi-letter token head keeps its capitalised name regardless of
+     * source casing: `range n` → `{Range: [n]}`. Single-letter heads (`f x`, `R x`,
+     * `Δ x`) are variables, not global functions, and stay anonymous: `"_"`.
      */
     toJSON(ctx = { leaves: new Map() }) {
         const head = this.args[0];
@@ -57,7 +68,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         }
         if (head instanceof L.LeanToken) {
             const raw = head.text || "";
-            if (raw && !/^[\p{Ll}_]/u.test(raw) && !isVariableHead(raw))
+            if (raw && !/^_/u.test(raw) && !isVariableHead(raw))
                 return { [raw.charAt(0).toUpperCase() + raw.slice(1)]: rest() };
         }
         return "_";

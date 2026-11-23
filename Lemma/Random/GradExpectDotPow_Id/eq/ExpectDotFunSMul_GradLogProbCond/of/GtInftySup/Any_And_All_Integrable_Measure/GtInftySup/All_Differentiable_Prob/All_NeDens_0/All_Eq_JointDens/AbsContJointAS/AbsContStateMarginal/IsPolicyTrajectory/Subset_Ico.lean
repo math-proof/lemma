@@ -73,7 +73,7 @@ private lemma main
     Model.IsPolicyTrajectory.singlePSpace_as (M := M) (r := r) (s := s) (a := a) θ' t
   have hπeq : ∀ θ (t : ℕ) («\sf{s}» : ℕ → 𝒮) («\sf{a}» : ℕ → 𝒜),
       (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ) =
-        M.π[θ] «\sf{s}»[t] «\sf{a}»[t] := fun θ t sb ab => by
+        M.π θ «\sf{s}»[t] «\sf{a}»[t] := fun θ t sb ab => by
     have : SinglePSpace (M θ) (fun ω => (a t ω, s t ω)) := hInst θ t
     exact (hfactor.factor θ t (sb t) (ab t)).symm
   simp only [FinsetPow.dot_eq]
@@ -81,10 +81,10 @@ private lemma main
   have hγ : γ ∈ Set.Ico 0 1 := h₀ (by simp)
   have hℓ₀ : ℓ ∈ Set.Ico 0 1 := h₀ (by simp)
   have hℓ : ℓ ∈ Set.Icc 0 1 := ⟨hℓ₀.1, hℓ₀.2.le⟩
-  have hπ : ∀ θ', Measurable (fun z : 𝒮 × 𝒜 => M.π[θ'] z.1 z.2) :=
+  have hπ : ∀ θ', Measurable (fun z : 𝒮 × 𝒜 => M.π θ' z.1 z.2) :=
     hStoch.measurable_π
   have hφpol : StronglyMeasurable
-    (fun z : 𝒮 × 𝒜 => ∇[θ] Real.log (M.π[θ] z.1 z.2)) := by
+    (fun z : 𝒮 × 𝒜 => ∇[θ] Real.log (M.π θ z.1 z.2)) := by
     convert hφ using 1
     funext z
     refine congrArg (gradient · θ) ?_
@@ -112,16 +112,16 @@ private lemma main
   have : ∀ θ' t, SinglePSpace (M θ') (a t, s t) := fun θ' t =>
     hfactor.htr.singlePSpace_as (haj := hfactor.haj) θ' t
   have hscore : ∀ t (sₜ : 𝒮) (aₜ : 𝒜),
-      gradient (fun θ' : Θ => Real.log (M.π[θ'] sₜ aₜ)) θ =
+      gradient (fun θ' : Θ => Real.log (M.π θ' sₜ aₜ)) θ =
         gradient (fun θ' : Θ => (ℙ[M θ']((a t) = aₜ | (s t) = sₜ) : ℝ).log) θ := by
     intro t sₜ aₜ
-    have hfe : (fun θ' : Θ => Real.log (M.π[θ'] sₜ aₜ)) =
+    have hfe : (fun θ' : Θ => Real.log (M.π θ' sₜ aₜ)) =
         (fun θ' : Θ => (ℙ[M θ']((a t) = aₜ | (s t) = sₜ) : ℝ).log) :=
       funext fun θ' =>
         congrArg Real.log (hπeq θ' t (fun _ => sₜ) (fun _ => aₜ)).symm
     simp only [hfe]
   have hφg : StronglyMeasurable
-    (fun z : 𝒮 × 𝒜 => gradient (fun θ' => Real.log (M.π[θ'] z.1 z.2)) θ) :=
+    (fun z : 𝒮 × 𝒜 => gradient (fun θ' => Real.log (M.π θ' z.1 z.2)) θ) :=
     hφpol
   have hφgℙ : ∀ t, StronglyMeasurable fun z : 𝒮 × 𝒜 =>
       gradient (fun θ' : Θ => (ℙ[M θ']((a t) = z.2 | (s t) = z.1) : ℝ).log) θ := fun t => by

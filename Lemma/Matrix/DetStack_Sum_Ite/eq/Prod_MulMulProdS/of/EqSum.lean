@@ -15,13 +15,16 @@ open Matrix Finset Nat
 set_option maxHeartbeats 999999
 
 
-local instance (priority := high) {n : ℕ} {α : Type*} :
-    GetElem (Fin n → α) (Fin n) α (fun _ _ => True) where
-  getElem f i _ := f i
-
-@[simp] private theorem getElem_fin_val {n : ℕ} {α : Type*} (f : Fin n → α) (i : Fin n) :
-    f[i] = f i := rfl
-
+/-- Application-form restatement of `AddSumIio.eq.SumIic`, usable by `simp_rw`. -/
+private lemma sum_Iio_add
+  {n : ℕ}
+-- given
+  (d : Fin n → ℕ)
+  (k : Fin n) :
+-- imply
+  (∑ t ∈ Finset.Iio k, d t) + d k = ∑ t ∈ Finset.Iic k, d t := by
+-- proof
+  rw [← Finset.Iio_insert, Finset.sum_insert Finset.notMem_Iio_self, add_comm]
 
 private lemma pair_prod_succ
   [Field R]
@@ -34,15 +37,20 @@ private lemma pair_prod_succ
       (∏ ℓ : Fin n, ∏ k ∈ Finset.Iio ℓ,
         (x[ℓ.succ] - x[k.succ]) ^ (d[ℓ.succ] * d[k.succ])) := by
 -- proof
+  change
+    (∏ ℓ : Fin (n + 1), ∏ k ∈ Finset.Iio ℓ, (x ℓ - x k) ^ (d ℓ * d k)) =
+      (∏ k : Fin n, (x k.succ - x 0) ^ (d k.succ * d 0)) *
+        (∏ ℓ : Fin n, ∏ k ∈ Finset.Iio ℓ,
+          (x ℓ.succ - x k.succ) ^ (d ℓ.succ * d k.succ))
   rw [Fin.prod_univ_succ]
-  have h0 : (∏ k ∈ Finset.Iio (0 : Fin (n + 1)), (x[0] - x[k]) ^ (d[0] * d[k])) = 1 := by
+  have h0 : (∏ k ∈ Finset.Iio (0 : Fin (n + 1)), (x 0 - x k) ^ (d 0 * d k)) = 1 := by
     refine Eq.trans (Finset.prod_congr ?_ fun _ _ => rfl) Finset.prod_empty
     ext k
     simp [Finset.mem_Iio]
   have hsucc (ℓ : Fin n) :
-    (∏ k ∈ Finset.Iio ℓ.succ, (x[ℓ.succ] - x[k]) ^ (d[ℓ.succ] * d[k])) =
-      (x[ℓ.succ] - x[0]) ^ (d[ℓ.succ] * d[0]) *
-        ∏ k ∈ Finset.Iio ℓ, (x[ℓ.succ] - x[k.succ]) ^ (d[ℓ.succ] * d[k.succ]) := by
+    (∏ k ∈ Finset.Iio ℓ.succ, (x ℓ.succ - x k) ^ (d ℓ.succ * d k)) =
+      (x ℓ.succ - x 0) ^ (d ℓ.succ * d 0) *
+        ∏ k ∈ Finset.Iio ℓ, (x ℓ.succ - x k.succ) ^ (d ℓ.succ * d k.succ) := by
     have hset :
       Finset.Iio ℓ.succ =
         insert (0 : Fin (n + 1)) ((Finset.Iio ℓ).map (Fin.succEmb n)) := by
@@ -77,16 +85,28 @@ private lemma main
     ∏ i : Fin n,
       (∏ j ∈ Finset.Iio i, (x[i] - x[j]) ^ (d[i] * d[j])) *
         (∏ j ∈ Finset.range d[i], (j ! : R)) *
-        x[i] ^ (d[i].choose 2) := by
+        x[i] ^ d[i].choose 2 := by
 -- proof
+  change
+    ([i < m][j < m]
+      ∑ k : Fin n,
+        if (i : ℕ) ∈ Finset.Ico (∑ t ∈ Finset.Iio k, d t)
+            (∑ t ∈ Finset.Iic k, d t) then
+          (j : R) ^ ((i : ℕ) - ∑ t ∈ Finset.Iio k, d t) * x k ^ (j : ℕ)
+        else
+          0).det =
+      ∏ i : Fin n,
+        (∏ j ∈ Finset.Iio i, (x i - x j) ^ (d i * d j)) *
+          (∏ j ∈ Finset.range (d i), (j ! : R)) *
+          x i ^ (d i).choose 2
   have hprod :
     (∏ i : Fin n,
-      (∏ j ∈ Finset.Iio i, (x[i] - x[j]) ^ (d[i] * d[j])) *
-        (∏ j ∈ Finset.range d[i], (j ! : R)) *
-        x[i] ^ (d[i].choose 2)) =
-      (∏ i : Fin n, ∏ j ∈ Finset.Iio i, (x[i] - x[j]) ^ (d[i] * d[j])) *
-        (∏ i : Fin n, ∏ j ∈ Finset.range d[i], (j ! : R)) *
-        (∏ i : Fin n, x[i] ^ (d[i].choose 2)) := by
+      (∏ j ∈ Finset.Iio i, (x i - x j) ^ (d i * d j)) *
+        (∏ j ∈ Finset.range (d i), (j ! : R)) *
+        x i ^ (d i).choose 2) =
+      (∏ i : Fin n, ∏ j ∈ Finset.Iio i, (x i - x j) ^ (d i * d j)) *
+        (∏ i : Fin n, ∏ j ∈ Finset.range (d i), (j ! : R)) *
+        (∏ i : Fin n, x i ^ (d i).choose 2) := by
     simp [mul_assoc, Finset.prod_mul_distrib]
   rw [hprod]
   clear hprod
@@ -97,18 +117,18 @@ private lemma main
     subst hm0
     simp [Matrix.det_fin_zero]
   | succ n ih =>
-    set d0 := d[0] with hd0
-    set x0 := x[0] with hx0
-    set d' : Fin n → ℕ := fun k => d[k.succ] with hd'
-    set x' : Fin n → R := fun k => x[k.succ] with hx'
-    have hsum_succ : d0 + ∑ k : Fin n, d'[k] = m := by
+    set d0 := d 0 with hd0
+    set x0 := x 0 with hx0
+    set d' : Fin n → ℕ := fun k => d k.succ with hd'
+    set x' : Fin n → R := fun k => x k.succ with hx'
+    have hsum_succ : d0 + ∑ k : Fin n, d' k = m := by
       simpa [Fin.sum_univ_succ, d0, d'] using h
-    have hsum' : ∑ k : Fin n, d'[k] = m - d0 := by omega
+    have hsum' : ∑ k : Fin n, d' k = m - d0 := by omega
     have hd0le : d0 ≤ m := by omega
     set off : Fin (n + 1) → ℕ := fun k =>
-      ∑ t ∈ Finset.Iio k, d[t] with hoff
+      ∑ t ∈ Finset.Iio k, d t with hoff
     set off' : Fin n → ℕ := fun k =>
-      ∑ t ∈ Finset.Iio k, d'[t] with hoff'
+      ∑ t ∈ Finset.Iio k, d' t with hoff'
     have hoff0 : off 0 = 0 := by
       simp [off]
     have hoff_succ (k : Fin n) : off k.succ = d0 + off' k := by
@@ -126,14 +146,14 @@ private lemma main
       rfl
     set M := [i < m][j < m]
       ∑ k : Fin (n + 1),
-        if (i : ℕ) ∈ Finset.Ico (off k) (off k + d[k]) then
-          (j : R) ^ ((i : ℕ) - off k) * x[k] ^ (j : ℕ)
+        if (i : ℕ) ∈ Finset.Ico (off k) (off k + d k) then
+          (j : R) ^ ((i : ℕ) - off k) * x k ^ (j : ℕ)
         else
           0 with hM
     set M_rest := [i < (m - d0)][j < (m - d0)]
       ∑ k : Fin n,
-        if (i : ℕ) ∈ Finset.Ico (off' k) (off' k + d'[k]) then
-          (j : R) ^ ((i : ℕ) - off' k) * x'[k] ^ (j : ℕ)
+        if (i : ℕ) ∈ Finset.Ico (off' k) (off' k + d' k) then
+          (j : R) ^ ((i : ℕ) - off' k) * x' k ^ (j : ℕ)
         else
           0 with hM_rest
     set ε₁ : Fin d0 ⊕ Fin (m - d0) ≃ Fin m :=
@@ -142,8 +162,8 @@ private lemma main
       x0 ^ (j : ℕ) * ((j : R) + 0) ^ (i : ℕ) with hA₁
     set A_rest := Matrix.of fun (i : Fin (m - d0)) (j : Fin m) =>
       ∑ k : Fin n,
-        if (i : ℕ) ∈ Finset.Ico (off' k) (off' k + d'[k]) then
-          x'[k] ^ (j : ℕ) * ((j : R) + 0) ^ ((i : ℕ) - off' k)
+        if (i : ℕ) ∈ Finset.Ico (off' k) (off' k + d' k) then
+          x' k ^ (j : ℕ) * ((j : R) + 0) ^ ((i : ℕ) - off' k)
         else
           0 with hA_rest
     set B₁ := Matrix.of fun (k : Fin m) (j : Fin d0) =>
@@ -177,23 +197,23 @@ private lemma main
         rw [hε₁_inl a]
         have hterm :
           (∑ k : Fin (n + 1),
-            if (a : ℕ) ∈ Finset.Ico (off k) (off k + d[k]) then
-              (j : R) ^ ((a : ℕ) - off k) * x[k] ^ (j : ℕ)
+            if (a : ℕ) ∈ Finset.Ico (off k) (off k + d k) then
+              (j : R) ^ ((a : ℕ) - off k) * x k ^ (j : ℕ)
             else
               0) =
             (j : R) ^ (a : ℕ) * x0 ^ (j : ℕ) := by
           rw [Fin.sum_univ_succ]
-          have h0 : (a : ℕ) ∈ Finset.Ico (off 0) (off 0 + d[0]) := by
+          have h0 : (a : ℕ) ∈ Finset.Ico (off 0) (off 0 + d 0) := by
             simp [hoff0, d0]
           rw [ite_eq_left h0, hoff0, tsub_zero, hx0]
           have hrest :
             (∑ k : Fin n,
-              if (a : ℕ) ∈ Finset.Ico (off k.succ) (off k.succ + d[k.succ]) then
-                (j : R) ^ ((a : ℕ) - off k.succ) * x[k.succ] ^ (j : ℕ)
+              if (a : ℕ) ∈ Finset.Ico (off k.succ) (off k.succ + d k.succ) then
+                (j : R) ^ ((a : ℕ) - off k.succ) * x k.succ ^ (j : ℕ)
               else
                 0) = 0 := by
             refine Finset.sum_eq_zero fun k _ => ?_
-            have : ¬((a : ℕ) ∈ Finset.Ico (off k.succ) (off k.succ + d[k.succ])) := by
+            have : ¬((a : ℕ) ∈ Finset.Ico (off k.succ) (off k.succ + d k.succ)) := by
               rw [hoff_succ]
               intro hmem
               have h1 := (Finset.mem_Ico.mp hmem).1
@@ -207,15 +227,15 @@ private lemma main
         simp only [Matrix.submatrix_apply, id, Matrix.fromRows_apply_inr, hA_rest, hM,
           Matrix.of_apply]
         rw [ha, Fin.sum_univ_succ]
-        have h0 : ¬(d0 + (a : ℕ) ∈ Finset.Ico (off 0) (off 0 + d[0])) := by
+        have h0 : ¬(d0 + (a : ℕ) ∈ Finset.Ico (off 0) (off 0 + d 0)) := by
           simp [hoff0, d0]
         rw [ite_eq_right h0, zero_add]
         refine Finset.sum_congr rfl fun k _ => ?_
         rw [hoff_succ k]
         simp only [d', x']
-        if hk : (a : ℕ) ∈ Finset.Ico (off' k) (off' k + d'[k]) then
+        if hk : (a : ℕ) ∈ Finset.Ico (off' k) (off' k + d' k) then
           have hk' :
-            d0 + (a : ℕ) ∈ Finset.Ico (d0 + off' k) (d0 + off' k + d'[k]) := by
+            d0 + (a : ℕ) ∈ Finset.Ico (d0 + off' k) (d0 + off' k + d' k) := by
             have h := Finset.mem_Ico.mp hk
             exact Finset.mem_Ico.mpr ⟨by omega, by omega⟩
           rw [ite_eq_left hk', ite_eq_left hk, mul_comm, add_zero]
@@ -223,12 +243,12 @@ private lemma main
           omega
         else
           have hk' :
-            ¬(d0 + (a : ℕ) ∈ Finset.Ico (d0 + off' k) (d0 + off' k + d'[k])) := by
+            ¬(d0 + (a : ℕ) ∈ Finset.Ico (d0 + off' k) (d0 + off' k + d' k)) := by
             intro hmem
             have h := Finset.mem_Ico.mp hmem
             exact hk (Finset.mem_Ico.mpr ⟨by omega, by omega⟩)
           rw [ite_eq_right hk', ite_eq_right hk]
-    have h5 : (M.submatrix ε₁ id) * T = (M.submatrix ε₁ ε₁) * (T.submatrix ε₁ id) := by
+    have h5 : M.submatrix ε₁ id * T = M.submatrix ε₁ ε₁ * T.submatrix ε₁ id := by
       rw [Matrix.submatrix_mul_equiv]
       rfl
     have hT1 : (T.submatrix ε₁ id).det = 1 := by
@@ -271,15 +291,15 @@ private lemma main
       DetMulStackS_MulPow.eq.Mul_Prod_Factorial.of.Le hd0le] at hmain
     have hRestBd :
       (A_rest * Bd).det =
-        (∏ k : Fin n, (x'[k] - x0) ^ (d'[k] * d0)) * M_rest.det := by
-      have hoff'_le (k : Fin n) : off' k + d'[k] ≤ m - d0 := by
-        have h1 : off' k + d'[k] = ∑ t ∈ Finset.Iic k, d'[t] := by
+        (∏ k : Fin n, (x' k - x0) ^ (d' k * d0)) * M_rest.det := by
+      have hoff'_le (k : Fin n) : off' k + d' k ≤ m - d0 := by
+        have h1 : off' k + d' k = ∑ t ∈ Finset.Iic k, d' t := by
           simpa [off'] using AddSumIio.eq.SumIic d' k
         rw [h1, ← hsum']
         exact Finset.sum_le_sum_of_subset (Finset.subset_univ _)
       have hex (a : Fin (m - d0)) :
-        ∃ k : Fin n, (a : ℕ) ∈ Finset.Ico (off' k) (off' k + d'[k]) := by
-        obtain ⟨k, hk⟩ := Any_In_IcoSumIio_SumIic.of.Eq_Sum hsum' a
+        ∃ k : Fin n, (a : ℕ) ∈ Finset.Ico (off' k) (off' k + d' k) := by
+        obtain ⟨k, hk⟩ := Any_In_IcoSumIio_SumIic.of.Eq_Sum (d := d') hsum' a
         refine ⟨k, ?_⟩
         have h := AddSumIio.eq.SumIic d' k
         dsimp only [GetElem.getElem] at hk h
@@ -288,8 +308,8 @@ private lemma main
         rw [h]
         apply hk
       have huniq (a : ℕ) (k₁ k₂ : Fin n)
-        (h1 : a ∈ Finset.Ico (off' k₁) (off' k₁ + d'[k₁]))
-        (h2 : a ∈ Finset.Ico (off' k₂) (off' k₂ + d'[k₂])) : k₁ = k₂ := by
+        (h1 : a ∈ Finset.Ico (off' k₁) (off' k₁ + d' k₁))
+        (h2 : a ∈ Finset.Ico (off' k₂) (off' k₂ + d' k₂)) : k₁ = k₂ := by
         refine Eq.of.In_IcoSumIio_SumIic.In_IcoSumIio_SumIic (d := d') (t := a) ?_ ?_
         ·
           have h := AddSumIio.eq.SumIic d' k₁
@@ -303,7 +323,7 @@ private lemma main
           rw [Finset.mem_Ico] at h2 ⊢
           rw [← h]
           apply h2
-      let σ : (Σ k : Fin n, Fin d'[k]) ≃ Fin (m - d0) := by
+      let σ : (Σ k : Fin n, Fin (d' k)) ≃ Fin (m - d0) := by
         refine Equiv.ofBijective
           (fun p => ⟨off' p.1 + (p.2 : ℕ), by
             have := p.2.isLt
@@ -314,10 +334,10 @@ private lemma main
           intro ⟨k₁, i₁⟩ ⟨k₂, i₂⟩ heq
           have heq' : off' k₁ + (i₁ : ℕ) = off' k₂ + (i₂ : ℕ) := by
             simpa using congrArg Fin.val heq
-          have ha1 : off' k₁ + (i₁ : ℕ) ∈ Finset.Ico (off' k₁) (off' k₁ + d'[k₁]) := by
+          have ha1 : off' k₁ + (i₁ : ℕ) ∈ Finset.Ico (off' k₁) (off' k₁ + d' k₁) := by
             have := i₁.isLt
             exact Finset.mem_Ico.mpr (by omega)
-          have ha2 : off' k₁ + (i₁ : ℕ) ∈ Finset.Ico (off' k₂) (off' k₂ + d'[k₂]) := by
+          have ha2 : off' k₁ + (i₁ : ℕ) ∈ Finset.Ico (off' k₂) (off' k₂ + d' k₂) := by
             rw [heq']
             have := i₂.isLt
             exact Finset.mem_Ico.mpr (by omega)
@@ -333,26 +353,26 @@ private lemma main
           ext
           simp
           omega
-      have hσ (k : Fin n) (i : Fin d'[k]) : (σ ⟨k, i⟩ : ℕ) = off' k + (i : ℕ) := rfl
-      set C : ∀ k : Fin n, Matrix (Fin d'[k]) (Fin d'[k]) R := fun k =>
-        [i < d'[k]][j < d'[k]]
+      have hσ (k : Fin n) (i : Fin (d' k)) : (σ ⟨k, i⟩ : ℕ) = off' k + (i : ℕ) := rfl
+      set C : ∀ k : Fin n, Matrix (Fin (d' k)) (Fin (d' k)) R := fun k =>
+        [i < d' k][j < d' k]
           ((i : ℕ).choose j : R) *
             ∑ h ∈ Finset.range (d0 + 1),
-              (d0.choose h : R) * (-x0) ^ (d0 - h) * x'[k] ^ h *
+              (d0.choose h : R) * (-x0) ^ (d0 - h) * x' k ^ h *
                 (h : R) ^ (i - j : ℤ) with hC
-      set As : ∀ k : Fin n, Matrix (Fin d'[k]) (Fin (m - d0)) R := fun k =>
-        Matrix.of fun (i : Fin d'[k]) (j : Fin (m - d0)) =>
-          ((j : R) + 0) ^ (i : ℕ) * x'[k] ^ (j : ℕ) with hAs
-      set Aσ : Matrix (Σ k : Fin n, Fin d'[k]) (Fin m) R :=
-        Matrix.of fun (p : Σ k : Fin n, Fin d'[k]) (j : Fin m) =>
-          (j : R) ^ (p.2 : ℕ) * x'[p.1] ^ (j : ℕ) with hAσ
-      set Asσ : Matrix (Σ k : Fin n, Fin d'[k]) (Fin (m - d0)) R :=
-        Matrix.of fun (p : Σ k : Fin n, Fin d'[k]) (j : Fin (m - d0)) =>
-          ((j : R) + 0) ^ (p.2 : ℕ) * x'[p.1] ^ (j : ℕ) with hAsσ
+      set As : ∀ k : Fin n, Matrix (Fin (d' k)) (Fin (m - d0)) R := fun k =>
+        Matrix.of fun (i : Fin (d' k)) (j : Fin (m - d0)) =>
+          ((j : R) + 0) ^ (i : ℕ) * x' k ^ (j : ℕ) with hAs
+      set Aσ : Matrix (Σ k : Fin n, Fin (d' k)) (Fin m) R :=
+        Matrix.of fun (p : Σ k : Fin n, Fin (d' k)) (j : Fin m) =>
+          (j : R) ^ (p.2 : ℕ) * x' p.1 ^ (j : ℕ) with hAσ
+      set Asσ : Matrix (Σ k : Fin n, Fin (d' k)) (Fin (m - d0)) R :=
+        Matrix.of fun (p : Σ k : Fin n, Fin (d' k)) (j : Fin (m - d0)) =>
+          ((j : R) + 0) ^ (p.2 : ℕ) * x' p.1 ^ (j : ℕ) with hAsσ
       have hA_sub : A_rest.submatrix σ id = Aσ := by
         ext ⟨k, i⟩ j
         simp only [Matrix.submatrix_apply, id, hA_rest, hAσ, Matrix.of_apply, hσ]
-        have hmem : off' k + (i : ℕ) ∈ Finset.Ico (off' k) (off' k + d'[k]) := by
+        have hmem : off' k + (i : ℕ) ∈ Finset.Ico (off' k) (off' k + d' k) := by
           have := i.isLt
           exact Finset.mem_Ico.mpr (by omega)
         rw [Finset.sum_eq_single k]
@@ -361,7 +381,7 @@ private lemma main
             add_zero]
         ·
           intro k' _ hk'
-          have : ¬(off' k + (i : ℕ) ∈ Finset.Ico (off' k') (off' k' + d'[k'])) := by
+          have : ¬(off' k + (i : ℕ) ∈ Finset.Ico (off' k') (off' k' + d' k')) := by
             intro hkmem
             exact hk' (huniq (off' k + (i : ℕ)) k k' hmem hkmem).symm
           simp [this]
@@ -371,7 +391,7 @@ private lemma main
       have hM_sub : M_rest.submatrix σ id = Asσ := by
         ext ⟨k, i⟩ j
         simp only [Matrix.submatrix_apply, id, hM_rest, hAsσ, Matrix.ofFun_apply, hσ]
-        have hmem : off' k + (i : ℕ) ∈ Finset.Ico (off' k) (off' k + d'[k]) := by
+        have hmem : off' k + (i : ℕ) ∈ Finset.Ico (off' k) (off' k + d' k) := by
           have := i.isLt
           exact Finset.mem_Ico.mpr (by omega)
         rw [Finset.sum_eq_single k]
@@ -380,7 +400,7 @@ private lemma main
           simp [add_zero]
         ·
           intro k' _ hk'
-          have : ¬(off' k + (i : ℕ) ∈ Finset.Ico (off' k') (off' k' + d'[k'])) := by
+          have : ¬(off' k + (i : ℕ) ∈ Finset.Ico (off' k') (off' k' + d' k')) := by
             intro hkmem
             exact hk' (huniq (off' k + (i : ℕ)) k k' hmem hkmem).symm
           simp [this]
@@ -388,26 +408,26 @@ private lemma main
           intro h
           exact absurd (Finset.mem_univ k) h
       have hAkBd (k : Fin n) :
-        (Matrix.of fun (i : Fin d'[k]) (j : Fin m) =>
-          (j : R) ^ (i : ℕ) * x'[k] ^ (j : ℕ)) * Bd =
+        (Matrix.of fun (i : Fin (d' k)) (j : Fin m) =>
+          (j : R) ^ (i : ℕ) * x' k ^ (j : ℕ)) * Bd =
           C k * As k := by
         have hB :
-          (Matrix.of fun (i : Fin d'[k]) (j : Fin m) =>
-            (j : R) ^ (i : ℕ) * x'[k] ^ (j : ℕ)) =
-            Matrix.of fun (i : Fin d'[k]) (j : Fin m) =>
-              x'[k] ^ (j : ℕ) * ((j : R) + 0) ^ (i : ℕ) := by
+          (Matrix.of fun (i : Fin (d' k)) (j : Fin m) =>
+            (j : R) ^ (i : ℕ) * x' k ^ (j : ℕ)) =
+            Matrix.of fun (i : Fin (d' k)) (j : Fin m) =>
+              x' k ^ (j : ℕ) * ((j : R) + 0) ^ (i : ℕ) := by
           ext i j
           simp [Matrix.of_apply, mul_comm, add_zero]
         rw [hB, hC, hAs, hBd]
         simpa [Matrix.ofFun] using
           (MulOfMulPowOfPowNegChoose.eq.MulOfChooseSumOf
-            (n := d'[k]) (m := m) (d := d0) (x := x'[k]) (δ := 0) (l := x0))
+            (n := d' k) (m := m) (d := d0) (x := x' k) (δ := 0) (l := x0))
       have hAσBd : Aσ * Bd = blockDiagonal' C * Asσ := by
         ext ⟨k, i⟩ j
         have hL :
           (Aσ * Bd) ⟨k, i⟩ j =
-            ((Matrix.of fun (i : Fin d'[k]) (j : Fin m) =>
-              (j : R) ^ (i : ℕ) * x'[k] ^ (j : ℕ)) * Bd) i j := by
+            ((Matrix.of fun (i : Fin (d' k)) (j : Fin m) =>
+              (j : R) ^ (i : ℕ) * x' k ^ (j : ℕ)) * Bd) i j := by
           simp [Matrix.mul_apply, hAσ, Matrix.of_apply]
         have hR :
           (blockDiagonal' C * Asσ) ⟨k, i⟩ j = (C k * As k) i j := by
@@ -428,7 +448,7 @@ private lemma main
         rw [hL, hR, hAkBd]
       have hRest :
         (A_rest * Bd).submatrix σ σ =
-          blockDiagonal' C * (M_rest.submatrix σ σ) := by
+          blockDiagonal' C * M_rest.submatrix σ σ := by
         have h1 : (A_rest * Bd).submatrix σ σ =
           (A_rest.submatrix σ id * Bd).submatrix id σ := by
           ext x y
@@ -448,61 +468,61 @@ private lemma main
       have hCdet_block : (blockDiagonal' C).det = ∏ k : Fin n, (C k).det := by
         rw [(blockTriangular_blockDiagonal' C).det_fintype]
         refine Fintype.prod_congr _ _ fun k => ?_
-        let e : Subtype (fun (p : Σ t : Fin n, Fin d'[t]) => p.1 = k) ≃ Fin d'[k] :=
+        let e : Subtype (fun (p : Σ t : Fin n, Fin (d' t)) => p.1 = k) ≃ Fin (d' k) :=
           Equiv.sigmaSubtype k
         rw [← Matrix.det_reindex_self e]
         congr 1
         ext i j
-        have hi : ↑(e.symm i) = (⟨k, i⟩ : Σ t : Fin n, Fin d'[t]) :=
+        have hi : ↑(e.symm i) = (⟨k, i⟩ : Σ t : Fin n, Fin (d' t)) :=
           congrArg Subtype.val (rfl : e.symm i = ⟨⟨k, i⟩, rfl⟩)
-        have hj : ↑(e.symm j) = (⟨k, j⟩ : Σ t : Fin n, Fin d'[t]) :=
+        have hj : ↑(e.symm j) = (⟨k, j⟩ : Σ t : Fin n, Fin (d' t)) :=
           congrArg Subtype.val (rfl : e.symm j = ⟨⟨k, j⟩, rfl⟩)
         simp [Matrix.reindex_apply, Matrix.submatrix_apply, Matrix.toSquareBlock_def,
           Matrix.of_apply, Matrix.blockDiagonal'_apply_eq, hi, hj]
-      have hCk (k : Fin n) : (C k).det = (x'[k] - x0) ^ (d'[k] * d0) := by
+      have hCk (k : Fin n) : (C k).det = (x' k - x0) ^ (d' k * d0) := by
         rw [hC]
-        exact DetStack_Mul_Sum_Mul_Pow_Sub.eq.PowSub__Mul (n := d'[k]) (d := d0) (x := x'[k]) (l := x0)
+        exact DetStack_Mul_Sum_Mul_Pow_Sub.eq.PowSub__Mul (n := d' k) (d := d0) (x := x' k) (l := x0)
       calc
         _ = ((A_rest * Bd).submatrix σ σ).det :=
           (Matrix.det_submatrix_equiv_self (A := A_rest * Bd) (e := σ)).symm
-        _ = (blockDiagonal' C * (M_rest.submatrix σ σ)).det := by rw [hRest]
+        _ = (blockDiagonal' C * M_rest.submatrix σ σ).det := by rw [hRest]
         _ = (blockDiagonal' C).det * (M_rest.submatrix σ σ).det := by rw [Matrix.det_mul]
         _ = (∏ k : Fin n, (C k).det) * M_rest.det := by
           rw [hCdet_block, Matrix.det_submatrix_equiv_self (e := σ)]
-        _ = (∏ k : Fin n, (x'[k] - x0) ^ (d'[k] * d0)) * M_rest.det := by
+        _ = (∏ k : Fin n, (x' k - x0) ^ (d' k * d0)) * M_rest.det := by
           simp only [hCk]
     rw [hRestBd] at hmain
     have hM_rest_det :
       M_rest.det =
         (∏ ℓ : Fin n, ∏ k ∈ Finset.Iio ℓ,
-            (x'[ℓ] - x'[k]) ^ (d'[ℓ] * d'[k])) *
-          (∏ k : Fin n, ∏ i ∈ Finset.range d'[k], (i ! : R)) *
-          (∏ k : Fin n, x'[k] ^ (d'[k].choose 2)) := by
+            (x' ℓ - x' k) ^ (d' ℓ * d' k)) *
+          (∏ k : Fin n, ∏ i ∈ Finset.range (d' k), (i ! : R)) *
+          (∏ k : Fin n, x' k ^ (d' k).choose 2) := by
       have hih := ih (x := x') (d := d') hsum'
       have hshape :
         M_rest =
           ([i < (m - d0)][j < (m - d0)]
             ∑ k : Fin n,
-              if (i : ℕ) ∈ Finset.Ico (∑ t ∈ Finset.Iio k, d'[t])
-                  (∑ t ∈ Finset.Iic k, d'[t]) then
-                (j : R) ^ ((i : ℕ) - ∑ t ∈ Finset.Iio k, d'[t]) *
-                  x'[k] ^ (j : ℕ)
+              if (i : ℕ) ∈ Finset.Ico (∑ t ∈ Finset.Iio k, d' t)
+                  (∑ t ∈ Finset.Iic k, d' t) then
+                (j : R) ^ ((i : ℕ) - ∑ t ∈ Finset.Iio k, d' t) *
+                  x' k ^ (j : ℕ)
               else
                 0) := by
         ext i j
         simp only [hM_rest, off', Matrix.ofFun_apply]
         refine Fintype.sum_congr _ _ fun k => ?_
-        simp_rw [AddSumIio.eq.SumIic]
+        simp_rw [sum_Iio_add]
       rwa [hshape]
     rw [hM_rest_det] at hmain
     have hLHS :
       M.det =
         ([i < m][j < m]
           ∑ k : Fin (n + 1),
-            if (i : ℕ) ∈ Finset.Ico (∑ t ∈ Finset.Iio k, d[t])
-                (∑ t ∈ Finset.Iic k, d[t]) then
-              (j : R) ^ ((i : ℕ) - ∑ t ∈ Finset.Iio k, d[t]) *
-                x[k] ^ (j : ℕ)
+            if (i : ℕ) ∈ Finset.Ico (∑ t ∈ Finset.Iio k, d t)
+                (∑ t ∈ Finset.Iic k, d t) then
+              (j : R) ^ ((i : ℕ) - ∑ t ∈ Finset.Iio k, d t) *
+                x k ^ (j : ℕ)
             else
               0).det := by
       simp only [hM, off]
@@ -510,9 +530,15 @@ private lemma main
       ext i j
       simp only [Matrix.ofFun_apply]
       refine Fintype.sum_congr _ _ fun k => ?_
-      simp_rw [AddSumIio.eq.SumIic]
+      simp_rw [sum_Iio_add]
     rw [← hLHS, ← hmain]
-    rw [pair_prod_succ (x := x) (d := d)]
+    have hp :
+      (∏ ℓ : Fin (n + 1), ∏ k ∈ Finset.Iio ℓ, (x ℓ - x k) ^ (d ℓ * d k)) =
+        (∏ k : Fin n, (x k.succ - x 0) ^ (d k.succ * d 0)) *
+          (∏ ℓ : Fin n, ∏ k ∈ Finset.Iio ℓ,
+            (x ℓ.succ - x k.succ) ^ (d ℓ.succ * d k.succ)) :=
+      pair_prod_succ (x := x) (d := d)
+    rw [hp]
     simp only [Fin.prod_univ_succ, hx0, hd0, hx', hd']
     ring
 

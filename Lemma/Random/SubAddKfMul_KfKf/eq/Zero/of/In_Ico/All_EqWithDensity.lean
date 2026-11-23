@@ -36,7 +36,7 @@ private lemma stage_Vkd
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M] {θ : Θ} {γ : ℝ}
   {R : ℝ}
   (h₀ : γ ∈ Set.Ico 0 1)
-  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 ↦ M.π[θ] z.1 z.2))
+  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 ↦ M.π θ z.1 z.2))
   (y : 𝒮) :
   ∫ w, M.V0 R θ γ w.2.1 ∂(M.stageK θ y) = M.V0 R θ γ y := by
   have hf : StronglyMeasurable fun w : ℝ × 𝒮 × 𝒜 ↦ M.V0 R θ γ w.2.1 :=
@@ -47,7 +47,7 @@ private lemma stage_Vkd
     Integral.eq.Integral_SMul.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
       (M := M) hf hC θ y
   refine e.trans ?_
-  change ∫ u, M.π[θ] y u •
+  change ∫ u, M.π θ y u •
       (∫ ρ, M.V0 R θ γ y ∂(M.reward (y, u) : Measure ℝ))
       ∂ReferenceMeasure.measure = _
   have hconst : ∀ u,
@@ -55,9 +55,9 @@ private lemma stage_Vkd
     have : IsProbabilityMeasure ((M.reward (y, u) : Measure ℝ)) := inferInstance
     rw [MeasureTheory.integral_const, probReal_univ, one_smul]
   simp_rw [hconst]
-  change ∫ u, M.π[θ] y u • M.V0 R θ γ y ∂ReferenceMeasure.measure = _
+  change ∫ u, M.π θ y u • M.V0 R θ γ y ∂ReferenceMeasure.measure = _
   rw [integral_smul_const,
-    show (∫ (x : 𝒜), M.π[θ] y x ∂ReferenceMeasure.measure) = 1 from
+    show (∫ (x : 𝒜), M.π θ y x ∂ReferenceMeasure.measure) = 1 from
       hStoch.integral_eq_one θ y,
     one_smul]
 
@@ -89,7 +89,7 @@ private lemma Kf_Vkd_one
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M] {θ : Θ} {γ : ℝ}
   {R : ℝ}
   (h₀ : γ ∈ Set.Ico 0 1)
-  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 ↦ M.π[θ] z.1 z.2))
+  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 ↦ M.π θ z.1 z.2))
   (z : ℝ × 𝒮 × 𝒜) :
   M.Kf θ (fun w ↦ M.V0 R θ γ w.2.1) 1 z =
     ∫ y, M.V0 R θ γ y ∂(M.trans z.2) := by
@@ -119,7 +119,7 @@ private lemma main
   {γ : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
-  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 ↦ M.π[θ] z.1 z.2))
+  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 ↦ M.π θ z.1 z.2))
   (R : ℝ)
   (θ : Θ)
   (z : ℝ × 𝒮 × 𝒜) :
@@ -139,7 +139,7 @@ private lemma main
   have hKf1w : ∀ w, M.Kf θ f 1 w = ∫ y, M.V0 R θ γ y ∂(M.trans w.2) :=
     fun w => Kf_Vkd_one (M := M) (θ := θ) (R := R) h₀ hπ w
   have h2 : M.Kf θ f 2 z =
-      ∫ y, (∫ u, M.π[θ] y u *
+      ∫ y, (∫ u, M.π θ y u *
         (∫ y', M.V0 R θ γ y' ∂(M.trans (y, u))) ∂ReferenceMeasure.measure)
         ∂(M.trans z.2) := by
     rw [Kf.eq.Integral.All_EqWithDensity (M := M) θ 1 z]
@@ -178,20 +178,20 @@ private lemma main
           ∫ y', M.V0 R θ γ y' ∂(M.trans (y, u)) := fun u => by
       have : IsProbabilityMeasure ((M.reward (y, u) : Measure ℝ)) := inferInstance
       rw [MeasureTheory.integral_const, probReal_univ, one_smul]
-    change ∫ u, M.π[θ] y u •
+    change ∫ u, M.π θ y u •
         (∫ ρ, (∫ y', M.V0 R θ γ y' ∂(M.trans (y, u)))
           ∂(M.reward (y, u) : Measure ℝ))
         ∂ReferenceMeasure.measure = _
     simp_rw [hρ, smul_eq_mul]
   rw [h1, h2, h3]
   have hBell : ∀ y,
-      M.Wkd R θ 0 y + γ * (∫ u, M.π[θ] y u *
+      M.Wkd R θ 0 y + γ * (∫ u, M.π θ y u *
           (∫ y', M.V0 R θ γ y' ∂(M.trans (y, u))) ∂ReferenceMeasure.measure) -
         M.V0 R θ γ y = 0 := by
     intro y
     have hV := Vkd.eq.Integral_MulProbQkd.of.In_Ico.All_Measurable_Prob (M := M) hπ h₀ R θ y
     have hW0 : M.Wkd R θ 0 y =
-        ∫ u, M.π[θ] y u * M.rkd R y u ∂ReferenceMeasure.measure := by
+        ∫ u, M.π θ y u * M.rkd R y u ∂ReferenceMeasure.measure := by
       simp [Model.Wkd]
     linarith [hV, hW0]
   have hW : Integrable (M.Wkd R θ 0) (M.trans z.2) :=
@@ -201,13 +201,13 @@ private lemma main
     Integrable.of_bound (Measurable_Vkd.of.All_Measurable_Prob (M := M) hπ R θ γ).aestronglyMeasurable
       ((1 - γ)⁻¹ * |R|)
       (Filter.Eventually.of_forall fun y => NormVkd.le.MulInvSub1Abs_R.of.In_Ico (M := M) h₀ R θ y)
-  have hGbd : ∀ y, ‖∫ u, M.π[θ] y u *
+  have hGbd : ∀ y, ‖∫ u, M.π θ y u *
         (∫ y', M.V0 R θ γ y' ∂(M.trans (y, u))) ∂ReferenceMeasure.measure‖
       ≤ (1 - γ)⁻¹ * |R| := fun y => by
     have hBound := (1 - γ)⁻¹ * |R|
     apply NormIntegral.le.of.All_LeNormMul.EqIntegral_1 (hStoch.integral_eq_one θ y)
     intro u
-    have hp : 0 ≤ M.π[θ] y u := hStoch.nonneg θ y u
+    have hp : 0 ≤ M.π θ y u := hStoch.nonneg θ y u
     rw [norm_mul, Real.norm_of_nonneg hp]
     exact mul_le_mul_of_nonneg_left
       ((norm_integral_le_of_norm_le_const
@@ -215,10 +215,10 @@ private lemma main
           NormVkd.le.MulInvSub1Abs_R.of.In_Ico (M := M) h₀ R θ y')).trans_eq (by simp))
       hp
   have hGin : AEStronglyMeasurable
-      (fun y : 𝒮 ↦ ∫ u, M.π[θ] y u *
+      (fun y : 𝒮 ↦ ∫ u, M.π θ y u *
         (∫ y', M.V0 R θ γ y' ∂(M.trans (y, u))) ∂ReferenceMeasure.measure)
       (M.trans z.2) := by
-    have hp : Measurable (fun z : 𝒮 × 𝒜 ↦ M.π[θ] z.1 z.2) := hπ θ
+    have hp : Measurable (fun z : 𝒮 × 𝒜 ↦ M.π θ z.1 z.2) := hπ θ
     have hT : StronglyMeasurable (fun z : 𝒮 × 𝒜 ↦
         ∫ y', M.V0 R θ γ y' ∂(M.trans z)) :=
       StronglyMeasurable.integral_kernel_prod_right'
@@ -226,31 +226,31 @@ private lemma main
         ((Measurable_Vkd.of.All_Measurable_Prob (M := M) hπ R θ γ).comp measurable_snd).stronglyMeasurable
     exact ((hp.stronglyMeasurable.mul hT).integral_prod_right).aestronglyMeasurable
   have hG : Integrable
-      (fun y ↦ ∫ u, M.π[θ] y u *
+      (fun y ↦ ∫ u, M.π θ y u *
         (∫ y', M.V0 R θ γ y' ∂(M.trans (y, u))) ∂ReferenceMeasure.measure)
       (M.trans z.2) :=
     Integrable.of_bound hGin _ (Filter.Eventually.of_forall hGbd)
   have hγG := hG.const_mul γ
   have eγ :
-      γ * ∫ y, (∫ u, M.π[θ] y u *
+      γ * ∫ y, (∫ u, M.π θ y u *
           (∫ y', M.V0 R θ γ y' ∂(M.trans (y, u))) ∂ReferenceMeasure.measure)
         ∂(M.trans z.2) =
-        ∫ y, γ * (∫ u, M.π[θ] y u *
+        ∫ y, γ * (∫ u, M.π θ y u *
           (∫ y', M.V0 R θ γ y' ∂(M.trans (y, u))) ∂ReferenceMeasure.measure)
         ∂(M.trans z.2) :=
     (integral_const_mul _ _).symm
   have hLHS :
       ∫ y, M.Wkd R θ 0 y ∂(M.trans z.2) +
-        γ * ∫ y, (∫ u, M.π[θ] y u *
+        γ * ∫ y, (∫ u, M.π θ y u *
             (∫ y', M.V0 R θ γ y' ∂(M.trans (y, u))) ∂ReferenceMeasure.measure)
           ∂(M.trans z.2) -
         ∫ y, M.V0 R θ γ y ∂(M.trans z.2) =
-      ∫ y, (M.Wkd R θ 0 y + γ * (∫ u, M.π[θ] y u *
+      ∫ y, (M.Wkd R θ 0 y + γ * (∫ u, M.π θ y u *
             (∫ y', M.V0 R θ γ y' ∂(M.trans (y, u))) ∂ReferenceMeasure.measure) -
           M.V0 R θ γ y) ∂(M.trans z.2) := by
     rw [eγ]
     set g : 𝒮 → ℝ := fun y =>
-      γ * (∫ u, M.π[θ] y u *
+      γ * (∫ u, M.π θ y u *
         (∫ y', M.V0 R θ γ y' ∂(M.trans (y, u))) ∂ReferenceMeasure.measure)
     change ∫ y, M.Wkd R θ 0 y ∂(M.trans z.2) + ∫ y, g y ∂(M.trans z.2) -
         ∫ y, M.V0 R θ γ y ∂(M.trans z.2) =

@@ -8,7 +8,7 @@ and closed slices `r[:n]` / `r[a:b]` via `Fun.getSlice` (see `Def.Probability.Pr
 structure Fun (ι : Type _) (α : Type _) where
   toFun : ι → α
 
-/-- Dependent indexed map, written `(i : ι) ⇀ α i`. -/
+/-- Dependent indexed map, written `(i : ι) → α i`. -/
 structure PiFun {ι : Type _} (α : ι → Type _) where
   toFun : (i : ι) → α i
 

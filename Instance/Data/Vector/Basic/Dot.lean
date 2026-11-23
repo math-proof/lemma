@@ -54,11 +54,6 @@ noncomputable instance (priority := low) instDotNatArrowProcess
     Dot (ℕ → α) (ℕ → Ω → α) (Ω → α) where
   dot f x := fun ω ↦ f ⬝ᵥ (fun k ↦ x k ω)
 
-/-- Path dot when the right factor is `ℕ ⇀ α`, e.g. in `𝔼[r:…]((γ ^ id) ⬝ᵥ r)`. -/
-noncomputable instance (priority := low) instDotNatFun
-    [TopologicalSpace α] [AddCommMonoid α] [Mul α] : Dot (ℕ → α) (ℕ ⇀ α) α where
-  dot f g := f ⬝ᵥ g.toFun
-
 /-- Path-smul sum: `f ⬝ᵥ g = ∑' t, f t • g t` (scalar sequence against a vector sequence).
 Lower priority than the Mul-based `(ℕ → α) ⬝ᵥ (ℕ → α)` so scalar `⬝ᵥ` stays unambiguous. -/
 noncomputable instance (priority := 50) instDotNatArrowSMul
@@ -71,12 +66,6 @@ noncomputable instance (priority := 50) instDotNatArrowSMulProcess
     {E : Type*} {Ω : Type*} [TopologicalSpace E] [AddCommMonoid E] [SMul ℝ E] :
     Dot (ℕ → ℝ) (ℕ → Ω → E) (Ω → E) where
   dot f x := fun ω ↦ f ⬝ᵥ (fun t ↦ x t ω)
-
-/-- Path-smul when the right factor is `ℕ ⇀ E`. -/
-noncomputable instance (priority := 50) instDotNatFunSMul
-    {E : Type*} [TopologicalSpace E] [AddCommMonoid E] [SMul ℝ E] :
-    Dot (ℕ → ℝ) (ℕ ⇀ E) E where
-  dot f g := f ⬝ᵥ g.toFun
 
 /-- Finite FinsetPow dot: `(γ ^ s) ⬝ᵥ g = ∑ i ∈ s, γ^i * g i`. -/
 instance (priority := 100) instDotFinsetPow

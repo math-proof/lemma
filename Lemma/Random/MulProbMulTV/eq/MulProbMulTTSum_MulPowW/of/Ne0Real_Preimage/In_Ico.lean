@@ -39,13 +39,13 @@ private lemma main
 -- imply
   let V (θ : Θ) (t : ℕ) (sₜ : 𝒮) : ℝ :=
     𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s t = sₜ);
-  M.π[θ] sₜ aₜ * μ.measure.real {aₜ} * (M.trans (sₜ, aₜ)).toMeasure.real {y} * V θ (t + 1) y =
-    M.π[θ] sₜ aₜ * μ.measure.real {aₜ} * (M.trans (sₜ, aₜ)).toMeasure.real {y} *
+  M.π θ sₜ aₜ * μ.measure.real {aₜ} * (M.trans (sₜ, aₜ)).toMeasure.real {y} * V θ (t + 1) y =
+    M.π θ sₜ aₜ * μ.measure.real {aₜ} * (M.trans (sₜ, aₜ)).toMeasure.real {y} *
       ∑' k, γ ^ k * ∫ z, M.Kf θ (fun z ↦ clip z.1 (-R) R) k z
         ∂(M.stageK θ y) := by
 -- proof
   intro Vθ
-  if hz : M.π[θ] sₜ aₜ * μ.measure.real {aₜ} *
+  if hz : M.π θ sₜ aₜ * μ.measure.real {aₜ} *
       (M.trans (sₜ, aₜ)).toMeasure.real {y} = 0 then
     rw [hz, zero_mul, zero_mul]
   else
@@ -78,7 +78,7 @@ private lemma main
       ∫ ω, (if s t ω = sₜ ∧ a t ω = aₜ then (1:ℝ) else 0) *
           (if s (t + 1) ω = y then (1:ℝ) else 0) ∂(M θ) =
         (M θ).real (s t ⁻¹' {sₜ}) *
-          (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) *
+          (M.π θ sₜ aₜ * μ.measure.real {aₜ}) *
           (M.trans (sₜ, aₜ)).toMeasure.real {y} := by
       rw [Integral_MulEqAndEq.eq.MulMulRealProbSum_MulT.of.All_Eq
         (M := M) h₁ hfY hCY θ t sₜ aₜ, hint]
@@ -119,7 +119,7 @@ private lemma main
       exact measureReal_mono (fun ω hω => hω.2)
     have hpos : 0 <
         (M θ).real (s t ⁻¹' {sₜ}) *
-          (M.π[θ] sₜ aₜ * μ.measure.real {aₜ}) *
+          (M.π θ sₜ aₜ * μ.measure.real {aₜ}) *
           (M.trans (sₜ, aₜ)).toMeasure.real {y} := by
       apply mul_pos
       ·

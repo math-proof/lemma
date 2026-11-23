@@ -1,6 +1,6 @@
 module
 
-public import Def.Data.Fin.Rope
+public import Def.Data.Fin.Step
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 
 @[expose] public section
@@ -38,7 +38,7 @@ noncomputable def Matrix.rotary {d : ℕ} (θ : Fin d → ℝ) : Matrix (Fin (d 
 Su et al. interleaved rotary matrix: planes are `(2t, 2t + 1)`.
 -/
 noncomputable def Matrix.rotary' {d : ℕ} (θ : Fin d → ℝ) : Matrix (Fin (d + d)) (Fin (d + d)) ℝ :=
-  Matrix.rotaryOn Fin.ropeEven Fin.ropeOdd θ
+  Matrix.rotaryOn Fin.stepEven Fin.stepOdd θ
 
 namespace Function
 

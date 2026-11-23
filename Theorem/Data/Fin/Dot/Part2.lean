@@ -8,8 +8,8 @@ import Notation.Data.Dot
 
 
 theorem Dot.fun_out_eq [AddCommMonoid α] [Mul α] {m : ℕ} (s : Slice)
-    (v : Fun (Fin m) α) (w : FunSlice.Out α s) :
-    v ⬝ᵥ w = Fin.dotResize v.toFun (w : Fin (s.stop.toNat - s.start.toNat) → α) := rfl
+    (v : Fin m → α) (w : FunSlice.Out α s) :
+    v ⬝ᵥ w = Fin.dotResize v (w : Fin (s.stop.toNat - s.start.toNat) → α) := rfl
 
 theorem Fin.resize_cast [Zero α] {m n : ℕ} (heq : m = n) (x : Fin m → α) (i : Fin n) :
     Fin.resize x n i = x (Fin.cast heq.symm i) := by
@@ -42,8 +42,8 @@ theorem Fin.dotResize_cast [AddCommMonoid α] [Mul α] {m n : ℕ} (h : n = m)
 
 @[simp]
 theorem Dot.fun_getSlice_eq [AddCommMonoid α] [Mul α]
-    (v : Fun (Fin n) α) (f : Fun ℕ α) (k : ℕ) :
-    v ⬝ᵥ f[k: k + n] = ∑ i : Fin n, v.toFun i * f.toFun (k + i) := by
+    (v : Fin n → α) (f : ℕ → α) (k : ℕ) :
+    v ⬝ᵥ f[k: k + n] = ∑ i : Fin n, v i * f (k + i) := by
   have hto : ((k : ℤ) + (n : ℤ)).toNat = k + n := by
     rw [← Int.natCast_add]
     rfl
@@ -51,5 +51,5 @@ theorem Dot.fun_getSlice_eq [AddCommMonoid α] [Mul α]
     rw [hto, Int.toNat_natCast, Nat.add_sub_cancel_left]
   rw [Dot.fun_out_eq, Fin.dotResize_cast hlen]
   refine Finset.sum_congr rfl fun i _ => ?_
-  simp [Fun.getSlice, Function.getSlice, FunSlice.slice, Nat.add_comm]
+  simp [Function.getSlice, FunSlice.slice, Nat.add_comm]
 

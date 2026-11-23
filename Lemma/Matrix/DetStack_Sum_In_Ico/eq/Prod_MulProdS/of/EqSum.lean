@@ -34,7 +34,7 @@ private lemma falling_det_mul_Q
       else 0).det *
     (∏ k : Fin r, x k ^ (d k).choose 2) =
   (∏ k : Fin r, ∏ j ∈ Finset.Iio k, (x k - x j) ^ (d k * d j)) *
-    (∏ k : Fin r, ∏ j ∈ Finset.range (d k), ((Nat.factorial j) : ℂ)) *
+    (∏ k : Fin r, ∏ j ∈ Finset.range (d k), (Nat.factorial j : ℂ)) *
     (∏ k : Fin r, x k ^ (d k).choose 2) := by
 -- proof
   classical
@@ -47,7 +47,7 @@ private lemma falling_det_mul_Q
       have hlt : p.2.val < d p.1 := p.2.isLt
       have hle : off p.1 + d p.1 ≤ n := by
         rw [show off p.1 + d p.1 = ∑ j ∈ Finset.Iic p.1, d j by
-          have h := AddSumIio.eq.SumIic (Fun.mk d) p.1
+          have h := AddSumIio.eq.SumIic d p.1
           dsimp only [GetElem.getElem] at h
           simpa [off] using h]
         rw [← hsum]
@@ -67,7 +67,7 @@ private lemma falling_det_mul_Q
       constructor
       · exact Nat.le_add_right _ _
       ·
-        have h := AddSumIio.eq.SumIic (Fun.mk d) k₁
+        have h := AddSumIio.eq.SumIic d k₁
         dsimp only [GetElem.getElem] at h
         rw [← h]
         exact Nat.add_lt_add_left a₁.isLt _
@@ -82,7 +82,7 @@ private lemma falling_det_mul_Q
           exact Nat.le_add_right _ _
         simpa [off] using this
       ·
-        have h := AddSumIio.eq.SumIic (Fun.mk d) k₂
+        have h := AddSumIio.eq.SumIic d k₂
         dsimp only [GetElem.getElem] at h
         rw [← h]
         have : i = off k₂ + a₂.val := by
@@ -91,7 +91,7 @@ private lemma falling_det_mul_Q
         exact Nat.add_lt_add_left a₂.isLt _
     have hk : k₁ = k₂ := by
       refine Eq.of.In_IcoSumIio_SumIic.In_IcoSumIio_SumIic
-        (d := Fun.mk d) (t := i) (k₁ := k₁) (k₂ := k₂) ?_ ?_
+        (d := d) (t := i) (k₁ := k₁) (k₂ := k₂) ?_ ?_
       ·
         dsimp only [GetElem.getElem]
         apply hi₁
@@ -108,9 +108,9 @@ private lemma falling_det_mul_Q
     intro i
     obtain ⟨k, hk⟩ := show
       ∃ k : Fin r, (i : ℕ) ∈ Finset.Ico (∑ j ∈ Finset.Iio k, d j) (∑ j ∈ Finset.Iic k, d j) by
-        have hsumd : ∑ k : Fin r, (Fun.mk d)[k] = n := by
-          simpa [Fun.getElem_eq] using hsum
-        obtain ⟨k, hk⟩ := Any_In_IcoSumIio_SumIic.of.Eq_Sum hsumd i
+        have hsumd : ∑ k : Fin r, d k = n := by
+          simpa using hsum
+        obtain ⟨k, hk⟩ := Any_In_IcoSumIio_SumIic.of.Eq_Sum (d := d) hsumd i
         refine ⟨k, ?_⟩
         dsimp only [GetElem.getElem] at hk
         apply hk
@@ -119,7 +119,7 @@ private lemma falling_det_mul_Q
       simpa [off] using hk.1
     have hupper : i < off k + d k := by
       have heq : off k + d k = ∑ j ∈ Finset.Iic k, d j := by
-        have h := AddSumIio.eq.SumIic (Fun.mk d) k
+        have h := AddSumIio.eq.SumIic d k
         dsimp only [GetElem.getElem] at h
         simpa [off] using h
       simpa [heq] using hk.2
@@ -152,7 +152,7 @@ private lemma falling_det_mul_Q
     ·
       have hex := off_ex i
       have hlt := ex_lt i
-      have h := AddSumIio.eq.SumIic (Fun.mk d) (block i)
+      have h := AddSumIio.eq.SumIic d (block i)
       dsimp only [GetElem.getElem] at h
       rw [← hex, ← h]
       exact Nat.add_lt_add_left hlt _
@@ -192,7 +192,7 @@ private lemma falling_det_mul_Q
         intro hkmem
         apply hk'
         refine Eq.of.In_IcoSumIio_SumIic.In_IcoSumIio_SumIic
-          (d := Fun.mk d) (t := i) (k₁ := k') (k₂ := block i) ?_ ?_
+          (d := d) (t := i) (k₁ := k') (k₂ := block i) ?_ ?_
         ·
           dsimp only [GetElem.getElem]
           apply hkmem
@@ -258,9 +258,9 @@ private lemma falling_det_mul_Q
             if ht : a.val ≤ (t : ℕ) then
               calc
                 _ = Nat.stirlingSecond ei a.val * (t : ℕ).descFactorial a.val *
-                    (x k ^ ((t : ℕ) - a.val) * x k ^ a.val) := by ring
+                    (x k ^ ((t : ℕ) - (a : ℕ)) * x k ^ a.val) := by ring
                 _ = Nat.stirlingSecond ei a.val * (t : ℕ).descFactorial a.val *
-                    x k ^ (((t : ℕ) - a.val) + a.val) := by rw [← pow_add]
+                    x k ^ ((t : ℕ) - a.val + a.val) := by rw [← pow_add]
                 _ = Nat.stirlingSecond ei a.val * (t : ℕ).descFactorial a.val *
                     x k ^ (t : ℕ) := by rw [Nat.sub_add_cancel ht]
             else
@@ -364,7 +364,7 @@ private lemma falling_det_mul_Q
         intro hkmem
         apply hk'
         refine Eq.of.In_IcoSumIio_SumIic.In_IcoSumIio_SumIic
-          (d := Fun.mk d) (t := i) (k₁ := k') (k₂ := block i) ?_ ?_
+          (d := d) (t := i) (k₁ := k') (k₂ := block i) ?_ ?_
         ·
           dsimp only [GetElem.getElem]
           apply hkmem
@@ -374,16 +374,16 @@ private lemma falling_det_mul_Q
           dsimp only [GetElem.getElem]
           apply hi
       simp [hnot]
-  have hsumF : ∑ k : Fin r, (⟨d⟩ : Fin r → ℕ)[k] = n := by
-    simpa [Fun.getElem_eq] using hsum
+  have hsumF : ∑ k : Fin r, d k = n := by
+    simpa using hsum
   have hlem :=
-    DetStack_Sum_Ite.eq.Prod_MulMulProdS.of.EqSum (x := ⟨x⟩) (d := ⟨d⟩) hsumF
+    DetStack_Sum_Ite.eq.Prod_MulMulProdS.of.EqSum (x := x) (d := d) hsumF
   have hsplit :
     (∏ i : Fin r,
-        (∏ j ∈ Finset.Iio i, ((⟨x⟩ : Fin r → ℂ)[i] - (⟨x⟩ : Fin r → ℂ)[j]) ^
-          ((⟨d⟩ : Fin r → ℕ)[i] * (⟨d⟩ : Fin r → ℕ)[j])) *
-        (∏ j ∈ Finset.range (⟨d⟩ : Fin r → ℕ)[i], ((Nat.factorial j) : ℂ)) *
-        (⟨x⟩ : Fin r → ℂ)[i] ^ (⟨d⟩ : Fin r → ℕ)[i].choose 2) =
+        (∏ j ∈ Finset.Iio i, (x i - x j) ^
+          (d i * d j)) *
+        (∏ j ∈ Finset.range (d i), (Nat.factorial j : ℂ)) *
+        x i ^ (d i).choose 2) =
       Vand * Fact * Q := by
     simp only [Vand, Fact, Q]
     simp_rw [mul_assoc]
@@ -394,15 +394,15 @@ private lemma falling_det_mul_Q
           [i < n][j < n]
             ∑ k : Fin r,
               if (i : ℕ) ∈ Finset.Ico
-                (∑ t ∈ Finset.Iio k, (⟨d⟩ : Fin r → ℕ)[t])
-                  (∑ t ∈ Finset.Iic k, (⟨d⟩ : Fin r → ℕ)[t]) then
-                (j : ℂ) ^ (i - ∑ t ∈ Finset.Iio k, (⟨d⟩ : Fin r → ℕ)[t]) *
-                  (⟨x⟩ : Fin r → ℂ)[k] ^ (j : ℕ)
+                (∑ t ∈ Finset.Iio k, d[t])
+                  (∑ t ∈ Finset.Iic k, d[t]) then
+                (j : ℂ) ^ (i - ∑ t ∈ Finset.Iio k, d[t]) *
+                  x[k] ^ (j : ℕ)
               else 0 := by
       ext i j
       simp [Mmono]
     rw [hmat]
-    rw [hlem, hsplit]
+    rwa [hlem]
   calc
     _ = Φ.det * Q := by rw [← hΦ]
     _ = Ψ.det := by rw [← hTdet, ← hΨdet]
@@ -424,14 +424,14 @@ private lemma main
           x k ^ ((t : ℕ) - (i - ∑ j ∈ Finset.Iio k, d j))
       else 0).det =
   ∏ k : Fin r, ((∏ j ∈ Finset.Iio k, (x k - x j) ^ (d k * d j)) *
-    (∏ j ∈ Finset.range (d k), ((Nat.factorial j) : ℂ))) := by
+    (∏ j ∈ Finset.range (d k), (Nat.factorial j : ℂ))) := by
 -- proof
   classical
   let subst (a : ℂ) : ℂ[X] := if a = 0 then X else C a
   let Vand : ℂ[X] :=
-    ∏ i : Fin r, ∏ j ∈ Finset.Iio i, (subst (x i) - subst (x j)) ^ (d i * d j)
+    ∏ i : Fin r, ∏ j ∈ Finset.Iio i, (subst (x i : ℂ) - subst (x j : ℂ)) ^ (d i * d j)
   let Fact : ℂ := ∏ i : Fin r, ∏ j ∈ Finset.range (d i), (Nat.factorial j)
-  let Qp : ℂ[X] := ∏ i : Fin r, subst (x i) ^ (d i).choose 2
+  let Qp : ℂ[X] := ∏ i : Fin r, subst (x i : ℂ) ^ (d i).choose 2
   let Mp : Matrix (Fin n) (Fin n) ℂ[X] :=
     [t < n][i < n]
       ∑ k : Fin r,

@@ -31,18 +31,18 @@ private lemma finite
   {R : ℝ}
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2))
-  (h₂ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
-  (h₃ : sup[sₜ] (∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖) ∂ReferenceMeasure.measure) < ∞)
-  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖))
-  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) ReferenceMeasure.measure)
+  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π θ z.1 z.2))
+  (h₂ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π θ sₜ aₜ))
+  (h₃ : sup[sₜ] (∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖) ∂ReferenceMeasure.measure) < ∞)
+  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖))
+  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖)) ReferenceMeasure.measure)
   (hφ : StronglyMeasurable
-    (fun z : 𝒮 × 𝒜 => fderiv ℝ (fun θ' => Real.log (M.π[θ'] z.1 z.2)) θ))
-  (hMs : sup[y, u] ‖fderiv ℝ (fun θ' => Real.log (M.π[θ'] y u)) θ‖ < ∞)
+    (fun z : 𝒮 × 𝒜 => fderiv ℝ (fun θ' => Real.log (M.π θ' z.1 z.2)) θ))
+  (hMs : sup[y, u] ‖fderiv ℝ (fun θ' => Real.log (M.π θ' y u)) θ‖ < ∞)
   (n : ℕ) :
   ∫ x, fderiv ℝ (fun θ => M.V0 R θ γ x) θ ∂((M θ).map (s 0)) =
     ∑ t ∈ Finset.range n, γ ^ t • ∫ ω, (M.rkd R (s t ω) (a t ω) + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (s t ω, a t ω))) •
-        fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ ∂(M θ) +
+        fderiv ℝ (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ ∂(M θ) +
       γ ^ n • ∫ x, fderiv ℝ (fun θ => M.V0 R θ γ x) θ ∂((M θ).map (s n)) := by
   induction n with
   | zero =>
@@ -53,16 +53,16 @@ private lemma finite
         (M := M) h₀ h₁ hπ h₂ h₃ hBdd hIntg hφ hMs R n
     calc
       _ = ∑ t ∈ Finset.range n, γ ^ t • ∫ ω, (M.rkd R (s t ω) (a t ω) + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (s t ω, a t ω))) •
-            fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ ∂(M θ) +
+            fderiv ℝ (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ ∂(M θ) +
           γ ^ n • ∫ x, fderiv ℝ (fun θ => M.V0 R θ γ x) θ ∂((M θ).map (s n)) := ih
       _ = ∑ t ∈ Finset.range n, γ ^ t • ∫ ω, (M.rkd R (s t ω) (a t ω) + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (s t ω, a t ω))) •
-            fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ ∂(M θ) +
+            fderiv ℝ (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ ∂(M θ) +
           γ ^ n • (∫ ω, (M.rkd R (s n ω) (a n ω) + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (s n ω, a n ω))) •
-            fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s n ω) (a n ω))) θ ∂(M θ) +
+            fderiv ℝ (fun θ' => Real.log (M.π θ' (s n ω) (a n ω))) θ ∂(M θ) +
             γ • ∫ x, fderiv ℝ (fun θ => M.V0 R θ γ x) θ ∂((M θ).map (s (n + 1)))) := by
         rw [hstep]
       _ = ∑ t ∈ Finset.range (n + 1), γ ^ t • ∫ ω, (M.rkd R (s t ω) (a t ω) + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (s t ω, a t ω))) •
-            fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ ∂(M θ) +
+            fderiv ℝ (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ ∂(M θ) +
           γ ^ (n + 1) • ∫ x, fderiv ℝ (fun θ => M.V0 R θ γ x) θ ∂((M θ).map (s (n + 1))) := by
         simp only [Finset.sum_range_succ, smul_add, smul_smul, pow_succ]
         abel
@@ -85,23 +85,23 @@ private lemma main
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
   (h₁ : ∀ t, (· t) = (r t, s t, a t))
-  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2))
-  (h₂ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
-  (h₃ : sup[sₜ] (∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖) ∂μ.measure) < ∞)
-  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖))
-  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) μ.measure)
+  (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π θ z.1 z.2))
+  (h₂ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π θ sₜ aₜ))
+  (h₃ : sup[sₜ] (∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖) ∂μ.measure) < ∞)
+  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖))
+  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖)) μ.measure)
   (hφ : StronglyMeasurable
-    (fun z : 𝒮 × 𝒜 => fderiv ℝ (fun θ' => Real.log (M.π[θ'] z.1 z.2)) θ))
-  (hMs : sup[y, u] ‖fderiv ℝ (fun θ' => Real.log (M.π[θ'] y u)) θ‖ < ∞)
+    (fun z : 𝒮 × 𝒜 => fderiv ℝ (fun θ' => Real.log (M.π θ' z.1 z.2)) θ))
+  (hMs : sup[y, u] ‖fderiv ℝ (fun θ' => Real.log (M.π θ' y u)) θ‖ < ∞)
   (R : ℝ) :
 -- imply
   ∫ x, fderiv ℝ (fun θ => M.V0 R θ γ x) θ ∂(M.init : Measure _) =
     ∑' t, γ ^ t • ∫ ω, (M.rkd R (s t ω) (a t ω) + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (s t ω, a t ω))) •
-      fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ ∂(M θ) := by
+      fderiv ℝ (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ ∂(M θ) := by
 -- proof
   have h₃grad := h₃
   obtain ⟨Ms, hMsb⟩ := id hMs
-  have hMsle : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.π[θ'] y u)) θ‖ ≤ Ms :=
+  have hMsle : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.π θ' y u)) θ‖ ≤ Ms :=
     fun y u => hMsb ⟨(y, u), rfl⟩
   classical
   obtain ⟨C, hC⟩ :=
@@ -124,7 +124,7 @@ private lemma main
         h₀.1
   have hscore_bd : ∀ t,
     ‖∫ ω, (M.rkd R (s t ω) (a t ω) + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (s t ω, a t ω))) •
-        fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ ∂(M θ)‖ ≤
+        fderiv ℝ (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ ∂(M θ)‖ ≤
         BQ * Ms := fun t => by
     have : IsProbabilityMeasure (M θ) := inferInstance
     refine (norm_integral_le_of_norm_le_const (μ := M θ)
@@ -134,7 +134,7 @@ private lemma main
           ((norm_nonneg _).trans (hQb (s t ω) (a t ω))))).trans_eq (by simp)
   have hsum :
     Summable fun t => γ ^ t • ∫ ω, (M.rkd R (s t ω) (a t ω) + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (s t ω, a t ω))) •
-        fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s t ω) (a t ω))) θ ∂(M θ) := by
+        fderiv ℝ (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ ∂(M θ) := by
     refine Summable.of_norm_bounded
       ((summable_geometric_of_lt_one h₀.1 h₀.2).mul_right (BQ * Ms)) fun t => ?_
     rw [norm_smul, norm_pow, Real.norm_of_nonneg h₀.1]

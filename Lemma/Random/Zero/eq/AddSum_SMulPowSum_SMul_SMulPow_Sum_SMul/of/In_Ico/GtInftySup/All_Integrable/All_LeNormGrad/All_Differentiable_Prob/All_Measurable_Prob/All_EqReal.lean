@@ -23,11 +23,11 @@ private lemma main
   {p : 𝒮 → 𝒜 → 𝒮 → ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
-  (h₁ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
-  (h₂ : sup[sₜ] (∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖) ∂ReferenceMeasure.measure) < ∞)
-  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖))
-  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) ReferenceMeasure.measure)
-  (h₅ : ∀ θ x, Measurable (M.π[θ] x))
+  (h₁ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π θ sₜ aₜ))
+  (h₂ : sup[sₜ] (∫ aₜ, sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖) ∂ReferenceMeasure.measure) < ∞)
+  (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖))
+  (hIntg : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π θ sₜ aₜ‖)) ReferenceMeasure.measure)
+  (h₅ : ∀ θ x, Measurable (M.π θ x))
   (h₆ : ∀ x u y, (M.trans (x, u)).toMeasure.real {y} = p x u y)
   (R : ℝ)
   (n : ℕ)
@@ -37,7 +37,7 @@ private lemma main
     ∑ t ∈ Finset.range n,
       γ ^ t • ∑ y, M.Pnkd θ t sₜ y •
         (∫ u, ((M.rkd R y u + γ * ∫ y', M.V0 R θ γ y' ∂(M.trans (y, u))) •
-          ∇[θ] M.π[θ] y u) ∂ReferenceMeasure.measure)
+          ∇[θ] M.π θ y u) ∂ReferenceMeasure.measure)
   ∇[θ] M.V0 R θ γ sₜ = S + γ ^ n • ∑ y, M.Pnkd θ n sₜ y • ∇[θ] M.V0 R θ γ y := by
 -- proof
   induction n with
@@ -49,7 +49,7 @@ private lemma main
     have hBell : ∀ y,
         ∇[θ] M.V0 R θ γ y =
           (∫ u, ((M.rkd R y u + γ * ∫ y', M.V0 R θ γ y' ∂(M.trans (y, u))) •
-              ∇[θ] M.π[θ] y u) ∂ReferenceMeasure.measure) +
+              ∇[θ] M.π θ y u) ∂ReferenceMeasure.measure) +
             γ • ∑ z, M.P1kd θ p y z • ∇[θ] M.V0 R θ γ z := by
       intro y
       exact

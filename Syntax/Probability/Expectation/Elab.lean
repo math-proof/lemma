@@ -403,7 +403,7 @@ where
     return s.setArgs args
 
 open Lean Meta Lean.Elab.Term in
-/-- `𝔼[a : μ](body)` when `a : ℕ ⇀ (Ω → α)` and `μ : Measure α`.
+/-- `𝔼[a : μ](body)` when `a : ℕ → Ω → α` and `μ : Measure α`.
 The sample is one action; `a[t]` in `body` reads that action, and
 `ℙ[M θ](a[t] | s[t])` is the trajectory conditional at the sample.
 A `ℙ` whose measure is already on `α` (the proposal kernel) is the pmf at the sample. -/

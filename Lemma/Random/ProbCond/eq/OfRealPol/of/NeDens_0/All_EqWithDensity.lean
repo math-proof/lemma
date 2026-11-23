@@ -32,18 +32,18 @@ private lemma main
   (h₀ : Model.IsPolicyTrajectory M r s a)
   (h₁ : Model.AbsContJointAS M a s)
   (h₂ : (M θ).prob (a t, s t) (aₜ, sₜ) =
-    ENNReal.ofReal (M.π[θ] sₜ aₜ) *
+    ENNReal.ofReal (M.π θ sₜ aₜ) *
       ((M θ).map (s t)).rnDeriv (μ.measure : Measure 𝒮) sₜ)
   (h₃ : ((M θ).map (s t)).rnDeriv (μ.measure : Measure 𝒮) sₜ ≠ 0)
   (h₄ : ((M θ).map (s t)).rnDeriv (μ.measure : Measure 𝒮) sₜ ≠ ⊤) :
 -- imply
   have : SinglePSpace (M θ) (a t, s t) := h₀.singlePSpace_as (haj := h₁) θ t
-  ℙ[M θ]((a t) = aₜ | (s t) = sₜ) = ENNReal.ofReal (M.π[θ] sₜ aₜ) := by
+  ℙ[M θ]((a t) = aₜ | (s t) = sₜ) = ENNReal.ofReal (M.π θ sₜ aₜ) := by
 -- proof
   intro hP
   change (M θ).prob (a t, s t) (aₜ, sₜ) /
       ((M θ).map (fun ω ↦ ((a t, s t) ω).2)).rnDeriv ReferenceMeasure.measure sₜ =
-    ENNReal.ofReal (M.π[θ] sₜ aₜ)
+    ENNReal.ofReal (M.π θ sₜ aₜ)
   have hsnd : (fun ω ↦ ((a t, s t) ω).2) = s t := rfl
   rw [hsnd, h₂, ENNReal.mul_div_cancel_right h₃ h₄]
 

@@ -32,7 +32,7 @@ private lemma main
   let s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮 := fun t ω => (ω t).2.1
   let a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜 := fun t ω => (ω t).2.2
   have h₁ : ∀ t, (· t) = (r t, s t, a t) := fun t => funext fun ω => rfl
-  have hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2) :=
+  have hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π θ z.1 z.2) :=
     fun θ => hStoch.measurable_π θ
   have hs : Measurable (s t) := Random.Measurable.of.All_Eq.snd.fst h₁ t
   have hset : MeasurableSet (s t ⁻¹' ({sₜ} : Set 𝒮)) :=

@@ -28,7 +28,7 @@ private lemma main
     fun z => NormClip.le.Abs_R _ _
   induction k generalizing sₜ with
   | zero =>
-    change ∫ u, M.π[θ] sₜ u * M.rkd R sₜ u ∂ReferenceMeasure.measure =
+    change ∫ u, M.π θ sₜ u * M.rkd R sₜ u ∂ReferenceMeasure.measure =
       ∫ z, clip z.1 (-R) R ∂(M.stageK θ sₜ)
     rw [Integral.eq.Integral_SMul.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
       (M := M) hf hC θ sₜ]
@@ -36,7 +36,7 @@ private lemma main
   | succ k ih =>
     rw [WAdd_1.eq.Integral_MulProbIntegral_TW.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
       (M := M) hf hC θ k sₜ]
-    change (∫ u, M.π[θ] sₜ u *
+    change (∫ u, M.π θ sₜ u *
         (∫ y, M.Wkd R θ k y ∂(M.trans (sₜ, u))) ∂ReferenceMeasure.measure) = _
     congr 1
     funext u
