@@ -151,7 +151,7 @@ public theorem montel_normal_families
     · obtain ⟨Mb, hMb⟩ := hbdd {(ζ k).val} (singleton_subset_iff.mpr hzk) isCompact_singleton
       exact ⟨Mb, fun n => by simp only [x, ite_eq_left hzk]; exact hMb n _ (mem_singleton _)⟩
     · exact ⟨0, fun n => by simp only [x, ite_eq_right hzk, norm_zero]; exact le_refl 0⟩
-  obtain ⟨φ, hφ_mono, hφ_conv⟩ := diagonal_extraction_nat x hbdd_pts
+  obtain ⟨φ, hφ_mono, hφ_conv⟩ := diagonal_extraction_nat hbdd_pts
   have hconv_D : ∀ d ∈ D, d ∈ Ω → ∃ a, Tendsto (fun n => f (φ n) d) atTop (nhds a) := by
     intro d hd hdΩ
     obtain ⟨k, hk⟩ := hζ_surj ⟨d, hd⟩
@@ -175,13 +175,17 @@ public theorem montel_normal_families
     have hLη : |L| * (2 * η) < ε / 3 := by
       have : |L| * (2 * η) = 2 * |L| * η := by ring
       rw [this]
+      have hηle : η ≤ ε / (6 * |L| + 6) := min_le_left _ _
+      have hstep : 2 * |L| * η ≤ 2 * |L| * (ε / (6 * |L| + 6)) :=
+        mul_le_mul_of_nonneg_left hηle (by positivity)
+      have hstep2 : 2 * |L| * (ε / (6 * |L| + 6)) = 2 * |L| * ε / (6 * |L| + 6) := by ring
+      have hstep3 : 2 * |L| * ε / (6 * |L| + 6) < ε / 3 := by
+        rw [div_lt_div_iff₀ (by positivity : 6 * |L| + 6 > 0) (by norm_num : (3 : ℝ) > 0)]
+        nlinarith [abs_nonneg L]
       calc 2 * |L| * η
-        ≤ 2 * |L| * (ε / (6 * |L| + 6)) := by
-          apply mul_le_mul_of_nonneg_left (min_le_left _ _); positivity
-        _ = 2 * |L| * ε / (6 * |L| + 6) := by ring
-        _ < ε / 3 := by
-          rw [div_lt_div_iff₀ (by positivity : 6 * |L| + 6 > 0) (by norm_num : (3:ℝ) > 0)]
-          nlinarith [abs_nonneg L]
+        ≤ 2 * |L| * (ε / (6 * |L| + 6)) := hstep
+        _ = 2 * |L| * ε / (6 * |L| + 6) := hstep2
+        _ < ε / 3 := hstep3
     obtain ⟨S, hSK, hS_fin, hS_cover⟩ := hK.elim_finite_subcover_image
       (fun _ _ => isOpen_ball)
       (show K ⊆ ⋃ z ∈ K, ball z η from fun z hz => mem_biUnion hz (mem_ball_self hη_pos))
@@ -279,3 +283,4 @@ public theorem montel_normal_families
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-23

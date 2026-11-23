@@ -2,6 +2,7 @@ import Lemma.Random.All_SinglePSpace_Joint.of.All_SinglePSpace_GetSlice
 import Notation.Fun
 import Mathlib.MeasureTheory.Constructions.Pi
 import Mathlib.MeasureTheory.Measure.Prod
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory Random Fun
 
 
@@ -57,7 +58,7 @@ The length-`k + 1` prefix is, up to peeling the last coordinate, the joint
 private lemma fun_Get_GetSlice_eq_piFinSuccAbove_comp_GetSlice_succ
   [MeasurableSpace Ω]
   [ReferenceMeasure 𝒮]
-  {s : ℕ ⇀ Ω → 𝒮}
+  {s : ℕ → Ω → 𝒮}
   {k : ℕ} :
 -- imply
   ((s[k], s[:k]) : Ω → 𝒮 × FunSlice.Vec 𝒮 ⟨0, ↑k, 1⟩) =
@@ -69,24 +70,23 @@ private lemma fun_Get_GetSlice_eq_piFinSuccAbove_comp_GetSlice_succ
   apply Prod.ext
   ·
     have hstart : (⟨0, ↑k.succ, 1⟩ : Slice).start.toNat = 0 := rfl
-    simp only [Fun.getSlice, Function.getSlice]
+    simp only [Function.getSlice]
     change s[k] ω =
-      s.toFun ((Fin.last k).val + (⟨0, ↑k.succ, 1⟩ : Slice).start.toNat) ω
+      s ((Fin.last k).val + (⟨0, ↑k.succ, 1⟩ : Slice).start.toNat) ω
     rw [hstart, Fin.val_last]
     simp
   ·
     funext j
     have hstart0 : (⟨0, ↑k, 1⟩ : Slice).start.toNat = 0 := rfl
-    simp only [JointRandomSymbol, Function.comp_apply, Fun.getSlice,
-      Function.getSlice]
+    simp only [JointRandomSymbol, Function.comp_apply, Function.getSlice]
     have hrhs :
-      (e (FunSlice.slice s.toFun ⟨0, ↑k.succ, 1⟩ ω)).2 j =
-        FunSlice.slice s.toFun ⟨0, ↑k.succ, 1⟩ ω
+      (e (FunSlice.slice s ⟨0, ↑k.succ, 1⟩ ω)).2 j =
+        FunSlice.slice s ⟨0, ↑k.succ, 1⟩ ω
           ((Fin.last k).succAbove j) :=
       rfl
     rw [hrhs, Fin.succAbove_last]
-    change s.toFun (j.val + (⟨0, ↑k, 1⟩ : Slice).start.toNat) ω =
-      s.toFun (j.castSucc.val + (⟨0, ↑k.succ, 1⟩ : Slice).start.toNat) ω
+    change s (j.val + (⟨0, ↑k, 1⟩ : Slice).start.toNat) ω =
+      s (j.castSucc.val + (⟨0, ↑k.succ, 1⟩ : Slice).start.toNat) ω
     have hidx : (j : ℕ) + (⟨0, ↑k, 1⟩ : Slice).start.toNat =
       (j.castSucc : ℕ) + (⟨0, ↑k.succ, 1⟩ : Slice).start.toNat := by
       let jn : ℕ := j
@@ -123,7 +123,7 @@ private lemma SinglePSpace_Get_succ_Get_of_Get_succ_GetSlice
   [MeasurableSpace Ω]
   [ReferenceMeasure 𝒮]
   {π : Measure Ω} [IsProbabilityMeasure π]
-  {s : ℕ ⇀ Ω → 𝒮}
+  {s : ℕ → Ω → 𝒮}
   {k : ℕ}
 -- given
   (hP : SinglePSpace π (s[k + 1], s[:k.succ])) :
@@ -198,7 +198,7 @@ private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure 𝒮]
   {π : Measure Ω} [IsProbabilityMeasure π]
-  {s : ℕ ⇀ Ω → 𝒮}
+  {s : ℕ → Ω → 𝒮}
 -- given
   (hP : ∀ n, SinglePSpace π (s[:n] : Ω → Fin n → 𝒮)) :
 -- imply

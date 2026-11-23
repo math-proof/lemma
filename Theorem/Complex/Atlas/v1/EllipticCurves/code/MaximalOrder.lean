@@ -59,11 +59,12 @@ public theorem ringOfIntegers_unique_maximalOrder
   O = integralClosure ℤ K := by
 -- proof
   apply le_antisymm
-  · exact ringOfIntegers_isMaximalOrder K O
-  · haveI : Module.Finite ℤ ↥(integralClosure ℤ K) := inferInstanceAs (Module.Finite ℤ (𝓞 K))
-    exact hmax (integralClosure ℤ K) (ringOfIntegers_isMaximalOrder K O)
+  · exact ringOfIntegers_isMaximalOrder
+  · have : Module.Finite ℤ ↥(integralClosure ℤ K) := inferInstanceAs (Module.Finite ℤ (𝓞 K))
+    exact hmax (integralClosure ℤ K) ringOfIntegers_isMaximalOrder
 
 end MaximalOrder
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-23

@@ -2,20 +2,18 @@ module
 
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
-public import Def.v1.Atlas.LieGroups.code.VermaModules.Part7
+public import Def.v1.Atlas.LieGroups.code.VermaModules
 
 public section
 
 open TriangularDecomposition
 
 
-namespace TriangularDecomposition
-
 /--
 [weightSubspace_eq_mathlib](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/VermaModules.lean)
 -/
 @[path]
-private lemma weightSubspace_eq_mathlib
+private lemma main
   [CommRing R]
   [LieRing 𝔤]
   [LieAlgebra R 𝔤]
@@ -39,9 +37,7 @@ private lemma weightSubspace_eq_mathlib
     rw [LieSubmodule.mem_toSubmodule, LieModule.mem_weightSpace] at hm
     intro h; exact hm h
 
-end TriangularDecomposition
-
 
 -- created on 2026-10-23
--- updated on 2026-10-26
+-- updated on 2026-11-23
 end

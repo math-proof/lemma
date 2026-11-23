@@ -5,6 +5,7 @@ import Mathlib.MeasureTheory.Constructions.Pi
 import Mathlib.MeasureTheory.MeasurableSpace.Embedding
 import Mathlib.MeasureTheory.MeasurableSpace.Prod
 import Mathlib.MeasureTheory.Measure.Prod
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory Random Fun
 
 
@@ -16,7 +17,7 @@ private lemma SinglePSpace_Get_GetSlice_prod
   [MeasurableSpace Ω]
   [ReferenceMeasure 𝒮] [ReferenceMeasure 𝒵]
   {π : Measure Ω} [IsProbabilityMeasure π]
-  {s : ℕ ⇀ Ω → 𝒮} {Z : Ω → 𝒵}
+  {s : ℕ → Ω → 𝒮} {Z : Ω → 𝒵}
 -- given
   (hPZ : ∀ k : ℕ, SinglePSpace π (s[:k], Z))
   (k : ℕ) :
@@ -36,12 +37,12 @@ private lemma SinglePSpace_Get_GetSlice_prod
     e ((s[:k.succ] : Ω → Fin k.succ → 𝒮) ω) =
       (s[k] ω, (s[:k] : Ω → Fin k → 𝒮) ω) := by
     refine Prod.ext ?_ ?_
-    · simp [e, MeasurableEquiv.piFinSuccAbove_apply, Fun.getSlice, Function.getSlice,
+    · simp [e, MeasurableEquiv.piFinSuccAbove_apply, Function.getSlice,
         FunSlice.slice, Int.toNat_zero, Fin.last]
     ·
       funext j
-      simp only [e, MeasurableEquiv.piFinSuccAbove_apply, Fun.getSlice,
-        Function.getSlice, FunSlice.slice, Int.toNat_zero]
+      simp only [e, MeasurableEquiv.piFinSuccAbove_apply, Function.getSlice,
+        FunSlice.slice, Int.toNat_zero]
       refine congrArg (fun i : ℕ => s[i] ω) ?_
       rw [Fin.succAbove_last_apply, Fin.val_castSucc]
   have hcomp :
@@ -145,7 +146,7 @@ private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure 𝒮] [ReferenceMeasure 𝒵]
   {π : Measure Ω} [IsProbabilityMeasure π]
-  {s : ℕ ⇀ Ω → 𝒮} {Z : Ω → 𝒵}
+  {s : ℕ → Ω → 𝒮} {Z : Ω → 𝒵}
 -- given
   (hs : ∀ k : ℕ, Measurable s[k])
   (hZ : Measurable Z)
@@ -255,11 +256,11 @@ private lemma main
         ((s[:n1] : Ω → Fin (n + 1) → 𝒮) ω) =
         (s[n] ω, (s[:n] : Ω → Fin n → 𝒮) ω) := by
       refine Prod.ext ?_ ?_
-      · simp [MeasurableEquiv.piFinSuccAbove_apply, Fun.getSlice, Function.getSlice,
+      · simp [MeasurableEquiv.piFinSuccAbove_apply, Function.getSlice,
           FunSlice.slice, Int.toNat_zero, Fin.last]
       ·
         funext j
-        simp only [MeasurableEquiv.piFinSuccAbove_apply, Fun.getSlice, Function.getSlice,
+        simp only [MeasurableEquiv.piFinSuccAbove_apply, Function.getSlice,
           FunSlice.slice, Int.toNat_zero]
         refine congrArg (fun i : ℕ => s[i] ω) ?_
         rw [Fin.succAbove_last_apply, Fin.val_castSucc]
@@ -418,4 +419,4 @@ private lemma main
 
 
 -- created on 2023-10-13
--- updated on 2026-11-19
+-- updated on 2026-11-23

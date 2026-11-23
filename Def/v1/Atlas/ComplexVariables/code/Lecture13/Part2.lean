@@ -26,15 +26,10 @@ noncomputable section
 
 open Complex MeasureTheory Set intervalIntegral Real Filter Function Topology Metric
 
-namespace ClosedCurve
-
-variable (γ : ClosedCurve)
-
-def Set.toRiemannSphere (Ω : Set ℂ) : Set RiemannSphere :=
-  OnePoint.some '' Ω
+def Set.toRiemannSphere (Ω : Set ℂ) : Set (OnePoint ℂ) :=
+  (OnePoint.some : ℂ → OnePoint ℂ) '' Ω
 
 def Complex.IsSimplyConnected (Ω : Set ℂ) : Prop :=
   IsOpen Ω ∧ IsConnected Ω ∧ IsConnected (Ω.toRiemannSphere)ᶜ
 
-end ClosedCurve
 end

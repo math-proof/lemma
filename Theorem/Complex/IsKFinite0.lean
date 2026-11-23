@@ -1,19 +1,13 @@
-module
-
-public import Mathlib
-public import Initialize.Tactic.Attr.Basic
-public import Def.v1.Atlas.LieGroups.code.KFinite.Part3
-
-public section
-
+import Mathlib
+import Initialize.Tactic.Attr.Basic
+import Def.v1.Atlas.LieGroups.code.KFinite.Part3
 open ContinuousRep
 
 
 /--
 [isKFinite_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KFinite.lean)
 -/
-@[path]
-private lemma isKFinite_zero_eq
+private theorem isKFinite_zero_eq
   [Group G]
   [TopologicalSpace G]
   [AddCommGroup V]
@@ -29,8 +23,7 @@ private lemma isKFinite_zero_eq
 /--
 [isKFinite_add](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KFinite.lean)
 -/
-@[path]
-private lemma isKFinite_add_eq
+private theorem isKFinite_add_eq
   [Group G]
   [TopologicalSpace G]
   [AddCommGroup V]
@@ -50,8 +43,7 @@ private lemma isKFinite_add_eq
 /--
 [isKFinite_smul](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KFinite.lean)
 -/
-@[path]
-private lemma isKFinite_smul_eq
+private theorem isKFinite_smul_eq
   [Group G]
   [TopologicalSpace G]
   [AddCommGroup V]
@@ -71,8 +63,7 @@ private lemma isKFinite_smul_eq
 /--
 [mem_kFiniteSubspace](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KFinite.lean)
 -/
-@[path]
-private lemma mem_kFiniteSubspace_eq
+private theorem mem_kFiniteSubspace_eq
   [Group G]
   [TopologicalSpace G]
   [AddCommGroup V]
@@ -88,5 +79,4 @@ private lemma mem_kFiniteSubspace_eq
 
 
 -- created on 2026-10-23
--- updated on 2026-10-26
-end
+-- updated on 2026-11-23

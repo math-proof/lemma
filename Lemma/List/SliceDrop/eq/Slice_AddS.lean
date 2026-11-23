@@ -1,5 +1,5 @@
 import Def.Data.List.List.Basic
-import Lemma.Nat.Sub_Add.eq.SubSub
+import Theorem.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.EqSubAdd
 open Nat
 
@@ -19,3 +19,4 @@ private lemma main
 
 
 -- created on 2025-06-17
+-- updated on 2026-11-23

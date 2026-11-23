@@ -3,6 +3,7 @@ module
 public import Def.Lean.Expr.Parser
 public import Def.Lean.PrettyPrinter.Latex.Expr
 public import Def.Lean.Json
+meta import Def.Lean.Name
 public import Def.Data.Array.Array
 
 @[expose] public section
@@ -12,7 +13,7 @@ open Lean (Name Json getConstInfoInduct)
 
 
 /-- Naming / structure tree for lemma-path suggestion (const vs method vs …). -/
-partial def Expr.toStructJson (this : Expr) : Json :=
+partial def Expr.toJson (this : Expr) : Json :=
   match this with
   | nil =>
     .null
@@ -33,7 +34,7 @@ partial def Expr.toStructJson (this : Expr) : Json :=
     Json.mkObj [
       ("kind", "symbol"),
       ("name", name.toString),
-      ("type", type.toStructJson),
+      ("type", type.toJson),
     ]
 
   | Binder binder binderName binderType value =>
@@ -41,8 +42,8 @@ partial def Expr.toStructJson (this : Expr) : Json :=
       ("kind", "binder"),
       ("binder", binder.toString),
       ("name", binderName.toString),
-      ("type", binderType.toStructJson),
-      ("value", value.toStructJson),
+      ("type", binderType.toJson),
+      ("value", value.toJson),
     ]
 
   | Basic (.ExprWithAttr (.LeanMethod name idx)) args _ =>
@@ -50,42 +51,42 @@ partial def Expr.toStructJson (this : Expr) : Json :=
       ("kind", "method"),
       ("name", name.toString),
       ("idx", s!"{idx}"),
-      ("args", Json.arr (args.toArray.map Expr.toStructJson)),
+      ("args", Json.arr (args.toArray.map Expr.toJson)),
     ]
 
   | Basic (.ExprWithAttr (.LeanProperty name)) args _ =>
     Json.mkObj [
       ("kind", "property"),
       ("name", name.toString),
-      ("args", Json.arr (args.toArray.map Expr.toStructJson)),
+      ("args", Json.arr (args.toArray.map Expr.toJson)),
     ]
 
   | Basic (.ExprWithAttr (.Lean_function name)) args _ =>
     Json.mkObj [
       ("kind", "function"),
       ("name", name.toString),
-      ("args", Json.arr (args.toArray.map Expr.toStructJson)),
+      ("args", Json.arr (args.toArray.map Expr.toJson)),
     ]
 
   | Basic (.ExprWithAttr (.Lean_operatorname name)) args _ =>
     Json.mkObj [
       ("kind", "operatorname"),
       ("name", name.toString),
-      ("args", Json.arr (args.toArray.map Expr.toStructJson)),
+      ("args", Json.arr (args.toArray.map Expr.toJson)),
     ]
 
   | Basic (.ExprWithAttr (.Lean_typeclass name)) args _ =>
     Json.mkObj [
       ("kind", "typeclass"),
       ("name", name.toString),
-      ("args", Json.arr (args.toArray.map Expr.toStructJson)),
+      ("args", Json.arr (args.toArray.map Expr.toJson)),
     ]
 
   | Basic (.ExprWithAttr (.LeanLemma name)) args _ =>
     Json.mkObj [
       ("kind", "lemma"),
       ("name", name.toString),
-      ("args", Json.arr (args.toArray.map Expr.toStructJson)),
+      ("args", Json.arr (args.toArray.map Expr.toJson)),
     ]
 
   | Basic (.BinaryInfix op) args _ =>
@@ -107,28 +108,28 @@ partial def Expr.toStructJson (this : Expr) : Json :=
     Json.mkObj [
       ("kind", kind),
       ("op", op.name.toString),
-      ("args", Json.arr (args.toArray.map Expr.toStructJson)),
+      ("args", Json.arr (args.toArray.map Expr.toJson)),
     ]
 
   | Basic (.ExprWithLimits .Lean_forall) (expr :: limits) _ =>
     Json.mkObj [
       ("kind", "forall"),
-      ("body", expr.toStructJson),
-      ("binders", Json.arr (limits.toArray.map Expr.toStructJson)),
+      ("body", expr.toJson),
+      ("binders", Json.arr (limits.toArray.map Expr.toJson)),
     ]
 
   | Basic (.ExprWithLimits .Lean_exists) (expr :: limits) _ =>
     Json.mkObj [
       ("kind", "exists"),
-      ("body", expr.toStructJson),
-      ("binders", Json.arr (limits.toArray.map Expr.toStructJson)),
+      ("body", expr.toJson),
+      ("binders", Json.arr (limits.toArray.map Expr.toJson)),
     ]
 
   | Basic (.ExprWithLimits .Lean_lambda) (expr :: limits) _ =>
     Json.mkObj [
       ("kind", "fun"),
-      ("body", expr.toStructJson),
-      ("binders", Json.arr (limits.toArray.map Expr.toStructJson)),
+      ("body", expr.toJson),
+      ("binders", Json.arr (limits.toArray.map Expr.toJson)),
     ]
 
   | Basic (.ExprWithLimits op) args _ =>
@@ -152,28 +153,28 @@ partial def Expr.toStructJson (this : Expr) : Json :=
     Json.mkObj [
       ("kind", "limits"),
       ("op", opName),
-      ("args", Json.arr (args.toArray.map Expr.toStructJson)),
+      ("args", Json.arr (args.toArray.map Expr.toJson)),
     ]
 
   | Basic (.UnaryPrefix op) args _ =>
     Json.mkObj [
       ("kind", "prefix"),
       ("op", op.name.toString),
-      ("args", Json.arr (args.toArray.map Expr.toStructJson)),
+      ("args", Json.arr (args.toArray.map Expr.toJson)),
     ]
 
   | Basic (.UnaryPostfix op) args _ =>
     Json.mkObj [
       ("kind", "postfix"),
       ("op", op.name.toString),
-      ("args", Json.arr (args.toArray.map Expr.toStructJson)),
+      ("args", Json.arr (args.toArray.map Expr.toJson)),
     ]
 
   | Basic (.Special op) args _ =>
     Json.mkObj [
       ("kind", "special"),
       ("op", op.name.toString),
-      ("args", Json.arr (args.toArray.map Expr.toStructJson)),
+      ("args", Json.arr (args.toArray.map Expr.toJson)),
     ]
 
 
@@ -209,7 +210,7 @@ def Expr.collect (expr : Expr) (obj : Json) : Json :=
             (
               match expr with
               | Binder _ _ binderType _ =>
-                binderType.toStructJson
+                binderType.toJson
               | e =>
                 panic! s!"{e}"
             )
@@ -223,7 +224,7 @@ def Expr.collect (expr : Expr) (obj : Json) : Json :=
 
 
 /-- Top-level lemma JSON: binders + imply (lean / latex / struct). -/
-def Expr.toJson (this : Expr) : Json :=
+def Expr.toLemmaJson (this : Expr) : Json :=
   match this with
   | nil =>
     .null
@@ -233,7 +234,7 @@ def Expr.toJson (this : Expr) : Json :=
     let imply := Json.mkObj ([
       ("lean", expr.toString),
       ("latex", expr.toLatex),
-      ("struct", expr.toStructJson),
+      ("struct", expr.toJson),
     ])
     codeObject.setObjVal! "imply" imply
 
@@ -242,7 +243,7 @@ def Expr.toJson (this : Expr) : Json :=
       let imply := Json.mkObj ([
         ("lean", this.toString),
         ("latex", this.toLatex),
-        ("struct", this.toStructJson),
+        ("struct", this.toJson),
       ])
       Json.mkObj ([
         ("imply", imply),
@@ -256,7 +257,7 @@ def Expr.toJson (this : Expr) : Json :=
       ("imply", Json.mkObj [
         ("lean", this.toString),
         ("latex", this.toLatex),
-        ("struct", this.toStructJson),
+        ("struct", this.toJson),
       ])
     ]
 
@@ -264,7 +265,7 @@ def Expr.toJson (this : Expr) : Json :=
 def Name.toJson (name : Name) : MetaM Json := do
   let type ← name.toExpr
   let expr ← Expr.toExpr type [] 0
-  let mut json := expr.toJson.setObjVal! "name" name.toString
+  let mut json := expr.toLemmaJson.setObjVal! "name" name.toString
   json := json.setObjVal! "type" (← ppExpr type).pretty
   for attr in (← getConstInfoInduct `Lean.BinderInfo).ctors do
     let attr := attr.getLast.toString

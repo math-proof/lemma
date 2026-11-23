@@ -145,6 +145,24 @@ SELECT ROW_COUNT();
 }
 
 
+# A moved module's build artifacts keep exporting the old namespaced declarations,
+# so `open Old New` sees the old short name as ambiguous ("Ambiguous term"). Drop
+# them after the move; the next `lake build` of the new module is unaffected.
+remove_build_artifacts() {
+  local mod=$1
+  local base=".lake/build/lib/lean/Lemma/${mod//.//}"
+  local ext f
+  for ext in olean ilean trace hash c; do
+    for f in "$base.$ext" "$base.echo.$ext"; do
+      if [ -f "$f" ]; then
+        echo rm "$f"
+        rm -f "$f"
+      fi
+    done
+  done
+}
+
+
 # sympy/ may be absent; only search directories that exist.
 search_dirs=()
 for d in Lemma sympy; do
@@ -328,6 +346,7 @@ if [ -n "$sublemma" ]; then
   rm -f "$body_file"
   echo rm $srcFile
   rm -f "$srcFile"
+  remove_build_artifacts "$src"
 
   # Imports must point at the parent module (no .../reward.lean).
   src_import_pat="Lemma.${src//./\\.}"
@@ -365,6 +384,7 @@ else
     echo mv $srcEchoFile $dstEchoFile
     mv "$srcEchoFile" "$dstEchoFile"
   fi
+  remove_build_artifacts "$src"
 fi
 
 srcReg=${src//./\\.}

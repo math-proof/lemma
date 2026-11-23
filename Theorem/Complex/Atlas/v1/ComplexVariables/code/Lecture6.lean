@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Initialize.Tactic.Attr.Basic
 public import Def.v1.Atlas.ComplexVariables.code.Lecture6.Part3
 
 public section
@@ -9,28 +10,23 @@ open Lecture6
 open Complex
 
 
-namespace Lecture6
-
 /--
 [circle_nonempty](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
 -/
 public theorem circle_nonempty
-  {C : Circle} :
+  {C : Lecture6.Circle} :
 -- imply
   (C.toSet).Nonempty := by
 -- proof
-  unfold Circle.toSet
+  unfold Lecture6.Circle.toSet
   exact NormedSpace.sphere_nonempty.mpr (le_of_lt C.radius_pos)
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [circle_exists_ne](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
 -/
 public theorem circle_exists_ne
-  {C : Circle}
+  {C : Lecture6.Circle}
   {p : ℂ} :
 -- imply
   ∃ z ∈ C.toSet, z ≠ p := by
@@ -38,10 +34,10 @@ public theorem circle_exists_ne
   by_contra h
   push Not at h
   have h1 : C.center + ↑C.radius ∈ C.toSet := by
-    rw [Circle.toSet, Metric.mem_sphere, Complex.dist_eq]
+    rw [Lecture6.Circle.toSet, Metric.mem_sphere, Complex.dist_eq]
     simp [add_sub_cancel_left, Complex.norm_real, Real.norm_of_nonneg C.radius_pos.le]
   have h2 : C.center - ↑C.radius ∈ C.toSet := by
-    rw [Circle.toSet, Metric.mem_sphere, Complex.dist_eq,
+    rw [Lecture6.Circle.toSet, Metric.mem_sphere, Complex.dist_eq,
       show C.center - ↑C.radius - C.center = -(↑C.radius : ℂ) from by ring,
       norm_neg, Complex.norm_real, Real.norm_of_nonneg C.radius_pos.le]
   have : C.center + ↑C.radius = C.center - ↑C.radius :=
@@ -56,9 +52,6 @@ public theorem circle_exists_ne
     exact this
   linarith [C.radius_pos]
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [inv_circle_line_re](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
@@ -82,9 +75,6 @@ public theorem inv_circle_line_re
     rw [← hmul_re]; linarith
   rw [Complex.div_re]; field_simp; linarith
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [normSq_add_inv_of_re_eq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
@@ -106,15 +96,12 @@ public theorem normSq_add_inv_of_re_eq
   field_simp
   nlinarith [hns_eq, sq_nonneg w.re, sq_nonneg w.im]
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [invTranslation_maps_circle_through_pole_to_line](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
 -/
 public theorem invTranslation_maps_circle_through_pole_to_line
-  {C : Circle}
+  {C : Lecture6.Circle}
   {p : ℂ}
 -- given
   (hp : p ∈ C.toSet) :
@@ -132,11 +119,11 @@ public theorem invTranslation_maps_circle_through_pole_to_line
     have hzp : z - p ≠ 0 := by convert hdef using 1; ring
     have hne : z ≠ p := sub_ne_zero.mp hzp
     have hnormeq : Complex.normSq (z - C.center) = Complex.normSq (p - C.center) := by
-      unfold Circle.toSet at hz hp
+      unfold Lecture6.Circle.toSet at hz hp
       rw [Metric.mem_sphere, Complex.dist_eq] at hz hp
       have h2 : ‖z - C.center‖ ^ 2 = ‖p - C.center‖ ^ 2 := by rw [hz, hp]
       rwa [Complex.sq_norm, Complex.sq_norm] at h2
-    have hre := inv_circle_line_re z p C.center hnormeq hne
+    have hre := inv_circle_line_re hnormeq hne
     have hw_eq : (0 * z + 1) / (1 * z + -p) = 1 / (z - p) := by ring
     rw [hw_eq]
     have h1 : d.re * (1 / (z - p)).re + (-d.im) * (1 / (z - p)).im =
@@ -151,17 +138,17 @@ public theorem invTranslation_maps_circle_through_pole_to_line
     refine ⟨p + 1/w, ?_, ?_, ?_⟩
     ·
       change p + 1/w ∈ C.toSet
-      unfold Circle.toSet
+      unfold Lecture6.Circle.toSet
       rw [Metric.mem_sphere, Complex.dist_eq]
       have hpc : p + 1/w - C.center = d + 1/w := by rw [hd_def]; ring
       rw [hpc]
-      have hns := normSq_add_inv_of_re_eq d w hw0 hline
+      have hns := normSq_add_inv_of_re_eq hw0 hline
       have hnorm_eq : ‖d + 1/w‖ = ‖d‖ := by
         nlinarith [Complex.sq_norm (d + 1/w), Complex.sq_norm d,
           norm_nonneg (d + 1/w), norm_nonneg d,
           sq_nonneg (‖d + 1/w‖ - ‖d‖)]
       rw [hnorm_eq]
-      unfold Circle.toSet at hp
+      unfold Lecture6.Circle.toSet at hp
       rw [Metric.mem_sphere, Complex.dist_eq] at hp
       rw [hd_def]; exact hp
     ·
@@ -173,9 +160,6 @@ public theorem invTranslation_maps_circle_through_pole_to_line
       simp only [invTranslation, MoebiusTransformation.apply]
       field_simp; ring
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [invTranslation_apply_eq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
@@ -187,9 +171,6 @@ public theorem invTranslation_apply_eq
 -- proof
   simp only [invTranslation, MoebiusTransformation.apply]; ring
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [invTranslation_denom_eq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
@@ -201,9 +182,6 @@ public theorem invTranslation_denom_eq
 -- proof
   simp only [invTranslation]; ring
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [key_normSq_fwd](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
@@ -221,9 +199,6 @@ public theorem key_normSq_fwd
   nlinarith [sq_nonneg w.re, sq_nonneg w.im, sq_nonneg d.re, sq_nonneg d.im, sq_nonneg R,
     sq_nonneg (w.re * d.re + w.im * d.im), sq_nonneg (w.re * d.im - w.im * d.re)]
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [normSq_image_fwd](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
@@ -243,13 +218,10 @@ public theorem normSq_image_fwd
   have : w⁻¹ - starRingEnd ℂ d / ↑(normSq d - R ^ 2) =
     (↑(normSq d - R ^ 2) - w * starRingEnd ℂ d) / (w * ↑(normSq d - R ^ 2)) := by
     field_simp
-  rw [this, normSq_div, normSq_mul, normSq_ofReal, key_normSq_fwd w d R hcirc]
+  rw [this, normSq_div, normSq_mul, normSq_ofReal, key_normSq_fwd hcirc]
   have hnsq : normSq w ≠ 0 := by rwa [ne_eq, normSq_eq_zero]
   field_simp
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [normSq_preimage_bwd](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
@@ -286,9 +258,6 @@ public theorem normSq_preimage_bwd
   nlinarith [sq_nonneg a, sq_nonneg b, sq_nonneg (a * c), sq_nonneg (b * e),
     sq_nonneg (a * e), sq_nonneg (b * c)]
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [norm_eq_of_normSq_eq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
@@ -304,9 +273,6 @@ public theorem norm_eq_of_normSq_eq
 -- proof
   (sq_eq_sq₀ (norm_nonneg x) hr).mp (by rw [Complex.sq_norm]; exact h)
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [normSq_of_norm_eq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
@@ -321,20 +287,17 @@ public theorem normSq_of_norm_eq
 -- proof
   rw [Complex.normSq_eq_norm_sq, h]
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [invTranslation_maps_circle_away_from_pole_to_circle](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
 -/
 public theorem invTranslation_maps_circle_away_from_pole_to_circle
-  {C : Circle}
+  {C : Lecture6.Circle}
   {p : ℂ}
 -- given
   (hp : p ∉ C.toSet) :
 -- imply
-  ∃ (B₁ : Circle), (invTranslation p).MapsCircle C B₁ := by
+  ∃ (B₁ : Lecture6.Circle), (invTranslation p).MapsCircle C B₁ := by
 -- proof
   set c₀ := C.center
   set R := C.radius
@@ -343,51 +306,48 @@ public theorem invTranslation_maps_circle_away_from_pole_to_circle
   have hD_ne : D ≠ 0 := by
     intro hD0
     apply hp
-    rw [Circle.toSet, Metric.mem_sphere, Complex.dist_eq]
-    have hnd : ‖d₀‖ = R := norm_eq_of_normSq_eq _ _ (le_of_lt C.radius_pos) (by linarith)
+    rw [Lecture6.Circle.toSet, Metric.mem_sphere, Complex.dist_eq]
+    have hnd : ‖d₀‖ = R := norm_eq_of_normSq_eq (le_of_lt C.radius_pos) (by linarith)
     rwa [show p - c₀ = -d₀ from by ring, norm_neg]
   have hR' : 0 < R / |D| := div_pos C.radius_pos (abs_pos.mpr hD_ne)
-  let B₁ : Circle := ⟨starRingEnd ℂ d₀ / ↑D, R / |D|, hR'⟩
+  let B₁ : Lecture6.Circle := ⟨starRingEnd ℂ d₀ / ↑D, R / |D|, hR'⟩
   use B₁
   rw [MoebiusTransformation.MapsCircle, MoebiusTransformation.MapsSetTo]
   refine ⟨fun z hz => ?_, fun w hw => ?_⟩
   ·
-    have hzc : ‖z - c₀‖ = R := by rwa [Circle.toSet, Metric.mem_sphere, Complex.dist_eq] at hz
+    have hzc : ‖z - c₀‖ = R := by rwa [Lecture6.Circle.toSet, Metric.mem_sphere, Complex.dist_eq] at hz
     have hzp : z - p ≠ 0 := by
       intro h; apply hp; rw [sub_eq_zero] at h; rw [h] at hz; exact hz
     intro _hdef
-    rw [Circle.toSet, Metric.mem_sphere, Complex.dist_eq, invTranslation_apply_eq]
+    rw [Lecture6.Circle.toSet, Metric.mem_sphere, Complex.dist_eq, invTranslation_apply_eq]
     set w := z - p
     have hwd : w - d₀ = z - c₀ := by ring
-    have hcirc : Complex.normSq (w - d₀) = R ^ 2 := by rw [hwd]; exact normSq_of_norm_eq _ _ hzc
-    apply norm_eq_of_normSq_eq _ _ (le_of_lt hR')
+    have hcirc : Complex.normSq (w - d₀) = R ^ 2 := by rw [hwd]; exact normSq_of_norm_eq hzc
+    apply norm_eq_of_normSq_eq (le_of_lt hR')
     rw [normSq_image_fwd hzp hcirc hD_ne, div_pow, sq_abs]
   ·
     have hwc : ‖w - starRingEnd ℂ d₀ / ↑D‖ = R / |D| := by
-      rwa [Circle.toSet, Metric.mem_sphere, Complex.dist_eq] at hw
+      rwa [Lecture6.Circle.toSet, Metric.mem_sphere, Complex.dist_eq] at hw
     have hwne : w ≠ 0 := by
       intro hw0; rw [hw0, zero_sub, norm_neg, norm_div, Complex.norm_conj,
         Complex.norm_real] at hwc
       have : ‖d₀‖ = R := (div_left_inj' (ne_of_gt (abs_pos.mpr hD_ne))).mp hwc
       apply hp
-      rw [Circle.toSet, Metric.mem_sphere, Complex.dist_eq,
+      rw [Lecture6.Circle.toSet, Metric.mem_sphere, Complex.dist_eq,
         show p - c₀ = -d₀ from by ring, norm_neg]
       exact this
     refine ⟨p + 1 / w, ?_, ?_, ?_⟩
     ·
-      rw [Circle.toSet, Metric.mem_sphere, Complex.dist_eq,
+      rw [Lecture6.Circle.toSet, Metric.mem_sphere, Complex.dist_eq,
         show p + 1 / w - c₀ = 1 / w - d₀ from by ring]
-      apply norm_eq_of_normSq_eq _ _ (le_of_lt C.radius_pos)
-      exact normSq_preimage_bwd hwne hD_ne (by rw [normSq_of_norm_eq _ _ hwc, div_pow, sq_abs])
+      apply norm_eq_of_normSq_eq (le_of_lt C.radius_pos)
+      exact normSq_preimage_bwd hwne hD_ne (by rw [normSq_of_norm_eq hwc, div_pow, sq_abs])
     ·
       rw [invTranslation_denom_eq]; simp only [add_sub_cancel_left]
       exact div_ne_zero one_ne_zero hwne
     ·
       rw [invTranslation_apply_eq]; simp only [add_sub_cancel_left]; field_simp
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [ipc_normSq_eq_line](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
@@ -401,9 +361,6 @@ public theorem ipc_normSq_eq_line
 -- proof
   linear_combination 2 * (a - b) * hline
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [ipc_normSq_ratio_circle](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
@@ -418,9 +375,6 @@ public theorem ipc_normSq_ratio_circle
 -- proof
   linear_combination (b - a) * hcirc - (b - a) * hab
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [ipc_line_from_normSq_eq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
@@ -440,9 +394,6 @@ public theorem ipc_line_from_normSq_eq
   · exact absurd h1 hab'
   · linarith
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [ipc_circle_normSq_identity](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
@@ -457,9 +408,6 @@ public theorem ipc_circle_normSq_identity
 -- proof
   subst hnsw; linear_combination (wr ^ 2 + wi ^ 2 - 2 * wr + 1) * hab
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [ipc_disjoint_bound](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
@@ -502,9 +450,6 @@ public theorem ipc_disjoint_bound
     nlinarith [norm_nonneg (z - c), sq_nonneg (‖z - c‖ - r)]
   exact Set.disjoint_left.mp hdisj hz_L hz_sphere
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [ipc_normSq_components](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
@@ -524,9 +469,6 @@ public theorem ipc_normSq_components
     simp [Complex.sub_im, Complex.mul_im, Complex.add_im, Complex.I_re, Complex.I_im]; ring
   rw [hre, him]
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [ipc_n_ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
@@ -545,9 +487,6 @@ public theorem ipc_n_ne_zero
     Complex.I_re, Complex.I_im, Complex.add_im, Complex.mul_im] at this
   nlinarith
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [ipc_normSq_n](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
@@ -562,16 +501,13 @@ public theorem ipc_normSq_n
     Complex.I_re, Complex.I_im, Complex.add_im, Complex.mul_im]; ring
 set_option maxHeartbeats 800000 in
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [inverse_points_maps_circle](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
 -/
 public theorem inverse_points_maps_circle
   {α β γ : ℝ}
-  {B₁ : Circle}
+  {B₁ : Lecture6.Circle}
 -- given
   (hN : 0 < α ^ 2 + β ^ 2)
   (hdisj : Disjoint {z : ℂ | α * z.re + β * z.im = γ} B₁.toSet) :
@@ -582,13 +518,12 @@ public theorem inverse_points_maps_circle
   set N2 := α ^ 2 + β ^ 2 with hN2_def
   set n : ℂ := (↑α : ℂ) + (↑β : ℂ) * Complex.I with hn_def
   have hN2_ne : N2 ≠ 0 := ne_of_gt hN
-  have hn_ne : n ≠ 0 := ipc_n_ne_zero α β hN
-  have hnsn : Complex.normSq n = N2 := ipc_normSq_n α β
+  have hn_ne : n ≠ 0 := ipc_n_ne_zero hN
+  have hnsn : Complex.normSq n = N2 := ipc_normSq_n (α := α) (β := β)
   set D := α * c.re + β * c.im
   have hbound : (D - γ) ^ 2 > r ^ 2 * N2 := by
     show (α * c.re + β * c.im - γ) ^ 2 > r ^ 2 * N2
-    exact ipc_disjoint_bound α β γ c r hr hN
-      (show Disjoint {z : ℂ | α * z.re + β * z.im = γ} (Metric.sphere c r) from hdisj)
+    exact ipc_disjoint_bound hr hN hdisj
   set δ := (D - γ) / N2
   have hδN2 : δ * N2 = D - γ := div_mul_cancel₀ (D - γ) hN2_ne
   have hδ_sq_bound : δ ^ 2 > r ^ 2 / N2 := by
@@ -633,7 +568,8 @@ public theorem inverse_points_maps_circle
       rw [h1] at h_sq; linarith
     exact hab_ne (by rwa [div_eq_iff hb_ne, one_mul] at h2)
   · intro z hz
-    rw [ipc_normSq_components z c a α β, ipc_normSq_components z c b α β]
+    rw [ipc_normSq_components (z := z) (c := c) (t := a) (α' := α) (β' := β),
+        ipc_normSq_components (z := z) (c := c) (t := b) (α' := α) (β' := β)]
     have key : (z.re - c.re + a * α) ^ 2 + (z.im - c.im + a * β) ^ 2 =
       (z.re - c.re + b * α) ^ 2 + (z.im - c.im + b * β) ^ 2 := by
       apply ipc_normSq_eq_line; rw [hab_sum]; linarith [hz, hδN2]
@@ -650,10 +586,11 @@ public theorem inverse_points_maps_circle
     ·
       have hns_eq : Complex.normSq (z - p₁) = Complex.normSq (z - p₂) := by
         rw [hz1, hz2, map_div₀, map_div₀, Complex.normSq_mul, hnsw, one_mul]
-      rw [ipc_normSq_components z c a α β, ipc_normSq_components z c b α β] at hns_eq
+      rw [ipc_normSq_components (z := z) (c := c) (t := a) (α' := α) (β' := β),
+          ipc_normSq_components (z := z) (c := c) (t := b) (α' := α) (β' := β)] at hns_eq
       have hns_sq : (z.re - c.re + a * α) ^ 2 + (z.im - c.im + a * β) ^ 2 =
         (z.re - c.re + b * α) ^ 2 + (z.im - c.im + b * β) ^ 2 := by nlinarith
-      have hline := ipc_line_from_normSq_eq _ _ a b α β hab_ne hns_sq
+      have hline := ipc_line_from_normSq_eq hab_ne hns_sq
       rw [hab_sum] at hline; linarith [hδN2]
     ·
       intro heq; have : z - p₂ = 0 := sub_eq_zero.mpr heq; rw [hz2] at this
@@ -672,9 +609,9 @@ public theorem inverse_points_maps_circle
       have := Complex.normSq_apply (z - c)
       simp [Complex.sub_re, Complex.sub_im] at this
       nlinarith [this, hzc_sq]
-    have hratio := ipc_normSq_ratio_circle u v a b α β (r ^ 2) hcirc hab_prodN2
-    have hns1 := ipc_normSq_components z c a α β
-    have hns2 := ipc_normSq_components z c b α β
+    have hratio := ipc_normSq_ratio_circle (rsq := r ^ 2) hcirc hab_prodN2
+    have hns1 := ipc_normSq_components (z := z) (c := c) (t := a) (α' := α) (β' := β)
+    have hns2 := ipc_normSq_components (z := z) (c := c) (t := b) (α' := α) (β' := β)
     have hb_ns1_eq : b * Complex.normSq (z - p₁) = a * Complex.normSq (z - p₂) := by
       rw [hns1, hns2]; nlinarith [hratio]
     have hzp2' : z - p₂ ≠ 0 := sub_ne_zero.mpr hzp2
@@ -699,7 +636,7 @@ public theorem inverse_points_maps_circle
         have : w.re ^ 2 + w.im ^ 2 = a / b := by nlinarith
         rw [this, mul_div_cancel₀ a hb_ne]
       linarith
-    have hident := ipc_circle_normSq_identity w.re w.im a b N2 (r ^ 2) hnsw_ab hab_prodN2
+    have hident := ipc_circle_normSq_identity (rsq := r ^ 2) hnsw_ab hab_prodN2
     have hz1 : z - p₁ = w * (p₁ - p₂) / ((1 : ℂ) - w) := by
       simp only [z]; field_simp; ring
     have hz2 : z - p₂ = (p₁ - p₂) / ((1 : ℂ) - w) := by
@@ -709,7 +646,7 @@ public theorem inverse_points_maps_circle
     refine ⟨z, ?_, ?_, ?_⟩
     ·
       rw [show B₁.toSet = Metric.sphere c r from rfl, Metric.mem_sphere, dist_eq_norm]
-      apply norm_eq_of_normSq_eq _ _ (le_of_lt hr)
+      apply norm_eq_of_normSq_eq (le_of_lt hr)
       rw [hzc, map_div₀, Complex.normSq_mul, hnsn]
       have hns_wb : Complex.normSq (w * (↑b : ℂ) - (↑a : ℂ)) =
         (w.re * b - a) ^ 2 + (w.im * b) ^ 2 := by
@@ -732,16 +669,13 @@ public theorem inverse_points_maps_circle
     ·
       rw [hz1, hz2, div_div_div_cancel_right₀ h1w, mul_div_cancel_right₀ w hp12_ne]
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [line_nondeg_of_disjoint](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
 -/
 public theorem line_nondeg_of_disjoint
   {α β γ : ℝ}
-  {B₁ : Circle}
+  {B₁ : Lecture6.Circle}
 -- given
   (hne : Set.Nonempty {z : ℂ | α * z.re + β * z.im = γ})
   (hdisj : Disjoint {z : ℂ | α * z.re + β * z.im = γ} B₁.toSet) :
@@ -760,35 +694,32 @@ public theorem line_nondeg_of_disjoint
   subst hz
   have huniv : {z : ℂ | (0 : ℝ) = 0} = Set.univ := by ext; simp
   rw [huniv] at hdisj
-  have hcirc := circle_nonempty B₁
+  have hcirc := circle_nonempty (C := B₁)
   rw [Set.disjoint_left] at hdisj
   obtain ⟨w, hw⟩ := hcirc
   exact hdisj (Set.mem_univ w) hw
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [moebius_line_circle_to_concentric](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
 -/
 public theorem moebius_line_circle_to_concentric
   {L : GeneralizedCircle}
-  {B₁ : Circle}
+  {B₁ : Lecture6.Circle}
 -- given
   (hL : ∃ a b c : ℝ, L = GeneralizedCircle.line a b c)
   (hLne : L.toSet.Nonempty)
   (hdisj : Disjoint L.toSet B₁.toSet) :
 -- imply
-  ∃ (T₂ : MoebiusTransformation) (A₂ B₂ : Circle), (∀ z ∈ L.toSet, T₂.c * z + T₂.d ≠ 0 → T₂.apply z ∈ A₂.toSet) ∧ (∀ w ∈ A₂.toSet, (T₂.c = 0 ∨ w ≠ T₂.a / T₂.c) → ∃ z ∈ L.toSet, T₂.c * z + T₂.d ≠ 0 ∧ T₂.apply z = w) ∧ T₂.MapsCircle B₁ B₂ ∧ A₂.Concentric B₂ ∧ (T₂.c ≠ 0 → T₂.a / T₂.c ∈ A₂.toSet) := by
+  ∃ (T₂ : MoebiusTransformation) (A₂ B₂ : Lecture6.Circle), (∀ z ∈ L.toSet, T₂.c * z + T₂.d ≠ 0 → T₂.apply z ∈ A₂.toSet) ∧ (∀ w ∈ A₂.toSet, (T₂.c = 0 ∨ w ≠ T₂.a / T₂.c) → ∃ z ∈ L.toSet, T₂.c * z + T₂.d ≠ 0 ∧ T₂.apply z = w) ∧ T₂.MapsCircle B₁ B₂ ∧ A₂.Concentric B₂ ∧ (T₂.c ≠ 0 → T₂.a / T₂.c ∈ A₂.toSet) := by
 -- proof
   obtain ⟨α, β, γ, hL_eq⟩ := hL
   subst hL_eq
   simp only [GeneralizedCircle.toSet] at hdisj hLne ⊢
-  have hN : 0 < α ^ 2 + β ^ 2 := line_nondeg_of_disjoint α β γ B₁ hLne hdisj
+  have hN : 0 < α ^ 2 + β ^ 2 := line_nondeg_of_disjoint (B₁ := B₁) hLne hdisj
   obtain ⟨p₁, p₂, ρ, hp_ne, hρ_pos, hρ_ne1, hL_normSq, hL_back,
     hB₁_fwd, hB₁_back⟩ :=
-    inverse_points_maps_circle α β γ B₁ hN hdisj
+    inverse_points_maps_circle (B₁ := B₁) hN hdisj
   have hdet : (1 : ℂ) * (-p₂) - (-p₁) * 1 ≠ 0 := by
     have : (1 : ℂ) * (-p₂) - (-p₁) * 1 = p₁ - p₂ := by ring
     rw [this]; exact sub_ne_zero.mpr hp_ne
@@ -856,9 +787,6 @@ public theorem moebius_line_circle_to_concentric
     change dist ((1 : ℂ) / 1) 0 = 1
     rw [dist_zero_right, div_self (one_ne_zero), norm_one]
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [comp_denom_factor](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
@@ -875,9 +803,6 @@ public theorem comp_denom_factor
   field_simp
   ring
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [comp_apply_eq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
@@ -894,9 +819,6 @@ public theorem comp_apply_eq
   field_simp
   ring
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [moebius_comp_maps](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
@@ -918,27 +840,24 @@ public theorem moebius_comp_maps
     intro z hz hcomp_def
     have h1def := h₁_defined z hz
     have hmid : T₁.apply z ∈ S₂ := h₁f z hz h1def
-    rw [comp_denom_factor T₁ T₂ z h1def] at hcomp_def
+    rw [comp_denom_factor h1def] at hcomp_def
     have h2def : T₂.c * T₁.apply z + T₂.d ≠ 0 := (mul_ne_zero_iff.mp hcomp_def).1
-    rw [comp_apply_eq T₁ T₂ z h1def]
+    rw [comp_apply_eq h1def]
     exact h₂f (T₁.apply z) hmid h2def
   ·
     intro w hw
     obtain ⟨w', hw'S₂, h2def, h2eq⟩ := h₂b w hw
     obtain ⟨z, hzS₁, h1def, h1eq⟩ := h₁b w' hw'S₂
     refine ⟨z, hzS₁, ?_, ?_⟩
-    · rw [comp_denom_factor T₁ T₂ z h1def]
+    · rw [comp_denom_factor h1def]
       exact mul_ne_zero (h1eq ▸ h2def) h1def
-    · rw [comp_apply_eq T₁ T₂ z h1def, h1eq, h2eq]
+    · rw [comp_apply_eq h1def, h1eq, h2eq]
 
-end Lecture6
-
-namespace Lecture6
 
 /--
-[MoebiusTransformation.apply_injective](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
+[moebiusTransformation_apply_injective](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
 -/
-public theorem MoebiusTransformation.apply_injective
+public theorem moebiusTransformation_apply_injective
   {T : MoebiusTransformation}
   {z₁ z₂ : ℂ}
 -- given
@@ -949,26 +868,23 @@ public theorem MoebiusTransformation.apply_injective
   z₁ = z₂ := by
 -- proof
   simp only [MoebiusTransformation.apply] at heq
-  rw [div_eq_div_iff h1 h2] at heq
+  rw [div_eq_div_iff h0 h1] at heq
   have key : (T.a * T.d - T.b * T.c) * (z₁ - z₂) = 0 := by linear_combination heq
   obtain h | h := mul_eq_zero.mp key
   · exact absurd h T.det_ne_zero
   · exact sub_eq_zero.mp h
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [moebius_preserves_nonintersecting_line](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
 -/
 public theorem moebius_preserves_nonintersecting_line
   {T₁ : MoebiusTransformation}
-  {A B : Circle}
+  {A B : Lecture6.Circle}
   {L : GeneralizedCircle}
-  {B₁ : Circle}
+  {B₁ : Lecture6.Circle}
 -- given
-  (hAB : Circle.Nonintersecting A B)
+  (hAB : Lecture6.Circle.Nonintersecting A B)
   (hA : T₁.MapsGenCircle (.circle A) L)
   (hB : T₁.MapsCircle B B₁) :
 -- imply
@@ -978,32 +894,29 @@ public theorem moebius_preserves_nonintersecting_line
   intro w ⟨hwL, hwB₁⟩
   obtain ⟨z₁, hz₁A, h1def, h1eq⟩ := hA.2 w hwL
   obtain ⟨z₂, hz₂B, h2def, h2eq⟩ := hB.2 w hwB₁
-  have hinj : z₁ = z₂ := T₁.apply_injective z₁ z₂ h1def h2def (by rw [h1eq, h2eq])
+  have hinj : z₁ = z₂ := moebiusTransformation_apply_injective h1def h2def (by rw [h1eq, h2eq])
   have : z₁ ∈ A.toSet ⊓ B.toSet := ⟨hz₁A, hinj ▸ hz₂B⟩
   exact (hAB.le_bot this).elim
 
-end Lecture6
-
-namespace Lecture6
 
 /--
 [nonintersecting_circles_concentric](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture6.lean)
 -/
 public theorem nonintersecting_circles_concentric
-  {A B : Circle}
+  {A B : Lecture6.Circle}
 -- given
-  (h : Circle.Nonintersecting A B) :
+  (h : Lecture6.Circle.Nonintersecting A B) :
 -- imply
-  ∃ (T : MoebiusTransformation) (A' B' : Circle), T.MapsCircle A A' ∧ T.MapsCircle B B' ∧ A'.Concentric B' := by
+  ∃ (T : MoebiusTransformation) (A' B' : Lecture6.Circle), T.MapsCircle A A' ∧ T.MapsCircle B B' ∧ A'.Concentric B' := by
 -- proof
-  obtain ⟨p, hp⟩ := circle_nonempty A
+  obtain ⟨p, hp⟩ := circle_nonempty (C := A)
   have hpB : p ∉ B.toSet := Set.disjoint_left.mp h hp
-  obtain ⟨L, hLline, hAL⟩ := invTranslation_maps_circle_through_pole_to_line A p hp
-  obtain ⟨B₁, hBB₁⟩ := invTranslation_maps_circle_away_from_pole_to_circle B p hpB
+  obtain ⟨L, hLline, hAL⟩ := invTranslation_maps_circle_through_pole_to_line (C := A) hp
+  obtain ⟨B₁, hBB₁⟩ := invTranslation_maps_circle_away_from_pole_to_circle (C := B) hpB
   have hdisj : Disjoint L.toSet B₁.toSet :=
-    moebius_preserves_nonintersecting_line (invTranslation p) A B L B₁ h hAL hBB₁
+    moebius_preserves_nonintersecting_line (T₁ := invTranslation p) h hAL hBB₁
   have hLne : L.toSet.Nonempty := by
-    obtain ⟨z, hz, hzp⟩ := circle_exists_ne A p
+    obtain ⟨z, hz, hzp⟩ := circle_exists_ne (C := A) (p := p)
     have hndef : (invTranslation p).c * z + (invTranslation p).d ≠ 0 := by
       simp only [invTranslation]
       show 1 * z + -p ≠ 0
@@ -1011,7 +924,7 @@ public theorem nonintersecting_circles_concentric
       rw [this]; exact sub_ne_zero.mpr hzp
     exact ⟨(invTranslation p).apply z, hAL.1 z hz hndef⟩
   obtain ⟨T₂, A₂, B₂, hLA₂_fwd, hLA₂_bwd, hB₁B₂, hconc, hinfty⟩ :=
-    moebius_line_circle_to_concentric L B₁ hLline hLne hdisj
+    moebius_line_circle_to_concentric (L := L) (B₁ := B₁) hLline hLne hdisj
   set T₁ := invTranslation p with hT₁_def
   have hB_defined : ∀ z ∈ B.toSet, T₁.c * z + T₁.d ≠ 0 := by
     intro z hz
@@ -1021,7 +934,7 @@ public theorem nonintersecting_circles_concentric
     have : 1 * z + -p = z - p := by ring
     rw [this]; exact sub_ne_zero.mpr hne
   have hB_comp : (T₂.comp T₁).MapsSetTo B.toSet B₂.toSet :=
-    moebius_comp_maps T₁ T₂ B.toSet B₁.toSet B₂.toSet hBB₁ hB₁B₂ hB_defined
+    moebius_comp_maps hBB₁ hB₁B₂ hB_defined
   have hA_comp : (T₂.comp T₁).MapsSetTo A.toSet A₂.toSet := by
     refine ⟨?_, ?_⟩
     ·
@@ -1039,14 +952,14 @@ public theorem nonintersecting_circles_concentric
           subst hzp
           simp only [MoebiusTransformation.apply, MoebiusTransformation.comp,
             invTranslation, hT₁_def]
-          congr 1 <;> ring
+          congr 1; ring
         rw [hcomp_apply_eq]
         exact hinfty hcomp_def
       ·
         have hmid : T₁.apply z ∈ L.toSet := (hAL.1 z hz h1def)
-        rw [comp_denom_factor T₁ T₂ z h1def] at hcomp_def
+        rw [comp_denom_factor h1def] at hcomp_def
         have h2def : T₂.c * T₁.apply z + T₂.d ≠ 0 := (mul_ne_zero_iff.mp hcomp_def).1
-        rw [comp_apply_eq T₁ T₂ z h1def]
+        rw [comp_apply_eq h1def]
         exact hLA₂_fwd (T₁.apply z) hmid h2def
     ·
       intro w hw
@@ -1055,9 +968,9 @@ public theorem nonintersecting_circles_concentric
         obtain ⟨w', hw'L, h2def, h2eq⟩ := hLA₂_bwd w hw hcase
         obtain ⟨z, hzA, h1def, h1eq⟩ := hAL.2 w' hw'L
         refine ⟨z, hzA, ?_, ?_⟩
-        · rw [comp_denom_factor T₁ T₂ z h1def]
+        · rw [comp_denom_factor h1def]
           exact mul_ne_zero (h1eq ▸ h2def) h1def
-        · rw [comp_apply_eq T₁ T₂ z h1def, h1eq, h2eq]
+        · rw [comp_apply_eq h1def, h1eq, h2eq]
       ·
         simp only [not_or, not_not] at hcase
         obtain ⟨hc_ne, hw_eq⟩ := hcase
@@ -1076,7 +989,7 @@ public theorem nonintersecting_circles_concentric
           congr 1 <;> ring
   exact ⟨T₂.comp T₁, A₂, B₂, hA_comp, hB_comp, hconc⟩
 
-end Lecture6
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-23

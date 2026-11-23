@@ -4,6 +4,7 @@ import Mathlib.Analysis.Calculus.Gradient.Basic
 import Def.Analysis.Calculus.Gradient.Operators
 import Instance.Analysis.Real.Numbers
 import Instance.Dynamics.PolicyTrajectory
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Filter Topology Measure
 open scoped ENNReal.ToRealCoe
 
@@ -22,9 +23,9 @@ private lemma main
   {γ : ℝ}
   {t : ℕ}
   {C : ℝ}
-  {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
-  {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
-  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜} [∀ θ t, SinglePSpace (M θ) (a t, s t)]
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜} [∀ θ t, SinglePSpace (M θ) (a t, s t)]
   {R : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
@@ -36,13 +37,13 @@ private lemma main
 -- imply
   have : PSpace (M θ) (AsPathRV.path s) :=
     PSpace_Path.of.All_PSpace
-      (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)
+      (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst (r := r) (s := s) (a := a) h₁ t).aemeasurable⟩)
   have : PSpace (M θ) (AsPathRV.path a) :=
     PSpace_Path.of.All_PSpace
-      (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)
+      (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := r) (s := s) (a := a) h₁ t).aemeasurable⟩)
   have : ∀ θ, PSpace (M θ) (AsPathRV.path r) := fun _ =>
     PSpace_Path.of.All_PSpace
-      (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)
+      (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := r) (s := s) (a := a) h₁ t).aemeasurable⟩)
   let : MeasurableSpace Θ := borel Θ
   𝔼[r, s, a : M θ](((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) • ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log) =
     𝔼[s, a : M θ](
@@ -62,4 +63,4 @@ private lemma main
 
 
 -- created on 2026-11-14
--- updated on 2026-11-18
+-- updated on 2026-11-23

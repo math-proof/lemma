@@ -23,7 +23,7 @@ import {
   fileExists,
 } from './lean/modulePath.mjs';
 import { conclusionSearchJson } from './lemmaPath.mjs';
-import { refreshInvertedForLemma } from './leanInvertedIndex.mjs';
+import { writeLemmaIndex } from './leanInvertedIndex.mjs';
 
 function jsonCol(v) {
   return JSON.stringify(v ?? (Array.isArray(v) ? [] : {}));
@@ -88,7 +88,7 @@ function resolveLeanFile(input) {
   return { abs, module: raw };
 }
 
-async function replaceLemmaRow(conn, module, code, abs) {
+async function replaceLemmaRow(conn, module, code, abs, startedAt) {
   const errs = Array.isArray(code.error) ? code.error : [];
   let fingerprint = null;
   try {
@@ -113,44 +113,65 @@ async function replaceLemmaRow(conn, module, code, abs) {
 
   // UNIQUE `uq_lemma_module (module)` keeps `id` stable: UPDATE the existing
   // row in place. INSERT only when the module is new, so inverted postings
-  // are not orphaned by a new AUTO_INCREMENT id.
-  const [existing] = await conn.query("SELECT id FROM lemma WHERE module = ?", [module]);
-  let id;
-  if (existing.length) {
-    id = existing[0].id;
-    await conn.query(
-      `UPDATE lemma
-       SET imports = CAST(? AS JSON),
-           \`open\` = CAST(? AS JSON),
-           set_option = CAST(? AS JSON),
-           preamble = CAST(? AS JSON),
-           lemma = CAST(? AS JSON),
-           meta = CAST(? AS JSON),
-           date = CAST(? AS JSON)
-       WHERE id = ?`,
-      [...fields, id],
+  // are not orphaned by a new AUTO_INCREMENT id. The row lock and the
+  // fingerprint/postings write share one transaction: a reader sees either
+  // the previous revision or the new one, never a half-applied state.
+  await conn.beginTransaction();
+  try {
+    const [existing] = await conn.query(
+      "SELECT id, JSON_EXTRACT(meta, '$.revision') AS revision FROM lemma WHERE module = ? FOR UPDATE",
+      [module],
     );
-  } else {
-    const [result] = await conn.query(
-      `INSERT INTO lemma
-        (module, imports, \`open\`, set_option, preamble, lemma, meta, date)
-       VALUES (?, CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON))`,
-      [module, ...fields],
-    );
-    id = result.insertId;
-  }
+    let id;
+    if (existing.length) {
+      id = existing[0].id;
+      // An older job may acquire the lock after a newer build already won.
+      if (Number(existing[0].revision ?? 0) > Number(startedAt)) {
+        await conn.rollback();
+        return { id, stale: true };
+      }
+      await conn.query(
+        `UPDATE lemma
+         SET imports = CAST(? AS JSON),
+             \`open\` = CAST(? AS JSON),
+             set_option = CAST(? AS JSON),
+             preamble = CAST(? AS JSON),
+             lemma = CAST(? AS JSON),
+             meta = CAST(? AS JSON),
+             date = CAST(? AS JSON)
+         WHERE id = ?`,
+        [...fields, id],
+      );
+    } else {
+      const [result] = await conn.query(
+        `INSERT INTO lemma
+          (module, imports, \`open\`, set_option, preamble, lemma, meta, date)
+         VALUES (?, CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON))`,
+        [module, ...fields],
+      );
+      id = result.insertId;
+    }
 
-  await refreshInvertedForLemma(conn, {
-    id,
-    module,
-    json: fingerprint,
-  });
-  return { id };
+    const { postings } = await writeLemmaIndex(conn, {
+      id,
+      module,
+      json: fingerprint,
+      startedAt,
+    });
+    await conn.commit();
+    return { id, postings };
+  } catch (err) {
+    await conn.rollback();
+    throw err;
+  }
 }
 
 export async function runLeanFile(leanInput) {
   const { abs, module, theorem } = resolveLeanFile(leanInput);
   if (!fileExists(abs)) throw new Error(`file not found: ${abs}`);
+  // Logical start of this build; stored as meta.revision so a slower, older
+  // build that acquires the row lock last can detect that it lost the race.
+  const startedAt = Date.now();
   const source = fs.readFileSync(abs, 'utf8');
   if (theorem) {
     const compilation = await spawnLakeLean(get_lake_path(), ['env', 'lean', abs], {
@@ -164,7 +185,7 @@ export async function runLeanFile(leanInput) {
   const code = await echo2vueFromSource(source, { leanAbsPath: abs, module });
   const conn = await connectMysql();
   try {
-    await replaceLemmaRow(conn, module, code, abs);
+    await replaceLemmaRow(conn, module, code, abs, startedAt);
   } finally {
     await conn.end();
   }

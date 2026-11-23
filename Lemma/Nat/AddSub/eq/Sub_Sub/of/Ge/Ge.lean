@@ -1,10 +1,15 @@
 import Lemma.Nat.EqSubAdd
-import Lemma.Nat.Sub_Add.eq.SubSub
+import Theorem.Nat.Sub_Add.eq.SubSub
 import Lemma.Nat.EqAddSub.of.Ge
-import Lemma.Nat.Le_Sub.of.LeAdd
 open Nat
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Nat.AddSub.eq.Sub_Sub.of.Ge.Ge |
+| comm | Nat.Sub_Sub.eq.AddSub.of.Ge.Ge |
+-/
 @[path, comm]
 private lemma main
   {a b c : ℕ}
@@ -21,8 +26,8 @@ private lemma main
   rw [EqSubAdd]
   rw [Sub_Add.eq.SubSub]
   rw [EqAddSub.of.Ge]
-  apply GeSub.of.Ge_Add.left h₀
+  apply Nat.le_sub_of_add_le' h₀
 
 
 -- created on 2025-06-18
--- updated on 2025-06-20
+-- updated on 2026-11-23

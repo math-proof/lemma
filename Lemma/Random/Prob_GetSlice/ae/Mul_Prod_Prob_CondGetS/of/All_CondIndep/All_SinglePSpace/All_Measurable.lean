@@ -12,6 +12,7 @@ import Mathlib.MeasureTheory.Constructions.Pi
 import Mathlib.MeasureTheory.MeasurableSpace.Embedding
 import Mathlib.MeasureTheory.Measure.Prod
 import Mathlib.Probability.Independence.Conditional
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory Random Fun
 open scoped ProbabilityTheory
 
@@ -33,9 +34,9 @@ private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
   [ReferenceMeasure 𝒮] [StandardBorelSpace 𝒮] [Nonempty 𝒮]
   {π : Measure Ω} [IsProbabilityMeasure π]
-  {s : ℕ ⇀ Ω → 𝒮}
+  {s : ℕ → Ω → 𝒮}
 -- given
-  (hs : ∀ k, Measurable s[k])
+  (hs : ∀ (k : ℕ), Measurable s[k])
   (hP : ∀ n, SinglePSpace π (s[:n] : Ω → Fin n → 𝒮))
   (hmarkov : ∀ (t : ℕ), s[t + 1] ⟂ᵢ[π] s[:t] | s[t])
   (n : ℕ) :

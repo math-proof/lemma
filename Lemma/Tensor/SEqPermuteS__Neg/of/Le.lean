@@ -1,5 +1,4 @@
-import Def.Data.Tensor.Prod
-import Notation.Data.Tensor.Permute
+import Lemma.Tensor.DataCast.as.Data.of.Eq
 import Lemma.List.Permute__Neg.of.Le
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.Nat.EqMod_1'0
@@ -11,6 +10,12 @@ open List Tensor Nat Bool Vector Fin Matrix
 set_option maxHeartbeats 400000
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.SEqPermuteS__Neg.of.Le |
+| cast | Tensor.Permute__Neg.eq.Cast.of.Le |
+-/
 @[path, cast]
 private lemma main
   {i : Fin s.length}
@@ -224,4 +229,4 @@ private lemma main
 
 
 -- created on 2025-10-30
--- updated on 2026-10-26
+-- updated on 2026-11-23

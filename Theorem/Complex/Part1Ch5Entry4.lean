@@ -456,7 +456,7 @@ public theorem worp_step (n k : ℕ) :
           * (↑(eulerianNumber (n + 1) m) : ℂ)
           * (↑((k + (n + 1) - m).choose (n + 1 + 1)) : ℂ)) := by
             rw [add_assoc, e4]
-  rwa [hk, hA]
+  rw [hk, hA, ← hB]
 
 end MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
 
@@ -584,10 +584,8 @@ public theorem tsum_choose_shift (N m : ℕ) (x : ℂ) (hx : ‖x‖ < 1) (hm : 
   have hts : (∑' i : ℕ, (↑(((i + m) + N - m).choose N) : ℂ) * x ^ (i + m))
     = x ^ m * (∑' i : ℕ, (↑((i + N).choose N) : ℂ) * x ^ i) := by
     calc (∑' i : ℕ, (↑(((i + m) + N - m).choose N) : ℂ) * x ^ (i + m))
-      = ∑' i : ℕ, x ^ m * ((↑((i + N).choose N) : ℂ) * x ^ i) := by
-        apply tsum_congr
-        intro i
-        exact hshift i
+      = ∑' i : ℕ, x ^ m * ((↑((i + N).choose N) : ℂ) * x ^ i) :=
+        tsum_congr (fun i => hshift i)
       _ = x ^ m * (∑' i : ℕ, (↑((i + N).choose N) : ℂ) * x ^ i) :=
         Summable.tsum_mul_left _ hgsum
   have hdecomp := Summable.sum_add_tsum_nat_add m hF
@@ -729,4 +727,4 @@ end MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4
 
 
 -- created on 2026-10-10
--- updated on 2026-10-26
+-- updated on 2026-11-23

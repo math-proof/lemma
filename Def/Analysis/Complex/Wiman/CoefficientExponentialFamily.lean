@@ -1,7 +1,6 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CoefficientExponentialFamily.lean -/
 
 import Def.Analysis.Complex.Wiman.RadialMajorant
-import Lemma.Complex.Wiman.RadialMajorant
 import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
 import Mathlib.Probability.Moments.Tilted
 

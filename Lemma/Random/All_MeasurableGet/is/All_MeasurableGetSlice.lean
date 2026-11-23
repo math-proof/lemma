@@ -1,5 +1,6 @@
 import Syntax.Data.List
 import Notation.Fun
+import Instance.Data.Nat.Fun
 import Instance.Probability.Process.HiddenMarkovSequence
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory Fun
@@ -17,7 +18,7 @@ A process is coordinate-wise measurable if and only if all its prefixes are.
 private lemma main
   [MeasurableSpace Ω]
   [MeasurableSpace 𝒮]
-  {s : ℕ ⇀ Ω → 𝒮} :
+  {s : ℕ → Ω → 𝒮} :
 -- imply
   (∀ k : ℕ, Measurable s[k]) ↔ ∀ k : ℕ, Measurable s[:k] := by
 -- proof
@@ -28,7 +29,7 @@ private lemma main
     intro i
     have heq : (fun ω => s[:k] ω i) = s[i] := by
       funext ω
-      simp [Fun.getSlice, Function.getSlice, FunSlice.slice, Int.toNat_zero]
+      simp [Function.getSlice, FunSlice.slice, Int.toNat_zero]
     rw [heq]
     apply hs
   ·
@@ -36,7 +37,7 @@ private lemma main
     have hk : Measurable (fun ω => (s[:k.succ] : Ω → Fin k.succ → 𝒮) ω) := hs k.succ
     have heq : s[k] = fun ω => (s[:k.succ] : Ω → Fin k.succ → 𝒮) ω (Fin.last k) := by
       funext ω
-      simp [Fun.getSlice, Function.getSlice, FunSlice.slice, Int.toNat_zero, Fin.val_last]
+      simp [Function.getSlice, FunSlice.slice, Int.toNat_zero, Fin.val_last]
     rw [heq]
     exact (measurable_pi_apply (Fin.last k)).comp hk
 

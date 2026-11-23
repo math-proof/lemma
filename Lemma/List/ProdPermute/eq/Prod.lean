@@ -1,5 +1,5 @@
 import Lemma.List.Append_DropTake.eq.Take.of.Ge
-import Lemma.List.ProdPermute.eq.MulProd_ProdAppend
+import Theorem.List.ProdPermute.eq.MulProd_ProdAppend
 import Lemma.List.ProdPermute__Neg.eq.MulProd_ProdAppend
 import Lemma.List.ProdRotate.eq.Prod
 open Int List
@@ -32,4 +32,4 @@ private lemma main
 
 
 -- created on 2025-10-19
--- updated on 2025-10-29
+-- updated on 2026-11-23

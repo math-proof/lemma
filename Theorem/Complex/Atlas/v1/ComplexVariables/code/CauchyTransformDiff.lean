@@ -76,7 +76,8 @@ public theorem differentiableAt_cauchy_transform
       have heq : F x = fun θ => (x - circleMap a r θ)⁻¹ *
         (deriv (circleMap a r) θ • φ (circleMap a r θ)) := by
         ext θ; simp only [F, smul_eq_mul]; ring
-      rwa [heq]
+      rw [heq]
+      exact hint.out.continuousOn_mul
         ((continuous_const.sub (continuous_circleMap a r)).inv₀
           (fun θ => sub_ne_zero.mpr (hne θ x hx))).continuousOn
     have hF'_ii : ∀ x ∈ ball z₀ δ, IntervalIntegrable (F' x) volume 0 (2 * Real.pi) := by
@@ -84,7 +85,8 @@ public theorem differentiableAt_cauchy_transform
       have heq : F' x = fun θ => (-1 / (x - circleMap a r θ) ^ 2) *
         (deriv (circleMap a r) θ • φ (circleMap a r θ)) := by
         ext θ; simp only [F', smul_eq_mul]; ring
-      rwa [heq]
+      rw [heq]
+      exact hint.out.continuousOn_mul
         (Continuous.continuousOn (Continuous.div continuous_const
           ((continuous_const.sub (continuous_circleMap a r)).pow 2)
           (fun θ => pow_ne_zero 2 (sub_ne_zero.mpr (hne θ x hx)))))
@@ -114,12 +116,15 @@ public theorem differentiableAt_cauchy_transform
         gcongr
         have h := hdist_lb θ x hx
         rwa [← dist_eq_norm]
+      have h1 : ‖(-1 / (x - circleMap a r θ) ^ 2) * φ (circleMap a r θ)‖ ≤
+          (1 / δ ^ 2) * ‖φ (circleMap a r θ)‖ := by
+        rw [norm_mul]
+        exact mul_le_mul_of_nonneg_right key (norm_nonneg _)
       calc ‖deriv (circleMap a r) θ‖ *
-        ‖(-1 / (x - circleMap a r θ) ^ 2) * φ (circleMap a r θ)‖
-        = ‖deriv (circleMap a r) θ‖ *
-          (‖(-1 : ℂ) / (x - circleMap a r θ) ^ 2‖ * ‖φ (circleMap a r θ)‖) := by
-          rw [norm_mul]
-        _ ≤ ‖deriv (circleMap a r) θ‖ * (1 / δ ^ 2 * ‖φ (circleMap a r θ)‖) := by gcongr
+          ‖(-1 / (x - circleMap a r θ) ^ 2) * φ (circleMap a r θ)‖
+          ≤ ‖deriv (circleMap a r) θ‖ *
+            ((1 / δ ^ 2) * ‖φ (circleMap a r θ)‖) :=
+            mul_le_mul_of_nonneg_left h1 (norm_nonneg _)
         _ = 1 / δ ^ 2 * (‖deriv (circleMap a r) θ‖ * ‖φ (circleMap a r θ)‖) := by ring
     case bound_int =>
       exact (hint.out.norm).const_mul _
@@ -139,3 +144,4 @@ public theorem differentiableAt_cauchy_transform
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-23

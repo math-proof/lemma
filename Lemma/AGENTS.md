@@ -45,7 +45,7 @@ Applies to every `lemma` / `theorem` source in this repository. Agents under `Le
     - use `grind`/`aesop` as much as possible
     - Prefer `√` (Root.sqrt notation) over `Real.sqrt` at call sites when both mean the same thing.
   - `set_option maxHeartbeats` (and other elaborator heartbeat budgets) may be set or raised to any value strictly below 1000000. 1000000 and above stay disallowed.
-  - Dates: never change `-- created on` including after `sh/rename.sh` / path moves. Only bump `-- updated on` when you edit the lemma. 
+  - Dates: never change `-- created on` even after `sh/rename.sh` / path moves. Only bump `-- updated on` when you edit the lemma. 
 
 ## Debugging
 - print logging info via `Syntax.Tactic.Echo` by creating *.echo.lean tracing files for debugging.

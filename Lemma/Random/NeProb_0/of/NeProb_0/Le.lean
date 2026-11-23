@@ -1,6 +1,5 @@
 import Lemma.Random.Prob.ne.Zero.of.NeProb_0
 import Lemma.Random.SinglePSpace.of.AEMeasurable.Le
-import Initialize.Tactic.Attr.Basic
 open MeasureTheory Random Fun
 
 
@@ -19,9 +18,9 @@ private lemma main
   [Countable α]
   [MeasurableSingletonClass α]
   {π : Measure Ω}
-  {x : ℕ ⇀ Ω → α} {«\sf{x}» : ℕ ⇀ α} {n : ℕ} [SinglePSpace π x[:n]]
+  {x : ℕ → Ω → α} {«\sf{x}» : ℕ → α} {n : ℕ} [SinglePSpace π x[:n]]
+  {t : ℕ}
 -- given
-  (t : ℕ)
   (ht : t ≤ n)
   (h : ℙ[π](x[:n] = «\sf{x}»[:n]) ≠ 0) :
 -- imply
@@ -61,4 +60,4 @@ private lemma main
 
 
 -- created on 2021-07-23
--- updated on 2026-11-17
+-- updated on 2026-11-23

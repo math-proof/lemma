@@ -3,6 +3,7 @@ import Lemma.Random.PSpace_Path.of.All_PSpace
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Instance.Dynamics.PolicyTrajectory
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure Real
 open scoped ENNReal.ToRealCoe
 set_option maxHeartbeats 800000
@@ -28,9 +29,9 @@ private lemma main
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {θ : Θ}
   {γ ℓ : ℝ}
-  {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
-  {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
-  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
   {R : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
@@ -43,13 +44,13 @@ private lemma main
   letI : Model.IsPolicyTrajectory M r s a := hπ.htr
   letI : Model.AbsContJointAS M a s := hπ.haj
   have : ∀ θ', PSpace (M θ') (AsPathRV.path r) := fun _ =>
-    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) hπ.htr.stage_eq t).aemeasurable⟩)
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := r) (s := s) (a := a) hπ.htr.stage_eq t).aemeasurable⟩)
   have : PSpace (M θ) (AsPathRV.path s) :=
-    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) hπ.htr.stage_eq t).aemeasurable⟩)
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst (r := r) (s := s) (a := a) hπ.htr.stage_eq t).aemeasurable⟩)
   have : PSpace (M θ) (AsPathRV.path a) :=
-    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) hπ.htr.stage_eq t).aemeasurable⟩)
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := r) (s := s) (a := a) hπ.htr.stage_eq t).aemeasurable⟩)
   let : MeasurableSpace Θ := borel Θ
-  let V_θ : ℕ ⇀ (ℕ → 𝒮) → ℕ → ℝ := ⟨fun t δ k => M.V θ γ (t + k) (δ k)⟩
+  let V_θ : ℕ → (ℕ → 𝒮) → ℕ → ℝ := (fun t δ k => M.V θ γ (t + k) (δ k))
   ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) =
     𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
       (((γ * ℓ) ^ (id : ℕ → ℕ) ⬝ᵥ (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:])) •
@@ -92,4 +93,4 @@ private lemma main
 
 
 -- created on 2026-10-21
--- updated on 2026-11-18
+-- updated on 2026-11-23

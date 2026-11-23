@@ -1,4 +1,5 @@
 import Theorem.Algebra.Power.Part2
+import Notation.Algebra.Power
 import Initialize.Tactic.Attr.Basic
 
 
@@ -14,3 +15,4 @@ private lemma main
 
 
 -- created on 2025-04-06
+-- updated on 2026-11-23

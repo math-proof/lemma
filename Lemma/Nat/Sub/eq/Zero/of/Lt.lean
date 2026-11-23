@@ -1,6 +1,4 @@
-import Lemma.Nat.Le.of.Lt
-import Lemma.Nat.Sub.eq.Zero.of.Le
-open Nat
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -10,8 +8,8 @@ private lemma main
 -- imply
   a - b = 0 := by
 -- proof
-  have h := Le.of.Lt h
-  apply Sub.eq.Zero.of.Le h
+  apply Nat.sub_eq_zero_of_le (le_of_lt h)
 
 
 -- created on 2025-05-14
+-- updated on 2026-11-23

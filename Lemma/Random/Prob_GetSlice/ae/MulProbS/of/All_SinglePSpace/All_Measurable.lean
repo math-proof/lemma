@@ -5,6 +5,7 @@ import Notation.Probability.JointRv
 import Notation.Fun
 import Syntax.Probability.Probability
 import Mathlib.MeasureTheory.Measure.Prod
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory Random Fun
 open scoped ProbabilityTheory
 
@@ -19,7 +20,7 @@ private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure 𝒮]
   {π : Measure Ω} [IsProbabilityMeasure π]
-  {s : ℕ ⇀ Ω → 𝒮}
+  {s : ℕ → Ω → 𝒮}
 -- given
   (hs : ∀ k, Measurable s[k])
   (hP : ∀ n, SinglePSpace π (s[:n] : Ω → Fin n → 𝒮))

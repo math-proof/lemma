@@ -52,6 +52,26 @@ export function fingerprintFormat(json) {
   }).join("");
 }
 
+/**
+ * Canonical string form for comparing fingerprint trees across the MySQL round
+ * trip: key order is irrelevant, and `undefined` properties (which JSON storage
+ * drops) are ignored, so a stored tree compares equal to the tree it was made from.
+ */
+export function fingerprintSignature(json) {
+  if (json == null) return "null";
+  if (Array.isArray(json)) {
+    return "[" + json.map(item => item === undefined ? "null" : fingerprintSignature(item)).join(",") + "]";
+  }
+  if (typeof json === "object") {
+    return "{" + Object.keys(json)
+      .filter(key => json[key] !== undefined)
+      .sort()
+      .map(key => JSON.stringify(key) + ":" + fingerprintSignature(json[key]))
+      .join(",") + "}";
+  }
+  return JSON.stringify(json);
+}
+
 /** Count each operator head in a search-JSON tree. Leaves (`$1`, `?0`, `2`) are ignored. */
 export function countHeads(json, counts = new Map()) {
   if (json == null || typeof json !== "object") return counts;
@@ -237,6 +257,14 @@ export function parseFingerprint(value) {
   return null;
 }
 
+/** Write one document's fingerprint onto `lemma.meta`; the caller owns the transaction. */
+async function writeFingerprint(conn, id, json) {
+  await conn.query(
+    "UPDATE lemma SET meta = JSON_SET(COALESCE(meta, JSON_OBJECT()), '$.fingerprint', CAST(? AS JSON)) WHERE id = ?",
+    [JSON.stringify(json), id],
+  );
+}
+
 /** Write each document's fingerprint tree onto axiom.lemma.meta.fingerprint. */
 export async function uploadFingerprints(pool, entries) {
   const idOf = await mapModulesToIds(pool, entries.map((e) => e.module));
@@ -251,10 +279,7 @@ export async function uploadFingerprints(pool, entries) {
         if (id == null) missing++;
         continue;
       }
-      await conn.query(
-        "UPDATE lemma SET meta = JSON_SET(COALESCE(meta, JSON_OBJECT()), '$.fingerprint', CAST(? AS JSON)) WHERE id = ?",
-        [JSON.stringify(entry.json), id],
-      );
+      await writeFingerprint(conn, id, entry.json);
       uploaded++;
     }
     await conn.commit();
@@ -288,6 +313,8 @@ function invertedRowsFor(id, heads, edges = new Map()) {
 /**
  * Replace inverted postings for one lemma.id.
  * An empty head list deletes any previous postings and inserts nothing.
+ * The caller must hold a transaction and the lemma row lock if readers must
+ * never observe the empty intermediate state.
  */
 export async function replaceInvertedPostings(pool, id, heads, edges = new Map()) {
   await pool.query("DELETE FROM inverted WHERE id = ?", [id]);
@@ -297,15 +324,66 @@ export async function replaceInvertedPostings(pool, id, heads, edges = new Map()
   return { postings: rows.length };
 }
 
+/** Run `fn(conn)` inside one transaction; commits on success, rolls back on error. */
+async function inTransaction(pool, fn) {
+  const conn = typeof pool.getConnection === "function" ? await pool.getConnection() : pool;
+  const own = conn !== pool;
+  try {
+    await conn.beginTransaction();
+    const out = await fn(conn);
+    await conn.commit();
+    return out;
+  } catch (err) {
+    await conn.rollback();
+    throw err;
+  } finally {
+    if (own) conn.release();
+  }
+}
+
 /**
- * After a lemma upsert: drop this id's postings, then write new ones only
- * when the module is in Random, Complex, Vector, or Tensor and a fingerprint tree is present.
+ * Write one lemma's fingerprint and postings. The caller must already hold a
+ * transaction and the lemma row lock, so both become visible in one commit.
+ * `startedAt` (ms, job start) is stored as `meta.revision`: an older job that
+ * acquires the lock last must see a higher stored revision and discard itself.
  */
-export async function refreshInvertedForLemma(pool, { id, module, json }) {
+export async function writeLemmaIndex(conn, { id, module, json, startedAt = null }) {
+  if (json != null) {
+    if (startedAt == null) {
+      await conn.query(
+        "UPDATE lemma SET meta = JSON_SET(COALESCE(meta, JSON_OBJECT()), '$.fingerprint', CAST(? AS JSON)) WHERE id = ?",
+        [JSON.stringify(json), id],
+      );
+    } else {
+      await conn.query(
+        "UPDATE lemma SET meta = JSON_SET(COALESCE(meta, JSON_OBJECT()), '$.fingerprint', CAST(? AS JSON), '$.revision', ?) WHERE id = ?",
+        [JSON.stringify(json), startedAt, id],
+      );
+    }
+  }
   const indexed = isIndexedSection(module) && json != null;
   const heads = indexed ? countHeads(json) : new Map();
   const edges = indexed ? countEdges(json) : new Map();
-  return replaceInvertedPostings(pool, id, heads, edges);
+  return replaceInvertedPostings(conn, id, heads, edges);
+}
+
+/**
+ * Incrementally rebuild one lemma: lock its row, discard the result when a
+ * newer build (higher stored revision) already won, then replace fingerprint
+ * and postings atomically. Retrying the same accepted revision is idempotent.
+ */
+export async function refreshInvertedForLemma(pool, { id, module, json, startedAt = null }) {
+  return inTransaction(pool, async (conn) => {
+    const [rows] = await conn.query(
+      "SELECT JSON_EXTRACT(meta, '$.revision') AS revision FROM lemma WHERE id = ? FOR UPDATE",
+      [id],
+    );
+    if (!rows.length) return { postings: 0, missing: true };
+    if (startedAt != null && Number(rows[0].revision ?? 0) > Number(startedAt)) {
+      return { postings: 0, stale: true };
+    }
+    return writeLemmaIndex(conn, { id, module, json, startedAt });
+  });
 }
 
 function positiveIds(ids) {
@@ -325,28 +403,30 @@ export async function deleteInvertedForIds(pool, ids) {
  * Pass `modules` for exact module names, or `prefix` for a package (`module` and `module.%`).
  */
 export async function deleteLemmaRowsAndInverted(pool, { modules, prefix } = {}) {
-  let rows = [];
-  if (prefix != null && prefix !== "") {
-    const [found] = await pool.query(
-      "SELECT id, module FROM lemma WHERE module = ? OR module LIKE ?",
-      [prefix, `${prefix}.%`],
-    );
-    rows = found;
-  } else {
-    const list = [...new Set((modules ?? []).map((m) => String(m ?? "").trim()).filter(Boolean))];
-    if (!list.length) return { deleted: 0, ids: [], modules: [] };
-    const [found] = await pool.query(
-      `SELECT id, module FROM lemma WHERE module IN (${list.map(() => "?").join(",")})`,
-      list,
-    );
-    rows = found;
-  }
-  const ids = rows.map((row) => row.id);
-  await deleteInvertedForIds(pool, ids);
-  if (ids.length) {
-    await pool.query(`DELETE FROM lemma WHERE id IN (${ids.join(",")})`);
-  }
-  return { deleted: ids.length, ids, modules: rows.map((row) => row.module) };
+  return inTransaction(pool, async (conn) => {
+    let rows = [];
+    if (prefix != null && prefix !== "") {
+      const [found] = await conn.query(
+        "SELECT id, module FROM lemma WHERE module = ? OR module LIKE ?",
+        [prefix, `${prefix}.%`],
+      );
+      rows = found;
+    } else {
+      const list = [...new Set((modules ?? []).map((m) => String(m ?? "").trim()).filter(Boolean))];
+      if (!list.length) return { deleted: 0, ids: [], modules: [] };
+      const [found] = await conn.query(
+        `SELECT id, module FROM lemma WHERE module IN (${list.map(() => "?").join(",")})`,
+        list,
+      );
+      rows = found;
+    }
+    const ids = rows.map((row) => row.id);
+    await deleteInvertedForIds(conn, ids);
+    if (ids.length) {
+      await conn.query(`DELETE FROM lemma WHERE id IN (${ids.join(",")})`);
+    }
+    return { deleted: ids.length, ids, modules: rows.map((row) => row.module) };
+  });
 }
 
 /**
@@ -354,22 +434,28 @@ export async function deleteLemmaRowsAndInverted(pool, { modules, prefix } = {})
  * (no-op rewrite when the section is still indexed; drop postings when it is not).
  */
 export async function refreshInvertedForModule(pool, module) {
-  const [rows] = await pool.query(
-    "SELECT id, module, JSON_EXTRACT(meta, '$.fingerprint') AS fingerprint FROM lemma WHERE module = ?",
-    [module],
-  );
-  if (!rows.length) return { updated: 0 };
-  const row = rows[0];
-  const result = await refreshInvertedForLemma(pool, {
-    id: row.id,
-    module: row.module,
-    json: parseFingerprint(row.fingerprint),
+  return inTransaction(pool, async (conn) => {
+    const [rows] = await conn.query(
+      "SELECT id, module, JSON_EXTRACT(meta, '$.fingerprint') AS fingerprint FROM lemma WHERE module = ? FOR UPDATE",
+      [module],
+    );
+    if (!rows.length) return { updated: 0 };
+    const row = rows[0];
+    const result = await writeLemmaIndex(conn, {
+      id: row.id,
+      module: row.module,
+      json: parseFingerprint(row.fingerprint),
+    });
+    return { updated: 1, id: row.id, postings: result.postings };
   });
-  return { updated: 1, id: row.id, postings: result.postings };
 }
 
-/** Replace postings in `inverted` for the given documents. `id` is `lemma.id`. */
-export async function uploadInverted(pool, entries) {
+/**
+ * Replace postings in `inverted` and fingerprints in `lemma.meta` for the given
+ * documents in ONE transaction, so a live reader never sees new postings with
+ * old fingerprints (or the reverse) during a section rebuild. `id` is `lemma.id`.
+ */
+export async function uploadIndex(pool, entries) {
   const idOf = await mapModulesToIds(pool, entries.map((e) => e.module));
   const withId = [];
   let missing = 0;
@@ -382,13 +468,16 @@ export async function uploadInverted(pool, entries) {
     withId.push({ ...entry, id });
   }
   const ids = [...new Set(withId.map((e) => e.id))];
-  const rows = [];
-  for (const entry of withId) {
-    rows.push(...invertedRowsFor(entry.id, entry.heads, entry.edges));
-  }
+  const rows = withId.flatMap((entry) => invertedRowsFor(entry.id, entry.heads, entry.edges));
   const conn = await pool.getConnection();
   try {
     await conn.beginTransaction();
+    let stored = 0;
+    for (const entry of withId) {
+      if (entry.json == null) continue;
+      await writeFingerprint(conn, entry.id, entry.json);
+      stored++;
+    }
     for (let i = 0; i < ids.length; i += ID_CHUNK) {
       await conn.query("DELETE FROM inverted WHERE id IN (?)", [ids.slice(i, i + ID_CHUNK)]);
     }
@@ -396,13 +485,13 @@ export async function uploadInverted(pool, entries) {
       await conn.query("INSERT INTO inverted (name, id, count) VALUES ?", [rows.slice(i, i + INSERT_CHUNK)]);
     }
     await conn.commit();
+    return { uploaded: withId.length, missing, postings: rows.length, stored };
   } catch (err) {
     await conn.rollback();
     throw err;
   } finally {
     conn.release();
   }
-  return { uploaded: withId.length, missing, postings: rows.length };
 }
 
 /**
@@ -422,7 +511,9 @@ export async function filterInverted(pool, queryCounts, queryEdges = new Map()) 
     candidates = candidates == null ? new Set(hit) : new Set(hit.filter((id) => candidates.has(id)));
     if (candidates.size === 0) return [];
   }
-  return [...(candidates ?? [])].sort((a, b) => a - b);
+  // Shortlist order doesn't matter: only the final matched hits are sorted
+  // (by fingerprint byte length, then module) in searchParsedQuery.
+  return [...(candidates ?? [])];
 }
 
 async function loadFingerprintsByIds(pool, ids) {
@@ -438,6 +529,17 @@ async function loadFingerprintsByIds(pool, ids) {
   return docs;
 }
 
+/**
+ * Order final matched hits: smallest conclusion fingerprint first (simplest
+ * structure), then module name as a deterministic tie-break so equal-length
+ * conclusions never come back in a different order between runs.
+ */
+function compareHit(a, b) {
+  const d = (a.len ?? 0) - (b.len ?? 0);
+  if (d !== 0) return d;
+  return String(a.module).localeCompare(String(b.module));
+}
+
 /** Shortlist + exact subtree match for one already-parsed query. */
 async function searchParsedQuery(query, { limit = 100, db }) {
   const ids = await filterInverted(db, query.counts, query.edges);
@@ -448,12 +550,33 @@ async function searchParsedQuery(query, { limit = 100, db }) {
     const json = parseFingerprint(row.fingerprint);
     if (json == null) continue;
     if (matchesSubtree(query.json, json)) {
-      hits.push({ id: row.id, module: row.module });
+      hits.push({ id: row.id, module: row.module, len: Buffer.byteLength(fingerprintFormat(json)) });
     }
   }
-  hits.sort((a, b) => String(a.module).localeCompare(String(b.module)));
+  hits.sort(compareHit);
   const cap = Math.max(0, Number(limit) || 0);
   return { shortlist: ids.length, hits: hits.slice(0, cap) };
+}
+
+/**
+ * Run read-only queries against one repeatable-read snapshot, so the shortlist
+ * and the fingerprint fetch come from the same committed revision. Callers
+ * that already hold a connection (an outer snapshot) are passed through.
+ */
+async function readSnapshot(db, fn) {
+  if (typeof db.getConnection !== "function") return fn(db);
+  const conn = await db.getConnection();
+  try {
+    await conn.query("START TRANSACTION WITH CONSISTENT SNAPSHOT, READ ONLY");
+    const out = await fn(conn);
+    await conn.commit();
+    return out;
+  } catch (err) {
+    await conn.rollback();
+    throw err;
+  } finally {
+    conn.release();
+  }
 }
 
 /**
@@ -467,7 +590,8 @@ async function searchParsedQuery(query, { limit = 100, db }) {
 export async function searchLeanExact(expr, { limit = 100, pool = null } = {}) {
   const db = pool ?? requirePool();
   const query = headsOfQuery(expr);
-  return { query, ...(await searchParsedQuery(query, { limit, db })) };
+  const result = await readSnapshot(db, (conn) => searchParsedQuery(query, { limit, db: conn }));
+  return { query, ...result };
 }
 
 /**
@@ -486,25 +610,27 @@ export async function searchLeanExact(expr, { limit = 100, pool = null } = {}) {
  */
 export async function searchLeanSimilar(expr, { limit = 100, pool = null } = {}) {
   const db = pool ?? requirePool();
-  const exact = await searchLeanExact(expr, { limit, pool: db });
-  const similar = [];
-  if (exact.hits.length > 0) return { query: exact.query, exact: exact.hits, similar, shortlist: exact.shortlist };
+  return readSnapshot(db, async (conn) => {
+    const exact = await searchLeanExact(expr, { limit, pool: conn });
+    const similar = [];
+    if (exact.hits.length > 0) return { query: exact.query, exact: exact.hits, similar, shortlist: exact.shortlist };
 
-  const seen = new Set(exact.hits.map((hit) => hit.id));
-  let shortlist = exact.shortlist;
-  for (const query of expandedQueries(expr)) {
-    if (query.fingerprint === exact.query.fingerprint) continue;
-    const found = await searchParsedQuery(query, { limit, db });
-    shortlist += found.shortlist;
-    for (const hit of found.hits) {
-      if (seen.has(hit.id)) continue;
-      seen.add(hit.id);
-      similar.push({ ...hit, match: "similar" });
+    const seen = new Set(exact.hits.map((hit) => hit.id));
+    let shortlist = exact.shortlist;
+    for (const query of expandedQueries(expr)) {
+      if (query.fingerprint === exact.query.fingerprint) continue;
+      const found = await searchParsedQuery(query, { limit, db: conn });
+      shortlist += found.shortlist;
+      for (const hit of found.hits) {
+        if (seen.has(hit.id)) continue;
+        seen.add(hit.id);
+        similar.push({ ...hit, match: "similar" });
+      }
     }
-  }
-  similar.sort((a, b) => String(a.module).localeCompare(String(b.module)));
-  const cap = Math.max(0, Number(limit) || 0);
-  return { query: exact.query, exact: exact.hits, similar: similar.slice(0, cap), shortlist };
+    similar.sort(compareHit);
+    const cap = Math.max(0, Number(limit) || 0);
+    return { query: exact.query, exact: exact.hits, similar: similar.slice(0, cap), shortlist };
+  });
 }
 
 function usage() {
@@ -625,12 +751,11 @@ async function runIndex(opts) {
   const { entries, skipped, child } = await collectSection(opts);
   if (child) return;
   const pool = requirePool();
-  const { uploaded, missing, postings } = await uploadInverted(pool, entries);
-  const stored = await uploadFingerprints(pool, entries);
+  const { uploaded, missing, postings, stored } = await uploadIndex(pool, entries);
   await pool.end();
   console.log(
     `uploaded ${uploaded} documents, ${postings} postings to axiom.inverted ` +
-      `and ${stored.uploaded} fingerprint trees ` +
+      `and ${stored} fingerprint trees ` +
       `(${skipped} parse skipped, ${missing} missing from lemma) in ` +
       `${((performance.now() - t0) / 1000).toFixed(1)}s`,
   );

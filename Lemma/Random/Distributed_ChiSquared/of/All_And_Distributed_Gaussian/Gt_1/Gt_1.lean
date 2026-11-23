@@ -8,6 +8,7 @@ import Instance.NNReal.Coe
 import Def.Probability.ChiSquare
 import Lemma.Random.Distributed_ProdChiSquareS.of.All_And_Distributed_Gaussian.Gt_1.Gt_1
 import Initialize.Tactic.Attr.Basic
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory Fun Measure
 open scoped NNReal
 set_option maxHeartbeats 800000
@@ -37,7 +38,7 @@ private lemma sb
   [MeasurableSpace Ω]
   {π : Measure Ω} [IsProbabilityMeasure π]
   {m n : ℕ}
-  {y : ℕ ⇀ ℕ ⇀ Ω → ℝ}
+  {y : ℕ → ℕ → Ω → ℝ}
   {μ : ℝ} {σ : ℝ⁺}
 -- given
   (hm : m > 1)
@@ -85,7 +86,7 @@ private lemma sw
   [MeasurableSpace Ω]
   {π : Measure Ω} [IsProbabilityMeasure π]
   {m n : ℕ}
-  {y : ℕ ⇀ ℕ ⇀ Ω → ℝ}
+  {y : ℕ → ℕ → Ω → ℝ}
   {μ : ℝ} {σ : ℝ⁺}
 -- given
   (hm : m > 1)
@@ -112,4 +113,4 @@ private lemma sw
 
 
 -- created on 2026-10-30
--- updated on 2026-11-17
+-- updated on 2026-11-23

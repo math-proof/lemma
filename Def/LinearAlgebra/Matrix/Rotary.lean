@@ -1,5 +1,6 @@
 module
 
+public import Def.Data.Fin.Rope
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 
 @[expose] public section
@@ -19,18 +20,6 @@ noncomputable def Matrix.rotaryOn {d : ℕ} (u v : Fin d → Fin (d + d)) (θ : 
       (if i = v t ∧ j = u t then Real.sin (θ t) else 0) +
       (if i = v t ∧ j = v t then Real.cos (θ t) else 0))
 
-/-- Even coordinate `2t` of an interleaved pair in `Fin (d + d)`. -/
-def Matrix.ropeEven (d : ℕ) (t : Fin d) : Fin (d + d) :=
-  ⟨2 * (t : ℕ), by
-    have ht := t.isLt
-    omega⟩
-
-/-- Odd coordinate `2t + 1` of an interleaved pair in `Fin (d + d)`. -/
-def Matrix.ropeOdd (d : ℕ) (t : Fin d) : Fin (d + d) :=
-  ⟨2 * (t : ℕ) + 1, by
-    have ht := t.isLt
-    omega⟩
-
 /--
 Hugging Face `rotate_half` matrix: planes are `(t, t + d)`.
 
@@ -49,7 +38,7 @@ noncomputable def Matrix.rotary {d : ℕ} (θ : Fin d → ℝ) : Matrix (Fin (d 
 Su et al. interleaved rotary matrix: planes are `(2t, 2t + 1)`.
 -/
 noncomputable def Matrix.rotary' {d : ℕ} (θ : Fin d → ℝ) : Matrix (Fin (d + d)) (Fin (d + d)) ℝ :=
-  Matrix.rotaryOn (Matrix.ropeEven d) (Matrix.ropeOdd d) θ
+  Matrix.rotaryOn (Fin.ropeEven d) (Fin.ropeOdd d) θ
 
 namespace Function
 

@@ -8,6 +8,7 @@ import Lemma.Random.EqProb
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Instance.Dynamics.PolicyTrajectory
+import Instance.Data.Nat.Fun
 open scoped ENNReal.ToRealCoe
 open Finset (range)
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure Real IsPolicyTrajectory
@@ -32,21 +33,21 @@ private lemma main
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {θ : Θ}
   {γ ℓ : ℝ}
-  {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
-  {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
-  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
   {R : ℝ}
 -- given
   (h₀ : {γ, ℓ} ⊆ Set.Ico 0 1)
   (hfactor : Model.IsConditionalProbability M r s a)
-  (h₁ : ∀ t («\sf{s}» : ℕ ⇀ 𝒮) («\sf{a}» : ℕ ⇀ 𝒜),
+  (h₁ : ∀ (t : ℕ) («\sf{s}» : ℕ → 𝒮) («\sf{a}» : ℕ → 𝒜),
     Differentiable ℝ (fun θ => (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)))
   (h₂ : sup[x] (∫ u, sSup (Set.range fun θ => ‖∇[θ] (ℙ[M θ](a[0] = u | s[0] = x) : ℝ)‖) ∂μ.measure) < ∞)
   (hBdd : ∀ x u, BddAbove (Set.range fun θ => ‖∇[θ] (ℙ[M θ](a[0] = u | s[0] = x) : ℝ)‖))
   (hIntg : ∀ x, Integrable (fun u => sSup (Set.range fun θ => ‖∇[θ] (ℙ[M θ](a[0] = u | s[0] = x) : ℝ)‖)) μ.measure)
   (hφ : StronglyMeasurable
     (fun ((s0, a0) : 𝒮 × 𝒜) => ∇[θ] (ℙ[M θ](a[0] = a0 | s[0] = s0) : ℝ).log))
-  (hMs : sup[«\sf{s}» : ℕ ⇀ 𝒮, «\sf{a}» : ℕ ⇀ 𝒜]
+  (hMs : sup[«\sf{s}» : ℕ → 𝒮, «\sf{a}» : ℕ → 𝒜]
     ‖∇[θ] (ℙ[M θ](a[0] = «\sf{a}»[0] | s[0] = «\sf{s}»[0]) : ℝ).log‖ < ∞)
   (hVm : ∀ t, Measurable (M.V θ γ t))
   (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1) :
@@ -60,7 +61,7 @@ private lemma main
   have : PSpace (M θ) (AsPathRV.path a) :=
     PSpace_Path.of.All_PSpace (fun t => ⟨(hfactor.htr.measurable_a t).aemeasurable⟩)
   let : MeasurableSpace Θ := borel Θ
-  let V_δ : ℕ ⇀ (ℕ → 𝒮) → ℕ → ℝ := ⟨fun t δ k => M.V θ γ (t + k) (δ k)⟩
+  let V_δ : ℕ → (ℕ → 𝒮) → ℕ → ℝ := (fun t δ k => M.V θ γ (t + k) (δ k))
   ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) =
     𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
       (((1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k ↦ (γ ^ range (k + 1)) ⬝ᵥ
@@ -68,10 +69,13 @@ private lemma main
         ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log)) := by
 -- proof
   intro hPas _ _ _ _ V_δ
-  have hπeq : ∀ θ t («\sf{s}» : ℕ ⇀ 𝒮) («\sf{a}» : ℕ ⇀ 𝒜),
+  have hInst : ∀ θ' (t : ℕ), SinglePSpace (M θ') (fun ω => (a t ω, s t ω)) := fun θ' t =>
+    Model.IsPolicyTrajectory.singlePSpace_as (M := M) (r := r) (s := s) (a := a) θ' t
+  have hπeq : ∀ θ (t : ℕ) («\sf{s}» : ℕ → 𝒮) («\sf{a}» : ℕ → 𝒜),
       (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ) =
-        M.π[θ] «\sf{s}»[t] «\sf{a}»[t] := fun θ t sb ab =>
-    (hfactor.factor θ t (sb t) (ab t)).symm
+        M.π[θ] «\sf{s}»[t] «\sf{a}»[t] := fun θ t sb ab => by
+    have : SinglePSpace (M θ) (fun ω => (a t ω, s t ω)) := hInst θ t
+    exact (hfactor.factor θ t (sb t) (ab t)).symm
   simp only [FinsetPow.dot_eq]
   classical
   have hγ : γ ∈ Set.Ico 0 1 := h₀ (by simp)
@@ -85,10 +89,7 @@ private lemma main
     funext z
     refine congrArg (gradient · θ) ?_
     funext θ'
-    simp only [hπeq θ' 0 ⟨fun _ => z.1⟩ ⟨fun _ => z.2⟩]
-  obtain ⟨r⟩ := r
-  obtain ⟨s⟩ := s
-  obtain ⟨a⟩ := a
+    exact congrArg Real.log (hπeq θ' 0 (fun _ => z.1) (fun _ => z.2)).symm
   obtain rfl : r = fun t ω ↦ (ω t).1 :=
     funext₂ fun t ω ↦ (congrArg Prod.fst (congrFun (hfactor.htr.stage_eq t) ω)).symm
   obtain rfl : s = fun t ω ↦ (ω t).2.1 :=
@@ -117,7 +118,7 @@ private lemma main
     have hfe : (fun θ' : Θ => Real.log (M.π[θ'] sₜ aₜ)) =
         (fun θ' : Θ => (ℙ[M θ']((a t) = aₜ | (s t) = sₜ) : ℝ).log) :=
       funext fun θ' =>
-        congrArg Real.log (hπeq θ' t ⟨fun _ => sₜ⟩ ⟨fun _ => aₜ⟩).symm
+        congrArg Real.log (hπeq θ' t (fun _ => sₜ) (fun _ => aₜ)).symm
     simp only [hfe]
   have hφg : StronglyMeasurable
     (fun z : 𝒮 × 𝒜 => gradient (fun θ' => Real.log (M.π[θ'] z.1 z.2)) θ) :=
@@ -303,7 +304,7 @@ private lemma main
     funext k
     have hk : t + k + 1 = t + 1 + k := by omega
     simp only [Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul, V_δ,
-      Function.getSliceFrom_apply, hk]
+      Function.getSliceFrom_apply, getElem_nat_apply, hk]
   have hFθ : ∀ t, Measurable fun ω : ℕ → ℝ × 𝒮 × 𝒜 =>
     ((γ * ℓ) ^ (id : ℕ → ℕ) ⬝ᵥ
       ((fun j => r j ω)[t:] + γ • V_δ[t + 1] (fun j => s j ω)[t + 1:] -
@@ -313,7 +314,7 @@ private lemma main
     exact congrArg (fun δ => Dot.dot ((γ * ℓ) ^ (id : ℕ → ℕ) : ℕ → ℝ) δ)
       (hδθ (fun j => s j ω) (fun j => r j ω) t).symm
   refine (GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity.In_Icc.In_Ico
-    (M := M) (θ := θ) (r := ⟨r⟩) (s := ⟨s⟩) (a := ⟨a⟩) hγ hℓ hfactor hπ hVm h₁ h₂ hBdd hIntg hφpol hMs hR).trans ?_
+    (M := M) (θ := θ) (r := r) (s := s) (a := a) hγ hℓ hfactor hπ hVm h₁ h₂ hBdd hIntg hφpol hMs hR).trans ?_
   symm
   have hFeq :
     (fun t (s : ℕ → 𝒮) (a : ℕ → 𝒜) (r : ℕ → ℝ) =>
@@ -329,7 +330,7 @@ private lemma main
     refine Finset.sum_congr rfl fun i _ => ?_
     have hk : t + i + 1 = t + 1 + i := by omega
     simp only [Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul, V_δ,
-      Function.getSliceFrom_apply]
+      Function.getSliceFrom_apply, getElem_nat_apply]
     rw [hk]
   refine (congrArg
       (fun F : ℕ → (ℕ → 𝒮) → (ℕ → 𝒜) → (ℕ → ℝ) → ℝ =>
@@ -348,4 +349,4 @@ private lemma main
 
 
 -- created on 2026-10-21
--- updated on 2026-11-18
+-- updated on 2026-11-23

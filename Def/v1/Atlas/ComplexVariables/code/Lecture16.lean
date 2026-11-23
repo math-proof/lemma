@@ -19,20 +19,18 @@ public import Mathlib.Analysis.Complex.Basic
 public import Mathlib.LinearAlgebra.Complex.FiniteDimensional
 public import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
 public import Mathlib.Analysis.Calculus.ParametricIntervalIntegral
-public import Mathlib.Analysis.SpecialFunctions.Integrals.PosLogEqCircleAverage
+public import Mathlib.Analysis.SpecialFunctions.Integrals.PosLog
 public import Def.v1.Atlas.ComplexVariables.code.Lecture13.Part2
-public import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture13
 public import Abbrev.v1.Atlas.ComplexVariables.code.Lecture16
 
 @[expose] public section
 
 open Complex InnerProductSpace Laplacian Metric Real Set Topology Filter MeasureTheory
 
-
-def poissonIntegral (U : ℂ → ℝ) (a : ℂ) : ℝ :=
+noncomputable def poissonIntegral (U : ℂ → ℝ) (a : ℂ) : ℝ :=
   Real.circleAverage (poissonKernel 0 a • U) 0 1
 
-def herglotzIntegral (U : ℂ → ℝ) (a : ℂ) : ℂ :=
+noncomputable def herglotzIntegral (U : ℂ → ℝ) (a : ℂ) : ℂ :=
   (2 * (π : ℝ))⁻¹ • ∫ θ in (0 : ℝ)..2 * π,
     herglotzRieszKernel 0 a (circleMap 0 1 θ) • (U (circleMap 0 1 θ) : ℂ)
 

@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Initialize.Tactic.Attr.Basic
 public import Def.v1.Atlas.EllipticCurves.code.JInvariant
 
 public section
@@ -18,11 +19,10 @@ public theorem shortWeierstrassCurve_c₄ (A B : k) :
     WeierstrassCurve.b₄]
   ring
 
-variable [Field k]
 /--
 [shortWeierstrassCurve_Δ](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
-@[simp]
+@[path, simp]
 public theorem shortWeierstrassCurve_Δ (A B : k) :
   (shortWeierstrassCurve A B).Δ = -16 * (4 * A ^ 3 + 27 * B ^ 2) := by
   simp only [shortWeierstrassCurve, WeierstrassCurve.Δ, WeierstrassCurve.b₂,
@@ -33,7 +33,6 @@ public theorem shortWeierstrassCurve_Δ (A B : k) :
 [four_ne_zero_of_two_ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem four_ne_zero_of_two_ne_zero
-  [Field k]
 -- given
   (h2 : (2 : k) ≠ 0) :
 -- imply
@@ -46,7 +45,6 @@ public theorem four_ne_zero_of_two_ne_zero
 [sixteen_ne_zero_of_two_ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem sixteen_ne_zero_of_two_ne_zero
-  [Field k]
 -- given
   (h2 : (2 : k) ≠ 0) :
 -- imply
@@ -59,7 +57,6 @@ public theorem sixteen_ne_zero_of_two_ne_zero
 [shortWeierstrassCurve_isElliptic](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem shortWeierstrassCurve_isElliptic
-  [Field k]
   {A B : k}
 -- given
   (h2 : (2 : k) ≠ 0)
@@ -75,20 +72,18 @@ public theorem shortWeierstrassCurve_isElliptic
 [j_eq_jInvariant](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem j_eq_jInvariant
-  [Field k]
   {A B : k}
 -- given
   (h2 : (2 : k) ≠ 0)
   (hΔ : 4 * A ^ 3 + 27 * B ^ 2 ≠ 0) :
 -- imply
+  letI : (shortWeierstrassCurve A B).IsElliptic :=
+    shortWeierstrassCurve_isElliptic (A := A) (B := B) h2 hΔ
   (shortWeierstrassCurve A B).j = jInvariant A B := by
 -- proof
-  haveI := shortWeierstrassCurve_isElliptic (A := A) (B := B) h2 hΔ
-  simp only [WeierstrassCurve.j, jInvariant]
-  have hΔ_val : ((shortWeierstrassCurve A B).Δ' : k) = (shortWeierstrassCurve A B).Δ :=
-    WeierstrassCurve.coe_Δ' _
-  simp only [Units.val_inv_eq_inv_val, hΔ_val, shortWeierstrassCurve_Δ,
-    shortWeierstrassCurve_c₄]
+  have : (shortWeierstrassCurve A B).IsElliptic :=
+    shortWeierstrassCurve_isElliptic (A := A) (B := B) h2 hΔ
+  rw [WeierstrassCurve.j_eq, jInvariant, shortWeierstrassCurve_Δ, shortWeierstrassCurve_c₄]
   have h16 : (16 : k) ≠ 0 := sixteen_ne_zero_of_two_ne_zero h2
   field_simp
   ring
@@ -97,7 +92,6 @@ public theorem j_eq_jInvariant
 [jInvariant_of_A_eq_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem jInvariant_of_A_eq_zero
-  [Field k]
   {B : k} :
 -- imply
   jInvariant (0 : k) B = 0 := by
@@ -108,7 +102,6 @@ public theorem jInvariant_of_A_eq_zero
 [jInvariant_of_B_eq_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem jInvariant_of_B_eq_zero
-  [Field k]
   {A : k}
 -- given
   (hA : A ≠ 0)
@@ -125,7 +118,6 @@ public theorem jInvariant_of_B_eq_zero
 [twentyseven_ne_zero_of_three_ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem twentyseven_ne_zero_of_three_ne_zero
-  [Field k]
 -- given
   (h3 : (3 : k) ≠ 0) :
 -- imply
@@ -138,7 +130,6 @@ public theorem twentyseven_ne_zero_of_three_ne_zero
 [onehundredeight_ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem onehundredeight_ne_zero
-  [Field k]
 -- given
   (h2 : (2 : k) ≠ 0)
   (h3 : (3 : k) ≠ 0) :
@@ -152,7 +143,6 @@ public theorem onehundredeight_ne_zero
 [seventeentwentyeight_ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem seventeentwentyeight_ne_zero
-  [Field k]
 -- given
   (h2 : (2 : k) ≠ 0)
   (h3 : (3 : k) ≠ 0) :
@@ -166,7 +156,6 @@ public theorem seventeentwentyeight_ne_zero
 [jInvariant_surjective](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem jInvariant_surjective
-  [Field k]
   {j₀ : k}
 -- given
   (h2 : (2 : k) ≠ 0)
@@ -209,7 +198,6 @@ public theorem jInvariant_surjective
 [short_weierstrass_iso_forward](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem short_weierstrass_iso_forward
-  [Field k]
   {A B A' B' : k}
   {C : WeierstrassCurve.VariableChange k}
 -- given
@@ -248,7 +236,6 @@ public theorem short_weierstrass_iso_forward
 [short_weierstrass_iso_backward](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem short_weierstrass_iso_backward
-  [Field k]
   {A B : k}
   {μ : kˣ} :
 -- imply
@@ -260,7 +247,6 @@ public theorem short_weierstrass_iso_backward
 [short_weierstrass_iso_iff](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem short_weierstrass_iso_iff
-  [Field k]
   {A B A' B' : k}
 -- given
   (h2 : (2 : k) ≠ 0)
@@ -271,17 +257,16 @@ public theorem short_weierstrass_iso_iff
   constructor
   ·
     rintro ⟨C, hC⟩
-    obtain ⟨_, _, _, hA', hB'⟩ := short_weierstrass_iso_forward A B A' B' h2 h3 C hC
+    obtain ⟨_, _, _, hA', hB'⟩ := short_weierstrass_iso_forward h2 h3 hC
     exact ⟨C.u⁻¹, hA', hB'⟩
   ·
     rintro ⟨μ, hA', hB'⟩
-    exact ⟨⟨μ⁻¹, 0, 0, 0⟩, by rw [hA', hB']; exact short_weierstrass_iso_backward A B μ⟩
+    exact ⟨⟨μ⁻¹, 0, 0, 0⟩, by rw [hA', hB']; exact short_weierstrass_iso_backward (μ := μ)⟩
 
 /--
 [jInvariant_scaling](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem jInvariant_scaling
-  [Field k]
   {A B : k}
   {μ : k}
 -- given
@@ -300,7 +285,6 @@ public theorem jInvariant_scaling
 [A_eq_zero_of_jInvariant_eq_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem A_eq_zero_of_jInvariant_eq_zero
-  [Field k]
   {A B : k}
 -- given
   (hΔ : 4 * A ^ 3 + 27 * B ^ 2 ≠ 0)
@@ -328,7 +312,6 @@ public theorem A_eq_zero_of_jInvariant_eq_zero
 [B_eq_zero_of_jInvariant_eq_1728](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem B_eq_zero_of_jInvariant_eq_1728
-  [Field k]
   {A B : k}
 -- given
   (hΔ : 4 * A ^ 3 + 27 * B ^ 2 ≠ 0)
@@ -356,7 +339,6 @@ public theorem B_eq_zero_of_jInvariant_eq_1728
 [jInvariant_cross_multiply](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem jInvariant_cross_multiply
-  [Field k]
   {A B A' B' : k}
 -- given
   (hΔ : 4 * A ^ 3 + 27 * B ^ 2 ≠ 0)
@@ -385,7 +367,6 @@ public theorem jInvariant_cross_multiply
 [jInvariant_cross_multiply_B](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem jInvariant_cross_multiply_B
-  [Field k]
   {A B A' B' : k}
 -- given
   (h3 : (3 : k) ≠ 0)
@@ -414,7 +395,6 @@ public theorem jInvariant_cross_multiply_B
 [jInvariant_converse_generic](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem jInvariant_converse_generic
-  [Field k]
   {A B A' B' : k}
 -- given
   (h2 : (2 : k) ≠ 0)
@@ -429,8 +409,8 @@ public theorem jInvariant_converse_generic
 -- imply
   ∃ u : k, u ≠ 0 ∧ A' = u ^ 2 * A ∧ B' = u ^ 3 * B := by
 -- proof
-  have hjcross := jInvariant_cross_multiply A B A' B' hΔ hΔ' h2 h3 hj
-  have hBcross := jInvariant_cross_multiply_B A B A' B' h3 hjcross
+  have hjcross := jInvariant_cross_multiply hΔ hΔ' h2 h3 hj
+  have hBcross := jInvariant_cross_multiply_B h3 hjcross
   have hden : (4 * A ^ 3 + 27 * B ^ 2) * A' * B' ≠ 0 :=
     mul_ne_zero (mul_ne_zero hΔ hA') hB'
   refine ⟨A * B * (4 * A' ^ 3 + 27 * B' ^ 2) / ((4 * A ^ 3 + 27 * B ^ 2) * A' * B'),
@@ -438,7 +418,8 @@ public theorem jInvariant_converse_generic
   ·
     suffices h : (A * B * (4 * A' ^ 3 + 27 * B' ^ 2)) ^ 2 * A =
       A' * ((4 * A ^ 3 + 27 * B ^ 2) * A' * B') ^ 2 by
-      rwa [div_pow, div_mul_eq_mul_div, eq_div_iff (pow_ne_zero 2 hden)]
+      rw [div_pow, div_mul_eq_mul_div, eq_div_iff (pow_ne_zero 2 hden)]
+      exact h.symm
     calc (A * B * (4 * A' ^ 3 + 27 * B' ^ 2)) ^ 2 * A
       = (A ^ 3 * (4 * A' ^ 3 + 27 * B' ^ 2)) *
         (B ^ 2 * (4 * A' ^ 3 + 27 * B' ^ 2)) := by ring
@@ -448,7 +429,8 @@ public theorem jInvariant_converse_generic
   ·
     suffices h : (A * B * (4 * A' ^ 3 + 27 * B' ^ 2)) ^ 3 * B =
       B' * ((4 * A ^ 3 + 27 * B ^ 2) * A' * B') ^ 3 by
-      rwa [div_pow, div_mul_eq_mul_div, eq_div_iff (pow_ne_zero 3 hden)]
+      rw [div_pow, div_mul_eq_mul_div, eq_div_iff (pow_ne_zero 3 hden)]
+      exact h.symm
     calc (A * B * (4 * A' ^ 3 + 27 * B' ^ 2)) ^ 3 * B
       = (A ^ 3 * (4 * A' ^ 3 + 27 * B' ^ 2)) *
         (B ^ 2 * (4 * A' ^ 3 + 27 * B' ^ 2)) *
@@ -462,7 +444,6 @@ public theorem jInvariant_converse_generic
 [jInvariant_eq_of_iso](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem jInvariant_eq_of_iso
-  [Field k]
   {A B A' B' : k}
   {μ : k}
 -- given
@@ -472,13 +453,12 @@ public theorem jInvariant_eq_of_iso
 -- imply
   jInvariant A B = jInvariant A' B' := by
 -- proof
-  rw [hA', hB', jInvariant_scaling A B μ hμ]
+  rw [hA', hB', jInvariant_scaling hμ]
 
 /--
 [jInvariant_converse_ne_zero_ne_1728](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem jInvariant_converse_ne_zero_ne_1728
-  [Field k]
   {A B A' B' : k}
 -- given
   (h2 : (2 : k) ≠ 0)
@@ -500,8 +480,10 @@ public theorem jInvariant_converse_ne_zero_ne_1728
     simp only [jInvariant, hB, mul_zero, zero_pow, ne_eq, OfNat.ofNat_ne_zero,
       not_false_eq_true, add_zero]
     rw [mul_div_cancel_right₀]
-    exact mul_ne_zero (by have : (4 : k) = 2 ^ 2 := by norm_num
-      rw [this]; exact pow_ne_zero 2 h2) (pow_ne_zero 3 hA)
+    have h4 : (4 : k) ≠ 0 := by
+      have : (4 : k) = 2 ^ 2 := by norm_num
+      rw [this]; exact pow_ne_zero 2 h2
+    exact mul_ne_zero h4 (pow_ne_zero 3 hA)
   have hB' : B' ≠ 0 := by
     intro hB'
     by_cases hA'0 : A' = 0
@@ -510,15 +492,16 @@ public theorem jInvariant_converse_ne_zero_ne_1728
       simp only [jInvariant, mul_zero, zero_pow, ne_eq, OfNat.ofNat_ne_zero,
         not_false_eq_true, add_zero]
       rw [mul_div_cancel_right₀]
-      exact mul_ne_zero (by have : (4 : k) = 2 ^ 2 := by norm_num
-        rw [this]; exact pow_ne_zero 2 h2) (pow_ne_zero 3 hA'0)
-  exact jInvariant_converse_generic A B A' B' h2 h3 hΔ hΔ' hA hB hA' hB' hj
+      have h4 : (4 : k) ≠ 0 := by
+        have : (4 : k) = 2 ^ 2 := by norm_num
+        rw [this]; exact pow_ne_zero 2 h2
+      exact mul_ne_zero h4 (pow_ne_zero 3 hA'0)
+  exact jInvariant_converse_generic h2 h3 hΔ hΔ' hA hB hA' hB' hj
 
 /--
 [jInvariant_converse_eq_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem jInvariant_converse_eq_zero
-  [Field k]
   {A B A' B' : k}
 -- given
   (h2 : (2 : k) ≠ 0)
@@ -530,14 +513,13 @@ public theorem jInvariant_converse_eq_zero
 -- imply
   A = 0 ∧ A' = 0 := by
 -- proof
-  exact ⟨A_eq_zero_of_jInvariant_eq_zero A B hΔ h2 h3 hj0,
-    A_eq_zero_of_jInvariant_eq_zero A' B' hΔ' h2 h3 (hj ▸ hj0)⟩
+  exact ⟨A_eq_zero_of_jInvariant_eq_zero hΔ h2 h3 hj0,
+    A_eq_zero_of_jInvariant_eq_zero hΔ' h2 h3 (hj ▸ hj0)⟩
 
 /--
 [jInvariant_converse_eq_1728](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem jInvariant_converse_eq_1728
-  [Field k]
   {A B A' B' : k}
 -- given
   (h2 : (2 : k) ≠ 0)
@@ -549,14 +531,13 @@ public theorem jInvariant_converse_eq_1728
 -- imply
   B = 0 ∧ B' = 0 := by
 -- proof
-  exact ⟨B_eq_zero_of_jInvariant_eq_1728 A B hΔ h2 h3 hj1728,
-    B_eq_zero_of_jInvariant_eq_1728 A' B' hΔ' h2 h3 (hj ▸ hj1728)⟩
+  exact ⟨B_eq_zero_of_jInvariant_eq_1728 hΔ h2 h3 hj1728,
+    B_eq_zero_of_jInvariant_eq_1728 hΔ' h2 h3 (hj ▸ hj1728)⟩
 
 /--
 [jInvariant_algebraMap](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem jInvariant_algebraMap
-  [Field k]
   {K : Type*}
   [Field K]
   [Algebra k K]
@@ -570,7 +551,6 @@ public theorem jInvariant_algebraMap
 [minpoly_natDegree_le_of_pow_eq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem minpoly_natDegree_le_of_pow_eq
-  [Field k]
   [Field K]
   [Algebra k K]
   {μ : K}
@@ -592,7 +572,6 @@ public theorem minpoly_natDegree_le_of_pow_eq
 [isomorphic_over_algClosure_iff_jInvariant_eq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
 public theorem isomorphic_over_algClosure_iff_jInvariant_eq
-  [Field k]
   {A B A' B' : k}
 -- given
   (h2 : (2 : k) ≠ 0)
@@ -608,12 +587,12 @@ public theorem isomorphic_over_algClosure_iff_jInvariant_eq
     rintro ⟨μ, hμ, hA', hB'⟩
     apply hinj
     rw [jInvariant_algebraMap, jInvariant_algebraMap, hA', hB',
-      jInvariant_scaling _ _ μ hμ]
+      jInvariant_scaling hμ]
   ·
     intro hj
     by_cases hj0 : jInvariant A B = 0
     ·
-      obtain ⟨hA0, hA'0⟩ := jInvariant_converse_eq_zero A B A' B' h2 h3 hΔ hΔ' hj hj0
+      obtain ⟨hA0, hA'0⟩ := jInvariant_converse_eq_zero h2 h3 hΔ hΔ' hj hj0
       subst hA0; subst hA'0
       have hB : B ≠ 0 := by intro hB; apply hΔ; rw [hB]; ring
       have hB' : B' ≠ 0 := by intro hB'; apply hΔ'; rw [hB']; ring
@@ -628,7 +607,7 @@ public theorem isomorphic_over_algClosure_iff_jInvariant_eq
         rwa [map_ne_zero_iff _ hinj]
     · by_cases hj1728 : jInvariant A B = 1728
       ·
-        obtain ⟨hB0, hB'0⟩ := jInvariant_converse_eq_1728 A B A' B' h2 h3 hΔ hΔ' hj hj1728
+        obtain ⟨hB0, hB'0⟩ := jInvariant_converse_eq_1728 h2 h3 hΔ hΔ' hj hj1728
         subst hB0; subst hB'0
         have hA : A ≠ 0 := by intro hA; apply hΔ; rw [hA]; ring
         have hA' : A' ≠ 0 := by intro hA'; apply hΔ'; rw [hA']; ring
@@ -642,7 +621,7 @@ public theorem isomorphic_over_algClosure_iff_jInvariant_eq
           rwa [map_ne_zero_iff _ hinj]
         · simp [map_zero]
       ·
-        obtain ⟨u, hu, hA'u, hB'u⟩ := jInvariant_converse_ne_zero_ne_1728 A B A' B'
+        obtain ⟨u, hu, hA'u, hB'u⟩ := jInvariant_converse_ne_zero_ne_1728
           h2 h3 hΔ hΔ' hj hj0 hj1728
         obtain ⟨μ, hμsq⟩ := IsAlgClosed.exists_pow_nat_eq
           (algebraMap k (AlgebraicClosure k) u) (by norm_num : 0 < 2)
@@ -657,24 +636,23 @@ public theorem isomorphic_over_algClosure_iff_jInvariant_eq
 /--
 [shortWeierstrassCurve_c](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
-public theorem shortWeierstrassCurve_c_eq
-  [Field k]
+private theorem shortWeierstrassCurve_c_eq
   {A B : k} :
 -- imply
   (shortWeierstrassCurve A B).c₄ = -48 * A := by
 -- proof
-  apply shortWeierstrassCurve_c A B
+  apply shortWeierstrassCurve_c₄
 
 /--
 [shortWeierstrassCurve_](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariant.lean)
 -/
-public theorem shortWeierstrassCurve__eq
-  [Field k]
+private theorem shortWeierstrassCurve_Delta_eq
   {A B : k} :
 -- imply
   (shortWeierstrassCurve A B).Δ = -16 * (4 * A ^ 3 + 27 * B ^ 2) := by
 -- proof
-  apply shortWeierstrassCurve_ A B
+  apply shortWeierstrassCurve_Δ
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-23

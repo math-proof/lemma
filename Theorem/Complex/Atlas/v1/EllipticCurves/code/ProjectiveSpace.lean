@@ -79,13 +79,10 @@ public theorem mk_coord
 -- given
   (hv : v ≠ 0) :
 -- imply
-  Projectivization.mk k (coord n k (mk n k v hv)) (coord_ne_zero n k (mk n k v hv)) = mk n k v hv :=
+  Projectivization.mk k (coord n k (mk n k v hv)) coord_ne_zero = mk n k v hv :=
 -- proof
   Projectivization.mk_rep (mk n k v hv)
-end ProjectiveSpace
-namespace ProjectiveSpace
-
-end ProjectiveSpace
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-23

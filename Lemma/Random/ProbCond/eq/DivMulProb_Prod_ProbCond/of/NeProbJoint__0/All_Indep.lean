@@ -5,6 +5,7 @@ import Mathlib.MeasureTheory.Function.FactorsThrough
 import Mathlib.Probability.Independence.Conditional
 import Def.Probability.Process.HiddenMarkovSequence.Part2
 import Instance.Probability.SinglePSpaceMeasurable
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory Measure Random Fun
 open scoped ProbabilityTheory
 
@@ -41,8 +42,8 @@ private lemma main
   [MeasurableSingletonClass α] [MeasurableSingletonClass β]
   {π : Measure Ω} [IsProbabilityMeasure π]
   {x : Ω → α} [Fact (Measurable x)]
-  {y : ℕ ⇀ Ω → β} {m : ℕ} [Fact (Measurable y[:m])]
-  {«\sf{x}» : α} {«\sf{y}» : ℕ ⇀ β}
+  {y : ℕ → Ω → β} {m : ℕ} [Fact (Measurable y[:m])]
+  {«\sf{x}» : α} {«\sf{y}» : ℕ → β}
 -- given
   (h₀ : ∀ t : ℕ, t > 0 → t < m → y[t] ⟂ᵢ[x, ‹Fact (Measurable x)›.out; π] y[:t]) :
 -- imply
@@ -69,7 +70,7 @@ private lemma main
     rw [Prob_Cond.eq.Div.of.SinglePSpace inferInstance, hjoint, hp,
       zero_mul, ENNReal.zero_div, ENNReal.zero_div]
   let a : α := «\sf{x}»
-  let b : ℕ → β := ⇑«\sf{y}»
+  let b : ℕ → β := «\sf{y}»
   let ys : Ω → Fin m → β := y[:m]
   let A : Set Ω := x ⁻¹' {a}
   let prefixSet : ℕ → Set Ω := fun k => ⋂ j : Fin k, y[j] ⁻¹' {b j}
@@ -296,4 +297,4 @@ private lemma main
 
 
 -- created on 2024-06-18
--- updated on 2026-11-22
+-- updated on 2026-11-23

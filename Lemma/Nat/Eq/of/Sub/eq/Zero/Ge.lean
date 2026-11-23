@@ -1,6 +1,4 @@
-import Lemma.Nat.Le.of.Sub.eq.Zero
-import Lemma.Nat.Eq.of.Le.Le
-open Nat
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -12,8 +10,8 @@ private lemma main
 -- imply
   a = b := by
 -- proof
-  have := Le.of.Sub.eq.Zero h_eq
-  apply Eq.of.Le.Le this h_ge
+  apply le_antisymm (Nat.le_of_sub_eq_zero h_eq) h_ge
 
 
 -- created on 2025-04-11
+-- updated on 2026-11-23

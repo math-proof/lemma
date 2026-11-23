@@ -1,4 +1,4 @@
-import Lemma.List.Permute.eq.Append_AppendRotateTakeDrop
+import Theorem.List.Permute.eq.Append_AppendRotateTakeDrop
 import Lemma.List.ProdAppend.eq.MulProdS
 open List
 
@@ -17,3 +17,4 @@ private lemma main
 
 
 -- created on 2025-07-14
+-- updated on 2026-11-23

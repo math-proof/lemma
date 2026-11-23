@@ -3,6 +3,7 @@ import Lemma.Random.PSpace_Path.of.All_PSpace
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
 import Mathlib.Analysis.Calculus.Gradient.Basic
 import Instance.Dynamics.PolicyTrajectory
+import Instance.Data.Nat.Fun
 open scoped ENNReal.ToRealCoe
 open Finset (range)
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure Real IsPolicyTrajectory
@@ -22,46 +23,50 @@ private lemma main
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {θ : Θ}
   {γ ℓ : ℝ}
-  {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
-  {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
-  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
   {R : ℝ}
 -- given
   (h₀ : {γ, ℓ} ⊆ Set.Ico 0 1)
   (hπ : Model.IsConditionalProbability M r s a)
-  (h₂ : ∀ («\sf{s}» : ℕ ⇀ 𝒮) («\sf{a}» : ℕ ⇀ 𝒜),
+  (h₂ : ∀ («\sf{s}» : ℕ → 𝒮) («\sf{a}» : ℕ → 𝒜),
     Differentiable ℝ (fun θ => (ℙ[M θ](a[0] = «\sf{a}»[0] | s[0] = «\sf{s}»[0]) : ℝ)))
-  (h₃ : sup[θ, «\sf{s}» : ℕ ⇀ 𝒮, «\sf{a}» : ℕ ⇀ 𝒜]
+  (h₃ : sup[θ, «\sf{s}» : ℕ → 𝒮, «\sf{a}» : ℕ → 𝒜]
     ‖∇[θ] (ℙ[M θ](a[0] = «\sf{a}»[0] | s[0] = «\sf{s}»[0]) : ℝ)‖ < ∞)
   (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1) :
 -- imply
   have : ∀ θ t, SinglePSpace (M θ) (a t, s t) := fun θ t =>
     hπ.htr.singlePSpace_as (haj := hπ.haj) θ t
   have : ∀ θ', PSpace (M θ') (AsPathRV.path r) := fun _ =>
-    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) hπ.htr.stage_eq t).aemeasurable⟩)
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := r) (s := s) (a := a) hπ.htr.stage_eq t).aemeasurable⟩)
   have : PSpace (M θ) (AsPathRV.path s) :=
-    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) hπ.htr.stage_eq t).aemeasurable⟩)
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst (r := r) (s := s) (a := a) hπ.htr.stage_eq t).aemeasurable⟩)
   have : PSpace (M θ) (AsPathRV.path a) :=
-    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) hπ.htr.stage_eq t).aemeasurable⟩)
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := r) (s := s) (a := a) hπ.htr.stage_eq t).aemeasurable⟩)
   let : MeasurableSpace Θ := borel Θ
-  let V_θ : ℕ ⇀ (ℕ → 𝒮) → ℕ → ℝ := ⟨fun t δ k => M.V θ γ (t + k) (δ k)⟩
+  let V_θ : ℕ → (ℕ → 𝒮) → ℕ → ℝ := (fun t δ k => M.V θ γ (t + k) (δ k))
   ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) =
     𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
       (((1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k ↦ (γ ^ range (k + 1)) ⬝ᵥ
         (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:]))) •
         ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log)) := by
 -- proof
+  have hInst : ∀ θ' (t : ℕ), SinglePSpace (M θ') (fun ω => (a t ω, s t ω)) := fun θ' t =>
+    Model.IsPolicyTrajectory.singlePSpace_as (M := M) (r := r) (s := s) (a := a) θ' t
   -- stage-t conditional = stage-0 via factor (both equal policy.π)
-  have hstage : ∀ θ' t (sₜ : 𝒮) (aₜ : 𝒜),
+  have hstage : ∀ θ' (t : ℕ) (sₜ : 𝒮) (aₜ : 𝒜),
       (ℙ[M θ'](a[t] = aₜ | s[t] = sₜ) : ℝ) = (ℙ[M θ'](a[0] = aₜ | s[0] = sₜ) : ℝ) :=
-    fun θ' t x u =>
-      (hπ.factor θ' t x u).symm.trans (hπ.factor θ' 0 x u)
+    fun θ' t x u => by
+      have : SinglePSpace (M θ') (fun ω => (a t ω, s t ω)) := hInst θ' t
+      have : SinglePSpace (M θ') (fun ω => (a 0 ω, s 0 ω)) := hInst θ' 0
+      exact (hπ.factor θ' t x u).symm.trans (hπ.factor θ' 0 x u)
   -- dens CM Diff is on the path-binder conditional; rewrite via hstage
-  have hDiff : ∀ t («\sf{s}» : ℕ ⇀ 𝒮) («\sf{a}» : ℕ ⇀ 𝒜),
+  have hDiff : ∀ (t : ℕ) («\sf{s}» : ℕ → 𝒮) («\sf{a}» : ℕ → 𝒜),
       Differentiable ℝ (fun θ => (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)) :=
     fun t sb ab =>
       (funext fun θ' => hstage θ' t (sb t) (ab t)) ▸
-        h₂ ⟨fun _ => sb t⟩ ⟨fun _ => ab t⟩
+        h₂ (fun _ => sb t) (fun _ => ab t)
   -- dens CM ∃g Finset-sum witness from uniform ‖∇ℙ‖ bound + Fintype 𝒜
   have hExistG : sup[x] (∑ u, sSup (Set.range fun θ => ‖∇[θ] (ℙ[M θ](a[0] = u | s[0] = x) : ℝ)‖)) < ∞ := by
     obtain ⟨C, hC⟩ := h₃
@@ -71,14 +76,14 @@ private lemma main
       intro u
       apply csSup_le (Set.range_nonempty _)
       rintro _ ⟨κ, rfl⟩
-      simpa using hC ⟨(κ, (⟨fun _ => x⟩, ⟨fun _ => u⟩)), rfl⟩
+      simpa using hC ⟨(κ, ((fun _ => x), (fun _ => u))), rfl⟩
     calc
       ∑ u, sSup (Set.range fun θ => ‖∇[θ] (ℙ[M θ](a[0] = u | s[0] = x) : ℝ)‖)
           ≤ ∑ _u : 𝒜, C := Finset.sum_le_sum fun u _ => hle u
       _ = C * (Fintype.card 𝒜 : ℝ) := by
         simp [Finset.sum_const, nsmul_eq_mul, mul_comm]
   -- dens CM score bound; finite 𝒮×𝒜 ⇒ BddAbove automatically
-  have hMs : sup[«\sf{s}» : ℕ ⇀ 𝒮, «\sf{a}» : ℕ ⇀ 𝒜]
+  have hMs : sup[«\sf{s}» : ℕ → 𝒮, «\sf{a}» : ℕ → 𝒜]
       ‖∇[θ] (ℙ[M θ](a[0] = «\sf{a}»[0] | s[0] = «\sf{s}»[0]) : ℝ).log‖ < ∞ := by
     have hfin : BddAbove (Set.range fun z : 𝒮 × 𝒜 =>
         ‖∇[θ] (ℙ[M θ](a[0] = z.2 | s[0] = z.1) : ℝ).log‖) :=
@@ -92,10 +97,10 @@ private lemma main
     obtain ⟨C, hC⟩ := h₃
     refine ⟨C, ?_⟩
     rintro _ ⟨κ, rfl⟩
-    simpa using hC ⟨(κ, (⟨fun _ => x⟩, ⟨fun _ => u⟩)), rfl⟩
+    simpa using hC ⟨(κ, ((fun _ => x), (fun _ => u))), rfl⟩
   exact GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_LeSum.CountableMeasure.Subset_Ico
     h₀ hπ hDiff hExistG hBdd hMs hR
 
 
 -- created on 2026-10-21
--- updated on 2026-11-18
+-- updated on 2026-11-23

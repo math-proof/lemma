@@ -21,6 +21,7 @@ import Lemma.Random.NormClip.le.Abs_R
 import Lemma.Random.AeNormSub.le.DeltaBound.of.In_Ico.All_EqWithDensity
 import Lemma.Random.Integral_SMul.eq.Zero.of.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity
 import Instance.Dynamics.PolicyTrajectory
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure Real
 set_option maxHeartbeats 900000
 
@@ -521,9 +522,9 @@ private lemma main
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {θ : Θ}
   {γ : ℝ}
-  {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
-  {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
-  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
   {R : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
@@ -540,13 +541,13 @@ private lemma main
   (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1) :
 -- imply
   have : ∀ θ', PSpace (M θ') (AsPathRV.path r) := fun _ =>
-    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := r) (s := s) (a := a) h₁ t).aemeasurable⟩)
   have : PSpace (M θ) (AsPathRV.path s) :=
-    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst (r := r) (s := s) (a := a) h₁ t).aemeasurable⟩)
   have : PSpace (M θ) (AsPathRV.path a) :=
-    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := r) (s := s) (a := a) h₁ t).aemeasurable⟩)
   let : MeasurableSpace Θ := borel Θ
-  let V_δ : ℕ ⇀ (ℕ → 𝒮) → ℕ → ℝ := ⟨fun t δ k => M.V θ γ (t + k) (δ k)⟩
+  let V_δ : ℕ → (ℕ → 𝒮) → ℕ → ℝ := (fun t δ k => M.V θ γ (t + k) (δ k))
   ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) =
     𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
       (((γ ^ (id : ℕ → ℕ)) ⬝ᵥ (r[t:] + γ • V_δ[t + 1] s[t + 1:] - V_δ[t] s[t:])) •
@@ -558,9 +559,6 @@ private lemma main
     fun y u => hMsb ⟨(y, u), rfl⟩
   intro _ _ _ _ V_δ
   classical
-  obtain ⟨r⟩ := r
-  obtain ⟨s⟩ := s
-  obtain ⟨a⟩ := a
   obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg Prod.fst (congrFun (h₁ t) ω)).symm
   obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
   obtain rfl : a = fun t ω ↦ (ω t).2.2 := funext₂ fun t ω ↦ (congrArg (·.2.2) (congrFun (h₁ t) ω)).symm
@@ -979,8 +977,8 @@ private lemma main
   congr 1
   refine tsum_congr fun k => ?_
   have hk : t + k + 1 = t + 1 + k := by omega
-  simp only [Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul, V_δ, hk]
+  simp only [Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul, V_δ, hk, getElem_nat_apply]
 
 
 -- created on 2026-10-20
--- updated on 2026-11-18
+-- updated on 2026-11-23

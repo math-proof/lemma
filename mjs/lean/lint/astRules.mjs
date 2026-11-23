@@ -878,18 +878,35 @@ function sameShape(a, b) {
 }
 
 function parenRedundantArith(ctx, node) {
-    const { LeanParenthesis, LeanArithmetic, LeanBigOperator, LeanDiv, LeanColon } = Lean.classes;
+    const {
+        LeanParenthesis, LeanArithmetic, LeanBigOperator, LeanDiv, LeanColon,
+        Lean_sqrt, LeanPow, LeanUnaryArithmeticPost,
+    } = Lean.classes;
     if (!(node instanceof LeanParenthesis)) return;
-    if (typeof node.latexParenRequired === 'function' && node.latexParenRequired()) return;
     const arg = node.arg;
+    const parent = node.parent;
+    if (parent instanceof Lean_sqrt) {
+        const group = parent.parent;
+        const power = group?.parent;
+        if (group instanceof LeanParenthesis && power instanceof LeanUnaryArithmeticPost && isBareName(arg)) {
+            ctx.warnAst('paren-redundant-arith', power,
+                'Parentheses around the atomic square-root argument are redundant inside the grouped power',
+                1, null, null, { fix: { text: String(power), mode: 'sqrt-argument' } });
+        }
+        return;
+    }
+    if (typeof node.latexParenRequired === 'function' && node.latexParenRequired()) return;
     // `(μ : ℝ*)` ascriptions stay
     if (arg instanceof LeanColon) return;
     // `if` / `fun` / `let` / `match` / `by` / tuples: the extent of these forms is not captured by
     // the parser's arithmetic insert below, so keep the parens (also covers `(fun y => f y) - g`).
     const head = unwrapParens(arg);
     if (head && ASCRIPTION_KEEP_PARENS.has(head.constructor?.name || '')) return;
-    const parent = node.parent;
     if (!(parent instanceof LeanArithmetic)) return;
+    // lean.js can attach a postfix power after the entire product in `a * (√(x))²`.
+    // Keep the root grouped when dropping the pair would expose it to that power.
+    if (head instanceof Lean_sqrt && (parent instanceof LeanPow ||
+        (parent.rhs === node && parent.parent instanceof LeanUnaryArithmeticPost))) return;
     // `⬝ᵥ` is this repo's `Dot.dot` (`pathDotV` / `infixl:72`), not `*`/`+`. Parens around a
     // `⬝ᵥ` parent stay: a trailing `fun` in its RHS swallows following `=`, `|`, `:=`, and
     // `γ ^ range (k + 1) ⬝ᵥ v` takes `range (k + 1)` as the `Dot.dot` argument.

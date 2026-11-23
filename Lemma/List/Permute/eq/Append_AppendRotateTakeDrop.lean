@@ -1,7 +1,7 @@
 import Theorem.Nat.Sub.gt.Zero.is.Gt
 import Lemma.List.LengthDrop.eq.SubLength
-import Lemma.List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0
-import Lemma.List.SliceDrop.eq.Slice_AddS
+import Theorem.List.Permute_0.eq.AppendRotateTake___Drop.of.GtLength_0
+import Theorem.List.SliceDrop.eq.Slice_AddS
 open List Nat
 
 
@@ -26,4 +26,4 @@ private lemma main
 
 
 -- created on 2025-06-17
--- updated on 2026-11-22
+-- updated on 2026-11-23

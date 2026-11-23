@@ -26,6 +26,7 @@ import Instance.Probability.Moments.Variance
 import Lemma.Random.StronglyMeasurable_KfAndAll_LeNormKf.of.All_LeNorm.StronglyMeasurable.All_EqWithDensity
 import Lemma.Random.TSum_SMul.eq.Integral_Fderiv_Vkd.of.In_Ico.GtInftySup.All_Integrable.All_LeNormGrad.All_Differentiable_Prob.All_Measurable_Prob.All_EqWithDensity
 import Instance.Dynamics.PolicyTrajectory
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory Topology PolicyGradient PolicyGradient.Model Random Finset Kernel
 set_option maxHeartbeats 900000
 
@@ -952,9 +953,9 @@ private lemma main
   {γ : ℝ}
   {Q : Θ → ℕ → 𝒮 → 𝒜 → ℝ}
   {V : Θ → ℕ → 𝒮 → ℝ}
-  {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
-  {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
-  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
   {R : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
@@ -972,11 +973,11 @@ private lemma main
   (hR : ∀ p, (M.reward p : Measure ℝ) (Set.Icc (-R) R) = 1) :
 -- imply
   have : ∀ θ', PSpace (M θ') (AsPathRV.path r) := fun _ =>
-    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := r) (s := s) (a := a) h₁ t).aemeasurable⟩)
   have : PSpace (M θ) (AsPathRV.path s) :=
-    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst (r := r) (s := s) (a := a) h₁ t).aemeasurable⟩)
   have : PSpace (M θ) (AsPathRV.path a) :=
-    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := r) (s := s) (a := a) h₁ t).aemeasurable⟩)
   ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) =
     𝔼[s, a : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
       Q θ t (s t) (a t) • ∇[θ] Real.log (M.π[θ] (s t) (a t))) := by
@@ -987,9 +988,6 @@ private lemma main
   intro hrP hsP haP
   let _ := hV
   classical
-  obtain ⟨r⟩ := r
-  obtain ⟨s⟩ := s
-  obtain ⟨a⟩ := a
   obtain rfl : r = fun t ω ↦ (ω t).1 := funext₂ fun t ω ↦ (congrArg Prod.fst (congrFun (h₁ t) ω)).symm
   obtain rfl : s = fun t ω ↦ (ω t).2.1 := funext₂ fun t ω ↦ (congrArg (·.2.1) (congrFun (h₁ t) ω)).symm
   obtain rfl : a = fun t ω ↦ (ω t).2.2 := funext₂ fun t ω ↦ (congrArg (·.2.2) (congrFun (h₁ t) ω)).symm
@@ -1077,7 +1075,7 @@ private lemma main
         h₀ h₁ ⟨max Ms 0, fun y u => hMs0 y u⟩ hR θ t
     refine hret.symm.trans (hcond.trans (integral_congr_ae (ae_of_all _ fun ω => ?_)))
     have hq := hQ θ t (fun _ => s t ω) (fun _ => a t ω)
-    simp [hq, Expectation.asRV, AsPathRV.path_fun]
+    simp [hq, Expectation.asRV, AsPathRV.path_process]
   have hchain :
     ∑' t, γ ^ t • fderiv ℝ (fun θ => ∫ ω, r t ω ∂(M θ)) θ =
         ∑' t, γ ^ t • integral (μ := M θ) (fun ω =>
@@ -1092,8 +1090,8 @@ private lemma main
     intro t x u
     have hpR : Measurable (fun ω t ↦ r t ω) :=
       Measurable.of_eval (Random.Measurable.of.All_Eq.fst h₁)
-    have hfG : Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) ⬝ᵥ ({ toFun := integ } : Fun ℕ ℝ)[t:]) := by
-      unfold Dot.dot Fun.getSliceFrom
+    have hfG : Measurable (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[t:]) := by
+      unfold Dot.dot Function.getSliceFrom
       refine Measurable.tsum fun k => ?_
       have hm : Measurable (fun integ : ℕ → ℝ => integ (t + k)) := measurable_pi_apply (t + k)
       simpa using hm.const_mul ((γ ^ (id : ℕ → ℕ)) k)
@@ -1108,7 +1106,7 @@ private lemma main
       Q θ t x u = ∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω
         ∂(M θ)[|(fun ω => (s t ω, a t ω)) ⁻¹' {(x, u)}] := by
       rw [hQ θ t (fun _ => x) (fun _ => u)]
-      simp only [Expectation.asRV, AsPathRV.path_fun]
+      simp only [Expectation.asRV, AsPathRV.path_process]
       have hpos' : (M θ).map (s t, a t) {(x, u)} ≠ 0 := by
         rwa [hsaJ]
       rw [Expectation.condEval_eq_integral hpR hy hfG hpos', hsaJ]
@@ -1295,4 +1293,4 @@ private lemma main
 
 
 -- created on 2026-11-11
--- updated on 2026-11-18
+-- updated on 2026-11-23

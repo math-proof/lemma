@@ -1,8 +1,9 @@
 module
 
-public import Theorem.Matrix.RowIsometryInvariance
+public import Mathlib.Data.Matrix.Basic
+public import Mathlib.NumberTheory.NumberField.InfiniteAdeleRing
 
-open AutomorphicForm AutomorphicForm.WindowedSiegel NumberField AdelicLevel IsDedekindDomain Matrix
+open Matrix NumberField
 
 open scoped Classical
 

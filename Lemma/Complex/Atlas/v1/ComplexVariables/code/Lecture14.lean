@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Abbrev.v1.Atlas.ComplexVariables.code.Lecture14
-open Complex MeasureTheory Metric Set Filter Topology Classical in
+open Complex MeasureTheory Metric Set Filter Topology Classical
 
 
 /--
@@ -42,13 +42,12 @@ lemma residue_eq_of_differentiableOn_annulus'
 -- imply
   residue f a R = residue f a r :=
 -- proof
-  residue_eq_of_differentiableOn_annulus hr hle (s := ∅) countable_empty hc
+  residue_eq_of_differentiableOn_annulus hr hle (s := ∅) Set.countable_empty hc
     (fun z hz => hd z hz.1)
 
 /--
 [circleIntegral.integral_neg](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture14.lean)
 -/
-@[path]
 lemma circleIntegral.integral_neg
   {f : ℂ → ℂ}
   {c : ℂ}
@@ -134,10 +133,10 @@ lemma principal_part_integral_eq
       · exact ((continuous_circleMap 0 r₀).continuousOn.comp continuousOn_snd (mapsTo_univ _ _))
       · exact continuousOn_const
     · apply ContinuousOn.mul
-      · apply ContinuousOn.inv₀
-        · exact ((continuous_circleMap c R).continuousOn.comp continuousOn_fst
-          (mapsTo_univ _ _)).sub
-          ((continuous_circleMap a₀ r₀).continuousOn.comp continuousOn_snd (mapsTo_univ _ _))
+      · refine ContinuousOn.inv₀
+          (f := fun x : ℝ × ℝ => circleMap c R x.1 - circleMap a₀ r₀ x.2) ?_ ?_
+        · exact (((continuous_circleMap c R).comp continuous_fst).continuousOn).sub
+            (((continuous_circleMap a₀ r₀).comp continuous_snd).continuousOn)
         · intro ⟨s, t⟩ ⟨hs, ht⟩
           simp only at hs ht
           exact sub_ne_zero.mpr (hne (circleMap a₀ r₀ t) (circleMap_mem_sphere a₀ hr₀.le t)
@@ -194,11 +193,13 @@ lemma logDeriv_zero_decomposition
     (differentiableAt_id.sub (differentiableAt_const a)).pow n
   have hpow_ne : (z - a) ^ n ≠ 0 := pow_ne_zero n (sub_ne_zero.mpr hza)
   have key := logDeriv_mul (f := fun w => (w - a) ^ n) (g := g) z hpow_ne hg_nez hpow_diff hg_diff
-  rw [key]
+  have key' : logDeriv (fun w : ℂ => (w - a) ^ n * g w) z =
+      logDeriv (fun w => (w - a) ^ n) z + logDeriv g z := key
+  rw [key']
   congr 1
   have heq : (fun w : ℂ => (w - a) ^ n) = (fun w => (w - a) ^ (n : ℤ)) := by
     ext w; simp [zpow_natCast]
-  rw [heq, logDeriv_sub_zpow a (n : ℤ) z hza]; simp
+  rw [heq, logDeriv_sub_zpow hza]; simp
 
 /--
 [logDeriv_pole_decomposition](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture14.lean)
@@ -234,11 +235,14 @@ lemma logDeriv_pole_decomposition
     · exact (differentiableAt_id.sub (differentiableAt_const b)).pow k
     · exact pow_ne_zero k (sub_ne_zero.mpr hzb)
   have hpow_ne : ((z - b) ^ k)⁻¹ ≠ 0 := inv_ne_zero (pow_ne_zero k (sub_ne_zero.mpr hzb))
-  rw [logDeriv_mul z hpow_ne hg_nez hpow_diff hg_diff]
+  have key : logDeriv (fun w : ℂ => ((w - b) ^ k)⁻¹ * g w) z =
+      logDeriv (fun w => ((w - b) ^ k)⁻¹) z + logDeriv g z :=
+    logDeriv_mul z hpow_ne hg_nez hpow_diff hg_diff
+  rw [key]
   congr 1
   have heq : (fun w : ℂ => ((w - b) ^ k)⁻¹) = (fun w => (w - b) ^ (-(k : ℤ))) := by
     ext w; simp [zpow_neg, zpow_natCast]
-  rw [heq, logDeriv_sub_zpow b (-(k : ℤ)) z hzb]
+  rw [heq, logDeriv_sub_zpow hzb]
   push_cast; ring
 
 /--
@@ -412,3 +416,4 @@ lemma rouche_integral_eq_of_differentiableOn
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-23

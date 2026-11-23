@@ -10,6 +10,7 @@ import Lemma.Random.Distributed_ChiSquared.of.All_And_Distributed_Gaussian.Gt_1.
 import Lemma.Random.Distributed_Fisher.of.Distributed_ChiSquared.Distributed_ChiSquared.Indep
 import Lemma.Random.Distributed_ProdChiSquareS.of.All_And_Distributed_Gaussian.Gt_1.Gt_1
 import Initialize.Tactic.Attr.Basic
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory Fun Random
 open scoped NNReal
 
@@ -41,7 +42,7 @@ private lemma main
   [MeasurableSpace Ω]
   {π : Measure Ω} [IsProbabilityMeasure π]
   {m n : ℕ}
-  {y : ℕ ⇀ ℕ ⇀ Ω → ℝ}
+  {y : ℕ → ℕ → Ω → ℝ}
   {μ : ℝ} {σ : ℝ⁺}
 -- given
   (hm : m > 1)
@@ -117,4 +118,4 @@ private lemma main
 
 
 -- created on 2026-10-30
--- updated on 2026-11-17
+-- updated on 2026-11-23

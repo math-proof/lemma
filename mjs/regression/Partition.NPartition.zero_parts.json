@@ -1,0 +1,69 @@
+{
+  "lean": "(0 : NPartition N).parts = fun _ => 0",
+  "regex": [
+    "Eq(Parts(0))(Fun_(0))"
+  ],
+  "suggestion": [
+    "EqParts_Fun_0"
+  ],
+  "dag": [
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Parts"
+      },
+      {
+        "token": "0"
+      },
+      {
+        "group": [
+          2
+        ]
+      },
+      {
+        "group": [
+          1,
+          3
+        ]
+      },
+      {
+        "token": "Fun"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "group": [
+          5,
+          6,
+          3
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          4,
+          7
+        ]
+      }
+    ]
+  ],
+  "json": {
+    "Eq": [
+      {
+        "Parts": [
+          "0"
+        ]
+      },
+      {
+        "Fun": [
+          "?0",
+          "0"
+        ]
+      }
+    ]
+  },
+  "fingerprint": "Eq(Parts(0))(Fun(?0)(0))"
+}

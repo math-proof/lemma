@@ -5,6 +5,7 @@ import Lemma.Random.Indep.of.Lt0.All_Indep_GetSlice.All_Measurable
 import Mathlib.Probability.Independence.Conditional
 import Notation.Fun
 import Initialize.Tactic.Attr.Basic
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory Measure Random Fun
 open scoped ProbabilityTheory
 
@@ -185,12 +186,12 @@ private lemma main
   [CountableMeasure 𝒮]
   [Countable 𝒮] [MeasurableSingletonClass 𝒮]
   {π : Measure Ω} [IsProbabilityMeasure π]
-  {s : ℕ ⇀ Ω → 𝒮}
+  {s : ℕ → Ω → 𝒮}
   {k : ℕ}
 -- given
   (hs : ∀ t, Measurable s[t])
   (hmarkov : ∀ t, s[t + 1] ⟂ᵢ[s t, hs t; π] s[:t])
-  («\sf{s}» : ℕ ⇀ 𝒮) :
+  («\sf{s}» : ℕ → 𝒮) :
 -- imply
   have : SinglePSpace π (s[k + 1], s[k]) :=
     SinglePSpace.of.Measurable.Measurable (hs (k + 1)) (hs k)
@@ -222,8 +223,7 @@ private lemma main
         (congrArg (fun t => π t / π C) _))
     rfl
     ext ω
-    simp [A, B, C, Prod.ext_iff, and_comm, and_left_comm,
-      show (s[k + 1], s[k]) ω = (s[k + 1] ω, s[k] ω) from rfl]
+    simp [A, B, C, JointRandomSymbol, Prod.ext_iff, and_comm, and_left_comm]
   rw [hdiv_trans, hdiv_marg, hdiv_joint]
   have hBAC_le_AC : B ∩ A ∩ C ⊆ A ∩ C := by
     intro ω hω
@@ -282,4 +282,4 @@ private lemma main
 
 
 -- created on 2023-03-30
--- updated on 2026-11-17
+-- updated on 2026-11-23

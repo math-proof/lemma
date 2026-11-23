@@ -86,14 +86,13 @@ public theorem j_eq_jInvariant
   (h2 : (2 : k) ≠ 0)
   (hΔ : 4 * A ^ 3 + 27 * B ^ 2 ≠ 0) :
 -- imply
+  letI : (shortWeierstrassCurve A B).IsElliptic :=
+    shortWeierstrassCurve_isElliptic (A := A) (B := B) h2 hΔ
   (shortWeierstrassCurve A B).j = jInvariant A B := by
 -- proof
-  haveI := shortWeierstrassCurve_isElliptic (A := A) (B := B) h2 hΔ
-  simp only [WeierstrassCurve.j, jInvariant]
-  have hΔ_val : ((shortWeierstrassCurve A B).Δ' : k) = (shortWeierstrassCurve A B).Δ :=
-    WeierstrassCurve.coe_Δ' _
-  simp only [Units.val_inv_eq_inv_val, hΔ_val, shortWeierstrassCurve_Δ,
-    shortWeierstrassCurve_c₄]
+  have : (shortWeierstrassCurve A B).IsElliptic :=
+    shortWeierstrassCurve_isElliptic (A := A) (B := B) h2 hΔ
+  rw [WeierstrassCurve.j_eq, jInvariant, shortWeierstrassCurve_Δ, shortWeierstrassCurve_c₄]
   have h16 : (16 : k) ≠ 0 := sixteen_ne_zero_of_two_ne_zero h2
   field_simp
   ring
@@ -148,18 +147,19 @@ public theorem shortWeierstrassCurve_c_eq
 -- imply
   (shortWeierstrassCurve A B).c₄ = -48 * A := by
 -- proof
-  apply JInvariant.shortWeierstrassCurve_c A B
+  apply shortWeierstrassCurve_c₄
 
 /--
 [shortWeierstrassCurve_](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/JInvariantDef.lean)
 -/
-public theorem shortWeierstrassCurve__eq
+public theorem shortWeierstrassCurve_Delta_eq
   [Field k]
   {A B : k} :
 -- imply
   (shortWeierstrassCurve A B).Δ = -16 * (4 * A ^ 3 + 27 * B ^ 2) := by
 -- proof
-  apply JInvariant.shortWeierstrassCurve_ A B
+  apply shortWeierstrassCurve_Δ
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-23

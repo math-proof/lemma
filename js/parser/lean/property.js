@@ -50,6 +50,10 @@ export class LeanProperty extends LeanBinary {
      */
     toJSON(ctx = { leaves: new Map() }) {
         if (!this.fieldName) return super.toJSON(ctx);
+        // `Complex.I` / `Complex.ImaginaryUnit` is a nullary constant: literal leaf `I`.
+        if ((this.fieldName === 'I' || this.fieldName === 'ImaginaryUnit') &&
+            this.lhs instanceof L.LeanToken && this.lhs.text === 'Complex')
+            return 'I';
         const parent = this.parent;
         if (parent instanceof L.LeanArgsSpaceSeparated && parent.args[0] === this)
             return parent.toJSON(ctx);

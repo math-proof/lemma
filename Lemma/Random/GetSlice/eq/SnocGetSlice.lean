@@ -1,4 +1,5 @@
 import Instance.Probability.Process.HiddenMarkovSequence
+import Instance.Data.Nat.Fun
 import Initialize.Tactic.Attr.Basic
 open Fun
 
@@ -9,7 +10,7 @@ and the current entry, pointwise.
 -/
 @[path]
 private lemma main
-  {s : ℕ ⇀ Ω → α}
+  {s : ℕ → Ω → α}
 -- given
   (t : ℕ) (ω : Ω) :
 -- imply
@@ -19,12 +20,13 @@ private lemma main
   ext i
   refine Fin.lastCases ?_ ?_ i
   ·
-    simp [Fun.getSlice, Function.getSlice, FunSlice.slice, Fin.snoc_last,
+    simp [Function.getSlice, FunSlice.slice, Fin.snoc_last,
       Fin.val_last, Int.toNat_natCast]
   ·
     intro j
-    simp [Fun.getSlice, Function.getSlice, FunSlice.slice, Fin.snoc_castSucc,
+    simp [Function.getSlice, FunSlice.slice, Fin.snoc_castSucc,
       Int.toNat_natCast]
 
 
 -- created on 2026-11-19
+-- updated on 2026-11-23

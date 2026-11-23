@@ -4,6 +4,7 @@ import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
 import Mathlib.MeasureTheory.Function.L1Space.Integrable
 import Mathlib.Topology.Algebra.InfiniteSum.Basic
 import Instance.Dynamics.PolicyTrajectory
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure Real
 open scoped ENNReal.ToRealCoe
 set_option maxHeartbeats 800000
@@ -26,9 +27,9 @@ private lemma main
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {θ : Θ}
   {γ ℓ : ℝ}
-  {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
-  {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
-  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
   {R : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
@@ -46,26 +47,33 @@ private lemma main
   letI : Model.IsPolicyTrajectory M r s a := hfactor.htr
   letI : Model.AbsContJointAS M a s := hfactor.haj
   have : ∀ θ', PSpace (M θ') (AsPathRV.path r) := fun _ =>
-    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) hfactor.htr.stage_eq t).aemeasurable⟩)
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := r) (s := s) (a := a) hfactor.htr.stage_eq t).aemeasurable⟩)
   have : PSpace (M θ) (AsPathRV.path s) :=
-    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) hfactor.htr.stage_eq t).aemeasurable⟩)
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst (r := r) (s := s) (a := a) hfactor.htr.stage_eq t).aemeasurable⟩)
   have : PSpace (M θ) (AsPathRV.path a) :=
-    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) hfactor.htr.stage_eq t).aemeasurable⟩)
+    PSpace_Path.of.All_PSpace (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := r) (s := s) (a := a) hfactor.htr.stage_eq t).aemeasurable⟩)
   let : MeasurableSpace Θ := borel Θ
-  let V_θ : ℕ ⇀ (ℕ → 𝒮) → ℕ → ℝ := ⟨fun t δ k => M.V θ γ (t + k) (δ k)⟩
+  let V_θ : ℕ → (ℕ → 𝒮) → ℕ → ℝ := (fun t δ k => M.V θ γ (t + k) (δ k))
   ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) =
     𝔼[r, s, a : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
       (((γ * ℓ) ^ (id : ℕ → ℕ) ⬝ᵥ (r[t:] + γ • V_θ[t + 1] s[t + 1:] - V_θ[t] s[t:])) •
         ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log)) := by
 -- proof
   obtain ⟨Ms, hMsb⟩ := id hMs
+  have hInst : ∀ θ' (t : ℕ), SinglePSpace (M θ') (fun ω => (a t ω, s t ω)) := fun θ' t =>
+    Model.IsPolicyTrajectory.singlePSpace_as (M := M) (r := r) (s := s) (a := a) θ' t
+  have hfac : ∀ (θ' : Θ) (t : ℕ) (sₜ : 𝒮) (aₜ : 𝒜),
+      M.π[θ'] sₜ aₜ = ((ℙ[M θ'](a[t] = aₜ | s[t] = sₜ) : ℝ)) := by
+    intro θ' t sₜ aₜ
+    have : SinglePSpace (M θ') (fun ω => (a t ω, s t ω)) := hInst θ' t
+    exact hfactor.factor θ' t sₜ aₜ
   have hMsle : ∀ y u, ‖∇[θ] Real.log (M.π[θ] y u)‖ ≤ Ms :=
     fun y u => hMsb ⟨(y, u), rfl⟩
   have hVm : ∀ k, Measurable (M.V θ γ k) := fun _ => Measurable.of_discrete
   have hfe : ∀ sₜ aₜ,
       (fun θ => M.π[θ] sₜ aₜ) =
         (fun θ => (ℙ[M θ](a[0] = aₜ | s[0] = sₜ) : ℝ)) :=
-    fun sₜ aₜ => funext fun θ' => hfactor.factor θ' 0 sₜ aₜ
+    fun sₜ aₜ => funext fun θ' => hfac θ' 0 sₜ aₜ
   have hnorm : ∀ sₜ aₜ,
       (fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖) =
         (fun θ => ‖∇[θ] (ℙ[M θ](a[0] = aₜ | s[0] = sₜ) : ℝ)‖) :=
@@ -87,18 +95,18 @@ private lemma main
   have hBddP : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] (ℙ[M θ](a[0] = aₜ | s[0] = sₜ) : ℝ)‖) := by
     intro sₜ aₜ
     simpa [hnorm sₜ aₜ] using hBdd sₜ aₜ
-  have hMspath : sup[«\sf{s}» : ℕ ⇀ 𝒮, «\sf{a}» : ℕ ⇀ 𝒜]
+  have hMspath : sup[«\sf{s}» : ℕ → 𝒮, «\sf{a}» : ℕ → 𝒜]
     ‖∇[θ] (ℙ[M θ](a[0] = «\sf{a}»[0] | s[0] = «\sf{s}»[0]) : ℝ).log‖ < ∞ :=
     ⟨Ms, by
       rintro _ ⟨⟨sb, ab⟩, rfl⟩
       simpa [funext fun θ' =>
-        congrArg Real.log (hfactor.factor θ' 0 (sb 0) (ab 0))] using
+        congrArg Real.log (hfac θ' 0 (sb 0) (ab 0))] using
         hMsle (sb 0) (ab 0)⟩
   apply GradExpectDotPow_Id.eq.ExpectDot_SMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity.In_Icc.In_Ico
     (M := M) h₀ h₁ hfactor hπ hVm
     (fun t sb ab =>
-      (funext fun θ' => hfactor.factor θ' t (sb t) (ab t)) ▸ h₂ (sb t) (ab t))
+      (funext fun θ' => hfac θ' t (sb t) (ab t)) ▸ h₂ (sb t) (ab t))
     h₃int hBddP hIntg hφ hMspath hR
 
 -- created on 2026-11-01
--- updated on 2026-11-18
+-- updated on 2026-11-23

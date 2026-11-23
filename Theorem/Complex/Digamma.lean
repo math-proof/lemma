@@ -1,6 +1,8 @@
 module
 
 public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.Analysis.SpecialFunctions.Gamma.Digamma
 
 public section
 
@@ -1061,10 +1063,11 @@ public theorem helper_series_agree_real (t : ℝ) (ht : 1 < t) :
     have ht0 : (0 : ℝ) < t := by linarith
     rw [Real.deriv_log_Gamma t ht0]
     simp only [digammaFun, Complex.digamma_def, logDeriv_apply,
-      Complex.deriv_Gamma_ofReal t ht0, Complex.Gamma_ofReal,
-      Complex.ofReal_div, Complex.ofReal_add]
+      Complex.Gamma_ofReal, Complex.ofReal_div, Complex.ofReal_add]
+    rw [deriv_Gamma_ofReal t ht0]
   have htsumC := congrArg (fun r : ℝ => (r : ℂ)) htsum
-  rwa [hcast, hval] at htsumC
+  rw [hcast, hval] at htsumC
+  exact htsumC.symm
 
 end Complex
 
@@ -1190,10 +1193,11 @@ public theorem hasSum_digamma_series (s : ℂ) (hs : 1 < s.re) :
     (Complex.digamma s + (Real.eulerMascheroniConstant : ℂ)) := by
   have hsum := summable_digammaSeriesTerm s hs
   have heq := helper_complex_digamma_series s hs
-  rwa [heq]
+  rw [heq]
+  simpa [digammaSeriesFun] using hsum.hasSum
 
 end Complex
 
 
 -- created on 2026-10-11
--- updated on 2026-10-26
+-- updated on 2026-11-23

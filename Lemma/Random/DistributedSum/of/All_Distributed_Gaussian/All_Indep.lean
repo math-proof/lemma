@@ -6,6 +6,7 @@ import Notation.Algebra.Power
 import Instance.Probability.Process.HiddenMarkovSequence
 import Lemma.Random.DistributedAdd.of.Distributed_Gaussian.Distributed_Gaussian.Indep
 import Initialize.Tactic.Attr.Basic
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory Fun Random
 open scoped NNReal
 
@@ -15,8 +16,8 @@ private lemma main
   [MeasurableSpace Ω]
   {π : Measure Ω} [IsProbabilityMeasure π]
   {n : ℕ}
-  {x : ℕ ⇀ Ω → ℝ}
-  {μ : ℕ ⇀ ℝ} {σ : ℕ ⇀ NNReal}
+  {x : ℕ → Ω → ℝ}
+  {μ : ℕ → ℝ} {σ : ℕ → NNReal}
 -- given
   (h₀ : ∀ (k : ℕ), x[k] ⟂ᵢ[π] x[:k])
   (h₁ : ∀ (k : ℕ), x[k] ∼[π] gaussianReal μ[k] σ[k]²) :
@@ -67,4 +68,4 @@ private lemma main
 
 
 -- created on 2021-07-25
--- updated on 2026-10-30
+-- updated on 2026-11-23

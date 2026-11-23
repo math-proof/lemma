@@ -9,6 +9,7 @@ import Lemma.Random.Expect.eq.Integral
 import Lemma.Random.All_Indep.of.All_Indep_GetSlice
 import Theorem.Probability.JointRv.AsRV
 import Initialize.Tactic.Attr.Basic
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory Finset Filter Fun Random
 
 
@@ -20,25 +21,25 @@ and common variance `σ²`, the sample average converges to `μ` in probability.
 private lemma main
   [MeasurableSpace Ω]
   {π : Measure Ω} [IsProbabilityMeasure π]
-  {x : ℕ ⇀ Ω → ℝ}
+  {x : ℕ → Ω → ℝ}
   {μ σ : ℝ} {ε : ℝ⁺}
 -- given
-  (h₀ : ∀ k, PSpace π x[k])
-  (h₁ : ∀ k, MemLp x[k] 2 π)
-  (h₂ : ∀ k, x[k] ⟂ᵢ[π] x[:k])
-  (h₃ : ∀ k, 𝔼[x[k]: π](x[k]) = μ)
-  (h₄ : ∀ k, 𝕍𝕒𝕣[x[k]: π](x[k]) = σ²) :
+  (h₀ : ∀ (k : ℕ), PSpace π x[k])
+  (h₁ : ∀ (k : ℕ), MemLp x[k] 2 π)
+  (h₂ : ∀ (k : ℕ), x[k] ⟂ᵢ[π] x[:k])
+  (h₃ : ∀ (k : ℕ), 𝔼[x[k]: π](x[k]) = μ)
+  (h₄ : ∀ (k : ℕ), 𝕍𝕒𝕣[x[k]: π](x[k]) = σ²) :
 -- imply
   lim[n → ∞] ℙ[π]{|(∑ i ∈ range n, x[i]) / (n : ℝ) - μ| < ε} = 1 := by
 -- proof
-  have hvar₀ : ∀ i, variance x[i] π = σ² := fun i => by
+  have hvar₀ : ∀ (i : ℕ), variance x[i] π = σ² := fun i => by
     have := h₀ i
     rw [variance_eq_integral (PSpace.aemeasurable (x := x[i])), ← Var.eq.Integral]
     apply h₄ i
-  have h₃' : ∀ i, π[x[i]] = μ := fun i => by
+  have h₃' : ∀ (i : ℕ), π[x[i]] = μ := fun i => by
     have := h₀ i
     simpa [← Expect.eq.Integral, Expectation.asRV_function] using h₃ i
-  have hpair : ∀ i j (_ : i ≠ j), x[i] ⟂ᵢ[π] x[j] := All_Indep.of.All_Indep_GetSlice h₂
+  have hpair : ∀ (i j : ℕ) (_ : i ≠ j), x[i] ⟂ᵢ[π] x[j] := All_Indep.of.All_Indep_GetSlice h₂
   let avg : ℕ → Ω → ℝ := fun n ω => (n : ℝ)⁻¹ * ∑ i ∈ range n, x[i] ω
   have hmem : ∀ n, MemLp (avg n) 2 π := fun n => by
     simpa [avg, Finset.sum_apply] using
@@ -82,13 +83,18 @@ private lemma main
       simp
     rw [hset, measureReal_compl₀ hs]
     simp [measureReal_def, measure_univ]
-  have hdiv : ∀ n, {ω | |(∑ i ∈ range n, x[i] ω) / (n : ℝ) - μ| < ε} =
+  have hdiv : ∀ n, {ω | |(∑ i ∈ range n, (fun k => x k ω)[i]) / (n : ℝ) - μ| < ε} =
       {ω | |avg n ω - μ| < ε} := by
     intro n
     ext ω
     simp [avg, div_eq_mul_inv, mul_comm]
-  simpa [hdiv, hcompl] using (tendsto_const_nhds.sub htail)
+  have hgoal : (fun n => π.real {ω | |(∑ i ∈ range n, (fun k => x k ω)[i]) / (n : ℝ) - μ| < ε}) =
+      fun n => 1 - π.real {ω | ε ≤ |avg n ω - μ|} := by
+    funext n
+    rw [hdiv n, hcompl n]
+  rw [hgoal]
+  simpa using (tendsto_const_nhds (x := (1 : ℝ))).sub htail
 
 
 -- created on 2023-04-18
--- updated on 2026-11-17
+-- updated on 2026-11-23

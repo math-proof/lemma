@@ -2,6 +2,7 @@ import Lemma.Random.ProbCond.eq.DivMulProb_Prod_ProbCond.of.NeProbJoint__0.All_I
 import Syntax.Order.ExprWithLimits
 import Notation.Probability.JointRv
 import Initialize.Tactic.Attr.Basic
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory Measure Random
 open scoped ENNReal.ToRealCoe
 open Fun
@@ -65,9 +66,9 @@ private lemma main
   [NeZero (n : ℕ)]
   {π : Measure Ω} [IsProbabilityMeasure π]
   {m : ℕ}
-  {x : ℕ ⇀ Ω → α} {y : ℕ ⇀ Ω → β}
-  {«\sf{x}» : ℕ ⇀ α} [Fact (Measurable x[:n])]
-  {«\sf{y}» : ℕ ⇀ β} [Fact (Measurable y[:m])]
+  {x : ℕ → Ω → α} {y : ℕ → Ω → β}
+  {«\sf{x}» : ℕ → α} [Fact (Measurable x[:n])]
+  {«\sf{y}» : ℕ → β} [Fact (Measurable y[:m])]
 -- given
   (h₀ : ∀ (i : Fin n) (t : ℕ), 0 < t → t < m → y[t] ⟂ᵢ[π] y[:t] | x[i]) :
 -- imply
@@ -128,8 +129,14 @@ private lemma main
       rw [hzero, show ℙ[π](y[:m] = «\sf{y}»[:m]) = 0 from he] at hmul
       have hn := hmul.symm
       simp only [div_eq_mul_inv, ENNReal.inv_zero, mul_eq_zero, ENNReal.top_ne_zero, or_false] at hn
-      simpa [hzero, scale, he, ENNReal.toReal_mul, ENNReal.toReal_prod] using
-        (congrArg ENNReal.toReal (mul_eq_zero.mpr hn)).symm
+      dsimp only [scale]
+      simp only [he, ite_true, div_one]
+      rw [hzero, ENNReal.toReal_zero, zero_eq_mul]
+      rcases hn with h | h
+      · left
+        rw [h, ENNReal.toReal_zero]
+      · right
+        rw [← ENNReal.toReal_prod, h, ENNReal.toReal_zero]
     else
       simpa [scale, he, evidence, ENNReal.toReal_div, ENNReal.toReal_mul,
         ENNReal.toReal_prod] using congrArg ENNReal.toReal hmul
@@ -159,4 +166,4 @@ private lemma main
 
 
 -- created on 2021-07-21
--- updated on 2026-11-22
+-- updated on 2026-11-23

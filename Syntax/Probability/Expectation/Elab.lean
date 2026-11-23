@@ -297,7 +297,8 @@ def Expectation.Macro.elabExpect (xs : Array Syntax) (body : Syntax)
   Lean.Elab.Term.elabTerm wrapped none
 
 open Lean Meta in
-/-- Codomain `α` of a `Fun ℕ (Ω → α)` process, if `ty` is one. -/
+/-- Codomain `α` of a `Fun ℕ (Ω → α)` or bare `ℕ → Ω → α` (also `Fin n → Ω → α`) process,
+if `ty` is one. -/
 def Expectation.Macro.funProcessCodomain (ty : Expr) : MetaM (Option Expr) := do
   match ← whnf ty with
   | .app (.app (.const n _) _) α =>
@@ -305,6 +306,13 @@ def Expectation.Macro.funProcessCodomain (ty : Expr) : MetaM (Option Expr) := do
     match ← whnf α with
     | .forallE _ _ b _ =>
       if b.hasLooseBVars then return none else return some b
+    | _ => return none
+  | .forallE _ d b _ =>
+    let d ← whnf d
+    unless d.isConstOf ``Nat || d.isAppOfArity ``Fin 1 do return none
+    match ← whnf b with
+    | .forallE _ _ c _ =>
+      if c.hasLooseBVars then return none else return some c
     | _ => return none
   | _ => return none
 

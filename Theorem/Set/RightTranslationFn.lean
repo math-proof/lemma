@@ -1,6 +1,7 @@
 module
 
 public import Mathlib
+public import Def.FLTPrelim_RightTranslationFn
 
 public section
 
@@ -8,6 +9,9 @@ set_option autoImplicit false
 
 namespace FLT.SmoothVectors
 
+namespace RightTranslationFn
+
+variable {G M : Type*}
 
 @[simp] public theorem toFun_mk (f : G → M) : toFun (mk f) = f := rfl
 

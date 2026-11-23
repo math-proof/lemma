@@ -3,6 +3,7 @@ import Instance.Probability.Process.HiddenMarkovSequence
 import Notation.Fun
 import Mathlib.MeasureTheory.Constructions.Pi
 import Mathlib.MeasureTheory.Measure.Prod
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory Random Fun
 
 
@@ -15,39 +16,38 @@ private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure 𝒮]
   {π : Measure Ω} [IsProbabilityMeasure π]
-  {s : ℕ ⇀ Ω → 𝒮}
+  {s : ℕ → Ω → 𝒮}
 -- given
   (hP : ∀ n, SinglePSpace π (s[:n] : Ω → Fin n → 𝒮)) :
 -- imply
-  ∀ k, SinglePSpace π (s[k], s[:k]) := by
+  ∀ k, SinglePSpace π (s k, s[:k]) := by
 -- proof
   intro k
   let e := MeasurableEquiv.piFinSuccAbove (fun _ : Fin k.succ => 𝒮) (Fin.last k)
   have hfun :
-    ((s[k], s[:k]) : Ω → 𝒮 × FunSlice.Vec 𝒮 ⟨0, ↑k, 1⟩) =
+    ((s k, s[:k]) : Ω → 𝒮 × FunSlice.Vec 𝒮 ⟨0, ↑k, 1⟩) =
       e ∘ (s[:k.succ] : Ω → Fin k.succ → 𝒮) := by
     funext ω
     apply Prod.ext
     ·
       have hstart : (⟨0, ↑k.succ, 1⟩ : Slice).start.toNat = 0 := rfl
-      simp only [Fun.getSlice, Function.getSlice]
-      change s[k] ω =
-        s.toFun ((Fin.last k).val + (⟨0, ↑k.succ, 1⟩ : Slice).start.toNat) ω
+      simp only [Function.getSlice]
+      change s k ω =
+        s ((Fin.last k).val + (⟨0, ↑k.succ, 1⟩ : Slice).start.toNat) ω
       rw [hstart, Fin.val_last]
       simp
     ·
       funext j
       have hstart0 : (⟨0, ↑k, 1⟩ : Slice).start.toNat = 0 := rfl
-      simp only [JointRandomSymbol, Function.comp_apply, Fun.getSlice,
-        Function.getSlice]
+      simp only [JointRandomSymbol, Function.comp_apply, Function.getSlice]
       have hrhs :
-        (e (FunSlice.slice s.toFun ⟨0, ↑k.succ, 1⟩ ω)).2 j =
-          FunSlice.slice s.toFun ⟨0, ↑k.succ, 1⟩ ω
+        (e (FunSlice.slice s ⟨0, ↑k.succ, 1⟩ ω)).2 j =
+          FunSlice.slice s ⟨0, ↑k.succ, 1⟩ ω
             ((Fin.last k).succAbove j) :=
         rfl
       rw [hrhs, Fin.succAbove_last]
-      change s.toFun (j.val + (⟨0, ↑k, 1⟩ : Slice).start.toNat) ω =
-        s.toFun (j.castSucc.val + (⟨0, ↑k.succ, 1⟩ : Slice).start.toNat) ω
+      change s (j.val + (⟨0, ↑k, 1⟩ : Slice).start.toNat) ω =
+        s (j.castSucc.val + (⟨0, ↑k.succ, 1⟩ : Slice).start.toNat) ω
       have hidx : (j : ℕ) + (⟨0, ↑k, 1⟩ : Slice).start.toNat =
         (j.castSucc : ℕ) + (⟨0, ↑k.succ, 1⟩ : Slice).start.toNat := by
         let jn : ℕ := j
@@ -99,4 +99,4 @@ private lemma main
 
 
 -- created on 2026-11-18
--- updated on 2026-11-19
+-- updated on 2026-11-23

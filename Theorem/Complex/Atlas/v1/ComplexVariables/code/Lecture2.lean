@@ -73,10 +73,10 @@ public theorem roots_of_unity_eq_powers_of_primitiveUnitRoot
   z ^ n = 1 ↔ ∃ k : Fin n, z = (primitiveUnitRoot n) ^ (k : ℕ) := by
 -- proof
   have hne : n ≠ 0 := Nat.pos_iff_ne_zero.mp hn
-  have hprim := primitiveUnitRoot_isPrimitiveRoot n hne
+  have hprim := primitiveUnitRoot_isPrimitiveRoot hne
   constructor
   · intro hz
-    haveI : NeZero n := ⟨hne⟩
+    have : NeZero n := ⟨hne⟩
     obtain ⟨i, hi, hiz⟩ := hprim.eq_pow_of_pow_eq_one hz
     exact ⟨⟨i, hi⟩, hiz.symm⟩
   · rintro ⟨k, rfl⟩
@@ -127,3 +127,4 @@ public theorem Complex.log_mul_eq_add_log_add_int
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-23

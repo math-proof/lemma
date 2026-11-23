@@ -1,16 +1,30 @@
 [
   {
-    "resolved": "LaurentPolynomial",
-    "reason": "Mathlib `LaurentPolynomial` is a def of a type former",
+    "resolved": "Fin",
+    "reason": "Mathlib `Fin` is a structure",
     "kind": "data type",
-    "folder": "LaurentPolynomial",
+    "folder": "Fin",
+    "decl": "structure"
+  },
+  {
+    "resolved": "Matrix",
+    "reason": "Mathlib `Matrix` is a def of a type former",
+    "kind": "data type",
+    "folder": "Matrix",
     "decl": "def-type"
   },
   {
-    "resolved": "IsUnit",
-    "reason": "Mathlib `IsUnit` is a def of a Prop-valued type former (predicate), not a data type",
-    "kind": "predicate",
-    "folder": "IsUnit",
-    "decl": "def-prop"
+    "resolved": "Set",
+    "reason": "Mathlib `Set` is a def of a type former",
+    "kind": "data type",
+    "folder": "Set",
+    "decl": "def-type"
+  },
+  {
+    "resolved": "Real",
+    "reason": "Mathlib `Real` is a structure",
+    "kind": "data type",
+    "folder": "Real",
+    "decl": "structure"
   }
 ]

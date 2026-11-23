@@ -1,0 +1,63 @@
+{
+  "lean": "[i < n] [j < n] (KroneckerDelta i j)",
+  "regex": [
+    "Stack_(KroneckerDelta__)"
+  ],
+  "suggestion": [
+    "Stack_KroneckerDelta"
+  ],
+  "dag": [
+    [
+      {
+        "token": "Stack"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "KroneckerDelta"
+      },
+      {
+        "group": [
+          2,
+          1,
+          1
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          1,
+          3
+        ]
+      }
+    ]
+  ],
+  "json": {
+    "Stack": [
+      {
+        "And": [
+          {
+            "Lt": [
+              "?0",
+              "$1"
+            ]
+          },
+          {
+            "Lt": [
+              "?0",
+              "$1"
+            ]
+          }
+        ]
+      },
+      {
+        "KroneckerDelta": [
+          "?1",
+          "?0"
+        ]
+      }
+    ]
+  },
+  "fingerprint": "Stack(And(Lt(?0)($1))(Lt(?0)($1)))(KroneckerDelta(?1)(?0))"
+}

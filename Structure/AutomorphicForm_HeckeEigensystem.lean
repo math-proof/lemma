@@ -4,7 +4,7 @@ public import Mathlib
 
 open IsDedekindDomain NumberField
 
-public noncomputable section
+@[expose] public noncomputable section
 
 namespace AutomorphicForm
 

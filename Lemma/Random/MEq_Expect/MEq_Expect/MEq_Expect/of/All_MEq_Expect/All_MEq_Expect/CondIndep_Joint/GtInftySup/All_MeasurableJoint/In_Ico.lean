@@ -1,6 +1,7 @@
 import Lemma.Random.MEq_ExpectCond.MEq_ExpectCond.MEq_ExpectCond.of.MEqExpectS.All_MEq_ExpectCondDot.All_MEq_ExpectCondDot.GtInftySup.In_Ico
 import Lemma.Random.MEqExpectS.of.CondIndep.Integrable.MeasurableJoint.Measurable
 import Initialize.Tactic.Attr.Basic
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory Random
 
 
@@ -17,39 +18,39 @@ whose `h₅` (`𝔼[… | s[t], a[t], s[t + 1]] =ᵐ 𝔼[… | s[t + 1]]`) foll
 private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω] [MeasurableSpace S] [MeasurableSpace A]
   {π : Measure Ω} [IsProbabilityMeasure π]
-  {s : ℕ ⇀ Ω → S}
-  {a : ℕ ⇀ Ω → A}
-  {r : ℕ ⇀ Ω → ℝ}
+  {s : ℕ → Ω → S}
+  {a : ℕ → Ω → A}
+  {r : ℕ → Ω → ℝ}
   {γ : ℝ}
   {t : ℕ}
-  {Q : ℕ ⇀ S → A → ℝ}
-  {V : ℕ ⇀ S → ℝ}
+  {Q : ℕ → S → A → ℝ}
+  {V : ℕ → S → ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
-  (h₁ : ∀ t, Measurable (r[t], s[t], a[t])) -- joint random variables r, s, a
-  (h₂ : sup[t, ω] |r[t] ω| < ∞)
+  (h₁ : ∀ (t : ℕ), Measurable (r[t], s[t], a[t])) -- joint random variables r, s, a
+  (h₂ : sup[t : ℕ, ω] |r[t] ω| < ∞)
   (h₃ : r[t + 1:] ⟂ᵢ[π] (s[t], a[t]) | s[t + 1])
-  (h₄ : ∀ t, Q[t] s[t] a[t] =ᵐ[π] 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s[t], a[t]))
-  (h₅ : ∀ t, V[t] s[t] =ᵐ[π] 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s[t])) :
+  (h₄ : ∀ (t : ℕ), Q[t] s[t] a[t] =ᵐ[π] 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s[t], a[t]))
+  (h₅ : ∀ (t : ℕ), V[t] s[t] =ᵐ[π] 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s[t])) :
 -- imply
   V[t] s[t] =ᵐ[π] 𝔼[s, a: π](Q[t] s[t] a[t] | s[t]) ∧
     V[t] s[t] =ᵐ[π] 𝔼[r, s: π](r[t] + γ * V[t + 1] s[t + 1] | s[t]) ∧
     Q[t] s[t] a[t] =ᵐ[π] 𝔼[r, s: π](r[t] + γ * V[t + 1] s[t + 1] | s[t], a[t]) := by
 -- proof
   apply MEq_ExpectCond.MEq_ExpectCond.MEq_ExpectCond.of.MEqExpectS.All_MEq_ExpectCondDot.All_MEq_ExpectCondDot.GtInftySup.In_Ico
-    (s := ⇑s) (a := ⇑a) (r := ⇑r) (Q := ⇑Q) (V := ⇑V)
+    (s := s) (a := a) (r := r) (Q := Q) (V := V)
     h₀ h₁ h₂ h₄ h₅
-  have hrm : ∀ n, Measurable r[n] := fun n ↦ (Random.Measurable.Measurable.of.MeasurableJoint (h₁ n)).1
-  have hsm : ∀ n, Measurable s[n] := fun n ↦
+  have hrm : ∀ (n : ℕ), Measurable r[n] := fun n ↦ (Random.Measurable.Measurable.of.MeasurableJoint (h₁ n)).1
+  have hsm : ∀ (n : ℕ), Measurable s[n] := fun n ↦
     (Random.Measurable.Measurable.of.MeasurableJoint (Random.Measurable.Measurable.of.MeasurableJoint (h₁ n)).2).1
-  have ham : ∀ n, Measurable a[n] := fun n ↦
+  have ham : ∀ (n : ℕ), Measurable a[n] := fun n ↦
     (Random.Measurable.Measurable.of.MeasurableJoint (Random.Measurable.Measurable.of.MeasurableJoint (h₁ n)).2).2
   have hF : Measurable (Expectation.asRV r[t + 1:]) := Measurable.of_eval fun k ↦ hrm (t + 1 + k)
   have hg : Measurable fun p : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) ⬝ᵥ p :=
     Measurable.tsum fun k ↦ (measurable_pi_apply k).const_mul _
   obtain ⟨R, hR⟩ := id h₂
-  have hr : ∀ t ω, |r[t] ω| ≤ R := fun t ω ↦ hR (Set.mem_range_self (t, ω))
-  have hb : ∀ ω k, ‖γ ^ k * r[t + 1 + k] ω‖ ≤ γ ^ k * |R| := fun ω k ↦ by
+  have hr : ∀ (t : ℕ) (ω : Ω), |r[t] ω| ≤ R := fun t ω ↦ hR (Set.mem_range_self (t, ω))
+  have hb : ∀ (ω : Ω) (k : ℕ), ‖γ ^ k * r[t + 1 + k] ω‖ ≤ γ ^ k * |R| := fun ω k ↦ by
     rw [norm_mul, norm_pow, Real.norm_of_nonneg h₀.1, Real.norm_eq_abs]
     exact mul_le_mul_of_nonneg_left ((hr _ _).trans (le_abs_self R)) (pow_nonneg h₀.1 k)
   have hgeo := (hasSum_geometric_of_lt_one h₀.1 h₀.2).mul_right |R|
@@ -80,4 +81,4 @@ private lemma main
 
 
 -- created on 2026-10-06
--- updated on 2026-11-17
+-- updated on 2026-11-23

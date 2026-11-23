@@ -9,6 +9,7 @@ import Mathlib.MeasureTheory.Function.ConditionalExpectation.PullOut
 import Mathlib.Probability.Kernel.CondDistrib
 import Theorem.Probability.CondExpectation
 import Instance.Dynamics.PolicyTrajectory
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Filter Measure
 
 
@@ -23,9 +24,9 @@ private lemma main
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {γ C : ℝ}
   {ψ : 𝒮 → 𝒜 → ℰ}
-  {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
-  {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
-  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
   {R : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
@@ -38,21 +39,18 @@ private lemma main
 -- imply
   have : PSpace (M θ) (AsPathRV.path s) :=
     PSpace_Path.of.All_PSpace
-      (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)
+      (fun t => ⟨(Random.Measurable.of.All_Eq.snd.fst (r := r) (s := s) (a := a) h₁ t).aemeasurable⟩)
   have : PSpace (M θ) (AsPathRV.path a) :=
     PSpace_Path.of.All_PSpace
-      (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)
+      (fun t => ⟨(Random.Measurable.of.All_Eq.snd.snd (r := r) (s := s) (a := a) h₁ t).aemeasurable⟩)
   have : ∀ θ, PSpace (M θ) (AsPathRV.path r) := fun _ =>
     PSpace_Path.of.All_PSpace
-      (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := ⇑r) (s := ⇑s) (a := ⇑a) h₁ t).aemeasurable⟩)
+      (fun t => ⟨(Random.Measurable.of.All_Eq.fst (r := r) (s := s) (a := a) h₁ t).aemeasurable⟩)
   𝔼[r, s, a : M θ](((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) • ψ (s t) (a t)) =
     𝔼[s, a : M θ](
       𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s[t], a[t]) • ψ (s t) (a t)) := by
 -- proof
   intro _ _ _
-  obtain ⟨r⟩ := r
-  obtain ⟨s⟩ := s
-  obtain ⟨a⟩ := a
   set G := (γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]
   set BG : ℝ := (1 - γ)⁻¹ * |R|
   set Y := fun ω => (s t ω, a t ω)
@@ -185,4 +183,4 @@ private lemma main
 
 
 -- created on 2026-11-14
--- updated on 2026-11-18
+-- updated on 2026-11-23

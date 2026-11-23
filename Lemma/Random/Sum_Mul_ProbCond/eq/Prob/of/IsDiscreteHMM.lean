@@ -4,12 +4,13 @@ import Lemma.Random.Prob_Cond.eq.Div.of.SinglePSpace
 import Instance.Probability.Process.DiscreteHMM.Part2
 import Syntax.Algebra.BigOperators.Summations
 import Initialize.Tactic.Attr.Basic
+import Instance.Data.Nat.Fun
 open MeasureTheory Random IsDiscreteHMM Fun
 
 
 /--
 Likelihood of an observed sequence in a hidden Markov model, cut at any time `t`.
-Let `x` (observations) and `y` (hidden states) form a discrete HMM `IsDiscreteHMM π (⇑x) (⇑y)` with finitely many
+Let `x` (observations) and `y` (hidden states) form a discrete HMM `IsDiscreteHMM π (x) (y)` with finitely many
 states, let `«\sf{x}»` be a fixed observed sequence and let `n` be the number of time steps.  Splitting the
 observations at any time `t : Fin n` into the past `x[:t + 1]` and the future `x[t + 1:n]`, the likelihood is the sum over
 the hidden state `«\sf{y}»[t]` at the cut of the forward probability
@@ -29,18 +30,18 @@ private lemma main
   [MeasurableSingletonClass Y] [Countable X] [MeasurableSingletonClass X]
   [Fintype Y]
   {π : Measure Ω} [IsProbabilityMeasure π]
-  {x : ℕ ⇀ Ω → X} {y : ℕ ⇀ Ω → Y} {«\sf{x}» : ℕ ⇀ X}
+  {x : ℕ → Ω → X} {y : ℕ → Ω → Y} {«\sf{x}» : ℕ → X}
   {n : ℕ}
 -- given
-  (h : IsDiscreteHMM π (⇑x) (⇑y))
+  (h : IsDiscreteHMM π (x) (y))
   (t : Fin n) :
 -- imply
-  have : ∀ i, SinglePSpace π ((⇑y) i) := fun i =>
-    IsDiscreteHMM.singlePSpace_y (x := ⇑x) i
-  have : ∀ i j, SinglePSpace π ((⇑y) i, (⇑y) j) := fun i j =>
-    IsDiscreteHMM.singlePSpace_yy (x := ⇑x) i j
-  have : ∀ (a b : ℤ), SinglePSpace π (⇑x)[a:b] := fun a b =>
-    IsDiscreteHMM.singlePSpace_x (x := ⇑x) (y := ⇑y) a b
+  have : ∀ i, SinglePSpace π ((y) i) := fun i =>
+    IsDiscreteHMM.singlePSpace_y (x := x) i
+  have : ∀ i j, SinglePSpace π ((y) i, (y) j) := fun i j =>
+    IsDiscreteHMM.singlePSpace_yy (x := x) i j
+  have : ∀ (a b : ℤ), SinglePSpace π (x)[a:b] := fun a b =>
+    IsDiscreteHMM.singlePSpace_x (x := x) (y := y) a b
   ∑ «\sf{y}»[t], ℙ[π](x[:t + 1] = «\sf{x}»[:t + 1] ∧ y[t] = «\sf{y}»[t]) *
       ℙ[π](x[t + 1:n] = «\sf{x}»[t + 1:n] | y[t] = «\sf{y}»[t]) = ℙ[π](x[:n] = «\sf{x}»[:n]) := by
 -- proof
@@ -396,6 +397,7 @@ private lemma main
             exact h2)]
     refine Finset.sum_congr rfl fun b _ => ?_
     rw [hP1, hPcondy, hPcond, hψ, mul_assoc]
+    rfl
   have hfb : ∀ (t : ℕ), t ≤ m → ∀ a, ℙ[π](x[:m + 1] = «\sf{x}»[:m + 1] ∧ y[t] = a) =
       ℙ[π](x[:t + 1] = «\sf{x}»[:t + 1] ∧ y[t] = a) *
         ℙ[π](x[t + 1:m + 1] = «\sf{x}»[t + 1:m + 1] | y[t] = a) := by
@@ -434,4 +436,4 @@ private lemma main
 
 
 -- created on 2026-10-03
--- updated on 2026-11-17
+-- updated on 2026-11-23

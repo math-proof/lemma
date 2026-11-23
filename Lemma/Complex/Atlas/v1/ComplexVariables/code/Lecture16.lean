@@ -295,8 +295,7 @@ lemma mobiusTransform_circleMap_invMobiusAngle_zero
       have : ‖starRingEnd ℂ a * a‖ = 1 := by rw [h1]; simp
       rw [norm_mul, Complex.norm_conj] at this
       have hmul : ‖a‖ * ‖a‖ = 1 := this
-      have : ‖a‖ * ‖a‖ < 1 :=
-        mul_lt_one_of_nonneg_of_lt_one_left (norm_nonneg a) ha_norm ha_norm.le
+      have : ‖a‖ * ‖a‖ < 1 := by nlinarith [norm_nonneg a, ha_norm]
       linarith
     · exact h1_sub_conj_ne
 
@@ -327,11 +326,20 @@ lemma eq_zero_of_hasDerivAt_mul
     intro θ
     have h1 := Complex.hasDerivAt_exp (-G θ)
     have h2 : HasDerivAt (fun t => -G t) (-c θ) θ := (hG_deriv θ).neg
-    convert (h1.comp θ h2) using 1; ring
+    have hfun : E = Complex.exp ∘ fun t => -G t := by
+      funext t; simp [E]
+    rw [hfun]
+    convert (h1.comp θ h2) using 1
+    simp only [Function.comp_apply]
+    ring
   have hu_deriv : ∀ θ, HasDerivAt u 0 θ := by
     intro θ
-    convert (hy_deriv θ).mul (hE_deriv θ) using 1
-    simp [hE_def]; ring
+    have hmul := (hy_deriv θ).mul (hE_deriv θ)
+    have hfun : u = y * E := by
+      funext t; simp [u]
+    rw [hfun]
+    convert hmul using 1
+    ring
   have hu_diff : Differentiable ℝ u := fun x => (hu_deriv x).differentiableAt
   have hu_deriv_eq : ∀ x, deriv u x = 0 := fun x => (hu_deriv x).deriv
   have hu_const : u θ = u 0 := is_const_of_deriv_eq_zero hu_diff hu_deriv_eq θ 0
@@ -398,8 +406,8 @@ lemma one_sub_conj_mul_circleMap_ne_zero
   have h1 : starRingEnd ℂ a * circleMap 0 1 θ = 1 := by
     have := sub_eq_zero.mp h; exact this.symm
   have hle : ‖starRingEnd ℂ a * circleMap 0 1 θ‖ < 1 := by
-    rw [norm_mul, Complex.norm_conj]
-    exact mul_lt_one_of_nonneg_of_lt_one_left (norm_nonneg _) ha_norm (le_of_eq hz_norm)
+    rw [norm_mul, Complex.norm_conj, hz_norm, mul_one]
+    exact ha_norm
   rw [h1] at hle; simp at hle
 
 /--
@@ -423,21 +431,21 @@ lemma invMobiusAngle_mobiusTransform_axiom
     have := circleMap_mem_sphere 0 one_pos.le t
     rw [Metric.mem_sphere, dist_zero_right] at this; exact this
   have hd : ∀ t, (1 : ℂ) - c * circleMap 0 1 t ≠ 0 :=
-    fun t => one_sub_conj_mul_circleMap_ne_zero a ha t
+    fun t => one_sub_conj_mul_circleMap_ne_zero (a := a) ha (θ := t)
   have hca : (1 : ℂ) - c * a ≠ 0 := by
     intro h
     have h1 : c * a = 1 := by rwa [sub_eq_zero, eq_comm] at h
     have : ‖c * a‖ = 1 := by rw [h1]; simp
     rw [norm_mul, Complex.norm_conj] at this
     have : ‖a‖ * ‖a‖ = 1 := this
-    have : ‖a‖ * ‖a‖ < 1 := mul_lt_one_of_nonneg_of_lt_one_left (norm_nonneg a) ha' ha'.le
+    have : ‖a‖ * ‖a‖ < 1 := by nlinarith [norm_nonneg a, ha']
     linarith
   have hza : ∀ t, circleMap 0 1 t - a ≠ 0 := fun t => by
     intro h
     have heq : a = circleMap 0 1 t := by rwa [sub_eq_zero, eq_comm] at h
     rw [heq, hz_norm] at ha'; linarith
   have hφ_deriv : ∀ t, HasDerivAt φ (↑(P t) * (φ t * Complex.I)) t := fun t => by
-    have hcont := continuous_poissonKernel_circleMap a ha
+    have hcont := continuous_poissonKernel_circleMap (a := a) ha
     have h_int : HasDerivAt (fun θ₀ => ∫ s in (0 : ℝ)..θ₀,
       poissonKernel 0 a (circleMap 0 1 s))
       (poissonKernel 0 a (circleMap 0 1 t)) t := by
@@ -450,32 +458,39 @@ lemma invMobiusAngle_mobiusTransform_axiom
     have hψ : HasDerivAt (invMobiusAngle a ha) (P t) t := by
       have h3 := h_const.add h_int; simp only [zero_add] at h3; exact h3
     have hcm := hasDerivAt_circleMap 0 1 (invMobiusAngle a ha t)
-    simp at hcm
-    convert (hcm.scomp t hψ) using 1
+    have hcomp := hcm.scomp t hψ
+    simpa [φ, Function.comp_def, mul_comm, mul_left_comm, mul_assoc] using hcomp
   have hw_deriv : ∀ t, HasDerivAt w (↑(P t) * (w t * Complex.I)) t := fun t => by
     set z := circleMap 0 1 t with hz_def
     have hcm : HasDerivAt (circleMap 0 1) (z * Complex.I) t := by
-      have := hasDerivAt_circleMap 0 1 t; simp at this; exact this
+      simpa only [← hz_def] using hasDerivAt_circleMap 0 1 t
+    have hzden : (1 : ℂ) - c * z ≠ 0 := by simpa only [hz_def] using hd t
+    have hzt : ‖z‖ = 1 := by simpa only [hz_def] using hz_norm t
+    have hzat : z - a ≠ 0 := by simpa only [hz_def] using hza t
     have hT : HasDerivAt (fun z => (z - a) / (1 - c * z)) ((1 - c * a) / (1 - c * z) ^ 2) z := by
-      have h1 : HasDerivAt (fun z => z - a) 1 z := by
-        convert (hasDerivAt_id z).sub (hasDerivAt_const z a) using 1; ring
-      have h2 : HasDerivAt (fun z => 1 - c * z) (-c) z := by
-        convert (hasDerivAt_const z (1 : ℂ)).sub ((hasDerivAt_const z c).mul (hasDerivAt_id z))
-          using 1; simp [mul_comm]
-      convert h1.div h2 (hd t) using 1; field_simp; ring
+      have h1 : HasDerivAt (fun w => w - a) 1 z := by
+        convert (hasDerivAt_id z).sub (hasDerivAt_const z a) using 1
+        all_goals first | (ext w; simp) | ring
+      have h2 : HasDerivAt (fun w => 1 - c * w) (-c) z := by
+        convert (hasDerivAt_const z (1 : ℂ)).sub ((hasDerivAt_const z c).mul (hasDerivAt_id z)) using 1
+        all_goals first | (ext w; simp) | ring
+      have hdiv := h1.div h2 hzden
+      convert hdiv using 1
+      field_simp
+      ring
     have hchain := hT.comp t hcm
-    have halg := deriv_inv_mobius_eq_poisson_mul' a z (hz_norm t) (hd t) (hza t)
-    convert hchain using 1
-    exact halg.symm
+    have halg := deriv_inv_mobius_eq_poisson_mul' (a := a) (z := z) hzt hzden hzat
+    refine hchain.congr_deriv ?_
+    simpa [c, P, w, mul_comm, mul_left_comm, mul_assoc] using halg
   have hP_cont : Continuous (fun t => ↑(P t) * Complex.I) := by
-    exact (continuous_ofReal.comp (continuous_poissonKernel_circleMap a ha)).mul continuous_const
+    exact (continuous_ofReal.comp (continuous_poissonKernel_circleMap (a := a) ha)).mul continuous_const
   have hh_deriv : ∀ t, HasDerivAt (fun t => φ t - w t)
     ((↑(P t) * Complex.I) * (φ t - w t)) t := fun t => by
     have := (hφ_deriv t).sub (hw_deriv t)
     convert this using 1; ring
   have h0 : φ 0 - w 0 = 0 := by
     rw [sub_eq_zero]
-    have hS := mobiusTransform_circleMap_invMobiusAngle_zero a ha
+    have hS := mobiusTransform_circleMap_invMobiusAngle_zero (a := a) ha
     rw [mobiusTransform] at hS
     have hden0 : c * φ 0 + 1 ≠ 0 := by
       intro h
@@ -496,7 +511,7 @@ lemma invMobiusAngle_mobiusTransform_axiom
       linarith
     rwa [eq_div_iff h1c]
   have huniq : ∀ t, φ t - w t = 0 :=
-    eq_zero_of_hasDerivAt_mul hP_cont hh_deriv h0
+    fun t => eq_zero_of_hasDerivAt_mul (θ := t) hP_cont hh_deriv h0
   have hφw : φ θ = w θ := sub_eq_zero.mp (huniq θ)
   rw [show circleMap 0 1 (invMobiusAngle a ha θ) = φ θ from rfl, hφw]
   show mobiusTransform a ((circleMap 0 1 θ - a) / (1 - c * circleMap 0 1 θ)) = circleMap 0 1 θ
@@ -533,7 +548,7 @@ lemma invMobiusAngle_mobiusTransform
 -- imply
   mobiusTransform a (circleMap 0 1 (invMobiusAngle a ha θ)) = circleMap 0 1 θ :=
 -- proof
-  invMobiusAngle_mobiusTransform_axiom a ha θ
+  invMobiusAngle_mobiusTransform_axiom (a := a) (θ := θ) ha
 
 /--
 [hasDerivAt_invMobiusAngle](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture16.lean)
@@ -547,7 +562,7 @@ lemma hasDerivAt_invMobiusAngle
 -- imply
   HasDerivAt (invMobiusAngle a ha) (poissonKernel 0 a (circleMap 0 1 θ)) θ := by
 -- proof
-  have hcont := continuous_poissonKernel_circleMap a ha
+  have hcont := continuous_poissonKernel_circleMap (a := a) ha
   have h1 : HasDerivAt (fun θ₀ => ∫ t in (0 : ℝ)..θ₀,
     poissonKernel 0 a (circleMap 0 1 t))
     (poissonKernel 0 a (circleMap 0 1 θ)) θ := by
@@ -574,7 +589,7 @@ lemma invMobiusAngle_add_two_pi
   invMobiusAngle a ha (θ + 2 * π) = invMobiusAngle a ha θ + 2 * π := by
 -- proof
   simp only [invMobiusAngle]
-  have hcont := continuous_poissonKernel_circleMap a ha
+  have hcont := continuous_poissonKernel_circleMap (a := a) ha
   suffices h : ∫ t in (0 : ℝ)..(θ + 2 * π), poissonKernel 0 a (circleMap 0 1 t) =
     (∫ t in (0 : ℝ)..θ, poissonKernel 0 a (circleMap 0 1 t)) + 2 * π by linarith
   have hint : ∀ (x y : ℝ), IntervalIntegrable
@@ -641,7 +656,7 @@ lemma poissonIntegral_eq_circleAverage_mobiusTransform
   {U : ℂ → ℝ}
   {a : ℂ}
 -- given
-  (hU : CircleIntegrable U 0 1)
+  (_hU : CircleIntegrable U 0 1)
   (ha : a ∈ ball (0 : ℂ) 1) :
 -- imply
   poissonIntegral U a = Real.circleAverage (U ∘ mobiusTransform a) 0 1 := by
@@ -662,12 +677,12 @@ lemma poissonIntegral_eq_circleAverage_mobiusTransform
     ∫ u in ψ 0..ψ (2 * π), g u := by
     apply intervalIntegral.integral_deriv_smul_comp_of_deriv_nonneg
     · exact (continuous_iff_continuousAt.mpr
-      (fun x => (hasDerivAt_invMobiusAngle a ha x).continuousAt)).continuousOn
-    · intro x _; exact hasDerivAt_invMobiusAngle a ha x
-    · intro x _; exact poissonKernel_nonneg_circleMap a ha x
+      (fun x => (hasDerivAt_invMobiusAngle (a := a) ha (θ := x)).continuousAt)).continuousOn
+    · intro x _; exact hasDerivAt_invMobiusAngle (a := a) ha (θ := x)
+    · intro x _; exact poissonKernel_nonneg_circleMap (a := a) ha (θ := x)
   rw [hcov]
   have hψ_shift : ψ (2 * π) = ψ 0 + 2 * π := by
-    have := invMobiusAngle_add_two_pi a ha 0; simp only [zero_add] at this; exact this
+    have := invMobiusAngle_add_two_pi (a := a) (θ := 0) ha; simp only [zero_add] at this; exact this
   rw [hψ_shift]
   have hg_periodic : Function.Periodic g (2 * π) := by
     intro t
@@ -750,7 +765,7 @@ lemma circleAverage_mobiusTransform_aestronglyMeasurable
     intro θ; simp only [Function.comp_apply, g]; rw [invMobiusAngle_mobiusTransform]
   have hψ_cont : ContinuousOn ψ (Set.uIcc 0 (2 * π)) :=
     (continuous_iff_continuousAt.mpr
-      (fun x => (hasDerivAt_invMobiusAngle a ha x).continuousAt)).continuousOn
+      (fun x => (hasDerivAt_invMobiusAngle (a := a) ha (θ := x)).continuousAt)).continuousOn
   have hprod : IntervalIntegrable
     (fun θ => poissonKernel 0 a (circleMap 0 1 θ) • (g ∘ ψ) θ) volume 0 (2 * π) := by
     simp_rw [smul_eq_mul, hgψ]
@@ -765,23 +780,23 @@ lemma circleAverage_mobiusTransform_aestronglyMeasurable
         apply pow_ne_zero 2; rw [norm_ne_zero_iff]
         intro heq
         have ha' := sub_eq_zero.mp heq
-        have hn := norm_circleMap_zero_one θ
+        have hn := norm_circleMap_zero_one (θ := θ)
         rw [ha'] at hn
         rw [mem_ball, dist_zero_right] at ha; linarith
-    exact hU.continuousOn_mul hP_cont
+    exact IntervalIntegrable.continuousOn_mul ((circleIntegrable_def U 0 1).mp hU) hP_cont
   have hg_ii_shifted : IntervalIntegrable g volume (ψ 0) (ψ (2 * π)) := by
     rw [← intervalIntegral.integrable_deriv_smul_comp_iff_of_deriv_nonneg hψ_cont
-      (fun x _ => hasDerivAt_invMobiusAngle a ha x)
-      (fun x _ => poissonKernel_nonneg_circleMap a ha x)]
+      (fun x _ => hasDerivAt_invMobiusAngle (a := a) ha (θ := x))
+      (fun x _ => poissonKernel_nonneg_circleMap (a := a) ha (θ := x))]
     exact hprod
   have hψ_shift : ψ (2 * π) = ψ 0 + 2 * π := by
-    have := invMobiusAngle_add_two_pi a ha 0; simp only [zero_add] at this; exact this
+    have := invMobiusAngle_add_two_pi (a := a) (θ := 0) ha; simp only [zero_add] at this; exact this
   rw [hψ_shift] at hg_ii_shifted
   have hg_ii : IntervalIntegrable g volume 0 (2 * π) := by
     have := (@Function.Periodic.intervalIntegrable_iff _ _ g (2 * π) (ψ 0) 0
       hg_periodic).mp hg_ii_shifted
     simpa using this
-  rwa [show Set.uIoc (0 : ℝ) (2 * π) = Set.Ioc 0 (2 * π) from Set.uIoc_of_le (by positivity)]
+  exact hg_ii.aestronglyMeasurable_restrict_uIoc
 
 /--
 [circleAverage_mobiusTransform_bound](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture16.lean)
@@ -791,9 +806,9 @@ lemma circleAverage_mobiusTransform_bound
   {U : ℂ → ℝ}
   {z₀ : ℂ}
 -- given
-  (hU : CircleIntegrable U 0 1)
+  (_hU : CircleIntegrable U 0 1)
   (hUbd : ∃ M : ℝ, ∀ z, ‖U z‖ ≤ M)
-  (hz₀ : z₀ ∈ sphere (0 : ℂ) 1) :
+  (_hz₀ : z₀ ∈ sphere (0 : ℂ) 1) :
 -- imply
   ∃ bound : ℝ → ℝ, IntervalIntegrable bound MeasureTheory.volume (0 : ℝ) (2 * π) ∧ ∀ᶠ a in nhdsWithin z₀ (ball 0 1), ∀ᵐ θ ∂MeasureTheory.volume, θ ∈ Set.uIoc (0 : ℝ) (2 * π) → ‖U (mobiusTransform a (circleMap 0 1 θ))‖ ≤ bound θ := by
 -- proof
@@ -817,9 +832,10 @@ lemma circleAverage_mobiusTransform_tendsto
   Filter.Tendsto (fun a => Real.circleAverage (U ∘ mobiusTransform a) 0 1) (nhdsWithin z₀ (ball 0 1)) (nhds (U z₀)) := by
 -- proof
   simp only [Real.circleAverage_def, Function.comp_def]
-  have h_ptwise := mobiusTransform_tendsto_on_circle z₀ hz₀
-  obtain ⟨bound, h_bound_int, h_bound⟩ := circleAverage_mobiusTransform_bound U hU hUbd z₀ hz₀
-  have h_meas := circleAverage_mobiusTransform_aestronglyMeasurable U hU z₀ hz₀
+  have h_ptwise := mobiusTransform_tendsto_on_circle (z₀ := z₀) hz₀
+  obtain ⟨bound, h_bound_int, h_bound⟩ :=
+    circleAverage_mobiusTransform_bound (U := U) hU hUbd (z₀ := z₀) hz₀
+  have h_meas := circleAverage_mobiusTransform_aestronglyMeasurable (U := U) hU (z₀ := z₀) hz₀
   have h_lim : ∀ᵐ θ ∂MeasureTheory.volume, θ ∈ Set.uIoc (0 : ℝ) (2 * π) →
     Filter.Tendsto (fun a => U (mobiusTransform a (circleMap 0 1 θ)))
       (nhdsWithin z₀ (ball 0 1)) (nhds (U z₀)) := by
@@ -852,9 +868,9 @@ lemma poissonIntegral_tendsto_boundary
 -- imply
   Filter.Tendsto (poissonIntegral U) (nhdsWithin z₀ (ball 0 1)) (nhds (U z₀)) := by
 -- proof
-  apply (circleAverage_mobiusTransform_tendsto U hU hUbd z₀ hz₀ hcont).congr'
+  apply (circleAverage_mobiusTransform_tendsto (U := U) hU hUbd (z₀ := z₀) hz₀ hcont).congr'
   filter_upwards [self_mem_nhdsWithin] with a ha
-  exact (poissonIntegral_eq_circleAverage_mobiusTransform U hU a ha).symm
+  exact (poissonIntegral_eq_circleAverage_mobiusTransform (U := U) hU (a := a) ha).symm
 end PoissonIntegralSetup
 
 /--
@@ -889,10 +905,10 @@ lemma schwarz_poisson_harmonic
 -- imply
   IsHarmonic (poissonIntegral U) (ball 0 1) := by
 -- proof
-  have hDiff := herglotzIntegral_differentiableOn U hU
+  have hDiff := herglotzIntegral_differentiableOn (U := U) hU
   have hHarm := harmonicOnNhd_re_of_differentiableOn isOpen_ball hDiff
   exact harmonicOnNhd_congr_eqOn isOpen_ball hHarm
-    (fun a ha ↦ (poissonIntegral_eq_re_herglotzIntegral U hU a ha).symm)
+    (fun a ha ↦ (poissonIntegral_eq_re_herglotzIntegral (U := U) hU (a := a) ha).symm)
 
 /--
 [schwarz_poisson_boundary](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture16.lean)
@@ -909,7 +925,7 @@ lemma schwarz_poisson_boundary
 -- imply
   Filter.Tendsto (poissonIntegral U) (nhdsWithin z₀ (ball 0 1)) (nhds (U z₀)) :=
 -- proof
-  poissonIntegral_tendsto_boundary U hU hUbd z₀ hz₀ hcont
+  poissonIntegral_tendsto_boundary (U := U) hU hUbd (z₀ := z₀) hz₀ hcont
 
 /--
 [schwarz_poisson](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture16.lean)
@@ -923,8 +939,8 @@ lemma schwarz_poisson
 -- imply
   IsHarmonic (poissonIntegral U) (ball 0 1) ∧ ∀ z₀ ∈ sphere (0 : ℂ) 1, ContinuousAt U z₀ → Filter.Tendsto (poissonIntegral U) (nhdsWithin z₀ (ball 0 1)) (nhds (U z₀)) :=
 -- proof
-  ⟨schwarz_poisson_harmonic U hU,
-    fun z₀ hz₀ hcont ↦ schwarz_poisson_boundary U hU hUbd z₀ hz₀ hcont⟩
+  ⟨schwarz_poisson_harmonic (U := U) hU,
+    fun z₀ hz₀ hcont ↦ schwarz_poisson_boundary (U := U) hU hUbd (z₀ := z₀) hz₀ hcont⟩
 
 /--
 [isHarmonic_mean_value_property](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture16.lean)
@@ -945,7 +961,7 @@ lemma isHarmonic_mean_value_property
   have hu_disk : IsHarmonic u (closedBall z₀ r) := hu.mono hdisk
   have hr_abs : |r| = r := abs_of_nonneg hr
   rw [← hr_abs] at hu_disk
-  exact (HarmonicOnNhd.circleAverage_eq hu_disk).symm
+  exact (InnerProductSpace.HarmonicOnNhd.circleAverage_eq hu_disk).symm
 set_option maxHeartbeats 1600000 in
 
 /--
@@ -961,7 +977,7 @@ lemma circleAverage_hasDerivAt_first
   (hu : IsHarmonic u Ω)
   (hΩ : IsOpen Ω)
   (hr₁ : 0 < r₁)
-  (hr₁₂ : r₁ ≤ r₂)
+  (_hr₁₂ : r₁ ≤ r₂)
   (hr0 : r₁ ≤ r₀)
   (hr0' : r₀ ≤ r₂)
   (hannulus : ∀ z, r₁ ≤ ‖z - z₀‖ → ‖z - z₀‖ ≤ r₂ → z ∈ Ω) :
@@ -974,11 +990,12 @@ lemma circleAverage_hasDerivAt_first
     exact h.const_smul (2 * π)⁻¹
   set K := {z : ℂ | r₁ ≤ ‖z - z₀‖ ∧ ‖z - z₀‖ ≤ r₂}
   have hK_compact : IsCompact K := by
-    apply IsCompact.of_isClosed_subset (isCompact_closedBall z₀ r₂)
-    · exact (isClosed_le continuous_const
-      (continuous_norm.comp (continuous_id.sub continuous_const))).inter
-      (isClosed_le (continuous_norm.comp (continuous_id.sub continuous_const)) continuous_const)
-    · intro z ⟨_, h2⟩; exact mem_closedBall.mpr (by rwa [dist_comm, dist_eq_norm, norm_sub_rev])
+    have hcont : Continuous fun z : ℂ => ‖z - z₀‖ :=
+      continuous_norm.comp (continuous_id.sub continuous_const)
+    have hKclosed1 : IsClosed {z : ℂ | r₁ ≤ ‖z - z₀‖} := isClosed_le continuous_const hcont
+    have hKclosed2 : IsClosed {z : ℂ | ‖z - z₀‖ ≤ r₂} := isClosed_le hcont continuous_const
+    exact (isCompact_closedBall z₀ r₂).of_isClosed_subset (hKclosed1.inter hKclosed2)
+      (fun z ⟨hz1, hz2⟩ => mem_closedBall.mpr (by rwa [dist_comm, dist_eq_norm, norm_sub_rev]))
   have hK_sub : K ⊆ Ω := fun z ⟨h1, h2⟩ => hannulus z h1 h2
   obtain ⟨δ, hδ_pos, hδ_sub⟩ := hK_compact.exists_thickening_subset_open hΩ hK_sub
   have hr0_pos : 0 < r₀ := lt_of_lt_of_le hr₁ hr0
@@ -1015,18 +1032,21 @@ lemma circleAverage_hasDerivAt_first
     (F' := fun s θ => (fderiv ℝ u (circleMap z₀ s θ)) (exp (↑θ * I)))
     (x₀ := r₀) (s := ball r₀ (δ / 2))
     (ball_mem_nhds r₀ (by linarith))
-    (by apply eventually_of_mem (ball_mem_nhds r₀ (by linarith : δ / 2 > 0))
+    (by
+      apply eventually_of_mem (ball_mem_nhds r₀ (show (0 : ℝ) < δ / 2 by linarith))
       intro x hx
       exact (hu_cont.comp_continuous (continuous_circleMap z₀ x)
         (hmem_Ω x hx)).aestronglyMeasurable)
     ((hu_cont.comp_continuous (continuous_circleMap z₀ r₀)
       (fun θ => hK_sub (hmem_K θ))).intervalIntegrable 0 _)
-    (by have h1 : Continuous (fun θ => fderiv ℝ u (circleMap z₀ r₀ θ)) :=
-      hfderiv_cont.comp_continuous (continuous_circleMap z₀ r₀) (fun θ => hK_sub (hmem_K θ))
+    (by
+      have h1 : Continuous (fun θ => fderiv ℝ u (circleMap z₀ r₀ θ)) :=
+        hfderiv_cont.comp_continuous (continuous_circleMap z₀ r₀) (fun θ => hK_sub (hmem_K θ))
       have h2 : Continuous (fun θ : ℝ => exp ((θ : ℂ) * I)) := by fun_prop
       exact ((isBoundedBilinearMap_apply (𝕜 := ℝ)).continuous.comp
         (h1.prodMk h2)).aestronglyMeasurable)
-    (by apply Eventually.of_forall; intro t _ x hx
+    (by
+      apply Eventually.of_forall; intro t _ x hx
       calc ‖(fderiv ℝ u (circleMap z₀ x t)) (exp (↑t * I))‖
         ≤ ‖fderiv ℝ u (circleMap z₀ x t)‖ * ‖exp (↑t * I)‖ :=
           (fderiv ℝ u (circleMap z₀ x t)).le_opNorm _
@@ -1034,13 +1054,16 @@ lemma circleAverage_hasDerivAt_first
           rw [Complex.norm_exp_ofReal_mul_I, mul_one]
         _ ≤ M := hM _ (hmem_cthick x hx t))
     intervalIntegrable_const
-    (by apply Eventually.of_forall; intro t _ x hx
+    (by
+      apply Eventually.of_forall; intro t _ x hx
       exact (hu_diff _ (hmem_Ω x hx t)).hasFDerivAt.comp_hasDerivAt x (by
         have : HasDerivAt (fun R : ℝ => z₀ + (R : ℂ) * exp (↑t * I))
           (exp (↑t * I)) x := by
           simpa using (Complex.ofRealCLM.hasDerivAt.mul_const
             (exp (↑t * I))).const_add z₀
-        convert this using 1))
+        convert this using 1
+        funext R
+        simp [circleMap]))
   exact leibniz.2
 
 /--
@@ -1056,14 +1079,14 @@ lemma circleAverage_hasDerivAt_second
   (hu : IsHarmonic u Ω)
   (hΩ : IsOpen Ω)
   (hr₁ : 0 < r₁)
-  (hr₁₂ : r₁ ≤ r₂)
+  (_hr₁₂ : r₁ ≤ r₂)
   (hr0 : r₁ ≤ r₀)
   (hr0' : r₀ ≤ r₂)
   (hannulus : ∀ z, r₁ ≤ ‖z - z₀‖ → ‖z - z₀‖ ≤ r₂ → z ∈ Ω) :
 -- imply
-  let V' := fun r => (2 * π)⁻¹ • ∫ θ in (0 : ℝ)..2 * π, (fderiv ℝ u (circleMap z₀ r θ)) (exp (↑θ * I)) HasDerivAt V' ((2 * π)⁻¹ • ∫ θ in (0 : ℝ)..2 * π, (fderiv ℝ (fun z => (fderiv ℝ u z) (exp (↑θ * I))) (circleMap z₀ r₀ θ)) (exp (↑θ * I))) r₀ := by
+  HasDerivAt (fun r => (2 * π)⁻¹ • ∫ θ in (0 : ℝ)..2 * π, (fderiv ℝ u (circleMap z₀ r θ)) (exp (↑θ * I)))
+    ((2 * π)⁻¹ • ∫ θ in (0 : ℝ)..2 * π, (fderiv ℝ (fun z => (fderiv ℝ u z) (exp (↑θ * I))) (circleMap z₀ r₀ θ)) (exp (↑θ * I))) r₀ := by
 -- proof
-  intro V'
   suffices h : HasDerivAt (fun s => ∫ θ in (0 : ℝ)..2 * π,
     (fderiv ℝ u (circleMap z₀ s θ)) (exp (↑θ * I)))
     (∫ θ in (0 : ℝ)..2 * π,
@@ -1072,11 +1095,12 @@ lemma circleAverage_hasDerivAt_second
     exact h.const_smul (2 * π)⁻¹
   set K := {z : ℂ | r₁ ≤ ‖z - z₀‖ ∧ ‖z - z₀‖ ≤ r₂}
   have hK_compact : IsCompact K := by
-    apply IsCompact.of_isClosed_subset (isCompact_closedBall z₀ r₂)
-    · exact (isClosed_le continuous_const
-      (continuous_norm.comp (continuous_id.sub continuous_const))).inter
-      (isClosed_le (continuous_norm.comp (continuous_id.sub continuous_const)) continuous_const)
-    · intro z ⟨_, h2⟩; exact mem_closedBall.mpr (by rwa [dist_comm, dist_eq_norm, norm_sub_rev])
+    have hcont : Continuous fun z : ℂ => ‖z - z₀‖ :=
+      continuous_norm.comp (continuous_id.sub continuous_const)
+    have hKclosed1 : IsClosed {z : ℂ | r₁ ≤ ‖z - z₀‖} := isClosed_le continuous_const hcont
+    have hKclosed2 : IsClosed {z : ℂ | ‖z - z₀‖ ≤ r₂} := isClosed_le hcont continuous_const
+    exact (isCompact_closedBall z₀ r₂).of_isClosed_subset (hKclosed1.inter hKclosed2)
+      (fun z ⟨hz1, hz2⟩ => mem_closedBall.mpr (by rwa [dist_comm, dist_eq_norm, norm_sub_rev]))
   have hK_sub : K ⊆ Ω := fun z ⟨h1, h2⟩ => hannulus z h1 h2
   obtain ⟨δ, hδ_pos, hδ_sub⟩ := hK_compact.exists_thickening_subset_open hΩ hK_sub
   have hr0_pos : 0 < r₀ := lt_of_lt_of_le hr₁ hr0
@@ -1118,15 +1142,17 @@ lemma circleAverage_hasDerivAt_second
       (circleMap z₀ s θ)) (exp (↑θ * I)))
     (x₀ := r₀) (s := ball r₀ (δ / 2))
     (ball_mem_nhds r₀ (by linarith))
-    (by apply eventually_of_mem (ball_mem_nhds r₀ (by linarith : δ / 2 > 0))
+    (by
+      apply eventually_of_mem (ball_mem_nhds r₀ (show (0 : ℝ) < δ / 2 by linarith))
       intro x hx
       have h1 : Continuous (fun θ => fderiv ℝ u (circleMap z₀ x θ)) :=
         hfderiv_cont.comp_continuous (continuous_circleMap z₀ x) (fun θ => hmem_Ω x hx θ)
       have h2 : Continuous (fun θ : ℝ => exp ((θ : ℂ) * I)) := by fun_prop
       exact ((isBoundedBilinearMap_apply (𝕜 := ℝ)).continuous.comp
         (h1.prodMk h2)).aestronglyMeasurable)
-    (by have h1 : Continuous (fun θ => fderiv ℝ u (circleMap z₀ r₀ θ)) :=
-      hfderiv_cont.comp_continuous (continuous_circleMap z₀ r₀) (fun θ => hK_sub (hmem_K θ))
+    (by
+      have h1 : Continuous (fun θ => fderiv ℝ u (circleMap z₀ r₀ θ)) :=
+        hfderiv_cont.comp_continuous (continuous_circleMap z₀ r₀) (fun θ => hK_sub (hmem_K θ))
       have h2 : Continuous (fun θ : ℝ => exp ((θ : ℂ) * I)) := by fun_prop
       exact ((isBoundedBilinearMap_apply (𝕜 := ℝ)).continuous.comp
         (h1.prodMk h2)).intervalIntegrable 0 _)
@@ -1150,7 +1176,8 @@ lemma circleAverage_hasDerivAt_second
       have hB : Continuous (fun θ : ℝ => exp ((θ : ℂ) * I)) := by fun_prop
       exact (((isBoundedBilinearMap_apply (𝕜 := ℝ)).continuous.comp
         (((isBoundedBilinearMap_apply (𝕜 := ℝ)).continuous.comp (hA.prodMk hB)).prodMk hB))))
-    (by apply Eventually.of_forall; intro t _ x hx
+    (by
+      apply Eventually.of_forall; intro t _ x hx
       show ‖(fderiv ℝ (fun z => (fderiv ℝ u z) (exp (↑t * I))) (circleMap z₀ x t))
         (exp (↑t * I))‖ ≤ M
       have hfdu_diff_at : DifferentiableAt ℝ (fderiv ℝ u) (circleMap z₀ x t) :=
@@ -1175,7 +1202,8 @@ lemma circleAverage_hasDerivAt_second
           rw [Complex.norm_exp_ofReal_mul_I, mul_one]
         _ ≤ M := hM _ (hmem_cthick x hx t))
     intervalIntegrable_const
-    (by apply Eventually.of_forall; intro t _ x hx
+    (by
+      apply Eventually.of_forall; intro t _ x hx
       exact (hg_diff _ (hmem_Ω x hx t) (exp (↑t * I))).hasFDerivAt.comp_hasDerivAt x (by
         have : HasDerivAt (fun R : ℝ => z₀ + (R : ℂ) * exp (↑t * I))
           (exp (↑t * I)) x := by
@@ -1203,8 +1231,7 @@ lemma bilinear_trace_rotation
     rw [hz]
     rw [show I * ((a : ℝ) • (1 : ℂ) + (b : ℝ) • (I : ℂ)) =
       (-(b : ℝ)) • (1 : ℂ) + (a : ℝ) • (I : ℂ) from by rw [← hz]; exact hiz]
-  simp only [map_add, map_smul, ContinuousLinearMap.add_apply,
-    ContinuousLinearMap.smul_apply, smul_eq_mul]
+  simp only [map_add, map_smul, add_apply, smul_apply, smul_eq_mul]
   simp; ring
 
 /--
@@ -1247,7 +1274,7 @@ lemma harmonic_second_deriv_neg
 -- imply
   (fderiv ℝ (fderiv ℝ u) z) e e = -(fderiv ℝ (fderiv ℝ u) z) (I * e) (I * e) := by
 -- proof
-  have := bilinear_trace_rotation (fderiv ℝ (fderiv ℝ u) z) e
+  have := bilinear_trace_rotation (B := fderiv ℝ (fderiv ℝ u) z) (z := e)
   rw [he, one_mul] at this
   linarith [this, harmonic_fderiv_trace_zero h]
 
@@ -1315,7 +1342,7 @@ lemma periodicity_of_circle_derivative
     set e := exp ((↑t : ℂ) * I)
     have h1 : circleMap 0 r₀ t * I = r₀ • (I * e) := by
       rw [circleMap_zero, Complex.real_smul]; ring
-    rw [h1]; simp only [map_smul, ContinuousLinearMap.smul_apply, smul_eq_mul]
+    rw [h1]; simp only [map_smul, smul_apply, smul_eq_mul]
     have h3 : I * (e * I) = (-1 : ℝ) • e := by
       simp only [Complex.real_smul, Complex.ofReal_neg, Complex.ofReal_one]
       ring_nf; rw [I_sq]; ring
@@ -1364,14 +1391,16 @@ lemma euler_ode_from_laplacian
   {r₁ r₂ r₀ : ℝ}
 -- given
   (hu : IsHarmonic u Ω)
-  (hΩ : IsOpen Ω)
+  (_hΩ : IsOpen Ω)
   (hr₁ : 0 < r₁)
-  (hr₁₂ : r₁ ≤ r₂)
+  (_hr₁₂ : r₁ ≤ r₂)
   (hr0 : r₁ ≤ r₀)
   (hr0' : r₀ ≤ r₂)
   (hannulus : ∀ z, r₁ ≤ ‖z - z₀‖ → ‖z - z₀‖ ≤ r₂ → z ∈ Ω) :
 -- imply
-  let V'₀ := (2 * π)⁻¹ • ∫ θ in (0 : ℝ)..2 * π, (fderiv ℝ u (circleMap z₀ r₀ θ)) (exp (↑θ * I)) let V''₀ := (2 * π)⁻¹ • ∫ θ in (0 : ℝ)..2 * π, (fderiv ℝ (fun z => (fderiv ℝ u z) (exp (↑θ * I))) (circleMap z₀ r₀ θ)) (exp (↑θ * I)) V''₀ + V'₀ / r₀ = 0 := by
+  let V'₀ := (2 * π)⁻¹ • ∫ θ in (0 : ℝ)..2 * π, (fderiv ℝ u (circleMap z₀ r₀ θ)) (exp (↑θ * I))
+  let V''₀ := (2 * π)⁻¹ • ∫ θ in (0 : ℝ)..2 * π, (fderiv ℝ (fun z => (fderiv ℝ u z) (exp (↑θ * I))) (circleMap z₀ r₀ θ)) (exp (↑θ * I))
+  V''₀ + V'₀ / r₀ = 0 := by
 -- proof
   have hr₀_pos : 0 < r₀ := lt_of_lt_of_le hr₁ hr0
   have hC2 : ∀ θ : ℝ, ContDiffAt ℝ 2 u (circleMap z₀ r₀ θ) := by
@@ -1380,12 +1409,12 @@ lemma euler_ode_from_laplacian
       apply hannulus
       · rw [circleMap_sub_center]; simp [abs_of_pos hr₀_pos]; linarith
       · rw [circleMap_sub_center]; simp [abs_of_pos hr₀_pos]; linarith
-    exact (hu.harmonicAt h_in_Ω).1
+    exact (isHarmonic_harmonicAt hu h_in_Ω).1
   have hdiff2 : ∀ θ : ℝ, DifferentiableAt ℝ (fderiv ℝ u) (circleMap z₀ r₀ θ) := by
     intro θ; exact (hC2 θ).fderiv_right le_rfl |>.differentiableAt one_ne_zero
   have hharm : ∀ θ : ℝ, HarmonicAt u (circleMap z₀ r₀ θ) := by
     intro θ
-    apply hu.harmonicAt
+    apply isHarmonic_harmonicAt hu
     apply hannulus
     · rw [circleMap_sub_center]; simp [abs_of_pos hr₀_pos]; linarith
     · rw [circleMap_sub_center]; simp [abs_of_pos hr₀_pos]; linarith
@@ -1397,7 +1426,7 @@ lemma euler_ode_from_laplacian
     (fderiv ℝ (fderiv ℝ u) (circleMap z₀ r₀ θ)) (exp (↑θ * I)) (exp (↑θ * I)) =
     -((fderiv ℝ (fderiv ℝ u) (circleMap z₀ r₀ θ)) (I * exp (↑θ * I)) (I * exp (↑θ * I))) := by
     intro θ
-    exact harmonic_second_deriv_neg (hharm θ) (cexp_re_sq_add_im_sq θ)
+    exact harmonic_second_deriv_neg (hharm θ) (cexp_re_sq_add_im_sq (θ := θ))
   have hV''_neg : ∀ θ : ℝ,
     (fderiv ℝ (fun z => (fderiv ℝ u z) (exp (↑θ * I))) (circleMap z₀ r₀ θ)) (exp (↑θ * I)) =
     -((fderiv ℝ (fderiv ℝ u) (circleMap z₀ r₀ θ)) (I * exp (↑θ * I)) (I * exp (↑θ * I))) :=
@@ -1513,7 +1542,8 @@ lemma harmonic_circleAverage_ode
   ∃ α : ℝ, ∀ r, r₁ ≤ r → r ≤ r₂ → HasDerivAt (fun s => circleAverage u z₀ s) (α / r) r := by
 -- proof
   obtain ⟨V', V'', hV, hV', hode⟩ := harmonic_circleAverage_euler_ode hu hΩ hr₁ hr₁₂ hannulus
-  exact euler_ode_solution _ V' V'' r₁ r₂ hr₁ hV hV' hode
+  exact euler_ode_solution (V := fun s => circleAverage u z₀ s) (V' := V') (V'' := V'')
+    (r₁ := r₁) (r₂ := r₂) hr₁ hV hV' hode
 
 /--
 [harmonic_annulus_mean_value](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture16.lean)
@@ -1555,9 +1585,11 @@ lemma harmonic_annulus_mean_value
     have hconst_at : HasDerivAt (fun _ => V r₁ - g r₁) 0 x := hasDerivAt_const x _
     have h := hg_at.add hconst_at
     simp only [add_zero] at h
+    have h' : HasDerivWithinAt (fun s => g s + (V r₁ - g r₁)) (α * x⁻¹) (Ici x) x :=
+      h.hasDerivWithinAt
     rwa [show α / x = α * x⁻¹ from div_eq_mul_inv α x]
   exact eq_of_has_deriv_right_eq hV_deriv hgc_deriv hV_cont hgc_cont (by ring) r ⟨hr1, hr2⟩
 
 
 -- created on 2026-10-23
--- updated on 2026-11-22
+-- updated on 2026-11-23

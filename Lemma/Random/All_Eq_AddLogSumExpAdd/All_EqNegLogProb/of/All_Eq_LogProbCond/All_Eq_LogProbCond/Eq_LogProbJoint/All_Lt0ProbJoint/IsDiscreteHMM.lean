@@ -10,6 +10,7 @@ import Instance.Algebra.BigOperators.Reduced
 import Instance.Algebra.BigOperators.Reduced.Part2
 import Instance.Algebra.BigOperators.Reduced.Part3
 import Initialize.Tactic.Attr.Basic
+import Instance.Data.Nat.Fun
 open MeasureTheory Measure Random ENNReal.ToRealCoe Fin IsDiscreteHMM Fun
 
 
@@ -26,47 +27,47 @@ private lemma main
   [Fintype Y] [DecidableEq Y]
   [NeZero (n : ℕ)]
   {π : Measure Ω} [IsProbabilityMeasure π]
-  {x : ℕ ⇀ Ω → X} {y : ℕ ⇀ Ω → Y} {«\sf{x}» : ℕ ⇀ X}
-  {s : ℕ ⇀ (ℕ ⇀ Y) → ℝ}
-  {e : ℕ ⇀ Y → ℝ}
+  {x : ℕ → Ω → X} {y : ℕ → Ω → Y} {«\sf{x}» : ℕ → X}
+  {s : ℕ → (ℕ → Y) → ℝ}
+  {e : ℕ → Y → ℝ}
   {G : Y → Y → ℝ}
 -- given
-  (h₀ : IsDiscreteHMM π (⇑x) (⇑y))
-  (hPy : ∀ i, SinglePSpace π ((⇑y) i) := fun i => IsDiscreteHMM.singlePSpace_y (x := ⇑x) i)
-  (hPyy : ∀ i j, SinglePSpace π ((⇑y) i, (⇑y) j) :=
-    fun i j => IsDiscreteHMM.singlePSpace_yy (x := ⇑x) i j)
-  (h₁ : ∀ «\sf{y}» : ℕ ⇀ Y,
+  (h₀ : IsDiscreteHMM π (x) (y))
+  (hPy : ∀ i, SinglePSpace π ((y) i) := fun i => IsDiscreteHMM.singlePSpace_y (x := x) i)
+  (hPyy : ∀ i j, SinglePSpace π ((y) i, (y) j) :=
+    fun i j => IsDiscreteHMM.singlePSpace_yy (x := x) i j)
+  (h₁ : ∀ «\sf{y}» : ℕ → Y,
     ℙ[π](x[:n] = «\sf{x}»[:n] ∧ y[:n] = «\sf{y}»[:n]) > 0)
-  (h₂ : ∀ (t : ℕ) («\sf{y}» : ℕ ⇀ Y),
-    s[t] «\sf{y}» = (ℙ[π](x[:t + 1] = «\sf{x}»[:t + 1] ∧ y[:t + 1] = «\sf{y}»[:t + 1]) : ℝ).log)
-  (h₃ : ∀ t («\sf{y}» : ℕ ⇀ Y),
-    e[t] «\sf{y}»[t] = (ℙ[π](x[t] = «\sf{x}»[t] | y[t] = «\sf{y}»[t]) : ℝ).log)
-  (h₄ : ∀ i («\sf{y}» : ℕ ⇀ Y),
-    G «\sf{y}»[i + 1] «\sf{y}»[i] = (ℙ[π](y[i + 1] = «\sf{y}»[i + 1] | y[i] = «\sf{y}»[i]) : ℝ).log) :
+  (h₂ : ∀ (t : ℕ) («\sf{y}» : ℕ → Y),
+    s t «\sf{y}» = (ℙ[π](x[:t + 1] = «\sf{x}»[:t + 1] ∧ y[:t + 1] = «\sf{y}»[:t + 1]) : ℝ).log)
+  (h₃ : ∀ (t : ℕ) («\sf{y}» : ℕ → Y),
+    e t («\sf{y}» t) = (ℙ[π]((x t) = («\sf{x}» t) | (y t) = («\sf{y}» t)) : ℝ).log)
+  (h₄ : ∀ (i : ℕ) («\sf{y}» : ℕ → Y),
+    G ((«\sf{y}» (i + 1))) ((«\sf{y}» (i))) = (ℙ[π]((y (i + 1)) = («\sf{y}» (i + 1)) | (y (i)) = («\sf{y}» (i))) : ℝ).log) :
 -- imply
-  have : SinglePSpace π ((⇑y)[:n], (⇑x)[:n]) := PSpace_Joint.comm (π := π) (x := (⇑x)[:n]) (y := (⇑y)[:n]) inferInstance
-  let z : ℕ ⇀ Y → ℝ := ⟨fun t a => ∑ ys : Fin t → Y, (s[t] ⟨fun i => if h : i < t then ys ⟨i, h⟩ else a⟩).exp⟩;
-  let x' : ℕ ⇀ Y → ℝ := ⟨(⇑z).log⟩;
-  (∀ t, t + 1 < n → x'[t + 1] = (G + x'[t]).exp.sum.log + e[t + 1]) ∧
-    ∀ («\sf{y}» : ℕ ⇀ Y), -(ℙ[π](y[:n] = «\sf{y}»[:n] | x[:n] = «\sf{x}»[:n]) : ℝ).log = x'[n - 1].exp.sum.log - s[n - 1] «\sf{y}» := by
+  have : SinglePSpace π ((y)[:n], (x)[:n]) := PSpace_Joint.comm (π := π) (x := (x)[:n]) (y := (y)[:n]) inferInstance
+  let z : ℕ → Y → ℝ := fun t a => ∑ ys : Fin t → Y, (s t (fun i => if h : i < t then ys ⟨i, h⟩ else a)).exp;
+  let x' : ℕ → Y → ℝ := (z).log;
+  (∀ t, t + 1 < n → x' (t + 1) = (G + x' (t)).exp.sum.log + e (t + 1)) ∧
+    ∀ («\sf{y}» : ℕ → Y), -(ℙ[π](y[:n] = «\sf{y}»[:n] | x[:n] = «\sf{x}»[:n]) : ℝ).log = (x' (n - 1)).exp.sum.log - s (n - 1) «\sf{y}» := by
 -- proof
   intro hYX z x'
-  have h₆ : ⇑x' = (⇑z).log := rfl
+  have h₆ : x' = (z).log := rfl
   have hx := h₀.measurable_x
   have hy := h₀.measurable_y
   have hX : (ReferenceMeasure.measure : Measure X) = Measure.count := CountableMeasure.measure_eq_count
   have hY : (ReferenceMeasure.measure : Measure Y) = Measure.count := CountableMeasure.measure_eq_count
   obtain ⟨m, rfl⟩ : ∃ m, n = m + 1 := ⟨n - 1, (Nat.succ_pred_eq_of_ne_zero (NeZero.ne n)).symm⟩
   simp only [Nat.add_sub_cancel]
-  replace hYX : SinglePSpace π ((⇑y)[:m + 1], (⇑x)[:m + 1]) := hYX
-  have : ∀ k : ℕ, SinglePSpace π ((⇑x)[:k], (⇑y)[:k]) := fun k => inferInstance
+  replace hYX : SinglePSpace π ((y)[:m + 1], (x)[:m + 1]) := hYX
+  have : ∀ k : ℕ, SinglePSpace π ((x)[:k], (y)[:k]) := fun k => inferInstance
   have := hPy
   have := hPyy
   have hpos := h₁
-  have h₃' : ∀ t a, e[t] a = (ℙ[π](x[t] = «\sf{x}»[t] | y[t] = a) : ℝ).log := fun t a => by
-    simpa using h₃ t ⟨fun _ => a⟩
-  have h₄' : ∀ i a b, G a b = (ℙ[π](y[i + 1] = a | y[i] = b) : ℝ).log := fun i a b => by
-    simpa using h₄ i ⟨fun k => if k = i + 1 then a else b⟩
+  have h₃' : ∀ (t : ℕ) (a : Y), e t a = (ℙ[π]((x (t)) = («\sf{x}» (t)) | (y (t)) = a) : ℝ).log := fun t a => by
+    simpa using h₃ t (fun _ => a)
+  have h₄' : ∀ i a b, G a b = (ℙ[π]((y (i + 1)) = a | (y (i)) = b) : ℝ).log := fun i a b => by
+    simpa using h₄ i (fun k => if k = i + 1 then a else b)
   obtain ⟨P, hPdef⟩ : ∃ P : ℕ → (ℕ → Y) → ℝ, ∀ t (ys : ℕ → Y), P t ys = (ℙ[π](x[:t + 1] = «\sf{x}»[:t + 1] ∧ y[:t + 1] = ys[:t + 1]) : ℝ) :=
     ⟨fun t ys => (ℙ[π](x[:t + 1] = «\sf{x}»[:t + 1] ∧ y[:t + 1] = ys[:t + 1]) : ℝ), fun _ _ => rfl⟩
   have hQ : ∀ (ys : ℕ → Y) (k : ℕ), (ℙ[π](x[:(k : ℤ)] = «\sf{x}»[:(k : ℤ)] ∧ y[:(k : ℤ)] = ys[:(k : ℤ)]) : ENNReal) =
@@ -84,7 +85,7 @@ private lemma main
       intro h
       exact ⟨fun i => h.1 i i.2, fun i => h.2 i i.2⟩
   have hM : ∀ ys : ℕ → Y, π {ω | (∀ i < m + 1, x i ω = «\sf{x}» i) ∧ ∀ i < m + 1, y i ω = ys i} ≠ 0 := fun ys h0 =>
-    (hpos ⟨ys⟩).ne' ((hQ ys (m + 1)).trans h0)
+    (hpos ys).ne' ((hQ ys (m + 1)).trans h0)
   have h₁ : ∀ t ≤ m, ∀ (ys : ℕ → Y), 0 < P t ys := by
     intro t ht ys
     rw [hPdef]
@@ -92,11 +93,11 @@ private lemma main
     refine measure_mono_null ?_ ((hQ ys (t + 1)).symm.trans h0)
     intro ω h
     exact ⟨fun i hi => h.1 i (by omega), fun i hi => h.2 i (by omega)⟩
-  have hE' : ∀ t ≤ m, ∀ a, 0 < (ℙ[π](x[t] = «\sf{x}»[t] | y[t] = a) : ℝ) := by
+  have hE' : ∀ t ≤ m, ∀ a, 0 < (ℙ[π]((x (t)) = («\sf{x}» (t)) | (y (t)) = a) : ℝ) := by
     intro t ht a
     have hdiv := Prob_Cond.eq.Div.of.SinglePSpace inferInstance (π := π) (x := x t) (y := y t)
       («\sf{x}» t) a
-    show 0 < ((ℙ[π](x[t] = «\sf{x}»[t] | y[t] = a) : ENNReal)).toReal
+    show 0 < ((ℙ[π]((x (t)) = («\sf{x}» (t)) | (y (t)) = a) : ENNReal)).toReal
     rw [hdiv]
     have hsub : {ω | (∀ i < m + 1, x i ω = «\sf{x}» i) ∧ ∀ i < m + 1, y i ω = (fun _ => a) i} ⊆ x t ⁻¹' {«\sf{x}» t} ∩ y t ⁻¹' {a} :=
       fun ω h => ⟨h.1 t (by omega), h.2 t (by omega)⟩
@@ -104,35 +105,35 @@ private lemma main
     exact ENNReal.toReal_pos (ENNReal.div_pos_iff.mpr ⟨hne, measure_ne_top _ _⟩).ne'
       (ENNReal.div_lt_top (measure_ne_top _ _)
         (fun h0 => hne (measure_mono_null Set.inter_subset_right h0))).ne
-  have hT' : ∀ i, i + 1 ≤ m → ∀ a b, 0 < (ℙ[π](y[i + 1] = a | y[i] = b) : ℝ) := by
+  have hT' : ∀ i, i + 1 ≤ m → ∀ a b, 0 < (ℙ[π]((y (i + 1)) = a | (y (i)) = b) : ℝ) := by
     intro i hi a b
-    have hdiv := Prob_Cond.eq.Div.of.SinglePSpace inferInstance (π := π) (x := y (i + 1)) (y := y i) a b
-    show 0 < ((ℙ[π](y[i + 1] = a | y[i] = b) : ENNReal)).toReal
+    have hdiv := Prob_Cond.eq.Div.of.SinglePSpace inferInstance (π := π) (x := (y (i + 1))) (y := y i) a b
+    show 0 < ((ℙ[π]((y (i + 1)) = a | (y (i)) = b) : ENNReal)).toReal
     rw [hdiv]
-    have hsub : {ω | (∀ k < m + 1, x k ω = «\sf{x}» k) ∧ ∀ k < m + 1, y k ω = (fun k => if k = i + 1 then a else b) k} ⊆ y (i + 1) ⁻¹' {a} ∩ y i ⁻¹' {b} :=
+    have hsub : {ω | (∀ k < m + 1, x k ω = «\sf{x}» k) ∧ ∀ k < m + 1, y k ω = (fun k => if k = i + 1 then a else b) k} ⊆ (y (i + 1)) ⁻¹' {a} ∩ y i ⁻¹' {b} :=
       fun ω h => ⟨by simpa using h.2 (i + 1) (by omega), by simpa using h.2 i (by omega)⟩
-    have hne : π (y (i + 1) ⁻¹' {a} ∩ y i ⁻¹' {b}) ≠ 0 := fun h0 => hM (fun k => if k = i + 1 then a else b) (measure_mono_null hsub h0)
+    have hne : π ((y (i + 1)) ⁻¹' {a} ∩ y i ⁻¹' {b}) ≠ 0 := fun h0 => hM (fun k => if k = i + 1 then a else b) (measure_mono_null hsub h0)
     exact ENNReal.toReal_pos (ENNReal.div_pos_iff.mpr ⟨hne, measure_ne_top _ _⟩).ne'
       (ENNReal.div_lt_top (measure_ne_top _ _)
         (fun h0 => hne (measure_mono_null Set.inter_subset_right h0))).ne
-  have hPr : IsHiddenMarkovPr π (⇑x) (⇑y) (⇑«\sf{x}») :=
+  have hPr : IsHiddenMarkovPr π (x) (y) («\sf{x}») :=
     IsHiddenMarkovPr.of.CondIndep.CondIndep h₀
   have hFac := IsHiddenMarkovFac.of.All_Eq.IsHiddenMarkovPr hPr hPdef
-  have h₂ : ∀ t («\sf{y}» : ℕ ⇀ Y), s[t] «\sf{y}» = (P t (⇑«\sf{y}»)).log := fun t «\sf{y}» => by rw [h₂, hPdef]
+  have h₂ : ∀ t («\sf{y}» : ℕ → Y), s t «\sf{y}» = (P t («\sf{y}»)).log := fun t «\sf{y}» => by rw [h₂, hPdef]
   have hpre := All_Imp_Eq.of.IsHiddenMarkovFac hFac
-  have hx' : ∀ t a, x'[t] a = Real.log (z[t] a) := fun t a => by
+  have hx' : ∀ (t : ℕ) (a : Y), x' (t) a = Real.log (z (t) a) := fun t a => by
     rw [h₆]
     rfl
-  have hz : ∀ t ≤ m, ∀ a, z[t] a = ∑ ys0 : Fin t → Y, P t (fun i => if h : i < t then ys0 ⟨i, h⟩ else a) := by
+  have hz : ∀ t ≤ m, ∀ a, z (t) a = ∑ ys0 : Fin t → Y, P t (fun i => if h : i < t then ys0 ⟨i, h⟩ else a) := by
     intro t ht a
     refine Finset.sum_congr rfl fun ys0 _ => ?_
     rw [h₂, Real.exp_log (h₁ t ht (fun i => if h : i < t then ys0 ⟨i, h⟩ else a))]
-  have hzpos : ∀ t ≤ m, ∀ a, 0 < z[t] a := by
+  have hzpos : ∀ t ≤ m, ∀ a, 0 < z (t) a := by
     intro t ht a
     have : Nonempty Y := ⟨a⟩
     rw [hz t ht]
     exact Finset.sum_pos (fun ys0 _ => h₁ t ht (fun i => if h : i < t then ys0 ⟨i, h⟩ else a)) Finset.univ_nonempty
-  have hrec : ∀ t, t + 1 ≤ m → ∀ a, z[t + 1] a = (∑ b, z[t] b * (ℙ[π](y[t + 1] = a | y[t] = b) : ℝ)) * (ℙ[π](x[t + 1] = «\sf{x}»[t + 1] | y[t + 1] = a) : ℝ) := by
+  have hrec : ∀ t, t + 1 ≤ m → ∀ a, z (t + 1) a = (∑ b, z (t) b * (ℙ[π]((y (t + 1)) = a | (y (t)) = b) : ℝ)) * (ℙ[π]((x (t + 1)) = («\sf{x}» (t + 1)) | (y (t + 1)) = a) : ℝ) := by
     intro t ht a
     rw [hz (t + 1) ht, Sum.eq.SumSumSnoc, Finset.sum_mul]
     refine Finset.sum_congr rfl fun b _ => ?_
@@ -146,10 +147,10 @@ private lemma main
     have ht : t < m := by omega
     funext a
     have : Nonempty Y := ⟨a⟩
-    show x'[t + 1] a = Real.log ((G + x'[t]).exp.sum a) + e[t + 1] a
-    have hs : (G + x'[t]).exp.sum a = ∑ b, z[t] b * (ℙ[π](y[t + 1] = a | y[t] = b) : ℝ) :=
+    show x' (t + 1) a = Real.log ((G + x' (t)).exp.sum a) + e (t + 1) a
+    have hs : (G + x' (t)).exp.sum a = ∑ b, z (t) b * (ℙ[π]((y (t + 1)) = a | (y (t)) = b) : ℝ) :=
       Finset.sum_congr rfl fun b _ => by
-        show Real.exp (G a b + x'[t] b) = _
+        show Real.exp (G a b + x' (t) b) = _
         rw [add_comm (G a b), Real.exp_add, hx' t b, h₄' t a b, Real.exp_log (hzpos t ht.le b), Real.exp_log (hT' t ht a b)]
     rw [hx' (t + 1) a, hrec t ht a, Real.log_mul (Finset.sum_pos (fun b _ => mul_pos (hzpos t ht.le b) (hT' t ht a b)) Finset.univ_nonempty).ne' (hE' (t + 1) ht a).ne', hs, h₃']
   ·
@@ -163,31 +164,31 @@ private lemma main
       intro ys'
       rw [hPdef]
       exact congrArg (fun w => (ℙ[π](x[:m + 1] = «\sf{x}»[:m + 1] ∧ y[:m + 1] = w) : ℝ)) (pad (m + 1) («\sf{y}» 0) ys').symm
-    have hD : ∑ ys' : Fin (m + 1) → Y, P m (fun i => if h : i < m + 1 then ys' ⟨i, h⟩ else «\sf{y}» 0) = x'[m].exp.sum := by
+    have hD : ∑ ys' : Fin (m + 1) → Y, P m (fun i => if h : i < m + 1 then ys' ⟨i, h⟩ else «\sf{y}» 0) = (x' (m)).exp.sum := by
       rw [Real.Sum.eq.Sum, Sum.eq.SumSumSnoc]
       refine Finset.sum_congr rfl fun b _ => ?_
-      show _ = Real.exp (x'[m] b)
+      show _ = Real.exp (x' (m) b)
       rw [hx' m b, Real.exp_log (hzpos m le_rfl b), hz m le_rfl]
       exact Finset.sum_congr rfl fun ys0 _ => hpre m _ _ fun i hi => IteSnoc.eq.Ite.of.Le hi ys0 b («\sf{y}» 0)
-    have hDpos : 0 < x'[m].exp.sum := Finset.sum_pos (fun b _ => Real.exp_pos _) Finset.univ_nonempty
+    have hDpos : 0 < (x' (m)).exp.sum := Finset.sum_pos (fun b _ => Real.exp_pos _) Finset.univ_nonempty
     -- Bayes: ℙ(y | x) = ℙ(x ∧ y) / ℙ(x), with ℙ(x) = ∑ over the finite label space (total probability)
     have hrefXY : ReferenceMeasure.measure (α := (Fin (m + 1) → X) × (Fin (m + 1) → Y)) = Measure.count :=
       CountableMeasure.measure_eq_count
     have hrefYX : ReferenceMeasure.measure (α := (Fin (m + 1) → Y) × (Fin (m + 1) → X)) = Measure.count :=
       CountableMeasure.measure_eq_count
-    have hmXY : ∀ a b, (ℙ[π](x[:m + 1] = a ∧ y[:m + 1] = b) : ENNReal) = π (((⇑x)[:m + 1], (⇑y)[:m + 1]) ⁻¹' {(a, b)}) := by
+    have hmXY : ∀ a b, (ℙ[π](x[:m + 1] = a ∧ y[:m + 1] = b) : ENNReal) = π (((x)[:m + 1], (y)[:m + 1]) ⁻¹' {(a, b)}) := by
       intro a b
       unfold Measure.prob
       rw [hrefXY, EqRnDeriv_Count, Measure.map_apply_of_aemeasurable (PSpace.aemeasurable (π := π)) (measurableSet_singleton _)]
-    have hmYX : ∀ a b, (ℙ[π](y[:m + 1] = b ∧ x[:m + 1] = a) : ENNReal) = π (((⇑x)[:m + 1], (⇑y)[:m + 1]) ⁻¹' {(a, b)}) := by
+    have hmYX : ∀ a b, (ℙ[π](y[:m + 1] = b ∧ x[:m + 1] = a) : ENNReal) = π (((x)[:m + 1], (y)[:m + 1]) ⁻¹' {(a, b)}) := by
       intro a b
       unfold Measure.prob
       rw [hrefYX, EqRnDeriv_Count, Measure.map_apply_of_aemeasurable (PSpace.aemeasurable (π := π)) (measurableSet_singleton _)]
       congr 1
       ext ω
       simp [JointRandomSymbol, and_comm]
-    have hden : ∑ b : Fin (m + 1) → Y, (ℙ[π](y[:m + 1] = b ∧ x[:m + 1] = «\sf{x}»[:m + 1]) : ENNReal) = (π.map (fun ω => (((⇑y)[:m + 1], (⇑x)[:m + 1]) ω).2)).rnDeriv ReferenceMeasure.measure (⇑«\sf{x}»)[:m + 1] := by
-      have := Sum.eq.Prob (π := π) (x := (⇑y)[:m + 1]) (y := (⇑x)[:m + 1]) hYX rfl rfl (⇑«\sf{x}»)[:m + 1]
+    have hden : ∑ b : Fin (m + 1) → Y, (ℙ[π](y[:m + 1] = b ∧ x[:m + 1] = «\sf{x}»[:m + 1]) : ENNReal) = (π.map (fun ω => (((y)[:m + 1], (x)[:m + 1]) ω).2)).rnDeriv ReferenceMeasure.measure («\sf{x}»)[:m + 1] := by
+      have := Sum.eq.Prob (π := π) (x := (y)[:m + 1]) (y := (x)[:m + 1]) hYX rfl rfl («\sf{x}»)[:m + 1]
       rwa [tsum_fintype] at this
     have h₇ : (ℙ[π](y[:m + 1] = «\sf{y}»[:m + 1] | x[:m + 1] = «\sf{x}»[:m + 1]) : ℝ) = (ℙ[π](x[:m + 1] = «\sf{x}»[:m + 1] ∧ y[:m + 1] = «\sf{y}»[:m + 1]) : ℝ) / ∑ ys' : Fin (m + 1) → Y, (ℙ[π](x[:m + 1] = «\sf{x}»[:m + 1] ∧ y[:m + 1] = ys') : ℝ) := by
       have hfin : ∀ b : Fin (m + 1) → Y, (ℙ[π](x[:m + 1] = «\sf{x}»[:m + 1] ∧ y[:m + 1] = b) : ENNReal) ≠ ⊤ := fun b => by
@@ -199,10 +200,10 @@ private lemma main
         exact Finset.sum_congr rfl fun b _ => by rw [hmYX, hmXY]
       show ((ℙ[π](y[:m + 1] = «\sf{y}»[:m + 1] | x[:m + 1] = «\sf{x}»[:m + 1]) : ENNReal)).toReal = _
       rw [hc, ENNReal.toReal_div, ENNReal.toReal_sum fun b _ => hfin b]
-    show -(ℙ[π](y[:m + 1] = «\sf{y}»[:m + 1] | x[:m + 1] = «\sf{x}»[:m + 1]) : ℝ).log = x'[m].exp.sum.log - s[m] «\sf{y}»
-    rw [h₇, Finset.sum_congr rfl (fun ys' _ => e ys'), hD, ← hPdef m (⇑«\sf{y}»), Real.log_div (h₁ m le_rfl (⇑«\sf{y}»)).ne' hDpos.ne', ← h₂]
+    show -(ℙ[π](y[:m + 1] = «\sf{y}»[:m + 1] | x[:m + 1] = «\sf{x}»[:m + 1]) : ℝ).log = (x' (m)).exp.sum.log - s m «\sf{y}»
+    rw [h₇, Finset.sum_congr rfl (fun ys' _ => e ys'), hD, ← hPdef m («\sf{y}»), Real.log_div (h₁ m le_rfl («\sf{y}»)).ne' hDpos.ne', ← h₂]
     ring
 
 
 -- created on 2026-10-22
--- updated on 2026-11-17
+-- updated on 2026-11-23

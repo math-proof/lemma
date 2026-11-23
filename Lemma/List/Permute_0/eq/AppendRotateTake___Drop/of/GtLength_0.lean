@@ -6,8 +6,8 @@ import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
 import Theorem.Nat.Le_Min.is.Le.Le
 import Theorem.List.TakeTake.eq.Take.of.Ge
 import Theorem.List.Append.of.Eq.Eq
-import Lemma.List.Take_1.eq.ListGet_0.of.GtLength_0
-import Lemma.List.TailTake.eq.TakeTail
+import Theorem.List.Take_1.eq.ListGet_0.of.GtLength_0
+import Theorem.List.TailTake.eq.TakeTail
 open List Nat
 
 
@@ -42,4 +42,4 @@ private lemma main
 
 
 -- created on 2025-06-17
--- updated on 2026-11-22
+-- updated on 2026-11-23

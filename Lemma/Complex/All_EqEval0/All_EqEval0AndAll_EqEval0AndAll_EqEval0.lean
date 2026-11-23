@@ -2,6 +2,8 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.Int.P2MUtil
 
+set_option maxHeartbeats 999999
+
 open Complex (I)
 
 /--
@@ -2724,4 +2726,4 @@ private lemma main
 
 
 -- created on 2026-10-23
--- updated on 2026-11-22
+-- updated on 2026-11-23

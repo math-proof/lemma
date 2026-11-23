@@ -4,6 +4,7 @@ import Mathlib.Analysis.Calculus.Gradient.Basic
 import Class.Dynamics.MarkovDecisionProcess
 import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Real Measure
 open scoped ENNReal.ToRealCoe
 open IsPolicyTrajectory
@@ -20,9 +21,9 @@ private lemma main
   [NormedAddCommGroup Θ] [InnerProductSpace ℝ Θ] [CompleteSpace Θ]
   [ReferenceMeasure 𝒮] [ReferenceMeasure 𝒜]
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M] {θ : Θ}
-  {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
-  {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
-  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
 
 -- given
   (h₀ : Model.IsPolicyTrajectory M r s a)
@@ -55,4 +56,4 @@ private lemma main
 
 
 -- created on 2026-11-13
--- updated on 2026-11-18
+-- updated on 2026-11-23

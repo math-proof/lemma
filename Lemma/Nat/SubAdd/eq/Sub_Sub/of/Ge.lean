@@ -1,8 +1,14 @@
 import Lemma.Nat.EqSubAdd
-import Lemma.Nat.Sub_Add.eq.SubSub
+import Theorem.Nat.Sub_Add.eq.SubSub
 open Nat
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Nat.SubAdd.eq.Sub_Sub.of.Ge |
+| comm | Nat.Sub_Sub.eq.SubAdd.of.Ge |
+-/
 @[path, comm]
 private lemma main
   {b c : ℕ}
@@ -23,3 +29,4 @@ private lemma main
 
 
 -- created on 2025-06-20
+-- updated on 2026-11-23

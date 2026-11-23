@@ -500,9 +500,26 @@ const {
   onExplorerKeydown,
 } = self.globals;
 
+/** Route parameter addressing this page: `lemma` / `theorem` (proof pages) or `module`. */
+function moduleQueryKey() {
+  const u = new URL(location.href);
+  for (const key of ['lemma', 'theorem', 'module']) {
+    const v = u.searchParams.get(key);
+    if (v != null && v.trim() !== '') return key;
+  }
+  return 'module';
+}
+
 /** Match `?module=` URL rules (slash vs dotted path segments). */
 function appendModuleSegment(segment, asFolder) {
   const u = new URL(location.href);
+  const key = moduleQueryKey();
+  if (key !== 'module') {
+    // `?lemma=` / `?theorem=` values are dotted names without the decl-folder prefix.
+    const base = (u.searchParams.get(key) || '').replace(/\//g, '.').replace(/\.+$/, '');
+    u.searchParams.set(key, base ? `${base}.${segment}` : segment);
+    return `${u.origin}${u.pathname}${u.search}${location.hash}`;
+  }
   const haystack = u.search;
   let mod = u.searchParams.get('module') || '';
   const usesDots = haystack.indexOf('.') >= 0;
@@ -526,7 +543,7 @@ function appendModuleSegment(segment, asFolder) {
 function openRow(row) {
   if (row.leanModule) {
     const u = new URL(location.href);
-    u.searchParams.set('module', row.leanModule);
+    u.searchParams.set(moduleQueryKey(), row.leanModule);
     location.href = u.toString();
     return;
   }

@@ -4,6 +4,7 @@ import Notation.Probability.JointRv
 import Notation.Fun
 import Syntax.Probability.Probability
 import Mathlib.MeasureTheory.Constructions.Pi
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory Random Fun
 open scoped ProbabilityTheory
 
@@ -21,7 +22,7 @@ private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure 𝒮]
   {π : Measure Ω} [IsProbabilityMeasure π]
-  {s : ℕ ⇀ Ω → 𝒮}
+  {s : ℕ → Ω → 𝒮}
 -- given
   (hs : ∀ k, Measurable s[k])
   (hP : ∀ n, SinglePSpace π (s[:n] : Ω → Fin n → 𝒮)) :
@@ -47,7 +48,7 @@ private lemma main
       (ReferenceMeasure.measure : Measure 𝒮) (Fin 1)
   have hfun : s[0] = e ∘ (s[:1] : Ω → Fin 1 → 𝒮) := by
     funext ω
-    simp [Fun.getSlice, Function.getSlice, FunSlice.slice, Int.toNat_zero]
+    simp [Function.getSlice, FunSlice.slice, Int.toNat_zero]
     rfl
   have hmap :
     π.map s[0] =
@@ -72,7 +73,8 @@ private lemma main
       fun p =>
         (π.map (s[:1] : Ω → Fin 1 → 𝒮)).rnDeriv
           ReferenceMeasure.measure p := by
-    simpa [hmap, hmp.map_eq] using hrd
+    rw [hmap, ← hmp.map_eq]
+    exact hrd
   have h1 := ae_of_ae_map hP1.aemeasurable (habs.ae_le hrd')
   filter_upwards [h1] with ω h
   change

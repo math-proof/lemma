@@ -6,9 +6,11 @@ import Lemma.Random.Measurable.Measurable.Measurable.of.All_Eq
 import Syntax.Order.Sup
 import Instance.Analysis.Real.Numbers
 import Instance.Dynamics.PolicyTrajectory
+import Instance.Data.Nat.Fun
+import Theorem.Data.List.List
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random
 open scoped ENNReal.ToRealCoe
-set_option maxHeartbeats 800000
+set_option maxHeartbeats 4000000
 
 
 /-- Discounted score expectation equals the observation integral. -/
@@ -20,8 +22,8 @@ lemma expect_weight_score_eq_integral
   {θ : Θ}
   {γ : ℝ}
   {W : ℕ → 𝒮 → 𝒜 → ℝ}
-  {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
-  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
 -- given
   (hsP : PSpace (M θ) (AsPathRV.path s))
   (haP : PSpace (M θ) (AsPathRV.path a)) :
@@ -49,7 +51,7 @@ lemma expect_weight_score_eq_integral
         ((measurable_pi_apply t).comp measurable_fst).prodMk
           ((measurable_pi_apply t).comp measurable_snd))
   ·
-    simp only [JointRandomSymbol, AsPathRV.path_fun, Dot.dot, Function.hPow_apply, id_eq]
+    simp only [JointRandomSymbol, AsPathRV.path_process, Dot.dot, Function.hPow_apply, id_eq, getElem_nat_apply]
 
 
 /-- A state-dependent baseline has policy-score integral zero, so it drops out of the gradient. -/
@@ -60,11 +62,11 @@ private lemma integral_state_score_zero
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {θ : Θ}
   {C Ms : ℝ}
-  {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
-  {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
-  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
 -- given
-  (h₀ : ∀ t, (· t) = (r[t], s[t], a[t]))
+  (h₀ : ∀ (t : ℕ), (· t) = (r[t], s[t], a[t]))
   (h₁ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
   (h₂ : ∀ sₜ, Integrable (fun aₜ => sSup (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖)) μ.measure)
   (hBdd : ∀ sₜ aₜ, BddAbove (Set.range fun θ => ‖∇[θ] M.π[θ] sₜ aₜ‖))
@@ -86,7 +88,7 @@ private lemma integral_state_score_zero
         fderiv ℝ (fun θ' => Real.log (M.π[θ'] (s[t] ω) (a[t] ω))) θ
       ∂(M θ) = 0 :=
     Integral_SMul.eq.Zero.of.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_Joint.All_EqWithDensity
-      (M := M) (r := r.toFun) (s := s.toFun) (a := a.toFun) θ h₀ h₁ h₂ hBdd h hh hC hφ hMs t
+      (M := M) (r := r) (s := s) (a := a) θ h₀ h₁ h₂ hBdd h hh hC hφ hMs t
   have hfun :
     (fun ω => h (s[t] ω) • ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω))) =
       fun ω => e (h (s[t] ω) •
@@ -131,12 +133,12 @@ lemma integrable_weight_score
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {θ : Θ}
   {B Ms : ℝ}
-  {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
-  {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
-  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
   {W : 𝒮 → 𝒜 → ℝ}
 -- given
-  (h₀ : ∀ t, (· t) = (r[t], s[t], a[t]))
+  (h₀ : ∀ (t : ℕ), (· t) = (r[t], s[t], a[t]))
   (hB : 0 ≤ B)
   (hW : ∀ x u, ‖W x u‖ ≤ B)
   (hMs : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.π[θ'] y u)) θ‖ ≤ Ms)
@@ -171,12 +173,12 @@ lemma integral_dot_score_eq_tsum
   {θ : Θ}
   {γ B Ms : ℝ}
   {W : ℕ → 𝒮 → 𝒜 → ℝ}
-  {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
-  {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
-  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
-  (h₁ : ∀ t, (· t) = (r[t], s[t], a[t]))
+  (h₁ : ∀ (t : ℕ), (· t) = (r[t], s[t], a[t]))
   (hsP : PSpace (M θ) (AsPathRV.path s))
   (hB : 0 ≤ B)
   (hW : ∀ t x u, ‖W t x u‖ ≤ B)
@@ -251,15 +253,15 @@ private lemma main
   {Q : Θ → ℕ → 𝒮 → 𝒜 → ℝ}
   {V : Θ → ℕ → 𝒮 → ℝ}
   {A : Θ → ℕ → 𝒮 → 𝒜 → ℝ}
-  {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
-  {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
-  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
   {R : ℝ}
 -- given
   (h₀ : γ ∈ Set.Ico 0 1)
-  (h₁ : ∀ t, (· t) = (r[t], s[t], a[t]))
-  (h₂ : ∀ θ t («\sf{s}» : ℕ ⇀ 𝒮) («\sf{a}» : ℕ ⇀ 𝒜), Q θ t «\sf{s}»[t] «\sf{a}»[t] = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s[t] = «\sf{s}»[t] ∧ a[t] = «\sf{a}»[t]))
-  (h₃ : ∀ θ t («\sf{s}» : ℕ ⇀ 𝒮), V θ t «\sf{s}»[t] = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s[t] = «\sf{s}»[t]))
+  (h₁ : ∀ (t : ℕ), (· t) = (r[t], s[t], a[t]))
+  (h₂ : ∀ θ t («\sf{s}» : ℕ → 𝒮) («\sf{a}» : ℕ → 𝒜), Q θ t «\sf{s}»[t] «\sf{a}»[t] = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s[t] = «\sf{s}»[t] ∧ a[t] = «\sf{a}»[t]))
+  (h₃ : ∀ θ t («\sf{s}» : ℕ → 𝒮), V θ t «\sf{s}»[t] = 𝔼[r : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s[t] = «\sf{s}»[t]))
   (h₄ : ∀ θ t x u, A θ t x u = Q θ t x u - V θ t x)
   (hπ : ∀ θ, Measurable (fun z : 𝒮 × 𝒜 => M.π[θ] z.1 z.2))
   (h₅ : ∀ sₜ aₜ, Differentiable ℝ (fun θ => M.π[θ] sₜ aₜ))
@@ -285,8 +287,8 @@ private lemma main
   obtain ⟨Ms, hMsb⟩ := id hMs
   have hMsle : ∀ y u, ‖fderiv ℝ (fun θ' => Real.log (M.π[θ'] y u)) θ‖ ≤ Ms :=
     fun y u => hMsb ⟨(y, u), rfl⟩
-  have h₂' := fun θ t (sb : ℕ → 𝒮) (ab : ℕ → 𝒜) => h₂ θ t ⟨sb⟩ ⟨ab⟩
-  have h₃' := fun θ t (sb : ℕ → 𝒮) => h₃ θ t ⟨sb⟩
+  have h₂' := fun θ t (sb : ℕ → 𝒮) (ab : ℕ → 𝒜) => h₂ θ t sb ab
+  have h₃' := fun θ t (sb : ℕ → 𝒮) => h₃ θ t sb
   have hQ :=
     GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_Integrable.All_LeNormGrad.All_Eq_ExpectCondDot.All_Eq_ExpectCondDot.All_Eq_Joint.All_EqWithDensity.In_Ico
       (M := M) (θ := θ) (γ := γ) (Q := Q) (V := V) (r := r) (s := s) (a := a) h₀ h₁ h₂' h₃' hπ h₅ h₆ hBdd hIntg hφ hMs hR
@@ -295,21 +297,22 @@ private lemma main
     (s := s) (a := a) hsP haP
   have hIntA := expect_weight_score_eq_integral (W := fun t x u => A θ t x u) (γ := γ)
     (s := s) (a := a) hsP haP
-  rw [hIntQ, hIntA]
+  refine hIntQ.trans ?_
+  rw [hIntA]
   set B : ℝ := (1 - γ)⁻¹ * |R|
   have hB : 0 ≤ B := mul_nonneg (inv_nonneg.mpr (sub_nonneg.mpr (le_of_lt h₀.2))) (abs_nonneg _)
-  have hpR : Measurable (fun ω t ↦ r[t] ω) :=
+  have hpR : Measurable (fun (ω : ℕ → ℝ × 𝒮 × 𝒜) (t : ℕ) ↦ r t ω) :=
     Measurable.of_eval (Random.Measurable.of.All_Eq.fst h₁)
   have hfG (t : ℕ) : Measurable
-    (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) ⬝ᵥ ({ toFun := integ } : Fun ℕ ℝ)[t:]) := by
-    unfold Dot.dot Fun.getSliceFrom
+    (fun integ : ℕ → ℝ ↦ (γ ^ (id : ℕ → ℕ)) ⬝ᵥ integ[t:]) := by
+    unfold Dot.dot Function.getSliceFrom
     refine Measurable.tsum fun k => ?_
     have hm : Measurable (fun integ : ℕ → ℝ => integ (t + k)) := measurable_pi_apply (t + k)
     simpa using hm.const_mul ((γ ^ (id : ℕ → ℕ)) k)
-  have hGbd : ∀ t, ∀ᵐ ω ∂(M θ), ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω‖ ≤ B := by
+  have hGbd : ∀ (t : ℕ), ∀ᵐ (ω : ℕ → ℝ × 𝒮 × 𝒜) ∂(M θ), ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω‖ ≤ B := by
     intro t
     filter_upwards [All_LeNorm_Abs.of.All_Eq_Joint.All_EqWithDensity
-      (M := M) (r := r.toFun) (s := s.toFun) (a := a.toFun) h₁ hR θ] with ω hrω
+      (M := M) (r := r) (s := s) (a := a) h₁ hR θ] with ω hrω
     have hsum : Summable fun k => γ ^ k * |R| :=
       (summable_geometric_of_lt_one h₀.1 h₀.2).mul_right |R|
     have hle : ∀ k, ‖γ ^ k * r[t + k] ω‖ ≤ γ ^ k * |R| := fun k => by
@@ -319,7 +322,7 @@ private lemma main
     have hsn : Summable fun k => ‖γ ^ k * r[t + k] ω‖ :=
       Summable.of_nonneg_of_le (fun k => norm_nonneg _) hle hsum
     have hG : ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω = ∑' k, γ ^ k * r[t + k] ω := by
-      simp [Dot.dot, Function.hPow_apply, id_eq]
+      simp [Dot.dot, Function.hPow_apply, id_eq, Function.getSliceFrom_apply]
     rw [hG]
     calc
       _ ≤ ∑' k, ‖γ ^ k * r[t + k] ω‖ := norm_tsum_le_tsum_norm hsn
@@ -336,11 +339,11 @@ private lemma main
     have : Q θ t sₜ aₜ =
       ∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω
         ∂(M θ)[|(fun ω => (s[t] ω, a[t] ω)) ⁻¹' {(sₜ, aₜ)}] := by
-      rw [h₂ θ t ⟨fun _ => sₜ⟩ ⟨fun _ => aₜ⟩]
-      simp only [Expectation.asRV, AsPathRV.path_fun]
-      rw [show (s[t], a[t]) = (fun ω => (s[t] ω, a[t] ω)) from rfl]
-      rw [Expectation.condEval_eq_integral hpR hsa (hfG t) hpos]
-      rfl
+      have h2s := h₂ θ t (fun _ => sₜ) (fun _ => aₜ)
+      simp only [getElem_nat_apply] at h2s
+      rw [h2s]
+      simp only [Expectation.asRV, AsPathRV.path_process]
+      exact Expectation.condEval_eq_integral hpR hsa (hfG t) hpos
     rw [this]
     have hae : ∀ᵐ ω ∂(M θ)[|(fun ω => (s[t] ω, a[t] ω)) ⁻¹' {(sₜ, aₜ)}],
       ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω‖ ≤ B :=
@@ -354,17 +357,21 @@ private lemma main
   have hVB_pos (t : ℕ) (sₜ : 𝒮)
     (hpos : (M θ).map s[t] {sₜ} ≠ 0) :
     ‖V θ t sₜ‖ ≤ B := by
-    have hs : Measurable (s[t] : (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮) :=
+    have hs : Measurable (s t : (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮) :=
       Measurable.of.All_Eq.snd.fst h₁ t
     have h0 : (M θ) (s[t] ⁻¹' {sₜ}) ≠ 0 := by
-      rwa [← Measure.map_apply hs (measurableSet_singleton sₜ)]
+      have h := hpos
+      rw [show (M θ).map s[t] {sₜ} = (M θ) (s[t] ⁻¹' {sₜ}) from
+        Measure.map_apply hs (measurableSet_singleton sₜ)] at h
+      exact h
     have : V θ t sₜ =
       ∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω
         ∂(M θ)[|s[t] ⁻¹' {sₜ}] := by
-      rw [h₃ θ t ⟨fun _ => sₜ⟩]
-      simp only [Expectation.asRV, AsPathRV.path_fun]
-      rw [Expectation.condEval_eq_integral hpR hs (hfG t) hpos]
-      rfl
+      have h3s := h₃ θ t (fun _ => sₜ)
+      simp only [getElem_nat_apply] at h3s
+      rw [h3s]
+      simp only [Expectation.asRV, AsPathRV.path_process]
+      exact Expectation.condEval_eq_integral hpR hs (hfG t) hpos
     rw [this]
     have hae : ∀ᵐ ω ∂(M θ)[|s[t] ⁻¹' {sₜ}],
       ‖((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:]) ω‖ ≤ B :=
@@ -382,7 +389,7 @@ private lemma main
     have hx : (M θ).map s[t] {sₜ} ≠ 0 := by
       have h0 : (M θ) ((fun ω => (s[t] ω, a[t] ω)) ⁻¹' {(sₜ, aₜ)}) ≠ 0 := by
         rwa [← Measure.map_apply hsa (measurableSet_singleton (sₜ, aₜ))]
-      have hs : Measurable (s[t] : (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮) :=
+      have hs : Measurable (s t : (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮) :=
         Measurable.of.All_Eq.snd.fst h₁ t
       have hsub : s[t] ⁻¹' {sₜ} ⊇ (fun ω => (s[t] ω, a[t] ω)) ⁻¹' {(sₜ, aₜ)} := by
         intro ω hω
@@ -390,7 +397,11 @@ private lemma main
         exact this.1
       exact fun hz =>
         h0 (measure_mono_null hsub
-          (by rwa [Measure.map_apply hs (measurableSet_singleton sₜ)] at hz))
+          (by
+            have hz' := hz
+            rw [show (M θ).map s[t] {sₜ} = (M θ) (s[t] ⁻¹' {sₜ}) from
+              Measure.map_apply hs (measurableSet_singleton sₜ)] at hz'
+            exact hz'))
     calc
       _ = ‖Q θ t sₜ aₜ - V θ t sₜ‖ := by rw [h₄]
       _ ≤ ‖Q θ t sₜ aₜ‖ + ‖V θ t sₜ‖ := norm_sub_le _ _
@@ -424,7 +435,7 @@ private lemma main
       apply hB
     · apply hVB_pos t x h0
   have h2B : 0 ≤ 2 * B := mul_nonneg (by norm_num) hB
-  have hposSA : ∀ t, ∀ᵐ ω ∂(M θ),
+  have hposSA : ∀ (t : ℕ), ∀ᵐ (ω : ℕ → ℝ × 𝒮 × 𝒜) ∂(M θ),
     (M θ).map (fun ω => (s[t] ω, a[t] ω)) {(s[t] ω, a[t] ω)} ≠ 0 := by
     intro t
     let pair : (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮 × 𝒜 := fun ω => (s[t] ω, a[t] ω)
@@ -439,9 +450,9 @@ private lemma main
     rw [e]
     refine (measure_biUnion_null_iff (Set.to_countable _)).2 fun z hz => ?_
     simpa [Measure.map_apply hpair (measurableSet_singleton z)] using hz
-  have hposS : ∀ t, ∀ᵐ ω ∂(M θ), (M θ).map s[t] {s[t] ω} ≠ 0 := by
+  have hposS : ∀ (t : ℕ), ∀ᵐ (ω : ℕ → ℝ × 𝒮 × 𝒜) ∂(M θ), (M θ).map s[t] {s[t] ω} ≠ 0 := by
     intro t
-    have hs : Measurable (s[t] : (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮) :=
+    have hs : Measurable (s t : (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮) :=
       Measurable.of.All_Eq.snd.fst h₁ t
     rw [ae_iff]
     have e :
@@ -451,31 +462,40 @@ private lemma main
       simp
     rw [e]
     refine (measure_biUnion_null_iff (Set.to_countable _)).2 fun z hz => ?_
-    simpa [Measure.map_apply hs (measurableSet_singleton z)] using hz
-  have hscoreQ : ∀ t, ∀ᵐ ω ∂(M θ),
+    have hz' : (M θ).map s[t] {z} = 0 := by simpa only [Set.mem_ofPred_eq] using hz
+    rw [show (M θ).map s[t] {z} = (M θ) (s[t] ⁻¹' {z}) from
+      Measure.map_apply hs (measurableSet_singleton z)] at hz'
+    exact hz'
+  have hscoreQ : ∀ (t : ℕ), ∀ᵐ (ω : ℕ → ℝ × 𝒮 × 𝒜) ∂(M θ),
     Q θ t (s[t] ω) (a[t] ω) •
       ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω)) =
     Q₀ t (s[t] ω) (a[t] ω) •
       ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω)) := by
     intro t
     filter_upwards [hposSA t] with ω hpos
-    simp [Q₀, hpos]
-  have hscoreA : ∀ t, ∀ᵐ ω ∂(M θ),
+    have hpos' : (M θ).map (fun ω => (s t ω, a t ω)) {(s t ω, a t ω)} ≠ 0 := by
+      simpa only [getElem_nat_apply] using hpos
+    simp [Q₀, hpos']
+  have hscoreA : ∀ (t : ℕ), ∀ᵐ (ω : ℕ → ℝ × 𝒮 × 𝒜) ∂(M θ),
     A θ t (s[t] ω) (a[t] ω) •
       ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω)) =
     A₀ t (s[t] ω) (a[t] ω) •
       ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω)) := by
     intro t
     filter_upwards [hposSA t] with ω hpos
-    simp [A₀, hpos]
-  have hscoreV : ∀ t, ∀ᵐ ω ∂(M θ),
+    have hpos' : (M θ).map (fun ω => (s t ω, a t ω)) {(s t ω, a t ω)} ≠ 0 := by
+      simpa only [getElem_nat_apply] using hpos
+    simp [A₀, hpos']
+  have hscoreV : ∀ (t : ℕ), ∀ᵐ (ω : ℕ → ℝ × 𝒮 × 𝒜) ∂(M θ),
     V θ t (s[t] ω) •
       ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω)) =
     V₀ t (s[t] ω) •
       ∇[θ] Real.log (M.π[θ] (s[t] ω) (a[t] ω)) := by
     intro t
     filter_upwards [hposS t] with ω hpos
-    simp [V₀, hpos]
+    have hpos' : (M θ).map (s t) {s t ω} ≠ 0 := by
+      simpa only [getElem_nat_apply] using hpos
+    simp [V₀, hpos']
   have hIntQ0 :
     ∫ ω, ((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
       Q θ t (s[t] ω) (a[t] ω) •
@@ -551,4 +571,4 @@ private lemma main
 
 
 -- created on 2023-04-13
--- updated on 2026-11-18
+-- updated on 2026-11-23

@@ -6,6 +6,7 @@ import Notation.Probability.HasLaw
 import Instance.Probability.JointRv
 import Lemma.Measure.MapPi_GaussianReal.eq.ProdChiSquareS.of.Gt_1.Gt_1
 import Lemma.Random.GetSlice.eq.SnocGetSlice
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory Fun Measure Random
 open scoped NNReal
 set_option maxHeartbeats 800000
@@ -26,7 +27,7 @@ private lemma main
   [MeasurableSpace Ω]
   {π : Measure Ω} [IsProbabilityMeasure π]
   {m n : ℕ}
-  {y : ℕ ⇀ ℕ ⇀ Ω → ℝ}
+  {y : ℕ → ℕ → Ω → ℝ}
   {μ : ℝ} {σ : ℝ⁺}
 -- given
   (hm : m > 1)
@@ -58,7 +59,8 @@ private lemma main
       have hx : (y[i][:N] : Ω → Fin N → ℝ) = fun ω (j : Fin N) ↦ y[i][j] ω := by
         funext ω j; rfl
       have hprefix : HasLaw y[i][:N] (Measure.pi fun _ : Fin N ↦ gaussianReal μ (σ : NNReal)²) π := by
-        simpa [hx] using ih i
+        rw [hx]
+        exact ih i
       have hwithin : (y[i][:N] : Ω → Fin N → ℝ) ⟂ᵢ[π] y[i][N] :=
         (h i N).1.comp measurable_id measurable_snd
       have hprod := hwithin.hasLaw_prod hprefix (h₁' i N)
@@ -207,11 +209,11 @@ private lemma main
         φ ∘ grid := by
     funext ω
     have hsum :
-      ∑ i : Fin m, ∑ j : Fin n, y[i][j] ω =
-          ∑ p : Fin m × Fin n, y[p.1][p.2] ω := by
+      ∑ i : Fin m, ∑ j : Fin n, y (i : ℕ) (j : ℕ) ω =
+          ∑ p : Fin m × Fin n, y (p.1 : ℕ) (p.2 : ℕ) ω := by
       simpa using
         (Fintype.sum_prod_type
-          (f := fun (p : Fin m × Fin n) ↦ y[p.1][p.2] ω)).symm
+          (f := fun (p : Fin m × Fin n) ↦ y (p.1 : ℕ) (p.2 : ℕ) ω)).symm
     simp [JointRandomSymbol, φ, grid, hsum, Function.const, Pi.div_apply, Pi.sub_apply,
       Pi.pow_apply, Pi.mul_apply, Finset.sum_apply, Pi.natCast_apply]
   rw [hfun]
@@ -219,4 +221,4 @@ private lemma main
 
 
 -- created on 2026-10-31
--- updated on 2026-11-17
+-- updated on 2026-11-23

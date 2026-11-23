@@ -3,6 +3,7 @@ import Syntax.Data.List
 import Notation.Fun
 import Initialize.Tactic.Attr.Basic
 import Mathlib.MeasureTheory.Constructions.Pi
+import Instance.Data.Nat.Fun
 open MeasureTheory
 
 
@@ -17,7 +18,7 @@ private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure 𝒮]
   {π : Measure Ω} [IsProbabilityMeasure π]
-  {s : ℕ ⇀ Ω → 𝒮}
+  {s : ℕ → Ω → 𝒮}
 -- given
   (hP : ∀ n, SinglePSpace π (s[:n] : Ω → Fin n → 𝒮)) :
 -- imply
@@ -27,7 +28,7 @@ private lemma main
   let i : Fin k.succ := ⟨k, Nat.lt_succ_self k⟩
   have heq : ((fun f : Fin k.succ → 𝒮 => f i) ∘ s[:k.succ]) = s[k] := by
     funext ω
-    simp [Fun.getSlice, Function.getSlice, FunSlice.slice, Int.toNat_zero]
+    simp [Function.getSlice, FunSlice.slice, Int.toNat_zero]
     rfl
   have h := (measurable_pi_apply i).comp_aemeasurable (hP k.succ).aemeasurable
   rwa [heq] at h

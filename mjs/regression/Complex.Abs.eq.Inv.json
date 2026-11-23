@@ -1,0 +1,79 @@
+{
+  "lean": "‖x⁻¹‖ = ‖x‖⁻¹",
+  "regex": [
+    "Eq(Norm(Inv_))(Inv(Norm_))"
+  ],
+  "suggestion": [
+    "EqNormInv_InvNorm"
+  ],
+  "dag": [
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Norm"
+      },
+      {
+        "token": "Inv"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "group": [
+          2,
+          3
+        ]
+      },
+      {
+        "group": [
+          1,
+          4
+        ]
+      },
+      {
+        "group": [
+          1,
+          3
+        ]
+      },
+      {
+        "group": [
+          2,
+          6
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          5,
+          7
+        ]
+      }
+    ]
+  ],
+  "json": {
+    "Eq": [
+      {
+        "Norm": [
+          {
+            "Inv": [
+              "$1"
+            ]
+          }
+        ]
+      },
+      {
+        "Inv": [
+          {
+            "Norm": [
+              "$1"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "fingerprint": "Eq(Norm(Inv($1)))(Inv(Norm($1)))"
+}

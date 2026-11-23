@@ -59,7 +59,6 @@ namespace IdealNorm
 -/
 public theorem idealNorm_pos
   [CommRing 𝒪]
-  [CommRing 𝒪]
   [IsDomain 𝒪]
   [Module.Free ℤ 𝒪]
   [Module.Finite ℤ 𝒪]
@@ -81,10 +80,9 @@ namespace IdealNorm
 -/
 public theorem idealNorm_eq_absNorm
   [CommRing 𝒪]
-  [CommRing 𝒪]
-  [Nontrivial 𝒪]
   [IsDedekindDomain 𝒪]
   [Module.Free ℤ 𝒪]
+  [Infinite 𝒪]
   {𝔞 : Ideal 𝒪} :
 -- imply
   Ideal.absNorm 𝔞 = idealNorm 𝔞 :=
@@ -95,3 +93,4 @@ end IdealNorm
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-23

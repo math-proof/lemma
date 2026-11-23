@@ -1,4 +1,4 @@
-import Lemma.List.Ne_Nil.is.GtLength_0
+import Theorem.List.Ne_Nil.is.GtLength_0
 import Notation.Data.Tensor.Permute
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.Vector.GetSplitAt.eq.Get_AddMul_ProdDrop
@@ -13,6 +13,12 @@ import Lemma.Vector.Get
 open List Vector Bool Tensor Fin
 
 
+/--
+| attributes | lemma |
+| :---: | :---: |
+| path | Tensor.SEqPermuteHead_1 |
+| comm | Tensor.SEq_PermuteHead_1 |
+-/
 @[path, comm]
 private lemma main
 -- given
@@ -81,3 +87,4 @@ private lemma main
 
 
 -- created on 2025-10-20
+-- updated on 2026-11-23

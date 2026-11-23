@@ -1,12 +1,14 @@
 module
 
 public import Mathlib
+public import Initialize.Tactic.Attr.Basic
 public import Def.v1.Atlas.ComplexVariables.code.Lecture13.Part2
 
 public section
 
 open Complex MeasureTheory Set intervalIntegral Real Filter Function Topology Metric OnePoint ClosedCurve
 open Topology OnePoint
+
 
 
 namespace ClosedCurve
@@ -21,9 +23,7 @@ public theorem range_nonempty
 -- proof
   ⟨γ.toFun γ.a, γ.a, left_mem_Icc.mpr γ.hab, rfl⟩
 
-end ClosedCurve
 
-namespace ClosedCurve
 
 /--
 [liesIn_nonempty](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture13.lean)
@@ -38,9 +38,7 @@ public theorem liesIn_nonempty
 -- proof
   γ.range_nonempty.mono h
 
-end ClosedCurve
 
-namespace ClosedCurve
 
 /--
 [isCompact_range](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture13.lean)
@@ -52,9 +50,7 @@ public theorem isCompact_range
 -- proof
   isCompact_Icc.image_of_continuousOn γ.continuous_toFun
 
-end ClosedCurve
 
-namespace ClosedCurve
 
 /--
 [isClosed_range](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture13.lean)
@@ -66,17 +62,16 @@ public theorem isClosed_range
 -- proof
   γ.isCompact_range.isClosed
 
-end ClosedCurve
 
 /--
 [ClosedCurve.continuous_windingNumber_restrict](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture13.lean)
 -/
-public theorem ClosedCurve.continuous_windingNumber_restrict
+public theorem continuous_windingNumber_restrict
   {γ : ClosedCurve} :
 -- imply
-  Continuous (γ.rangeᶜ.restrict γ.windingNumber) := by
+  Continuous (γ.rangeᶜ.domRestrict γ.windingNumber) := by
 -- proof
-  rw [← continuousOn_iff_continuous_restrict]
+  rw [← continuousOn_iff_continuous_domRestrict]
   intro w₀ hw₀
   apply ContinuousAt.continuousWithinAt
   unfold ClosedCurve.windingNumber
@@ -124,9 +119,9 @@ set_option maxHeartbeats 800000 in
 /--
 [ClosedCurve.windingNumber_intValued](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture13.lean)
 -/
-public theorem ClosedCurve.windingNumber_intValued
+public theorem windingNumber_intValued
   {γ : ClosedCurve}
-  {z : ℂ}
+  (z : ℂ)
 -- given
   (hz : z ∉ γ.range) :
 -- imply
@@ -230,18 +225,15 @@ public theorem isLocallyConstant_of_continuous_intValued
 /--
 [ClosedCurve.isLocallyConstant_windingNumber_restrict](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture13.lean)
 -/
-public theorem ClosedCurve.isLocallyConstant_windingNumber_restrict
+public theorem isLocallyConstant_windingNumber_restrict
   {γ : ClosedCurve} :
 -- imply
-  IsLocallyConstant (γ.rangeᶜ.restrict γ.windingNumber) :=
+  IsLocallyConstant (γ.rangeᶜ.domRestrict γ.windingNumber) :=
 -- proof
   isLocallyConstant_of_continuous_intValued
     γ.continuous_windingNumber_restrict
     (fun ⟨z, hz⟩ => γ.windingNumber_intValued z hz)
-namespace ClosedCurve
-variable (γ : ClosedCurve)
 
-namespace ClosedCurve
 
 /--
 [contourIntegral_cancel_sub_inv](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture13.lean)
@@ -264,14 +256,13 @@ public theorem contourIntegral_cancel_sub_inv
   simp only []
   field_simp
 
-end ClosedCurve
 
 /--
 [dividedDiff_symm](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture13.lean)
 -/
 public theorem dividedDiff_symm
-  {f : ℂ → ℂ}
-  {z ζ : ℂ} :
+  (f : ℂ → ℂ)
+  (z ζ : ℂ) :
 -- imply
   dividedDiff f (z, ζ) = dividedDiff f (ζ, z) := by
 -- proof
@@ -357,8 +348,7 @@ public theorem continuousOn_dividedDiff
       rw [← dist_eq_norm]
       exact le_of_lt (hδ₁_bound (lt_of_lt_of_le (mem_ball.mp hw) (min_le_left _ _)))
     calc ‖dslope f z ζ - deriv f z₀‖
-      ≤ ε / 2 := dslope_sub_deriv_norm_le hfδ hCδ (convex_ball z₀ δ)
-        (mem_ball.mpr hz) (mem_ball.mpr hζ)
+      ≤ ε / 2 := dslope_sub_deriv_norm_le hfδ hCδ (convex_ball z₀ δ) (mem_ball.mpr hz) (mem_ball.mpr hζ)
       _ < ε := half_lt_self hε
   ·
     set g : ℂ × ℂ → ℂ := fun p => (f p.2 - f p.1) / (p.2 - p.1)
@@ -381,10 +371,10 @@ public theorem continuousOn_dividedDiff
 public theorem differentiableOn_dividedDiff_snd
   {f : ℂ → ℂ}
   {Ω : Set ℂ}
-  {z₀ : ℂ}
 -- given
   (hΩ : IsOpen Ω)
   (hf : DifferentiableOn ℂ f Ω)
+  (z₀ : ℂ)
   (hz₀ : z₀ ∈ Ω) :
 -- imply
   DifferentiableOn ℂ (fun ζ => dividedDiff f (z₀, ζ)) Ω := by
@@ -398,10 +388,10 @@ public theorem differentiableOn_dividedDiff_snd
 public theorem differentiableOn_dividedDiff_fst
   {f : ℂ → ℂ}
   {Ω : Set ℂ}
-  {ζ₀ : ℂ}
 -- given
   (hΩ : IsOpen Ω)
   (hf : DifferentiableOn ℂ f Ω)
+  (ζ₀ : ℂ)
   (hζ₀ : ζ₀ ∈ Ω) :
 -- imply
   DifferentiableOn ℂ (fun z => dividedDiff f (z, ζ₀)) Ω := by
@@ -453,7 +443,7 @@ public theorem union_complementDomain_eq_univ
   Ω ∪ γ.complementDomain = Set.univ := by
 -- proof
   ext z
-  simp only [mem_union, ClosedCurve.complementDomain, mem_setOf_eq, mem_univ, iff_true]
+  simp only [mem_union, ClosedCurve.complementDomain, Set.mem_ofPred_eq, mem_univ, iff_true]
   by_cases hz : z ∈ Ω
   · exact Or.inl hz
   · right; exact ⟨fun habs => hz (hγ.1 habs), hγ.2 z hz⟩
@@ -474,7 +464,7 @@ public theorem isOpen_complementDomain
   have heq : γ.complementDomain =
     Subtype.val '' {x : ↥(γ.rangeᶜ) | γ.windingNumber x.val = 0} := by
     ext z
-    simp only [ClosedCurve.complementDomain, mem_setOf_eq, mem_image, Subtype.exists]
+    simp only [ClosedCurve.complementDomain, Set.mem_ofPred_eq, mem_image, Subtype.exists]
     constructor
     · intro ⟨hz_not_range, hz_winding⟩
       exact ⟨z, hz_not_range, hz_winding, rfl⟩
@@ -487,8 +477,8 @@ public theorem isOpen_complementDomain
 [differentiableOn_cauchyTypeIntegral](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture13.lean)
 -/
 public theorem differentiableOn_cauchyTypeIntegral
-  {f : ℂ → ℂ}
-  {γ : ClosedCurve}
+  (f : ℂ → ℂ)
+  (γ : ClosedCurve)
 -- given
   (hf_cont : ContinuousOn f γ.range) :
 -- imply
@@ -535,29 +525,36 @@ public theorem differentiableOn_cauchyTypeIntegral
     (F' := fun z t => f (γ.toFun t) * ((γ.toFun t - z) ^ 2)⁻¹ * deriv γ.toFun t)
     (x₀ := z₀) (s := ball z₀ r) (bound := fun _ => Cf * (r ^ 2)⁻¹ * Cγ) (μ := volume)
     (ball_mem_nhds z₀ hr_pos)
-    (by filter_upwards [ball_mem_nhds z₀ hr_pos] with z hz
+    (by
+      filter_upwards [ball_mem_nhds z₀ hr_pos] with z hz
       exact ((hF_cont z hz).mono huIoc_sub).aestronglyMeasurable measurableSet_uIoc)
     ((hF_cont z₀ (mem_ball_self hr_pos)).intervalIntegrable_of_Icc γ.hab)
     ((hF'_cont.mono huIoc_sub).aestronglyMeasurable measurableSet_uIoc)
-    (by apply Filter.Eventually.of_forall; intro t ht z hz
+    (by
+      apply Filter.Eventually.of_forall; intro t ht z hz
       have ht' := huIoc_sub ht
       have hζ_mem : γ.toFun t ∈ γ.range := ⟨t, ht', rfl⟩
       calc ‖f (γ.toFun t) * ((γ.toFun t - z) ^ 2)⁻¹ * deriv γ.toFun t‖
         = ‖f (γ.toFun t)‖ * ‖((γ.toFun t - z) ^ 2)⁻¹‖ * ‖deriv γ.toFun t‖ := by
-          simp [norm_mul]
+            simp
         _ ≤ Cf * (r ^ 2)⁻¹ * Cγ := by
-          have hinv : ‖((γ.toFun t - z) ^ 2)⁻¹‖ ≤ (r ^ 2)⁻¹ := by
-            rw [norm_inv, norm_pow]
-            exact inv_anti₀ (by positivity)
-              (pow_le_pow_left₀ (by positivity) (hdist t ht' z hz) 2)
-          exact mul_le_mul (mul_le_mul (hCf _ hζ_mem) hinv (norm_nonneg _)
-            (le_trans (norm_nonneg _) (hCf _ hζ_mem))) (hCγ _ ht')
-            (norm_nonneg _) (mul_nonneg (le_trans (norm_nonneg _) (hCf _ hζ_mem)) (inv_nonneg.mpr (sq_nonneg _))))
+            have hinv : ‖((γ.toFun t - z) ^ 2)⁻¹‖ ≤ (r ^ 2)⁻¹ := by
+              rw [norm_inv, norm_pow]
+              exact inv_anti₀ (by positivity)
+                (pow_le_pow_left₀ (by positivity) (hdist t ht' z hz) 2)
+            exact mul_le_mul (mul_le_mul (hCf _ hζ_mem) hinv (norm_nonneg _)
+              (le_trans (norm_nonneg _) (hCf _ hζ_mem))) (hCγ _ ht')
+              (norm_nonneg _) (mul_nonneg (le_trans (norm_nonneg _) (hCf _ hζ_mem)) (inv_nonneg.mpr (sq_nonneg _))))
     (intervalIntegrable_const)
-    (by apply Filter.Eventually.of_forall; intro t ht z hz
+    (by
+      apply Filter.Eventually.of_forall; intro t ht z hz
       have hζz : γ.toFun t - z ≠ 0 := hne_sub t (huIoc_sub ht) z hz
       have hd : HasDerivAt (fun w => (γ.toFun t - w)⁻¹) ((γ.toFun t - z) ^ 2)⁻¹ z := by
-        simpa using ((hasDerivAt_const z (γ.toFun t)).sub (hasDerivAt_id z)).inv hζz
+        have h := ((hasDerivAt_const z (γ.toFun t)).sub (hasDerivAt_id z)).inv hζz
+        convert h using 1
+        · ext w
+          simp
+        · simp
       exact (hd.const_mul _).mul_const _)
   have heq : cauchyTypeIntegral f γ =
     fun z => (2 * ↑π * I)⁻¹ *
@@ -565,10 +562,7 @@ public theorem differentiableOn_cauchyTypeIntegral
     ext z; simp only [cauchyTypeIntegral, ClosedCurve.contourIntegral]
   rw [heq]
   exact (key.2.const_mul _).differentiableAt.differentiableWithinAt
-namespace ClosedCurve
-variable (γ : ClosedCurve)
 
-namespace ClosedCurve
 
 /--
 [differentiableOn_dslope_contourIntegral_complement](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture13.lean)
@@ -683,9 +677,7 @@ public theorem differentiableOn_dslope_contourIntegral_complement
     apply h1.congr_of_eventuallyEq_of_mem hF_eq hz₀
 set_option maxHeartbeats 800000 in
 
-end ClosedCurve
 
-namespace ClosedCurve
 
 /--
 [differentiableOn_dslope_contourIntegral_omega_morera](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture13.lean)
@@ -694,11 +686,11 @@ public theorem differentiableOn_dslope_contourIntegral_omega_morera
   {γ : ClosedCurve}
   {Ω : Set ℂ}
   {f : ℂ → ℂ}
-  {z₀ : ℂ}
 -- given
   (hΩ : IsOpen Ω)
   (hf : DifferentiableOn ℂ f Ω)
   (hγ : γ.IsHomologousToZero Ω)
+  (z₀ : ℂ)
   (hz₀ : z₀ ∈ Ω) :
 -- imply
   DifferentiableWithinAt ℂ (fun z => γ.contourIntegral (fun ζ => dslope f z ζ)) Ω z₀ := by
@@ -784,7 +776,8 @@ public theorem differentiableOn_dslope_contourIntegral_omega_morera
     (F' := fun z t => deriv (fun w => dividedDiff f (w, γ.toFun t)) z * deriv γ.toFun t)
     (x₀ := z₀) (s := ball z₀ r') (bound := fun _ => Cdd / r' * Cγ) (μ := volume)
     (ball_mem_nhds z₀ hr'_pos)
-    (by filter_upwards [ball_mem_nhds z₀ h2r'_pos] with z hz
+    (by
+      filter_upwards [ball_mem_nhds z₀ h2r'_pos] with z hz
       exact ((hF_cont z (ball_subset_ball (by linarith : 2 * r' ≤ 2 * r') hz)).mono
         huIoc_sub).aestronglyMeasurable measurableSet_uIoc)
     ((hF_cont z₀ (mem_ball_self h2r'_pos)).intervalIntegrable_of_Icc γ.hab)
@@ -798,11 +791,12 @@ public theorem differentiableOn_dslope_contourIntegral_omega_morera
         show ‖(r' : ℂ) * ((↑(n + 1) : ℂ))⁻¹‖ < 2 * r'
         rw [norm_mul, Complex.norm_real, Real.norm_of_nonneg hr'_pos.le, norm_inv,
           Complex.norm_natCast]
-        calc r' * (↑(n + 1) : ℝ)⁻¹ ≤ r' * 1 := by
+        calc r' * (↑(n + 1) : ℝ)⁻¹
+        _ ≤ r' * 1 := by
           apply mul_le_mul_of_nonneg_left _ hr'_pos.le
           exact inv_le_one_of_one_le₀ (by exact_mod_cast Nat.one_le_iff_ne_zero.mpr (by omega))
-          _ = r' := mul_one r'
-          _ < 2 * r' := by linarith
+        _ = r' := mul_one r'
+        _ < 2 * r' := by linarith
       have h_seq_tend : Tendsto h_seq atTop (𝓝[≠] 0) := by
         apply tendsto_nhdsWithin_of_tendsto_nhds_of_eventually_within
         ·
@@ -820,8 +814,8 @@ public theorem differentiableOn_dslope_contourIntegral_omega_morera
       have hG_meas : ∀ n : ℕ, AEStronglyMeasurable (G n)
         (volume.restrict (Set.uIoc γ.a γ.b)) := by
         intro n
-        have hcont_n : ContinuousOn (G n) (Icc γ.a γ.b) :=
-          ((hF_cont _ (h_seq_in_ball n)).sub (hF_cont z₀ (mem_ball_self h2r'_pos))).const_smul _
+        have hcont_n : ContinuousOn (G n) (Icc γ.a γ.b) := by
+          convert ((hF_cont _ (h_seq_in_ball n)).sub (hF_cont z₀ (mem_ball_self h2r'_pos))).const_smul (h_seq n)⁻¹ using 1
         exact (hcont_n.mono huIoc_sub).aestronglyMeasurable measurableSet_uIoc
       have hG_lim : ∀ᵐ t ∂(volume.restrict (Set.uIoc γ.a γ.b)),
         Tendsto (fun n => G n t) atTop (𝓝 (F'_z₀ t)) := by
@@ -835,25 +829,25 @@ public theorem differentiableOn_dslope_contourIntegral_omega_morera
         have hda_F : HasDerivAt (fun w => F_main w t) (F'_z₀ t) z₀ := hda.mul_const _
         exact hda_F.tendsto_slope_zero.comp h_seq_tend
       exact aestronglyMeasurable_of_tendsto_ae atTop hG_meas hG_lim)
-    (by apply Filter.Eventually.of_forall; intro t ht z hz
+    (by
+      apply Filter.Eventually.of_forall; intro t ht z hz
       have ht' := huIoc_sub ht
       calc ‖deriv (fun w => dividedDiff f (w, γ.toFun t)) z * deriv γ.toFun t‖
         = ‖deriv (fun w => dividedDiff f (w, γ.toFun t)) z‖ * ‖deriv γ.toFun t‖ := norm_mul ..
         _ ≤ Cdd / r' * Cγ := by
-          have hCdd_nn : 0 ≤ Cdd := by
-            have hmem : (z₀, γ.toFun γ.a) ∈ closedBall z₀ (2 * r') ×ˢ γ.range :=
-              ⟨mem_closedBall_self (by linarith), ⟨γ.a, left_mem_Icc.mpr γ.hab, rfl⟩⟩
-            exact le_trans (norm_nonneg _) (hCdd _ hmem)
-          exact mul_le_mul (hderiv_bound t ht' z hz) (hCγ _ ht') (norm_nonneg _)
-            (div_nonneg hCdd_nn hr'_pos.le))
+            have hCdd_nn : 0 ≤ Cdd := by
+              have hmem : (z₀, γ.toFun γ.a) ∈ closedBall z₀ (2 * r') ×ˢ γ.range :=
+                ⟨mem_closedBall_self (by linarith), ⟨γ.a, left_mem_Icc.mpr γ.hab, rfl⟩⟩
+              exact le_trans (norm_nonneg _) (hCdd _ hmem)
+            exact mul_le_mul (hderiv_bound t ht' z hz) (hCγ _ ht') (norm_nonneg _)
+              (div_nonneg hCdd_nn hr'_pos.le))
     (intervalIntegrable_const)
-    (by apply Filter.Eventually.of_forall; intro t ht z hz
+    (by
+      apply Filter.Eventually.of_forall; intro t ht z hz
       exact hF_deriv t ht z hz)
   exact key.2.differentiableAt
 
-end ClosedCurve
 
-namespace ClosedCurve
 
 /--
 [differentiableOn_dslope_contourIntegral_omega](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture13.lean)
@@ -878,9 +872,7 @@ public theorem differentiableOn_dslope_contourIntegral_omega
     have hopen : IsOpen γ.rangeᶜ := γ.isCompact_range.isClosed.isOpen_compl
     exact (hcomp.differentiableAt (hopen.mem_nhds hzγ)).differentiableWithinAt
 
-end ClosedCurve
 
-namespace ClosedCurve
 
 /--
 [contourIntegral_dslope_differentiable](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture13.lean)
@@ -910,9 +902,7 @@ public theorem contourIntegral_dslope_differentiable
   exact DifferentiableOn.union_of_isOpen hF_Ω hF_comp hΩ hrange_open
 set_option maxHeartbeats 800000 in
 
-end ClosedCurve
 
-namespace ClosedCurve
 
 /--
 [contourIntegral_dslope_tendsto_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture13.lean)
@@ -922,7 +912,7 @@ public theorem contourIntegral_dslope_tendsto_zero
   {Ω : Set ℂ}
   {f : ℂ → ℂ}
 -- given
-  (hΩ : IsOpen Ω)
+  (_hΩ : IsOpen Ω)
   (hf : DifferentiableOn ℂ f Ω)
   (hγ : γ.IsHomologousToZero Ω) :
 -- imply
@@ -1012,22 +1002,22 @@ public theorem contourIntegral_dslope_tendsto_zero
         ≤ ‖(2 * ↑Real.pi * I)⁻¹‖ *
           ‖∫ t in γ.a..γ.b, (γ.toFun t - w)⁻¹ * deriv γ.toFun t‖ := norm_mul_le _ _
         _ ≤ ‖(2 * ↑Real.pi * I)⁻¹‖ * (Cd / (‖w‖ - Cg) * |γ.b - γ.a|) := by
-          gcongr
-          apply intervalIntegral.norm_integral_le_of_norm_le_const
-          intro t ht
-          rw [uIoc_of_le γ.hab] at ht
-          have ht' : t ∈ Icc γ.a γ.b := Ioc_subset_Icc_self ht
-          have h_norm_sub : ‖w‖ - Cg ≤ ‖γ.toFun t - w‖ := by
-            have := norm_sub_norm_le w (γ.toFun t)
-            rw [norm_sub_rev] at this; linarith [hCg t ht']
-          calc ‖(γ.toFun t - w)⁻¹ * deriv γ.toFun t‖
-            = ‖γ.toFun t - w‖⁻¹ * ‖deriv γ.toFun t‖ := by rw [norm_mul, norm_inv]
-            _ ≤ (‖w‖ - Cg)⁻¹ * Cd := by
-              apply mul_le_mul (inv_anti₀ hw_sub_pos h_norm_sub) (hCd t ht')
-                (norm_nonneg _) (inv_nonneg.mpr hw_sub_pos.le)
-            _ = Cd / (‖w‖ - Cg) := by rw [mul_comm, div_eq_mul_inv]
+            gcongr
+            apply intervalIntegral.norm_integral_le_of_norm_le_const
+            intro t ht
+            rw [uIoc_of_le γ.hab] at ht
+            have ht' : t ∈ Icc γ.a γ.b := Ioc_subset_Icc_self ht
+            have h_norm_sub : ‖w‖ - Cg ≤ ‖γ.toFun t - w‖ := by
+              have := norm_sub_norm_le w (γ.toFun t)
+              rw [norm_sub_rev] at this; linarith [hCg t ht']
+            calc ‖(γ.toFun t - w)⁻¹ * deriv γ.toFun t‖
+              = ‖γ.toFun t - w‖⁻¹ * ‖deriv γ.toFun t‖ := by rw [norm_mul, norm_inv]
+              _ ≤ (‖w‖ - Cg)⁻¹ * Cd := by
+                  apply mul_le_mul (inv_anti₀ hw_sub_pos h_norm_sub) (hCd t ht')
+                    (norm_nonneg _) (inv_nonneg.mpr hw_sub_pos.le)
+              _ = Cd / (‖w‖ - Cg) := by rw [mul_comm, div_eq_mul_inv]
         _ = (2 * Real.pi)⁻¹ * Cd * |γ.b - γ.a| / (‖w‖ - Cg) := by
-          rw [norm_inv, norm_2piI]; ring
+            rw [norm_inv, norm_2piI]; ring
         _ < 1 := by rw [div_lt_one hw_sub_pos]; linarith
     rw [hn] at hlt ⊢
     rw [Complex.norm_intCast] at hlt
@@ -1048,7 +1038,7 @@ public theorem contourIntegral_dslope_tendsto_zero
   apply Filter.Eventually.mono
   show ∀ᶠ z : ℂ in cocompact ℂ, R < ‖z‖
   · have : {z : ℂ | ‖z‖ ≤ R} ⊆ Metric.closedBall 0 R := by
-    intro z hz; simp [Metric.mem_closedBall, dist_zero_right]; exact hz
+      intro z hz; simp [Metric.mem_closedBall, dist_zero_right]; exact hz
     exact Filter.Eventually.mono
       (IsCompact.compl_mem_cocompact
         (IsCompact.of_isClosed_subset (isCompact_closedBall 0 R)
@@ -1098,37 +1088,33 @@ public theorem contourIntegral_dslope_tendsto_zero
     have hz_sub_pos : 0 < ‖z‖ - Cg := by linarith
     calc ‖∫ t in γ.a..γ.b, f (γ.toFun t) * (γ.toFun t - z)⁻¹ * deriv γ.toFun t‖
       ≤ Cf * Cd / (‖z‖ - Cg) * |γ.b - γ.a| := by
-        apply intervalIntegral.norm_integral_le_of_norm_le_const
-        intro t ht
-        rw [uIoc_of_le γ.hab] at ht
-        have ht' : t ∈ Icc γ.a γ.b := Ioc_subset_Icc_self ht
-        have h_norm_sub : ‖z‖ - Cg ≤ ‖γ.toFun t - z‖ := by
-          have := norm_sub_norm_le z (γ.toFun t)
-          rw [norm_sub_rev] at this; linarith [hCg t ht']
-        calc ‖f (γ.toFun t) * (γ.toFun t - z)⁻¹ * deriv γ.toFun t‖
-          = ‖f (γ.toFun t)‖ * ‖γ.toFun t - z‖⁻¹ * ‖deriv γ.toFun t‖ := by
-            rw [norm_mul, norm_mul, norm_inv]
-          _ ≤ Cf * (‖z‖ - Cg)⁻¹ * Cd := by
-            apply mul_le_mul
-            · apply mul_le_mul (hCf t ht') (inv_anti₀ hz_sub_pos h_norm_sub)
-              (inv_nonneg.mpr (norm_nonneg _)) (le_trans (norm_nonneg _) (hCf t ht'))
-            · exact hCd t ht'
-            · exact norm_nonneg _
-            · exact mul_nonneg (le_trans (norm_nonneg _) (hCf t ht'))
-              (inv_nonneg.mpr hz_sub_pos.le)
-          _ = Cf * Cd / (‖z‖ - Cg) := by ring
+            apply intervalIntegral.norm_integral_le_of_norm_le_const
+            intro t ht
+            rw [uIoc_of_le γ.hab] at ht
+            have ht' : t ∈ Icc γ.a γ.b := Ioc_subset_Icc_self ht
+            have h_norm_sub : ‖z‖ - Cg ≤ ‖γ.toFun t - z‖ := by
+              have := norm_sub_norm_le z (γ.toFun t)
+              rw [norm_sub_rev] at this; linarith [hCg t ht']
+            calc ‖f (γ.toFun t) * (γ.toFun t - z)⁻¹ * deriv γ.toFun t‖
+              = ‖f (γ.toFun t)‖ * ‖γ.toFun t - z‖⁻¹ * ‖deriv γ.toFun t‖ := by
+                  rw [norm_mul, norm_mul, norm_inv]
+              _ ≤ Cf * (‖z‖ - Cg)⁻¹ * Cd := by
+                  apply mul_le_mul
+                  · exact mul_le_mul (hCf t ht') (inv_anti₀ hz_sub_pos h_norm_sub) (inv_nonneg.mpr (norm_nonneg _)) (le_trans (norm_nonneg _) (hCf t ht'))
+                  · exact hCd t ht'
+                  · exact norm_nonneg _
+                  · exact mul_nonneg (le_trans (norm_nonneg _) (hCf t ht')) (inv_nonneg.mpr hz_sub_pos.le)
+              _ = Cf * Cd / (‖z‖ - Cg) := by ring
       _ = K / (‖z‖ - Cg) := by rw [hK_def]; ring
       _ < ε := by
-        rw [div_lt_iff₀ hz_sub_pos]
-        have hR_bound : Cg + K / ε + 1 ≤ R := le_max_right _ _ |>.trans (le_max_right _ _)
-        have hKe : K / ε < ‖z‖ - Cg := by linarith
-        calc K = K / ε * ε := (div_mul_cancel₀ K hε.ne').symm
-          _ < (‖z‖ - Cg) * ε := by nlinarith
-          _ = ε * (‖z‖ - Cg) := by ring
+          rw [div_lt_iff₀ hz_sub_pos]
+          have hR_bound : Cg + K / ε + 1 ≤ R := le_max_right _ _ |>.trans (le_max_right _ _)
+          have hKe : K / ε < ‖z‖ - Cg := by linarith
+          calc K = K / ε * ε := (div_mul_cancel₀ K hε.ne').symm
+            _ < (‖z‖ - Cg) * ε := by nlinarith
+            _ = ε * (‖z‖ - Cg) := by ring
 
-end ClosedCurve
 
-namespace ClosedCurve
 
 /--
 [contourIntegral_dslope_eq_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture13.lean)
@@ -1150,9 +1136,7 @@ public theorem contourIntegral_dslope_eq_zero
   have h_tend := γ.contourIntegral_dslope_tendsto_zero hΩ hf hγ
   exact _root_.Differentiable.apply_eq_of_tendsto_cocompact h_diff z h_tend
 
-end ClosedCurve
 
-namespace ClosedCurve
 
 /--
 [h_vanishes](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture13.lean)
@@ -1184,9 +1168,7 @@ public theorem h_vanishes
   rw [dslope_of_ne _ hne, slope_def_module, smul_eq_mul]
   ring
 
-end ClosedCurve
 
-namespace ClosedCurve
 
 /--
 [contourIntegrable_cauchy_kernel](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture13.lean)
@@ -1197,10 +1179,10 @@ public theorem contourIntegrable_cauchy_kernel
   {f : ℂ → ℂ}
   {z : ℂ}
 -- given
-  (hΩ : IsOpen Ω)
+  (_hΩ : IsOpen Ω)
   (hf : DifferentiableOn ℂ f Ω)
   (hγ : γ.IsHomologousToZero Ω)
-  (hz : z ∈ Ω)
+  (_hz : z ∈ Ω)
   (hzγ : z ∉ γ.range) :
 -- imply
   IntervalIntegrable (fun t => f (γ.toFun t) * (γ.toFun t - z)⁻¹ * deriv γ.toFun t) MeasureSpace.volume γ.a γ.b ∧ IntervalIntegrable (fun t => f z * ((γ.toFun t - z)⁻¹ * deriv γ.toFun t)) MeasureSpace.volume γ.a γ.b := by
@@ -1225,15 +1207,12 @@ public theorem contourIntegrable_cauchy_kernel
       hder.continuousOn_mul (uIcc_of_le γ.hab ▸ hinv_cont)
     convert h1.const_mul (f z) using 1
 
-end ClosedCurve
 
-namespace ClosedCurve
 
 /--
 [cauchy_integral_formula](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture13.lean)
 -/
 public theorem cauchy_integral_formula
-  {γ : ClosedCurve}
   {Ω : Set ℂ}
   {f : ℂ → ℂ}
   {γ : ClosedCurve}
@@ -1262,15 +1241,12 @@ public theorem cauchy_integral_formula
   rw [sub_eq_zero.mp hv']
   ring
 
-end ClosedCurve
 
-namespace ClosedCurve
 
 /--
 [exists_point_in_open_not_on_curve](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture13.lean)
 -/
 public theorem exists_point_in_open_not_on_curve
-  {γ : ClosedCurve}
   {Ω : Set ℂ}
   {γ : ClosedCurve}
 -- given
@@ -1288,15 +1264,12 @@ public theorem exists_point_in_open_not_on_curve
   have hcl : IsClopen γ.range := ⟨hK.isClosed, hΩ⟩
   exact noncompact_univ ℂ (hcl.eq_univ hΩne ▸ hK)
 
-end ClosedCurve
 
-namespace ClosedCurve
 
 /--
 [cauchy_theorem](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture13.lean)
 -/
 public theorem cauchy_theorem
-  {γ : ClosedCurve}
   {Ω : Set ℂ}
   {f : ℂ → ℂ}
   {γ : ClosedCurve}
@@ -1307,18 +1280,17 @@ public theorem cauchy_theorem
 -- imply
   γ.contourIntegral f = 0 := by
 -- proof
-  obtain ⟨z₀, hz₀Ω, hz₀γ⟩ := exists_point_in_open_not_on_curve Ω hΩ
-    (γ.liesIn_nonempty hγ.1) γ hγ.1
+  obtain ⟨z₀, hz₀Ω, hz₀γ⟩ := exists_point_in_open_not_on_curve hΩ
+    (γ.liesIn_nonempty hγ.1) hγ.1
   have hF : DifferentiableOn ℂ (fun ζ => (ζ - z₀) * f ζ) Ω :=
     (differentiableOn_id.sub (differentiableOn_const z₀)).mul hf
-  have hCIF := cauchy_integral_formula Ω hΩ (fun ζ => (ζ - z₀) * f ζ) hF γ hγ z₀ hz₀Ω hz₀γ
+  have hCIF := cauchy_integral_formula hΩ hF hγ hz₀Ω hz₀γ
   simp only [sub_self, zero_mul, mul_zero] at hCIF
   rw [γ.contourIntegral_cancel_sub_inv hz₀γ] at hCIF
   have h2pi : (2 : ℂ) * ↑π * I ≠ 0 :=
     mul_ne_zero (mul_ne_zero two_ne_zero (mod_cast Real.pi_ne_zero)) I_ne_zero
   rwa [eq_comm, mul_eq_zero, inv_eq_zero, or_iff_right h2pi] at hCIF
 
-end ClosedCurve
 
 /--
 [differentiableOn_cauchyPiecewise_omega](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture13.lean)
@@ -1362,12 +1334,12 @@ public theorem cauchyPiecewise_eq_cauchyTypeIntegral_on_complementDomain
   ·
     have lhs : cauchyPiecewise Ω f γ z = 0 := by
       rw [cauchyPiecewise_eq_on_omega hz]
-      have : γ.contourIntegral (fun ζ => dividedDiff f (z, ζ)) = 0 := by
-        have h := γ.contourIntegral_dslope_eq_zero hΩ hf hγ hz
-        convert h using 1
-      rw [this, mul_zero]
+      have hfun : (fun ζ => dividedDiff f (z, ζ)) = dslope f z := by
+        funext ζ
+        rfl
+      rw [hfun, γ.contourIntegral_dslope_eq_zero hΩ hf hγ hz, mul_zero]
     have rhs : cauchyTypeIntegral f γ z = 0 := by
-      have hcif := ClosedCurve.cauchy_integral_formula Ω hΩ f hf γ hγ z hz hzγ
+      have hcif := cauchy_integral_formula hΩ hf hγ hz hzγ
       rw [hwz, zero_mul] at hcif
       simp only [cauchyTypeIntegral]
       exact hcif.symm
@@ -1389,7 +1361,7 @@ public theorem differentiableOn_cauchyPiecewise_complement
 -- imply
   DifferentiableOn ℂ (cauchyPiecewise Ω f γ) γ.complementDomain := by
 -- proof
-  have h_eq := cauchyPiecewise_eq_cauchyTypeIntegral_on_complementDomain Ω hΩ f hf γ hγ
+  have h_eq := cauchyPiecewise_eq_cauchyTypeIntegral_on_complementDomain hΩ hf hγ
   have h_cont : ContinuousOn f γ.range :=
     hf.continuousOn.mono (fun z hz => hγ.1 hz)
   have h_diff := differentiableOn_cauchyTypeIntegral f γ h_cont
@@ -1410,10 +1382,11 @@ public theorem cauchyPiecewise_differentiable
 -- imply
   Differentiable ℂ (cauchyPiecewise Ω f γ) := by
 -- proof
-  rwa [← differentiableOn_univ, ← union_complementDomain_eq_univ hγ]
-    (differentiableOn_cauchyPiecewise_omega Ω hΩ f hf γ hγ)
-    (differentiableOn_cauchyPiecewise_complement Ω hΩ f hf γ hγ)
-    hΩ (isOpen_complementDomain γ)
+  rw [← differentiableOn_univ, ← union_complementDomain_eq_univ hγ]
+  exact DifferentiableOn.union_of_isOpen
+    (differentiableOn_cauchyPiecewise_omega hΩ hf hγ)
+    (differentiableOn_cauchyPiecewise_complement hΩ hf hγ)
+    hΩ isOpen_complementDomain
 
 /--
 [cauchyPiecewise_tendsto_zero_cocompact](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture13.lean)
@@ -1433,7 +1406,7 @@ public theorem cauchyPiecewise_tendsto_zero_cocompact
     γ.contourIntegral (fun ζ => dslope f z ζ) with hF_def
   have hF_diff : Differentiable ℂ F :=
     (γ.contourIntegral_dslope_differentiable hΩ hf hγ).const_mul _
-  have hG_diff := cauchyPiecewise_differentiable Ω hΩ f hf γ hγ
+  have hG_diff := cauchyPiecewise_differentiable hΩ hf hγ
   have agree_on_Ω : ∀ z ∈ Ω, cauchyPiecewise Ω f γ z = F z := by
     intro z hz
     simp only [cauchyPiecewise, ite_eq_left hz, dividedDiff, hF_def]
@@ -1471,10 +1444,11 @@ public theorem cauchyPiecewise_eq_zero
 -- imply
   cauchyPiecewise Ω f γ z = 0 := by
 -- proof
-  have h_entire := cauchyPiecewise_differentiable Ω hΩ f hf γ hγ
-  have h_tendsto := cauchyPiecewise_tendsto_zero_cocompact Ω hΩ f hf γ hγ
+  have h_entire := cauchyPiecewise_differentiable hΩ hf hγ
+  have h_tendsto := cauchyPiecewise_tendsto_zero_cocompact hΩ hf hγ
   exact Differentiable.apply_eq_of_tendsto_cocompact h_entire z h_tendsto
-end
+end ClosedCurve
+
 open Topology OnePoint
 
 /--
@@ -1503,3 +1477,4 @@ public theorem Complex.IsSimplyConnected.isConnected
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-23

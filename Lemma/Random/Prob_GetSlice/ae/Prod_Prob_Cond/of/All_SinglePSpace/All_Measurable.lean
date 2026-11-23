@@ -9,6 +9,7 @@ import Notation.Fun
 import Mathlib.MeasureTheory.Constructions.Pi
 import Mathlib.MeasureTheory.MeasurableSpace.Embedding
 import Mathlib.MeasureTheory.Measure.Prod
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory Random Fun
 
 
@@ -27,7 +28,7 @@ private lemma main
   [MeasurableSpace Ω]
   [ReferenceMeasure 𝒮]
   {π : Measure Ω} [IsProbabilityMeasure π]
-  {s : ℕ ⇀ Ω → 𝒮}
+  {s : ℕ → Ω → 𝒮}
 -- given
   (hs : ∀ k, Measurable s[k])
   (hP : ∀ n, SinglePSpace π (s[:n] : Ω → Fin n → 𝒮))
@@ -35,11 +36,11 @@ private lemma main
 -- imply
   have : ∀ k : ℕ, Measurable s[:k] :=
     All_MeasurableGetSlice.of.All_MeasurableGet hs
-  have : ∀ k, SinglePSpace π (s[k], s[:k]) :=
+  have : ∀ (k : ℕ), SinglePSpace π (s[k], s[:k]) :=
     All_SinglePSpace_Joint.of.All_SinglePSpace_GetSlice hP
   ℙ[π](s[:n]) =ᵐ[π] ∏ k ∈ Finset.range n, ℙ[π](s[k] | s[:k]) := by
 -- proof
-  have hPstep : ∀ k, SinglePSpace π (s[k], s[:k]) :=
+  have hPstep : ∀ (k : ℕ), SinglePSpace π (s[k], s[:k]) :=
     All_SinglePSpace_Joint.of.All_SinglePSpace_GetSlice hP
   let Z : Ω → Fin 0 → 𝒮 := fun _ => Fin.elim0
   have hZ : Measurable Z := measurable_const
@@ -78,4 +79,4 @@ private lemma main
 
 
 -- created on 2023-04-08
--- updated on 2026-11-18
+-- updated on 2026-11-23

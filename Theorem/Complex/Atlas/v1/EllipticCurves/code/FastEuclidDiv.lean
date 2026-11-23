@@ -85,18 +85,18 @@ public theorem longDivLoop_invariant
     induction k with
     | zero =>
       simp only [longDivLoop, Nat.sub_zero]
-      obtain ⟨heq, hr⟩ := longDivStep_invariant b (a.testBit m) 0 0 hb
+      obtain ⟨heq, hr⟩ := longDivStep_invariant (b := b) (bit := a.testBit m) (q := 0) (r := 0) hb
       simp at heq
       refine ⟨?_, hr⟩
-      rw [heq, div_pow_two_step a m, Nat.div_eq_of_lt ham]; ring
+      rw [heq, div_pow_two_step (a := a) (k := m), Nat.div_eq_of_lt ham]; ring
     | succ k ih =>
       simp only [longDivLoop]
       obtain ⟨heq, hr⟩ := ih (by omega : k ≤ m)
-      obtain ⟨heq2, hr2⟩ := longDivStep_invariant b (a.testBit (m - k - 1)) _ _ hr
+      obtain ⟨heq2, hr2⟩ := longDivStep_invariant hr
       refine ⟨?_, hr2⟩
       rw [heq2, heq]
       have hmk : m - (k + 1) = m - k - 1 := by omega
-      rw [hmk, div_pow_two_step a (m - k - 1)]
+      rw [hmk, div_pow_two_step (a := a) (k := m - k - 1)]
       have : m - k - 1 + 1 = m - k := by omega
       rw [this]
 
@@ -117,7 +117,7 @@ public theorem long_division_correct
   a = res.1 * b + res.2 ∧ res.2 < b := by
 -- proof
   simp only [longDiv]
-  obtain ⟨heq, hr⟩ := longDivLoop_invariant a b m hb ham m le_rfl
+  obtain ⟨heq, hr⟩ := longDivLoop_invariant hb ham m le_rfl
   simp only [Nat.sub_self, pow_zero, Nat.div_one] at heq
   exact ⟨heq.symm, hr⟩
 
@@ -125,3 +125,4 @@ end IntegerLongDivision
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-23

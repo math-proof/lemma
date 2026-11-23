@@ -9,7 +9,6 @@ namespace ComplexTorus
 /--
 [proj_eq_iff](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/ComplexTorus.lean)
 -/
-@[path]
 lemma proj_eq_iff
   {L : ComplexLattice}
   {z w : ℂ} :
@@ -22,3 +21,4 @@ end ComplexTorus
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-23

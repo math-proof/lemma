@@ -6,6 +6,7 @@ import Notation.Fun
 import Class.Dynamics.MarkovDecisionProcess
 import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random Measure Finset
 open scoped ProbabilityTheory
 
@@ -570,27 +571,27 @@ private lemma main
   [MeasurableSpace 𝒮] [StandardBorelSpace 𝒮] [Nonempty 𝒮]
   [ReferenceMeasure 𝒜] [StandardBorelSpace 𝒜] [Nonempty 𝒜]
   {M : Model Θ 𝒮 𝒜} [StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
-  {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
-  {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
-  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
   {θ : Θ}
   {t : ℕ}
 -- given
-  (h₀ : ∀ t, (· t) = (r[t], s[t], a[t])) :
+  (h₀ : ∀ (t : ℕ), (· t) = (r[t], s[t], a[t])) :
 -- imply
-  let : ∀ t, Measurable (s[t], a[t]) :=
+  let : ∀ (t : ℕ), Measurable (s[t], a[t]) :=
     fun t ↦ ((h₀ t) ▸ measurable_pi_apply t).snd
   (s[t + 1], r[t]) ⟂ᵢ[M θ] (s[:t], a[:t]) | (s[t], a[t]) := by
 -- proof
   intro h
-  obtain rfl : r = ⟨fun t ω ↦ (ω t).1⟩ :=
-    congrArg Fun.mk <| funext₂ fun t ω ↦
+  obtain rfl : r = fun t ω ↦ (ω t).1 :=
+    funext₂ fun t ω ↦
       (congrArg Prod.fst (congrFun (h₀ t) ω)).symm
-  obtain rfl : s = ⟨fun t ω ↦ (ω t).2.1⟩ :=
-    congrArg Fun.mk <| funext₂ fun t ω ↦
+  obtain rfl : s = fun t ω ↦ (ω t).2.1 :=
+    funext₂ fun t ω ↦
       (congrArg (·.2.1) (congrFun (h₀ t) ω)).symm
-  obtain rfl : a = ⟨fun t ω ↦ (ω t).2.2⟩ :=
-    congrArg Fun.mk <| funext₂ fun t ω ↦
+  obtain rfl : a = fun t ω ↦ (ω t).2.2 :=
+    funext₂ fun t ω ↦
       (congrArg (·.2.2) (congrFun (h₀ t) ω)).symm
   let μ := M θ
   let H := Preorder.frestrictLe (π := fun _ : ℕ => ℝ × 𝒮 × 𝒜) t
@@ -730,7 +731,7 @@ private lemma main
     condDistrib (fun ω => (X ω, R ω)) Y μ =ᵐ[μ.map Y] (M.transK ×ₖ M.rewardK) :=
     condDistrib_ae_eq_of_measure_eq_compProd (by fun_prop) hXR.aemeasurable hYX
   apply CondIndepFun.symm
-  dsimp only [JointRandomSymbol, Function.getSlice, Fun.getSlice, getElem]
+  dsimp only [JointRandomSymbol, Function.getSlice, getElem]
   change Z ⟂ᵢ[Y, hY; μ] (fun ω => (X ω, R ω))
   rw [condIndepFun_iff_condDistrib_prod_ae_eq_prodMkRight hXR hZ hY]
   refine hcd_YZ.trans ?_

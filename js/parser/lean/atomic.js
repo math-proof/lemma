@@ -224,7 +224,7 @@ export class LeanToken extends Lean {
     }
 
     is_variable() {
-        return /^[a-zA-Z_][a-zA-Z_0-9]*$/.test(this.text);
+        return /^[\p{L}_][\p{L}\p{N}_]*$/u.test(this.text);
     }
 
     /**

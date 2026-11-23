@@ -17,10 +17,11 @@ import Lemma.Random.PSpace_Path.of.All_PSpace
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.Basic
 import Mathlib.MeasureTheory.Function.ConditionalExpectation.PullOut
 import Mathlib.MeasureTheory.Integral.Prod
+import Instance.Data.Nat.Fun
 open scoped ENNReal.ToRealCoe
 open Finset (range)
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Filter Topology Random Measure Real IsPolicyTrajectory
-set_option maxHeartbeats 900000
+set_option maxHeartbeats 4000000
 
 
 private lemma smul_fderiv_log
@@ -175,21 +176,21 @@ private lemma main
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {θ θ' : Θ}
   {γ ℓ : ℝ}
-  {r : ℕ ⇀ (ℕ → (ℝ × 𝒮 × 𝒜)) → ℝ}
-  {s : ℕ ⇀ (ℕ → (ℝ × 𝒮 × 𝒜)) → 𝒮}
-  {a : ℕ ⇀ (ℕ → (ℝ × 𝒮 × 𝒜)) → 𝒜}
+  {r : ℕ → (ℕ → (ℝ × 𝒮 × 𝒜)) → ℝ}
+  {s : ℕ → (ℕ → (ℝ × 𝒮 × 𝒜)) → 𝒮}
+  {a : ℕ → (ℕ → (ℝ × 𝒮 × 𝒜)) → 𝒜}
   {R : ℝ}
 -- given
   (h₀ : {γ, ℓ} ⊆ Set.Ico 0 1)
   (hfactor : Model.IsConditionalProbability M r s a)
-  (h₁ : ∀ t («\sf{s}» : ℕ ⇀ 𝒮) («\sf{a}» : ℕ ⇀ 𝒜),
+  (h₁ : ∀ (t : ℕ) («\sf{s}» : ℕ → 𝒮) («\sf{a}» : ℕ → 𝒜),
     Differentiable ℝ (fun θ => (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ)))
   (h₂ : sup[s₀] (∫ a₀, sSup (Set.range fun θ => ‖∇[θ] (ℙ[M θ](a[0] = a₀ | s[0] = s₀) : ℝ)‖) ∂μ.measure) < ∞)
   (hBdd : ∀ s₀ a₀, sup[θ] ‖∇[θ] (ℙ[M θ](a[0] = a₀ | s[0] = s₀) : ℝ)‖ < ∞)
   (hIntg : ∀ s₀, Integrable (fun a₀ => sSup (Set.range fun θ => ‖∇[θ] (ℙ[M θ](a[0] = a₀ | s[0] = s₀) : ℝ)‖)) μ.measure)
   (hφ : StronglyMeasurable
     (fun ((s₀, a₀) : 𝒮 × 𝒜) => ∇[θ] (ℙ[M θ](a[0] = a₀ | s[0] = s₀) : ℝ).log))
-  (hMs : sup[«\sf{s}» : ℕ ⇀ 𝒮, «\sf{a}» : ℕ ⇀ 𝒜]
+  (hMs : sup[«\sf{s}» : ℕ → 𝒮, «\sf{a}» : ℕ → 𝒜]
     ‖∇[θ] (ℙ[M θ](a[0] = «\sf{a}»[0] | s[0] = «\sf{s}»[0]) : ℝ).log‖ < ∞)
   (hVm : ∀ t, Measurable (M.V θ γ t))
   (hsup : ∀ sₜ aₜ, M.π[θ'] sₜ aₜ ≠ 0 ∨ M.π[θ] sₜ aₜ = 0)
@@ -217,26 +218,30 @@ private lemma main
         (r[t:] + γ • (fun j => M.V θ γ (t + 1 + j) (s[t + 1:] j)) -
           fun j => M.V θ γ (t + j) (s[t:] j)))
       | s[t] = sₜ ∧ a[t] = aₜ)
+  let s₀ := s
   ∇[θ] 𝔼[r: M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r) =
     𝔼[s : M θ]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ fun t ↦
       𝔼[a : M[s[t]] θ'](
         Â t s[t] a[t] • ((∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ)) /
           (ℙ[M[s[t]] θ'](a[t] | s[t]) : ℝ)))) := by
 -- proof
-  intro hPas _ _ _ hPker hSPker _ Â
+  intro
   have hGAE := GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.Any_And_All_Integrable_Measure.GtInftySup.All_Differentiable_Prob.All_NeDens_0.All_Eq_JointDens.AbsContJointAS.AbsContStateMarginal.IsPolicyTrajectory.Subset_Ico
     (M := M) (θ := θ) (γ := γ) (ℓ := ℓ) (r := r) (s := s) (a := a)
     h₀ hfactor h₁ h₂ hBdd hIntg hφ hMs hVm hR
   rw [hGAE]
-  have hπeq : ∀ θ t («\sf{s}» : ℕ ⇀ 𝒮) («\sf{a}» : ℕ ⇀ 𝒜),
+  have hInst : ∀ θ' (t : ℕ), SinglePSpace (M θ') (fun ω => (a t ω, s t ω)) := fun θ' t =>
+    hfactor.htr.singlePSpace_as (haj := hfactor.haj) θ' t
+  have hπeq : ∀ θ (t : ℕ) («\sf{s}» : ℕ → 𝒮) («\sf{a}» : ℕ → 𝒜),
       (ℙ[M θ](a[t] = «\sf{a}»[t] | s[t] = «\sf{s}»[t]) : ℝ) =
-        M.π[θ] «\sf{s}»[t] «\sf{a}»[t] := fun θ t sb ab =>
-      (hfactor.factor θ t (sb t) (ab t)).symm
+        M.π[θ] «\sf{s}»[t] «\sf{a}»[t] := fun θ t sb ab => by
+    have : SinglePSpace (M θ) (fun ω => (a t ω, s t ω)) := hInst θ t
+    exact (hfactor.factor θ t (sb t) (ab t)).symm
   have hdiff : ∀ sₜ aₜ, Differentiable ℝ (fun κ => M.π[κ] sₜ aₜ) := fun sₜ aₜ => by
-    have hd := h₁ 0 ⟨fun _ => sₜ⟩ ⟨fun _ => aₜ⟩
+    have hd := h₁ 0 (fun _ => sₜ) (fun _ => aₜ)
     convert hd using 1
     funext κ
-    exact (hπeq κ 0 ⟨fun _ => sₜ⟩ ⟨fun _ => aₜ⟩).symm
+    exact (hπeq κ 0 (fun _ => sₜ) (fun _ => aₜ)).symm
   have hγ : γ ∈ Set.Ico 0 1 := h₀ (by simp)
   have hℓ₀ : ℓ ∈ Set.Ico 0 1 := h₀ (by simp)
   have h₁' : ∀ t, (· t) = (r t, s t, a t) := hfactor.htr.stage_eq
@@ -246,31 +251,32 @@ private lemma main
     funext z
     refine congrArg (gradient · θ) ?_
     funext κ
-    simp only [hπeq κ 0 ⟨fun _ => z.1⟩ ⟨fun _ => z.2⟩]
+    exact congrArg Real.log (hπeq κ 0 (fun _ => z.1) (fun _ => z.2)).symm
   have hÂm : ∀ t, StronglyMeasurable (fun z : 𝒮 × 𝒜 => Â t z.1 z.2) := fun t => by
     set RewardPath := ∀ _ : ℕ, ℝ
     set StatePath := ∀ _ : ℕ, 𝒮
     let G : Prod RewardPath StatePath → ℝ := fun integ =>
-      let r : Fun ℕ ℝ := ⟨integ.1⟩
-      let s : Fun ℕ 𝒮 := ⟨integ.2⟩
+      let r : ℕ → ℝ := integ.1
+      let s : ℕ → 𝒮 := integ.2
       (↑1 - ℓ) * (ℓ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k ↦ (γ ^ range (k + 1)) ⬝ᵥ
         (r[t:] + γ • (fun k ↦ M.V θ γ (t + 1 + k) (s[t + 1:] k)) -
           fun k ↦ M.V θ γ (t + k) (s[t:] k))
     have hAeq : (fun z : 𝒮 × 𝒜 => Â t z.1 z.2) =
         (fun z => Expectation.condEval (M θ)
           ((Expectation.asRV r, Expectation.asRV s))
-          ((s.toFun t, a.toFun t)) G z) := by
+          ((s t, a t)) G z) := by
       funext z
       simp only [Â]
       dsimp only [G]
+      rfl
     have hres_eq : ∀ (p : Prod RewardPath StatePath) (k : ℕ),
-        (let r : Fun ℕ ℝ := ⟨p.1⟩
-          let s : Fun ℕ 𝒮 := ⟨p.2⟩
+        (let r : ℕ → ℝ := p.1
+          let s : ℕ → 𝒮 := p.2
           r[t:] + γ • (fun k ↦ M.V θ γ (t + 1 + k) (s[t + 1:] k)) -
             fun k ↦ M.V θ γ (t + k) (s[t:] k)) k =
         p.1 (t + k) + γ * M.V θ γ (t + 1 + k) (p.2 (t + 1 + k)) - M.V θ γ (t + k) (p.2 (t + k)) := by
       intro p k
-      simp only [Fun.getSliceFrom, Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul]
+      simp only [Function.getSliceFrom, Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul]
     have hres : Measurable
       (fun p : Prod RewardPath StatePath => fun k =>
         p.1 (t + k) + γ * M.V θ γ (t + 1 + k) (p.2 (t + 1 + k)) - M.V θ γ (t + k) (p.2 (t + k))) :=
@@ -305,17 +311,17 @@ private lemma main
     have hinteq :
       (fun z => Expectation.condEval (M θ)
         ((Expectation.asRV r, Expectation.asRV s))
-        ((s.toFun t, a.toFun t)) G z) =
+        ((s t, a t)) G z) =
       (fun z => ∫ y, G y ∂(ProbabilityTheory.condDistrib
         ((Expectation.asRV r, Expectation.asRV s))
-        ((s.toFun t, a.toFun t)) (M θ) z)) := by
+        ((s t, a t)) (M θ) z)) := by
       funext z
       unfold Expectation.condEval
       rw [expectation_real]
     rw [hAeq, hinteq]
     exact StronglyMeasurable.integral_kernel (κ := ProbabilityTheory.condDistrib
         ((Expectation.asRV r, Expectation.asRV s))
-        ((s.toFun t, a.toFun t)) (M θ))
+        ((s t, a t)) (M θ))
       hGsm
   -- For each state `sₜ`, rewrite the IS inner expectation in policy densities,
   -- then apply `is_weight_eq_score`.
@@ -325,8 +331,6 @@ private lemma main
         ∫ aₜ, M.π[θ] sₜ aₜ • (Â t sₜ aₜ • ∇[θ] Real.log (M.π[θ] sₜ aₜ))
           ∂ReferenceMeasure.measure := by
     intro t sₜ
-    have hP : PSpace (M[sₜ] θ') (id : 𝒜 → 𝒜) := hPker sₜ
-    have hSP : SinglePSpace (M[sₜ] θ') (id : 𝒜 → 𝒜) := hSPker sₜ
     let fπ : 𝒜 → Θ := fun aₜ =>
       (Â t sₜ aₜ • ∇[θ] (M.π[θ] sₜ aₜ)) / M.π[θ'] sₜ aₜ
     have hsm : AEStronglyMeasurable fπ ((M[sₜ] θ').map (id : 𝒜 → 𝒜)) := by
@@ -376,13 +380,13 @@ private lemma main
     (congrArg (fun z : ℝ × 𝒮 × 𝒜 => z.2.2) (congrFun (h₁' t) ω)).symm
   have hscore_bd : ∀ (sₜ : 𝒮) (aₜ : 𝒜),
       ‖∇[θ] Real.log (M.π[θ] sₜ aₜ)‖ ≤ Ms := fun sₜ aₜ => by
-    have h := hMsUB (Set.mem_range_self (⟨fun _ => sₜ⟩, ⟨fun _ => aₜ⟩))
+    have h := hMsUB (Set.mem_range_self ((fun _ => sₜ), (fun _ => aₜ)))
     have hfe :
       ∇[θ] Real.log (M.π[θ] sₜ aₜ) =
         ∇[θ] (ℙ[M θ](a[0] = aₜ | s[0] = sₜ) : ℝ).log := by
       refine congrArg (gradient · θ) ?_
       funext κ
-      simp only [hπeq κ 0 ⟨fun _ => sₜ⟩ ⟨fun _ => aₜ⟩]
+      exact congrArg Real.log (hπeq κ 0 (fun _ => sₜ) (fun _ => aₜ)).symm
     rwa [hfe]
   have hrm : ∀ n, Measurable (r n) := fun n =>
     Random.Measurable.of.All_Eq.fst h₁' n
@@ -598,21 +602,21 @@ private lemma main
       (by filter_upwards [hG_ae] with ω h; rw [norm_smul, Real.norm_eq_abs]; exact mul_le_mul (h t) (hψbd t ω) (norm_nonneg _) hBG0)
   have hGω : ∀ t ω,
       (fun integ : (ℕ → ℝ) × (ℕ → 𝒮) =>
-        let r : Fun ℕ ℝ := ⟨integ.1⟩
-        let s : Fun ℕ 𝒮 := ⟨integ.2⟩
+        let r : ℕ → ℝ := integ.1
+        let s : ℕ → 𝒮 := integ.2
         (↑1 - ℓ) * (ℓ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k ↦ (γ ^ range (k + 1)) ⬝ᵥ
           (r[t:] + γ • (fun j => M.V θ γ (t + 1 + j) (s[t + 1:] j)) -
             fun j => M.V θ γ (t + j) (s[t:] j)))
         ((Expectation.asRV r, Expectation.asRV s) ω) =
       Gfun t ω := fun t ω => by
     simp only [Gfun, JointRandomSymbol, Expectation.asRV,
-      FinsetPow.dot_eq, Fun.getSliceFrom, Pi.add_apply, Pi.sub_apply, Pi.smul_apply,
+      FinsetPow.dot_eq, Function.getSliceFrom, Pi.add_apply, Pi.sub_apply, Pi.smul_apply,
       smul_eq_mul]
     rfl
   have hGpath : ∀ t, StronglyMeasurable
     (fun integ : (ℕ → ℝ) × (ℕ → 𝒮) =>
-      let r : Fun ℕ ℝ := ⟨integ.1⟩
-      let s : Fun ℕ 𝒮 := ⟨integ.2⟩
+      let r : ℕ → ℝ := integ.1
+      let s : ℕ → 𝒮 := integ.2
       (↑1 - ℓ) * (ℓ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k ↦ (γ ^ range (k + 1)) ⬝ᵥ
         (r[t:] + γ • (fun j => M.V θ γ (t + 1 + j) (s[t + 1:] j)) -
           fun j => M.V θ γ (t + j) (s[t:] j))) := fun t => by
@@ -634,23 +638,23 @@ private lemma main
   have hÂae : ∀ t,
       (fun ω => Â t (s t ω) (a t ω)) =ᵐ[M θ] Expectation.condSigma (M θ)
         ((Expectation.asRV r, Expectation.asRV s))
-        ((s.toFun t, a.toFun t))
+        ((s t, a t))
         (fun integ =>
-          let r : Fun ℕ ℝ := ⟨integ.1⟩
-          let s : Fun ℕ 𝒮 := ⟨integ.2⟩
+          let r : ℕ → ℝ := integ.1
+          let s : ℕ → 𝒮 := integ.2
           (↑1 - ℓ) * (ℓ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k ↦ (γ ^ range (k + 1)) ⬝ᵥ
             (r[t:] + γ • (fun j => M.V θ γ (t + 1 + j) (s[t + 1:] j)) -
               fun j => M.V θ γ (t + j) (s[t:] j))) := fun t => by
     have hx : AEMeasurable
       ((Expectation.asRV r, Expectation.asRV s)) (M θ) :=
       PSpace.aemeasurable
-    have hy : Measurable ((s.toFun t, a.toFun t)) :=
+    have hy : Measurable ((s t, a t)) :=
       (hsm t).prodMk (ham t)
     have hint : Integrable
       (fun ω =>
         (fun integ : (ℕ → ℝ) × (ℕ → 𝒮) =>
-          let r : Fun ℕ ℝ := ⟨integ.1⟩
-          let s : Fun ℕ 𝒮 := ⟨integ.2⟩
+          let r : ℕ → ℝ := integ.1
+          let s : ℕ → 𝒮 := integ.2
           (↑1 - ℓ) * (ℓ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k ↦ (γ ^ range (k + 1)) ⬝ᵥ
             (r[t:] + γ • (fun j => M.V θ γ (t + 1 + j) (s[t + 1:] j)) -
               fun j => M.V θ γ (t + j) (s[t:] j)))
@@ -659,10 +663,10 @@ private lemma main
     have hcomp :=
       Expectation.condEval_comp_ae_eq_condSigma
         (x := (Expectation.asRV r, Expectation.asRV s))
-        (y := (s.toFun t, a.toFun t))
+        (y := (s t, a t))
         (f := fun integ =>
-          let r : Fun ℕ ℝ := ⟨integ.1⟩
-          let s : Fun ℕ 𝒮 := ⟨integ.2⟩
+          let r : ℕ → ℝ := integ.1
+          let s : ℕ → 𝒮 := integ.2
           (↑1 - ℓ) * ((ℓ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k ↦ (γ ^ range (k + 1)) ⬝ᵥ
             (r[t:] + γ • (fun j => M.V θ γ (t + 1 + j) (s[t + 1:] j)) -
               fun j => M.V θ γ (t + j) (s[t:] j))))
@@ -672,10 +676,10 @@ private lemma main
   have hσeq : ∀ t,
       Expectation.condSigma (M θ)
         ((Expectation.asRV r, Expectation.asRV s))
-        ((s.toFun t, a.toFun t))
+        ((s t, a t))
         (fun integ =>
-          let r : Fun ℕ ℝ := ⟨integ.1⟩
-          let s : Fun ℕ 𝒮 := ⟨integ.2⟩
+          let r : ℕ → ℝ := integ.1
+          let s : ℕ → 𝒮 := integ.2
           (↑1 - ℓ) * (ℓ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k ↦ (γ ^ range (k + 1)) ⬝ᵥ
             (r[t:] + γ • (fun j => M.V θ γ (t + 1 + j) (s[t + 1:] j)) -
               fun j => M.V θ γ (t + j) (s[t:] j))) =ᵐ[M θ]
@@ -947,7 +951,7 @@ private lemma main
     funext z
     refine congrArg (gradient · θ) ?_
     funext κ
-    simp only [hπeq κ t ⟨fun _ => z.1⟩ ⟨fun _ => z.2⟩]
+    simpa [getElem_nat_apply] using congrArg Real.log (hπeq κ t (fun _ => z.1) (fun _ => z.2))
   have hexp : ∀ F : ℕ → (ℕ → 𝒮) → (ℕ → 𝒜) → (ℕ → ℝ) → ℝ,
     (∀ t, Measurable fun ω : ℕ → (ℝ × 𝒮 × 𝒜) => F t (fun j => s j ω) (fun j => a j ω) (fun j => r j ω)) →
     𝔼[r, s, a : M θ](
@@ -1005,8 +1009,8 @@ private lemma main
   have hsrc :
     (fun t (s : ℕ → 𝒮) (a : ℕ → 𝒜) (r : ℕ → ℝ) =>
       (1 - ℓ) * (ℓ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k ↦ (γ ^ range (k + 1)) ⬝ᵥ
-        (r[t:] + γ • (⟨fun t δ k => M.V θ γ (t + k) (δ k)⟩ : ℕ ⇀ (ℕ → 𝒮) → ℕ → ℝ)[t + 1] s[t + 1:] -
-          (⟨fun t δ k => M.V θ γ (t + k) (δ k)⟩ : ℕ ⇀ (ℕ → 𝒮) → ℕ → ℝ)[t] s[t:])) =
+        (r[t:] + γ • ((fun t δ k => M.V θ γ (t + k) (δ k)) : ℕ → (ℕ → 𝒮) → ℕ → ℝ)[t + 1] s[t + 1:] -
+          ((fun t δ k => M.V θ γ (t + k) (δ k)) : ℕ → (ℕ → 𝒮) → ℕ → ℝ)[t] s[t:])) =
     (fun t (s : ℕ → 𝒮) (a : ℕ → 𝒜) (r : ℕ → ℝ) =>
       (1 - ℓ) * (ℓ ^ (id : ℕ → ℕ)) ⬝ᵥ fun k ↦ (γ ^ range (k + 1)) ⬝ᵥ
         (r[t:] + γ • (fun j => M.V θ γ (t + 1 + j) (s[t + 1:] j)) -
@@ -1018,7 +1022,7 @@ private lemma main
         ∇[θ] Real.log (M.π[θ] (s t ω) (a t ω)) := fun t ω => by
     refine congrArg (gradient · θ) ?_
     funext κ
-    simp only [hπeq κ t ⟨fun _ => s t ω⟩ ⟨fun _ => a t ω⟩]
+    simpa [getElem_nat_apply] using congrArg Real.log (hπeq κ t (fun _ => s t ω) (fun _ => a t ω))
   let innerC : ℕ → 𝒮 → Θ := fun t y =>
     ∫ aₜ, M.π[θ] y aₜ • (Âc t y aₜ • ∇[θ] Real.log (M.π[θ] y aₜ))
       ∂ReferenceMeasure.measure
@@ -1265,7 +1269,7 @@ private lemma main
         Expectation.ofRV (M[σ t] θ') (id : 𝒜 → 𝒜)
           (fun act =>
             (Â t (σ t) act • ∇[θ] ((M θ).condProb
-                  ((a.toFun t, s.toFun t)) (act, σ t)).toReal) /
+                  ((a t, s t)) (act, σ t)).toReal) /
               ((M[σ t] θ').prob id act).toReal) =
         Expectation.ofRV (M[σ t] θ') (id : 𝒜 → 𝒜)
           (fun aₜ => (Â t (σ t) aₜ • ∇[θ] (M.π[θ] (σ t) aₜ)) /
@@ -1273,7 +1277,7 @@ private lemma main
       have hnum :
         (fun act =>
           (Â t (σ t) act • ∇[θ] ((M θ).condProb
-                ((a.toFun t, s.toFun t)) (act, σ t)).toReal) /
+                ((a t, s t)) (act, σ t)).toReal) /
             ((M[σ t] θ').prob id act).toReal) =
         (fun act =>
           (Â t (σ t) act • ∇[θ] (M.π[θ] (σ t) act)) /
@@ -1281,11 +1285,11 @@ private lemma main
         funext act
         have hgrad :
           ∇[θ] ((M θ).condProb
-              ((a.toFun t, s.toFun t)) (act, σ t)).toReal =
+              ((a t, s t)) (act, σ t)).toReal =
             ∇[θ] (M.π[θ] (σ t) act) := by
           refine congrArg (gradient · θ) ?_
           funext κ
-          simpa using hπeq κ t ⟨fun _ => σ t⟩ ⟨fun _ => act⟩
+          simpa using hπeq κ t (fun _ => σ t) (fun _ => act)
         rw [hgrad]
       have hden :
         Filter.EventuallyEq (ae (M[σ t] θ'))
@@ -1322,7 +1326,7 @@ private lemma main
         Expectation.ofRV (M[σ t] θ') (id : 𝒜 → 𝒜)
           (fun act =>
             (Â t (σ t) act • ∇[θ] ((M θ).condProb
-                  ((a.toFun t, s.toFun t)) (act, σ t)).toReal) /
+                  ((a t, s t)) (act, σ t)).toReal) /
               ((M[σ t] θ').prob id act).toReal)) =
       fun σ => ∑' t, γ ^ t • Expectation.ofRV (M[σ t] θ') (id : 𝒜 → 𝒜)
         (fun aₜ => (Â t (σ t) aₜ • ∇[θ] (M.π[θ] (σ t) aₜ)) /
@@ -1377,4 +1381,4 @@ private lemma main
 
 
 -- created on 2026-11-11
--- updated on 2026-11-20
+-- updated on 2026-11-23

@@ -480,6 +480,13 @@ function matchParen(s, open) {
  * outermost pair is dropped instead.
  */
 function dropInnerParens(span, mode = 'inner') {
+    if (mode === 'sqrt-argument') {
+        const open = /^\(\s*√\s*\(/.exec(span)?.[0].length - 1;
+        if (!(open >= 0)) return null;
+        const close = matchParen(span, open);
+        if (close < 0 || !/^\s*\)/.test(span.slice(close + 1))) return null;
+        return span.slice(0, open) + span.slice(open + 1, close) + span.slice(close + 1);
+    }
     if (mode === 'outer') {
         if (!span.startsWith('(') || matchParen(span, 0) !== span.length - 1) return null;
         return span.slice(1, -1);

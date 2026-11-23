@@ -3,6 +3,9 @@ import Initialize.Tactic.Attr.Basic
 import Def.AutomorphicForm_FormalBaseChange
 import Lemma.Int.P2MUtil
 
+-- `Def.AutomorphicForm_FormalBaseChange` still uses the deprecated `Ideal.inertiaDeg'`.
+set_option linter.deprecated false
+
 open NumberField IsDedekindDomain AutomorphicForm
 open scoped BigOperators NumberField
 
@@ -20,7 +23,7 @@ private lemma main
   ((formalBaseChange K L π).a w, (formalBaseChange K L π).b w) =
       ((formalBaseChange K L π).a w', (formalBaseChange K L π).b w') := by
   have h' : w.asIdeal.under (𝓞 K) = w'.asIdeal.under (𝓞 K) := congrArg HeightOneSpectrum.asIdeal h
-  haveI : w.asIdeal.LiesOver (w'.asIdeal.under (𝓞 K)) := ⟨h'.symm⟩
+  have : w.asIdeal.LiesOver (w'.asIdeal.under (𝓞 K)) := ⟨h'.symm⟩
   have hf : (w'.asIdeal.under (𝓞 K)).inertiaDeg' w.asIdeal = (w'.asIdeal.under (𝓞 K)).inertiaDeg' w'.asIdeal := by
 -- proof
     rw [Ideal.inertiaDeg'_eq_inertiaDeg, Ideal.inertiaDeg'_eq_inertiaDeg]
@@ -30,3 +33,4 @@ private lemma main
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-23

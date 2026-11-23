@@ -16,7 +16,6 @@ namespace ComplexLattice
 /--
 [eisensteinSeries_def](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/EisensteinSeries.lean)
 -/
-@[path]
 public theorem eisensteinSeries_def
   {L : ComplexLattice}
   {k : ℕ} :
@@ -32,7 +31,6 @@ namespace ComplexLattice
 /--
 [hasSum_eisensteinSeries](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/EisensteinSeries.lean)
 -/
-@[path]
 public theorem hasSum_eisensteinSeries
   {L : ComplexLattice}
   {k : ℕ}
@@ -52,7 +50,6 @@ namespace ComplexLattice
 /--
 [summable_eisensteinSeries](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/EisensteinSeries.lean)
 -/
-@[path]
 public theorem summable_eisensteinSeries
   {L : ComplexLattice}
   {k : ℕ}
@@ -70,7 +67,6 @@ namespace ComplexLattice
 /--
 [summable_norm_eisensteinSeries](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/EisensteinSeries.lean)
 -/
-@[path]
 public theorem summable_norm_eisensteinSeries
   {L : ComplexLattice}
   {k : ℕ}
@@ -83,10 +79,25 @@ public theorem summable_norm_eisensteinSeries
 
 end ComplexLattice
 
+namespace ComplexLattice
+
+public theorem g₂_eq {L : ComplexLattice} : L.g₂ = 60 * L.eisensteinSeries 4 := rfl
+
+public theorem g₃_eq {L : ComplexLattice} : L.g₃ = 140 * L.eisensteinSeries 6 := rfl
+
+end ComplexLattice
+
+public noncomputable def g₂Function (τ : ℍ) : ℂ := (ComplexLattice.ofUpperHalfPlane τ).g₂
+
+public noncomputable def g₃Function (τ : ℍ) : ℂ := (ComplexLattice.ofUpperHalfPlane τ).g₃
+
+public noncomputable def g₂Ext (z : ℂ) : ℂ := if h : 0 < z.im then g₂Function ⟨z, h⟩ else 0
+
+public noncomputable def g₃Ext (z : ℂ) : ℂ := if h : 0 < z.im then g₃Function ⟨z, h⟩ else 0
+
 /--
 [lattice_ofUpperHalfPlane_eq_addOne](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/EisensteinSeries.lean)
 -/
-@[path]
 public theorem lattice_ofUpperHalfPlane_eq_addOne
   {τ : ℍ} :
 -- imply
@@ -104,7 +115,6 @@ public theorem lattice_ofUpperHalfPlane_eq_addOne
 /--
 [isHomothetic_ofUpperHalfPlane_negInv](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/EisensteinSeries.lean)
 -/
-@[path]
 public theorem isHomothetic_ofUpperHalfPlane_negInv
   {τ : ℍ} :
 -- imply
@@ -137,7 +147,6 @@ public theorem isHomothetic_ofUpperHalfPlane_negInv
 /--
 [ComplexLattice.jInvariantLattice_eq_of_lattice_eq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/EisensteinSeries.lean)
 -/
-@[path]
 public theorem ComplexLattice.jInvariantLattice_eq_of_lattice_eq
   {L L' : ComplexLattice}
 -- given
@@ -159,7 +168,6 @@ public theorem ComplexLattice.jInvariantLattice_eq_of_lattice_eq
 /--
 [ComplexLattice.jInvariantLattice_eq_of_isHomothetic](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/EisensteinSeries.lean)
 -/
-@[path]
 public theorem ComplexLattice.jInvariantLattice_eq_of_isHomothetic
   {L L' : ComplexLattice}
 -- given
@@ -207,7 +215,6 @@ public theorem ComplexLattice.jInvariantLattice_eq_of_isHomothetic
 /--
 [jFunction_add_one](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/EisensteinSeries.lean)
 -/
-@[path]
 public theorem jFunction_add_one
   {τ : ℍ} :
 -- imply
@@ -215,12 +222,11 @@ public theorem jFunction_add_one
 -- proof
   unfold jFunction
   exact (ComplexLattice.jInvariantLattice_eq_of_lattice_eq
-    (lattice_ofUpperHalfPlane_eq_addOne τ)).symm
+    (lattice_ofUpperHalfPlane_eq_addOne (τ := τ))).symm
 
 /--
 [jFunction_neg_inv](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/EisensteinSeries.lean)
 -/
-@[path]
 public theorem jFunction_neg_inv
   {τ : ℍ} :
 -- imply
@@ -228,12 +234,33 @@ public theorem jFunction_neg_inv
 -- proof
   unfold jFunction
   exact ComplexLattice.jInvariantLattice_eq_of_isHomothetic
-    (isHomothetic_ofUpperHalfPlane_negInv τ)
+    (isHomothetic_ofUpperHalfPlane_negInv (τ := τ))
+
+/--
+Upstream states this as `sorry`: holomorphy of `τ ↦ ∑'_{m,n} (m + n τ)⁻⁴` on the upper half plane
+requires local uniform convergence of the Eisenstein series, which is not yet formalized.
+-/
+public theorem g₂Ext_differentiableOn :
+  DifferentiableOn ℂ g₂Ext {z : ℂ | 0 < z.im} := by
+  sorry
+
+/--
+Same as `g₂Ext_differentiableOn`, for weight 6; upstream states this as `sorry`.
+-/
+public theorem g₃Ext_differentiableOn :
+  DifferentiableOn ℂ g₃Ext {z : ℂ | 0 < z.im} := by
+  sorry
+
+/--
+Nonvanishing of the discriminant of a lattice; upstream states this as `sorry`
+(it amounts to the three half-period values of `℘` being pairwise distinct).
+-/
+public theorem discriminantLattice_ne_zero' (L : ComplexLattice) : L.discriminantLattice ≠ 0 := by
+  sorry
 
 /--
 [jFunction_ext_eq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/EisensteinSeries.lean)
 -/
-@[path]
 public theorem jFunction_ext_eq
   {z : ℂ}
 -- given
@@ -247,7 +274,6 @@ public theorem jFunction_ext_eq
 /--
 [discriminant_ext_ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/EisensteinSeries.lean)
 -/
-@[path]
 public theorem discriminant_ext_ne_zero
   {z : ℂ}
 -- given
@@ -256,13 +282,12 @@ public theorem discriminant_ext_ne_zero
   g₂Ext z ^ 3 - 27 * g₃Ext z ^ 2 ≠ 0 := by
 -- proof
   simp only [g₂Ext, g₃Ext, hz, dite_true, g₂Function, g₃Function]
-  exact (ComplexLattice.ofUpperHalfPlane ⟨z, hz⟩).discriminantLattice_ne_zero'
+  exact discriminantLattice_ne_zero' (ComplexLattice.ofUpperHalfPlane ⟨z, hz⟩)
 
 /--
 [jFunction_holomorphic](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/EisensteinSeries.lean)
 -/
-@[path]
-public theorem jFunction_holomorphic
+public theorem jFunction_holomorphic :
 -- imply
   DifferentiableOn ℂ (fun z : ℂ => if h : 0 < z.im then jFunction ⟨z, h⟩ else 0) {z : ℂ | 0 < z.im} := by
 -- proof
@@ -275,8 +300,9 @@ public theorem jFunction_holomorphic
     · exact (differentiableOn_const 1728).mul (hg₂.pow 3)
     · exact (hg₂.pow 3).sub ((differentiableOn_const 27).mul (hg₃.pow 2))
     · intro z hz
-      exact discriminant_ext_ne_zero z hz
-  exact hj.congr (fun z hz => jFunction_ext_eq z hz)
+      exact discriminant_ext_ne_zero hz
+  exact hj.congr (fun z hz => jFunction_ext_eq hz)
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-23

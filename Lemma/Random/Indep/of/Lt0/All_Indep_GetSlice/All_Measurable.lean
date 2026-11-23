@@ -2,6 +2,7 @@ import Instance.Probability.Process.HiddenMarkovSequence
 import Mathlib.Probability.Independence.Conditional
 import Notation.Fun
 import Initialize.Tactic.Attr.Basic
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory Fun
 open scoped ProbabilityTheory
 
@@ -17,7 +18,7 @@ private lemma main
   [MeasurableSpace Ω] [StandardBorelSpace Ω]
   [MeasurableSpace 𝒮]
   {π : Measure Ω} [IsProbabilityMeasure π]
-  {s : ℕ ⇀ Ω → 𝒮}
+  {s : ℕ → Ω → 𝒮}
   {k : ℕ}
 -- given
   (hs : ∀ t, Measurable s[t])
@@ -31,10 +32,9 @@ private lemma main
   have hid : (id ∘ s[k + 1]) = s[k + 1] := funext fun _ ↦ rfl
   have hs0 : ((fun p : Fin k → 𝒮 ↦ p ⟨0, hk⟩) ∘ s[:k]) = s[0] := by
     funext ω
-    simp [Function.comp, Fun.getSlice, Function.getSlice, FunSlice.slice, Int.toNat_zero]
-    rfl
+    simp [Function.comp, Function.getSlice, FunSlice.slice, Int.toNat_zero]
   rwa [hid, hs0] at hCI
 
 
 -- created on 2026-11-13
--- updated on 2026-11-17
+-- updated on 2026-11-23

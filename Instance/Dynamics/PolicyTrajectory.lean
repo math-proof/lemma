@@ -31,13 +31,13 @@ variable {Θ 𝒮 𝒜 : Type*} [MeasurableSpace 𝒮] [ReferenceMeasure 𝒜]
 namespace Model.IsPolicyTrajectory
 
 variable {M : Model Θ 𝒮 𝒜}
-  {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
-  {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
-  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
 
 /-- Canonical projections form an `IsPolicyTrajectory` (`stage_eq` by `rfl`). -/
 instance instCanonical (M : Model Θ 𝒮 𝒜) :
-    Model.IsPolicyTrajectory M ⟨fun t ω => (ω t).1⟩ ⟨fun t ω => (ω t).2.1⟩ ⟨fun t ω => (ω t).2.2⟩ where
+    Model.IsPolicyTrajectory M (fun t ω => (ω t).1) (fun t ω => (ω t).2.1) (fun t ω => (ω t).2.2) where
   stage_eq t := by
     funext ω
     rfl

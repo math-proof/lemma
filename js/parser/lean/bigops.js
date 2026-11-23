@@ -340,7 +340,8 @@ export class LeanBigOperator extends LeanArgs {
         return domain ? domain.toJSON(ctx) : null;
     }
 
-    toJSON(ctx = { leaves: new Map() }) {
+    toJSON(ctx = { leaves: new Map(), binders: [] }) {
+        ctx.binders ??= [];
         // Stacked big operators `∑ i ∈ s, ∑ j ∈ t, body` are a single operator
         // whose domains are the conjunction of the binders, innermost first:
         // `∑ k ∈ Icc 1 n, ∑ d ∈ k.divisors, f` →
@@ -1594,6 +1595,42 @@ export class LeanStack extends LeanBigOperator {
         )
             return null;
         return /** @type {[Lean, Lean]} */ (parts);
+    }
+
+    /**
+     * Plain identifier names bound by a matrix-index bracket:
+     * `[i < n]` → `["i"]`, `[i < m, j < n]` → `["i", "j"]`.
+     * Also handles `≤` / `≥` as comparison binders for completeness.
+     * Falls through to super for any other bound shape.
+     */
+    binderNames() {
+        const bound = this.bound;
+        const names = [];
+        const relClasses = [L.Lean_lt, L.Lean_le, L.Lean_ge];
+        const collect = (node) => {
+            if (!node) return;
+            if (node instanceof L.LeanArgsCommaSeparated) {
+                node.args.forEach(collect);
+            } else if (relClasses.some((C) => node instanceof C)) {
+                const lhs = node.lhs;
+                if (lhs instanceof L.LeanToken && lhs.is_variable() && lhs.text !== '')
+                    names.push(lhs.text);
+            } else if (node instanceof L.LeanToken && node.is_variable() && node.text !== '') {
+                names.push(node.text);
+            }
+        };
+        collect(bound);
+        if (names.length) return names;
+        return super.binderNames();
+    }
+
+    /**
+     * `LeanBigOperator.jsonDomain` strips `LeanBinaryBoolean` binders (like `∀ k : ℕ`)
+     * to their RHS. For `LeanStack`, the bound `i < n` / `[i < m, j < n]` IS the domain
+     * itself — do not strip to `bound.rhs`.
+     */
+    get jsonDomain() {
+        return this.bound;
     }
 
     is_indented() {

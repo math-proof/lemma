@@ -1,5 +1,5 @@
-import Def.Data.Tensor.Prod
-import Notation.Data.Tensor.Permute
+import Lemma.Nat.SubSub
+import Lemma.Tensor.DataCast.as.Data.of.Eq
 import Lemma.List.Permute.of.Add.ge.SubLength_1
 import Lemma.List.ProdPermute.eq.Prod
 import Lemma.Nat.Add_1.ge.Mod1
@@ -24,7 +24,7 @@ private lemma main
   X.permute i d ≃ X.permute i (s.length - 1 - i : ℕ) := by
 -- proof
   if h_d : i + d = s.length - 1 then
-    have h_d := Eq_Sub.of.EqAdd.left h_d
+    have h_d : d = s.length - 1 - i := by omega
     subst h_d
     rfl
   else
@@ -259,4 +259,4 @@ private lemma main
 
 
 -- created on 2025-10-29
--- updated on 2026-10-26
+-- updated on 2026-11-23

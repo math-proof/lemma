@@ -77,10 +77,6 @@ def IsJLNice (S : Finset (HeightOneSpectrum (𝓞 K)))
           Λ s = d.sFactor μ s * pinnedRootNumber K Pi μ S archR archC uR aR uC kC *
             ((finiteConductor K μ S : ℝ) : ℂ) ^ ((1 : ℂ) / 2 - s) * Λd (1 - s))
 
-example {v : HeightOneSpectrum (𝓞 K)} (ψ : AddChar (v.adicCompletion K) ℂ) :
-    addCharLevel ψ = sSup {n : ℤ | ∀ x : v.adicCompletion K, Valued.v x ≤ WithZero.exp n → ψ x = 1} :=
-  addCharLevel_def ψ
-
 end LanglandsTunnell.Converse
 
 end

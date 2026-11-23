@@ -2,20 +2,20 @@ import Theorem.List.Cons.eq.Append
 import Theorem.List.AppendAppend.eq.Append_Append
 import Theorem.List.Append.of.Eq
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
-import Lemma.List.EqPermute
+import Theorem.List.EqPermute
 import Lemma.Int.NegSucc.eq.NegAdd_1
-import Lemma.Nat.AddAdd.eq.Add_Add
-import Lemma.Nat.EqMin.of.Le
-import Lemma.List.Drop_SubLength_1.eq.ListGet.of.GtLength_0
+import Theorem.Nat.AddAdd.eq.Add_Add
+import Theorem.Nat.EqMin.of.Le
+import Theorem.List.Drop_SubLength_1.eq.ListGet.of.GtLength_0
 import Lemma.List.LengthDrop.eq.SubLength
-import Lemma.Nat.EqSub_Sub.of.Ge
+import Theorem.Nat.EqSub_Sub.of.Ge
 import Lemma.Nat.SubSub
-import Lemma.Nat.EqMin.of.Gt
-import Lemma.Nat.Sub.eq.Zero.of.Lt
-import Lemma.List.Slice_0.eq.Take
-import Lemma.Nat.AddSub.eq.Sub_Sub.of.Ge.Ge
-import Lemma.Nat.LeSubS.of.Le
-import Lemma.Nat.LtSubS.of.Lt.Le
+import Theorem.Nat.EqMin.of.Gt
+import Theorem.Nat.Sub.eq.Zero.of.Lt
+import Theorem.List.Slice_0.eq.Take
+import Theorem.Nat.AddSub.eq.Sub_Sub.of.Ge.Ge
+import Theorem.Nat.LeSubS.of.Le
+import Theorem.Nat.LtSubS.of.Lt.Le
 open List Nat Int
 
 
@@ -90,4 +90,4 @@ private lemma main
 
 
 -- created on 2025-06-17
--- updated on 2026-11-22
+-- updated on 2026-11-23

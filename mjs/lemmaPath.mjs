@@ -537,6 +537,32 @@ function hasComplexICues(node) {
   return found;
 }
 
+/**
+ * Section namespaces that head the conclusion, e.g. `Matrix.rotaryOn u v 0 = 1`
+ * → `["Matrix"]`. The signature may be dominated by index types (`Fin d`,
+ * `Fin (d + d)`) that say nothing about the subject matter, so the conclusion's
+ * head namespace is the better signal. Only Matrix uses this bonus: other
+ * sections' conclusions are frequently headed by generic namespaces
+ * (`Set.range`, `Finset.sum`) that must not override a curated path.
+ */
+function conclusionHeadSections(sigNode) {
+  const concl = conclusionNode(sigNode);
+  if (!concl) return [];
+  const REL = new Set(["LeanEq", "Lean_le", "Lean_lt", "Lean_ge", "Lean_gt", "LeanNe", "Lean_ne", "Lean_leftrightarrow"]);
+  const sides = REL.has(cls(concl)) ? (concl.args || []).slice(0, 2) : [concl];
+  const out = [];
+  for (const side of sides) {
+    let node = unwrapParen(side);
+    if (cls(node) === "LeanArgsSpaceSeparated") node = node.args?.[0];
+    node = unwrapParen(node);
+    const parts = propertyParts(node);
+    if (!parts || parts.length < 2) continue;
+    const sec = TYPE_TO_SECTION[parts[0]] ?? (DATA_TYPE_SECTIONS.has(parts[0]) ? parts[0] : null);
+    if (sec && !out.includes(sec)) out.push(sec);
+  }
+  return out;
+}
+
 function conclusionLhsHeadToken(colonNode) {
   let type = colonNode?.args?.[colonNode.args.length - 1];
   while (type && (cls(type) === "LeanStatements" || cls(type) === "LeanArgsNewLineSeparated")) {
@@ -786,6 +812,10 @@ function pickSection(sigNode, sections, extra = {}) {
   if (hasVecMul(sigNode) && scores.has("Matrix")) scores.set("Matrix", scores.get("Matrix") + 2);
   const LP_EMBED = new Set(["ofL1", "ofLp", "toL1", "toLp"]);
   if (LP_EMBED.has(conclusionLhsHeadToken(sigNode)) && scores.has("Matrix"))
+    scores.set("Matrix", scores.get("Matrix") + 2);
+  // The conclusion's head namespace names the subject matter: `Matrix.rotaryOn u v 0 = 1`
+  // stays Matrix even when the signature is dominated by `Fin d` / `Fin (d + d)`.
+  if (conclusionHeadSections(sigNode).includes("Matrix") && scores.has("Matrix"))
     scores.set("Matrix", scores.get("Matrix") + 2);
   if (tokens.has("AbsoluteValue") && scores.has("AbsoluteValue"))
     scores.set("AbsoluteValue", scores.get("AbsoluteValue") + 5);

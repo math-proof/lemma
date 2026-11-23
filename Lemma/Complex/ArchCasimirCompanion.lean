@@ -1,4 +1,3 @@
-import Def.LanglandsTunnell_JLConverse
 import Lemma.Matrix.ArchDerivCasimir
 import Def.LanglandsTunnell_ArchCasimirCompanion
 

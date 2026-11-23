@@ -1,7 +1,6 @@
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/TwoPowerBadSets.lean -/
 
 import Theorem.Analysis.Complex.Wiman.LogMajorantRegularity
-import Lemma.Complex.Wiman.LogMajorantRegularity
 import Theorem.Real.Calculus.PowerGrowthBadSet
 import Def.Analysis.Calculus.PowerGrowthBadSet
 

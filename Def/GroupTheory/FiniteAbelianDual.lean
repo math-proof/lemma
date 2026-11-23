@@ -6,6 +6,7 @@ Authors: Adam Kiezun, Muse Spark 1.3, Codex
 
 module
 
+public import Mathlib.Algebra.DirectSum.AddChar
 public import Mathlib.Algebra.Group.AddChar
 public import Mathlib.Basic.Complex.Basic
 public import Mathlib.Analysis.Fourier.FiniteAbelian.PontryaginDuality

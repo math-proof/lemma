@@ -2,6 +2,7 @@ import Lemma.Random.ProbCond.eq.OfRealPol.of.NeDens_0.All_EqWithDensity
 import Class.Dynamics.MarkovDecisionProcess
 import Instance.Dynamics.PolicyTrajectory
 import Initialize.Tactic.Attr.Basic
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 open scoped ENNReal.ToRealCoe
 open IsPolicyTrajectory
@@ -12,9 +13,9 @@ private lemma main
   [μ : ReferenceMeasure 𝒮] [ReferenceMeasure 𝒜]
   {M : Model Θ 𝒮 𝒜} [hStoch : StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
   {θ : Θ} {t : ℕ} {sₜ : 𝒮} {aₜ : 𝒜}
-  {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
-  {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
-  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
 -- given
   (h₀ : Model.IsPolicyTrajectory M r s a)
   (h₁ : Model.AbsContJointAS M a s)
@@ -37,4 +38,4 @@ private lemma main
 
 
 -- created on 2026-10-21
--- updated on 2026-11-18
+-- updated on 2026-11-23

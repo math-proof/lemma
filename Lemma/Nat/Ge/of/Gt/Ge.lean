@@ -1,5 +1,4 @@
 import Lemma.Nat.Ge.of.Ge.Ge
-import Lemma.Nat.Ge.of.Gt
 open Nat
 
 
@@ -13,8 +12,8 @@ private lemma main
 -- imply
   a ≥ c := by
 -- proof
-  apply Ge.of.Ge.Ge h₀
-  apply Ge.of.Gt h₁
+  apply Ge.of.Ge.Ge h₀ (le_of_lt h₁)
 
 
 -- created on 2025-06-20
+-- updated on 2026-11-23

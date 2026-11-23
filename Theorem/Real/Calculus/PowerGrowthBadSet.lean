@@ -19,12 +19,12 @@ namespace Real
 -/
 public theorem volume_powerGrowthBadSet_lt_top
 -- given
-  (h : ℝ → ℝ) {p x0 : ℝ} (hp : 1 < p)
-  (hpos : ∀ x, x0 ≤ x → 0 < h x)
-  (hmono : MonotoneOn h (Ici x0))
+  (h : ℝ → ℝ) {p x₀ : ℝ} (hp : 1 < p)
+  (hpos : ∀ x, x₀ ≤ x → 0 < h x)
+  (hmono : MonotoneOn h (Ici x₀))
   (hsmooth : ContDiff ℝ 1 h) :
 -- imply
-  volume (powerGrowthBadSet h p x0) < ∞ := by
+  volume (powerGrowthBadSet h p x₀) < ∞ := by
 -- proof
   let q : ℝ → ℝ := fun x ↦ deriv h x / h x ^ p
   let H : ℝ → ℝ := fun x ↦ h x ^ (1 - p) / (1 - p)
@@ -34,7 +34,8 @@ public theorem volume_powerGrowthBadSet_lt_top
   have hderiv_nonneg {x : ℝ} (hx : x₀ < x) : 0 ≤ deriv h x := by
     have hnhds : Ici x₀ ∈ nhds x :=
       mem_of_superset (Ioi_mem_nhds hx) Ioi_subset_Ici_self
-    rwa [← derivWithin_of_mem_nhds hnhds]
+    rw [← derivWithin_of_mem_nhds hnhds]
+    exact hmono.derivWithin_nonneg
   have hq_continuousOn {b : ℝ} (hxb : x₀ ≤ b) :
     ContinuousOn q (Icc x₀ b) := by
     have hhpow : ContinuousOn (fun x ↦ h x ^ p) (Icc x₀ b) :=

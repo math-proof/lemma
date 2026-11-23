@@ -1,6 +1,4 @@
-import Lemma.Nat.Ge.of.Gt
-import Lemma.Nat.EqMin.of.Ge
-open Nat
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
@@ -10,10 +8,10 @@ private lemma main
 -- given
   (h : a > b) :
 -- imply
-  a ⊓ b = b := 
+  a ⊓ b = b :=
 -- proof
-  EqMin.of.Ge (Ge.of.Gt h)
+  min_eq_right (le_of_lt h)
 
 
 -- created on 2018-09-09
--- updated on 2025-10-12
+-- updated on 2026-11-23

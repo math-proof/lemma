@@ -3,6 +3,7 @@ import Lemma.Random.CondIndep.of.All_Eq_Joint.All_EqWithDensity
 import Lemma.Random.CondIndep.of.All_CondIndep.All_MeasurableJoint
 import Notation.Probability.JointRv
 import Notation.Fun
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory PolicyGradient PolicyGradient.Model Random
 open scoped ProbabilityTheory
 
@@ -19,15 +20,15 @@ private lemma reward
   [MeasurableSpace 𝒮] [StandardBorelSpace 𝒮] [Nonempty 𝒮]
   [ReferenceMeasure 𝒜] [StandardBorelSpace 𝒜] [Nonempty 𝒜]
   {M : Model Θ 𝒮 𝒜} [StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
-  {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
-  {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
-  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
   {θ : Θ}
   {t : ℕ}
 -- given
-  (h₀ : ∀ t, (· t) = (r[t], s[t], a[t])) :
+  (h₀ : ∀ (t : ℕ), (· t) = (r[t], s[t], a[t])) :
 -- imply
-  let : ∀ t, Measurable (s[t], a[t]) := fun t ↦ ((h₀ t) ▸ measurable_pi_apply t).snd
+  let : ∀ (t : ℕ), Measurable (s[t], a[t]) := fun t ↦ ((h₀ t) ▸ measurable_pi_apply t).snd
   r[t] ⟂ᵢ[M θ] (s[:t], a[:t]) | (s[t], a[t]) := by
 -- proof
   intro
@@ -46,15 +47,15 @@ private lemma main
   [MeasurableSpace 𝒮] [StandardBorelSpace 𝒮] [Nonempty 𝒮]
   [ReferenceMeasure 𝒜] [StandardBorelSpace 𝒜] [Nonempty 𝒜]
   {M : Model Θ 𝒮 𝒜} [StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
-  {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
-  {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
-  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
   {θ : Θ}
   {t : ℕ}
 -- given
-  (h₀ : ∀ t, (· t) = (r[t], s[t], a[t])) :
+  (h₀ : ∀ (t : ℕ), (· t) = (r[t], s[t], a[t])) :
 -- imply
-  let : ∀ t, Measurable (s[t], a[t]) := fun t ↦ ((h₀ t) ▸ measurable_pi_apply t).snd
+  let : ∀ (t : ℕ), Measurable (s[t], a[t]) := fun t ↦ ((h₀ t) ▸ measurable_pi_apply t).snd
   s[t + 1] ⟂ᵢ[M θ] (s[:t], a[:t]) | (s[t], a[t]) := by
 -- proof
   intro
@@ -74,15 +75,15 @@ private lemma future_reward
   [MeasurableSpace 𝒮] [StandardBorelSpace 𝒮] [Nonempty 𝒮]
   [ReferenceMeasure 𝒜] [StandardBorelSpace 𝒜] [Nonempty 𝒜]
   {M : Model Θ 𝒮 𝒜} [StochasticPolicy M.toPolicy] [Model.HasMeasurableEnv M]
-  {r : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
-  {s : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
-  {a : ℕ ⇀ (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
+  {r : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → ℝ}
+  {s : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒮}
+  {a : ℕ → (ℕ → ℝ × 𝒮 × 𝒜) → 𝒜}
   {θ : Θ}
   {t : ℕ}
 -- given
-  (h₀ : ∀ t, (· t) = (r[t], s[t], a[t])) :
+  (h₀ : ∀ (t : ℕ), (· t) = (r[t], s[t], a[t])) :
 -- imply
-  let : ∀ t, Measurable (r[t], s[t], a[t]) := fun t ↦ (h₀ t) ▸ measurable_pi_apply t
+  let : ∀ (t : ℕ), Measurable (r[t], s[t], a[t]) := fun t ↦ (h₀ t) ▸ measurable_pi_apply t
   r[t + 1:] ⟂ᵢ[M θ] (s[t], a[t]) | s[t + 1] :=
 -- proof
   CondIndep.of.All_CondIndep.All_MeasurableJoint (fun t ↦ (h₀ t) ▸ measurable_pi_apply t)

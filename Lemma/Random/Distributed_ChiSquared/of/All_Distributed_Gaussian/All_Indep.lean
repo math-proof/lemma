@@ -5,6 +5,7 @@ import Notation.Probability.HasLaw
 import Notation.Algebra.Power
 import Lemma.Measure.SumSqGaussians.eq.ChiSquaredReal
 import Lemma.Random.GetSlice.eq.SnocGetSlice
+import Instance.Data.Nat.Fun
 open MeasureTheory ProbabilityTheory Fun Measure Random
 
 
@@ -16,7 +17,7 @@ private lemma main
   [MeasurableSpace Ω]
   {π : Measure Ω} [IsProbabilityMeasure π]
   {n : ℕ}
-  {x : ℕ ⇀ Ω → ℝ}
+  {x : ℕ → Ω → ℝ}
 -- given
   (h₀ : ∀ (k : ℕ), x[k] ⟂ᵢ[π] x[:k])
   (h₁ : ∀ (k : ℕ), x[k] ∼[π] gaussianReal 0 1) :
@@ -76,4 +77,4 @@ private lemma main
 
 
 -- created on 2021-07-17
--- updated on 2026-11-17
+-- updated on 2026-11-23

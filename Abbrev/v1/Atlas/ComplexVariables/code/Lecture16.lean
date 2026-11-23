@@ -19,7 +19,7 @@ public import Mathlib.Analysis.Complex.Basic
 public import Mathlib.LinearAlgebra.Complex.FiniteDimensional
 public import Mathlib.MeasureTheory.Integral.IntervalIntegral.IntegrationByParts
 public import Mathlib.Analysis.Calculus.ParametricIntervalIntegral
-public import Mathlib.Analysis.SpecialFunctions.Integrals.PosLogEqCircleAverage
+public import Mathlib.Analysis.SpecialFunctions.Integrals.PosLog
 public import Def.v1.Atlas.ComplexVariables.code.Lecture13.Part2
 public import Theorem.Complex.Atlas.v1.ComplexVariables.code.Lecture13
 @[expose] public section

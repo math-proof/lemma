@@ -9,7 +9,6 @@ namespace ComplexLattice
 /--
 [weierstrassPFun_differentiableOn](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/WeierstrassP.lean)
 -/
-@[path]
 lemma weierstrassPFun_differentiableOn
   {L : ComplexLattice} :
 -- imply
@@ -24,7 +23,6 @@ namespace ComplexLattice
 /--
 [weierstrassPFun_differentiableAt](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/WeierstrassP.lean)
 -/
-@[path]
 lemma weierstrassPFun_differentiableAt
   {L : ComplexLattice}
   {z₀ : ℂ}
@@ -43,7 +41,6 @@ namespace ComplexLattice
 /--
 [weierstrassPFun_analyticOnNhd](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/WeierstrassP.lean)
 -/
-@[path]
 lemma weierstrassPFun_analyticOnNhd
   {L : ComplexLattice} :
 -- imply
@@ -58,7 +55,6 @@ namespace ComplexLattice
 /--
 [weierstrassPFun_meromorphic](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/WeierstrassP.lean)
 -/
-@[path]
 lemma weierstrassPFun_meromorphic
   {L : ComplexLattice} :
 -- imply
@@ -73,7 +69,6 @@ namespace ComplexLattice
 /--
 [weierstrassPFun_order](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/WeierstrassP.lean)
 -/
-@[path]
 lemma weierstrassPFun_order
   {L : ComplexLattice}
   {l₀ : ℂ}
@@ -91,7 +86,6 @@ namespace ComplexLattice
 /--
 [weierstrassPFun_even](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/WeierstrassP.lean)
 -/
-@[path]
 lemma weierstrassPFun_even
   {L : ComplexLattice}
   {z : ℂ} :
@@ -107,7 +101,6 @@ namespace ComplexLattice
 /--
 [weierstrassPFun_laurentExpansion](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/WeierstrassP.lean)
 -/
-@[path]
 lemma weierstrassPFun_laurentExpansion
   {L : ComplexLattice}
   {z : ℂ}
@@ -147,10 +140,10 @@ lemma weierstrassPFun_laurentExpansion
     · subst hx0
       simp [weierstrassPExceptSeries, FormalMultilinearSeries.coeff_ofScalars]
     · have hodd : Odd x := by
-      by_contra h
-      have heven := Nat.not_odd_iff_even.mp h
-      obtain ⟨m, hm⟩ := heven
-      exact absurd (show 2 * (m - 1) + 2 = x by omega) (hx (m - 1))
+        by_contra h
+        have heven := Nat.not_odd_iff_even.mp h
+        obtain ⟨m, hm⟩ := heven
+        exact absurd (show 2 * (m - 1) + 2 = x by omega) (hx (m - 1))
       have hodd2 : Odd (x + 2) := hodd.add_even even_two
       simp only [weierstrassPExceptSeries, FormalMultilinearSeries.coeff_ofScalars, hx0,
         ↓reduceIte, L.lattice.zero_mem, sub_zero, zero_pow (by omega : x + 2 ≠ 0),
@@ -164,7 +157,6 @@ namespace ComplexLattice
 /--
 [derivWeierstrassPFun_meromorphic](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/WeierstrassP.lean)
 -/
-@[path]
 lemma derivWeierstrassPFun_meromorphic
   {L : ComplexLattice} :
 -- imply
@@ -179,7 +171,6 @@ namespace ComplexLattice
 /--
 [derivWeierstrassPFun_odd](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/WeierstrassP.lean)
 -/
-@[path]
 lemma derivWeierstrassPFun_odd
   {L : ComplexLattice}
   {z : ℂ} :
@@ -195,7 +186,6 @@ namespace ComplexLattice
 /--
 [derivWeierstrassPFun_analyticOnNhd](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/WeierstrassP.lean)
 -/
-@[path]
 lemma derivWeierstrassPFun_analyticOnNhd
   {L : ComplexLattice} :
 -- imply
@@ -210,7 +200,6 @@ namespace ComplexLattice
 /--
 [derivWeierstrassPFun_order](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/WeierstrassP.lean)
 -/
-@[path]
 lemma derivWeierstrassPFun_order
   {L : ComplexLattice}
   {l₀ : ℂ}
@@ -224,8 +213,8 @@ lemma derivWeierstrassPFun_order
   rw [meromorphicOrderAt_eq_int_iff (L.meromorphic_derivWeierstrassP l₀)]
   refine ⟨fun z ↦ (z - l₀) ^ 3 * L.derivWeierstrassPExcept l₀ z - 2, ?_, ?_, ?_⟩
   · have : AnalyticAt ℂ (L.derivWeierstrassPExcept l₀) l₀ := by
-    apply L.analyticOnNhd_derivWeierstrassPExcept l₀
-    simp [Set.mem_compl_iff, Set.mem_sdiff, h]
+      apply L.analyticOnNhd_derivWeierstrassPExcept l₀
+      simp [Set.mem_compl_iff, Set.mem_sdiff, h]
     fun_prop
   · simp [sub_self]
   · filter_upwards [self_mem_nhdsWithin] with z (hz : z ≠ l₀)
@@ -243,7 +232,6 @@ namespace ComplexLattice
 /--
 [weierstrassPFun_add_lattice](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/WeierstrassP.lean)
 -/
-@[path]
 lemma weierstrassPFun_add_lattice
   {L : ComplexLattice}
   {z : ℂ}
@@ -262,7 +250,6 @@ namespace ComplexLattice
 /--
 [derivWeierstrassPFun_add_lattice](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/WeierstrassP.lean)
 -/
-@[path]
 lemma derivWeierstrassPFun_add_lattice
   {L : ComplexLattice}
   {z : ℂ}
@@ -282,7 +269,6 @@ variable (L : ComplexLattice)
 /--
 [g₂Fun_eq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/WeierstrassP.lean)
 -/
-@[path]
 lemma g₂Fun_eq : L.g₂Fun = L.g₂ :=
   rfl
 
@@ -294,7 +280,6 @@ variable (L : ComplexLattice)
 /--
 [g₃Fun_eq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/WeierstrassP.lean)
 -/
-@[path]
 lemma g₃Fun_eq : L.g₃Fun = L.g₃ :=
   rfl
 
@@ -305,7 +290,6 @@ namespace ComplexLattice
 /--
 [weierstrassPFun_differentialEquation](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/WeierstrassP.lean)
 -/
-@[path]
 lemma weierstrassPFun_differentialEquation
   {L : ComplexLattice}
   {z : ℂ}
@@ -318,27 +302,5 @@ lemma weierstrassPFun_differentialEquation
 end ComplexLattice
 
 
-/--
-[g](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/WeierstrassP.lean)
--/
-@[path]
-private lemma g_eq
-  {L : ComplexLattice} :
--- imply
-  L.g₂Fun = L.g₂ := by
--- proof
-  apply ComplexLattice.g L
-
-/--
-[g](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/WeierstrassP.lean)
--/
-@[path]
-private lemma g_eq_2
-  {L : ComplexLattice} :
--- imply
-  L.g₃Fun = L.g₃ := by
--- proof
-  apply ComplexLattice.g L
-
-
 -- created on 2026-10-23
+-- updated on 2026-11-23

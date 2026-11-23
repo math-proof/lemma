@@ -2,6 +2,7 @@ import Lemma.Random.SinglePSpace.of.AEMeasurable
 import Instance.Probability.Rv.Part2
 import Def.Probability.Process.HiddenMarkovSequence.Part2
 import Initialize.Tactic.Attr.Basic
+import Instance.Data.Nat.Fun
 open MeasureTheory Random Fun
 
 
@@ -17,7 +18,7 @@ private lemma main
   [Countable α]
   [MeasurableSingletonClass α]
   {π : Measure Ω} [IsProbabilityMeasure π]
-  {x : ℕ ⇀ Ω → α} {n : ℕ}
+  {x : ℕ → Ω → α} {n : ℕ}
 -- given
   (t : ℕ)
   (ht : t ≤ n)
@@ -45,4 +46,4 @@ private lemma main
   }
 
 -- created on 2026-10-23
--- updated on 2026-11-17
+-- updated on 2026-11-23

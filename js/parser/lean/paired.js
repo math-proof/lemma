@@ -1328,6 +1328,12 @@ export class LeanAbs extends LeanPairedGroup {
 export class LeanNorm extends LeanPairedGroup {
     static { this.register(); }
 
+    /** `‖x‖` keeps its head as `{Norm: [x]}` instead of unwrapping to `x`. */
+    toJSON(ctx = { leaves: new Map() }) {
+        const inner = this.arg ?? this.args?.[0];
+        return { [this.pathToken]: [inner ? inner.toJSON(ctx) : ""] };
+    }
+
     get stack_priority() {
         return 17;
     }
@@ -1344,6 +1350,15 @@ export class LeanInner extends LeanPairedGroup {
     static { this.register(); }
 
     static input_priority = 72;
+
+    /** `⟪x, y⟫` keeps its head as `{Inner: [x, y]}` instead of unwrapping. */
+    toJSON(ctx = { leaves: new Map() }) {
+        const inner = this.arg ?? this.args?.[0];
+        if (!inner) return { [this.pathToken]: [] };
+        const parts = inner instanceof L.LeanArgsCommaSeparated ? inner.args : [inner];
+        return { [this.pathToken]: parts.map((a) => a.toJSON(ctx)).filter((s) => s !== "") };
+    }
+
     get stack_priority() {
         return 10;
     }
@@ -1359,6 +1374,13 @@ export class LeanCeil extends LeanPairedGroup {
     static { this.register(); }
 
     static input_priority = 72;
+
+    /** `⌈x⌉` keeps its head as `{Ceil: [x]}` instead of unwrapping to `x`. */
+    toJSON(ctx = { leaves: new Map() }) {
+        const inner = this.arg ?? this.args?.[0];
+        return { [this.pathToken]: [inner ? inner.toJSON(ctx) : ""] };
+    }
+
     get stack_priority() {
         return 22;
     }
@@ -1374,6 +1396,13 @@ export class LeanFloor extends LeanPairedGroup {
     static { this.register(); }
 
     static input_priority = 72;
+
+    /** `⌊x⌋` keeps its head as `{Floor: [x]}` instead of unwrapping to `x`. */
+    toJSON(ctx = { leaves: new Map() }) {
+        const inner = this.arg ?? this.args?.[0];
+        return { [this.pathToken]: [inner ? inner.toJSON(ctx) : ""] };
+    }
+
     get stack_priority() {
         return 22;
     }
@@ -1389,6 +1418,13 @@ export class LeanWhiteSquareBracket extends LeanPairedGroup {
     static { this.register(); }
 
     static input_priority = 72;
+
+    /** `⟦x⟧` keeps its head as `{WhiteSquareBracket: [x]}` instead of unwrapping. */
+    toJSON(ctx = { leaves: new Map() }) {
+        const inner = this.arg ?? this.args?.[0];
+        return { [this.pathToken]: [inner ? inner.toJSON(ctx) : ""] };
+    }
+
     get stack_priority() {
         return 17;
     }

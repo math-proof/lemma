@@ -8,7 +8,7 @@ import Lemma.Bool.NotAnd.is.OrNotS
 import Lemma.Nat.Ge.of.Gt.Ge
 import Lemma.List.EqTake.of.LeLength
 import Theorem.List.TakeTake.eq.Take.of.Ge
-import Lemma.Nat.LeSubS.of.Le
+import Theorem.Nat.LeSubS.of.Le
 import Lemma.List.DropTake.eq.TakeDrop
 open List Bool Nat
 
@@ -44,4 +44,4 @@ private lemma main
 
 
 -- created on 2025-06-20
--- updated on 2026-11-22
+-- updated on 2026-11-23

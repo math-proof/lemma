@@ -6,13 +6,12 @@ public import Abbrev.v1.Atlas.ComplexVariables.code.Lecture14
 
 public section
 
-open Complex MeasureTheory Metric Set Filter Topology Classical in
+open Complex MeasureTheory Metric Set Filter Topology Classical
 
 
 /--
 [residue_eq_of_differentiableOn_annulus](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture14.lean)
 -/
-@[path]
 public theorem residue_eq_of_differentiableOn_annulus
   {a : ℂ}
   {r R : ℝ}
@@ -34,7 +33,6 @@ public theorem residue_eq_of_differentiableOn_annulus
 /--
 [residue_eq_of_differentiableOn_annulus'](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture14.lean)
 -/
-@[path]
 public theorem residue_eq_of_differentiableOn_annulus'
   {a : ℂ}
   {r R : ℝ}
@@ -47,13 +45,12 @@ public theorem residue_eq_of_differentiableOn_annulus'
 -- imply
   residue f a R = residue f a r :=
 -- proof
-  residue_eq_of_differentiableOn_annulus hr hle (s := ∅) countable_empty hc
+  residue_eq_of_differentiableOn_annulus hr hle (s := ∅) Set.countable_empty hc
     (fun z hz => hd z hz.1)
 
 /--
 [circleIntegral.integral_neg](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture14.lean)
 -/
-@[path]
 public theorem circleIntegral.integral_neg
   {f : ℂ → ℂ}
   {c : ℂ}
@@ -67,7 +64,6 @@ set_option maxHeartbeats 3200000 in
 /--
 [principal_part_integral_eq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture14.lean)
 -/
-@[path]
 public theorem principal_part_integral_eq
   {c : ℂ}
   {R : ℝ}
@@ -139,10 +135,10 @@ public theorem principal_part_integral_eq
       · exact ((continuous_circleMap 0 r₀).continuousOn.comp continuousOn_snd (mapsTo_univ _ _))
       · exact continuousOn_const
     · apply ContinuousOn.mul
-      · apply ContinuousOn.inv₀
-        · exact ((continuous_circleMap c R).continuousOn.comp continuousOn_fst
-          (mapsTo_univ _ _)).sub
-          ((continuous_circleMap a₀ r₀).continuousOn.comp continuousOn_snd (mapsTo_univ _ _))
+      · refine ContinuousOn.inv₀
+          (f := fun x : ℝ × ℝ => circleMap c R x.1 - circleMap a₀ r₀ x.2) ?_ ?_
+        · exact (((continuous_circleMap c R).comp continuous_fst).continuousOn).sub
+            (((continuous_circleMap a₀ r₀).comp continuous_snd).continuousOn)
         · intro ⟨s, t⟩ ⟨hs, ht⟩
           simp only at hs ht
           exact sub_ne_zero.mpr (hne (circleMap a₀ r₀ t) (circleMap_mem_sphere a₀ hr₀.le t)
@@ -152,7 +148,6 @@ public theorem principal_part_integral_eq
 /--
 [logDeriv_sub_zpow](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture14.lean)
 -/
-@[path]
 public theorem logDeriv_sub_zpow
   {b : ℂ}
   {n : ℤ}
@@ -172,7 +167,6 @@ public theorem logDeriv_sub_zpow
 /--
 [logDeriv_zero_decomposition](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture14.lean)
 -/
-@[path]
 public theorem logDeriv_zero_decomposition
   {a : ℂ}
   {ε : ℝ}
@@ -199,16 +193,17 @@ public theorem logDeriv_zero_decomposition
     (differentiableAt_id.sub (differentiableAt_const a)).pow n
   have hpow_ne : (z - a) ^ n ≠ 0 := pow_ne_zero n (sub_ne_zero.mpr hza)
   have key := logDeriv_mul (f := fun w => (w - a) ^ n) (g := g) z hpow_ne hg_nez hpow_diff hg_diff
-  rw [key]
+  have key' : logDeriv (fun w : ℂ => (w - a) ^ n * g w) z =
+      logDeriv (fun w => (w - a) ^ n) z + logDeriv g z := key
+  rw [key']
   congr 1
   have heq : (fun w : ℂ => (w - a) ^ n) = (fun w => (w - a) ^ (n : ℤ)) := by
     ext w; simp [zpow_natCast]
-  rw [heq, logDeriv_sub_zpow a (n : ℤ) z hza]; simp
+  rw [heq, logDeriv_sub_zpow hza]; simp
 
 /--
 [logDeriv_pole_decomposition](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture14.lean)
 -/
-@[path]
 public theorem logDeriv_pole_decomposition
   {b : ℂ}
   {ε : ℝ}
@@ -239,17 +234,19 @@ public theorem logDeriv_pole_decomposition
     · exact (differentiableAt_id.sub (differentiableAt_const b)).pow k
     · exact pow_ne_zero k (sub_ne_zero.mpr hzb)
   have hpow_ne : ((z - b) ^ k)⁻¹ ≠ 0 := inv_ne_zero (pow_ne_zero k (sub_ne_zero.mpr hzb))
-  rw [logDeriv_mul z hpow_ne hg_nez hpow_diff hg_diff]
+  have key : logDeriv (fun w : ℂ => ((w - b) ^ k)⁻¹ * g w) z =
+      logDeriv (fun w => ((w - b) ^ k)⁻¹) z + logDeriv g z :=
+    logDeriv_mul z hpow_ne hg_nez hpow_diff hg_diff
+  rw [key]
   congr 1
   have heq : (fun w : ℂ => ((w - b) ^ k)⁻¹) = (fun w => (w - b) ^ (-(k : ℤ))) := by
     ext w; simp [zpow_neg, zpow_natCast]
-  rw [heq, logDeriv_sub_zpow b (-(k : ℤ)) z hzb]
+  rw [heq, logDeriv_sub_zpow hzb]
   push_cast; ring
 
 /--
 [circleIntegral_logDeriv_eq_zero_of_image_in_unit_ball](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture14.lean)
 -/
-@[path]
 public theorem circleIntegral_logDeriv_eq_zero_of_image_in_unit_ball
   {c : ℂ}
   {R : ℝ}
@@ -275,7 +272,6 @@ public theorem circleIntegral_logDeriv_eq_zero_of_image_in_unit_ball
 /--
 [rouche_integral_eq](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture14.lean)
 -/
-@[path]
 public theorem rouche_integral_eq
   {c : ℂ}
   {R : ℝ}
@@ -319,7 +315,6 @@ public theorem rouche_integral_eq
 /--
 [analyticAt_of_mem_ball_of_closedBall](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture14.lean)
 -/
-@[path]
 public theorem analyticAt_of_mem_ball_of_closedBall
   {c : ℂ}
   {R : ℝ}
@@ -337,7 +332,6 @@ public theorem analyticAt_of_mem_ball_of_closedBall
 /--
 [analyticOrderAt_ne_top_in_ball](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture14.lean)
 -/
-@[path]
 public theorem analyticOrderAt_ne_top_in_ball
   {c : ℂ}
   {R : ℝ}
@@ -370,7 +364,6 @@ public theorem analyticOrderAt_ne_top_in_ball
 /--
 [factorization_on_ball](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture14.lean)
 -/
-@[path]
 public theorem factorization_on_ball
   {f : ℂ → ℂ}
   {a : ℂ}
@@ -398,7 +391,6 @@ public theorem factorization_on_ball
 /--
 [rouche_integral_eq_of_differentiableOn](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ComplexVariables/code/Lecture14.lean)
 -/
-@[path]
 public theorem rouche_integral_eq_of_differentiableOn
   {c : ℂ}
   {R : ℝ}
@@ -417,3 +409,4 @@ public theorem rouche_integral_eq_of_differentiableOn
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-23

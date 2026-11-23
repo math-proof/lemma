@@ -12,7 +12,6 @@ open LocalRingAtPoint
 /--
 [isRegularAt_iff](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/LocalRingAtPoint.lean)
 -/
-@[path]
 public theorem isRegularAt_iff
   [Field k]
   [Field K]
@@ -28,8 +27,7 @@ public theorem isRegularAt_iff
 /--
 [algebraMap_mem](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/LocalRingAtPoint.lean)
 -/
-@[path]
-public theorem algebraMap_mem
+public theorem algebraMap_mem_toValuationSubring
   [Field k]
   [Field K]
   [Algebra k K]
@@ -45,3 +43,4 @@ public theorem algebraMap_mem
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-23
