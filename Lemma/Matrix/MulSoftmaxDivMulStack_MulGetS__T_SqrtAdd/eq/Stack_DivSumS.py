@@ -2,7 +2,7 @@ from util import *
 
 
 
-@apply
+@apply(given=True)
 def apply(eq_theta, eq_R, Q, K, V, j):
     from Lemma.Tensor.DotT.eq.RotaryMatrixSub.of.Eq_Stack_Mul.Ge import extract
     Rk, d, alpha, θ, b, k, i, *_ = extract(eq_theta, eq_R)
