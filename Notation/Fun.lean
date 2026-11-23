@@ -7,37 +7,6 @@ public section
 
 open Lean
 
-/-- Type sugar: `ℕ ⇀ ℝ` means `Fun ℕ ℝ`, and `(k : ℕ) ⇀ α k` means `PiFun (fun k => α k)`. -/
-syntax:25 term:26 " ⇀ " term:25 : term
-
-macro_rules
-  | `($α ⇀ $β) => do
-      match α with
-      | `(($x:ident : $ι)) => `(PiFun (fun $x : $ι => $β))
-      | _ => `(Fun $α $β)
-
-/-- Infoview: print `Fun α β` as `α ⇀ β`. Same precedence and right-associativity as `→`,
-so `ℕ ⇀ 𝒫 → ℝ` is `Fun ℕ (𝒫 → ℝ)` and needs no extra parens on the right of `⇀`. -/
-@[app_unexpander Fun]
-meta def Fun.unexpandType : PrettyPrinter.Unexpander
-  | `($_ $α $β) => `($α ⇀ $β)
-  | _ => throw ()
-
-open PrettyPrinter Delaborator SubExpr in
-/-- Infoview: print `PiFun (fun k : ι => α k)` as `(k : ι) ⇀ α k`.
-Uses a delaborator so the binder type is kept (`pp` would otherwise omit it,
-yielding `(k) ⇀ α k`). Ordinary `Fun` stays on `Fun.unexpandType`. -/
-@[app_delab PiFun]
-meta def PiFun.delabType : Delab := whenNotPPOption getPPExplicit do
-  guard <| (← getExpr).consumeMData.getAppNumArgs == 2
-  withAppArg do
-    guard (← getExpr).isLambda
-    let ty ← withBindingDomain delab
-    withBindingBodyUnusedName fun x => do
-      let body ← delab
-      let x : TSyntax `ident := ⟨x⟩
-      `(($x:ident : $ty) ⇀ $body)
-
 namespace Fun
 
 instance : CoeFun (Fun ι α) (fun _ => ι → α) where

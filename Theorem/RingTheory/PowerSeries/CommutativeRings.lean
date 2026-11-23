@@ -199,7 +199,7 @@ commutative ring K (not necessarily a field).
 The source defines a K-module (Definition `def.alg.module`) as a set M with:
 - Addition `⊕ : M × M → M`
 - Subtraction `⊖ : M × M → M`
-- Scaling `⇀ : K × M → M`
+- Scaling `• : K × M → M`
 - Zero element `0⃗ ∈ M`
 
 satisfying the standard module axioms.

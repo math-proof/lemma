@@ -109,17 +109,17 @@ The source defines a K-algebra as a set A equipped with four maps:
 - `⊕ : A × A → A` (addition)
 - `⊖ : A × A → A` (subtraction)
 - `⊙ : A × A → A` (multiplication)
-- `⇀ : K × A → A` (scalar multiplication)
+- `• : K × A → A` (scalar multiplication)
 
 and two elements `0⃗ ∈ A` (zero) and `1⃗ ∈ A` (one), satisfying three properties:
 
 1. **A is a (noncommutative) ring**: The set A with ⊕, ⊖, ⊙, 0⃗, 1⃗ is a ring
    (same as commutative ring but without commutativity of multiplication).
 
-2. **A is a K-module**: The set A with ⊕, ⊖, ⇀, 0⃗ is a module.
+2. **A is a K-module**: The set A with ⊕, ⊖, •, 0⃗ is a module.
 
 3. **Compatibility property** (equation 7.5.2):
-   `λ ⇀ (a ⊙ b) = (λ ⇀ a) ⊙ b = a ⊙ (λ ⇀ b)` for all `λ ∈ K` and `a, b ∈ A`.
+   `λ • (a ⊙ b) = (λ • a) ⊙ b = a ⊙ (λ • b)` for all `λ ∈ K` and `a, b ∈ A`.
 
 In Mathlib, this is captured by the `Algebra` typeclass, which requires:
 - `[Semiring A]` (or `[Ring A]` for rings with subtraction)

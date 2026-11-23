@@ -538,7 +538,7 @@ const CONTAINER_SECTIONS = new Set(["Finset", "Set", "List", "Multiset"]);
 /** Right-hand head of a (possibly iterated) arrow type, e.g. `ℕ → ℂ` → `ℂ`. */
 function typeCodomainHead(typeNode) {
   let h = unwrapParen(typeNode);
-  while (cls(h) === "Lean_rightarrow" || cls(h) === "Lean_rightharpoonup") {
+  while (cls(h) === "Lean_rightarrow") {
     h = unwrapParen(h.args?.[h.args.length - 1]);
   }
   if (cls(h) === "LeanArgsSpaceSeparated") h = h.args?.[0];
@@ -658,7 +658,7 @@ function collectTokenWeights(node, w = 1, out = new Map()) {
     const p = nameToken(node.args[1].text || "");
     if (TYPE_TO_SECTION[p] === p) put("." + p, w);
   }
-  if ((c === "Lean_rightarrow" || c === "Lean_rightharpoonup") && node.args?.length === 2) {
+  if (c === "Lean_rightarrow" && node.args?.length === 2) {
     const dom = node.args[0];
     const isType = cls(dom) === "LeanToken" || (cls(dom) === "LeanArgsSpaceSeparated" && cls(dom.args?.[0]) === "LeanToken" && /^[A-Z]/.test(dom.args[0].text || ""));
     if (isType) {

@@ -1303,7 +1303,6 @@ export class Lean extends IndentedNode {
             case '⊇':
             case '⊂':
             case '⊃':
-            case '⇀':
             case '↦':
             case '↔':
             case '∧':
@@ -1629,7 +1628,7 @@ export class Lean extends IndentedNode {
                 const dom = ty.lhs?.peelGroup?.() ?? ty.lhs;
                 if (dom instanceof LeanToken && (dom.text === 'Ω' || dom.text === 'Omega')) {
                     const cod = ty.rhs?.peelGroup?.() ?? ty.rhs;
-                    if (!(cod instanceof L.Lean_rightarrow || cod instanceof L.Lean_rightharpoonup))
+                    if (!(cod instanceof L.Lean_rightarrow))
                         return [];
                 }
             }

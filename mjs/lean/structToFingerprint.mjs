@@ -124,6 +124,16 @@ function infixHead(op) {
   return cap(seg);
 }
 
+/** `x ^ 2` / `x ^ 3` mirror the `x²` / `x³` notation heads. */
+function power(struct, ctx) {
+  const [base, exp] = struct.args ?? [];
+  const b = base == null ? '' : convert(base, ctx);
+  const e = exp == null ? '' : convert(exp, ctx);
+  if (e === '2') return node('Square', [b]);
+  if (e === '3') return node('Cube', [b]);
+  return node('Pow', [b, e]);
+}
+
 /** Is this a bare `∑ i` / `∀ i` domain rather than `∈ s` / `: T`? */
 function isUniv(type) {
   if (!type || type.kind === 'nil') return true;
@@ -317,10 +327,40 @@ function method(struct, ctx) {
   return node(head, args.map((arg) => convert(arg, ctx)));
 }
 
+/** Notation the parser fingerprints structurally instead of by head:
+ *  `Membership.mem S a` is `a ∈ S` → `In(a)(S)` (arguments flipped),
+ *  `Insert.insert a (Singleton.singleton b)` is `{a, b}` → `Brace(a)(b)`,
+ *  `Singleton.singleton a` is `{a}` → `Brace(a)`.
+ *  Member and element are converted in source order so `$n` numbering matches. */
+function setNotation(struct, ctx) {
+  if (struct.op === 'Membership.mem') {
+    const [set, member] = struct.args ?? [];
+    const a = member == null ? '' : convert(member, ctx);
+    const s = set == null ? '' : convert(set, ctx);
+    return node('In', [a, s]);
+  }
+  if (struct.op === 'Singleton.singleton') {
+    const [value] = struct.args ?? [];
+    return node('Brace', [value == null ? '' : convert(value, ctx)]);
+  }
+  if (struct.op === 'Insert.insert') {
+    const [head, tail] = struct.args ?? [];
+    if (tail?.op === 'Singleton.singleton') {
+      const [value] = tail.args ?? [];
+      const a = head == null ? '' : convert(head, ctx);
+      const b = value == null ? '' : convert(value, ctx);
+      return node('Brace', [a, b]);
+    }
+  }
+  return null;
+}
+
 /** Single entry point: convert one `Expr.toJson` node. */
 export function convert(struct, ctx = { leaves: new Map(), binders: [] }) {
   if (struct == null) return '';
   if (typeof struct === 'string') return struct;
+  const notation = setNotation(struct, ctx);
+  if (notation) return notation;
   const kind = struct.kind;
   switch (kind) {
     case 'nil':
@@ -354,6 +394,7 @@ export function convert(struct, ctx = { leaves: new Map(), binders: [] }) {
       return node(KIND_HEAD[kind], (struct.args ?? []).map((arg) => convert(arg, ctx)));
     case 'infix':
     case 'prop_infix':
+      if (struct.op === 'HPow.hPow') return power(struct, ctx);
       return node(infixHead(struct.op), (struct.args ?? []).map((arg) => convert(arg, ctx)));
     case 'prefix':
     case 'postfix':

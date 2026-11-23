@@ -35,7 +35,9 @@ function parseArgs(argv) {
     else if (arg === '--help') options.help = true;
     else throw new Error('Unknown argument: ' + arg);
   }
-  if (!Number.isInteger(options.limit) || options.limit < 0) throw new Error('--limit needs a non-negative integer');
+  if (options.limit !== Infinity && (!Number.isInteger(options.limit) || options.limit < 0)) {
+    throw new Error('--limit needs a non-negative integer');
+  }
   return options;
 }
 
@@ -137,7 +139,7 @@ function failureEntry(item) {
   };
 }
 
-async function writeFailureReport(file, failures) {
+export async function writeFailureReport(file, failures) {
   await fs.mkdir(path.dirname(file), { recursive: true });
   await fs.writeFile(file, JSON.stringify({
     generatedAt: new Date().toISOString(),
@@ -238,7 +240,7 @@ function markdownFor(item) {
 }
 
 /** Write the readable form: `dir/index.md` plus one markdown file per lemma. */
-async function writeFailureMarkdown(dir, failures) {
+export async function writeFailureMarkdown(dir, failures) {
   await fs.rm(dir, { recursive: true, force: true });
   await fs.mkdir(dir, { recursive: true });
   const rows = [];

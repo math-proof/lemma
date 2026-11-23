@@ -509,8 +509,8 @@ function collectRandomVarNames(binderRoots) {
         }
     }
 
-    /** Pi `→` or Fun `⇀` (indexed families `ℕ ⇀ Ω → S`). */
-    const isArrow = (n) => n instanceof L.Lean_rightarrow || n instanceof L.Lean_rightharpoonup;
+    /** Pi `→` (indexed families `ℕ → Ω → S`). */
+    const isArrow = (n) => n instanceof L.Lean_rightarrow;
 
     /** @type {Set<string>} */
     const rvs = new Set();
@@ -524,8 +524,8 @@ function collectRandomVarNames(binderRoots) {
         for (const col of cols) {
             const ty = col.rhs.peelGroup();
             if (!isArrow(ty)) continue;
-            // `X : Ω → S`, or an indexed family `s : ℕ → Ω → S` / `s : ℕ ⇀ Ω → S`
-            // (the last domain before the codomain is Ω). Not `V : ℕ ⇀ S → ℝ`.
+            // `X : Ω → S`, or an indexed family `s : ℕ → Ω → S`
+            // (the last domain before the codomain is Ω). Not `V : ℕ → S → ℝ`.
             let last = ty;
             while (isArrow(last.rhs.peelGroup())) last = last.rhs.peelGroup();
             const dom = strStmt(ty.lhs.peelGroup()).trim();

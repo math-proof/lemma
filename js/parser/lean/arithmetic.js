@@ -1069,6 +1069,10 @@ export class Lean_uparrow extends LeanUnaryArithmeticPre {
     get operator() {
         return '↑';
     }
+    /** Erased cast: `↑r` has the same fingerprint as `r`. */
+    toJSON(ctx = { leaves: new Map() }) {
+        return this.arg.toJSON(ctx);
+    }
     peelLatexCoe() {
         return this.arg.peelLatexCoe();
     }
@@ -1084,6 +1088,10 @@ export class LeanUparrow extends LeanUnaryArithmeticPre {
     }
     get operator() {
         return '⇑';
+    }
+    /** Erased cast: `⇑r` has the same fingerprint as `r`. */
+    toJSON(ctx = { leaves: new Map() }) {
+        return this.arg.toJSON(ctx);
     }
 }
 
