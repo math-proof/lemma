@@ -1,5 +1,10 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicEndpointFailure.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicEndpointFailure.Part26
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicEndpointFailure.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,11 +12,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicEndpointFailure.Part26
-
-
 namespace StatMech.Universality
 
 #print axioms sourceFailureOutputAt_vertical_diffusive_weight_le

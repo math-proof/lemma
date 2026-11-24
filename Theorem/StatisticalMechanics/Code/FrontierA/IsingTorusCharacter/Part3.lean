@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingTorusCharacter.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingTorusGaussianDomination.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingInfraredReduction
+public import Mathlib.Analysis.Fourier.FiniteAbelian.Orthogonality
+public import Def.StatisticalMechanics.Code.FrontierA.IsingTorusCharacter.Part3
+open Finset
+open scoped BigOperators ComplexConjugate
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingTorusCharacter.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingTorusGaussianDomination.Part3
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingInfraredReduction
-import Mathlib.Analysis.Fourier.FiniteAbelian.Orthogonality
-import Def.StatisticalMechanics.Code.FrontierA.IsingTorusCharacter.Part3
-open Finset
-open scoped BigOperators ComplexConjugate
-
-
 namespace StatMech.FrontierA
 
 open StatMech.Ising

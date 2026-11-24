@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKQgt4ParameterBridge.lean -/
+module
+public import Def.StatisticalMechanics.Code.FrontierD.SixVertexAntiferroelectricSeries.Part9
+public import Def.StatisticalMechanics.Code.FrontierD.FKQgt4ParameterBridge
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKQgt4ParameterBridge.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Def.StatisticalMechanics.Code.FrontierD.SixVertexAntiferroelectricSeries.Part9
-import Def.StatisticalMechanics.Code.FrontierD.FKQgt4ParameterBridge
-
-
 namespace StatMech.FrontierD
 
 theorem fkQgt4SixVertexWeight_sq {q : ℝ} (hq : 4 < q) :

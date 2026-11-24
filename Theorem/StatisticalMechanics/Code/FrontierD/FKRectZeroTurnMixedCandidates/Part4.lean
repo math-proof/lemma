@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectZeroTurnMixedCandidates.lean -/
+module
+public import Def.StatisticalMechanics.Code.FrontierD.FKRectMedialDualShift.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnMixedAnnulusCharge
+public import Def.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnMixedCandidates.Part4
+open SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectZeroTurnMixedCandidates.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Def.StatisticalMechanics.Code.FrontierD.FKRectMedialDualShift.Part3
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnMixedAnnulusCharge
-import Def.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnMixedCandidates.Part4
-open SimpleGraph
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

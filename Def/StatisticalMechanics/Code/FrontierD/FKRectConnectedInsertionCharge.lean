@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectConnectedInsertionCharge.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryToggleWinding.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectConnectedInsertionSurfaceAssembly
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectMedialLoopTurnGeometry.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedConnectedInsertionCarrier
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectConnectedInsertionCharge
+open Finset SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectConnectedInsertionCharge.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryToggleWinding.Part2
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectConnectedInsertionSurfaceAssembly
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectMedialLoopTurnGeometry.Part3
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedConnectedInsertionCarrier
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectConnectedInsertionCharge
-open Finset SimpleGraph
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

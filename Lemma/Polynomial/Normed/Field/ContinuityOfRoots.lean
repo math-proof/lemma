@@ -1,12 +1,15 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.Algebra.Polynomial.L1Norm
-import Lemma.Polynomial.L1Norm
-import Lemma.AbsoluteValue.IsClosestConjugate
-import Lemma.Polynomial.RootBound
-import Lemma.Polynomial.DegreeStability
-import Theorem.Algebra.Polynomial.RootBound
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.Algebra.Polynomial.L1Norm
+public import Lemma.Polynomial.L1Norm
+public import Lemma.AbsoluteValue.IsClosestConjugate
+public import Lemma.Polynomial.RootBound
+public import Lemma.Polynomial.DegreeStability
+public import Theorem.Algebra.Polynomial.RootBound
 
+
+public section
 
 namespace Polynomial
 

@@ -1,4 +1,5 @@
 import Initialize.Tactic.Attr.Basic
+import Lemma.Bool.All.of.Cond.subst.given
 
 
 @[path]
@@ -10,18 +11,6 @@ private lemma main
   ∀ _ : α, r :=
 -- proof
   fun _ => h
-
-
-@[path]
-private lemma subst.given
-  {n : ℕ}
-  {p : ℕ → Prop}
--- given
-  (h : ∀ m < n + 1, p m) :
--- imply
-  ∀ x < n + 1, p x :=
--- proof
-  h
 
 
 @[path]

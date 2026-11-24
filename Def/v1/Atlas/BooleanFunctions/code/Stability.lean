@@ -1,5 +1,22 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Stability.lean -/
+module
+public import Def.v1.Atlas.BooleanFunctions.code.Hypercontractivity
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Hypercontractivity
+public import Mathlib.Data.Finset.SymmDiff
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
+public import Mathlib.Order.Filter.Basic
+public import Mathlib.Topology.Order.Basic
+public import Mathlib.Algebra.Order.Chebyshev
+set_option maxHeartbeats 400000
+set_option maxHeartbeats 1600000
+open Finset BigOperators Real
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Stability.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,24 +24,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.BooleanFunctions.code.Hypercontractivity
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Hypercontractivity
-import Mathlib.Data.Finset.SymmDiff
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
-import Mathlib.Order.Filter.Basic
-import Mathlib.Topology.Order.Basic
-import Mathlib.Algebra.Order.Chebyshev
-set_option maxHeartbeats 400000
-
-set_option maxHeartbeats 1600000
-
-open Finset BigOperators Real
-
-
 namespace BooleanFourier
 
 noncomputable def noiseOperator {n : ℕ} (ρ : ℝ) (f : (Fin n → Bool) → ℝ) :

@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/AdaptiveCovLowerClose.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.OSSS.FamilyEqzzzResolution
+public import Theorem.StatisticalMechanics.Code.OSSS.RevealmentSum
+public import Def.StatisticalMechanics.Code.OSSS.AdaptiveCovLowerClose
+open scoped BigOperators
+open MeasureTheory
+set_option linter.unusedSectionVars false
+set_option linter.style.longLine false
+set_option linter.style.openClassical false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/AdaptiveCovLowerClose.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.OSSS.FamilyEqzzzResolution
-import Theorem.StatisticalMechanics.Code.OSSS.RevealmentSum
-import Def.StatisticalMechanics.Code.OSSS.AdaptiveCovLowerClose
-open scoped BigOperators
-open MeasureTheory
-
-set_option linter.unusedSectionVars false
-set_option linter.style.longLine false
-set_option linter.style.openClassical false
-
-
 namespace StatMech
 
 namespace OSSS

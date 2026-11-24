@@ -12,7 +12,6 @@ namespace UGCHardness
 /--
 [corollary_1_2](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Corollary12Lec11.lean)
 -/
-@[path]
 public theorem corollary_1_2
 -- given
   (hUGC : UGC) :

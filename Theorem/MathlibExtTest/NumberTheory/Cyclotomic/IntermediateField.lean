@@ -1,10 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/IntermediateField.lean -/
-
-
-import Def.NumberTheory.Cyclotomic.IntermediateField
-import Lemma.Nat.Cyclotomic.IntermediateField
+module
+public import Def.NumberTheory.Cyclotomic.IntermediateField
+public import Theorem.Nat.Cyclotomic.IntermediateField
 open scoped IntermediateField
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Cyclotomic/IntermediateField.lean -/
 
 example :
     ∃! K : IntermediateField ℚ (CyclotomicField 2 ℚ), Module.finrank ℚ K = 1 :=

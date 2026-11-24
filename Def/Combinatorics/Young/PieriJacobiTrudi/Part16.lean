@@ -1,17 +1,21 @@
+module
+public import Mathlib
+public import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part29
+public import Def.Combinatorics.Young.OmegaInvolution.Part2
+public import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
+public import Def.Combinatorics.Young.LittlewoodRichardson.Part17
+public import Theorem.Matrix.LGV2
+public import Theorem.Partition.NPartition
+public import Instance.Combinatorics.Young.PieriJacobiTrudi.Part10
+open Finset BigOperators Matrix MvPolynomial
+
+
+public section
+
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part29
-import Def.Combinatorics.Young.OmegaInvolution.Part2
-import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
-import Def.Combinatorics.Young.LittlewoodRichardson.Part17
-import Theorem.Matrix.LGV2
-import Theorem.Partition.NPartition
-import Instance.Combinatorics.Young.PieriJacobiTrudi.Part10
-open Finset BigOperators Matrix MvPolynomial
-
 /-!
 # The Pieri Rules and Jacobi-Trudi Identities
 
@@ -79,8 +83,6 @@ There are three representations for horizontal/vertical strip predicates:
 
 See `SkewPartition.isHorizontalStrip_iff_isHorizontalStripFun` for the equivalence lemma.
 -/
-
-
 namespace SymmetricFunctions
 
 variable {N : ℕ} {R : Type*} [CommRing R]

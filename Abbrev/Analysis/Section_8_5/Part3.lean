@@ -1,7 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Section_8_4
-import Theorem.Analysis.Section_8_5.Part3
+module
+public import Mathlib
+public import Theorem.Analysis.Section_8_4
+public import Theorem.Analysis.Section_8_5.Part3
 set_option doc.verso.suggestions false
+
+
+public section
 
 /-!
 # Analysis I, Section 8.5: Ordered sets
@@ -19,8 +23,6 @@ Main constructions and results of this section:
 - Zorn's lemma.
 
 -/
-
-
 namespace Chapter8
 
 abbrev IsStrictUpperBound {X:Type} [PartialOrder X] (A:Set X) (x:X) : Prop :=

@@ -1,9 +1,11 @@
-import Def.M4aHerbrand_IdeleClassVocab
-import Def.AutomorphicForm_SigmaAdelicAction
-
+module
+public import Def.M4aHerbrand_IdeleClassVocab
+public import Def.AutomorphicForm_SigmaAdelicAction
 set_option autoImplicit false
-
 open IsDedekindDomain NumberField
+
+
+public section
 
 noncomputable section
 

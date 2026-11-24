@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.Scheme.CurveModel
 import Lemma.ResidueField.GluedPic0
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open scoped TensorProduct
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry AlgebraicCurve

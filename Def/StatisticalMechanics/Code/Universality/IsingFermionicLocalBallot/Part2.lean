@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicLocalBallot.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicStoppedPointwise.Part3
+public import Abbrev.StatisticalMechanics.Code.Universality.IsingFermionicLocalBallot
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicLocalBallot.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicStoppedPointwise.Part3
-import Abbrev.StatisticalMechanics.Code.Universality.IsingFermionicLocalBallot
-
-
 namespace StatMech.Universality
 
 open Finset

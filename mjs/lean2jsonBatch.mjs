@@ -5,6 +5,7 @@ import { getMysqlPool } from './lean/fetchLemmaMysql.mjs';
 import { REPO_ROOT } from './lean/modulePath.mjs';
 import { fingerprintFormat, fingerprintSignature, parseFingerprint, refreshInvertedForLemma } from './leanInvertedIndex.mjs';
 import { buildEcho, probeLemma } from './lean2json.mjs';
+import { lemmaSearchDocuments } from './lemmaPath.mjs';
 
 const DEFAULT_STATE = path.join(REPO_ROOT, 'tmp', 'lean2json-batch.jsonl');
 const DEFAULT_REPORT = path.join(REPO_ROOT, 'tmp', 'lean2json-failures.json');
@@ -74,7 +75,10 @@ function shortMessage(error) {
 }
 
 async function storedFingerprint(pool, id) {
-  const [rows] = await pool.execute("SELECT JSON_EXTRACT(meta, '$.fingerprint') AS fingerprint FROM lemma WHERE id = ?", [id]);
+  const [rows] = await pool.execute(
+    "SELECT fingerprint FROM fingerprint WHERE id = ? AND section = 'imply' AND latex_id = 0",
+    [id],
+  );
   return parseFingerprint(rows[0]?.fingerprint);
 }
 
@@ -101,12 +105,15 @@ async function checkOne(pool, lean, row) {
     return { module: row.module, at, status: 'mismatch', ...views, exprToJson: result.echo.struct };
   }
 
-  // Stale row: replace its fingerprint and postings incrementally, then test afresh.
+  // Stale row: replace its fingerprint and all section postings incrementally.
+  const { documents } = lemmaSearchDocuments(result.path);
   const rebuild = await refreshInvertedForLemma(pool, {
     id: row.id,
     module: row.module,
     json: result.sourceJson,
+    documents,
     startedAt: Date.now(),
+    location: result.location,
   });
   if (rebuild.stale || rebuild.missing) {
     return { module: row.module, at, status: 'error', message: 'rebuild skipped: ' + JSON.stringify(rebuild), ...views };
@@ -298,7 +305,9 @@ async function main() {
   const pool = getMysqlPool();
   if (!pool) throw new Error('MySQL is not configured');
   const [rows] = await pool.query(
-    "SELECT id, module FROM lemma WHERE JSON_EXTRACT(meta, '$.fingerprint') IS NOT NULL ORDER BY module",
+    "SELECT l.id, l.module FROM lemma l " +
+      "WHERE EXISTS (SELECT 1 FROM fingerprint f WHERE f.id = l.id AND f.section = 'imply' AND f.latex_id = 0) " +
+      "ORDER BY l.module",
   );
   console.log(`${rows.length} lemma(s) with a fingerprint, ${state.size} already in ${options.state}`);
 

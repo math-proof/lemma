@@ -1,8 +1,11 @@
-import Def.LocalNewvector_CongruenceSubgroupK1
-import Instance.RepTheory_GL2CongruenceSubgroup
-import Def.LocalLanglands_LocalHeckeInstance
-
+module
+public import Def.LocalNewvector_CongruenceSubgroupK1
+public import Instance.RepTheory_GL2CongruenceSubgroup
+public import Def.LocalLanglands_LocalHeckeInstance
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

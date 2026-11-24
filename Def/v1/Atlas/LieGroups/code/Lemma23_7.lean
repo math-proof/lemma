@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/Lemma23_7.lean -/
+module
+public import Def.v1.Atlas.LieGroups.code.ProjectiveFunctors.Part7
+public import Theorem.Int.IsDirectSummand
+public import Theorem.Finset.EqMul_Mul.of.In_SimpleReflections
+public import Def.v1.Atlas.LieGroups.code.HeckeKL.Part9
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/Lemma23_7.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.LieGroups.code.ProjectiveFunctors.Part7
-import Theorem.Int.IsDirectSummand
-import Theorem.Finset.EqMul_Mul.of.In_SimpleReflections
-import Def.v1.Atlas.LieGroups.code.HeckeKL.Part9
-
-
 noncomputable section
 
 universe u

@@ -1,7 +1,12 @@
-import Mathlib.RingTheory.AdicCompletion.AsTensorProduct
-import Theorem.Algebra.AdicCompletion.RingFunctoriality.Part7
-import Theorem.Algebra.AdicCompletion.RestrictScalars.Part3
-import Def.Algebra.AdicCompletion.TensorRing
+module
+public import Mathlib.RingTheory.AdicCompletion.AsTensorProduct
+public import Theorem.Algebra.AdicCompletion.RingFunctoriality.Part7
+public import Theorem.Algebra.AdicCompletion.RestrictScalars.Part3
+public import Def.Algebra.AdicCompletion.TensorRing
+
+
+public section
+
 universe u₁ u₂
 
 open scoped TensorProduct

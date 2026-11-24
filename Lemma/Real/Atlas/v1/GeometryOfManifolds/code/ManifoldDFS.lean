@@ -1,10 +1,13 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.GeometryOfManifolds.code.ManifoldDFS.Part2
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.GeometryOfManifolds.code.ManifoldDFS.Part2
 open ManifoldWedgeHelpers
 open scoped Manifold ContDiff
 open VectorField
 
+
+public section
 
 namespace ManifoldWedgeHelpers
 

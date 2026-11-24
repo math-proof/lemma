@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/ThicknessFoldings.lean -/
+module
+public import Theorem.v1.Atlas.Buildings.code.Building.AptFoldingFromRetraction
+public import Theorem.Finset.Any_And_All_EqAndAll_IsMaximalAndAll_EqImageSOrAdjacentAndAll_Eq.of.IsMaximal.In_Apartments
+public import Theorem.Finset.Any_And_Subset.of.In_Faces.In_Apartments
+public import Theorem.v1.Atlas.Buildings.code.Building.AptThinness.Part2
+open scoped Classical
+open ChamberComplex AptIsCoxeterProof
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/ThicknessFoldings.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.Buildings.code.Building.AptFoldingFromRetraction
-import Theorem.Finset.Any_And_All_EqAndAll_IsMaximalAndAll_EqImageSOrAdjacentAndAll_Eq.of.IsMaximal.In_Apartments
-import Lemma.Finset.Any_And_Subset.of.In_Faces.In_Apartments
-import Theorem.v1.Atlas.Buildings.code.Building.AptThinness.Part2
-open scoped Classical
-open ChamberComplex AptIsCoxeterProof
-
 variable {V : Type} [DecidableEq V]
 
 

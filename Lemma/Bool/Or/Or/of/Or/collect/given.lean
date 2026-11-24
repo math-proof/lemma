@@ -1,0 +1,22 @@
+import Initialize.Tactic.Attr.Basic
+
+
+@[path]
+private lemma main
+  {p q r c : Prop}
+-- given
+  (h : c ∨ (p ∧ q ∧ r)) :
+-- imply
+  (p ∨ c) ∧ (q ∨ c) ∧ (r ∨ c) := by
+-- proof
+  rcases h with hc | ⟨hp, hq, hr⟩
+  ·
+    exact ⟨Or.inr hc, Or.inr hc, Or.inr hc⟩
+  ·
+    exact ⟨Or.inl hp, Or.inl hq, Or.inl hr⟩
+
+
+
+
+-- created on 2021-09-09
+-- updated on 2026-11-24

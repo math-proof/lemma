@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Probability/PBiasedConvexity.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Probability.PBiasedIntegralHC.Part2
+open Real Set
+set_option linter.style.longLine false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Probability/PBiasedConvexity.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Probability.PBiasedIntegralHC.Part2
-open Real Set
-
-set_option linter.style.longLine false
-
-
 namespace StatMech.Probability
 
 theorem pcx_gpp_bracket_nonneg {p q a c : ℝ} (hp0 : 0 < p) (hp1 : p < 1)

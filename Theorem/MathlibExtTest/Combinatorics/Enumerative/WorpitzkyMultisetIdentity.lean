@@ -1,12 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/WorpitzkyMultisetIdentity.lean -/
-
-
-import Theorem.Combinatorics.Enumerative.WorpitzkyMultisetIdentity.Part14
-import Lemma.Finset.Enumerative.WorpitzkyMultisetIdentity
-import Mathlib.Data.Fin.VecNotation
+module
+public import Theorem.Combinatorics.Enumerative.WorpitzkyMultisetIdentity.Part14
+public import Theorem.Finset.Enumerative.WorpitzkyMultisetIdentity
+public import Mathlib.Data.Fin.VecNotation
 open scoped BigOperators
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/WorpitzkyMultisetIdentity.lean -/
 namespace MetaMathlibExt
 
 -- Two singleton multiplicities at x = 2 give four.

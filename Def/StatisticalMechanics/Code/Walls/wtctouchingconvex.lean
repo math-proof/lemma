@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/wtctouchingconvex.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Lattice.DartOrbit.Part6
+public import Theorem.StatisticalMechanics.Code.Walls.jc4_firstreturnK.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.jc5_core.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.jc5_singlecycle.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.jc5_footprintdartsfinite
+public import Theorem.StatisticalMechanics.Code.Walls.wtctouchingconvex
+open SimpleGraph Function Set
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/wtctouchingconvex.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Lattice.DartOrbit.Part6
-import Theorem.StatisticalMechanics.Code.Walls.jc4_firstreturnK.Part2
-import Theorem.StatisticalMechanics.Code.Walls.jc5_core.Part2
-import Theorem.StatisticalMechanics.Code.Walls.jc5_singlecycle.Part2
-import Theorem.StatisticalMechanics.Code.Walls.jc5_footprintdartsfinite
-import Theorem.StatisticalMechanics.Code.Walls.wtctouchingconvex
-open SimpleGraph Function Set
-
-
 namespace StatMech
 
 namespace Walls

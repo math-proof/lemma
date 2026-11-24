@@ -1,18 +1,21 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/RoadColoring.lean -/
+module
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.Algebra.Group.End
+public import Mathlib.Data.Fintype.Defs
+public import Mathlib.Data.Fintype.Pigeonhole
+public import Mathlib.Data.Finset.Max
+public import Mathlib.Data.List.Chain
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Dynamics.PeriodicPts.Lemmas
+public import Instance.Combinatorics.RoadColoring
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/RoadColoring.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
-
-import Mathlib.Combinatorics.SimpleGraph.Basic
-import Mathlib.Algebra.Group.End
-import Mathlib.Data.Fintype.Defs
-import Mathlib.Data.Fintype.Pigeonhole
-import Mathlib.Data.Finset.Max
-import Mathlib.Data.List.Chain
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Dynamics.PeriodicPts.Lemmas
-import Instance.Combinatorics.RoadColoring
 /-!
 # Road coloring theorem
 
@@ -22,8 +25,6 @@ a recoloring with a stable pair passes to a smaller quotient automaton, and sync
 lift back. Stable pairs come from two bunches into one vertex, or else from Trahtman's lemma on
 spanning subgraphs with a unique highest tree, via Kari's minimal-rank argument.
 -/
-
-
 namespace MetaMathlibExt
 
 section

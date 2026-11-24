@@ -1,6 +1,10 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.AlgebraicGeometry.EllipticCurve.PointCount.Part3
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.AlgebraicGeometry.EllipticCurve.PointCount.Part3
+
+
+public section
 
 /-!
 The Frobenius-trace identities are already declared by

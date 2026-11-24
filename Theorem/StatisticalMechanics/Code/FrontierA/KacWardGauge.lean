@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/KacWardGauge.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardTheta
+public import Theorem.StatisticalMechanics.Code.Onsager.ShermanLoop
+public import Def.StatisticalMechanics.Code.FrontierA.KacWardGauge
+open scoped BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/KacWardGauge.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardTheta
-import Theorem.StatisticalMechanics.Code.Onsager.ShermanLoop
-import Def.StatisticalMechanics.Code.FrontierA.KacWardGauge
-open scoped BigOperators
-
-
 namespace StatMech.FrontierA
 
 open Matrix

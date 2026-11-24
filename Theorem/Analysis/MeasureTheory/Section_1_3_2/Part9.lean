@@ -1,8 +1,11 @@
-import Theorem.Analysis.MeasureTheory.Section_1_3_1.Part11
-import Mathlib.Algebra.Order.Floor.Semifield
-import Def.Analysis.MeasureTheory.Section_1_3_2.Part9
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_3_1.Part11
+public import Mathlib.Algebra.Order.Floor.Semifield
+public import Def.Analysis.MeasureTheory.Section_1_3_2.Part9
 set_option doc.verso.suggestions false
 
+
+public section
 
 theorem RealMeasurable.iff {d:ℕ} {f: EuclideanSpace' d → ℝ} : RealMeasurable f ↔ ComplexMeasurable (Real.complex_fun f) := by
   constructor

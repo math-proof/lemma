@@ -1,13 +1,16 @@
--- Carved from Lemma/Definitions/Def_FrobeniusDensity_PrimeSums.lean: instance decls only.
-import Theorem.Ideal.BadPrimes
-import Mathlib.NumberTheory.NumberField.DedekindZeta
-import Mathlib.RingTheory.DedekindDomain.Factorization
-import Def.FrobeniusDensity_PrimeSums
-
+module
+public import Theorem.Ideal.BadPrimes
+public import Mathlib.NumberTheory.NumberField.DedekindZeta
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Def.FrobeniusDensity_PrimeSums
 set_option autoImplicit false
-
 open Ideal NumberField Filter Topology Asymptotics IsDedekindDomain
 open scoped ENNReal NNReal
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_FrobeniusDensity_PrimeSums.lean: instance decls only.
 
 namespace FrobeniusDensity
 

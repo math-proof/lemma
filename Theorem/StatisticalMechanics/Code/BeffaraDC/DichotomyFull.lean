@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/BeffaraDC/DichotomyFull.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.PcUpperUncond.Part4
+public import Theorem.StatisticalMechanics.Code.BeffaraDC.SelfDualValue
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/BeffaraDC/DichotomyFull.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FK.PcUpperUncond.Part4
-import Theorem.StatisticalMechanics.Code.BeffaraDC.SelfDualValue
-
-
 namespace StatMech
 
 namespace BeffaraDC

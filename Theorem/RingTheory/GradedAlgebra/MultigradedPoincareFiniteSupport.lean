@@ -1,12 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/GradedAlgebra/MultigradedPoincareFiniteSupport.lean -/
+module
+public import Def.RingTheory.GradedAlgebra.MultigradedPoincareCoefficients
+public import Theorem.Int.GradedAlgebra.MultigradedPoincareCoefficients
+public import Def.RingTheory.GradedAlgebra.MultigradedPoincareFiniteSupport
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/GradedAlgebra/MultigradedPoincareFiniteSupport.lean -/
 /-
   Author: Muse Code powered by Meta Muse Spark
 -/
-
-import Def.RingTheory.GradedAlgebra.MultigradedPoincareCoefficients
-import Theorem.Int.GradedAlgebra.MultigradedPoincareCoefficients
-import Def.RingTheory.GradedAlgebra.MultigradedPoincareFiniteSupport
 /-!
 # Finite support of multigraded Poincaré coefficients
 
@@ -44,8 +47,6 @@ Main results:
   the raw coefficient function has finite support under the two
   structural resolution hypotheses above.
 -/
-
-
 namespace MetaMathlibExt
 
 universe u

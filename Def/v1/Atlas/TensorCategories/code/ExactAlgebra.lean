@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/ExactAlgebra.lean -/
+module
+public import Def.v1.Atlas.TensorCategories.code.AlgebrasInCategories.Part4
+public import Theorem.Category.Atlas.v1.TensorCategories.code.AlgebrasInCategories
+public import Theorem.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
+public import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/ExactAlgebra.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,11 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.TensorCategories.code.AlgebrasInCategories.Part4
-import Theorem.Category.Atlas.v1.TensorCategories.code.AlgebrasInCategories
-import Theorem.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
-import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
 universe v u
 
 

@@ -1,9 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionWiring
-import Lemma.List.IsReduced_Drop.of.IsReduced
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionWiring
+public import Lemma.List.IsReduced_Drop.of.IsReduced
 open List CoxeterGroup
 
+
+public section
 
 /--
 [isReduced_drop'](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/SignChangeExchangeFinal.lean)

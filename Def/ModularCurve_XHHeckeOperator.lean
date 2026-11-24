@@ -1,7 +1,10 @@
-import Def.AlgebraicCurve_Correspondence
-import Abbrev.ModularCurve_XH
-
+module
+public import Def.AlgebraicCurve_Correspondence
+public import Abbrev.ModularCurve_XH
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

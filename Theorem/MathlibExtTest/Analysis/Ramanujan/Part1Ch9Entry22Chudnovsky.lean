@@ -1,10 +1,11 @@
+module
+public import Def.Analysis.Ramanujan.Part1Ch9Entry22Chudnovsky
+public import Theorem.Real.Ramanujan.Part1Ch9Entry22Chudnovsky
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Ramanujan/Part1Ch9Entry22Chudnovsky.lean -/
-
-
-import Def.Analysis.Ramanujan.Part1Ch9Entry22Chudnovsky
-import Lemma.Real.Ramanujan.Part1Ch9Entry22Chudnovsky
-
-
 namespace MathlibExtTest.Analysis.Ramanujan.Part1Ch9Entry22Chudnovsky
 
 open MathlibExt.Analysis.Ramanujan.Part1Ch9.Entry22Chudnovsky

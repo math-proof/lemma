@@ -1,10 +1,14 @@
--- Carved from Lemma/Definitions/Def_PresheafOfModules_InternalHom.lean: instance decls only.
-import Mathlib
-import Theorem.LinearMap.InternalHom
-import Def.AlgebraicGeometry_InternalHom
-
+module
+public import Mathlib
+public import Theorem.LinearMap.InternalHom
+public import Def.AlgebraicGeometry_InternalHom
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_PresheafOfModules_InternalHom.lean: instance decls only.
 
 universe u v' u'
 

@@ -1,5 +1,10 @@
-import Mathlib
-import Theorem.Analysis.Section_6_5
+module
+public import Mathlib
+public import Theorem.Analysis.Section_6_5
+
+
+public section
+
 /-!
 # Analysis I, Section 6.6: Subsequences
 
@@ -13,8 +18,6 @@ Main constructions and results of this section:
 
 - Definition of a subsequence.
 -/
-
-
 namespace Chapter6
 
 /-- Definition 6.6.1 -/

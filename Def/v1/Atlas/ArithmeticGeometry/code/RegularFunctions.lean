@@ -1,5 +1,19 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/RegularFunctions.lean -/
+module
+public import Def.v1.Atlas.ArithmeticGeometry.code.AffineVarieties.Part5
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.AffineVarieties
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.CategoryTheory.Category.Basic
+public import Mathlib.CategoryTheory.Functor.Basic
+public import Mathlib.CategoryTheory.Equivalence
+public import Mathlib.CategoryTheory.Opposites
+open MvPolynomial
+set_option autoImplicit false
+set_option linter.unusedSectionVars false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/RegularFunctions.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +21,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.ArithmeticGeometry.code.AffineVarieties.Part5
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.AffineVarieties
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.CategoryTheory.Category.Basic
-import Mathlib.CategoryTheory.Functor.Basic
-import Mathlib.CategoryTheory.Equivalence
-import Mathlib.CategoryTheory.Opposites
-open MvPolynomial
-
-set_option autoImplicit false
-set_option linter.unusedSectionVars false
-
 variable (k : Type*) [Field k]
 
 

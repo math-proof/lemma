@@ -1,8 +1,11 @@
-import Mathlib
-import Instance.PresheafOfModules_ExteriorPower
-import Abbrev.AlgebraicGeometry_ModulesDet
-
+module
+public import Mathlib
+public import Instance.PresheafOfModules_ExteriorPower
+public import Abbrev.AlgebraicGeometry_ModulesDet
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

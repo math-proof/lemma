@@ -1,10 +1,11 @@
+module
+public import Def.Analysis.Ramanujan.Part1Ch9Entry14Xoversin
+public import Theorem.Real.Ramanujan.Part1Ch9Entry14Xoversin
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Ramanujan/Part1Ch9Entry14Xoversin.lean -/
-
-
-import Def.Analysis.Ramanujan.Part1Ch9Entry14Xoversin
-import Lemma.Real.Ramanujan.Part1Ch9Entry14Xoversin
-
-
 namespace MathlibExtTest.Analysis.Ramanujan.Part1Ch9Entry14Xoversin
 
 open scoped Interval

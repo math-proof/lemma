@@ -1,6 +1,10 @@
-import Mathlib
-import Instance.Gamma0HeckeOperatorHom
-import Instance.Gamma0CoeffCohomology
+module
+public import Mathlib
+public import Instance.Gamma0HeckeOperatorHom
+public import Instance.Gamma0CoeffCohomology
+
+
+public section
 
 namespace HeckeEis
 

@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingGaussianMomentDeterminacy.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianTrivialityReduction.Part2
+public import Mathlib.Analysis.Complex.TaylorSeries
+public import Mathlib.Probability.Moments.ComplexMGF
+open Filter MeasureTheory Set Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingGaussianMomentDeterminacy.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianTrivialityReduction.Part2
-import Mathlib.Analysis.Complex.TaylorSeries
-import Mathlib.Probability.Moments.ComplexMGF
-open Filter MeasureTheory Set Topology
-
-
 namespace StatMech.FrontierA
 
 open ProbabilityTheory

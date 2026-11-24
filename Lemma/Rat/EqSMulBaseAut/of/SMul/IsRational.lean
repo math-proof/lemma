@@ -3,7 +3,7 @@ import Initialize.Tactic.Attr.Basic
 import Lemma.Valuation.DivisorClassGroup
 import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
 import Def.AlgebraicCurve_PlaceEvaluation
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 
 namespace Definitions

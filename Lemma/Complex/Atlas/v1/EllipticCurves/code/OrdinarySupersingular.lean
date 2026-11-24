@@ -1,9 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.EllipticCurves.code.OrdinarySupersingular
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.EllipticCurves.code.OrdinarySupersingular
 open OrdinarySupersingular OrdinarySupersingularClassification
 open ConductorOrder
 
+
+public section
 
 namespace OrdinarySupersingular
 

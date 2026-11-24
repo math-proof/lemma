@@ -1,11 +1,15 @@
--- Carved from Lemma/Definitions/Def_MvPolynomial_CrossingResolutionScheme.lean: instance decls only.
-import Mathlib
-import Theorem.MvPolynomial.CrossingResolution
-import Inductive.MvPolynomial_GlueIndex
-import Theorem.MvPolynomial.CrossingResolutionScheme
-import Def.MvPolynomial_CrossingResolutionScheme
-
+module
+public import Mathlib
+public import Theorem.MvPolynomial.CrossingResolution
+public import Inductive.MvPolynomial_GlueIndex
+public import Theorem.MvPolynomial.CrossingResolutionScheme
+public import Def.MvPolynomial_CrossingResolutionScheme
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_MvPolynomial_CrossingResolutionScheme.lean: instance decls only.
 
 noncomputable section
 

@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/TriangularIsingTorusSectorSandwich.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusSectors.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingArfSandwich
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Def.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusSectorSandwich
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/TriangularIsingTorusSectorSandwich.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusSectors.Part2
-import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingArfSandwich
-import Mathlib.Analysis.SpecificLimits.Basic
-import Def.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusSectorSandwich
-
-
 namespace StatMech.FrontierA
 
 open StatMech.Ising

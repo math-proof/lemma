@@ -1,16 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/RelativePDerivation.lean -/
-
-
-import Instance.RingTheory.RelativePDerivation
-import Theorem.Int.RelativePDerivation
-import Mathlib.Data.Nat.Choose.Dvd
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Tactic.Ring
-import Def.MathlibExtTest.RingTheory.RelativePDerivation
+module
+public import Instance.RingTheory.RelativePDerivation
+public import Theorem.Int.RelativePDerivation
+public import Mathlib.Data.Nat.Choose.Dvd
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Tactic.Ring
+public import Def.MathlibExtTest.RingTheory.RelativePDerivation
 open MetaMathlibExt
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/RelativePDerivation.lean -/
 -- Exercise the bundled structure end-to-end.
+
 example (A : Type*) [CommRing A] (p : ℕ) [Fact p.Prime] :
     let d := zeroDerivation A p
     (d : A → ZMod 1) 1 = 0 ∧

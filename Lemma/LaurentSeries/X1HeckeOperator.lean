@@ -1,7 +1,10 @@
-import Lemma.Scheme.Correspondence
-import Lemma.UpperHalfPlane.X1
-
+module
+public import Lemma.Scheme.Correspondence
+public import Lemma.UpperHalfPlane.X1
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

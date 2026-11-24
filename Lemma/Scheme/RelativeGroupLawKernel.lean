@@ -1,8 +1,12 @@
-import Lemma.Scheme.RelativeGroupLaw
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Abbrev.GoodReductionJacobian_RelativeGroupLawKernel
-
+module
+public import Lemma.Scheme.RelativeGroupLaw
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Abbrev.GoodReductionJacobian_RelativeGroupLawKernel
 set_option autoImplicit false
+
+
+public section
+
 noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry NeronModelInfra Scheme

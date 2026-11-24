@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/BeffaraDC/TorusGeometricEuler.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Lattice.EulerFaces2.Part2
+public import Theorem.StatisticalMechanics.Code.Onsager.Torus
+public import Def.StatisticalMechanics.Code.BeffaraDC.TorusGeometricEuler.Part2
+open SimpleGraph Set
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/BeffaraDC/TorusGeometricEuler.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Lattice.EulerFaces2.Part2
-import Theorem.StatisticalMechanics.Code.Onsager.Torus
-import Def.StatisticalMechanics.Code.BeffaraDC.TorusGeometricEuler.Part2
-open SimpleGraph Set
-
-
 namespace StatMech.BeffaraDC
 
 open StatMech.Lattice (card_components_bot card_components_eq_one_of_connected)

@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/osd_hcovpoincare.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessAssembly
+public import Theorem.StatisticalMechanics.Code.OSSS.MonotoneOSSSAssembly
+public import Theorem.StatisticalMechanics.Code.OSSS.RevealmentBoundAssembly
+public import Theorem.StatisticalMechanics.Code.OSSS.LindebergTree.Part6
+open scoped BigOperators
+open Finset
+set_option linter.style.longLine false
+set_option linter.unusedSectionVars false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/osd_hcovpoincare.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessAssembly
-import Theorem.StatisticalMechanics.Code.OSSS.MonotoneOSSSAssembly
-import Theorem.StatisticalMechanics.Code.OSSS.RevealmentBoundAssembly
-import Theorem.StatisticalMechanics.Code.OSSS.LindebergTree.Part6
-open scoped BigOperators
-open Finset
-
-set_option linter.style.longLine false
-set_option linter.unusedSectionVars false
-
-
 namespace StatMech
 
 namespace Walls

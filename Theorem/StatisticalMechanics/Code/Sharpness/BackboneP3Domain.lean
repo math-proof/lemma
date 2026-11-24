@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/BackboneP3Domain.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Sharpness.BackboneSelectorCompatible.Part5
+public import Def.StatisticalMechanics.Code.Sharpness.BackboneP3Domain
+open SimpleGraph Finset
+set_option linter.unusedSectionVars false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/BackboneP3Domain.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Sharpness.BackboneSelectorCompatible.Part5
-import Def.StatisticalMechanics.Code.Sharpness.BackboneP3Domain
-open SimpleGraph Finset
-
-set_option linter.unusedSectionVars false
-
-
 namespace StatMech.Sharpness
 
 variable {V : Type*} [Fintype V] [DecidableEq V] [LinearOrder V]

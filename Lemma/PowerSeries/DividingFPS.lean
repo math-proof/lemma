@@ -1,7 +1,10 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.RingTheory.PowerSeries.DividingFPS.Part2
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.RingTheory.PowerSeries.DividingFPS.Part2
 
+
+public section
 
 section
 -- ac-theorems

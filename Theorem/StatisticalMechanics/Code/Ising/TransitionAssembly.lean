@@ -1,5 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/TransitionAssembly.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Ising.TransitionRegime
+public import Theorem.StatisticalMechanics.Code.IsingFK.MagnetizationCorrespondence
+public import Theorem.StatisticalMechanics.Code.IsingFK.MagnetizationFK
+public import Theorem.StatisticalMechanics.Code.IsingFK.HisingBoxClose.Part3
+public import Theorem.StatisticalMechanics.Code.FK.ThetaZeroBelowPc
+public import Theorem.StatisticalMechanics.Code.FK.PcUpperUncond.Part4
+public import Theorem.StatisticalMechanics.Code.Ising.OuterContourWindingClose.Part3
+open Real
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/TransitionAssembly.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +20,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Ising.TransitionRegime
-import Theorem.StatisticalMechanics.Code.IsingFK.MagnetizationCorrespondence
-import Theorem.StatisticalMechanics.Code.IsingFK.MagnetizationFK
-import Theorem.StatisticalMechanics.Code.IsingFK.HisingBoxClose.Part3
-import Theorem.StatisticalMechanics.Code.FK.ThetaZeroBelowPc
-import Theorem.StatisticalMechanics.Code.FK.PcUpperUncond.Part4
-import Theorem.StatisticalMechanics.Code.Ising.OuterContourWindingClose.Part3
-open Real
-
-
 namespace StatMech
 
 namespace Ising

@@ -1,7 +1,10 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
 
+
+public section
 
 /--
 [canonical_retraction_onto_apartment](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/Basic.lean)

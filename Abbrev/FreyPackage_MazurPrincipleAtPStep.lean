@@ -1,9 +1,11 @@
-import Mathlib
-import Def.FreyPackage_LoweringAtUniform
-
+module
+public import Mathlib
+public import Def.FreyPackage_LoweringAtUniform
 set_option autoImplicit false
-
 open WeierstrassCurve WeierstrassCurve.Affine.Point
+
+
+public section
 
 namespace FreyPackage
 

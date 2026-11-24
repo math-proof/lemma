@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/TriangularIsingTorusGeneralPhysical.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusSignedPhysical.Part7
+public import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingGeneralSymbol.Part4
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/TriangularIsingTorusGeneralPhysical.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,11 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusSignedPhysical.Part7
-import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingGeneralSymbol.Part4
-
-
 namespace StatMech.FrontierA
 
 theorem triangularTorusIsingPartition_freeEnergy_first_lipschitz

@@ -1,10 +1,11 @@
+module
+public import Theorem.NumberTheory.QuadraticForms.ThreeSquaresLegendreRecursion.Part23
+public import Theorem.Nat.QuadraticForms.ThreeSquaresLegendreRecursion
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/QuadraticForms/ThreeSquaresLegendreRecursion.lean -/
-
-
-import Theorem.NumberTheory.QuadraticForms.ThreeSquaresLegendreRecursion.Part23
-import Theorem.Nat.QuadraticForms.ThreeSquaresLegendreRecursion
-
-
 namespace MathlibExtTest.NumberTheory.QuadraticForms.ThreeSquaresLegendreRecursion
 
 -- At `p = 3`, the recursion computes the representations of `18` from those of `2`.

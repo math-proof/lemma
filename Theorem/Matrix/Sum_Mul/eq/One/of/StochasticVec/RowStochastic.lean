@@ -7,7 +7,7 @@ public section
 
 
 @[path]
-public theorem main
+private theorem main
   {S : Type*} [Fintype S]
   {μ : S → ℝ}
   {P : Matrix S S ℝ}

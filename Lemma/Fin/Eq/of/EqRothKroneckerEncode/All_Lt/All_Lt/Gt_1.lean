@@ -1,8 +1,11 @@
-import Mathlib
-import Lemma.Fin.RothKroneckerEncode.eq.Add_Mul_RothKroneckerEncode
+module
+public import Mathlib
+public import Lemma.Fin.RothKroneckerEncode.eq.Add_Mul_RothKroneckerEncode
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [rothKroneckerEncode_injective](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

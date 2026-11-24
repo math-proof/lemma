@@ -13,7 +13,7 @@ import Lemma.Matrix.DivisorPushPull
 import Lemma.Ideal.AdicValuation_InlineSpecific
 import Lemma.Valuation.PlaceCompletion
 import Def.AlgebraicCurve_TateResidueCurrency
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open AlgebraicCurve Submodule Valuation Matrix Scheme Ideal
 open AlgebraicCurve.Place AlgebraicCurve Submodule Valuation Matrix Scheme Ideal

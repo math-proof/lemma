@@ -1,12 +1,16 @@
--- Carved from Lemma/Definitions/Def_ModularCurve_KatzLevelPTorusPairs.lean: instance decls only.
-import Mathlib
-import Instance.ModularCurve_KatzLevelP
-import Instance.ModularCurve_KatzLevelPUniversal
-import Instance.ModularCurve_KatzLevelPClassifyingMaps
-import Theorem.WeierstrassCurve.KatzLevelPTorusPairs
-import Def.ModularCurve_KatzLevelPTorusPairs
-
+module
+public import Mathlib
+public import Instance.ModularCurve_KatzLevelP
+public import Instance.ModularCurve_KatzLevelPUniversal
+public import Instance.ModularCurve_KatzLevelPClassifyingMaps
+public import Theorem.WeierstrassCurve.KatzLevelPTorusPairs
+public import Def.ModularCurve_KatzLevelPTorusPairs
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_ModularCurve_KatzLevelPTorusPairs.lean: instance decls only.
 
 universe u v w
 

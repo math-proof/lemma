@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.BooleanFunctions.code.Talagrand
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.BooleanFunctions.code.Talagrand
 open Finset BigOperators BooleanFourier
 
+
+public section
 
 namespace BooleanFourier
 

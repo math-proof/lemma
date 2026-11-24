@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingSurfaceTensionSelectedSeamCapacity.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitLowRankSwitching.Part2
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitAggregateMatching.Part7
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionPrismGinibre.Part7
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionInteriorBlockClosure
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionCriticalInfiniteVolumeReduction
+public import Instance.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionSelectedSeamCapacity
+open Finset
+open scoped BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingSurfaceTensionSelectedSeamCapacity.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitLowRankSwitching.Part2
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaOrbitAggregateMatching.Part7
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionPrismGinibre.Part7
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionInteriorBlockClosure
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionCriticalInfiniteVolumeReduction
-import Instance.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionSelectedSeamCapacity
-open Finset
-open scoped BigOperators
-
-
 namespace StatMech.FrontierA
 
 open StatMech.Ising

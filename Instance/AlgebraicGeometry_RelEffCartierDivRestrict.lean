@@ -1,12 +1,15 @@
--- Carved from Lemma/Definitions/Def_AlgebraicGeometry_RelEffCartierDivRestrict.lean: instance decls only.
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
-import Theorem.Scheme.RelEffCartierDivRestrict
-import Def.AlgebraicGeometry_RelEffCartierDivRestrict
-
+module
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
+public import Theorem.Scheme.RelEffCartierDivRestrict
+public import Def.AlgebraicGeometry_RelEffCartierDivRestrict
 set_option autoImplicit false
-
 open CategoryTheory CategoryTheory.Limits
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicGeometry_RelEffCartierDivRestrict.lean: instance decls only.
 
 universe u
 

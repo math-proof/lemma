@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/InfiniteCurrentMeasures.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierB.InfiniteCurrentPairCylinders.Part2
+public import Def.StatisticalMechanics.Code.FrontierB.InfiniteCurrentMeasures
+open Filter MeasureTheory
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/InfiniteCurrentMeasures.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierB.InfiniteCurrentPairCylinders.Part2
-import Def.StatisticalMechanics.Code.FrontierB.InfiniteCurrentMeasures
-open Filter MeasureTheory
-
-
 namespace StatMech.FrontierB
 
 open Lattice

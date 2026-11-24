@@ -1,14 +1,14 @@
-import Mathlib
-import Def.TateCurve_DefectLines
-
+module
+public import Mathlib
+public import Def.TateCurve_DefectLines
 set_option autoImplicit false
-
 open scoped NNReal
 open IsUltrametricDist Filter
-
-
 open scoped NNReal
 open IsUltrametricDist Filter Finset
+
+
+public section
 
 namespace TateCurve
 

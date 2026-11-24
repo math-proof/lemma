@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectBlackOrbitRibbonPrimitive.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Onsager.TorusPrimitiveResidue.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBlackOrbitRibbonParityCapstone
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectVerticalWindingPrimitiveArithmetic
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectBlackOrbitRibbonPrimitive.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Onsager.TorusPrimitiveResidue.Part3
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBlackOrbitRibbonParityCapstone
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectVerticalWindingPrimitiveArithmetic
-
-
 namespace StatMech.FrontierD
 
 open StatMech.Onsager

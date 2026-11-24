@@ -1,11 +1,14 @@
-import Mathlib.Analysis.Convex.Integral
-import Mathlib.InformationTheory.KullbackLeibler.Basic
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
-import Mathlib.MeasureTheory.Measure.LogLikelihoodRatio
-import Initialize.Tactic.Attr.Basic
+module
+public import Mathlib.Analysis.Convex.Integral
+public import Mathlib.InformationTheory.KullbackLeibler.Basic
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
+public import Mathlib.MeasureTheory.Measure.LogLikelihoodRatio
+public import Initialize.Tactic.Attr.Basic
 open ENNReal Filter InformationTheory MeasureTheory Real
 
+
+public section
 
 private lemma variational_le [MeasurableSpace α] {μ ν : Measure α} [IsProbabilityMeasure μ] [IsProbabilityMeasure ν] (hνμ : ν ≪ μ) (hint : Integrable (llr ν μ) ν) {f : α → ℝ} (hf : Measurable f) (hC : ∃ C, ∀ x, |f x| ≤ C) :
   ∫ x, f x ∂ν - log (∫ x, exp (f x) ∂μ) ≤ (klDiv ν μ).toReal := by

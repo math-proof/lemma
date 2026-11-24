@@ -1,4 +1,6 @@
 import Lemma.Bool.Imp_And.of.Imp
+import Lemma.Bool.Eq.of.Eq.Eq.subst.lhs
+import Lemma.Bool.Eq.of.Eq.Eq.subst.rhs
 
 
 @[path]
@@ -25,36 +27,6 @@ private lemma main
   a = b :=
 -- proof
   h_a.symm.trans h_b
-
-
-@[path]
-private lemma subst.rhs
-  {a b : α}
-  {l : β}
-  {r : α → β}
--- given
-  (h₀ : a = b)
-  (h₁ : l = r a) :
--- imply
-  l = r b := by
--- proof
-  rw [← h₀]
-  exact h₁
-
-
-@[path]
-private lemma subst.lhs
-  {a b : α}
-  {l : α → β}
-  {r : β}
--- given
-  (h₀ : a = b)
-  (h₁ : l a = r) :
--- imply
-  l b = r := by
--- proof
-  rw [← h₀]
-  exact h₁
 
 
 -- created on 2018-01-09

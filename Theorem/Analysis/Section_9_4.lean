@@ -1,7 +1,12 @@
-import Mathlib
-import Mathlib.Data.Real.Sign
-import Mathlib.Topology.ContinuousOn
-import Abbrev.Analysis.Section_9_3.Part2
+module
+public import Mathlib
+public import Mathlib.Data.Real.Sign
+public import Mathlib.Topology.ContinuousOn
+public import Abbrev.Analysis.Section_9_3.Part2
+
+
+public section
+
 /-!
 # Analysis I, Section 9.4: Continuous functions
 
@@ -15,8 +20,6 @@ Main constructions and results of this section:
 - Continuity of functions, using the Mathlib notions
 
 -/
-
-
 namespace Chapter9
 
 /--

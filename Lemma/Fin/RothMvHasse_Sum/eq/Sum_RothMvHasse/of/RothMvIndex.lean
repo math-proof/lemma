@@ -1,9 +1,12 @@
-import Mathlib
-import Lemma.Fin.RothMvHasse0.eq.Zero.of.RothMvIndex
-import Lemma.Fin.RothMvHasseAdd.eq.AddRothSMvHasse.of.RothMvIndex
+module
+public import Mathlib
+public import Lemma.Fin.RothMvHasse0.eq.Zero.of.RothMvIndex
+public import Lemma.Fin.RothMvHasseAdd.eq.AddRothSMvHasse.of.RothMvIndex
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [rothMvHasse_finset_sum](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

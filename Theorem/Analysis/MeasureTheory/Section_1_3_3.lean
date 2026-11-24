@@ -1,6 +1,9 @@
-import Theorem.Analysis.MeasureTheory.Section_1_3_2.Part9
-import Def.Analysis.MeasureTheory.Section_1_3_3
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_3_2.Part9
+public import Def.Analysis.MeasureTheory.Section_1_3_3
 
+
+public section
 
 theorem LowerUnsignedLebesgueIntegral.eq {d:ℕ} {f: EuclideanSpace' d → EReal} (hf : ∀ x, 0 ≤ f x) : LowerUnsignedLebesgueIntegral f =
   sSup { R | ∃ g: EuclideanSpace' d → EReal, ∃ hg: UnsignedSimpleFunction g, (AlmostAlways (fun x ↦ g x ≤ f x)) ∧ R = hg.integ} := by

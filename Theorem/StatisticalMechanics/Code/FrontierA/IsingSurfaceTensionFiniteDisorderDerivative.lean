@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingSurfaceTensionFiniteDisorderDerivative.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionRectangularModel.Part4
+public import Def.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionFiniteDisorderDerivative
+open scoped BigOperators
+open Finset
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingSurfaceTensionFiniteDisorderDerivative.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionRectangularModel.Part4
-import Def.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionFiniteDisorderDerivative
-open scoped BigOperators
-open Finset
-
-
 namespace StatMech.FrontierA
 
 noncomputable section

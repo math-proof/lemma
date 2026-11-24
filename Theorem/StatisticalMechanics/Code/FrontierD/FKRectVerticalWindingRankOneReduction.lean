@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectVerticalWindingRankOneReduction.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectVerticalWindingCutFiberBalance
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectHorizontalCylinderTransverseTail.Part2
+public import Def.StatisticalMechanics.Code.FrontierD.FKRectVerticalWindingRankOneReduction
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectVerticalWindingRankOneReduction.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectVerticalWindingCutFiberBalance
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectHorizontalCylinderTransverseTail.Part2
-import Def.StatisticalMechanics.Code.FrontierD.FKRectVerticalWindingRankOneReduction
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

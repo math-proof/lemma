@@ -5,11 +5,11 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
-public import Lemma.List.Atlas.CPythonListsort.Code.Transcription.MergeAt
-public import Lemma.List.Atlas.CPythonListsort.Code.Transcription.MergeMemory
+public import Theorem.List.Atlas.CPythonListsort.Code.Transcription.MergeAt
+public import Theorem.List.Atlas.CPythonListsort.Code.Transcription.MergeMemory
 public import Theorem.CPythonListsort.Code.Assembly.GallopRightSafety
 public import Theorem.CPythonListsort.Code.Assembly.GallopLeftSafety
-public import Lemma.List.Atlas.CPythonListsort.Code.Policy.PendingLayout
+public import Theorem.List.Atlas.CPythonListsort.Code.Policy.PendingLayout
 public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part8
 
 public section

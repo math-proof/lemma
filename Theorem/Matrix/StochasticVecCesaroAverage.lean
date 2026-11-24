@@ -9,7 +9,7 @@ open scoped Matrix BigOperators
 
 
 @[path]
-public theorem main
+private theorem main
   {S : Type*} [Fintype S] [DecidableEq S]
   {x0 : S → ℝ} [StochasticVec x0]
   {P : Matrix S S ℝ} [RowStochastic P]

@@ -1,6 +1,6 @@
 import Mathlib
 import Lemma.Submodule.FormalUpperHalfPlaneFunctor
-import Lemma.Set.OmegaTubes
+import Theorem.Set.OmegaTubes
 import Structure.CerednikDrinfeld_FormalUpperHalfPlanePoints
 
 set_option autoImplicit false

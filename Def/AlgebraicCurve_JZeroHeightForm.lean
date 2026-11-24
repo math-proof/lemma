@@ -1,7 +1,11 @@
-import Lemma.Finsupp.JZeroNaiveHeight
-import Def.AlgebraicCurve_PlaceEvaluation
-import Theorem.Submodule.Repartitions
-import Lemma.Ideal.Mathlib430
+module
+public import Theorem.Finsupp.JZeroNaiveHeight
+public import Def.AlgebraicCurve_PlaceEvaluation
+public import Theorem.Submodule.Repartitions
+public import Lemma.Ideal.Mathlib430
+
+
+public section
 
 noncomputable section
 

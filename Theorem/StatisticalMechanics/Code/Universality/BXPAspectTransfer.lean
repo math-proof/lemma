@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/BXPAspectTransfer.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanExteriorClosure.Part8
+public import Theorem.StatisticalMechanics.Code.Universality.BXPAllAspect
+public import Theorem.StatisticalMechanics.Code.Universality.BXPTransfer.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.CrossingReflection.Part4
+open Set MeasureTheory SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/BXPAspectTransfer.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Lattice.JordanExteriorClosure.Part8
-import Theorem.StatisticalMechanics.Code.Universality.BXPAllAspect
-import Theorem.StatisticalMechanics.Code.Universality.BXPTransfer.Part2
-import Theorem.StatisticalMechanics.Code.Universality.CrossingReflection.Part4
-open Set MeasureTheory SimpleGraph
-
-
 namespace StatMech
 
 namespace Universality

@@ -1,12 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/IntegerComplexity.lean -/
-
-
-import Def.NumberTheory.IntegerComplexity.Part3
-import Theorem.Nat.IntegerComplexity
-import Def.MathlibExtTest.NumberTheory.IntegerComplexity
+module
+public import Def.NumberTheory.IntegerComplexity.Part3
+public import Theorem.Nat.IntegerComplexity
+public import Def.MathlibExtTest.NumberTheory.IntegerComplexity
 open IntegerComplexity
 open IntegerComplexity.Expr
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/IntegerComplexity.lean -/
 
 example : expr6.eval = 6 := rfl
 

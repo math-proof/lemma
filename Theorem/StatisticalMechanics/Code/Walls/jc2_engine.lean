@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/jc2_engine.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Walls.jc_turnpreserveengine
+public import Theorem.StatisticalMechanics.Code.Lattice.UmlaufsatzEar.Part2
+public import Theorem.StatisticalMechanics.Code.Lattice.GaussBonnetEar
+public import Theorem.StatisticalMechanics.Code.Lattice.BalancePreservingContraction.Part4
+open SimpleGraph Function
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/jc2_engine.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Walls.jc_turnpreserveengine
-import Theorem.StatisticalMechanics.Code.Lattice.UmlaufsatzEar.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.GaussBonnetEar
-import Theorem.StatisticalMechanics.Code.Lattice.BalancePreservingContraction.Part4
-open SimpleGraph Function
-
-
 namespace StatMech
 
 namespace Walls

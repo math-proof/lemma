@@ -1,20 +1,21 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GameTheory/BondarevaShapley.lean -/
+module
+public import Theorem.GameTheory.ShapleyValue.Part3
+public import Theorem.Set.ShapleyValue
+public import Mathlib.Data.Fintype.Powerset
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
+public import Mathlib.Analysis.LocallyConvex.Separation
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GameTheory/BondarevaShapley.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
-
-import Theorem.GameTheory.ShapleyValue.Part3
-import Lemma.Set.ShapleyValue
-import Mathlib.Data.Fintype.Powerset
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Analysis.LocallyConvex.AbsConvexOpen
-import Mathlib.Analysis.LocallyConvex.Separation
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
 /-! # Bondareva-Shapley theorem -/
-
-
 section
 
 namespace MathlibExt.GameTheory.BondarevaShapleyWanted

@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/SLE/CanonicalBrownianSLE.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.SLE.BrownianDyadicModulus
+public import Theorem.StatisticalMechanics.Code.SLE.LoewnerHolomorphicDependence.Part3
+public import Def.StatisticalMechanics.Code.SLE.CanonicalBrownianSLE
+open MeasureTheory
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/SLE/CanonicalBrownianSLE.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.SLE.BrownianDyadicModulus
-import Theorem.StatisticalMechanics.Code.SLE.LoewnerHolomorphicDependence.Part3
-import Def.StatisticalMechanics.Code.SLE.CanonicalBrownianSLE
-open MeasureTheory
-
-
 namespace StatMech.SLE
 
 theorem canonicalBrownian_isChordalSLE (kappa : Real) (hkappa : 0 <= kappa) :

@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/LebowitzPfisterMatchingCutCurrent.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterTwoGhostVarianceSector
+public import Theorem.StatisticalMechanics.Code.Ising.CorrelationRatio
+public import Theorem.StatisticalMechanics.Code.Sharpness.MultiReplica.Part2
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterMatchingCutCurrent
+open Finset
+open scoped BigOperators symmDiff
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/LebowitzPfisterMatchingCutCurrent.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterTwoGhostVarianceSector
-import Theorem.StatisticalMechanics.Code.Ising.CorrelationRatio
-import Theorem.StatisticalMechanics.Code.Sharpness.MultiReplica.Part2
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterMatchingCutCurrent
-open Finset
-open scoped BigOperators symmDiff
-
-
 namespace StatMech.Ising
 
 open StatMech.Sharpness

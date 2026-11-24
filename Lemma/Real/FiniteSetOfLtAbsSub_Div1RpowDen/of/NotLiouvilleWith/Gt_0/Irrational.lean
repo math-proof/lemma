@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Lemma.Real.LiouvilleWith.of.InfiniteSetOfLtAbsSub_Div1RpowDen.Gt_0.Irrational
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Lemma.Real.LiouvilleWith.of.InfiniteSetOfLtAbsSub_Div1RpowDen.Gt_0.Irrational
 open Real
 
+
+public section
 
 /--
 [roth_finite_of_not_liouvilleWith](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

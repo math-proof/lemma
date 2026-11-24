@@ -3,22 +3,17 @@ import Initialize.Tactic.Attr.Basic
 
 @[path]
 private lemma main
-  {a b c : ℝ}
-  {p : ℝ → Prop}
+  [Preorder α]
+  {a b c : α}
+  {f : α → Prop}
 -- given
-  (hlt : c < b)
-  (h : ∀ x ∈ Set.Ico a b, p x) :
+  (h₀ : c < b)
+  (h₁ : ∀ x ∈ Set.Ico a b, f x) :
 -- imply
-  ∀ x ∈ Set.Ico a c, p x := by
+  ∀ x ∈ Set.Icc a c, f x :=
 -- proof
-  intro x hx
-  apply h x
-  simp only [Set.mem_Ico] at hx ⊢
-  constructor
-  ·
-    apply hx.1
-  ·
-    apply lt_trans hx.2 hlt
+  fun x hx => h₁ x ⟨hx.1, lt_of_le_of_lt hx.2 h₀⟩
 
 
 -- created on 2019-12-12
+-- updated on 2026-11-24

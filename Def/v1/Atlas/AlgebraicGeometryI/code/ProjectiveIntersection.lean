@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/ProjectiveIntersection.lean -/
+module
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.DimensionTheory
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DimensionTheory
+public import Mathlib.RingTheory.KrullDimension.Polynomial
+public import Mathlib.RingTheory.KrullDimension.Field
+public import Mathlib.Algebra.MvPolynomial.CommRing
+public import Mathlib.RingTheory.MvPolynomial.Ideal
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Class.v1.Atlas.AlgebraicGeometryI.code.ProjectiveIntersection
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/ProjectiveIntersection.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.DimensionTheory
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.DimensionTheory
-import Mathlib.RingTheory.KrullDimension.Polynomial
-import Mathlib.RingTheory.KrullDimension.Field
-import Mathlib.Algebra.MvPolynomial.CommRing
-import Mathlib.RingTheory.MvPolynomial.Ideal
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Class.v1.Atlas.AlgebraicGeometryI.code.ProjectiveIntersection
-
-
 noncomputable section
 
 open Ideal

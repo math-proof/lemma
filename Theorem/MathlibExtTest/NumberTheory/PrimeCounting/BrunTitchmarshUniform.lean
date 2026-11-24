@@ -1,12 +1,13 @@
+module
+public import Def.NumberTheory.PrimeCounting.BrunTitchmarshUniform.Part3
+public import Theorem.Nat.PrimeCounting.BrunTitchmarshUniform
+public import Mathlib.Tactic.NormNum
+public import Lean.Elab.Tactic.Omega
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PrimeCounting/BrunTitchmarshUniform.lean -/
-
-
-import Def.NumberTheory.PrimeCounting.BrunTitchmarshUniform.Part3
-import Lemma.Nat.PrimeCounting.BrunTitchmarshUniform
-import Mathlib.Tactic.NormNum
-import Lean.Elab.Tactic.Omega
-
-
 namespace MathlibExtTest.NumberTheory.PrimeCounting.BrunTitchmarshUniform
 
 open MathlibExt.NumberTheory.PrimeCounting.BrunTitchmarshUniformWanted

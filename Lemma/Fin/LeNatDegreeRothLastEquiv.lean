@@ -1,9 +1,12 @@
-import Mathlib
-import Lemma.Fin.CoeffCoeffRothLastEquiv.eq.CoeffRothLastIndex.of.RothMvIndex
-import Lemma.Fin.EqRothLastIndex_Last.of.RothMvIndex
+module
+public import Mathlib
+public import Lemma.Fin.CoeffCoeffRothLastEquiv.eq.CoeffRothLastIndex.of.RothMvIndex
+public import Lemma.Fin.EqRothLastIndex_Last.of.RothMvIndex
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [rothLastEquiv_natDegree_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

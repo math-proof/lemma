@@ -1,10 +1,11 @@
+module
+public import Theorem.Combinatorics.RoadColoring.Part8
+public import Theorem.Finset.RoadColoring
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/RoadColoring.lean -/
-
-
-import Theorem.Combinatorics.RoadColoring.Part8
-import Lemma.Finset.RoadColoring
-
-
 namespace MetaMathlibExt
 
 -- `roadColoring'` applies with only a `Finite` instance in context.

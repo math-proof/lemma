@@ -1,26 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/gc36route.lean -/
-
-/-
-Copyright (c) Meta Platforms, Inc. and affiliates.
-All rights reserved.
-
-This source code is licensed under the license found in the
-LICENSE file in the root directory of this source tree.
--/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Walls.gc35bridge
-import Theorem.StatisticalMechanics.Code.Walls.gc28ghsrigid
-import Theorem.StatisticalMechanics.Code.Walls.gc29hdom.Part2
-import Theorem.StatisticalMechanics.Code.Walls.gc9core.Part3
-import Theorem.StatisticalMechanics.Code.Walls.gc15core.Part5
-import Theorem.StatisticalMechanics.Code.Walls.ghc_urselleqgap
-import Theorem.StatisticalMechanics.Code.Walls.FaithfulnessAudit.Part2
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Walls.gc35bridge
+public import Theorem.StatisticalMechanics.Code.Walls.gc28ghsrigid
+public import Theorem.StatisticalMechanics.Code.Walls.gc29hdom.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.gc9core.Part3
+public import Theorem.StatisticalMechanics.Code.Walls.gc15core.Part5
+public import Theorem.StatisticalMechanics.Code.Walls.ghc_urselleqgap
+public import Theorem.StatisticalMechanics.Code.Walls.FaithfulnessAudit.Part2
 open Finset BigOperators SimpleGraph
 open scoped symmDiff
 open Classical
-
 set_option linter.unusedSectionVars false
 set_option linter.unusedVariables false
 set_option linter.style.longLine false
@@ -30,6 +19,16 @@ set_option linter.unusedDecidableInType false
 set_option maxHeartbeats 1600000
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/gc36route.lean -/
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
 namespace StatMech.Walls
 
 open StatMech StatMech.Ising StatMech.Sharpness

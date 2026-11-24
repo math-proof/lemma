@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicSquareWiredTangentCode.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredRibbon.Part9
+public import Def.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredTangentCode
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicSquareWiredTangentCode.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredRibbon.Part9
-import Def.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredTangentCode
-
-
 namespace StatMech.Universality
 
 open StatMech StatMech.FK StatMech.Lattice StatMech.FrontierD

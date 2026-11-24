@@ -1,17 +1,20 @@
-/-
-Authors: Adam Kiezun, Muse Spark 1.3
--/
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.Algebra.Order.Archimedean.Real.Hom
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Def.Analysis.NormedSpace.GrothendieckInequality.Part5
+module
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.Algebra.Order.Archimedean.Real.Hom
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Def.Analysis.NormedSpace.GrothendieckInequality.Part5
 open scoped InnerProductSpace
 
 
+public section
+
+/-
+Authors: Adam Kiezun, Muse Spark 1.3
+-/
 section
 
 namespace FunctionalAnalysis.GrothendieckInequalityWanted

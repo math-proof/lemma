@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKQgt4PIMSTwoByOnePhaseAssembly.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDevelopedHardTransport
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBalancedSectorThermodynamicBridge.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4OneWindingPhaseAssembly
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4WiredGlobalOrder
+open Filter MeasureTheory Set SimpleGraph Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKQgt4PIMSTwoByOnePhaseAssembly.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDevelopedHardTransport
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBalancedSectorThermodynamicBridge.Part2
-import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4OneWindingPhaseAssembly
-import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4WiredGlobalOrder
-open Filter MeasureTheory Set SimpleGraph Topology
-
-
 namespace StatMech.FrontierD
 
 open StatMech.Lattice StatMech.Percolation StatMech.FK StatMech.BeffaraDC

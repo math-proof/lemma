@@ -1,10 +1,13 @@
-import Mathlib
-import Def.ModularCurve_KatzLevelP
-import Def.ModularCurve_KatzLevelPUniversal
-import Instance.ModularCurve_KatzLevelPClassifyingMaps
-import Abbrev.ModularCurve_KatzLevelPClassifyingMaps
-
+module
+public import Mathlib
+public import Def.ModularCurve_KatzLevelP
+public import Def.ModularCurve_KatzLevelPUniversal
+public import Instance.ModularCurve_KatzLevelPClassifyingMaps
+public import Abbrev.ModularCurve_KatzLevelPClassifyingMaps
 set_option autoImplicit false
+
+
+public section
 
 universe u v w
 

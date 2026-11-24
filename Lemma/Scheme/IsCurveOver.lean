@@ -1,9 +1,12 @@
-import Lemma.Valuation.DivisorClassGroup
-import Mathlib.RingTheory.Kaehler.Basic
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Class.AlgebraicCurve_IsCurveOver
-
+module
+public import Lemma.Valuation.DivisorClassGroup
+public import Mathlib.RingTheory.Kaehler.Basic
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Class.AlgebraicCurve_IsCurveOver
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/GBSplittingUniqueness.lean -/
+module
+public import Def.v1.Atlas.AlgebraicGeometryI.code.GBSplittingExistence.Part2
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GBSplittingExistence
+public import Mathlib.Data.Multiset.Basic
+open BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/GBSplittingUniqueness.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.AlgebraicGeometryI.code.GBSplittingExistence.Part2
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GBSplittingExistence
-import Mathlib.Data.Multiset.Basic
-open BigOperators
-
-
 namespace GBUniqueness
 
 /-- Sum of `h^0` dimensions across a multiset of twist degrees: for a multiset `s` of integers,

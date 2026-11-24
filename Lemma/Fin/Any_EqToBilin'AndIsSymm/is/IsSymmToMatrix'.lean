@@ -1,7 +1,10 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
 open LinearMap LinearMap.BilinForm Module
 
+
+public section
 
 /--
 [bilinearForm_matrix_correspondence](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraNotes/code/BilinearForms.lean)

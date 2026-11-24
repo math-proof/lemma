@@ -1,12 +1,15 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.DifferentialAnalysis.code.FourierInversion.Part7
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.DifferentialAnalysis.code.FourierInversion.Part7
 open Real MeasureTheory MeasureTheory.Measure TestFunctions FourierInversion SobolevSpace
 open scoped FourierTransform ComplexInnerProductSpace SchwartzMap
 open FourierTransform TemperedDistribution LineDeriv
 open scoped SchwartzMap
 open TestFunctions
 
+
+public section
 
 namespace FourierInversion
 

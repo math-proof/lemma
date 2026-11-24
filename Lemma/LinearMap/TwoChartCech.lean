@@ -1,11 +1,14 @@
-import Def.AlgebraicGeometry_CoherentBaseChange
-import Mathlib.Algebra.Algebra.Hom
-import Mathlib.LinearAlgebra.Prod
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.RingTheory.TensorProduct.Basic
-import Structure.AlgebraicGeometry_TwoChartCech
-
+module
+public import Def.AlgebraicGeometry_CoherentBaseChange
+public import Mathlib.Algebra.Algebra.Hom
+public import Mathlib.LinearAlgebra.Prod
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Structure.AlgebraicGeometry_TwoChartCech
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

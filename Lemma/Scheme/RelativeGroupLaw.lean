@@ -1,7 +1,10 @@
-import Lemma.Scheme.NeronModelPropertyBundleCarrier
-import Structure.AlgebraicGeometry_RelativeGroupLaw
-
+module
+public import Lemma.Scheme.NeronModelPropertyBundleCarrier
+public import Structure.AlgebraicGeometry_RelativeGroupLaw
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/LeeYangLogDerivativeBound.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangFieldAnalytic.Part3
+public import Mathlib.Algebra.Polynomial.Splits
+open scoped BigOperators
+open Polynomial
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/LeeYangLogDerivativeBound.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangFieldAnalytic.Part3
-import Mathlib.Algebra.Polynomial.Splits
-open scoped BigOperators
-open Polynomial
-
-
 namespace StatMech.FrontierA
 
 open StatMech.Ising StatMech.FrontierB StatMech.FrontierC

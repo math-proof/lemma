@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKQgt4SquareWiredPhaseTransport.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareDualInfiniteDomination
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareFaceDualFrame.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareInverseDualPercolation
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityBoxInfluence
+public import Theorem.StatisticalMechanics.Code.IsingFK.PcUpperAllDimensions
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareWiredPhaseTransport
+open Filter Finset MeasureTheory Set SimpleGraph Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKQgt4SquareWiredPhaseTransport.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareDualInfiniteDomination
-import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareFaceDualFrame.Part2
-import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareInverseDualPercolation
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityBoxInfluence
-import Theorem.StatisticalMechanics.Code.IsingFK.PcUpperAllDimensions
-import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareWiredPhaseTransport
-open Filter Finset MeasureTheory Set SimpleGraph Topology
-
-
 namespace StatMech.FrontierD
 
 open StatMech.Lattice StatMech.BeffaraDC StatMech.Ising StatMech.FK

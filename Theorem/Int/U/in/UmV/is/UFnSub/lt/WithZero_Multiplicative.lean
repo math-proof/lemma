@@ -20,7 +20,7 @@ namespace LocalGL2.Kirillov
 variable {K : Type} [Field K] [NumberField K] (v : HeightOneSpectrum (𝓞 K))
 
 @[path]
-public theorem main
+private theorem main
 -- given
   (δ : Γ)
   (u : UF v) :

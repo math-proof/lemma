@@ -1,12 +1,16 @@
--- Carved from Lemma/Definitions/Def_ModularCurve_JLinePlacesBar.lean: instance decls only.
-import Mathlib
-import Instance.ModularCurve_ArithmeticGalois
-import Instance.AlgebraicCurve_RatFuncPlaces
-import Theorem.Valuation.RatFuncPlaceInfty
-import Theorems.Thm_ModularCurve_transcendental_coeffEmb_jq
-import Def.ModularCurve_JLinePlacesBar
-
+module
+public import Mathlib
+public import Instance.ModularCurve_ArithmeticGalois
+public import Instance.AlgebraicCurve_RatFuncPlaces
+public import Theorem.Valuation.RatFuncPlaceInfty
+public import Theorems.Thm_ModularCurve_transcendental_coeffEmb_jq
+public import Def.ModularCurve_JLinePlacesBar
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_ModularCurve_JLinePlacesBar.lean: instance decls only.
 
 noncomputable section
 

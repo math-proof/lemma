@@ -1,7 +1,10 @@
-import Mathlib.Order.BooleanAlgebra.Defs
-import Def.Analysis.MeasureTheory.Section_1_3_5.Part3
-import Instance.Analysis.MeasureTheory.Section_1_4_1.Part2
+module
+public import Mathlib.Order.BooleanAlgebra.Defs
+public import Def.Analysis.MeasureTheory.Section_1_3_5.Part3
+public import Instance.Analysis.MeasureTheory.Section_1_4_1.Part2
 
+
+public section
 
 def JordanMeasurable.gt_elementary_boolean_algebra (d:ℕ) :
   JordanMeasurable.boolean_algebra d ≥ EuclideanSpace'.elementary_boolean_algebra d := by

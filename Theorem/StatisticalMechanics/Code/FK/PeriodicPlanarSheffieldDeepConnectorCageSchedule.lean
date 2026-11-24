@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/PeriodicPlanarSheffieldDeepConnectorCageSchedule.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldDeepConnectorRows.Part2
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldExclusion
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarDualBurtonKeane.Part2
+public import Structure.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldDeepConnectorCageSchedule
+open MeasureTheory Set
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/PeriodicPlanarSheffieldDeepConnectorCageSchedule.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldDeepConnectorRows.Part2
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldExclusion
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarDualBurtonKeane.Part2
-import Structure.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldDeepConnectorCageSchedule
-open MeasureTheory Set
-
-
 namespace StatMech.FK.PeriodicPlanar
 
 open Lattice

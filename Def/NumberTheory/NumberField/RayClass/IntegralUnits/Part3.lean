@@ -1,9 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/IntegralUnits.lean -/
+module
+public import Theorem.NumberTheory.NumberField.RayClass.ResidueSign.Part3
+public import Theorem.Nat.NumberField.RayClass.ResidueSign
+public import Mathlib.Algebra.Exact.Basic
+public import Theorem.NumberTheory.NumberField.RayClass.IntegralUnits.Part2
 
-import Theorem.NumberTheory.NumberField.RayClass.ResidueSign.Part3
-import Lemma.Nat.NumberField.RayClass.ResidueSign
-import Mathlib.Algebra.Exact.Basic
-import Theorem.NumberTheory.NumberField.RayClass.IntegralUnits.Part2
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/IntegralUnits.lean -/
 @[expose] noncomputable section
 
 /-!

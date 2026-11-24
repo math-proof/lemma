@@ -1,9 +1,13 @@
--- Carved from Lemma/Definitions/Def_LanglandsTunnell_LiftTraceSeed.lean: instance decls only.
-import Def.AutomorphicForm_HeckeEigensystem
-import Def.LanglandsTunnell_ExplicitLift
-import Def.LanglandsTunnell_LiftTraceSeed
-
+module
+public import Def.AutomorphicForm_HeckeEigensystem
+public import Def.LanglandsTunnell_ExplicitLift
+public import Def.LanglandsTunnell_LiftTraceSeed
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_LanglandsTunnell_LiftTraceSeed.lean: instance decls only.
 
 noncomputable section
 

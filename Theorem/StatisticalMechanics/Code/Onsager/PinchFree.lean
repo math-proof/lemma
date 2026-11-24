@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/PinchFree.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.EdgeUnique
+public import Theorem.StatisticalMechanics.Code.Onsager.WalkCellBridge
+public import Theorem.StatisticalMechanics.Code.Onsager.CellPinch
+public import Theorem.StatisticalMechanics.Code.Onsager.StraightCorner
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/PinchFree.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.EdgeUnique
-import Theorem.StatisticalMechanics.Code.Onsager.WalkCellBridge
-import Theorem.StatisticalMechanics.Code.Onsager.CellPinch
-import Theorem.StatisticalMechanics.Code.Onsager.StraightCorner
-
-
 namespace StatMech.Onsager.PinchFree
 
 open Finset StatMech.Onsager.BaseCase StatMech.Onsager.NoDoubleWind StatMech.Onsager.WalkCrossing

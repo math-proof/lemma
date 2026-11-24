@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/BackboneTwoEdgeExhaustiveProgram.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Sharpness.BackboneTwoEdgeCycleObstruction.Part9
+public import Def.StatisticalMechanics.Code.Sharpness.BackboneTwoEdgeExhaustiveProgram
+open SimpleGraph Finset
+open scoped symmDiff
+set_option linter.unusedSectionVars false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/BackboneTwoEdgeExhaustiveProgram.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Sharpness.BackboneTwoEdgeCycleObstruction.Part9
-import Def.StatisticalMechanics.Code.Sharpness.BackboneTwoEdgeExhaustiveProgram
-open SimpleGraph Finset
-open scoped symmDiff
-
-set_option linter.unusedSectionVars false
-
-
 namespace StatMech.Sharpness
 
 noncomputable section

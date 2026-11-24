@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/HarishChandraIsomorphism.lean -/
+module
+public import Def.v1.Atlas.LieGroups.code.VermaModules.Part7
+public import Theorem.Int.WeightSubspace.eq.ToSubmoduleWeightSpace
+public import Theorem.v1.Atlas.LieGroups.code.PBW
+public import Mathlib.Algebra.Algebra.Subalgebra.Basic
+public import Mathlib.Algebra.Lie.OfAssociative
+public import Theorem.v1.Atlas.LieGroups.code.HarishChandraIsomorphism.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/HarishChandraIsomorphism.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,7 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.LieGroups.code.VermaModules.Part7
-import Theorem.Int.WeightSubspace.eq.ToSubmoduleWeightSpace
-import Theorem.v1.Atlas.LieGroups.code.PBW
-import Mathlib.Algebra.Algebra.Subalgebra.Basic
-import Mathlib.Algebra.Lie.OfAssociative
-import Theorem.v1.Atlas.LieGroups.code.HarishChandraIsomorphism.Part2
 -- Mathlib keeps LieRing.ofAssociativeRing as a local instance only
-
-
 noncomputable section
 
 attribute [local instance 100] LieRing.ofAssociativeRing

@@ -1,12 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/GradedAlgebra/MultigradedHilbertSyzygy.lean -/
-
-
-import Theorem.RingTheory.GradedAlgebra.MultigradedHilbertSyzygy.Part21
-import Lemma.Int.GradedAlgebra.MultigradedHilbertSyzygy
-import Instance.MathlibExtTest.RingTheory.GradedAlgebra.MultigradedHilbertSyzygy
+module
+public import Theorem.RingTheory.GradedAlgebra.MultigradedHilbertSyzygy.Part21
+public import Theorem.Int.GradedAlgebra.MultigradedHilbertSyzygy
+public import Instance.MathlibExtTest.RingTheory.GradedAlgebra.MultigradedHilbertSyzygy
 open CategoryTheory CategoryTheory.Limits MvPolynomial
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/GradedAlgebra/MultigradedHilbertSyzygy.lean -/
 noncomputable section
 
 namespace MathlibExtTest.RingTheory.GradedAlgebra.MultigradedHilbertSyzygy

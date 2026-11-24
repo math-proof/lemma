@@ -1,10 +1,13 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.Analysis.Complex.Wiman.CorrectedMajorantBoundOffExceptionalSet
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.Analysis.Complex.Wiman.CorrectedMajorantBoundOffExceptionalSet
 open Filter MeasureTheory Set
 open scoped ENNReal
 open Complex
 
+
+public section
 
 /--
 [wimanMajorant_bound_off_exceptionalSet](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CorrectedMajorantBoundOffExceptionalSet.lean)

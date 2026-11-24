@@ -1,14 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/MergeAtCorrectness.lean -/
+module
+public import Def.CPythonListsort.Code.Assembly.GallopCorrectness
+public import Def.CPythonListsort.Code.Assembly.MergeAtSafety.Part4
+public import Def.CPythonListsort.Code.Correctness.MergeAtCorrectnessSupport
+public import Def.CPythonListsort.Code.Correctness.MergeHiCorrectness
+public import Structure.CPythonListsort.Code.Correctness.MergeLoCorrectness
+public import Def.CPythonListsort.Code.Correctness.PendingRunCorrectness
+public import Theorem.List.Atlas.CPythonListsort.Code.Policy.MergeAtPreservation
+public import Theorem.List.Atlas.CPythonListsort.Code.Policy.MergeTopPowerPreservation
+public import Structure.CPythonListsort.Code.Correctness.MergeAtCorrectness
 
-import Def.CPythonListsort.Code.Assembly.GallopCorrectness
-import Def.CPythonListsort.Code.Assembly.MergeAtSafety.Part4
-import Def.CPythonListsort.Code.Correctness.MergeAtCorrectnessSupport
-import Def.CPythonListsort.Code.Correctness.MergeHiCorrectness
-import Structure.CPythonListsort.Code.Correctness.MergeLoCorrectness
-import Def.CPythonListsort.Code.Correctness.PendingRunCorrectness
-import Lemma.List.Atlas.CPythonListsort.Code.Policy.MergeAtPreservation
-import Theorem.List.Atlas.CPythonListsort.Code.Policy.MergeTopPowerPreservation
-import Structure.CPythonListsort.Code.Correctness.MergeAtCorrectness
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/MergeAtCorrectness.lean -/
 /-!
 # Functional correctness of `merge_at`
 
@@ -20,8 +24,6 @@ left-biased stable merge, all pending runs remain correct, the persistent
 whole-entry snapshot is preserved, and no entry outside the consumed prefix
 changes.
 -/
-
-
 namespace CPythonListsort
 
 universe u v

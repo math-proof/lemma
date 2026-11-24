@@ -1,11 +1,14 @@
-import Def.HeckeCharacter_FiniteOrder
-import Lemma.Matrix.AdelicLevel
-import Def.AutomorphicForm_ConstantTerm
-import Instance.AutomorphicForm_GaussTwist
-import Abbrev.AutomorphicForm_GaussTwist
-
+module
+public import Def.HeckeCharacter_FiniteOrder
+public import Lemma.Matrix.AdelicLevel
+public import Def.AutomorphicForm_ConstantTerm
+public import Instance.AutomorphicForm_GaussTwist
+public import Abbrev.AutomorphicForm_GaussTwist
 set_option autoImplicit false
 set_option maxSynthPendingDepth 3
+
+
+public section
 
 noncomputable section
 

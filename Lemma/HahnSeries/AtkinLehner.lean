@@ -1,7 +1,10 @@
-import Lemma.HahnSeries.QAdicPlace
-import Lemma.LaurentSeries.ArithmeticGalois
-
+module
+public import Lemma.HahnSeries.QAdicPlace
+public import Lemma.LaurentSeries.ArithmeticGalois
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

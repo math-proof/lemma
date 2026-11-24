@@ -1,9 +1,14 @@
+module
+public import Mathlib.CategoryTheory.Sites.Continuous
+public import Instance.AlgebraicGeometry_FppfSiteCohomology
+public import Instance.AlgebraicGeometry_FppfCohomologyLES
+public import Theorem.Scheme.FppfH0Identification
+public import Def.AlgebraicGeometry_FppfH0Identification
+
+
+public section
+
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_FppfH0Identification.lean: instance decls only.
-import Mathlib.CategoryTheory.Sites.Continuous
-import Instance.AlgebraicGeometry_FppfSiteCohomology
-import Instance.AlgebraicGeometry_FppfCohomologyLES
-import Theorem.Scheme.FppfH0Identification
-import Def.AlgebraicGeometry_FppfH0Identification
 
 universe v' u' wE vE uE v₁ v₂ u₁ u₂ u w' w v
 

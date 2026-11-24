@@ -1,9 +1,13 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.NumberTheory.NumberField.RayClass.QuotientToRayClass.Part3
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.NumberTheory.NumberField.RayClass.QuotientToRayClass.Part3
 open scoped nonZeroDivisors
 open NumberField
 open Modulus
+
+
+public section
 
 noncomputable instance {K : Type*} [Field K] [NumberField K] (m : Modulus K) :
     Group (rayElements m ⧸ rayOneElements m) :=

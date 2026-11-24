@@ -1,4 +1,4 @@
-import Lemma.ModularForm.HeckeOperatorForms
+import Theorem.ModularForm.HeckeOperatorForms
 import Theorems.Thm_CuspForm_heckeTLin_comm
 import Theorems.Thm_CuspForm_heckeTLin_heckeULin_comm
 import Theorems.Thm_CuspForm_heckeULin_comm

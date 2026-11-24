@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectDualSourceBarrierPattern.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDualSourceBarrierRate
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectIndexedPatternPushforward.Part2
+public import Def.StatisticalMechanics.Code.FrontierD.FKRectDualSourceBarrierPattern
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectDualSourceBarrierPattern.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDualSourceBarrierRate
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectIndexedPatternPushforward.Part2
-import Def.StatisticalMechanics.Code.FrontierD.FKRectDualSourceBarrierPattern
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

@@ -1,11 +1,15 @@
--- Carved from Lemma/Definitions/Def_MvPolynomial_CrossingResolutionFibrePoints.lean: instance decls only.
-import Mathlib
-import Instance.MvPolynomial_CrossingResolutionScheme
-import Theorem.MvPolynomial.CrossingResolutionFibrePoints
-import Def.AlgebraicGeometry_CrossingResolutionFibrePoints
-
+module
+public import Mathlib
+public import Instance.MvPolynomial_CrossingResolutionScheme
+public import Theorem.MvPolynomial.CrossingResolutionFibrePoints
+public import Def.AlgebraicGeometry_CrossingResolutionFibrePoints
 set_option maxHeartbeats 200000
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_MvPolynomial_CrossingResolutionFibrePoints.lean: instance decls only.
 
 noncomputable section
 

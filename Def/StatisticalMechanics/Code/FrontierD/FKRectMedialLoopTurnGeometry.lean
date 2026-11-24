@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectMedialLoopTurnGeometry.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedEdgeCenterClass
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialBoundaryToggleParity.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialLoopTurnWalk.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectMedialLoopTurnGeometry
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectMedialLoopTurnGeometry.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedEdgeCenterClass
-import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialBoundaryToggleParity.Part3
-import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialLoopTurnWalk.Part2
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectMedialLoopTurnGeometry
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

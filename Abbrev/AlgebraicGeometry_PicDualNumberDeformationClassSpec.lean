@@ -1,9 +1,12 @@
-import Mathlib
-import Instance.AlgebraicGeometry_RigKerDualNumber
-import Structure.AlgebraicGeometry_TwoAffineOpenCoverH1BaseChange
-import Theorem.Scheme.ModulesSectionsTensor
-
+module
+public import Mathlib
+public import Instance.AlgebraicGeometry_RigKerDualNumber
+public import Structure.AlgebraicGeometry_TwoAffineOpenCoverH1BaseChange
+public import Theorem.Scheme.ModulesSectionsTensor
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

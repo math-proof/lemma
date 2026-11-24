@@ -1,9 +1,12 @@
-import Lemma.Random.Any_And_Any_All_LeAbsAndLe_Integral_Sub_Log_Integral_Exp.of.Not
-import Lemma.Random.Any_And_Any_All_LeAbsAndLe_Integral_Sub_Log_Integral_Exp.of.NotIntegrable_Llr
-import Mathlib.InformationTheory.KullbackLeibler.Basic
-import Initialize.Tactic.Attr.Basic
+module
+public import Lemma.Random.Any_And_Any_All_LeAbsAndLe_Integral_Sub_Log_Integral_Exp.of.Not
+public import Lemma.Random.Any_And_Any_All_LeAbsAndLe_Integral_Sub_Log_Integral_Exp.of.NotIntegrable_Llr
+public import Mathlib.InformationTheory.KullbackLeibler.Basic
+public import Initialize.Tactic.Attr.Basic
 open InformationTheory MeasureTheory Random Real
 
+
+public section
 
 /--
 If the Kullback–Leibler divergence is infinite, a bounded continuous test function makes the

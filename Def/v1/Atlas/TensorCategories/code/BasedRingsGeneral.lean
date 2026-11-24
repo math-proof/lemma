@@ -1,5 +1,20 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/BasedRingsGeneral.lean -/
+module
+public import Mathlib.CategoryTheory.Monoidal.Category
+public import Mathlib.CategoryTheory.Preadditive.Basic
+public import Mathlib.CategoryTheory.Linear.Basic
+public import Mathlib.CategoryTheory.Simple
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.BigOperators.Finprod
+public import Mathlib.Data.Set.Finite.Basic
+public import Abbrev.v1.Atlas.TensorCategories.code.BasedRings
+public import Theorem.Category.Atlas.v1.TensorCategories.code.BasedRings
+set_option maxHeartbeats 800000
+open CategoryTheory MonoidalCategory Finset
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/BasedRingsGeneral.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,20 +22,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib.CategoryTheory.Monoidal.Category
-import Mathlib.CategoryTheory.Preadditive.Basic
-import Mathlib.CategoryTheory.Linear.Basic
-import Mathlib.CategoryTheory.Simple
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.BigOperators.Finprod
-import Mathlib.Data.Set.Finite.Basic
-import Abbrev.v1.Atlas.TensorCategories.code.BasedRings
-import Theorem.Category.Atlas.v1.TensorCategories.code.BasedRings
-set_option maxHeartbeats 800000
-
-open CategoryTheory MonoidalCategory Finset
-
 universe v u
 
 

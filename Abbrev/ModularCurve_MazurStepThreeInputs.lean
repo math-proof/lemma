@@ -1,7 +1,10 @@
-import Def.ModularCurve_Eisenstein
-import Def.ModularCurve_MazurStepThree
-
+module
+public import Def.ModularCurve_Eisenstein
+public import Def.ModularCurve_MazurStepThree
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

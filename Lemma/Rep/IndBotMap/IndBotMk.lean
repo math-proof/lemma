@@ -3,7 +3,7 @@ import Initialize.Tactic.Attr.Basic
 import Lemma.LinearMap.TateCohomology
 import Lemma.Representation.EqIndBotMk
 import Def.GroupCohomology_TateDimensionShiftMaps
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open CategoryTheory Rep CategoryTheory.MonoidalCategory
 

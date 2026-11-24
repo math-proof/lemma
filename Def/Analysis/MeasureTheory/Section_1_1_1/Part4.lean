@@ -1,8 +1,11 @@
-import Def.Analysis.MeasureTheory.Notation.Part2
-import Theorem.Analysis.Section_9_1.Part3
-import Theorem.Analysis.MeasureTheory.Section_1_1_1.Part12
+module
+public import Def.Analysis.MeasureTheory.Notation.Part2
+public import Theorem.Analysis.Section_9_1.Part3
+public import Theorem.Analysis.MeasureTheory.Section_1_1_1.Part12
 open BoundedInterval
 
+
+public section
 
 /-- The bounded interval with the given endpoints, open or closed at each end as specified. -/
 def BoundedInterval.mk' (a b : ℝ) (lclosed uclosed : Bool) : BoundedInterval :=

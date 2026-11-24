@@ -1,13 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/PrincipalIdele.lean -/
+module
+public import Theorem.NumberTheory.NumberField.PrincipalIdele
+public import Theorem.Nat.NumberField.PrincipalIdele
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/PrincipalIdele.lean -/
 /-
 Author: @toskua, Avocado
 -/
-
-import Theorem.NumberTheory.NumberField.PrincipalIdele
-import Lemma.Nat.NumberField.PrincipalIdele
-
-
 noncomputable section
 
 open NumberField NumberField.TopologicalIdeleGroup

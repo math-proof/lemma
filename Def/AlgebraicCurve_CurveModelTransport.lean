@@ -1,8 +1,11 @@
-import Mathlib
-import Def.AlgebraicCurve_CurveModel
-import Instance.AlgebraicCurve_CurveModelTransport
-
+module
+public import Mathlib
+public import Def.AlgebraicCurve_CurveModel
+public import Instance.AlgebraicCurve_CurveModelTransport
 set_option autoImplicit false
+
+
+public section
 
 universe u v
 

@@ -3,7 +3,7 @@ import Initialize.Tactic.Attr.Basic
 import Lemma.Int.LevelModuliPackage
 import Lemma.Int.LevelModuliPackageAbs
 import Def.ModularCurve_WeierstrassLevelModuliDatum
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open ModularCurve Int
 

@@ -1,5 +1,25 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/ExactModuleCatEquiv.lean -/
+module
+public import Def.v1.Atlas.TensorCategories.code.AlgebrasInCategories.Part4
+public import Theorem.Category.Atlas.v1.TensorCategories.code.AlgebrasInCategories
+public import Theorem.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
+public import Theorem.Category.Atlas.v1.TensorCategories.code.InternalHom
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
+public import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
+public import Def.v1.Atlas.TensorCategories.code.InternalHom.Part4
+public import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
+public import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
+public import Mathlib.CategoryTheory.Abelian.Basic
+public import Mathlib.CategoryTheory.Linear.Basic
+public import Mathlib.CategoryTheory.Preadditive.Projective.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Structure.v1.Atlas.TensorCategories.code.ExactModuleCatEquiv
+set_option maxHeartbeats 800000
+set_option autoImplicit false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/ExactModuleCatEquiv.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,25 +27,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.TensorCategories.code.AlgebrasInCategories.Part4
-import Theorem.Category.Atlas.v1.TensorCategories.code.AlgebrasInCategories
-import Theorem.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
-import Theorem.Category.Atlas.v1.TensorCategories.code.InternalHom
-import Theorem.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
-import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
-import Def.v1.Atlas.TensorCategories.code.InternalHom.Part4
-import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
-import Mathlib.CategoryTheory.Monoidal.Rigid.Basic
-import Mathlib.CategoryTheory.Abelian.Basic
-import Mathlib.CategoryTheory.Linear.Basic
-import Mathlib.CategoryTheory.Preadditive.Projective.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Structure.v1.Atlas.TensorCategories.code.ExactModuleCatEquiv
-set_option maxHeartbeats 800000
-
-set_option autoImplicit false
-
 universe v₁ v₂ u₁ u₂
 
 

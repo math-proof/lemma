@@ -1,6 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Section_6_5
-import Abbrev.Analysis.Section_6_6
+module
+public import Mathlib
+public import Theorem.Analysis.Section_6_5
+public import Abbrev.Analysis.Section_6_6
+
+
+public section
+
 /-!
 # Analysis I, Section 6.6: Subsequences
 
@@ -14,8 +19,6 @@ Main constructions and results of this section:
 
 - Definition of a subsequence.
 -/
-
-
 namespace Chapter6
 
 /-- Theorem 6.6.8 (Bolzano-Weierstrass theorem) -/

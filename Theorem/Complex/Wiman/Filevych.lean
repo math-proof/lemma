@@ -1,9 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.Analysis.Complex.Wiman.Filevych
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.Analysis.Complex.Wiman.Filevych
 open Filter MeasureTheory Set
 open Complex
 
+
+public section
 
 /--
 [tendsto_wimanMaximumTerm_exp_atTop](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/Filevych.lean)

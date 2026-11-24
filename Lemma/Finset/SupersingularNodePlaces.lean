@@ -1,5 +1,5 @@
 import Lemma.Polynomial.CharLSpecialFibreLevelNDictionary
-import Lemma.WeierstrassCurve.SupersingularModuli
+import Theorem.WeierstrassCurve.SupersingularModuli
 import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
 
 set_option autoImplicit false

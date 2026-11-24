@@ -1,12 +1,16 @@
+module
+public import Mathlib
+public import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part29
+public import Theorem.LinearAlgebra.Matrix.Determinant.LGV1.Part10
+open Finset BigOperators Matrix
+
+
+public section
+
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.LinearAlgebra.Matrix.Determinant.LGV2.Part29
-import Theorem.LinearAlgebra.Matrix.Determinant.LGV1.Part10
-open Finset BigOperators Matrix
-
 /-!
 # The Lindström-Gessel-Viennot Lemma: Part 1
 
@@ -80,8 +84,6 @@ LGV1's definitions. Both definitions are kept compatible with trivial conversion
 LGV2.lean contains the complete weighted LGV lemma proof. This file contains the
 counting case infrastructure with lattice-specific path counting results.
 -/
-
-
 namespace LGV1
 
 /-- Convert a PathTuple to a LatticePath'Tuple.

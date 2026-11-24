@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingDiagonalReflectionInfinite.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingDiagonalReflectionFold.Part5
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityFreeLeftContinuous
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingDiagonalReflectionInfinite
+open Filter MeasureTheory Set Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingDiagonalReflectionInfinite.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingDiagonalReflectionFold.Part5
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityFreeLeftContinuous
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingDiagonalReflectionInfinite
-open Filter MeasureTheory Set Topology
-
-
 namespace StatMech.FrontierA
 
 open StatMech Ising Lattice StatMech.FrontierB

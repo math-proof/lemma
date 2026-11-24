@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ProjectionTheory/code/SzemerediTrotterProjection.lean -/
+module
+public import Mathlib
+public import Def.v1.Atlas.ProjectionTheory.code.SzemerediTrotter.Part2
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.SzemerediTrotter
+open Finset Real Set
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ProjectionTheory/code/SzemerediTrotterProjection.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib
-import Def.v1.Atlas.ProjectionTheory.code.SzemerediTrotter.Part2
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.SzemerediTrotter
-open Finset Real Set
-
-
 namespace SzemerediTrotterProjection
 
 /-- The orthogonal projection $\pi_\theta(p) = p_1 \cos\theta + p_2 \sin\theta$ of a

@@ -1,6 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Section_5_6.Part2
-import Theorem.Analysis.Section_5_epilogue.Part2
+module
+public import Mathlib
+public import Theorem.Analysis.Section_5_6.Part2
+public import Theorem.Analysis.Section_5_epilogue.Part2
+
+
+public section
+
 /-!
 # Analysis I, Chapter 5 epilogue: Isomorphism with the Mathlib real numbers
 
@@ -23,10 +28,7 @@ Users of the companion who have completed the exercises in this section are welc
 - (Add tip here)
 
 -/
-
-
 /-- Now to develop analogous results for the Mathlib reals. -/
-
 abbrev Real.toSet_Rat (x:ℝ) : Set ℚ := { q | (q:ℝ) < x }
 
 abbrev Real.toCut (x:ℝ) : Chapter5.DedekindCut :=

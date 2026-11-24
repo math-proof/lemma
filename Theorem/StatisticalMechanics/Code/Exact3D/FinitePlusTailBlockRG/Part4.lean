@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Exact3D/FinitePlusTailBlockRG.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailBlockBounds.Part6
+public import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailRG
+public import Def.StatisticalMechanics.Code.Exact3D.FinitePlusTailBlockRG.Part4
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Exact3D/FinitePlusTailBlockRG.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailBlockBounds.Part6
-import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailRG
-import Def.StatisticalMechanics.Code.Exact3D.FinitePlusTailBlockRG.Part4
-
-
 namespace StatMech
 
 namespace Exact3D

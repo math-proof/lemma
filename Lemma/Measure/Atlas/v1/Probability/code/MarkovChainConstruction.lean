@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Instance.v1.Atlas.Probability.code.MarkovChainConstruction.Part2
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Instance.v1.Atlas.Probability.code.MarkovChainConstruction.Part2
 open MeasureTheory ProbabilityTheory Kernel Set
 
+
+public section
 
 /--
 [markovChainMeasure_initial_distribution](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/MarkovChainConstruction.lean)

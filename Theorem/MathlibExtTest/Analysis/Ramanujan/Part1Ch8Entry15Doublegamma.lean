@@ -1,11 +1,12 @@
+module
+public import Def.Analysis.Ramanujan.Part1Ch8Entry15Doublegamma
+public import Theorem.Real.Ramanujan.Part1Ch8Entry15Doublegamma
+public import Mathlib.Analysis.Asymptotics.Lemmas
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Ramanujan/Part1Ch8Entry15Doublegamma.lean -/
-
-
-import Def.Analysis.Ramanujan.Part1Ch8Entry15Doublegamma
-import Lemma.Real.Ramanujan.Part1Ch8Entry15Doublegamma
-import Mathlib.Analysis.Asymptotics.Lemmas
-
-
 namespace MathlibExtTest.Analysis.Ramanujan.Part1Ch8Entry15Doublegamma
 
 open Asymptotics Filter Complex

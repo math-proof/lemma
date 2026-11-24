@@ -7,7 +7,7 @@ import Def.GroupCohomology_CochainCup
 import Lemma.Definitions.Def_GroupCohomology_IsGradedCupProduct
 import Lemma.Definitions.Def_GroupCohomology_IsTateCupProduct
 import Lemma.Rep.RelationModule
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 open CategoryTheory Rep CategoryTheory.MonoidalCategory
 
 

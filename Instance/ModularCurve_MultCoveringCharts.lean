@@ -1,16 +1,19 @@
--- Carved from Lemma/Definitions/Def_ModularCurve_MultCoveringCharts.lean: instance decls only.
-import Theorem.ValuationSubring.SemistableCharts
-import Def.AlgebraicCurve_ChordalProximity
-import Lemma.WeierstrassCurve.SupersingularModuli
-import Structure.ModularCurve_LevelOneProlongationPair
-import Theorem.AlgEquiv.SemistableChartsComap
-import Theorem.ResidueField.LevelOneChartFst
-
+module
+public import Theorem.ValuationSubring.SemistableCharts
+public import Def.AlgebraicCurve_ChordalProximity
+public import Theorem.WeierstrassCurve.SupersingularModuli
+public import Structure.ModularCurve_LevelOneProlongationPair
+public import Theorem.AlgEquiv.SemistableChartsComap
+public import Theorem.ResidueField.LevelOneChartFst
 set_option maxHeartbeats 200000
 set_option synthInstance.maxHeartbeats 20000
 set_option autoImplicit false
-
 set_option synthInstance.maxHeartbeats 400000
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_ModularCurve_MultCoveringCharts.lean: instance decls only.
 
 noncomputable section
 

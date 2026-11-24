@@ -1,12 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/KillingLemma.lean -/
+module
+public import Mathlib.Algebra.GCDMonoid.IntegrallyClosed
+public import Mathlib.LinearAlgebra.Eigenspace.Charpoly
+public import Mathlib.RingTheory.Norm.Transitivity
+public import Def.GroupTheory.BurnsidePaqb.CentralCharacter.Part3
+public import Theorem.Representation.MulCentralScalarFinrankV.eq.Sum_Character
+public import Theorem.Complex.In_CycSubfield.of.EqPow_1.Ne_0
+public import Instance.GroupTheory.BurnsidePaqb.CyclotomicField
 
-import Mathlib.Algebra.GCDMonoid.IntegrallyClosed
-import Mathlib.LinearAlgebra.Eigenspace.Charpoly
-import Mathlib.RingTheory.Norm.Transitivity
-import Def.GroupTheory.BurnsidePaqb.CentralCharacter.Part3
-import Lemma.Representation.MulCentralScalarFinrankV.eq.Sum_Character
-import Theorem.Complex.In_CycSubfield.of.EqPow_1.Ne_0
-import Instance.GroupTheory.BurnsidePaqb.CyclotomicField
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/KillingLemma.lean -/
 /-!
 Norm/killing stage of the complete Burnside proof.
 
@@ -16,8 +20,6 @@ SHA-256: d9da7df82e467d9fa587892eeef9f51e2b83df0588175653bd1d16264b09dd00
 
 This module is mechanically ported from the audited source `extracted/Burnside/KillingLemma.lean`.
 -/
-
-
 namespace BurnsidePaqb
 
 variable {G : Type*} [Group G] [Fintype G]

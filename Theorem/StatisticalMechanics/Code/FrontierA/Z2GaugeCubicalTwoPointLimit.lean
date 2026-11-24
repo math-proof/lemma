@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/Z2GaugeCubicalTwoPointLimit.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.Z2GaugeCubicalTwoPointPrism.Part2
+public import Theorem.StatisticalMechanics.Code.Sharpness.SimonPlusLimit.Part3
+public import Theorem.StatisticalMechanics.Code.Ising.FVConsistencyProve.Part2
+open MeasureTheory Filter Topology
+open scoped BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/Z2GaugeCubicalTwoPointLimit.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.Z2GaugeCubicalTwoPointPrism.Part2
-import Theorem.StatisticalMechanics.Code.Sharpness.SimonPlusLimit.Part3
-import Theorem.StatisticalMechanics.Code.Ising.FVConsistencyProve.Part2
-open MeasureTheory Filter Topology
-open scoped BigOperators
-
-
 namespace StatMech.FrontierA
 
 open StatMech StatMech.Ising StatMech.Sharpness StatMech.Lattice

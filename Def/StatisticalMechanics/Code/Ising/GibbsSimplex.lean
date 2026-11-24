@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/GibbsSimplex.lean -/
+module
+public import Mathlib
+public import Def.StatisticalMechanics.Code.Ising.DLR
+open MeasureTheory ProbabilityTheory MeasurableSpace Set
+open scoped BigOperators ENNReal
+set_option linter.style.longLine false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/GibbsSimplex.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Def.StatisticalMechanics.Code.Ising.DLR
-open MeasureTheory ProbabilityTheory MeasurableSpace Set
-open scoped BigOperators ENNReal
-
-set_option linter.style.longLine false
-
-
 namespace StatMech
 
 namespace Ising

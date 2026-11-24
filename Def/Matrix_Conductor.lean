@@ -1,10 +1,13 @@
-import Mathlib
-import Def.Matrix_EulerFactor
-import Theorem.Ideal.Valuation.LowerRamificationGroup
-import Instance.ArtinL_Conductor
-import Notation.ArtinL_Conductor
-
+module
+public import Mathlib
+public import Def.Matrix_EulerFactor
+public import Theorem.Ideal.Valuation.LowerRamificationGroup
+public import Instance.ArtinL_Conductor
+public import Notation.ArtinL_Conductor
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/PlusPairSourceCurrentLimit.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierB.BoundarySourceParity.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierB.PlusPairSourceBoxCurrent.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierB.PairSourceCurrentLimit.Part4
+public import Theorem.StatisticalMechanics.Code.FrontierB.InfiniteCurrentFiniteMarginals
+public import Def.StatisticalMechanics.Code.FrontierB.PlusPairSourceCurrentLimit
+open Filter MeasureTheory
+open scoped ENNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/PlusPairSourceCurrentLimit.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierB.BoundarySourceParity.Part2
-import Theorem.StatisticalMechanics.Code.FrontierB.PlusPairSourceBoxCurrent.Part2
-import Theorem.StatisticalMechanics.Code.FrontierB.PairSourceCurrentLimit.Part4
-import Theorem.StatisticalMechanics.Code.FrontierB.InfiniteCurrentFiniteMarginals
-import Def.StatisticalMechanics.Code.FrontierB.PlusPairSourceCurrentLimit
-open Filter MeasureTheory
-open scoped ENNReal
-
-
 namespace StatMech.FrontierB
 
 open Lattice

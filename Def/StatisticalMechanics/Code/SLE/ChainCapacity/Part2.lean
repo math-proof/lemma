@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/SLE/ChainCapacity.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.SLE.LoewnerCapacity
+public import Theorem.StatisticalMechanics.Code.SLE.LoewnerExistence
+public import Theorem.StatisticalMechanics.Code.SLE.ChainCapacity.Part3
+open Complex Set Filter Topology MeasureTheory
+open scoped NNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/SLE/ChainCapacity.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.SLE.LoewnerCapacity
-import Theorem.StatisticalMechanics.Code.SLE.LoewnerExistence
-import Theorem.StatisticalMechanics.Code.SLE.ChainCapacity.Part3
-open Complex Set Filter Topology MeasureTheory
-open scoped NNReal
-
-
 namespace StatMech.SLE
 
 noncomputable def capacityParametrizedChain_of_sle_realization {Ω : Type*} (κ : ℝ)

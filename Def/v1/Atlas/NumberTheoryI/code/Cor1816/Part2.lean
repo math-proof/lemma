@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Cor1816.lean -/
+module
+public import Def.v1.Atlas.NumberTheoryI.code.DirichletCharacters
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DirichletCharacters
+public import Theorem.v1.Atlas.NumberTheoryI.code.Cor1816.Part2
+open DirichletCharacter
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Cor1816.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.NumberTheoryI.code.DirichletCharacters
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DirichletCharacters
-import Theorem.v1.Atlas.NumberTheoryI.code.Cor1816.Part2
-open DirichletCharacter
-
-
 namespace DirichletCharacter
 
 variable {R : Type*} [CommMonoidWithZero R]

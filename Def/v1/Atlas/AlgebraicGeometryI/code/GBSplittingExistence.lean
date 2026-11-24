@@ -1,5 +1,23 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/GBSplittingExistence.lean -/
+module
+public import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRoch
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRoch
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyP1
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSheavesCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckBirkhoff
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.CohomologyP1.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CoherentSheavesCurves.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.GrothendieckBirkhoff
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.RingTheory.PrincipalIdealDomain
+public import Mathlib.LinearAlgebra.FreeModule.PID
+public import Mathlib.Order.Filter.Basic
+public import Mathlib.Data.Fin.VecNotation
+open BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/GBSplittingExistence.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,23 +25,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRoch
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRoch
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyP1
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSheavesCurves
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckBirkhoff
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.CohomologyP1.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.CoherentSheavesCurves.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.GrothendieckBirkhoff
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.RingTheory.PrincipalIdealDomain
-import Mathlib.LinearAlgebra.FreeModule.PID
-import Mathlib.Order.Filter.Basic
-import Mathlib.Data.Fin.VecNotation
-open BigOperators
-
-
 namespace GBExistence
 
 /-- Combinatorial model for `h⁰(P¹, O(d)) = max(d + 1, 0)`. -/

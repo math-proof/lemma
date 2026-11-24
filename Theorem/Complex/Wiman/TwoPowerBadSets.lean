@@ -1,10 +1,13 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.Analysis.Complex.Wiman.TwoPowerBadSets
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.Analysis.Complex.Wiman.TwoPowerBadSets
 open Filter MeasureTheory Set
 open scoped ENNReal
 open Complex
 
+
+public section
 
 /--
 [exists_finite_wimanExceptionalSet](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/TwoPowerBadSets.lean)

@@ -1,9 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Instance.GroupTheory.Perm.Basics.Part2
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Instance.GroupTheory.Perm.Basics.Part2
 open AlgebraicCombinatorics
 open Equiv
 
+
+public section
 
 section
 -- ac-theorems

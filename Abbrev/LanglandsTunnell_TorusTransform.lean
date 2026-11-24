@@ -1,27 +1,29 @@
-import Theorem.ClassGroup.ProductionPinsGeneral
-import Structure.LanglandsTunnell_JLConverse
-import Def.AutomorphicForm_ConstantTerm
-import Structure.AutomorphicForm_CarrierPins
-import Def.NumberField_AdelicBox
-import Theorem.Complex.NormPowChar
-import Theorem.Matrix.HeckeCosetLocal
-import Structure.M4aHerbrand_IdeleClassVocab
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
-import Mathlib.Probability.ConditionalProbability
-import Structure.AutomorphicForm_WhittakerCoefficient
-import Mathlib.Analysis.Normed.Group.FunctionSeries
-import Theorem.Measure.IdeleProductMeasure
-import Abbrev.AutomorphicForm_ArchType
-import Theorem.Matrix.ArchWeightChar
-import Def.AutomorphicForm_ViaCompactCuspNotion
-import Abbrev.LanglandsTunnell_JLSynthesis
-
+module
+public import Theorem.ClassGroup.ProductionPinsGeneral
+public import Structure.LanglandsTunnell_JLConverse
+public import Def.AutomorphicForm_ConstantTerm
+public import Structure.AutomorphicForm_CarrierPins
+public import Def.NumberField_AdelicBox
+public import Theorem.Complex.NormPowChar
+public import Theorem.Matrix.HeckeCosetLocal
+public import Structure.M4aHerbrand_IdeleClassVocab
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
+public import Mathlib.Probability.ConditionalProbability
+public import Structure.AutomorphicForm_WhittakerCoefficient
+public import Mathlib.Analysis.Normed.Group.FunctionSeries
+public import Theorem.Measure.IdeleProductMeasure
+public import Abbrev.AutomorphicForm_ArchType
+public import Theorem.Matrix.ArchWeightChar
+public import Def.AutomorphicForm_ViaCompactCuspNotion
+public import Abbrev.LanglandsTunnell_JLSynthesis
 set_option autoImplicit false
-
 open IsDedekindDomain NumberField AutomorphicForm
 open NumberField.AdelicLevel NumberField.AdelicBox NumberField.TateGlobal
 open AutomorphicForm.WindowedSiegel
 open LanglandsTunnell.Converse
+
+
+public section
 
 noncomputable section
 

@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/Lindeberg.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.OSSS.Coding.Part6
+public import Theorem.StatisticalMechanics.Code.OSSS.MonotonicOSSS.Part3
+public import Theorem.StatisticalMechanics.Code.OSSS.Lindeberg
+open scoped BigOperators
+open Finset
+set_option linter.style.longLine false
+set_option linter.unusedSectionVars false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/Lindeberg.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.OSSS.Coding.Part6
-import Theorem.StatisticalMechanics.Code.OSSS.MonotonicOSSS.Part3
-import Theorem.StatisticalMechanics.Code.OSSS.Lindeberg
-open scoped BigOperators
-open Finset
-
-set_option linter.style.longLine false
-set_option linter.unusedSectionVars false
-
-
 namespace StatMech
 
 namespace OSSS

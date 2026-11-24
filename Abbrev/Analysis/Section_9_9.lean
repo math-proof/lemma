@@ -1,9 +1,13 @@
-import Mathlib
-import Abbrev.Analysis.Section_6_1.Part17
-import Mathlib.Data.Nat.Nth
-import Theorem.Analysis.Section_9_6
-import Theorem.Analysis.Section_9_9
+module
+public import Mathlib
+public import Abbrev.Analysis.Section_6_1.Part17
+public import Mathlib.Data.Nat.Nth
+public import Theorem.Analysis.Section_9_6
+public import Theorem.Analysis.Section_9_9
 open Chapter6 Filter
+
+
+public section
 
 /-!
 # Analysis I, Section 9.9: Uniform continuity
@@ -19,8 +23,6 @@ Main constructions and results of this section:
 - Continuous functions on compact intervals are uniformly continuous.
 
 -/
-
-
 /--
 Definition 9.9.5.  This is similar but not identical to {name}`Real.CloseSeq` from
 Section 6.1.

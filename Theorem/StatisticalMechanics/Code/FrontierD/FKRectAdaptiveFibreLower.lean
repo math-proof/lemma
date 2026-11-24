@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectAdaptiveFibreLower.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectCutPushforward.Part9
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRandomClusterEventFKG.Part5
+public import Theorem.StatisticalMechanics.Code.Probability.AdaptiveFibreLower
+open scoped BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectAdaptiveFibreLower.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectCutPushforward.Part9
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRandomClusterEventFKG.Part5
-import Theorem.StatisticalMechanics.Code.Probability.AdaptiveFibreLower
-open scoped BigOperators
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/FKUniquenessDensity.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.FK.EdgeMarginal.Part2
+public import Theorem.StatisticalMechanics.Code.FK.Uniqueness
+public import Theorem.StatisticalMechanics.Code.FK.PressureDiff
+open Set Filter Topology
+set_option linter.unusedSectionVars false
+set_option linter.unusedFintypeInType false
+set_option linter.unusedDecidableInType false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/FKUniquenessDensity.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.FK.EdgeMarginal.Part2
-import Theorem.StatisticalMechanics.Code.FK.Uniqueness
-import Theorem.StatisticalMechanics.Code.FK.PressureDiff
-open Set Filter Topology
-
-set_option linter.unusedSectionVars false
-set_option linter.unusedFintypeInType false
-set_option linter.unusedDecidableInType false
-
-
 namespace StatMech
 
 namespace FK

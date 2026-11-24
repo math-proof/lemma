@@ -1,10 +1,13 @@
-import Lemma.Random.KlDiv.eq.F
-import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
-import Mathlib.Topology.Instances.ENNReal.Lemmas
-import Mathlib.Topology.Semicontinuity.Basic
-import Initialize.Tactic.Attr.Basic
+module
+public import Lemma.Random.KlDiv.eq.F
+public import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+public import Mathlib.Topology.Instances.ENNReal.Lemmas
+public import Mathlib.Topology.Semicontinuity.Basic
+public import Initialize.Tactic.Attr.Basic
 open BoundedContinuousFunction ENNReal InformationTheory MeasureTheory Random Real
 
+
+public section
 
 /--
 The Kullback–Leibler divergence is lower semicontinuous for the topology of weak convergence.

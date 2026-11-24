@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.Rep.ContinuousH1
-import Lemma.Int.P2MUtil
+import Theorem.Rep.ContinuousH1
+import Theorem.Int.P2MUtil
 open CategoryTheory groupCohomology
 open Int
 

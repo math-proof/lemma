@@ -1,11 +1,15 @@
--- Carved from Lemma/Definitions/Def_AlgebraicGeometry_OModulePresheafFamilyFramesGradedModule.lean: instance decls only.
-import Mathlib
-import Def.AlgebraicGeometry_OModulePresheafHom
-import Instance.AlgebraicGeometry_ProjTwistDatum
-import Theorem.MvPolynomial.OModulePresheafFamilyFramesGradedModule
-import Def.AlgebraicGeometry_OModulePresheafFamilyFramesGradedModule
-
+module
+public import Mathlib
+public import Def.AlgebraicGeometry_OModulePresheafHom
+public import Instance.AlgebraicGeometry_ProjTwistDatum
+public import Theorem.MvPolynomial.OModulePresheafFamilyFramesGradedModule
+public import Def.AlgebraicGeometry_OModulePresheafFamilyFramesGradedModule
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicGeometry_OModulePresheafFamilyFramesGradedModule.lean: instance decls only.
 
 noncomputable section
 

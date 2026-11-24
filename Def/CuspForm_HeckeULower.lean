@@ -1,8 +1,11 @@
-import Mathlib
-import Def.ModularForm_HeckeOperatorForms
-import Theorems.Thm_ModularForm_heckeU_slash_eq_self_of_mem_Gamma0_div
-
+module
+public import Mathlib
+public import Def.ModularForm_HeckeOperatorForms
+public import Theorems.Thm_ModularForm_heckeU_slash_eq_self_of_mem_Gamma0_div
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

@@ -1,5 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/RiemannRochRiemannForm.lean -/
+module
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochEulerCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochEulerCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannFormRR
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
+public import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannFormRR
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.RiemannRochRiemannForm
+open CanonicalSheafCurves RiemannRochEulerCurves RiemannFormRR
+open SheafCohCurvesFiniteness
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/RiemannRochRiemannForm.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +20,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochEulerCurves
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochEulerCurves
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannFormRR
-import Instance.v1.Atlas.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
-import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannFormRR
-import Structure.v1.Atlas.AlgebraicGeometryI.code.RiemannRochRiemannForm
-open CanonicalSheafCurves RiemannRochEulerCurves RiemannFormRR
-open SheafCohCurvesFiniteness
-
-
 noncomputable section
 
 namespace RiemannRochRiemannForm

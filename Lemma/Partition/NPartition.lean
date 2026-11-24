@@ -1,9 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
 open NPartition
 open scoped BigOperators
 
+
+public section
 
 section
 -- ac-theorems

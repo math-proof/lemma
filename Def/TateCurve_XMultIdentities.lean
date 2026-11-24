@@ -1,12 +1,13 @@
-import Mathlib
-import Def.TateCurve_XMultStructure
-
+module
+public import Mathlib
+public import Def.TateCurve_XMultStructure
 set_option autoImplicit false
-
 set_option linter.unusedSectionVars false
-
 open scoped NNReal
 open IsUltrametricDist Filter Finset
+
+
+public section
 
 namespace TateCurve
 

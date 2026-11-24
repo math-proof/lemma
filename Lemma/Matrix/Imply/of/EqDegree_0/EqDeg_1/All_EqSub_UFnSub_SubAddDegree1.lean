@@ -3,7 +3,7 @@ import Initialize.Tactic.Attr.Basic
 import Lemma.Valuation.DivisorClassGroup
 import Lemma.Submodule.Repartitions
 import Lemma.Submodule.AdelicIndex
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open AlgebraicCurve Module Submodule Valuation
 

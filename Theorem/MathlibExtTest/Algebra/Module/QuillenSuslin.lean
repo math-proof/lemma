@@ -1,10 +1,12 @@
+module
+public import Theorem.Algebra.Module.QuillenSuslin.Part11
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/Module/QuillenSuslin.lean -/
-
-
-import Theorem.Algebra.Module.QuillenSuslin.Part11
-
-
 -- A finitely generated projective module over a two-variable rational polynomial ring is free.
+
 example {M : Type*} [AddCommGroup M]
     [Module (MvPolynomial (Fin 2) ℚ) M]
     [Module.Finite (MvPolynomial (Fin 2) ℚ) M]

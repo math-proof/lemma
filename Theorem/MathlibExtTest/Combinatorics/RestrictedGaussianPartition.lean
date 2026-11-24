@@ -1,13 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/RestrictedGaussianPartition.lean -/
-
-import Def.Combinatorics.RestrictedGaussianPartition.Part5
-import Lemma.Finset.RestrictedGaussianPartition
-import Mathlib.Algebra.IsPrimePow
-import Mathlib.Data.Nat.Prime.Basic
+module
+public import Def.Combinatorics.RestrictedGaussianPartition.Part5
+public import Theorem.Finset.RestrictedGaussianPartition
+public import Mathlib.Algebra.IsPrimePow
+public import Mathlib.Data.Nat.Prime.Basic
 open MetaMathlibExt
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/RestrictedGaussianPartition.lean -/
 -- q = 1 is rejected: 1 is not a prime power.
+
 example : ¬ IsRestrictedGaussianPartition 1 1 ⟨[1], by decide⟩ := by
   rintro ⟨hprime, -, -⟩
   exact notPrimePowOne hprime

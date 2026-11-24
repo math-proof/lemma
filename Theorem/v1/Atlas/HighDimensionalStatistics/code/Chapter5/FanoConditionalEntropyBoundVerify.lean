@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter5/FanoConditionalEntropyBoundVerify.lean -/
+module
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.InfoTheory.Part3
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.InfoTheory
+open MeasureTheory InformationTheory
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter5/FanoConditionalEntropyBoundVerify.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,11 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.InfoTheory.Part3
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.InfoTheory
-open MeasureTheory InformationTheory
-
 
 #check @InfoTheory.fano_conditional_entropy_bound
 

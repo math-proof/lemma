@@ -1,10 +1,11 @@
+module
+public import Def.Analysis.Asymptotics.CatalanOddTermsShift
+public import Theorem.Real.Asymptotics.CatalanOddTermsShift
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Asymptotics/CatalanOddTermsShift.lean -/
-
-
-import Def.Analysis.Asymptotics.CatalanOddTermsShift
-import Lemma.Real.Asymptotics.CatalanOddTermsShift
-
-
 namespace MathlibExtTest.Analysis.Asymptotics.CatalanOddTermsShift
 
 open scoped BigOperators

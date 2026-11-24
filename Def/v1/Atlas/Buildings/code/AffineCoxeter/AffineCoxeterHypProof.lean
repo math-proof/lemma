@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/AffineCoxeter/AffineCoxeterHypProof.lean -/
+module
+public import Def.v1.Atlas.Buildings.code.AffineCoxeter.FiniteProperParabolicsInstance
+public import Instance.v1.Atlas.Buildings.code.AffineCoxeter.AffineCriterion.Part2
+set_option linter.unusedSectionVars false
+open Finset BigOperators CoxeterGroup TitsCone PerronFrobeniusProof
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/AffineCoxeter/AffineCoxeterHypProof.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.Buildings.code.AffineCoxeter.FiniteProperParabolicsInstance
-import Instance.v1.Atlas.Buildings.code.AffineCoxeter.AffineCriterion.Part2
-set_option linter.unusedSectionVars false
-
-open Finset BigOperators CoxeterGroup TitsCone PerronFrobeniusProof
-
-
 namespace AffineCoxeterHypProof
 
 variable {B : Type*} [DecidableEq B] [Fintype B]

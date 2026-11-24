@@ -1,6 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Section_9_6
-import Theorem.Analysis.Section_11_2.Part6
+module
+public import Mathlib
+public import Theorem.Analysis.Section_9_6
+public import Theorem.Analysis.Section_11_2.Part6
+
+
+public section
+
 /-!
 # Analysis I, Section 11.3: Upper and lower Riemann integrals
 
@@ -15,8 +20,6 @@ Main constructions and results of this section:
 - Upper and lower Riemann sums.
 
 -/
-
-
 namespace Chapter11
 
 open BoundedInterval Chapter9

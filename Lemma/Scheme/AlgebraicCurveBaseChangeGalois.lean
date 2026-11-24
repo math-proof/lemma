@@ -1,18 +1,21 @@
+module
+public import Def.AlgebraicCurve_BaseChangeGalois
+public import Def.AlgebraicCurve_BaseChangeGalois_TorsionRep
+public import Instance.AlgebraicCurve_BaseChangeGalois
+public import Lemma.Valuation.DivisorClassGroup
+public import Mathlib.Algebra.Ring.Action.End
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+set_option autoImplicit false
+
+
+public section
+
 -- Carved: SemilinearAut/toRingAut/baseAut/ofAlgAut -> Def.AlgebraicCurve_BaseChangeGalois
 -- Instances -> Instance.AlgebraicCurve_BaseChangeGalois (this stub imports Instance).
 -- Entangled defs smulValuationSubringEquiv / smulResidueRingEquiv / degZeroSMulHom
 -- live in Instance (public) so instance proofs and GluedPic0 share one constant.
 -- torsionRep / torsionRep_apply -> Def.AlgebraicCurve_BaseChangeGalois_TorsionRep
 -- (imports Instance; Instance must NOT import that module).
-import Def.AlgebraicCurve_BaseChangeGalois
-import Def.AlgebraicCurve_BaseChangeGalois_TorsionRep
-import Instance.AlgebraicCurve_BaseChangeGalois
-import Lemma.Valuation.DivisorClassGroup
-import Mathlib.Algebra.Ring.Action.End
-import Mathlib.LinearAlgebra.Dimension.Finrank
-
-set_option autoImplicit false
-
 noncomputable section
 
 open IsLocalRing

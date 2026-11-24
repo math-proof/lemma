@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/ExactModuleCriteria.lean -/
+module
+public import Def.v1.Atlas.TensorCategories.code.HomExactImpliesExact.Part2
+public import Def.v1.Atlas.TensorCategories.code.ExactModuleCriteria
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/ExactModuleCriteria.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,9 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.TensorCategories.code.HomExactImpliesExact.Part2
-import Def.v1.Atlas.TensorCategories.code.ExactModuleCriteria
 universe v₁ v₂ v₃ u₁ u₂ u₃
 
 

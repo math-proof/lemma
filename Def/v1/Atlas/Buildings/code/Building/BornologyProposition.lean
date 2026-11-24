@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/BornologyProposition.lean -/
+module
+public import Def.v1.Atlas.Buildings.code.Building.BornologyGroups.Part3
+public import Theorem.Set.Empty.in.Bounded
+public import Mathlib.Topology.MetricSpace.Basic
+public import Mathlib.Topology.MetricSpace.Isometry
+set_option linter.unusedSectionVars false
+open Set
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/BornologyProposition.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.Buildings.code.Building.BornologyGroups.Part3
-import Lemma.Set.Empty.in.Bounded
-import Mathlib.Topology.MetricSpace.Basic
-import Mathlib.Topology.MetricSpace.Isometry
-set_option linter.unusedSectionVars false
-
-open Set
-
-
 namespace BornologyProp
 
 variable {G : Type*} {X : Type*}

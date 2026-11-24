@@ -1,10 +1,11 @@
+module
+public import Def.Analysis.Ramanujan.Part1Ch7Entry14Bernoulliasymptotic
+public import Theorem.Real.Ramanujan.Part1Ch7Entry14Bernoulliasymptotic
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Ramanujan/Part1Ch7Entry14Bernoulliasymptotic.lean -/
-
-
-import Def.Analysis.Ramanujan.Part1Ch7Entry14Bernoulliasymptotic
-import Lemma.Real.Ramanujan.Part1Ch7Entry14Bernoulliasymptotic
-
-
 namespace MathlibExtTest.Analysis.Ramanujan.Part1Ch7Entry14Bernoulliasymptotic
 
 open Filter Topology MathlibExt.Analysis.Ramanujan.Part1Ch7.Entry14Bernoulliasymptotic

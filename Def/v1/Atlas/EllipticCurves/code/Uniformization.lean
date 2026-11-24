@@ -1,5 +1,22 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Uniformization.lean -/
+module
+public import Def.v1.Atlas.EllipticCurves.code.EisensteinSeries
+public import Lemma.Complex.Atlas.v1.EllipticCurves.code.EisensteinSeries
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.JInvariant
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Isogenies
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.WeierstrassPOrder
+public import Def.v1.Atlas.EllipticCurves.code.JInvariant
+public import Def.v1.Atlas.EllipticCurves.code.Isogenies.Part13
+public import Theorem.v1.Atlas.EllipticCurves.code.WeierstrassPOrder
+public import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
+public import Mathlib.Analysis.Complex.UpperHalfPlane.MoebiusAction
+public import Mathlib.LinearAlgebra.Matrix.FixedDetMatrices
+public import Mathlib.NumberTheory.Modular
+open Complex PeriodPair
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/Uniformization.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,22 +24,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.EllipticCurves.code.EisensteinSeries
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.EisensteinSeries
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.JInvariant
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.Isogenies
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.WeierstrassPOrder
-import Def.v1.Atlas.EllipticCurves.code.JInvariant
-import Def.v1.Atlas.EllipticCurves.code.Isogenies.Part13
-import Theorem.v1.Atlas.EllipticCurves.code.WeierstrassPOrder
-import Mathlib.Analysis.Complex.UpperHalfPlane.Basic
-import Mathlib.Analysis.Complex.UpperHalfPlane.MoebiusAction
-import Mathlib.LinearAlgebra.Matrix.FixedDetMatrices
-import Mathlib.NumberTheory.Modular
-open Complex PeriodPair
-
-
 noncomputable section
 
 namespace ComplexLattice

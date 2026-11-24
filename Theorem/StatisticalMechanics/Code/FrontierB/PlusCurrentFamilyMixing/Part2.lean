@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/PlusCurrentFamilyMixing.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierB.PlusCurrentSingletonMixing
+public import Def.StatisticalMechanics.Code.FrontierB.PlusCurrentFamilyMixing
+open MeasureTheory Set
+open scoped BigOperators ENNReal symmDiff
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/PlusCurrentFamilyMixing.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.FrontierB.PlusCurrentSingletonMixing
-import Def.StatisticalMechanics.Code.FrontierB.PlusCurrentFamilyMixing
-open MeasureTheory Set
-open scoped BigOperators ENNReal symmDiff
-
-
 namespace StatMech.FrontierB
 
 open Sharpness Ising Lattice

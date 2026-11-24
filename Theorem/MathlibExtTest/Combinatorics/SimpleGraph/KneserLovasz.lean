@@ -1,10 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/KneserLovasz.lean -/
-
-
-import Theorem.Combinatorics.SimpleGraph.KneserLovasz.Part8
-import Lemma.Finset.SimpleGraph.KneserLovasz
+module
+public import Theorem.Combinatorics.SimpleGraph.KneserLovasz.Part8
+public import Theorem.Finset.SimpleGraph.KneserLovasz
 open MathlibExt.Combinatorics.SimpleGraph.KneserLovaszWanted
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/KneserLovasz.lean -/
 
 example (n k : ℕ) (x y : KneserVertex n k) :
     (kneserGraph n k).Adj x y ↔ Disjoint x.val y.val ∧ x ≠ y :=

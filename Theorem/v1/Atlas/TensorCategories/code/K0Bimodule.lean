@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/K0Bimodule.lean -/
+module
+public import Theorem.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
+public import Theorem.Category.Atlas.v1.TensorCategories.code.GrothendieckRing
+public import Mathlib.Algebra.Module.Defs
+public import Mathlib.Algebra.Group.Opposite
+public import Instance.v1.Atlas.TensorCategories.code.K0Bimodule
+set_option maxHeartbeats 800000
+open Finset FusionRing
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/K0Bimodule.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
-import Theorem.Category.Atlas.v1.TensorCategories.code.GrothendieckRing
-import Mathlib.Algebra.Module.Defs
-import Mathlib.Algebra.Group.Opposite
-import Instance.v1.Atlas.TensorCategories.code.K0Bimodule
-set_option maxHeartbeats 800000
-
-open Finset FusionRing
-
-
 namespace FusionRing
 
 variable {ι : Type*} [DecidableEq ι] [Fintype ι] (R : FusionRing ι)

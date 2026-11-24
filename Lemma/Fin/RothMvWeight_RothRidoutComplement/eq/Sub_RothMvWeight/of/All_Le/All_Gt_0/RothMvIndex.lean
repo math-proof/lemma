@@ -1,8 +1,11 @@
-import Mathlib
-import Lemma.Fin.RothRidoutComplement.eq.Sub.of.RothMvIndex
+module
+public import Mathlib
+public import Lemma.Fin.RothRidoutComplement.eq.Sub.of.RothMvIndex
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [roth_ridout_weight_complement](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

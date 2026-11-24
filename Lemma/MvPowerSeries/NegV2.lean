@@ -1,6 +1,9 @@
-import Lemma.MvPowerSeries.EndRingV2
-
+module
+public import Lemma.MvPowerSeries.EndRingV2
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

@@ -1,13 +1,14 @@
+module
+public import Def.Combinatorics.Matroid.Algebraic.Part2
+public import Theorem.Finset.Matroid.Algebraic
+public import Mathlib.FieldTheory.RatFunc.IntermediateField
+public import Mathlib.Algebra.Field.ZMod
+public import Def.MathlibExtTest.Combinatorics.Matroid.Algebraic.Part2
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Matroid/Algebraic.lean -/
-
-
-import Def.Combinatorics.Matroid.Algebraic.Part2
-import Theorem.Finset.Matroid.Algebraic
-import Mathlib.FieldTheory.RatFunc.IntermediateField
-import Mathlib.Algebra.Field.ZMod
-import Def.MathlibExtTest.Combinatorics.Matroid.Algebraic.Part2
-
-
 namespace AlgebraicMatroidTest
 
 example : Matroid.IsAlgebraicOver ℚ testMatroid :=

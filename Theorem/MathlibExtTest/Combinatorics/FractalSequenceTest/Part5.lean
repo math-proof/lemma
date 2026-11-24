@@ -1,12 +1,13 @@
+module
+public import Structure.Combinatorics.FractalSequence
+public import Theorem.Finset.FractalSequence
+public import Mathlib.Tactic
+public import Def.MathlibExtTest.Combinatorics.FractalSequenceTest.Part4
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/FractalSequenceTest.lean -/
-
-
-import Structure.Combinatorics.FractalSequence
-import Theorem.Finset.FractalSequence
-import Mathlib.Tactic
-import Def.MathlibExtTest.Combinatorics.FractalSequenceTest.Part4
-
-
 namespace MetaMathlibExt
 
 example : diagonalFractal.seq 0 = 1 := rfl

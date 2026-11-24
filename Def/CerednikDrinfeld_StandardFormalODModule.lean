@@ -1,10 +1,14 @@
-import Mathlib
-import Def.FormalGroup_NegV2
-import Def.CerednikDrinfeld_SpecialFormalModule
-import Def.CerednikDrinfeld_LubinTateModule
-import Def.FormalGroup_EndRingV2LinearPart
-import Abbrev.CerednikDrinfeld_StandardFormalODModule
-import Notation.CerednikDrinfeld_StandardFormalODModule
+module
+public import Mathlib
+public import Def.FormalGroup_NegV2
+public import Def.CerednikDrinfeld_SpecialFormalModule
+public import Def.CerednikDrinfeld_LubinTateModule
+public import Def.FormalGroup_EndRingV2LinearPart
+public import Abbrev.CerednikDrinfeld_StandardFormalODModule
+public import Notation.CerednikDrinfeld_StandardFormalODModule
+
+
+public section
 
 section BoxBasisLemmaAppendix
 

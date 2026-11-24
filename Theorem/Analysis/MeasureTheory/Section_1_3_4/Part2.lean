@@ -1,6 +1,9 @@
-import Theorem.Analysis.MeasureTheory.Section_1_3_3.Part2
-import Def.Analysis.MeasureTheory.Section_1_3_4.Part2
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_3_3.Part2
+public import Def.Analysis.MeasureTheory.Section_1_3_4.Part2
 
+
+public section
 
 theorem RealAbsolutelyIntegrable.add {d:ℕ} {f g: EuclideanSpace' d → ℝ} (hf: RealAbsolutelyIntegrable f) (hg: RealAbsolutelyIntegrable g) : RealAbsolutelyIntegrable (f + g) := by
   constructor

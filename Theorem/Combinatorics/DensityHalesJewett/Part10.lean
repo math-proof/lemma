@@ -1,26 +1,27 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/DensityHalesJewett.lean -/
+module
+public import Mathlib.Combinatorics.HalesJewett
+public import Mathlib.Basic.Real.Basic
+public import Mathlib.Combinatorics.Pigeonhole
+public import Mathlib.Algebra.BigOperators.Field
+public import Mathlib.Algebra.Order.BigOperators.Expect
+public import Mathlib.Algebra.Order.Archimedean.Basic
+public import Mathlib.Algebra.Order.Ring.Pow
+public import Mathlib.Analysis.Real.Pi.Wallis
+public import Mathlib.Combinatorics.SetFamily.LYM
+public import Mathlib.Data.Nat.Choose.Central
+public import Mathlib.Data.Finset.Lattice.Basic
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Tactic
+public import Def.Combinatorics.DensityHalesJewett.Part11
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/DensityHalesJewett.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
-
-import Mathlib.Combinatorics.HalesJewett
-import Mathlib.Basic.Real.Basic
-import Mathlib.Combinatorics.Pigeonhole
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Algebra.Order.BigOperators.Expect
-import Mathlib.Algebra.Order.Archimedean.Basic
-import Mathlib.Algebra.Order.Ring.Pow
-import Mathlib.Analysis.Real.Pi.Wallis
-import Mathlib.Combinatorics.SetFamily.LYM
-import Mathlib.Data.Nat.Choose.Central
-import Mathlib.Data.Finset.Lattice.Basic
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Tactic
-import Def.Combinatorics.DensityHalesJewett.Part11
 /-! Proves the density Hales–Jewett theorem and the Graham–Rothschild theorem for lines. -/
-
-
 namespace MathlibExt.Combinatorics.DensityHalesJewettWanted
 
 open scoped Finset

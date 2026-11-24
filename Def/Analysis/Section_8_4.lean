@@ -1,8 +1,12 @@
-import Mathlib
-import Theorem.Analysis.Section_8_1.Part4
-import Theorem.Analysis.Section_8_2.Part4
-import Abbrev.Analysis.Section_8_4
+module
+public import Mathlib
+public import Theorem.Analysis.Section_8_1.Part4
+public import Theorem.Analysis.Section_8_2.Part4
+public import Abbrev.Analysis.Section_8_4
 set_option doc.verso.suggestions false
+
+
+public section
 
 /-!
 # Analysis I, Section 8.4: The axiom of choice
@@ -29,8 +33,6 @@ It is theoretically possible to restore this distinction by removing the relianc
 working throughout with custom structures such as `Chapter3.SetTheory` and
 `Chapter3.SetTheoryWithChoice`, but this would be extremely tedious and not attempted here.
 -/
-
-
 namespace Chapter8
 
 /-- Equivalence with Mathlib's product -/

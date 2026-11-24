@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/CriticalIntegrability.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.CriticalTransfer.Part2
+public import Def.StatisticalMechanics.Code.Onsager.CriticalIntegrability.Part2
+open scoped Real
+open MeasureTheory Interval
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/CriticalIntegrability.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.CriticalTransfer.Part2
-import Def.StatisticalMechanics.Code.Onsager.CriticalIntegrability.Part2
-open scoped Real
-open MeasureTheory Interval
-
-
 namespace StatMech.Onsager
 
 theorem ons_inner_integral_norm_le (beta k1 : ℝ)

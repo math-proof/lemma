@@ -1,17 +1,19 @@
-import Mathlib
-import Structure.ModularCurve_X0
-import Abbrev.ModularCurve_IgusaScheme
-import Instance.AlgebraicCurve_TwoChartIntegralModel
-import Structure.AlgebraicCurve_CurveModel
-import Instance.ModularCurve_GeometricBaseChange
-import Instance.ModularCurve_ArithmeticGalois
-import Structure.AlgebraicGeometry_NeronModelPropertyBundleCarrier
-import Def.ModularCurve_SupersingularModuli
-import Structure.AlgebraicGeometry_TwoAffineOpenCover
-
+module
+public import Mathlib
+public import Structure.ModularCurve_X0
+public import Abbrev.ModularCurve_IgusaScheme
+public import Instance.AlgebraicCurve_TwoChartIntegralModel
+public import Structure.AlgebraicCurve_CurveModel
+public import Instance.ModularCurve_GeometricBaseChange
+public import Instance.ModularCurve_ArithmeticGalois
+public import Structure.AlgebraicGeometry_NeronModelPropertyBundleCarrier
+public import Def.ModularCurve_SupersingularModuli
+public import Structure.AlgebraicGeometry_TwoAffineOpenCover
 set_option autoImplicit false
-
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry NeronModelInfra ModularCurve AlgebraicCurve IsLocalRing
+
+
+public section
 
 noncomputable section
 

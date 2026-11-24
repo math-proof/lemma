@@ -1,5 +1,20 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/jc5_core.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Walls.jc4_core.Part3
+public import Theorem.StatisticalMechanics.Code.Walls.jc4_firstreturnK.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.jc4_tailnotprobed
+public import Theorem.StatisticalMechanics.Code.Walls.jc5_firstreturn
+public import Theorem.StatisticalMechanics.Code.Walls.jc5_singlecycle.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.jc5_earframe.Part3
+public import Theorem.StatisticalMechanics.Code.Walls.jc5_footprintdartsfinite
+public import Theorem.StatisticalMechanics.Code.Lattice.DartOrbit.Part6
+public import Theorem.StatisticalMechanics.Code.Walls.jc5_core
+open SimpleGraph Function Set
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/jc5_core.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,21 +22,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Walls.jc4_core.Part3
-import Theorem.StatisticalMechanics.Code.Walls.jc4_firstreturnK.Part2
-import Theorem.StatisticalMechanics.Code.Walls.jc4_tailnotprobed
-import Theorem.StatisticalMechanics.Code.Walls.jc5_firstreturn
-import Theorem.StatisticalMechanics.Code.Walls.jc5_singlecycle.Part2
-import Theorem.StatisticalMechanics.Code.Walls.jc5_earframe.Part3
-import Theorem.StatisticalMechanics.Code.Walls.jc5_footprintdartsfinite
-import Theorem.StatisticalMechanics.Code.Lattice.DartOrbit.Part6
-import Theorem.StatisticalMechanics.Code.Walls.jc5_core
-open SimpleGraph Function Set
-
-
 namespace StatMech
 
 namespace Walls

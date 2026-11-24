@@ -1,7 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Section_6_7.Part2
-import Theorem.Analysis.Section_6_epilogue
+module
+public import Mathlib
+public import Theorem.Analysis.Section_6_7.Part2
+public import Theorem.Analysis.Section_6_epilogue
 open Filter
+
+
+public section
 
 /-!
 # Analysis I, Chapter 6 epilogue: Connections with Mathlib limits
@@ -12,8 +16,6 @@ that Mathlib's operations are defined in far greater generality than the setting
 sequences, in particular using the language of filters.
 
 -/
-
-
 /-- A technicality: {name}`CauSeq.IsComplete` {lean}`ℝ` was established for {name}`_root_.abs` but not for {name}`norm`. -/
 instance inst_real_complete : CauSeq.IsComplete ℝ norm := by convert Real.instIsCompleteAbs
 

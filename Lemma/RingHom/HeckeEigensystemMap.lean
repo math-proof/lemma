@@ -1,7 +1,10 @@
-import Def.AutomorphicForm_HeckeEigensystem
-import Def.AutomorphicForm_HeckeEigensystemMap
-
+module
+public import Def.AutomorphicForm_HeckeEigensystem
+public import Def.AutomorphicForm_HeckeEigensystemMap
 open IsDedekindDomain NumberField
+
+
+public section
 
 namespace AutomorphicForm
 

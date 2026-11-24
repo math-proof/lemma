@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/BeffaraDC/Dichotomy.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.BeffaraDC.SelfDualValue
+public import Theorem.StatisticalMechanics.Code.BeffaraDC.RussoHamming.Part2
+public import Theorem.StatisticalMechanics.Code.BeffaraDC.FiniteMoments.Part3
+public import Theorem.StatisticalMechanics.Code.BeffaraDC.AnnulusDefs.Part10
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/BeffaraDC/Dichotomy.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.BeffaraDC.SelfDualValue
-import Theorem.StatisticalMechanics.Code.BeffaraDC.RussoHamming.Part2
-import Theorem.StatisticalMechanics.Code.BeffaraDC.FiniteMoments.Part3
-import Theorem.StatisticalMechanics.Code.BeffaraDC.AnnulusDefs.Part10
-
-
 namespace StatMech
 
 namespace BeffaraDC

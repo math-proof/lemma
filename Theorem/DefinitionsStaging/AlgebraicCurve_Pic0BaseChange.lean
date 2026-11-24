@@ -1,8 +1,11 @@
-import Lemma.Definitions.Def_AlgebraicCurve_ConstantFieldPullback
-import Lemma.Definitions.Def_ModularCurve_DegeneracyVp
-import Def.AlgebraicCurve_Pic0BaseChange
+module
+public import Lemma.Definitions.Def_AlgebraicCurve_ConstantFieldPullback
+public import Lemma.Definitions.Def_ModularCurve_DegeneracyVp
+public import Def.AlgebraicCurve_Pic0BaseChange
 set_option autoImplicit false
 
+
+public section
 
 noncomputable section
 

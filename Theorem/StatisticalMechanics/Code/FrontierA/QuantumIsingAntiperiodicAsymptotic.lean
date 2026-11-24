@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/QuantumIsingAntiperiodicAsymptotic.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingSymbolAsymptotic.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingAntiperiodicReduction
+open Filter Set
+open scoped Topology BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/QuantumIsingAntiperiodicAsymptotic.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingSymbolAsymptotic.Part2
-import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingAntiperiodicReduction
-open Filter Set
-open scoped Topology BigOperators
-
-
 namespace StatMech.FrontierA
 
 theorem spectralRoot_eq_exp_arcosh {a : Real} (ha : 1 ≤ a) :

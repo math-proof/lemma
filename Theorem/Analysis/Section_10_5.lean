@@ -1,8 +1,13 @@
-import Mathlib
-import Theorem.Analysis.Section_9_1.Part3
-import Theorem.Analysis.Section_10_1.Part2
-import Abbrev.Analysis.Section_10_2
+module
+public import Mathlib
+public import Theorem.Analysis.Section_9_1.Part3
+public import Theorem.Analysis.Section_10_1.Part2
+public import Abbrev.Analysis.Section_10_2
 open Chapter9
+
+
+public section
+
 /-!
 # Analysis I, Section 10.5: L'Hôpital's rule
 
@@ -16,8 +21,6 @@ Main constructions and results of this section:
 - L'Hôpital's rule.
 
 -/
-
-
 namespace Chapter10
 
 /-- Proposition 10.5.2 (L'Hôpital's rule, II) -/

@@ -1,12 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/MeasureTheory/Measure/Lebesgue/TriangleArea.lean -/
-
-
-import Theorem.MeasureTheory.Measure.Lebesgue.TriangleArea.Part3
-import Lemma.Measure.Lebesgue.TriangleArea
-import Mathlib.Tactic
+module
+public import Theorem.MeasureTheory.Measure.Lebesgue.TriangleArea.Part3
+public import Theorem.Measure.Lebesgue.TriangleArea
+public import Mathlib.Tactic
 open MeasureTheory
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/MeasureTheory/Measure/Lebesgue/TriangleArea.lean -/
 namespace MathlibExtTest.MeasureTheory.Measure.Lebesgue.TriangleArea
 
 -- The coordinate right triangle has area one half.

@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/TriangularIsingGeneralSymbol.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.LogNonnegativeSinusoid
+public import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingSymbol.Part2
+public import Mathlib.Analysis.SpecialFunctions.Artanh
+public import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingGeneralSymbol
+open MeasureTheory
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/TriangularIsingGeneralSymbol.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.FrontierA.LogNonnegativeSinusoid
-import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingSymbol.Part2
-import Mathlib.Analysis.SpecialFunctions.Artanh
-import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingGeneralSymbol
-open MeasureTheory
-
-
 namespace StatMech.FrontierA
 
 def triangularIsingZ2Sign (e : Fin 2) : Real :=

@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/WeilChatelet.lean -/
+module
+public import Def.v1.Atlas.ArithmeticGeometry.code.Torsors
+public import Def.v1.Atlas.ArithmeticGeometry.code.EllipticCurves.Part7
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.EllipticCurves
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Divisors
+public import Def.v1.Atlas.ArithmeticGeometry.code.Divisors.Part11
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.WeilChatelet.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/WeilChatelet.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.ArithmeticGeometry.code.Torsors
-import Def.v1.Atlas.ArithmeticGeometry.code.EllipticCurves.Part7
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.EllipticCurves
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Divisors
-import Def.v1.Atlas.ArithmeticGeometry.code.Divisors.Part11
-import Theorem.v1.Atlas.ArithmeticGeometry.code.WeilChatelet.Part2
 /-- Abstract predicate: the type `C_pts` represents the points of a smooth curve of arithmetic
 genus 1 over $k$. The concrete content is deferred via `sorry`. -/
 /-- An $E$-torsor over $k$ is nonempty (since `AddTorsor` requires nonemptiness). -/
@@ -21,8 +24,6 @@ genus 1 over $k$. The concrete content is deferred via `sorry`. -/
 that intertwines the $E$-actions: $e(p +_v q) = p +_v e(q)$. -/
 /-- The *Weil-Châtelet set* of $E/k$: the set of $E$-torsors over $k$ up to $k$-isomorphism,
 realised as the quotient of `ETorsor` by the equivalence relation. -/
-
-
 namespace ETorsor
 
 variable {k : Type u} [Field k] {W : WeierstrassCurve k} [W.IsElliptic]

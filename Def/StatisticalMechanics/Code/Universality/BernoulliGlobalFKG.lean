@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/BernoulliGlobalFKG.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.Ergodicity
+public import Theorem.StatisticalMechanics.Code.Probability.InfiniteHarris.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.BXPAspectTransfer
+public import Theorem.StatisticalMechanics.Code.Universality.RSWLowestCrossing.Part101
+open MeasureTheory Set Filter
+open scoped ENNReal NNReal symmDiff
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/BernoulliGlobalFKG.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FK.Ergodicity
-import Theorem.StatisticalMechanics.Code.Probability.InfiniteHarris.Part3
-import Theorem.StatisticalMechanics.Code.Universality.BXPAspectTransfer
-import Theorem.StatisticalMechanics.Code.Universality.RSWLowestCrossing.Part101
-open MeasureTheory Set Filter
-open scoped ENNReal NNReal symmDiff
-
-
 namespace StatMech
 
 namespace Universality

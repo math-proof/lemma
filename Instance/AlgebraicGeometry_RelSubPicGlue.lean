@@ -1,11 +1,15 @@
--- Carved from Lemma/Definitions/Def_AlgebraicGeometry_RelSubPicGlue.lean: instance decls only.
-import Mathlib
-import Instance.AlgebraicGeometry_LocalRepresentabilityULift
-import Def.AlgebraicGeometry_RelSubPicPresheaf
-import Theorem.Scheme.RelSubPicGlue
-import Def.AlgebraicGeometry_RelSubPicGlue
-
+module
+public import Mathlib
+public import Instance.AlgebraicGeometry_LocalRepresentabilityULift
+public import Def.AlgebraicGeometry_RelSubPicPresheaf
+public import Theorem.Scheme.RelSubPicGlue
+public import Def.AlgebraicGeometry_RelSubPicGlue
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicGeometry_RelSubPicGlue.lean: instance decls only.
 
 universe w v u
 

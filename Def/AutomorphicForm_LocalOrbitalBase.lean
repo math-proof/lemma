@@ -1,10 +1,12 @@
-import Mathlib
-import Lemma.Matrix.FactorizableTestFn
-import Abbrev.AutomorphicForm_LocalOrbitalBase
-
+module
+public import Mathlib
+public import Theorem.Matrix.FactorizableTestFn
+public import Abbrev.AutomorphicForm_LocalOrbitalBase
 set_option autoImplicit false
-
 open NumberField IsDedekindDomain MeasureTheory TopologicalSpace
+
+
+public section
 
 noncomputable section
 

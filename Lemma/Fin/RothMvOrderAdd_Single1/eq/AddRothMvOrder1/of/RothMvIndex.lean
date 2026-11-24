@@ -1,8 +1,11 @@
-import Mathlib
-import Lemma.Fin.EqRothMvOrder_Single
+module
+public import Mathlib
+public import Lemma.Fin.EqRothMvOrder_Single
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [rothMvOrder_add_single_one](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

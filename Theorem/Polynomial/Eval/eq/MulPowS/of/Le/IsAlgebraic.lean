@@ -1,0 +1,38 @@
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.NumberTheory.RothAuxiliary
+public import Def.NumberTheory.RothAuxiliary.Part7
+public import Theorem.Polynomial.Eval.eq.PowMulLeadingCoeffRothIntPolynomial.of.IsAlgebraic
+open MathlibExt.NumberTheory.RothAuxiliary
+open Polynomial
+
+
+public section
+
+/--
+[rothScaledPowerCoord_eval](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)
+-/
+@[path]
+private theorem main
+  (α : ℝ)
+  {S n : ℕ}
+-- given
+  (hn : n ≤ S)
+  (hα : IsAlgebraic ℚ α) :
+-- imply
+  eval₂ (algebraMap ℤ ℝ)
+    (((rothIntPolynomial α).leadingCoeff : ℝ) * α)
+    (rothScaledPowerCoord α S n) =
+    ((rothIntPolynomial α).leadingCoeff : ℝ) ^ S * α ^ n := by
+-- proof
+  let a := (rothIntPolynomial α).leadingCoeff
+  rw [rothScaledPowerCoord, eval₂_mul, eval₂_C,
+    Eval.eq.PowMulLeadingCoeffRothIntPolynomial.of.IsAlgebraic α n hα]
+  change ((a ^ (S - n) : ℤ) : ℝ) * (((a : ℝ) * α) ^ n) = _
+  push_cast
+  rw [mul_pow, ← mul_assoc, ← pow_add, Nat.sub_add_cancel hn]
+
+
+-- created on 2026-10-21
+-- updated on 2026-11-13

@@ -1,9 +1,12 @@
-import Mathlib.Data.EReal.Basic
-import Mathlib.Probability.ProbabilityMassFunction.Basic
-import Lemma.Real.Sum_Mul_LogDiv.ge.Zero.of.EqSum_1.All_Gt_0.EqSum_1.All_Ge_0
-import Initialize.Tactic.Attr.Basic
+module
+public import Mathlib.Data.EReal.Basic
+public import Mathlib.Probability.ProbabilityMassFunction.Basic
+public import Lemma.Real.Sum_Mul_LogDiv.ge.Zero.of.EqSum_1.All_Gt_0.EqSum_1.All_Ge_0
+public import Initialize.Tactic.Attr.Basic
 open Finset Real
 
+
+public section
 
 private lemma sum_toReal [Fintype α] (μ : PMF α) : ∑ a, (μ a).toReal = 1 := by
   have hsum : ∑ a, μ a = 1 := by

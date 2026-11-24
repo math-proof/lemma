@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/rc10core.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Walls.rc9core.Part2
+public import Theorem.StatisticalMechanics.Code.Inequalities.ReimerCompressLib.Part2
+public import Theorem.StatisticalMechanics.Code.Inequalities.ReimerIterationClose.Part4
+public import Theorem.StatisticalMechanics.Code.Walls.rc10core
+open Finset
+open scoped FinsetFamily StatMech NNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/rc10core.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Walls.rc9core.Part2
-import Theorem.StatisticalMechanics.Code.Inequalities.ReimerCompressLib.Part2
-import Theorem.StatisticalMechanics.Code.Inequalities.ReimerIterationClose.Part4
-import Theorem.StatisticalMechanics.Code.Walls.rc10core
-open Finset
-open scoped FinsetFamily StatMech NNReal
-
-
 namespace StatMech.Walls
 
 open StatMech ConfigSpace

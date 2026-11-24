@@ -1,6 +1,7 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras.Part3
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras.Part3
 open MeasureTheory Set MeasuresAndSigmaAlgebras
 open scoped ENNReal
 open scoped NNReal
@@ -8,6 +9,8 @@ open CompactlySupportedContinuousMap
 open Measure RealRMK
 open scoped CompactlySupported ZeroAtInfty
 
+
+public section
 
 namespace MeasuresAndSigmaAlgebras
 

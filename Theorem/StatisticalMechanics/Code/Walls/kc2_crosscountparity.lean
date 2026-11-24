@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/kc2_crosscountparity.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
+public import Theorem.StatisticalMechanics.Code.Lattice.CrossingParity.Part2
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanExteriorClosure.Part8
+open Set SimpleGraph Function
+open StatMech.Lattice
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/kc2_crosscountparity.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
-import Theorem.StatisticalMechanics.Code.Lattice.CrossingParity.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.JordanExteriorClosure.Part8
-open Set SimpleGraph Function
-open StatMech.Lattice
-
-
 namespace StatMech.Walls
 
 theorem kc2_crossCount_parity (S : Set (Site 2)) {x y : Site 2}

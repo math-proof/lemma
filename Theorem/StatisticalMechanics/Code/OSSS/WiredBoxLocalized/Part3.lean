@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/WiredBoxLocalized.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.OSSS.LocalizedCrossTree
+public import Theorem.StatisticalMechanics.Code.OSSS.WiredBoxDifferential.Part5
+public import Theorem.StatisticalMechanics.Code.FK.WiredDomChain.Part4
+public import Theorem.StatisticalMechanics.Code.FK.OffCentreSandwichProof.Part6
+public import Theorem.StatisticalMechanics.Code.OSSS.WiredDenominatorArithmetic
+public import Def.StatisticalMechanics.Code.OSSS.WiredBoxLocalized.Part3
+open scoped BigOperators Classical
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/WiredBoxLocalized.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.OSSS.LocalizedCrossTree
-import Theorem.StatisticalMechanics.Code.OSSS.WiredBoxDifferential.Part5
-import Theorem.StatisticalMechanics.Code.FK.WiredDomChain.Part4
-import Theorem.StatisticalMechanics.Code.FK.OffCentreSandwichProof.Part6
-import Theorem.StatisticalMechanics.Code.OSSS.WiredDenominatorArithmetic
-import Def.StatisticalMechanics.Code.OSSS.WiredBoxLocalized.Part3
-open scoped BigOperators Classical
-
-
 namespace StatMech
 
 namespace OSSS

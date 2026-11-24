@@ -1,5 +1,269 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/NumberTheoryI.lean -/
+module
+public import Theorem.v1.Atlas.NumberTheoryI.code.AbelSummationSummable
+public import Def.v1.Atlas.NumberTheoryI.code.Adeles.Part10
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Adeles
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.AdicCompletionAlgebra
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.AnalyticClassNumber
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ArithmeticFunctions
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ArtinUnramified
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.CDVRExtensions
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.CRTHelper
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Ch22Conductor
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Ch22ConductorDef
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Ch22NormGroup
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Ch22WeberLFunction
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter1.AbsoluteValues
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter1.IntegralClosure
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter1.Valuations
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter14.ClassGroupFinite
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter3.DedekindProperties
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter4.SepClosedDecomp
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter4.TensorSplitting
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter4.Theorem440
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.CompleteFields
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ComplexAnalysis
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ConductorOrders
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor1015
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor1015IntegralClosureDVR
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor1126
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor1816
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor2222
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor227
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor2322
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor2328
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor2344
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.CyclotomicDVRInstances
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.CyclotomicRamification
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DedekindExtensions
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DedekindFactorization
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DedekindProperties
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Def2213
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DifferentDiscriminant
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DirectLimits
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DirichletCharacters
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DirichletL
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DirichletSeries
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DirichletUnits
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.EisensteinRamified
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.EtaleAlgebrasProps
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.FinitePlaceAbsValue
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.FourierAnalysis
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.FractionalIdeals
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.FunctionalEquation
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GaloisExtensions
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GeometryOfNumbers
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GlobalCFT
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GlobalCFTMain
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GlobalFields
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GroupCohomology
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GroupCounts
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.HenselBridgeLemmas
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.HenselDefs
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.HenselFactorization
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.HenselLemmas
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.IdealFactorization
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.IdealNorms
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.IdeleNorm
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Ideles
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.InverseLimits
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.KrasnerLemma
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.KroneckerWeber
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.KroneckerWeberLocal2
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Lem168
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Lem2226
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Lem225
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Lem2326
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Lemma188
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.LocalCFT
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.LocalExtensions
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.LocalFields
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.LocalGlobal
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.LocalizationDedekind
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.PNT
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.PairingsTheorems
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.PrimeSplitting
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ProductFormula
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Prop1215
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Prop1228
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Prop2219
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Prop2221
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Prop2225
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Prop226
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Prop229
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Prop22_4_RayClassGroup
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Prop255
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.RamificationTypes
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.RayClassFields
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ResidueFieldFunctor
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ResidueFieldHelper
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ScalingStep
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.StieltjesIntegral
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.TateCohomology
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Theorem2220
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ThetaFunction
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Thm1023
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Thm2214
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Thm2321
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.TracePairing
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.UnramBridge
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ValuationBijection
+public import Theorem.v1.Atlas.NumberTheoryI.code.AdicCompletionAlgebra.Part3
+public import Instance.v1.Atlas.NumberTheoryI.code.AnalyticClassNumber.Part3
+public import Def.v1.Atlas.NumberTheoryI.code.ArithmeticFunctions.Part4
+public import Def.v1.Atlas.NumberTheoryI.code.ArtinUnramified.Part14
+public import Instance.v1.Atlas.NumberTheoryI.code.CDVRExtensions
+public import Theorem.v1.Atlas.NumberTheoryI.code.CRTHelper
+public import Def.v1.Atlas.NumberTheoryI.code.Ch22Conductor
+public import Def.v1.Atlas.NumberTheoryI.code.Ch22ConductorDef
+public import Theorem.v1.Atlas.NumberTheoryI.code.Ch22NormGroup.Part4
+public import Instance.v1.Atlas.NumberTheoryI.code.Ch22WeberLFunction
+public import Def.v1.Atlas.NumberTheoryI.code.Chapter1.AbsoluteValues.Part2
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter1.DVR
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter1.NumberField
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter3.FiniteApproximation
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter4.EtaleAlgebras
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.CoprimePrincipal
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor1815
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor1838
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor2360
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor2365
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor913
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DedekindUFDPID
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.EtaleAlgebras
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GammaFunction
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.KummerInertiaDeg
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Lem168LowerBound
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Lem1812
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Lem2358
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Lem2364
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Lemma247
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.NormTrace
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Prop1824
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Prop1837
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Prop2357
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Prop256
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.RiemannZeta
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Theorem2229
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Thm1829
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Thm2350
+public import Abbrev.v1.Atlas.NumberTheoryI.code.Chapter1.IntegralClosure
+public import Abbrev.v1.Atlas.NumberTheoryI.code.Chapter1.LocalRings
+public import Def.v1.Atlas.NumberTheoryI.code.Chapter1.Valuations.Part2
+public import Def.v1.Atlas.NumberTheoryI.code.Chapter14.ClassGroupFinite
+public import Def.v1.Atlas.NumberTheoryI.code.Chapter3.DedekindProperties.Part2
+public import Def.v1.Atlas.NumberTheoryI.code.Chapter4.SepClosedDecomp.Part2
+public import Def.v1.Atlas.NumberTheoryI.code.Chapter4.TensorSplitting.Part2
+public import Theorem.v1.Atlas.NumberTheoryI.code.Chapter4.Theorem440
+public import Theorem.v1.Atlas.NumberTheoryI.code.CompleteFields.Part2
+public import Def.v1.Atlas.NumberTheoryI.code.ComplexAnalysis.Part2
+public import Class.v1.Atlas.NumberTheoryI.code.ConductorOrders.Part2
+public import Abbrev.v1.Atlas.NumberTheoryI.code.Cor1015
+public import Theorem.v1.Atlas.NumberTheoryI.code.Cor1015IntegralClosureDVR
+public import Def.v1.Atlas.NumberTheoryI.code.Cor1126
+public import Def.v1.Atlas.NumberTheoryI.code.Cor1816.Part2
+public import Def.v1.Atlas.NumberTheoryI.code.Cor1828
+public import Def.v1.Atlas.NumberTheoryI.code.Cor1835
+public import Theorem.v1.Atlas.NumberTheoryI.code.Cor2222
+public import Theorem.v1.Atlas.NumberTheoryI.code.Cor227.Part2
+public import Def.v1.Atlas.NumberTheoryI.code.Cor2322
+public import Def.v1.Atlas.NumberTheoryI.code.Cor2328
+public import Instance.v1.Atlas.NumberTheoryI.code.Cor2344
+public import Instance.v1.Atlas.NumberTheoryI.code.Cor2361
+public import Instance.v1.Atlas.NumberTheoryI.code.CyclotomicDVRInstances
+public import Theorem.v1.Atlas.NumberTheoryI.code.CyclotomicRamification
+public import Theorem.v1.Atlas.NumberTheoryI.code.DedekindCriterion
+public import Theorem.v1.Atlas.NumberTheoryI.code.DedekindExtensions.Part4
+public import Theorem.v1.Atlas.NumberTheoryI.code.DedekindFactorization
+public import Def.v1.Atlas.NumberTheoryI.code.DedekindProperties
+public import Def.v1.Atlas.NumberTheoryI.code.Def2213
+public import Instance.v1.Atlas.NumberTheoryI.code.Def2371.Part2
+public import Def.v1.Atlas.NumberTheoryI.code.Def2376.Part2
+public import Def.v1.Atlas.NumberTheoryI.code.DifferentDiscriminant.Part3
+public import Def.v1.Atlas.NumberTheoryI.code.DirectLimits.Part2
+public import Def.v1.Atlas.NumberTheoryI.code.DirichletCharacters
+public import Abbrev.v1.Atlas.NumberTheoryI.code.DirichletL
+public import Def.v1.Atlas.NumberTheoryI.code.DirichletSeries.Part4
+public import Def.v1.Atlas.NumberTheoryI.code.DirichletUnits
+public import Abbrev.v1.Atlas.NumberTheoryI.code.EisensteinRamified
+public import Instance.v1.Atlas.NumberTheoryI.code.EtaleAlgebrasProps
+public import Theorem.v1.Atlas.NumberTheoryI.code.FinitePlaceAbsValue
+public import Abbrev.v1.Atlas.NumberTheoryI.code.FourierAnalysis
+public import Def.v1.Atlas.NumberTheoryI.code.FractionalIdeals.Part2
+public import Def.v1.Atlas.NumberTheoryI.code.FunctionalEquation
+public import Def.v1.Atlas.NumberTheoryI.code.GaloisExtensions.Part4
+public import Def.v1.Atlas.NumberTheoryI.code.GeometryOfNumbers.Part2
+public import Structure.v1.Atlas.NumberTheoryI.code.GlobalCFT.Part3
+public import Def.v1.Atlas.NumberTheoryI.code.GlobalCFTMain.Part2
+public import Abbrev.v1.Atlas.NumberTheoryI.code.GlobalFields
+public import Def.v1.Atlas.NumberTheoryI.code.GroupCohomology.Part9
+public import Theorem.v1.Atlas.NumberTheoryI.code.GroupCounts.Part8
+public import Theorem.v1.Atlas.NumberTheoryI.code.HenselBridgeLemmas
+public import Def.v1.Atlas.NumberTheoryI.code.HenselDefs
+public import Theorem.v1.Atlas.NumberTheoryI.code.HenselFactorization
+public import Instance.v1.Atlas.NumberTheoryI.code.HenselLemmas
+public import Theorem.v1.Atlas.NumberTheoryI.code.IdealFactorization.Part3
+public import Def.v1.Atlas.NumberTheoryI.code.IdealNorms
+public import Def.v1.Atlas.NumberTheoryI.code.IdeleNorm.Part4
+public import Def.v1.Atlas.NumberTheoryI.code.Ideles.Part3
+public import Def.v1.Atlas.NumberTheoryI.code.InfinitePlaceBaseChange
+public import Def.v1.Atlas.NumberTheoryI.code.InverseLimits.Part2
+public import Def.v1.Atlas.NumberTheoryI.code.KrasnerLemma
+public import Def.v1.Atlas.NumberTheoryI.code.KroneckerWeber.Part5
+public import Theorem.v1.Atlas.NumberTheoryI.code.KroneckerWeberLocal2.Part2
+public import Def.v1.Atlas.NumberTheoryI.code.LaplaceTransform
+public import Abbrev.v1.Atlas.NumberTheoryI.code.Lem168
+public import Theorem.v1.Atlas.NumberTheoryI.code.Lem2226
+public import Def.v1.Atlas.NumberTheoryI.code.Lem225
+public import Def.v1.Atlas.NumberTheoryI.code.Lem2326
+public import Abbrev.v1.Atlas.NumberTheoryI.code.Lem2327
+public import Def.v1.Atlas.NumberTheoryI.code.Lem2373
+public import Def.v1.Atlas.NumberTheoryI.code.Lem2374
+public import Instance.v1.Atlas.NumberTheoryI.code.Lem2377
+public import Def.v1.Atlas.NumberTheoryI.code.Lem2378
+public import Def.v1.Atlas.NumberTheoryI.code.Lemma188
+public import Def.v1.Atlas.NumberTheoryI.code.LocalCFT.Part3
+public import Theorem.v1.Atlas.NumberTheoryI.code.LocalExtensions.Part2
+public import Def.v1.Atlas.NumberTheoryI.code.LocalFields.Part9
+public import Abbrev.v1.Atlas.NumberTheoryI.code.LocalGlobal
+public import Instance.v1.Atlas.NumberTheoryI.code.LocalizationDedekind
+public import Def.v1.Atlas.NumberTheoryI.code.PNT
+public import Def.v1.Atlas.NumberTheoryI.code.Pairings.Part2
+public import Def.v1.Atlas.NumberTheoryI.code.PairingsTheorems.Part3
+public import Def.v1.Atlas.NumberTheoryI.code.PrimeSplitting
+public import Class.v1.Atlas.NumberTheoryI.code.ProductFormula
+public import Theorem.v1.Atlas.NumberTheoryI.code.Prop1215
+public import Def.v1.Atlas.NumberTheoryI.code.Prop1228
+public import Def.v1.Atlas.NumberTheoryI.code.Prop2219.Part2
+public import Theorem.v1.Atlas.NumberTheoryI.code.Prop2221
+public import Theorem.v1.Atlas.NumberTheoryI.code.Prop2225
+public import Theorem.v1.Atlas.NumberTheoryI.code.Prop226
+public import Theorem.v1.Atlas.NumberTheoryI.code.Prop229
+public import Theorem.v1.Atlas.NumberTheoryI.code.Prop22_4_RayClassGroup
+public import Def.v1.Atlas.NumberTheoryI.code.Prop2369
+public import Def.v1.Atlas.NumberTheoryI.code.Prop255.Part4
+public import Def.v1.Atlas.NumberTheoryI.code.RamificationTypes.Part2
+public import Def.v1.Atlas.NumberTheoryI.code.RayClassFields.Part28
+public import Def.v1.Atlas.NumberTheoryI.code.ResidueFieldFunctor
+public import Theorem.v1.Atlas.NumberTheoryI.code.ResidueFieldHelper
+public import Theorem.v1.Atlas.NumberTheoryI.code.RootOfUnityMonogenicity
+public import Instance.v1.Atlas.NumberTheoryI.code.ScalingStep
+public import Def.v1.Atlas.NumberTheoryI.code.StieltjesIntegral.Part2
+public import Instance.v1.Atlas.NumberTheoryI.code.TateCohomology.Part4
+public import Def.v1.Atlas.NumberTheoryI.code.Theorem2220
+public import Def.v1.Atlas.NumberTheoryI.code.ThetaFunction
+public import Theorem.v1.Atlas.NumberTheoryI.code.Thm1023
+public import Def.v1.Atlas.NumberTheoryI.code.Thm2214
+public import Theorem.v1.Atlas.NumberTheoryI.code.Thm2321
+public import Def.v1.Atlas.NumberTheoryI.code.Thm2370
+public import Def.v1.Atlas.NumberTheoryI.code.Thm2375
+public import Def.v1.Atlas.NumberTheoryI.code.TracePairing
+public import Theorem.v1.Atlas.NumberTheoryI.code.UnramBridge
+public import Theorem.v1.Atlas.NumberTheoryI.code.ValuationBijection
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/NumberTheoryI.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,266 +271,4 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.NumberTheoryI.code.AbelSummationSummable
-import Def.v1.Atlas.NumberTheoryI.code.Adeles.Part10
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Adeles
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.AdicCompletionAlgebra
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.AnalyticClassNumber
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ArithmeticFunctions
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ArtinUnramified
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.CDVRExtensions
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.CRTHelper
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Ch22Conductor
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Ch22ConductorDef
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Ch22NormGroup
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Ch22WeberLFunction
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter1.AbsoluteValues
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter1.IntegralClosure
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Chapter1.Valuations
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Chapter14.ClassGroupFinite
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter3.DedekindProperties
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter4.SepClosedDecomp
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter4.TensorSplitting
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter4.Theorem440
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.CompleteFields
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ComplexAnalysis
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ConductorOrders
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor1015
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor1015IntegralClosureDVR
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Cor1126
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Cor1816
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Cor2222
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor227
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor2322
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor2328
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Cor2344
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.CyclotomicDVRInstances
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.CyclotomicRamification
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.DedekindExtensions
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DedekindFactorization
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.DedekindProperties
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Def2213
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.DifferentDiscriminant
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DirectLimits
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DirichletCharacters
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DirichletL
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.DirichletSeries
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DirichletUnits
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.EisensteinRamified
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.EtaleAlgebrasProps
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.FinitePlaceAbsValue
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.FourierAnalysis
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.FractionalIdeals
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.FunctionalEquation
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GaloisExtensions
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.GeometryOfNumbers
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GlobalCFT
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GlobalCFTMain
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.GlobalFields
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.GroupCohomology
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.GroupCounts
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.HenselBridgeLemmas
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.HenselDefs
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.HenselFactorization
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.HenselLemmas
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.IdealFactorization
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.IdealNorms
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.IdeleNorm
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Ideles
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.InverseLimits
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.KrasnerLemma
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.KroneckerWeber
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.KroneckerWeberLocal2
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Lem168
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Lem2226
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Lem225
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Lem2326
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Lemma188
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.LocalCFT
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.LocalExtensions
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.LocalFields
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.LocalGlobal
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.LocalizationDedekind
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.PNT
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.PairingsTheorems
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.PrimeSplitting
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ProductFormula
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Prop1215
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Prop1228
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Prop2219
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Prop2221
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Prop2225
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Prop226
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Prop229
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Prop22_4_RayClassGroup
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Prop255
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.RamificationTypes
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.RayClassFields
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.ResidueFieldFunctor
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ResidueFieldHelper
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ScalingStep
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.StieltjesIntegral
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.TateCohomology
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Theorem2220
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ThetaFunction
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Thm1023
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Thm2214
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Thm2321
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.TracePairing
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.UnramBridge
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ValuationBijection
-import Theorem.v1.Atlas.NumberTheoryI.code.AdicCompletionAlgebra.Part3
-import Instance.v1.Atlas.NumberTheoryI.code.AnalyticClassNumber.Part3
-import Def.v1.Atlas.NumberTheoryI.code.ArithmeticFunctions.Part4
-import Def.v1.Atlas.NumberTheoryI.code.ArtinUnramified.Part14
-import Instance.v1.Atlas.NumberTheoryI.code.CDVRExtensions
-import Theorem.v1.Atlas.NumberTheoryI.code.CRTHelper
-import Def.v1.Atlas.NumberTheoryI.code.Ch22Conductor
-import Def.v1.Atlas.NumberTheoryI.code.Ch22ConductorDef
-import Theorem.v1.Atlas.NumberTheoryI.code.Ch22NormGroup.Part4
-import Instance.v1.Atlas.NumberTheoryI.code.Ch22WeberLFunction
-import Def.v1.Atlas.NumberTheoryI.code.Chapter1.AbsoluteValues.Part2
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter1.DVR
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter1.NumberField
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter3.FiniteApproximation
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Chapter4.EtaleAlgebras
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.CoprimePrincipal
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor1815
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor1838
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor2360
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor2365
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor913
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DedekindUFDPID
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.EtaleAlgebras
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GammaFunction
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.KummerInertiaDeg
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Lem168LowerBound
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Lem1812
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Lem2358
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Lem2364
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Lemma247
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.NormTrace
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Prop1824
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Prop1837
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Prop2357
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Prop256
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.RiemannZeta
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Theorem2229
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Thm1829
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Thm2350
-import Abbrev.v1.Atlas.NumberTheoryI.code.Chapter1.IntegralClosure
-import Abbrev.v1.Atlas.NumberTheoryI.code.Chapter1.LocalRings
-import Def.v1.Atlas.NumberTheoryI.code.Chapter1.Valuations.Part2
-import Def.v1.Atlas.NumberTheoryI.code.Chapter14.ClassGroupFinite
-import Def.v1.Atlas.NumberTheoryI.code.Chapter3.DedekindProperties.Part2
-import Def.v1.Atlas.NumberTheoryI.code.Chapter4.SepClosedDecomp.Part2
-import Def.v1.Atlas.NumberTheoryI.code.Chapter4.TensorSplitting.Part2
-import Theorem.v1.Atlas.NumberTheoryI.code.Chapter4.Theorem440
-import Theorem.v1.Atlas.NumberTheoryI.code.CompleteFields.Part2
-import Def.v1.Atlas.NumberTheoryI.code.ComplexAnalysis.Part2
-import Class.v1.Atlas.NumberTheoryI.code.ConductorOrders.Part2
-import Abbrev.v1.Atlas.NumberTheoryI.code.Cor1015
-import Theorem.v1.Atlas.NumberTheoryI.code.Cor1015IntegralClosureDVR
-import Def.v1.Atlas.NumberTheoryI.code.Cor1126
-import Def.v1.Atlas.NumberTheoryI.code.Cor1816.Part2
-import Def.v1.Atlas.NumberTheoryI.code.Cor1828
-import Def.v1.Atlas.NumberTheoryI.code.Cor1835
-import Theorem.v1.Atlas.NumberTheoryI.code.Cor2222
-import Theorem.v1.Atlas.NumberTheoryI.code.Cor227.Part2
-import Def.v1.Atlas.NumberTheoryI.code.Cor2322
-import Def.v1.Atlas.NumberTheoryI.code.Cor2328
-import Instance.v1.Atlas.NumberTheoryI.code.Cor2344
-import Instance.v1.Atlas.NumberTheoryI.code.Cor2361
-import Instance.v1.Atlas.NumberTheoryI.code.CyclotomicDVRInstances
-import Theorem.v1.Atlas.NumberTheoryI.code.CyclotomicRamification
-import Theorem.v1.Atlas.NumberTheoryI.code.DedekindCriterion
-import Theorem.v1.Atlas.NumberTheoryI.code.DedekindExtensions.Part4
-import Theorem.v1.Atlas.NumberTheoryI.code.DedekindFactorization
-import Def.v1.Atlas.NumberTheoryI.code.DedekindProperties
-import Def.v1.Atlas.NumberTheoryI.code.Def2213
-import Instance.v1.Atlas.NumberTheoryI.code.Def2371.Part2
-import Def.v1.Atlas.NumberTheoryI.code.Def2376.Part2
-import Def.v1.Atlas.NumberTheoryI.code.DifferentDiscriminant.Part3
-import Def.v1.Atlas.NumberTheoryI.code.DirectLimits.Part2
-import Def.v1.Atlas.NumberTheoryI.code.DirichletCharacters
-import Abbrev.v1.Atlas.NumberTheoryI.code.DirichletL
-import Def.v1.Atlas.NumberTheoryI.code.DirichletSeries.Part4
-import Def.v1.Atlas.NumberTheoryI.code.DirichletUnits
-import Abbrev.v1.Atlas.NumberTheoryI.code.EisensteinRamified
-import Instance.v1.Atlas.NumberTheoryI.code.EtaleAlgebrasProps
-import Theorem.v1.Atlas.NumberTheoryI.code.FinitePlaceAbsValue
-import Abbrev.v1.Atlas.NumberTheoryI.code.FourierAnalysis
-import Def.v1.Atlas.NumberTheoryI.code.FractionalIdeals.Part2
-import Def.v1.Atlas.NumberTheoryI.code.FunctionalEquation
-import Def.v1.Atlas.NumberTheoryI.code.GaloisExtensions.Part4
-import Def.v1.Atlas.NumberTheoryI.code.GeometryOfNumbers.Part2
-import Structure.v1.Atlas.NumberTheoryI.code.GlobalCFT.Part3
-import Def.v1.Atlas.NumberTheoryI.code.GlobalCFTMain.Part2
-import Abbrev.v1.Atlas.NumberTheoryI.code.GlobalFields
-import Def.v1.Atlas.NumberTheoryI.code.GroupCohomology.Part9
-import Theorem.v1.Atlas.NumberTheoryI.code.GroupCounts.Part8
-import Theorem.v1.Atlas.NumberTheoryI.code.HenselBridgeLemmas
-import Def.v1.Atlas.NumberTheoryI.code.HenselDefs
-import Theorem.v1.Atlas.NumberTheoryI.code.HenselFactorization
-import Instance.v1.Atlas.NumberTheoryI.code.HenselLemmas
-import Theorem.v1.Atlas.NumberTheoryI.code.IdealFactorization.Part3
-import Def.v1.Atlas.NumberTheoryI.code.IdealNorms
-import Def.v1.Atlas.NumberTheoryI.code.IdeleNorm.Part4
-import Def.v1.Atlas.NumberTheoryI.code.Ideles.Part3
-import Def.v1.Atlas.NumberTheoryI.code.InfinitePlaceBaseChange
-import Def.v1.Atlas.NumberTheoryI.code.InverseLimits.Part2
-import Def.v1.Atlas.NumberTheoryI.code.KrasnerLemma
-import Def.v1.Atlas.NumberTheoryI.code.KroneckerWeber.Part5
-import Theorem.v1.Atlas.NumberTheoryI.code.KroneckerWeberLocal2.Part2
-import Def.v1.Atlas.NumberTheoryI.code.LaplaceTransform
-import Abbrev.v1.Atlas.NumberTheoryI.code.Lem168
-import Theorem.v1.Atlas.NumberTheoryI.code.Lem2226
-import Def.v1.Atlas.NumberTheoryI.code.Lem225
-import Def.v1.Atlas.NumberTheoryI.code.Lem2326
-import Abbrev.v1.Atlas.NumberTheoryI.code.Lem2327
-import Def.v1.Atlas.NumberTheoryI.code.Lem2373
-import Def.v1.Atlas.NumberTheoryI.code.Lem2374
-import Instance.v1.Atlas.NumberTheoryI.code.Lem2377
-import Def.v1.Atlas.NumberTheoryI.code.Lem2378
-import Def.v1.Atlas.NumberTheoryI.code.Lemma188
-import Def.v1.Atlas.NumberTheoryI.code.LocalCFT.Part3
-import Theorem.v1.Atlas.NumberTheoryI.code.LocalExtensions.Part2
-import Def.v1.Atlas.NumberTheoryI.code.LocalFields.Part9
-import Abbrev.v1.Atlas.NumberTheoryI.code.LocalGlobal
-import Instance.v1.Atlas.NumberTheoryI.code.LocalizationDedekind
-import Def.v1.Atlas.NumberTheoryI.code.PNT
-import Def.v1.Atlas.NumberTheoryI.code.Pairings.Part2
-import Def.v1.Atlas.NumberTheoryI.code.PairingsTheorems.Part3
-import Def.v1.Atlas.NumberTheoryI.code.PrimeSplitting
-import Class.v1.Atlas.NumberTheoryI.code.ProductFormula
-import Theorem.v1.Atlas.NumberTheoryI.code.Prop1215
-import Def.v1.Atlas.NumberTheoryI.code.Prop1228
-import Def.v1.Atlas.NumberTheoryI.code.Prop2219.Part2
-import Theorem.v1.Atlas.NumberTheoryI.code.Prop2221
-import Theorem.v1.Atlas.NumberTheoryI.code.Prop2225
-import Theorem.v1.Atlas.NumberTheoryI.code.Prop226
-import Theorem.v1.Atlas.NumberTheoryI.code.Prop229
-import Theorem.v1.Atlas.NumberTheoryI.code.Prop22_4_RayClassGroup
-import Def.v1.Atlas.NumberTheoryI.code.Prop2369
-import Def.v1.Atlas.NumberTheoryI.code.Prop255.Part4
-import Def.v1.Atlas.NumberTheoryI.code.RamificationTypes.Part2
-import Def.v1.Atlas.NumberTheoryI.code.RayClassFields.Part28
-import Def.v1.Atlas.NumberTheoryI.code.ResidueFieldFunctor
-import Theorem.v1.Atlas.NumberTheoryI.code.ResidueFieldHelper
-import Theorem.v1.Atlas.NumberTheoryI.code.RootOfUnityMonogenicity
-import Instance.v1.Atlas.NumberTheoryI.code.ScalingStep
-import Def.v1.Atlas.NumberTheoryI.code.StieltjesIntegral.Part2
-import Instance.v1.Atlas.NumberTheoryI.code.TateCohomology.Part4
-import Def.v1.Atlas.NumberTheoryI.code.Theorem2220
-import Def.v1.Atlas.NumberTheoryI.code.ThetaFunction
-import Theorem.v1.Atlas.NumberTheoryI.code.Thm1023
-import Def.v1.Atlas.NumberTheoryI.code.Thm2214
-import Theorem.v1.Atlas.NumberTheoryI.code.Thm2321
-import Def.v1.Atlas.NumberTheoryI.code.Thm2370
-import Def.v1.Atlas.NumberTheoryI.code.Thm2375
-import Def.v1.Atlas.NumberTheoryI.code.TracePairing
-import Theorem.v1.Atlas.NumberTheoryI.code.UnramBridge
-import Theorem.v1.Atlas.NumberTheoryI.code.ValuationBijection
-
 

@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKQgt4WiredPhaseInput.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4DiscontinuityAssembly.Part3
+public import Theorem.StatisticalMechanics.Code.FK.InfiniteFiniteEnergy.Part2
+public import Theorem.StatisticalMechanics.Code.FK.FreePercolationFull
+open MeasureTheory Set SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKQgt4WiredPhaseInput.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4DiscontinuityAssembly.Part3
-import Theorem.StatisticalMechanics.Code.FK.InfiniteFiniteEnergy.Part2
-import Theorem.StatisticalMechanics.Code.FK.FreePercolationFull
-open MeasureTheory Set SimpleGraph
-
-
 namespace StatMech.FrontierD
 
 open StatMech.Lattice StatMech.Percolation

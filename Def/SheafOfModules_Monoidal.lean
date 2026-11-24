@@ -1,9 +1,12 @@
-import Mathlib
-import Lemma.LinearMap.InternalHom
-import Theorems.Thm_PresheafOfModules_isMonoidal_inverseImage_W_toPresheaf
-import Abbrev.SheafOfModules_Monoidal
-
+module
+public import Mathlib
+public import Lemma.LinearMap.InternalHom
+public import Theorems.Thm_PresheafOfModules_isMonoidal_inverseImage_W_toPresheaf
+public import Abbrev.SheafOfModules_Monoidal
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

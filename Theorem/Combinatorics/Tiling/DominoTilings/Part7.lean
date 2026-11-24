@@ -1,7 +1,10 @@
-import Mathlib
-import Def.Combinatorics.Tiling.DominoTilings.Part9
+module
+public import Mathlib
+public import Def.Combinatorics.Tiling.DominoTilings.Part9
 open Finset BigOperators
 
+
+public section
 
 namespace DominoTilings
 

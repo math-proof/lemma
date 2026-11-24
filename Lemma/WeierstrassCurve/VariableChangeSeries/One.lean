@@ -5,7 +5,7 @@ import Lemma.FormalGroup.DrinfeldBasis
 import Def.FormalGroup_PointTransport
 import Lemma.WeierstrassCurve.FormalGroupLaw
 import Lemma.WeierstrassCurve.VariableChangeSeries
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 open FormalGroup IsLocalRing Int
 
 

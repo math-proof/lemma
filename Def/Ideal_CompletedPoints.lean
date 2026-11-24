@@ -1,8 +1,11 @@
-import Mathlib
-import Def.AlgHom_Points
-import Instance.PDivisibleGroup_CompletedPoints
-
+module
+public import Mathlib
+public import Def.AlgHom_Points
+public import Instance.PDivisibleGroup_CompletedPoints
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

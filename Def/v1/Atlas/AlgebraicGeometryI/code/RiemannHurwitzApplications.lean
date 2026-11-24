@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/RiemannHurwitzApplications.lean -/
+module
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzDegree
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzDegree
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NormalExtension
+public import Def.v1.Atlas.AlgebraicGeometryI.code.NormalExtension
+public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+public import Mathlib.RingTheory.DedekindDomain.Basic
+public import Mathlib.RingTheory.Ideal.Height
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzApplications
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/RiemannHurwitzApplications.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzDegree
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzDegree
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NormalExtension
-import Def.v1.Atlas.AlgebraicGeometryI.code.NormalExtension
-import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
-import Mathlib.RingTheory.DedekindDomain.Basic
-import Mathlib.RingTheory.Ideal.Height
-import Structure.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzApplications
-
-
 noncomputable section
 
 open RiemannHurwitzFormula CanonicalSheafCurves RiemannHurwitzDegree

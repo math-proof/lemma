@@ -1,7 +1,10 @@
+module
+public import Def.NumberTheory.NumberField.RayClass.InducedCharacter.Part3
+public import Theorem.Nat.NumberField.RayClass.InducedCharacter
+
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/RayClass/InducedCharacter.lean -/
 
-import Def.NumberTheory.NumberField.RayClass.InducedCharacter.Part3
-import Lemma.Nat.NumberField.RayClass.InducedCharacter
 @[expose] public noncomputable section
 
 open scoped Classical nonZeroDivisors

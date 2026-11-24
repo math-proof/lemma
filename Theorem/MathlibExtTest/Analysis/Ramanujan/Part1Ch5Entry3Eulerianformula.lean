@@ -1,8 +1,11 @@
+module
+public import Theorem.Analysis.Ramanujan.Part1Ch5Entry3Eulerianformula
+public import Theorem.Real.Ramanujan.Part1Ch5Entry3Eulerianformula
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Ramanujan/Part1Ch5Entry3Eulerianformula.lean -/
-
-
-import Theorem.Analysis.Ramanujan.Part1Ch5Entry3Eulerianformula
-import Theorem.Real.Ramanujan.Part1Ch5Entry3Eulerianformula
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 5, Entry 3 (Eulerian formula) API checks
 
@@ -10,8 +13,6 @@ Both power-series term definitions at zero and small indices, the Eulerian
 evaluations at `-1` and `1`, and direct uses of the Entry 8 theorem and the
 Entry 3 compatibility alias.
 -/
-
-
 namespace MathlibExtTest.Analysis.Ramanujan.Part1Ch5Entry3Eulerianformula
 
 open MathlibExt.Analysis.Ramanujan.Part1Ch5.Entry4

@@ -1,15 +1,18 @@
-import Theorem.WeierstrassCurve.FreyPackage
-import Instance.FLTPrelim_GaloisRep
-import Def.FLTPrelim_ModularRep
-import Instance.FLTPrelim_Modularity
-import Def.WeierstrassCurve_Mlc1RowStatement
-import Def.WeierstrassCurve_ModularityProps
-import Def.WeierstrassCurve_Semistability
-import Def.WeierstrassCurve_ThreeFiveSwitchConditioned
-import Abbrev.WeierstrassCurve_ModularityLiftingConductor
-import Instance.WeierstrassCurve_ModularityLiftingConductor
-
+module
+public import Theorem.WeierstrassCurve.FreyPackage
+public import Instance.FLTPrelim_GaloisRep
+public import Def.FLTPrelim_ModularRep
+public import Instance.FLTPrelim_Modularity
+public import Def.WeierstrassCurve_Mlc1RowStatement
+public import Def.WeierstrassCurve_ModularityProps
+public import Def.WeierstrassCurve_Semistability
+public import Def.WeierstrassCurve_ThreeFiveSwitchConditioned
+public import Abbrev.WeierstrassCurve_ModularityLiftingConductor
+public import Instance.WeierstrassCurve_ModularityLiftingConductor
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

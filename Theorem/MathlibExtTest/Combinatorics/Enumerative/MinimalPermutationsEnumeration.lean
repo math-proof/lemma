@@ -1,11 +1,12 @@
+module
+public import Theorem.Combinatorics.Enumerative.MinimalPermutationsEnumeration.Part14
+public import Theorem.Finset.Enumerative.MinimalPermutationsEnumeration
+public import Mathlib.Tactic.NormNum
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/MinimalPermutationsEnumeration.lean -/
-
-
-import Theorem.Combinatorics.Enumerative.MinimalPermutationsEnumeration.Part14
-import Lemma.Finset.Enumerative.MinimalPermutationsEnumeration
-import Mathlib.Tactic.NormNum
-
-
 namespace MetaMathlibExt
 
 -- For one descent, the closed form gives no minimal permutations.

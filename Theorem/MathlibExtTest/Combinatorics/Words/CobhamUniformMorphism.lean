@@ -1,10 +1,11 @@
+module
+public import Def.Combinatorics.Words.CobhamUniformMorphism
+public import Theorem.Finset.Words.CobhamUniformMorphism
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Words/CobhamUniformMorphism.lean -/
-
-
-import Def.Combinatorics.Words.CobhamUniformMorphism
-import Lemma.Finset.Words.CobhamUniformMorphism
-
-
 namespace MetaMathlibExt
 
 example : baseWordValueLSD ([] : List (Fin 2)) = 0 := rfl

@@ -1,5 +1,5 @@
 import Lemma.Submodule.IsotypicCuspSpace
-import Lemma.Matrix.FactorizableTestFn
+import Theorem.Matrix.FactorizableTestFn
 import Structure.AutomorphicForm_CuspidalConstituent
 
 set_option autoImplicit false

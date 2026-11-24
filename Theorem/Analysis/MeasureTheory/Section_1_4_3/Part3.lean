@@ -1,6 +1,9 @@
-import Def.Analysis.MeasureTheory.Section_1_4_2.Part8
-import Class.Analysis.MeasureTheory.Section_1_4_3.Part2
+module
+public import Def.Analysis.MeasureTheory.Section_1_4_2.Part8
+public import Class.Analysis.MeasureTheory.Section_1_4_3.Part2
 
+
+public section
 
 /-- The analogue of {name}`FinitelyAdditiveMeasure.ext` for countably additive measures.  The
 underlying finitely additive measure is an instance-implicit parent field, so it is enough to

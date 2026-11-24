@@ -1,11 +1,12 @@
+module
+public import Def.NumberTheory.PrimeCounting.ArithmeticLargeSieve.Part3
+public import Theorem.Nat.PrimeCounting.ArithmeticLargeSieve
+public import Mathlib.Tactic.NormNum
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PrimeCounting/ArithmeticLargeSieve.lean -/
-
-
-import Def.NumberTheory.PrimeCounting.ArithmeticLargeSieve.Part3
-import Lemma.Nat.PrimeCounting.ArithmeticLargeSieve
-import Mathlib.Tactic.NormNum
-
-
 namespace MathlibExtTest.NumberTheory.PrimeCounting.ArithmeticLargeSieve
 
 open scoped BigOperators

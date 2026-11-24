@@ -1,10 +1,13 @@
-import Mathlib
-import Lemma.Scheme.Correspondence
-import Class.WeierstrassCurve_GenusOnePic0
-import Structure.Isogeny_ConditionalCurrency
-import Lemma.WeierstrassCurve.GenusOnePic0
-
+module
+public import Mathlib
+public import Lemma.Scheme.Correspondence
+public import Class.WeierstrassCurve_GenusOnePic0
+public import Structure.Isogeny_ConditionalCurrency
+public import Lemma.WeierstrassCurve.GenusOnePic0
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section IsogenyCurrency
 

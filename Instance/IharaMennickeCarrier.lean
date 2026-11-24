@@ -1,11 +1,14 @@
--- Carved from Lemma/Definitions/Def_IharaMennickeCarrier.lean: instance decls only.
-import Mathlib.GroupTheory.Subgroup.Simple
-import Theorem.Matrix.IharaMennickeCarrier
-import Def.Matrix_IharaMennickeCarrier
-
+module
+public import Mathlib.GroupTheory.Subgroup.Simple
+public import Theorem.Matrix.IharaMennickeCarrier
+public import Def.Matrix_IharaMennickeCarrier
 open Matrix
-
 open scoped MatrixGroups
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_IharaMennickeCarrier.lean: instance decls only.
 
 namespace Ihara
 

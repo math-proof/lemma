@@ -1,7 +1,12 @@
-import Mathlib.Data.Fintype.Prod
-import Mathlib.Data.Finset.Prod
-import Def.Dynamics.MarkovDecisionProcess.Part5
-import Def.Dynamics.MdpHistory
+module
+public import Mathlib.Data.Fintype.Prod
+public import Mathlib.Data.Finset.Prod
+public import Def.Dynamics.MarkovDecisionProcess.Part5
+public import Def.Dynamics.MdpHistory
+
+
+public section
+
 universe u v
 
 /-!

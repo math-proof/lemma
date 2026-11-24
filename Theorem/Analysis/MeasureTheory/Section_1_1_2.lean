@@ -1,7 +1,10 @@
-import Theorem.Analysis.MeasureTheory.Section_1_1_1.Part16
-import Mathlib.LinearAlgebra.AffineSpace.Simplex.Basic
-import Abbrev.Analysis.MeasureTheory.Section_1_1_2
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_1_1.Part16
+public import Mathlib.LinearAlgebra.AffineSpace.Simplex.Basic
+public import Abbrev.Analysis.MeasureTheory.Section_1_1_2
 
+
+public section
 
 /-- Jordan measure equals the inner Jordan measure by definition. -/
 theorem JordanMeasurable.eq_inner {d:ℕ} {E: Set (EuclideanSpace' d)} (hE: JordanMeasurable E) : hE.measure = Jordan_inner_measure E := rfl

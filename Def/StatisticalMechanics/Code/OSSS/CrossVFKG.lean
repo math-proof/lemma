@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/CrossVFKG.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.OSSS.MargMonoRand
+public import Theorem.StatisticalMechanics.Code.OSSS.SpliceST1.Part4
+public import Theorem.StatisticalMechanics.Code.OSSS.CrossVFKG
+open scoped BigOperators ENNReal
+open Finset MeasureTheory
+set_option linter.style.longLine false
+set_option linter.unusedSectionVars false
+set_option maxHeartbeats 2000000
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/CrossVFKG.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.OSSS.MargMonoRand
-import Theorem.StatisticalMechanics.Code.OSSS.SpliceST1.Part4
-import Theorem.StatisticalMechanics.Code.OSSS.CrossVFKG
-open scoped BigOperators ENNReal
-open Finset MeasureTheory
-
-set_option linter.style.longLine false
-set_option linter.unusedSectionVars false
-set_option maxHeartbeats 2000000
-
-
 namespace StatMech
 
 namespace OSSS

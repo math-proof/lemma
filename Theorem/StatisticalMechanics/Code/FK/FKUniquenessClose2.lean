@@ -1,5 +1,19 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/FKUniquenessClose2.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.FK.FKUniquenessClose
+public import Theorem.StatisticalMechanics.Code.FK.ComparisonHolley.Part3
+public import Theorem.StatisticalMechanics.Code.FK.MonoBC.Part4
+public import Theorem.StatisticalMechanics.Code.FK.IvProperties
+open MeasureTheory Set Filter Topology
+open scoped BigOperators ENNReal
+set_option linter.unusedSectionVars false
+set_option linter.unusedFintypeInType false
+set_option linter.unusedDecidableInType false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/FKUniquenessClose2.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,21 +21,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.FK.FKUniquenessClose
-import Theorem.StatisticalMechanics.Code.FK.ComparisonHolley.Part3
-import Theorem.StatisticalMechanics.Code.FK.MonoBC.Part4
-import Theorem.StatisticalMechanics.Code.FK.IvProperties
-open MeasureTheory Set Filter Topology
-open scoped BigOperators ENNReal
-
-set_option linter.unusedSectionVars false
-set_option linter.unusedFintypeInType false
-set_option linter.unusedDecidableInType false
-
-
 namespace StatMech
 
 namespace FK

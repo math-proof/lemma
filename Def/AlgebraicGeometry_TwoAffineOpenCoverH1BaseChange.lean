@@ -1,7 +1,10 @@
-import Lemma.Scheme.RelPicardStageHom
-import Structure.AlgebraicGeometry_TwoAffineOpenCoverH1BaseChange
-
+module
+public import Theorem.Scheme.RelPicardStageHom
+public import Structure.AlgebraicGeometry_TwoAffineOpenCoverH1BaseChange
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

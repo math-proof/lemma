@@ -1,10 +1,13 @@
-import Mathlib
-import Lemma.Fin.CoeffCoeffRothLastEquiv.eq.CoeffRothLastIndex.of.RothMvIndex
-import Lemma.Fin.EqRothLastIndexCastSucc.of.RothMvIndex
-import Lemma.Fin.RothMvL1.eq.Sum_NatAbsCoeff
+module
+public import Mathlib
+public import Lemma.Fin.CoeffCoeffRothLastEquiv.eq.CoeffRothLastIndex.of.RothMvIndex
+public import Lemma.Fin.EqRothLastIndexCastSucc.of.RothMvIndex
+public import Lemma.Fin.RothMvL1.eq.Sum_NatAbsCoeff
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [rothMvL1_lastEquiv_coeff_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

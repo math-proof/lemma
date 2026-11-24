@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/BackboneP2CoordinateReindex.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Sharpness.BackbonePartialP2Reindex.Part3
+public import Def.StatisticalMechanics.Code.Sharpness.BackboneP2CoordinateReindex.Part3
+open SimpleGraph Finset BigOperators
+open scoped symmDiff
+set_option linter.unusedSectionVars false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/BackboneP2CoordinateReindex.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Sharpness.BackbonePartialP2Reindex.Part3
-import Def.StatisticalMechanics.Code.Sharpness.BackboneP2CoordinateReindex.Part3
-open SimpleGraph Finset BigOperators
-open scoped symmDiff
-
-set_option linter.unusedSectionVars false
-
-
 namespace StatMech.Sharpness
 
 noncomputable section

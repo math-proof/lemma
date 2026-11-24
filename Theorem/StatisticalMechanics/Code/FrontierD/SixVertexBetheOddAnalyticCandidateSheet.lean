@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexBetheOddAnalyticCandidateSheet.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOddAnalyticStabilitySheet
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheZeroPhaseSingle.Part3
+open Finset Filter Topology Matrix
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexBetheOddAnalyticCandidateSheet.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOddAnalyticStabilitySheet
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheZeroPhaseSingle.Part3
-open Finset Filter Topology Matrix
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

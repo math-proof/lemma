@@ -1,30 +1,31 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/WorpitzkyMultisetIdentity.lean -/
+module
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.SetTheory.Cardinal.NatCard
+public import Mathlib.Order.Interval.Finset.Nat
+public import Mathlib.Algebra.BigOperators.GroupWithZero.Finset
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Data.Sym.Card
+public import Mathlib.SetTheory.Cardinal.Finite
+public import Mathlib.Data.Prod.Lex
+public import Mathlib.Data.Multiset.Sort
+public import Mathlib.Data.List.OfFn
+public import Mathlib.Data.List.FinRange
+public import Mathlib.Data.Fintype.Vector
+public import Mathlib.Data.Multiset.Count
+public import Mathlib.Data.Multiset.Filter
+public import Mathlib.Data.Fintype.Fin
+public import Def.Combinatorics.Enumerative.WorpitzkyMultisetIdentity.Part14
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/WorpitzkyMultisetIdentity.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
-
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Fintype.Card
-import Mathlib.SetTheory.Cardinal.NatCard
-import Mathlib.Order.Interval.Finset.Nat
-import Mathlib.Algebra.BigOperators.GroupWithZero.Finset
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Data.Sym.Card
-import Mathlib.SetTheory.Cardinal.Finite
-import Mathlib.Data.Prod.Lex
-import Mathlib.Data.Multiset.Sort
-import Mathlib.Data.List.OfFn
-import Mathlib.Data.List.FinRange
-import Mathlib.Data.Fintype.Vector
-import Mathlib.Data.Multiset.Count
-import Mathlib.Data.Multiset.Filter
-import Mathlib.Data.Fintype.Fin
-import Def.Combinatorics.Enumerative.WorpitzkyMultisetIdentity.Part14
-
-
 section
 
 namespace MetaMathlibExt

@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKQgt4StoppedPathPIMSEndpoint.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4PIMSTwoByOnePhaseAssembly
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectHardCrossingOrientationNoGo.Part2
+open Filter
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKQgt4StoppedPathPIMSEndpoint.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4PIMSTwoByOnePhaseAssembly
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectHardCrossingOrientationNoGo.Part2
-open Filter
-
-
 namespace StatMech.FrontierD
 
 open StatMech.FK StatMech.BeffaraDC

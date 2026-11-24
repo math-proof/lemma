@@ -1,5 +1,21 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/SerreDualityTate.lean -/
+module
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityLinear.Part4
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityLinear
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ResidueSum
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityGeneral
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityCurves.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ResidueSum
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves.Part2
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.SerreDualityTate
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/SerreDualityTate.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,21 +23,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityLinear.Part4
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityLinear
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityCurves
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ResidueSum
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityGeneral
-import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityCurves.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.ResidueSum
-import Instance.v1.Atlas.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
-import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves.Part2
-import Structure.v1.Atlas.AlgebraicGeometryI.code.SerreDualityTate
-
-
 noncomputable section
 
 namespace SerreDualityTate

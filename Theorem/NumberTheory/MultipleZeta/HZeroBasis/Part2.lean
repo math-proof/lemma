@@ -1,12 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/HZeroBasis.lean -/
+module
+public import Theorem.NumberTheory.MultipleZeta.WordAlgebra.Part2
+public import Theorem.Nat.MultipleZeta.WordAlgebra
+public import Mathlib.Algebra.FreeAlgebra
+public import Mathlib.Algebra.MvPolynomial.Equiv
+public import Mathlib.Combinatorics.Enumerative.Composition
+public import Mathlib.LinearAlgebra.Finsupp.VectorSpace
+public import Def.NumberTheory.MultipleZeta.HZeroBasis.Part2
 
-import Theorem.NumberTheory.MultipleZeta.WordAlgebra.Part2
-import Theorem.Nat.MultipleZeta.WordAlgebra
-import Mathlib.Algebra.FreeAlgebra
-import Mathlib.Algebra.MvPolynomial.Equiv
-import Mathlib.Combinatorics.Enumerative.Composition
-import Mathlib.LinearAlgebra.Finsupp.VectorSpace
-import Def.NumberTheory.MultipleZeta.HZeroBasis.Part2
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/HZeroBasis.lean -/
 /-!
 # Multiple-zeta word bases
 
@@ -14,8 +18,6 @@ This file records the two substantial basis constructions left after the
 proved word-subalgebra interface in
 `MathlibExt.NumberTheory.MultipleZeta.WordAlgebra`.
 -/
-
-
 section
 
 namespace MathlibExt.NumberTheory.MultipleZeta.WordAlgebraWanted

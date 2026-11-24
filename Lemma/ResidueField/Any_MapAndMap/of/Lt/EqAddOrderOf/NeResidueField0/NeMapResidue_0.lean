@@ -3,7 +3,7 @@ import Initialize.Tactic.Attr.Basic
 import Lemma.WeierstrassCurve.Velu
 import Lemma.WeierstrassCurve.OddOrderSummingSet
 import Lemma.WeierstrassCurve.ReduceHom
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open WeierstrassCurve IsLocalRing
 

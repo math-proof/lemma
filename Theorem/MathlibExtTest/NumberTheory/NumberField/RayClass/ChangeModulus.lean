@@ -1,12 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/RayClass/ChangeModulus.lean -/
-
-import Def.NumberTheory.NumberField.RayClass.ChangeModulus
-import Lemma.Nat.NumberField.RayClass.ChangeModulus
+module
+public import Def.NumberTheory.NumberField.RayClass.ChangeModulus
+public import Theorem.Nat.NumberField.RayClass.ChangeModulus
 open scoped nonZeroDivisors
 open NumberField
 open NumberField.Modulus
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/RayClass/ChangeModulus.lean -/
 noncomputable section
 
 variable {K : Type*} [Field K] [NumberField K]

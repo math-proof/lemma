@@ -1,9 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Abbrev.Analysis.Section_3_3.Part2
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Abbrev.Analysis.Section_3_3.Part2
 open Chapter3 hiding Nat Set
 open Chapter3.Function
 
+
+public section
 
 /--
 [Function.to_fn_eval](https://github.com/teorth/analysis/blob/main/Analysis/Section_3_3.lean)

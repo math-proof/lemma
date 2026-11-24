@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexBetheOffsetBoundarySource.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetFiniteResidual.Part2
+public import Def.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetBoundarySource
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexBetheOffsetBoundarySource.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetFiniteResidual.Part2
-import Def.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetBoundarySource
-
-
 namespace StatMech.FrontierD
 
 open Finset

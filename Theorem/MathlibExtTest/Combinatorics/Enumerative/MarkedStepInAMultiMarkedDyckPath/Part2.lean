@@ -1,11 +1,12 @@
+module
+public import Def.Combinatorics.Enumerative.MarkedStepInAMultiMarkedDyckPath.Part2
+public import Theorem.Finset.Enumerative.MarkedStepInAMultiMarkedDyckPath
+public import Def.MathlibExtTest.Combinatorics.Enumerative.MarkedStepInAMultiMarkedDyckPath
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/MarkedStepInAMultiMarkedDyckPath.lean -/
-
-
-import Def.Combinatorics.Enumerative.MarkedStepInAMultiMarkedDyckPath.Part2
-import Theorem.Finset.Enumerative.MarkedStepInAMultiMarkedDyckPath
-import Def.MathlibExtTest.Combinatorics.Enumerative.MarkedStepInAMultiMarkedDyckPath
-
-
 namespace MetaMathlibExt
 
 example : multiMarkedSize sourceExamplePath.steps = 12 := by decide

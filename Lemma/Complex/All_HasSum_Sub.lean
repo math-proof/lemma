@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.Int.EisensteinTwoCoeff
 import Lemma.ModularForm.HeckeOperator
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 open Complex
 open scoped ArithmeticFunction.sigma
 

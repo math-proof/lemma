@@ -1,6 +1,9 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
 
+
+public section
 
 /--
 [roth_pow_le_rpow_of_le_twice](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

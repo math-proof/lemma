@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectZeroTurnEssential.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectSeamForcing.Part5
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectMedialLoopTurnClassification.Part5
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedIntersection.Part7
+open Equiv Finset SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectZeroTurnEssential.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectSeamForcing.Part5
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectMedialLoopTurnClassification.Part5
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedIntersection.Part7
-open Equiv Finset SimpleGraph
-
-
 namespace StatMech.FrontierD
 
 open FKMedialTurningFiber StatMech.Onsager

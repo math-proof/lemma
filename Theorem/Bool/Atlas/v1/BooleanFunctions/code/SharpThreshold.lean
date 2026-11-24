@@ -15,7 +15,6 @@ namespace BooleanFourier
 /--
 [influence_le_one](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/SharpThreshold.lean)
 -/
-@[path]
 public theorem influence_le_one
   {n : ℕ}
   {f : (Fin n → Bool) → Bool}
@@ -38,7 +37,6 @@ namespace BooleanFourier
 /--
 [totalInfluence_le_n](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/SharpThreshold.lean)
 -/
-@[path]
 public theorem totalInfluence_le_n
   {n : ℕ}
   {f : (Fin n → Bool) → Bool} :

@@ -1,9 +1,12 @@
-import Mathlib
-import Lemma.Definitions.Def_AlgebraicCurve_PlaceEvaluation
-import Lemma.Definitions.Def_AlgebraicCurve_RegularDifferentials
-import Def.AlgebraicCurve_ComplexLineIntegral
+module
+public import Mathlib
+public import Lemma.Definitions.Def_AlgebraicCurve_PlaceEvaluation
+public import Lemma.Definitions.Def_AlgebraicCurve_RegularDifferentials
+public import Def.AlgebraicCurve_ComplexLineIntegral
 set_option autoImplicit false
 
+
+public section
 
 noncomputable section
 

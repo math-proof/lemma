@@ -1,13 +1,15 @@
-import Mathlib
-import Def.ExtEndgame_ProductionDatum
-import Lemma.Rep.ContinuousH1
-import Def.GroupCohomology_PoitouTate
-
+module
+public import Mathlib
+public import Def.ExtEndgame_ProductionDatum
+public import Theorem.Rep.ContinuousH1
+public import Def.GroupCohomology_PoitouTate
 set_option autoImplicit false
 set_option maxHeartbeats 400000
 set_option synthInstance.maxHeartbeats 400000
-
 open CategoryTheory ExtCitation
+
+
+public section
 
 noncomputable section
 

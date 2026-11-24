@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexBetheOffsetRowContraction.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetSymmetry
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetOperatorQuadrature.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheEvenRootOffsetBound
+public import Def.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetRowContraction
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexBetheOffsetRowContraction.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetSymmetry
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetOperatorQuadrature.Part2
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheEvenRootOffsetBound
-import Def.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetRowContraction
-
-
 namespace StatMech.FrontierD
 
 open Finset

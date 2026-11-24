@@ -1,7 +1,10 @@
-import Mathlib
-import Def.GaloisRep_Adic
-
+module
+public import Mathlib
+public import Def.GaloisRep_Adic
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

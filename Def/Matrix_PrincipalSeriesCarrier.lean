@@ -1,7 +1,10 @@
-import Lemma.Matrix.ConductorDatum
-import Instance.LocalNewvector_PrincipalSeriesCarrier
-
+module
+public import Theorem.Matrix.ConductorDatum
+public import Instance.LocalNewvector_PrincipalSeriesCarrier
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

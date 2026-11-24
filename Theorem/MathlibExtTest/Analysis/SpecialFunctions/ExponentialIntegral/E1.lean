@@ -1,10 +1,11 @@
+module
+public import Theorem.Analysis.SpecialFunctions.ExponentialIntegral.E1.DLMF
+public import Theorem.Complex.SpecialFunctions.ExponentialIntegral.E1.DLMF
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/ExponentialIntegral/E1.lean -/
-
-
-import Theorem.Analysis.SpecialFunctions.ExponentialIntegral.E1.DLMF
-import Lemma.Complex.SpecialFunctions.ExponentialIntegral.E1.DLMF
-
-
 namespace Complex
 
 example (z : ℂ) (hz : z ≠ 0) (hargLower : Real.pi / 2 ≤ |z.arg|)

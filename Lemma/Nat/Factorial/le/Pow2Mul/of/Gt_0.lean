@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Lemma.Nat.Add_1.le.Pow2.of.Gt_0
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Lemma.Nat.Add_1.le.Pow2.of.Gt_0
 open Nat
 
+
+public section
 
 /--
 [roth_factorial_le_two_pow_sq](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

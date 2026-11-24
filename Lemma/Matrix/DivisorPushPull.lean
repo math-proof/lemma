@@ -1,4 +1,8 @@
-import Class.AlgebraicCurve_DivisorPushPull
+module
+public import Class.AlgebraicCurve_DivisorPushPull
+
+
+public section
 
 /-!
 Re-export of Class.AlgebraicCurve_DivisorPushPull.

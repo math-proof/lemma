@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexEndpointCriticalDivergence.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.HexEndpointAggregation.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.HexBridgeRecon.Part3
+public import Structure.StatisticalMechanics.Code.Universality.HexEndpointCriticalDivergence
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexEndpointCriticalDivergence.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.HexEndpointAggregation.Part2
-import Theorem.StatisticalMechanics.Code.Universality.HexBridgeRecon.Part3
-import Structure.StatisticalMechanics.Code.Universality.HexEndpointCriticalDivergence
-
-
 namespace StatMech.Universality
 
 open HexWalk

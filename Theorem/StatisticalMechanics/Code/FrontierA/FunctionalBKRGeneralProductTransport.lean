@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/FunctionalBKRGeneralProductTransport.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.FunctionalBKRGeneralProductCore.Part10
+public import Def.StatisticalMechanics.Code.FrontierA.FunctionalBKRGeneralProductTransport
+open MeasureTheory Set
+open Filter Topology
+open scoped BigOperators ENNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/FunctionalBKRGeneralProductTransport.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.FrontierA.FunctionalBKRGeneralProductCore.Part10
-import Def.StatisticalMechanics.Code.FrontierA.FunctionalBKRGeneralProductTransport
-open MeasureTheory Set
-open Filter Topology
-open scoped BigOperators ENNReal
-
-
 namespace StatMech.FrontierA
 
 universe u v

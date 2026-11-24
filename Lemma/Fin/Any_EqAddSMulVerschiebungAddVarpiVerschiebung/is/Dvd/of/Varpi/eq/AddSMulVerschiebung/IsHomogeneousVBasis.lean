@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.MvPowerSeries.SpecialFormalModule
 import Lemma.Fin.GradedCartierModuleData
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open CerednikDrinfeld Fin MvPowerSeries
 open Fin.GradedCartierModuleData

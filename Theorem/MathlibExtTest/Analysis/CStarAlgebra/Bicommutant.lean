@@ -1,17 +1,19 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/CStarAlgebra/Bicommutant.lean -/
+module
+public import Theorem.Analysis.CStarAlgebra.Bicommutant.Part6
+open MathlibExt.Analysis.CStarAlgebra.Bicommutant
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/CStarAlgebra/Bicommutant.lean -/
 /-
 Author: @toskua, Avocado
 -/
-import Theorem.Analysis.CStarAlgebra.Bicommutant.Part6
-open MathlibExt.Analysis.CStarAlgebra.Bicommutant
-
 /-!
 # Tests for the finite-dimensional matrix bicommutant theorem.
 -/
-
-
 -- Ordinary finite case: an arbitrary star subalgebra equals its own bicommutant.
+
 example (S : StarSubalgebra ℂ (Matrix (Fin 2) (Fin 2) ℂ)) :
     StarSubalgebra.centralizer ℂ
         ((StarSubalgebra.centralizer ℂ (S : Set (Matrix (Fin 2) (Fin 2) ℂ)) :

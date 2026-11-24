@@ -1,5 +1,22 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KFiniteProps.lean -/
+module
+public import Def.v1.Atlas.LieGroups.code.KFinite.Part3
+public import Theorem.Complex.IsKFinite0
+public import Theorem.Fin.Any_Eq_SMul.of.All_ToMonoidHom.IsIrreducible
+public import Theorem.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
+public import Def.v1.Atlas.LieGroups.code.SchurLemma
+public import Def.v1.Atlas.LieGroups.code.Admissible.Part3
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.MeasureTheory.Measure.Haar.Basic
+public import Mathlib.Analysis.InnerProductSpace.Projection.Basic
+public import Mathlib.Algebra.MonoidAlgebra.Basic
+public import Mathlib.Algebra.BigOperators.Finsupp.Basic
+public import Def.v1.Atlas.LieGroups.code.KFiniteProps.Part3
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KFiniteProps.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,22 +24,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.LieGroups.code.KFinite.Part3
-import Theorem.Complex.IsKFinite0
-import Theorem.Fin.Any_Eq_SMul.of.All_ToMonoidHom.IsIrreducible
-import Theorem.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
-import Def.v1.Atlas.LieGroups.code.SchurLemma
-import Def.v1.Atlas.LieGroups.code.Admissible.Part3
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.MeasureTheory.Measure.Haar.Basic
-import Mathlib.Analysis.InnerProductSpace.Projection.Basic
-import Mathlib.Algebra.MonoidAlgebra.Basic
-import Mathlib.Algebra.BigOperators.Finsupp.Basic
-import Def.v1.Atlas.LieGroups.code.KFiniteProps.Part3
-
-
 noncomputable section
 
 open scoped ComplexOrder
@@ -43,7 +44,7 @@ variable {M : Type uM} [Ring M] [Algebra ℂ M] [TopologicalSpace M]
 
 variable [CompactlySupportedMeasureAlgebra G M]
 
-/-! ### API exports for Lemma.Complex.inner.of.IsUnitary (olean stubs) -/
+/-! ### API exports for Theorem.Complex.inner.of.IsUnitary (olean stubs) -/
 
 /-- Schur dichotomy for continuous intertwiner between irreps: zero or bijective. -/
 theorem schur_zero_or_iso_continuous

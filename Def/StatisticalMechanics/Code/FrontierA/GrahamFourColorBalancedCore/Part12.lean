@@ -1,5 +1,27 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/GrahamFourColorBalancedCore.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Ising.GKS.Part5
+public import Theorem.StatisticalMechanics.Code.Ising.GKS2.Part4
+public import Theorem.StatisticalMechanics.Code.Ising.AizenmanBarsky.Part5
+public import Theorem.StatisticalMechanics.Code.Ising.GHSThreePoint
+public import Theorem.StatisticalMechanics.Code.Ising.CorrelationRatio
+public import Theorem.StatisticalMechanics.Code.Ising.CurrentWeight.Part2
+public import Theorem.StatisticalMechanics.Code.Sharpness.GhostCurrentRep
+public import Theorem.StatisticalMechanics.Code.Sharpness.ClaimIsingFull.Part4
+public import Theorem.StatisticalMechanics.Code.Sharpness.BackbonePropsFull.Part4
+public import Theorem.StatisticalMechanics.Code.Sharpness.Simon.Part3
+public import Theorem.StatisticalMechanics.Code.Walls.gc10ghostfourpoint
+public import Theorem.StatisticalMechanics.Code.Walls.ghc_urselleqgap
+public import Theorem.StatisticalMechanics.Code.Walls.vbgtriangle.Part3
+public import Theorem.StatisticalMechanics.Code.Walls.gc7ghosteven
+public import Theorem.StatisticalMechanics.Code.FrontierA.GrahamFourColorBalancedCore.Part10
+open scoped BigOperators symmDiff
+open Finset
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/GrahamFourColorBalancedCore.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,27 +29,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Ising.GKS.Part5
-import Theorem.StatisticalMechanics.Code.Ising.GKS2.Part4
-import Theorem.StatisticalMechanics.Code.Ising.AizenmanBarsky.Part5
-import Theorem.StatisticalMechanics.Code.Ising.GHSThreePoint
-import Theorem.StatisticalMechanics.Code.Ising.CorrelationRatio
-import Theorem.StatisticalMechanics.Code.Ising.CurrentWeight.Part2
-import Theorem.StatisticalMechanics.Code.Sharpness.GhostCurrentRep
-import Theorem.StatisticalMechanics.Code.Sharpness.ClaimIsingFull.Part4
-import Theorem.StatisticalMechanics.Code.Sharpness.BackbonePropsFull.Part4
-import Theorem.StatisticalMechanics.Code.Sharpness.Simon.Part3
-import Theorem.StatisticalMechanics.Code.Walls.gc10ghostfourpoint
-import Theorem.StatisticalMechanics.Code.Walls.ghc_urselleqgap
-import Theorem.StatisticalMechanics.Code.Walls.vbgtriangle.Part3
-import Theorem.StatisticalMechanics.Code.Walls.gc7ghosteven
-import Theorem.StatisticalMechanics.Code.FrontierA.GrahamFourColorBalancedCore.Part10
-open scoped BigOperators symmDiff
-open Finset
-
-
 namespace StatMech
 
 namespace GrahamGHS

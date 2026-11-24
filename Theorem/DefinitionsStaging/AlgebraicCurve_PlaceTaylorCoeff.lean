@@ -1,8 +1,11 @@
-import Mathlib
-import Lemma.Definitions.Def_AlgebraicCurve_PlaceEvaluation
-import Def.AlgebraicCurve_PlaceTaylorCoeff
+module
+public import Mathlib
+public import Lemma.Definitions.Def_AlgebraicCurve_PlaceEvaluation
+public import Def.AlgebraicCurve_PlaceTaylorCoeff
 set_option autoImplicit false
 
+
+public section
 
 noncomputable section
 

@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Percolation/ThreePendantTree.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Percolation.FiniteTreeTripod
+public import Theorem.StatisticalMechanics.Code.Walls.bc121trifcount.Part2
+open Set SimpleGraph Finset
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Percolation/ThreePendantTree.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Percolation.FiniteTreeTripod
-import Theorem.StatisticalMechanics.Code.Walls.bc121trifcount.Part2
-open Set SimpleGraph Finset
-
-
 namespace StatMech.Percolation
 
 theorem tpt_degree_pos_of_connected {V : Type*} [Fintype V]

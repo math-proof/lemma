@@ -1,9 +1,12 @@
-import Mathlib
-import Def.AlgebraicGeometry_RelativePicardFunctor
-import Instance.AlgebraicGeometry_SquareZeroDeformation
-import Abbrev.AlgebraicGeometry_SquareZeroDeformation
-
+module
+public import Mathlib
+public import Def.AlgebraicGeometry_RelativePicardFunctor
+public import Instance.AlgebraicGeometry_SquareZeroDeformation
+public import Abbrev.AlgebraicGeometry_SquareZeroDeformation
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

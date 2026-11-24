@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.WeierstrassCurve.FrobeniusTrace
+import Theorem.WeierstrassCurve.FrobeniusTrace
 import Lemma.Matrix.MatrixRepresentationG.eq.MulVecLinValG
 import Notation.ArtinL_EulerFactor
 

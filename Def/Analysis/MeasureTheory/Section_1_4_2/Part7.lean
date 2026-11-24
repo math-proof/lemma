@@ -1,7 +1,10 @@
-import Mathlib.SetTheory.Cardinal.Aleph
-import Instance.Analysis.MeasureTheory.Section_1_4_1.Part4
-import Theorem.Analysis.MeasureTheory.Section_1_4_2.Part5
+module
+public import Mathlib.SetTheory.Cardinal.Aleph
+public import Instance.Analysis.MeasureTheory.Section_1_4_1.Part4
+public import Theorem.Analysis.MeasureTheory.Section_1_4_2.Part5
 
+
+public section
 
 def ConcreteSigmaAlgebra.measurableSpace {X: Type*} (B: ConcreteSigmaAlgebra X) : MeasurableSpace X := {
   MeasurableSet' := B.measurable

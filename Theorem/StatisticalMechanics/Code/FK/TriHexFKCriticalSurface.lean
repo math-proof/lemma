@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/TriHexFKCriticalSurface.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.TriHexFKFiniteWiredCofinal.Part15
+public import Theorem.StatisticalMechanics.Code.FK.TriHexCoarseGeometry.Part3
+public import Theorem.StatisticalMechanics.Code.FK.TriHexSurfacePercolationClosure
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarCriticalNontriviality.Part8
+open MeasureTheory Set StatMech.Lattice
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/TriHexFKCriticalSurface.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FK.TriHexFKFiniteWiredCofinal.Part15
-import Theorem.StatisticalMechanics.Code.FK.TriHexCoarseGeometry.Part3
-import Theorem.StatisticalMechanics.Code.FK.TriHexSurfacePercolationClosure
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarCriticalNontriviality.Part8
-open MeasureTheory Set StatMech.Lattice
-
-
 namespace StatMech.FK.PeriodicPlanar
 
 open BeffaraDC FrontierA

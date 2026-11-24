@@ -1,4 +1,4 @@
-import Lemma.Scheme.ThetaGroupAction
+import Theorem.Scheme.ThetaGroupAction
 import Lemma.Scheme.ThetaGroup
 import Instance.AlgebraicGeometry_ThetaGroupLaw
 

@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.FLTPrelim_Ramification
-import Lemma.WeierstrassCurve.FrobeniusTrace
+import Theorem.WeierstrassCurve.FrobeniusTrace
 import Lemma.WeierstrassCurve.ReductionMap
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open WeierstrassCurve WeierstrassCurve.Affine WeierstrassCurve.Affine.Point ValuationSubring
 

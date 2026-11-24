@@ -1,11 +1,14 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.NumberTheory.RothAuxiliary
-import Lemma.Nat.RothLastIndex.eq.AddRothSLastIndex.of.RothMvIndex
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.NumberTheory.RothAuxiliary
+public import Lemma.Nat.RothLastIndex.eq.AddRothSLastIndex.of.RothMvIndex
 open MathlibExt.NumberTheory.RothAuxiliary
 open Polynomial
 open Nat
 
+
+public section
 
 private lemma equivMapDomain_symm
   {A B M : Type*} [Zero M]

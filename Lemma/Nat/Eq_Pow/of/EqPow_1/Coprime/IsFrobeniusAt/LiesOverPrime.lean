@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.FLTPrelim_Ramification
 import Def.EllipticCurve_FrobeniusTrace
-import Lemma.WeierstrassCurve.FrobeniusTrace
+import Theorem.WeierstrassCurve.FrobeniusTrace
 
 
 /-- ported from external source -/

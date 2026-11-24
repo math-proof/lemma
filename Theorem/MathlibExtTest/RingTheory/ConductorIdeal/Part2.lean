@@ -1,12 +1,14 @@
+module
+public import Def.RingTheory.ConductorIdeal
+public import Theorem.Int.ConductorIdeal
+public import Def.MathlibExtTest.RingTheory.ConductorIdeal
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/ConductorIdeal.lean -/
-
-
-import Def.RingTheory.ConductorIdeal
-import Theorem.Int.ConductorIdeal
-import Def.MathlibExtTest.RingTheory.ConductorIdeal
-
-
 -- The diagonal subalgebra of `ℤ × ℤ` has bottom conductor.
+
 example : diagSubalgebra.conductorIdeal = ⊥ := by
   rw [eq_bot_iff]
   intro p hp

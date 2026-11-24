@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Probability/DecoupledTwoPointClose.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Probability.SharpThresholdWire.Part2
+open scoped BigOperators
+open Real Set
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Probability/DecoupledTwoPointClose.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Probability.SharpThresholdWire.Part2
-open scoped BigOperators
-open Real Set
-
-
 namespace StatMech.Probability
 
 set_option linter.style.longLine false

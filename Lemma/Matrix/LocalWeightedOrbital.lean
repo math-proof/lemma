@@ -1,6 +1,6 @@
 import Lemma.Matrix.LocalOrbitalBase
 import Def.AutomorphicForm_ConstantTerm
-import Lemma.Matrix.CubicInduction_TorusValues
+import Theorem.Matrix.CubicInduction_TorusValues
 import Def.AutomorphicForm_LocalWeightedOrbital
 
 set_option autoImplicit false

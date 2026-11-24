@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ProbabilisticMethodsInCombinatorics/code/Chapter10/ShearerCombinatorial.lean -/
+module
+public import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.ShearerChainRule
+public import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter10.ShearerChainRule
+public import Mathlib.Probability.Distributions.Uniform
+public import Mathlib.Analysis.Convex.Jensen
+public import Mathlib.Data.Finset.Image
+set_option maxHeartbeats 800000
+open Finset BigOperators Real ShannonEntropy
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ProbabilisticMethodsInCombinatorics/code/Chapter10/ShearerCombinatorial.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.ShearerChainRule
-import Lemma.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter10.ShearerChainRule
-import Mathlib.Probability.Distributions.Uniform
-import Mathlib.Analysis.Convex.Jensen
-import Mathlib.Data.Finset.Image
-set_option maxHeartbeats 800000
-
-open Finset BigOperators Real ShannonEntropy
-
-
 namespace ShearerCombinatorial
 
 /-- Projection of `x : Fin n → α` onto all coordinates except the $i$-th one. -/

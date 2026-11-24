@@ -1,12 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/NormOneIdeleClassGroup.lean -/
+module
+public import Def.NumberTheory.NumberField.IdeleNorm
+public import Theorem.Nat.NumberField.IdeleNorm
+public import Def.NumberTheory.NumberField.NormOneIdeleClassGroup
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/NormOneIdeleClassGroup.lean -/
 /-
 Author: @toskua, Avocado
 -/
-
-import Def.NumberTheory.NumberField.IdeleNorm
-import Lemma.Nat.NumberField.IdeleNorm
-import Def.NumberTheory.NumberField.NormOneIdeleClassGroup
 /-!
 # Norm-one idele class group
 
@@ -39,8 +42,6 @@ That compactness result is intentionally outside this module's scope:
 we define the quotient and its topology but do not assert a `CompactSpace`
 instance.
 -/
-
-
 noncomputable section
 
 namespace NumberField.TopologicalIdeleGroup

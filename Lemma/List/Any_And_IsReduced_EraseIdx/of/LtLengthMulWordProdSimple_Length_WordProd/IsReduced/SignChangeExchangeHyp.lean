@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.StrongExchangeBridge
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.StrongExchangeBridge
 open CoxeterExchange CoxeterGroup CoxeterExchangeGenuine StrongExchangeBridge
 
+
+public section
 
 namespace StrongExchangeBridge
 

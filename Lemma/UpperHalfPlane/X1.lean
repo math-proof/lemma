@@ -1,7 +1,10 @@
-import Mathlib
-import Lemma.LaurentSeries.ArithmeticGalois
-
+module
+public import Mathlib
+public import Lemma.LaurentSeries.ArithmeticGalois
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

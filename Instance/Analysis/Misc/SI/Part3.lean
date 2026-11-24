@@ -1,8 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Misc.UnitsSystem.Part23
-import Mathlib.Algebra.Group.MinimalAxioms
-import Theorem.Analysis.Misc.SI.Part2
+module
+public import Mathlib
+public import Theorem.Analysis.Misc.UnitsSystem.Part23
+public import Mathlib.Algebra.Group.MinimalAxioms
+public import Theorem.Analysis.Misc.SI.Part2
 
+
+public section
 
 instance SI_dimensions.instAddGroup : AddGroup SI_dimensions :=
 AddGroup.ofLeftAxioms

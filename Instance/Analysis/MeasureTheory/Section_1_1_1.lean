@@ -1,8 +1,11 @@
-import Def.Analysis.MeasureTheory.Notation.Part2
-import Theorem.Analysis.Section_9_1.Part3
-import Def.Analysis.MeasureTheory.Section_1_1_1
+module
+public import Def.Analysis.MeasureTheory.Notation.Part2
+public import Theorem.Analysis.Section_9_1.Part3
+public import Def.Analysis.MeasureTheory.Section_1_1_1
 open BoundedInterval
 
+
+public section
 
 /-- Enables coercion from {name}`BoundedInterval` to {lean}`Set ℝ`. -/
 instance BoundedInterval.inst_coeSet : Coe BoundedInterval (Set ℝ) where

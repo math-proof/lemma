@@ -1,9 +1,12 @@
-import Mathlib
-import Def.AlgebraicGeometry_RelativeGroupLaw
-import Def.GoodReductionJacobian_RelativeGroupLawKernel
-import Def.AlgebraicGeometry_RelativePicardFunctor
-
+module
+public import Mathlib
+public import Def.AlgebraicGeometry_RelativeGroupLaw
+public import Def.GoodReductionJacobian_RelativeGroupLawKernel
+public import Def.AlgebraicGeometry_RelativePicardFunctor
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

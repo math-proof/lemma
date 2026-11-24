@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexBetheFixedChargePeriodicQuadrature.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheFixedChargeStability.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheTailConvolution.Part2
+open scoped BigOperators
+open Filter Finset
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexBetheFixedChargePeriodicQuadrature.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheFixedChargeStability.Part3
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheTailConvolution.Part2
-open scoped BigOperators
-open Filter Finset
-
-
 namespace StatMech.FrontierD
 
 theorem abs_empiricalPeriodicLipschitz_sub_finiteDensityIntegral_fixedCharge

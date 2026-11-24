@@ -1,10 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/ScanStepSupport.lean -/
+module
+public import Def.CPythonListsort.Code.Correctness.BinarysortCorrectness.Part3
+public import Def.CPythonListsort.Code.Correctness.CountRunCorrectness.Part2
+public import Def.CPythonListsort.Code.Correctness.EntrySnapshotPermutation
+public import Theorem.CPythonListsort.Code.Correctness.ScanCorrectnessSupport
+public import Theorem.CPythonListsort.Code.Policy.PushRunPreservation
 
-import Def.CPythonListsort.Code.Correctness.BinarysortCorrectness.Part3
-import Def.CPythonListsort.Code.Correctness.CountRunCorrectness.Part2
-import Def.CPythonListsort.Code.Correctness.EntrySnapshotPermutation
-import Theorem.CPythonListsort.Code.Correctness.ScanCorrectnessSupport
-import Theorem.CPythonListsort.Code.Policy.PushRunPreservation
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/ScanStepSupport.lean -/
 /-!
 # Semantic bridges for one forward scan step
 
@@ -13,8 +17,6 @@ certificates to the scan invariant.  They contain no second implementation of
 the scan: every update is the range frame or pending-stack push exported by
 the transcribed operation's correctness theorem.
 -/
-
-
 namespace CPythonListsort
 
 universe u v

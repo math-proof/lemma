@@ -1,7 +1,10 @@
-import Lemma.ValuationSubring.FinitePlaceLift
-import Structure.AlgebraicCurve_SemistableCharts
-
+module
+public import Lemma.ValuationSubring.FinitePlaceLift
+public import Structure.AlgebraicCurve_SemistableCharts
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

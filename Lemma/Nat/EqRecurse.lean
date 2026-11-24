@@ -1,9 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Abbrev.Analysis.Section_2_1
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Abbrev.Analysis.Section_2_1
 open Chapter2 hiding Nat
 open Chapter2.Nat
 
+
+public section
 
 /--
 [Nat.recurse_succ](https://github.com/teorth/analysis/blob/main/Analysis/Section_2_1.lean)

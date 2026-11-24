@@ -1,14 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/InnerProductSpace/NeumannPolyaBenchmark.lean -/
-
-/-
-Author: Muse Spark 1.3
--/
-
-import Def.Analysis.InnerProductSpace.NeumannPolyaBenchmark
-import Lemma.Real.InnerProductSpace.NeumannPolyaBenchmark
+module
+public import Def.Analysis.InnerProductSpace.NeumannPolyaBenchmark
+public import Theorem.Real.InnerProductSpace.NeumannPolyaBenchmark
 open TopologicalSpace
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/InnerProductSpace/NeumannPolyaBenchmark.lean -/
+/-
+Author: Muse Spark 1.3
+-/
 namespace EuclideanLaplacianTest
 
 example {n : ℕ} (Ω : Opens (EuclideanSpace ℝ (Fin n))) (j : ℕ) :

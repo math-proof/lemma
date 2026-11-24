@@ -1,7 +1,10 @@
-import Mathlib
-import Def.AlgebraicGeometry_ProjectiveWeierstrassPolynomialPrime
-
+module
+public import Mathlib
+public import Def.AlgebraicGeometry_ProjectiveWeierstrassPolynomialPrime
 open MvPolynomial
+
+
+public section
 
 namespace ProjWeierstrassCubicPrime
 

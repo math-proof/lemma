@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/SLE/LoewnerCapacity.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.SLE.LoewnerProps.Part4
+public import Theorem.StatisticalMechanics.Code.SLE.CapacityProps
+open Complex Set Filter Topology
+open scoped NNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/SLE/LoewnerCapacity.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.SLE.LoewnerProps.Part4
-import Theorem.StatisticalMechanics.Code.SLE.CapacityProps
-open Complex Set Filter Topology
-open scoped NNReal
-
-
 namespace StatMech.SLE
 
 theorem tendsto_self_div_of_tendsto_const (F : ℂ → ℂ) (c : ℂ)

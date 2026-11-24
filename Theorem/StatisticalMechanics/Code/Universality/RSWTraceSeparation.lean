@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/RSWTraceSeparation.lean -/
+module
+public import Def.StatisticalMechanics.Code.Universality.RSWContactRedesign.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.RSWReflectedRegion
+public import Def.StatisticalMechanics.Code.Universality.RSWTraceSeparation
+open Function MeasureTheory Set
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/RSWTraceSeparation.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.StatisticalMechanics.Code.Universality.RSWContactRedesign.Part2
-import Theorem.StatisticalMechanics.Code.Universality.RSWReflectedRegion
-import Def.StatisticalMechanics.Code.Universality.RSWTraceSeparation
-open Function MeasureTheory Set
-
-
 namespace StatMech
 
 namespace Universality

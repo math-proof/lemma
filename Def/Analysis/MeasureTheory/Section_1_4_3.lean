@@ -1,6 +1,9 @@
-import Def.Analysis.MeasureTheory.Section_1_4_2.Part8
-import Theorem.Analysis.MeasureTheory.Section_1_4_3
+module
+public import Def.Analysis.MeasureTheory.Section_1_4_2.Part8
+public import Theorem.Analysis.MeasureTheory.Section_1_4_3
 
+
+public section
 
 /-- Example 1.4.21 (restriction to a subalgebra) -/
 def FinitelyAdditiveMeasure.restrict_alg {X:Type*} {B: ConcreteBooleanAlgebra X} (μ: FinitelyAdditiveMeasure B) {B':ConcreteBooleanAlgebra X} (hBB': B' ≤ B) : FinitelyAdditiveMeasure B' :=

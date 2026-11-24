@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/GrahamThreeGateBoundaryCounterexample.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.GrahamFourColorBalancedCore.Part17
+public import Def.StatisticalMechanics.Code.FrontierA.GrahamThreeGateBoundaryCounterexample
+open Finset
+open scoped symmDiff
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/GrahamThreeGateBoundaryCounterexample.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.GrahamFourColorBalancedCore.Part17
-import Def.StatisticalMechanics.Code.FrontierA.GrahamThreeGateBoundaryCounterexample
-open Finset
-open scoped symmDiff
-
-
 namespace StatMech.GrahamGHS.FourColor
 
 open StatMech.Sharpness.RandomCurrent

@@ -1,14 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/InnerProductSpace/NeumannPolyaBenchmark.lean -/
-
-/-
-Author: Muse Spark 1.3
--/
-
-import Def.Analysis.InnerProductSpace.DirichletSpectrum
-import Lemma.Real.InnerProductSpace.DirichletSpectrum
+module
+public import Def.Analysis.InnerProductSpace.DirichletSpectrum
+public import Theorem.Real.InnerProductSpace.DirichletSpectrum
 open TopologicalSpace
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/InnerProductSpace/NeumannPolyaBenchmark.lean -/
+/-
+Author: Muse Spark 1.3
+-/
 namespace EuclideanLaplacian
 
 /-- Zero-based Neumann Pólya benchmark. The numerator `j` corresponds to

@@ -1,8 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Misc.UnitsSystem.Part23
-import Mathlib.Algebra.Group.MinimalAxioms
-import Instance.Analysis.Misc.SI.Part4
+module
+public import Mathlib
+public import Theorem.Analysis.Misc.UnitsSystem.Part23
+public import Mathlib.Algebra.Group.MinimalAxioms
+public import Instance.Analysis.Misc.SI.Part4
 
+
+public section
 
 namespace SI
 

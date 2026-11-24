@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/CurrentSwitchingGatePlusPlus.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentSwitchingGateLimit
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentTracePlusPlusUniqueness
+open Filter MeasureTheory Set Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/CurrentSwitchingGatePlusPlus.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentSwitchingGateLimit
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentTracePlusPlusUniqueness
-open Filter MeasureTheory Set Topology
-
-
 namespace StatMech.FrontierB
 
 open Lattice Percolation

@@ -1,10 +1,13 @@
-import Lemma.Matrix.CentreCutSiegelSet
-import Lemma.Measure.ContractionDecay
-import Lemma.Matrix.SiegelCoordinates
-import Lemma.Measure.AdelicHaar
-
+module
+public import Theorem.Matrix.CentreCutSiegelSet
+public import Lemma.Measure.ContractionDecay
+public import Theorem.Matrix.SiegelCoordinates
+public import Lemma.Measure.AdelicHaar
 open MeasureTheory Set IsDedekindDomain NumberField Matrix Measure
 open scoped ENNReal
+
+
+public section
 
 noncomputable section
 

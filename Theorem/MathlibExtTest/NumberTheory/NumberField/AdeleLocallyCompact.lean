@@ -1,12 +1,13 @@
+module
+public import Instance.NumberTheory.NumberField.AdeleLocallyCompact.Part2
+public import Theorem.Nat.NumberField.AdeleLocallyCompact
+public import Theorem.Int.DedekindDomain.AdicCompletionResidueField
+public import Def.RingTheory.DedekindDomain.AdicCompletionResidueField.Part2
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/AdeleLocallyCompact.lean -/
-
-
-import Instance.NumberTheory.NumberField.AdeleLocallyCompact.Part2
-import Lemma.Nat.NumberField.AdeleLocallyCompact
-import Lemma.Int.DedekindDomain.AdicCompletionResidueField
-import Def.RingTheory.DedekindDomain.AdicCompletionResidueField.Part2
-
-
 noncomputable section
 
 open NumberField IsDedekindDomain

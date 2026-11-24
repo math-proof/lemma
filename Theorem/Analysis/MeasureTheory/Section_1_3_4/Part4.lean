@@ -1,8 +1,12 @@
-import Theorem.Analysis.MeasureTheory.Section_1_3_3.Part2
-import Instance.Analysis.MeasureTheory.Section_1_3_4
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_3_3.Part2
+public import Instance.Analysis.MeasureTheory.Section_1_3_4
 
+
+public section
 
 -- Helper: integral of the zero simple function is zero
+
 lemma UnsignedSimpleFunction.integ_zero {d:ℕ} :
     let h_simple : UnsignedSimpleFunction (0 : EuclideanSpace' d → EReal) := by
       use 0, fun i => Fin.elim0 i, fun i => Fin.elim0 i

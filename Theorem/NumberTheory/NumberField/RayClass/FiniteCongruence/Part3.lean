@@ -1,11 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/FiniteCongruence.lean -/
+module
+public import Theorem.NumberTheory.NumberField.RayClass.RayGroup.Part3
+public import Theorem.Nat.NumberField.RayClass.RayGroup
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Mathlib.RingTheory.FractionalIdeal.Operations
+public import Def.NumberTheory.NumberField.RayClass.FiniteCongruence.Part2
 
-import Theorem.NumberTheory.NumberField.RayClass.RayGroup.Part3
-import Lemma.Nat.NumberField.RayClass.RayGroup
-import Mathlib.RingTheory.DedekindDomain.AdicValuation
-import Mathlib.RingTheory.DedekindDomain.Factorization
-import Mathlib.RingTheory.FractionalIdeal.Operations
-import Def.NumberTheory.NumberField.RayClass.FiniteCongruence.Part2
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/FiniteCongruence.lean -/
 @[expose] noncomputable section
 
 open scoped nonZeroDivisors

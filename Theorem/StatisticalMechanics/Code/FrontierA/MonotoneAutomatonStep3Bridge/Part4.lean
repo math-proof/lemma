@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/MonotoneAutomatonStep3Bridge.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonCoarseTrifurcationGeneral.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonSingleSiteStability.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierA.MultivaluedMap
+public import Def.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonStep3Bridge.Part3
+open MeasureTheory Set
+open scoped ENNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/MonotoneAutomatonStep3Bridge.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonCoarseTrifurcationGeneral.Part3
-import Theorem.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonSingleSiteStability.Part3
-import Theorem.StatisticalMechanics.Code.FrontierA.MultivaluedMap
-import Def.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonStep3Bridge.Part3
-open MeasureTheory Set
-open scoped ENNReal
-
-
 namespace StatMech.FrontierA
 
 open StatMech StatMech.Lattice StatMech.ConfigSpace StatMech.Percolation

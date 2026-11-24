@@ -1,6 +1,9 @@
-import Def.Data.Tensor.Aminmax
+module
+public import Def.Data.Tensor.Aminmax
 open Tensor
 
+
+public section
 
 /--
 Returns the indices of the maximum value of a tensor along `dim`.

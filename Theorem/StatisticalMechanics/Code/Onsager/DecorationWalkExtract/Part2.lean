@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/DecorationWalkExtract.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Onsager.DecorationCycles
+public import Def.StatisticalMechanics.Code.Onsager.DecorationWalkExtract.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/DecorationWalkExtract.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,11 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.Onsager.DecorationCycles
-import Def.StatisticalMechanics.Code.Onsager.DecorationWalkExtract.Part2
-
-
 namespace StatMech.Onsager
 
 theorem ons_decCycleFirstReturn_isFirstReturn

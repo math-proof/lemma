@@ -1,11 +1,14 @@
-import Mathlib
-import Structure.AlgebraicGeometry_RelativeGroupLaw
-import Instance.AlgebraicGeometry_SquareZeroDeformation
-import Def.AlgebraicGeometry_SquareZeroRelTangent
-import Abbrev.AlgebraicGeometry_SmallExtensionPairTangent
-
+module
+public import Mathlib
+public import Structure.AlgebraicGeometry_RelativeGroupLaw
+public import Instance.AlgebraicGeometry_SquareZeroDeformation
+public import Def.AlgebraicGeometry_SquareZeroRelTangent
+public import Abbrev.AlgebraicGeometry_SmallExtensionPairTangent
 set_option autoImplicit false
 set_option linter.unusedSectionVars false
+
+
+public section
 
 noncomputable section
 

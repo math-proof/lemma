@@ -1,7 +1,10 @@
-import Abbrev.AlgebraicGeometry_IdealSheafModule
-import Abbrev.AlgebraicGeometry_IdealSheafModuleMaps
-
+module
+public import Abbrev.AlgebraicGeometry_IdealSheafModule
+public import Abbrev.AlgebraicGeometry_IdealSheafModuleMaps
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

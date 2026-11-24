@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/IsingPlusExtremeFinal.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Ising.IsingCrossBoxCap.Part2
+public import Theorem.StatisticalMechanics.Code.Ising.IsingPlusTIClose.Part5
+public import Theorem.StatisticalMechanics.Code.Ising.IsingPlusErgodicClose
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/IsingPlusExtremeFinal.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.Ising.IsingCrossBoxCap.Part2
-import Theorem.StatisticalMechanics.Code.Ising.IsingPlusTIClose.Part5
-import Theorem.StatisticalMechanics.Code.Ising.IsingPlusErgodicClose
-
-
 namespace StatMech.Ising
 
 open StatMech StatMech.ConfigSpace MeasureTheory

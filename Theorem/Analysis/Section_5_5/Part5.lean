@@ -1,6 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Section_5_4.Part4
-import Instance.Analysis.Section_5_5.Part2
+module
+public import Mathlib
+public import Theorem.Analysis.Section_5_4.Part4
+public import Instance.Analysis.Section_5_5.Part2
+
+
+public section
+
 /-!
 # Analysis I, Section 5.5: The least upper bound property
 
@@ -21,8 +26,6 @@ Users of the companion who have completed the exercises in this section are welc
 - (Add tip here)
 
 -/
-
-
 namespace Chapter5
 
 theorem ExtendedReal.sSup_of_bounded {E: Set Real} (hnon: E.Nonempty) (hb: BddAbove E) :

@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_8
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_8
 open MeasureTheory Real ProbabilityTheory Set
 
+
+public section
 
 /--
 [hoeffding_mgf_bound](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter1/Lemma_1_8.lean)

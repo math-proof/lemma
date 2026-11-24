@@ -1,11 +1,12 @@
+module
+public import Theorem.Combinatorics.DensityHalesJewett.Part13
+public import Theorem.Finset.DensityHalesJewett
+public import Mathlib.Tactic.Ring
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/DensityHalesJewett.lean -/
-
-
-import Theorem.Combinatorics.DensityHalesJewett.Part13
-import Lemma.Finset.DensityHalesJewett
-import Mathlib.Tactic.Ring
-
-
 namespace MathlibExtTest.Combinatorics.DensityHalesJewett
 
 universe u v

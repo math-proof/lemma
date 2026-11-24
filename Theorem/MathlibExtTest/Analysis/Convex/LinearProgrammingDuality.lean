@@ -1,8 +1,11 @@
+module
+public import Theorem.Analysis.Convex.LinearProgrammingDuality.Part3
+public import Def.MathlibExtTest.Analysis.Convex.LinearProgrammingDuality
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Convex/LinearProgrammingDuality.lean -/
-
-
-import Theorem.Analysis.Convex.LinearProgrammingDuality.Part3
-import Def.MathlibExtTest.Analysis.Convex.LinearProgrammingDuality
 /-!
 # Tests for strong linear programming duality
 
@@ -10,8 +13,6 @@ Focused checks for `LPDuality.strong_linear_programming_duality`: an ordinary
 one-dimensional program whose optimum value is pinned down, plus the two
 empty-index boundary cases (no primal variables, no constraints).
 -/
-
-
 namespace LinearProgrammingDualityTest
 
 /-- One-dimensional optimum: the attained value equals `10`. -/

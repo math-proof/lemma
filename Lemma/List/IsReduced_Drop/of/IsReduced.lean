@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.RootSignChangeProof
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.RootSignChangeProof
 open Finset BigOperators CoxeterGroup CoxeterExchangeGenuine CoxeterRootSignChange
 
+
+public section
 
 /--
 [isReduced_drop](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/RootSignChangeProof.lean)

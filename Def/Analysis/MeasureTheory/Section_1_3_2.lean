@@ -1,7 +1,10 @@
-import Theorem.Analysis.MeasureTheory.Section_1_3_1.Part11
-import Mathlib.Algebra.Order.Floor.Semifield
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_3_1.Part11
+public import Mathlib.Algebra.Order.Floor.Semifield
 set_option doc.verso.suggestions false
 
+
+public section
 
 /-!
 # Introduction to Measure Theory, Section 1.3.2: Measurable functions
@@ -9,7 +12,6 @@ set_option doc.verso.suggestions false
 A companion to (the introduction to) Section 1.3.2 of the book "An introduction to Measure Theory".
 
 -/
-
 def Unsigned {X Y:Type*} [LE Y] [Zero Y] (f:X → Y) : Prop := ∀ x, f x ≥ 0
 
 def PointwiseConvergesTo {X Y:Type*} [TopologicalSpace Y] (f: ℕ → X → Y) (g: X → Y) : Prop := ∀ x, Filter.atTop.Tendsto (fun n ↦ f n x) (nhds (g x))

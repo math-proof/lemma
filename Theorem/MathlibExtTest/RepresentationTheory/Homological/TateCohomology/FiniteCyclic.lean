@@ -1,10 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RepresentationTheory/Homological/TateCohomology/FiniteCyclic.lean -/
-
-
-import Def.RepresentationTheory.Homological.TateCohomology.FiniteCyclic.Part4
-import Lemma.Int.Nonempty_TateCohomology
+module
+public import Def.RepresentationTheory.Homological.TateCohomology.FiniteCyclic.Part4
+public import Theorem.Int.Nonempty_TateCohomology
 open CategoryTheory TateCohomology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RepresentationTheory/Homological/TateCohomology/FiniteCyclic.lean -/
 universe u
 
 variable {R G : Type u} [CommRing R] [Group G] [Fintype G] [IsCyclic G]

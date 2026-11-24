@@ -1,8 +1,11 @@
-import Def.LanglandsTunnell_C8Character
-import Instance.LanglandsTunnell_QuatH
-import Instance.LanglandsTunnell_C8Tower
-
+module
+public import Def.LanglandsTunnell_C8Character
+public import Instance.LanglandsTunnell_QuatH
+public import Instance.LanglandsTunnell_C8Tower
 set_option autoImplicit false
+
+
+public section
 
 namespace LanglandsTunnell
 

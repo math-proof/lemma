@@ -1,10 +1,11 @@
+module
+public import Theorem.Nat.NumberField.ExtensionDiscriminantLocalization
+public import Theorem.MathlibExtTest.NumberTheory.NumberField.ExtensionDiscriminantLocalization.Part2
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/ExtensionDiscriminantLocalization.lean -/
-
-
-import Lemma.Nat.NumberField.ExtensionDiscriminantLocalization
-import Theorem.MathlibExtTest.NumberTheory.NumberField.ExtensionDiscriminantLocalization.Part2
-
-
 namespace ConcreteLocalization
 
 noncomputable local instance : Algebra SA (FractionRing ℤ) :=

@@ -1,19 +1,23 @@
--- Carved from Lemma/Definitions/Def_EllipticCurve_TateModule.lean: instance decls only.
-import Mathlib.NumberTheory.Padics.RingHoms
-import Mathlib.RingTheory.AdicCompletion.RingHom
-import Mathlib.LinearAlgebra.Dimension.Free
-import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
-import Mathlib.FieldTheory.Finiteness
-import Mathlib.Algebra.Module.ZMod
-import Mathlib.Algebra.Field.ZMod
-import Mathlib.GroupTheory.Coset.Card
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Mathlib.Algebra.Group.Subgroup.Finite
-import Def.GaloisRep_Adic
-import Theorem.WeierstrassCurve.TateModule.Basic
-import Def.WeierstrassCurve_TateModule_Basic
-
+module
+public import Mathlib.NumberTheory.Padics.RingHoms
+public import Mathlib.RingTheory.AdicCompletion.RingHom
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
+public import Mathlib.FieldTheory.Finiteness
+public import Mathlib.Algebra.Module.ZMod
+public import Mathlib.Algebra.Field.ZMod
+public import Mathlib.GroupTheory.Coset.Card
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Mathlib.Algebra.Group.Subgroup.Finite
+public import Def.GaloisRep_Adic
+public import Theorem.WeierstrassCurve.TateModule.Basic
+public import Def.WeierstrassCurve_TateModule_Basic
 open IsLocalRing
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_EllipticCurve_TateModule.lean: instance decls only.
 
 namespace TateModule
 

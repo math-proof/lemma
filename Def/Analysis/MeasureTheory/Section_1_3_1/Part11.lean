@@ -1,7 +1,10 @@
-import Theorem.Analysis.MeasureTheory.Section_1_2_3.Part2
-import Theorem.Analysis.Misc.NatBitwise
-import Theorem.Analysis.MeasureTheory.Section_1_3_1.Part10
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_2_3.Part2
+public import Theorem.Analysis.Misc.NatBitwise
+public import Theorem.Analysis.MeasureTheory.Section_1_3_1.Part10
 
+
+public section
 
 def RealSimpleFunction.pos {d:ℕ} {f: EuclideanSpace' d → ℝ} (hf: RealSimpleFunction f) : UnsignedSimpleFunction (EReal.pos_fun f) := by
   -- Use disjoint representation: f = ∑ i, v_i • A_i.indicator' with disjoint A_i

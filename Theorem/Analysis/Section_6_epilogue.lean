@@ -1,6 +1,10 @@
-import Mathlib
-import Theorem.Analysis.Section_6_7.Part2
+module
+public import Mathlib
+public import Theorem.Analysis.Section_6_7.Part2
 open Filter
+
+
+public section
 
 /-!
 # Analysis I, Chapter 6 epilogue: Connections with Mathlib limits
@@ -11,8 +15,6 @@ that Mathlib's operations are defined in far greater generality than the setting
 sequences, in particular using the language of filters.
 
 -/
-
-
 /-- Identification with the Cauchy sequence support in Mathlib/Algebra/Order/CauSeq/Basic -/
 theorem Chapter6.Sequence.isCauchy_iff_isCauSeq (a: ℕ → ℝ) :
     (a:Sequence).IsCauchy ↔ IsCauSeq _root_.abs a := by

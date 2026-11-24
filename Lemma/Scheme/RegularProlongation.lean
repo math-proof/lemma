@@ -1,8 +1,11 @@
-import Mathlib
-import Lemma.ResidueField.ConstantReduction
-import Structure.AlgebraicCurve_RegularProlongation
-
+module
+public import Mathlib
+public import Lemma.ResidueField.ConstantReduction
+public import Structure.AlgebraicCurve_RegularProlongation
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

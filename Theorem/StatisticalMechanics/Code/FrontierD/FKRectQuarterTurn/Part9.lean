@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectQuarterTurn.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDevelopedSquareReflection.Part6
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusCrossingEvents.Part3
+public import Def.StatisticalMechanics.Code.FrontierD.FKRectQuarterTurn.Part9
+open Set SimpleGraph StatMech.Lattice
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectQuarterTurn.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDevelopedSquareReflection.Part6
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusCrossingEvents.Part3
-import Def.StatisticalMechanics.Code.FrontierD.FKRectQuarterTurn.Part9
-open Set SimpleGraph StatMech.Lattice
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

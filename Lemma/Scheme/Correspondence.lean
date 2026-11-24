@@ -1,8 +1,11 @@
-import Class.AlgebraicCurve_DivisorPushPull
-import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
-import Abbrev.AlgebraicCurve_Correspondence
-
+module
+public import Class.AlgebraicCurve_DivisorPushPull
+public import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
+public import Abbrev.AlgebraicCurve_Correspondence
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

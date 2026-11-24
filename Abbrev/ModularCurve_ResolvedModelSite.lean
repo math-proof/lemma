@@ -1,16 +1,18 @@
-import Mathlib
-import Abbrev.AlgebraicGeometry_ResolvedModelGlueComponents
-import Structure.ModularCurve_DRResolvedModelPackageV4
-import Abbrev.ModularCurve_DRModelPackage
-import Instance.MvPolynomial_CrossingResolutionScheme
-import Instance.MvPolynomial_CrossingResolutionFibrePoints
-import Structure.ModularCurve_ResolvedModelSite
-
+module
+public import Mathlib
+public import Abbrev.AlgebraicGeometry_ResolvedModelGlueComponents
+public import Structure.ModularCurve_DRResolvedModelPackageV4
+public import Abbrev.ModularCurve_DRModelPackage
+public import Instance.MvPolynomial_CrossingResolutionScheme
+public import Instance.MvPolynomial_CrossingResolutionFibrePoints
+public import Structure.ModularCurve_ResolvedModelSite
 set_option autoImplicit false
 set_option maxHeartbeats 1600000
 set_option synthInstance.maxHeartbeats 400000
-
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
+
+
+public section
 
 noncomputable section
 

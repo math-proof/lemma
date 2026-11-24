@@ -1,8 +1,11 @@
-import Instance.SheafOfModules_Monoidal
-import Structure.AlgebraicGeometry_RelEffCartierDiv
-import Theorem.Scheme.RelEffCartierDiv
-
+module
+public import Instance.SheafOfModules_Monoidal
+public import Structure.AlgebraicGeometry_RelEffCartierDiv
+public import Theorem.Scheme.RelEffCartierDiv
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

@@ -1,5 +1,10 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/LebowitzPfisterZeroFieldSheet.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReflectionGauge
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/LebowitzPfisterZeroFieldSheet.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,11 +12,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReflectionGauge
-
-
 namespace StatMech.Ising
 
 open StatMech.Sharpness

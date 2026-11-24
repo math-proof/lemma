@@ -1,6 +1,11 @@
+module
+public import Mathlib
+public import Def.Mathlib_RightActionInstances
+
+
+public section
+
 -- Carved from Lemma/Definitions/Def_Mathlib_RightActionInstances.lean: instance decls only.
-import Mathlib
-import Def.Mathlib_RightActionInstances
 
 section
 

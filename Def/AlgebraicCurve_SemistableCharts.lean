@@ -1,7 +1,10 @@
-import Def.ModularCurve_FinitePlaceLift
-import Structure.AlgebraicCurve_SemistableCharts
-
+module
+public import Def.ModularCurve_FinitePlaceLift
+public import Structure.AlgebraicCurve_SemistableCharts
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

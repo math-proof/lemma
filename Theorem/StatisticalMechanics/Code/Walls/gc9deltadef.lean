@@ -1,5 +1,24 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/gc9deltadef.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Sharpness.Switching.Part3
+public import Theorem.StatisticalMechanics.Code.Sharpness.SwitchingDichotomy.Part2
+public import Theorem.StatisticalMechanics.Code.Sharpness.DeltaRewrite
+public import Theorem.StatisticalMechanics.Code.Sharpness.DeltaRewriteDichotomy.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.gc8crossingallconn
+public import Theorem.StatisticalMechanics.Code.Walls.gc8core.Part2
+public import Def.StatisticalMechanics.Code.Walls.gc9deltadef
+open Finset BigOperators
+open scoped symmDiff
+open Classical
+set_option linter.unusedSectionVars false
+set_option linter.unusedVariables false
+set_option linter.style.longLine false
+set_option maxHeartbeats 800000
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/gc9deltadef.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,26 +26,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Sharpness.Switching.Part3
-import Theorem.StatisticalMechanics.Code.Sharpness.SwitchingDichotomy.Part2
-import Theorem.StatisticalMechanics.Code.Sharpness.DeltaRewrite
-import Theorem.StatisticalMechanics.Code.Sharpness.DeltaRewriteDichotomy.Part2
-import Theorem.StatisticalMechanics.Code.Walls.gc8crossingallconn
-import Theorem.StatisticalMechanics.Code.Walls.gc8core.Part2
-import Def.StatisticalMechanics.Code.Walls.gc9deltadef
-open Finset BigOperators
-open scoped symmDiff
-open Classical
-
-set_option linter.unusedSectionVars false
-set_option linter.unusedVariables false
-set_option linter.style.longLine false
-set_option maxHeartbeats 800000
-
-
 namespace StatMech.Walls
 
 open StatMech StatMech.Sharpness

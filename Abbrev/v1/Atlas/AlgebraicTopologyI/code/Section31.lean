@@ -1,5 +1,34 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/Section31.lean -/
+module
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section26.Part8
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section32
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Lemma32_4
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section32.Part2
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Lemma32_4
+public import Mathlib.Topology.Covering.Quotient
+public import Mathlib.Topology.Algebra.MulAction
+public import Mathlib.Geometry.Manifold.IsManifold.Basic
+public import Mathlib.Analysis.InnerProductSpace.EuclideanDist
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.Topology.Covering.Basic
+public import Mathlib.Topology.Homotopy.Lifting
+public import Mathlib.AlgebraicTopology.FundamentalGroupoid.FundamentalGroup
+public import Mathlib.CategoryTheory.Action.Basic
+public import Mathlib.CategoryTheory.Functor.Category
+public import Mathlib.Algebra.Category.ModuleCat.Basic
+public import Mathlib.Algebra.MonoidAlgebra.Defs
+public import Mathlib.RepresentationTheory.Rep.Iso
+public import Mathlib.Topology.Connected.PathConnected
+public import Mathlib.Topology.Homotopy.Path
+public import Mathlib.Topology.LocallyConstant.Basic
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section31.Part3
+open Topology MulAction CategoryTheory TopologicalSpace
+open CategoryTheory AlgebraicTopology SingularCohomology Limits
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/Section31.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,35 +36,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section26.Part8
-import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
-import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section32
-import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Lemma32_4
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section32.Part2
-import Def.v1.Atlas.AlgebraicTopologyI.code.Lemma32_4
-import Mathlib.Topology.Covering.Quotient
-import Mathlib.Topology.Algebra.MulAction
-import Mathlib.Geometry.Manifold.IsManifold.Basic
-import Mathlib.Analysis.InnerProductSpace.EuclideanDist
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.Topology.Covering.Basic
-import Mathlib.Topology.Homotopy.Lifting
-import Mathlib.AlgebraicTopology.FundamentalGroupoid.FundamentalGroup
-import Mathlib.CategoryTheory.Action.Basic
-import Mathlib.CategoryTheory.Functor.Category
-import Mathlib.Algebra.Category.ModuleCat.Basic
-import Mathlib.Algebra.MonoidAlgebra.Defs
-import Mathlib.RepresentationTheory.Rep.Iso
-import Mathlib.Topology.Connected.PathConnected
-import Mathlib.Topology.Homotopy.Path
-import Mathlib.Topology.LocallyConstant.Basic
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section31.Part3
-open Topology MulAction CategoryTheory TopologicalSpace
-
-open CategoryTheory AlgebraicTopology SingularCohomology Limits
-
-
 noncomputable section
 
 namespace OrientationHomology

@@ -1,13 +1,16 @@
-import Def.ModularCurve_ComponentGroup
-import Theorems.Thm_ModularCurve_gramMap_injective
-import Mathlib.LinearAlgebra.FreeModule.PID
-import Mathlib.LinearAlgebra.Dual.Lemmas
-import Mathlib.LinearAlgebra.Matrix.ToLin
-import Mathlib.LinearAlgebra.Matrix.Basis
-import Mathlib.LinearAlgebra.Determinant
-import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
-
+module
+public import Def.ModularCurve_ComponentGroup
+public import Theorems.Thm_ModularCurve_gramMap_injective
+public import Mathlib.LinearAlgebra.FreeModule.PID
+public import Mathlib.LinearAlgebra.Dual.Lemmas
+public import Mathlib.LinearAlgebra.Matrix.ToLin
+public import Mathlib.LinearAlgebra.Matrix.Basis
+public import Mathlib.LinearAlgebra.Determinant
+public import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

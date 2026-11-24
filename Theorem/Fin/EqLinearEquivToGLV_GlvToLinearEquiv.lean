@@ -13,7 +13,7 @@ open GeometricAlgebra GeometricAlgebra.Flag
 [main](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/GeometricAlgebra/FlagsParabolics.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   [Field k]
   [AddCommGroup V]
   [Module k V]

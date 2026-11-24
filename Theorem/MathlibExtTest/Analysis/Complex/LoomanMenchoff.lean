@@ -1,11 +1,13 @@
+module
+public import Theorem.Analysis.Complex.LoomanMenchoff.Part6
+public import Mathlib.Analysis.Calculus.Deriv.Add
+public import Mathlib.Analysis.Calculus.Deriv.Mul
+public import Mathlib.Analysis.Calculus.Deriv.Pow
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Complex/LoomanMenchoff.lean -/
-
-import Theorem.Analysis.Complex.LoomanMenchoff.Part6
-import Mathlib.Analysis.Calculus.Deriv.Add
-import Mathlib.Analysis.Calculus.Deriv.Mul
-import Mathlib.Analysis.Calculus.Deriv.Pow
-
-
 namespace MathlibExtTest.Analysis.Complex.LoomanMenchoff
 
 open Set

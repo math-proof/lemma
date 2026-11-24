@@ -1,10 +1,11 @@
+module
+public import all MathlibExt.Combinatorics.Enumerative.SpiveyPQBell
+public import Mathlib.Tactic.NormNum
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/SpiveyPQBell.lean -/
-
-
-import all MathlibExt.Combinatorics.Enumerative.SpiveyPQBell
-import Mathlib.Tactic.NormNum
-
-
 namespace MetaMathlibExt
 
 -- At `p = 1` and `q = 1/2`, the theorem computes `tildeB 2 1` as `3/2`.

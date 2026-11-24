@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicCombinatorics/code/YoungDiagrams.lean -/
+module
+public import Instance.v1.Atlas.AlgebraicCombinatorics.code.YoungLattice.Part3
+public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungLattice
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Fintype.Sum
+set_option autoImplicit false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicCombinatorics/code/YoungDiagrams.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Instance.v1.Atlas.AlgebraicCombinatorics.code.YoungLattice.Part3
-import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.YoungLattice
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Fintype.Sum
-set_option autoImplicit false
-
-
 namespace YoungLattice
 
 namespace Lmn

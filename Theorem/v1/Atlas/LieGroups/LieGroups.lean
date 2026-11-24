@@ -1,5 +1,183 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/LieGroups.lean -/
+module
+public import Def.v1.Atlas.LieGroups.code.Admissible.Part3
+public import Theorem.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
+public import Theorem.Submodule.Any_And_All_Eq_GetToMonoidHomAndAll_In_Span.of.IsMaximalCompactSubgroup.IsSemisimpleLieGroupG
+public import Theorem.Int.All_Eq_0.of.EqCompositionLengthO_0.IsCategoryO
+public import Theorem.Int.ExtVanishesCategoryO1.of.IsCategoryO.IsProjectiveInO.IsCategoryO
+public import Theorem.AlgHom.EqLiftOfSurjectiveNC.of.All_Eq_0.Surjective
+public import Theorem.Representation.All_Bijective.All_AnyAndAll_Any.of.All_All_Any.All_Any_Eq.All_Eq.All_All_Eq.All_All_Eq.All_All_Any_And_Eq.All_All_Any_And_Eq.All_Prop.All_BijectiveFun.All.All.All_Any.All_Prop.All_Prop.All_Eq.All.All.All_Eq.All.All.All
+public import Theorem.Nat.ClosedEmbedding.eq.BundleProjection
+public import Theorem.Nat.Degrees.Gt_0
+public import Theorem.Int.IsInQPlus0
+public import Theorem.Int.WeightLE.of.BruhatLE
+public import Theorem.Rat.EqProjectToH.of.Given
+public import Theorem.Complex.Eq_Sum_Mul
+public import Theorem.Int.StandardFiltrationMultiplicity.eq.DimHomProjectiveContragredientVerma
+public import Theorem.Complex.IsStronglyContinuousToMonoidHom
+public import Theorem.Nat.AddLengthMulDescentRefl1.eq.Length.of.Ne_1
+public import Theorem.Int.SMulLiftKaehlerDifferential
+public import Theorem.Int.Any_All_IffInAny_EqSMul0
+public import Theorem.Set.In_RangeAlgebraMap.of.IsAlgebraic
+public import Theorem.Int.FGUeaIotaRange
+public import Theorem.Int.IsFreeOverNMinus.of.IsProjectiveInO.IsCategoryO
+public import Theorem.Matrix.All_Eq_0AndNonempty_R.of.All_Any_All_EqQ_S.EqWeightSpace_Bot.All_IffEqP_0_Any_EqI.SurjectiveP.InjectiveI.IsCategoryO.IsCategoryO.IsVermaModule.IsCategoryO
+public import Theorem.Int.GetVermaHomBackwardHighestWeightVec.eq.Val.of.IsVermaModule
+public import Theorem.Submodule.Any_And_Le_Aleph0.of.IsIrreducibleGKModule
+public import Theorem.Nat.CoeffKazhdanLusztigPoly.ge.Zero
+public import Theorem.Finset.Zero.le.Form.of.In_PosRoots
+public import Theorem.Fin.All_Eq.of.All_Eq.All_Eq_RightAction.All_Eq_RightAction.All_Any_Eq_Sum_RightAction
+public import Theorem.Complex.Any_Any_And_All_Eq_AdjointAction.All_Finite.of.IsHarishChandraBimodule.IsIrreducible
+public import Theorem.Set.Dense_KFiniteSubspace.of.IsAdmissible
+public import Theorem.Int.Any_All_Eq.of.LeKer_Ker.Surjective
+public import Theorem.Finset.EqMul_Mul.of.In_SimpleReflections
+public import Theorem.Fin.Any_Eq.of.Ne_0
+public import Theorem.Int.IsIntegral
+public import Theorem.Complex.DenseRange_ι
+public import Theorem.Submodule.All_NormSubtype.of.All_EqinnerS
+public import Theorem.MvPolynomial.ReynoldsOperator.in.PolynomialInvariantSubalgebra
+public import Theorem.Int.Level1.ne.Top
+public import Theorem.Complex.IsKFinite0
+public import Theorem.Complex.inner.of.IsUnitary
+public import Theorem.Complex.In_WeightSpace.is.H.eq.SMul
+public import Theorem.Int.Zero.in.DominantWeights
+public import Theorem.Finset.Form.Gt_0.of.In_PosRoots
+public import Theorem.Submodule.In_OfUEASubmoduleHcompat.is.In
+public import Theorem.Int.Any_EqUeaAction
+public import Theorem.Set.Any_And_All_IsSupportedIn.of.IsWeakStarCauchy
+public import Theorem.Int.Zero.in.NilpotentCone
+public import Theorem.Int.Eq.of.All_Eq
+public import Theorem.Complex.ConvolutionOp.eq.Integral_MulConvolutionKernel
+public import Theorem.Int.GetLift_ToEndSubMulS.eq.Zero.of.All_EqGetLiftSMul
+public import Theorem.Int.IsDirectSummand
+public import Theorem.Nat.basisHC.eq.SMul
+public import Theorem.Matrix.LinearIndependent.of.LpSingle
+public import Theorem.Complex.Nonempty_Realization
+public import Theorem.LinearMap.BijectiveNegIntertwiningLinearMap.of.All_Ne_0
+public import Theorem.Set.KtypeBoundedness.eq.BoundedBoth.is.BddAboveKtypeSetAndBddBelowKtypeSet
+public import Theorem.Complex.IsIsomorphicGK.of.IsIsomorphicGK.IsIsomorphicGK
+public import Theorem.Int.Square.ge.One.of.Ne_0
+public import Theorem.Fin.Any_Eq_SMul.of.All_ToMonoidHom.IsIrreducible
+public import Theorem.Matrix.EqGetTraceSum
+public import Theorem.Fin.StarRingEnd_GetTraceVToLinearMap.eq.GetTraceVToLinearMapAdjoint
+public import Theorem.Real.GetToMonoidHom.in.SmoothSubspace.of.In_SmoothSubspace
+public import Theorem.Real.IsSmoothVector0
+public import Theorem.Ideal.IsHomogeneous_AugmentationIdealGraded
+public import Theorem.Int.Surjective_Comp.of.Surjective
+public import Theorem.Int.IsCategoryOA.of.IsCategoryOB
+public import Theorem.Submodule.Le.of.LeSpan.SurjectiveFun.InjectiveFun
+public import Theorem.Int.Mul
+public import Theorem.Int.WeightSubspace.eq.ToSubmoduleWeightSpace
+public import Theorem.Set.Any_And_Ne_0.of.NotIn_Closure.Any_EqSetF
+public import Def.v1.Atlas.LieGroups.code.AnalyticityRegularity.Part2
+public import Theorem.v1.Atlas.LieGroups.code.AuditReport
+public import Theorem.v1.Atlas.LieGroups.code.AxiomCitationAudit
+public import Def.v1.Atlas.LieGroups.code.BGGReciprocity.Part3
+public import Def.v1.Atlas.LieGroups.code.BGGResolution
+public import Structure.v1.Atlas.LieGroups.code.BeilinsonBernstein.Part3
+public import Theorem.v1.Atlas.LieGroups.code.BeilinsonBernsteinVerify
+public import Structure.v1.Atlas.LieGroups.code.BernsteinGelfandEquivalence.Part3
+public import Def.v1.Atlas.LieGroups.code.BorelWeil.Part6
+public import Def.v1.Atlas.LieGroups.code.CSTTheorem.Part2
+public import Def.v1.Atlas.LieGroups.code.CategoryO.Part3
+public import Def.v1.Atlas.LieGroups.code.CategoryOII.Part3
+public import Def.v1.Atlas.LieGroups.code.ChevalleyRestriction.Part7
+public import Def.v1.Atlas.LieGroups.code.CompactMeasures
+public import Def.v1.Atlas.LieGroups.code.CompositionSeries
+public import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
+public import Theorem.Fin.All_AreNatIsoOnGenInfCharAndAll_Any_And_All_EqObjAndIsDirectSumDecompAndAll_Any_And_AreNatIsoTheta
+public import Theorem.RingHom.Any_EqLengthAndAsIdealLast.of.EqLength.Ker.eq.Bot
+public import Theorem.Fin.UFnSub.of.IsSemisimpleEnd
+public import Structure.v1.Atlas.LieGroups.code.Corollary30_20
+public import Structure.v1.Atlas.LieGroups.code.CoxeterTheory.Part2
+public import Structure.v1.Atlas.LieGroups.code.DModuleApplications.Part5
+public import Abbrev.v1.Atlas.LieGroups.code.DModules
+public import Def.v1.Atlas.LieGroups.code.DModulesII.Part6
+public import Def.v1.Atlas.LieGroups.code.DixmierLemma
+public import Def.v1.Atlas.LieGroups.code.DualityFunctor
+public import Def.v1.Atlas.LieGroups.code.DualityFunctorDefs
+public import Def.v1.Atlas.LieGroups.code.DufloJoseph.Part8
+public import Def.v1.Atlas.LieGroups.code.ExtO.Part2
+public import Theorem.v1.Atlas.LieGroups.code.ExtVanishingKernelZero
+public import Def.v1.Atlas.LieGroups.code.FrobeniusReciprocity
+public import Def.v1.Atlas.LieGroups.code.GKModule.Part2
+public import Def.v1.Atlas.LieGroups.code.GKModuleDefs.Part2
+public import Def.v1.Atlas.LieGroups.code.Globalization
+public import Theorem.v1.Atlas.LieGroups.code.Goal109_GrothendieckBasis
+public import Theorem.v1.Atlas.LieGroups.code.Goal139_KLProperties
+public import Theorem.v1.Atlas.LieGroups.code.Goal77_Cor134_Status
+public import Theorem.v1.Atlas.LieGroups.code.Goal88_Verma_Status
+public import Def.v1.Atlas.LieGroups.code.GrothendieckGroupO.Part4
+public import Theorem.v1.Atlas.LieGroups.code.GrothendieckGroupOAudit
+public import Def.v1.Atlas.LieGroups.code.HCBimoduleClassification
+public import Def.v1.Atlas.LieGroups.code.HCBimoduleProjectives.Part2
+public import Theorem.v1.Atlas.LieGroups.code.HarishChandraAxiomAudit
+public import Theorem.v1.Atlas.LieGroups.code.HarishChandraCorollaries
+public import Structure.v1.Atlas.LieGroups.code.HarishChandraFunctor
+public import Structure.v1.Atlas.LieGroups.code.HarishChandraIsomorphism.Part2
+public import Def.v1.Atlas.LieGroups.code.HeckeKL.Part9
+public import Def.v1.Atlas.LieGroups.code.HighestWeightModules.Part2
+public import Instance.v1.Atlas.LieGroups.code.HilbertNoether
+public import Theorem.v1.Atlas.LieGroups.code.InfinitesimalEquivalence
+public import Structure.v1.Atlas.LieGroups.code.InfinitesimalEquivalenceCore.Part3
+public import Theorem.v1.Atlas.LieGroups.code.InfinitesimalEquivalenceProposition71
+public import Def.v1.Atlas.LieGroups.code.InvariantTheoryLemmas
+public import Def.v1.Atlas.LieGroups.code.IsotypicPeterWeyl.Part3
+public import Structure.v1.Atlas.LieGroups.code.IwasawaDecomposition
+public import Def.v1.Atlas.LieGroups.code.JantzenFiltration.Part2
+public import Def.v1.Atlas.LieGroups.code.KFinite.Part3
+public import Theorem.v1.Atlas.LieGroups.code.KFiniteDenseAudit
+public import Def.v1.Atlas.LieGroups.code.KFiniteProps.Part4
+public import Def.v1.Atlas.LieGroups.code.KTypeDecomposition.Part3
+public import Def.v1.Atlas.LieGroups.code.KostantTheorem.Part5
+public import Theorem.v1.Atlas.LieGroups.code.KrullSchmidtCategoryO
+public import Def.v1.Atlas.LieGroups.code.Lemma23_4
+public import Def.v1.Atlas.LieGroups.code.Lemma23_7.Part3
+public import Def.v1.Atlas.LieGroups.code.LieSimplicityBridge
+public import Instance.v1.Atlas.LieGroups.code.MaximalQuotients
+public import Def.v1.Atlas.LieGroups.code.MeasuresSupport.Part2
+public import Theorem.v1.Atlas.LieGroups.code.MvPolynomialWeightedHomogeneous
+public import Structure.v1.Atlas.LieGroups.code.NilpotentCone.Part5
+public import Theorem.v1.Atlas.LieGroups.code.PBW
+public import Def.v1.Atlas.LieGroups.code.PBWLieSubmodBridge
+public import Def.v1.Atlas.LieGroups.code.POUSeqDensityHelpers
+public import Abbrev.v1.Atlas.LieGroups.code.PlancherelCompact.Part3
+public import Def.v1.Atlas.LieGroups.code.PrimitiveIdeal
+public import Def.v1.Atlas.LieGroups.code.PrincipalSeries.Part6
+public import Def.v1.Atlas.LieGroups.code.ProjectiveFunctors.Part7
+public import Theorem.v1.Atlas.LieGroups.code.Prop194Audit
+public import Def.v1.Atlas.LieGroups.code.Prop415
+public import Theorem.v1.Atlas.LieGroups.code.Proposition22_7
+public import Theorem.v1.Atlas.LieGroups.code.SL2Basics.Part4
+public import Def.v1.Atlas.LieGroups.code.SL2CRepresentations.Part3
+public import Theorem.v1.Atlas.LieGroups.code.SL2Classification
+public import Def.v1.Atlas.LieGroups.code.SL2RealizationBridge
+public import Def.v1.Atlas.LieGroups.code.SL2RepWired
+public import Def.v1.Atlas.LieGroups.code.SL2Representations.Part2
+public import Def.v1.Atlas.LieGroups.code.SL2Unitary.Part2
+public import Theorem.v1.Atlas.LieGroups.code.SchurGKModuleAudit
+public import Def.v1.Atlas.LieGroups.code.SchurLemma
+public import Def.v1.Atlas.LieGroups.code.SchurOrthogonality
+public import Def.v1.Atlas.LieGroups.code.SchurOrthogonalityConsequences
+public import Structure.v1.Atlas.LieGroups.code.ShapovalovDeterminant
+public import Def.v1.Atlas.LieGroups.code.SmoothVectors
+public import Theorem.v1.Atlas.LieGroups.code.SmoothVectorsProps
+public import Instance.v1.Atlas.LieGroups.code.SyzygiesKoszul.Part2
+public import Def.v1.Atlas.LieGroups.code.TensorHomAxiom
+public import Structure.v1.Atlas.LieGroups.code.TensorO
+public import Def.v1.Atlas.LieGroups.code.TranslationFunctors.Part4
+public import Def.v1.Atlas.LieGroups.code.UnivEnvelopingAction.Part4
+public import Theorem.v1.Atlas.LieGroups.code.VerifyFullBuild
+public import Theorem.v1.Atlas.LieGroups.code.VerifyGoal44
+public import Theorem.v1.Atlas.LieGroups.code.VerifyGoal45
+public import Theorem.v1.Atlas.LieGroups.code.VerifyGoal89
+public import Def.v1.Atlas.LieGroups.code.VermaModules.Part7
+public import Theorem.v1.Atlas.LieGroups.code.VermaRetractionHelper
+public import Def.v1.Atlas.LieGroups.code.WeaklyAnalytic.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/LieGroups.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,180 +185,4 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.LieGroups.code.Admissible.Part3
-import Theorem.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
-import Lemma.Submodule.Any_And_All_Eq_GetToMonoidHomAndAll_In_Span.of.IsMaximalCompactSubgroup.IsSemisimpleLieGroupG
-import Theorem.Int.All_Eq_0.of.EqCompositionLengthO_0.IsCategoryO
-import Lemma.Int.ExtVanishesCategoryO1.of.IsCategoryO.IsProjectiveInO.IsCategoryO
-import Theorem.AlgHom.EqLiftOfSurjectiveNC.of.All_Eq_0.Surjective
-import Theorem.Representation.All_Bijective.All_AnyAndAll_Any.of.All_All_Any.All_Any_Eq.All_Eq.All_All_Eq.All_All_Eq.All_All_Any_And_Eq.All_All_Any_And_Eq.All_Prop.All_BijectiveFun.All.All.All_Any.All_Prop.All_Prop.All_Eq.All.All.All_Eq.All.All.All
-import Theorem.Nat.ClosedEmbedding.eq.BundleProjection
-import Lemma.Nat.Degrees.Gt_0
-import Theorem.Int.IsInQPlus0
-import Theorem.Int.WeightLE.of.BruhatLE
-import Theorem.Rat.EqProjectToH.of.Given
-import Theorem.Complex.Eq_Sum_Mul
-import Theorem.Int.StandardFiltrationMultiplicity.eq.DimHomProjectiveContragredientVerma
-import Theorem.Complex.IsStronglyContinuousToMonoidHom
-import Theorem.Nat.AddLengthMulDescentRefl1.eq.Length.of.Ne_1
-import Theorem.Int.SMulLiftKaehlerDifferential
-import Theorem.Int.Any_All_IffInAny_EqSMul0
-import Theorem.Set.In_RangeAlgebraMap.of.IsAlgebraic
-import Theorem.Int.FGUeaIotaRange
-import Lemma.Int.IsFreeOverNMinus.of.IsProjectiveInO.IsCategoryO
-import Lemma.Matrix.All_Eq_0AndNonempty_R.of.All_Any_All_EqQ_S.EqWeightSpace_Bot.All_IffEqP_0_Any_EqI.SurjectiveP.InjectiveI.IsCategoryO.IsCategoryO.IsVermaModule.IsCategoryO
-import Lemma.Int.GetVermaHomBackwardHighestWeightVec.eq.Val.of.IsVermaModule
-import Theorem.Submodule.Any_And_Le_Aleph0.of.IsIrreducibleGKModule
-import Lemma.Nat.CoeffKazhdanLusztigPoly.ge.Zero
-import Lemma.Finset.Zero.le.Form.of.In_PosRoots
-import Theorem.Fin.All_Eq.of.All_Eq.All_Eq_RightAction.All_Eq_RightAction.All_Any_Eq_Sum_RightAction
-import Theorem.Complex.Any_Any_And_All_Eq_AdjointAction.All_Finite.of.IsHarishChandraBimodule.IsIrreducible
-import Theorem.Set.Dense_KFiniteSubspace.of.IsAdmissible
-import Lemma.Int.Any_All_Eq.of.LeKer_Ker.Surjective
-import Theorem.Finset.EqMul_Mul.of.In_SimpleReflections
-import Theorem.Fin.Any_Eq.of.Ne_0
-import Theorem.Int.IsIntegral
-import Lemma.Complex.DenseRange_ι
-import Theorem.Submodule.All_NormSubtype.of.All_EqinnerS
-import Theorem.MvPolynomial.ReynoldsOperator.in.PolynomialInvariantSubalgebra
-import Theorem.Int.Level1.ne.Top
-import Theorem.Complex.IsKFinite0
-import Lemma.Complex.inner.of.IsUnitary
-import Theorem.Complex.In_WeightSpace.is.H.eq.SMul
-import Lemma.Int.Zero.in.DominantWeights
-import Lemma.Finset.Form.Gt_0.of.In_PosRoots
-import Theorem.Submodule.In_OfUEASubmoduleHcompat.is.In
-import Theorem.Int.Any_EqUeaAction
-import Theorem.Set.Any_And_All_IsSupportedIn.of.IsWeakStarCauchy
-import Theorem.Int.Zero.in.NilpotentCone
-import Theorem.Int.Eq.of.All_Eq
-import Lemma.Complex.ConvolutionOp.eq.Integral_MulConvolutionKernel
-import Lemma.Int.GetLift_ToEndSubMulS.eq.Zero.of.All_EqGetLiftSMul
-import Theorem.Int.IsDirectSummand
-import Theorem.Nat.basisHC.eq.SMul
-import Lemma.Matrix.LinearIndependent.of.LpSingle
-import Lemma.Complex.Nonempty_Realization
-import Lemma.LinearMap.BijectiveNegIntertwiningLinearMap.of.All_Ne_0
-import Lemma.Set.KtypeBoundedness.eq.BoundedBoth.is.BddAboveKtypeSetAndBddBelowKtypeSet
-import Theorem.Complex.IsIsomorphicGK.of.IsIsomorphicGK.IsIsomorphicGK
-import Lemma.Int.Square.ge.One.of.Ne_0
-import Theorem.Fin.Any_Eq_SMul.of.All_ToMonoidHom.IsIrreducible
-import Lemma.Matrix.EqGetTraceSum
-import Lemma.Fin.StarRingEnd_GetTraceVToLinearMap.eq.GetTraceVToLinearMapAdjoint
-import Theorem.Real.GetToMonoidHom.in.SmoothSubspace.of.In_SmoothSubspace
-import Theorem.Real.IsSmoothVector0
-import Theorem.Ideal.IsHomogeneous_AugmentationIdealGraded
-import Theorem.Int.Surjective_Comp.of.Surjective
-import Theorem.Int.IsCategoryOA.of.IsCategoryOB
-import Theorem.Submodule.Le.of.LeSpan.SurjectiveFun.InjectiveFun
-import Theorem.Int.Mul
-import Theorem.Int.WeightSubspace.eq.ToSubmoduleWeightSpace
-import Lemma.Set.Any_And_Ne_0.of.NotIn_Closure.Any_EqSetF
-import Def.v1.Atlas.LieGroups.code.AnalyticityRegularity.Part2
-import Theorem.v1.Atlas.LieGroups.code.AuditReport
-import Theorem.v1.Atlas.LieGroups.code.AxiomCitationAudit
-import Def.v1.Atlas.LieGroups.code.BGGReciprocity.Part3
-import Def.v1.Atlas.LieGroups.code.BGGResolution
-import Structure.v1.Atlas.LieGroups.code.BeilinsonBernstein.Part3
-import Theorem.v1.Atlas.LieGroups.code.BeilinsonBernsteinVerify
-import Structure.v1.Atlas.LieGroups.code.BernsteinGelfandEquivalence.Part3
-import Def.v1.Atlas.LieGroups.code.BorelWeil.Part6
-import Def.v1.Atlas.LieGroups.code.CSTTheorem.Part2
-import Def.v1.Atlas.LieGroups.code.CategoryO.Part3
-import Def.v1.Atlas.LieGroups.code.CategoryOII.Part3
-import Def.v1.Atlas.LieGroups.code.ChevalleyRestriction.Part7
-import Def.v1.Atlas.LieGroups.code.CompactMeasures
-import Def.v1.Atlas.LieGroups.code.CompositionSeries
-import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
-import Theorem.Fin.All_AreNatIsoOnGenInfCharAndAll_Any_And_All_EqObjAndIsDirectSumDecompAndAll_Any_And_AreNatIsoTheta
-import Theorem.RingHom.Any_EqLengthAndAsIdealLast.of.EqLength.Ker.eq.Bot
-import Theorem.Fin.UFnSub.of.IsSemisimpleEnd
-import Structure.v1.Atlas.LieGroups.code.Corollary30_20
-import Structure.v1.Atlas.LieGroups.code.CoxeterTheory.Part2
-import Structure.v1.Atlas.LieGroups.code.DModuleApplications.Part5
-import Abbrev.v1.Atlas.LieGroups.code.DModules
-import Def.v1.Atlas.LieGroups.code.DModulesII.Part6
-import Def.v1.Atlas.LieGroups.code.DixmierLemma
-import Def.v1.Atlas.LieGroups.code.DualityFunctor
-import Def.v1.Atlas.LieGroups.code.DualityFunctorDefs
-import Def.v1.Atlas.LieGroups.code.DufloJoseph.Part8
-import Def.v1.Atlas.LieGroups.code.ExtO.Part2
-import Theorem.v1.Atlas.LieGroups.code.ExtVanishingKernelZero
-import Def.v1.Atlas.LieGroups.code.FrobeniusReciprocity
-import Def.v1.Atlas.LieGroups.code.GKModule.Part2
-import Def.v1.Atlas.LieGroups.code.GKModuleDefs.Part2
-import Def.v1.Atlas.LieGroups.code.Globalization
-import Theorem.v1.Atlas.LieGroups.code.Goal109_GrothendieckBasis
-import Theorem.v1.Atlas.LieGroups.code.Goal139_KLProperties
-import Theorem.v1.Atlas.LieGroups.code.Goal77_Cor134_Status
-import Theorem.v1.Atlas.LieGroups.code.Goal88_Verma_Status
-import Def.v1.Atlas.LieGroups.code.GrothendieckGroupO.Part4
-import Theorem.v1.Atlas.LieGroups.code.GrothendieckGroupOAudit
-import Def.v1.Atlas.LieGroups.code.HCBimoduleClassification
-import Def.v1.Atlas.LieGroups.code.HCBimoduleProjectives.Part2
-import Theorem.v1.Atlas.LieGroups.code.HarishChandraAxiomAudit
-import Theorem.v1.Atlas.LieGroups.code.HarishChandraCorollaries
-import Structure.v1.Atlas.LieGroups.code.HarishChandraFunctor
-import Structure.v1.Atlas.LieGroups.code.HarishChandraIsomorphism.Part2
-import Def.v1.Atlas.LieGroups.code.HeckeKL.Part9
-import Def.v1.Atlas.LieGroups.code.HighestWeightModules.Part2
-import Instance.v1.Atlas.LieGroups.code.HilbertNoether
-import Theorem.v1.Atlas.LieGroups.code.InfinitesimalEquivalence
-import Structure.v1.Atlas.LieGroups.code.InfinitesimalEquivalenceCore.Part3
-import Theorem.v1.Atlas.LieGroups.code.InfinitesimalEquivalenceProposition71
-import Def.v1.Atlas.LieGroups.code.InvariantTheoryLemmas
-import Def.v1.Atlas.LieGroups.code.IsotypicPeterWeyl.Part3
-import Structure.v1.Atlas.LieGroups.code.IwasawaDecomposition
-import Def.v1.Atlas.LieGroups.code.JantzenFiltration.Part2
-import Def.v1.Atlas.LieGroups.code.KFinite.Part3
-import Theorem.v1.Atlas.LieGroups.code.KFiniteDenseAudit
-import Def.v1.Atlas.LieGroups.code.KFiniteProps.Part4
-import Def.v1.Atlas.LieGroups.code.KTypeDecomposition.Part3
-import Def.v1.Atlas.LieGroups.code.KostantTheorem.Part5
-import Theorem.v1.Atlas.LieGroups.code.KrullSchmidtCategoryO
-import Def.v1.Atlas.LieGroups.code.Lemma23_4
-import Def.v1.Atlas.LieGroups.code.Lemma23_7.Part3
-import Def.v1.Atlas.LieGroups.code.LieSimplicityBridge
-import Instance.v1.Atlas.LieGroups.code.MaximalQuotients
-import Def.v1.Atlas.LieGroups.code.MeasuresSupport.Part2
-import Theorem.v1.Atlas.LieGroups.code.MvPolynomialWeightedHomogeneous
-import Structure.v1.Atlas.LieGroups.code.NilpotentCone.Part5
-import Theorem.v1.Atlas.LieGroups.code.PBW
-import Def.v1.Atlas.LieGroups.code.PBWLieSubmodBridge
-import Def.v1.Atlas.LieGroups.code.POUSeqDensityHelpers
-import Abbrev.v1.Atlas.LieGroups.code.PlancherelCompact.Part3
-import Def.v1.Atlas.LieGroups.code.PrimitiveIdeal
-import Def.v1.Atlas.LieGroups.code.PrincipalSeries.Part6
-import Def.v1.Atlas.LieGroups.code.ProjectiveFunctors.Part7
-import Theorem.v1.Atlas.LieGroups.code.Prop194Audit
-import Def.v1.Atlas.LieGroups.code.Prop415
-import Theorem.v1.Atlas.LieGroups.code.Proposition22_7
-import Theorem.v1.Atlas.LieGroups.code.SL2Basics.Part4
-import Def.v1.Atlas.LieGroups.code.SL2CRepresentations.Part3
-import Theorem.v1.Atlas.LieGroups.code.SL2Classification
-import Def.v1.Atlas.LieGroups.code.SL2RealizationBridge
-import Def.v1.Atlas.LieGroups.code.SL2RepWired
-import Def.v1.Atlas.LieGroups.code.SL2Representations.Part2
-import Def.v1.Atlas.LieGroups.code.SL2Unitary.Part2
-import Theorem.v1.Atlas.LieGroups.code.SchurGKModuleAudit
-import Def.v1.Atlas.LieGroups.code.SchurLemma
-import Def.v1.Atlas.LieGroups.code.SchurOrthogonality
-import Def.v1.Atlas.LieGroups.code.SchurOrthogonalityConsequences
-import Structure.v1.Atlas.LieGroups.code.ShapovalovDeterminant
-import Def.v1.Atlas.LieGroups.code.SmoothVectors
-import Theorem.v1.Atlas.LieGroups.code.SmoothVectorsProps
-import Instance.v1.Atlas.LieGroups.code.SyzygiesKoszul.Part2
-import Def.v1.Atlas.LieGroups.code.TensorHomAxiom
-import Structure.v1.Atlas.LieGroups.code.TensorO
-import Def.v1.Atlas.LieGroups.code.TranslationFunctors.Part4
-import Def.v1.Atlas.LieGroups.code.UnivEnvelopingAction.Part4
-import Theorem.v1.Atlas.LieGroups.code.VerifyFullBuild
-import Theorem.v1.Atlas.LieGroups.code.VerifyGoal44
-import Theorem.v1.Atlas.LieGroups.code.VerifyGoal45
-import Theorem.v1.Atlas.LieGroups.code.VerifyGoal89
-import Def.v1.Atlas.LieGroups.code.VermaModules.Part7
-import Theorem.v1.Atlas.LieGroups.code.VermaRetractionHelper
-import Def.v1.Atlas.LieGroups.code.WeaklyAnalytic.Part2
-
 

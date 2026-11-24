@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/OrderTransition.lean -/
+module
+public import Def.StatisticalMechanics.Code.FK.CriticalPoint.Part3
+public import Theorem.StatisticalMechanics.Code.FK.IvProperties
+public import Theorem.StatisticalMechanics.Code.FK.DlrSandwich
+public import Theorem.StatisticalMechanics.Code.BeffaraDC.SelfDualValue
+public import Def.StatisticalMechanics.Code.FK.OrderTransition
+open MeasureTheory
+open scoped NNReal
+set_option linter.unusedSectionVars false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/OrderTransition.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Def.StatisticalMechanics.Code.FK.CriticalPoint.Part3
-import Theorem.StatisticalMechanics.Code.FK.IvProperties
-import Theorem.StatisticalMechanics.Code.FK.DlrSandwich
-import Theorem.StatisticalMechanics.Code.BeffaraDC.SelfDualValue
-import Def.StatisticalMechanics.Code.FK.OrderTransition
-open MeasureTheory
-open scoped NNReal
-
-set_option linter.unusedSectionVars false
-
-
 namespace StatMech
 
 namespace FK

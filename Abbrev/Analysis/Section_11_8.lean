@@ -1,7 +1,11 @@
-import Mathlib
-import Mathlib.Topology.Instances.Irrational
-import Theorem.Analysis.Section_11_6
+module
+public import Mathlib
+public import Mathlib.Topology.Instances.Irrational
+public import Theorem.Analysis.Section_11_6
 set_option doc.verso.suggestions false
+
+
+public section
 
 /-!
 # Analysis I, Section 11.8: The Riemann-Stieltjes integral
@@ -36,8 +40,6 @@ Technical notes:
   integral is intended for functions that are of bounded variation, though we shall restrict
   attention to the special case of monotone increasing functions for the most part.
 -/
-
-
 namespace Chapter11
 
 open BoundedInterval Chapter9

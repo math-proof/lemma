@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/DihedralPositivityFinite.lean -/
+module
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.DihedralPositivity.Part2
+open Finset BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/DihedralPositivityFinite.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,11 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.DihedralPositivity.Part2
-open Finset BigOperators
-
-
 namespace CoxeterGroup
 
 set_option linter.unusedSectionVars false

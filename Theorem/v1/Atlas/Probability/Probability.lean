@@ -1,5 +1,170 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/TheoryOfProbability.lean -/
+module
+public import Theorem.Measure.Atlas.v1.Probability.code.AbsolutelyContinuous
+public import Theorem.Measure.Atlas.v1.Probability.code.BorelCantelli
+public import Theorem.Measure.Atlas.v1.Probability.code.BorelCantelliSecond
+public import Theorem.Measure.Atlas.v1.Probability.code.BoundedConvergence
+public import Theorem.Measure.Atlas.v1.Probability.code.ChebyshevInequality
+public import Theorem.Measure.Atlas.v1.Probability.code.ConvProbSubseq
+public import Theorem.Measure.Atlas.v1.Probability.code.ConvexSubmartingale
+public import Theorem.Measure.Atlas.v1.Probability.code.FatouLemma
+public import Theorem.Measure.Atlas.v1.Probability.code.HolderInequality
+public import Theorem.Measure.Atlas.v1.Probability.code.JensenInequality
+public import Theorem.Measure.Atlas.v1.Probability.code.KolmogorovZeroOne
+public import Theorem.Measure.Atlas.v1.Probability.code.MarkovInequality
+public import Theorem.Measure.Atlas.v1.Probability.code.MeasurabilityGenerators
+public import Theorem.Measure.Atlas.v1.Probability.code.MonotoneConvergence
+public import Theorem.Measure.Atlas.v1.Probability.code.PiLambdaSystem
+public import Theorem.Measure.Atlas.v1.Probability.code.RadonNikodym
+public import Theorem.Measure.Atlas.v1.Probability.code.StrongLaw
+public import Theorem.Measure.Atlas.v1.Probability.code.UIConvergenceEquiv
+public import Theorem.Measure.Atlas.v1.Probability.code.WaldEquation
+public import Def.Probability.AeCauchyFromKMI
+public import Structure.v1.Atlas.Probability.code.BackwardsMartingales.Part2
+public import Theorem.Measure.Atlas.v1.Probability.code.BackwardsMartingales
+public import Theorem.Measure.Atlas.v1.Probability.code.BallotTheorem
+public import Theorem.Measure.Atlas.v1.Probability.code.Blumenthal01
+public import Theorem.Measure.Atlas.v1.Probability.code.CLT
+public import Theorem.Measure.Atlas.v1.Probability.code.CaratheodoryExtension
+public import Theorem.Measure.Atlas.v1.Probability.code.CenteredConvergence
+public import Theorem.Measure.Atlas.v1.Probability.code.CharacteristicFunction
+public import Theorem.Measure.Atlas.v1.Probability.code.ConditionalVariance
+public import Theorem.Measure.Atlas.v1.Probability.code.ContinuousMapping
+public import Theorem.Measure.Atlas.v1.Probability.code.DeMoivreLaplace
+public import Theorem.Measure.Atlas.v1.Probability.code.DominatedConvergence
+public import Theorem.Measure.Atlas.v1.Probability.code.DoobDecomposition
+public import Theorem.Measure.Atlas.v1.Probability.code.ExistRegularCondProb
+public import Theorem.Measure.Atlas.v1.Probability.code.FubiniTheorem
+public import Theorem.Measure.Atlas.v1.Probability.code.GeneralOptionalStopping
+public import Theorem.Measure.Atlas.v1.Probability.code.HellySelection
+public import Theorem.Measure.Atlas.v1.Probability.code.HewittSavage
+public import Theorem.Measure.Atlas.v1.Probability.code.IntegrationProperties
+public import Theorem.Measure.Atlas.v1.Probability.code.KolmogorovCycle
+public import Theorem.Measure.Atlas.v1.Probability.code.KolmogorovMaximal
+public import Theorem.Measure.Atlas.v1.Probability.code.KolmogorovThreeSeries
+public import Theorem.Measure.Atlas.v1.Probability.code.LevyContinuity
+public import Theorem.Measure.Atlas.v1.Probability.code.LocalDeMoivreLaplace
+public import Theorem.Measure.Atlas.v1.Probability.code.MarkovChainConstruction
+public import Theorem.Measure.Atlas.v1.Probability.code.MarkovChainFDD
+public import Theorem.Measure.Atlas.v1.Probability.code.MarkovPropertyChain
+public import Theorem.Measure.Atlas.v1.Probability.code.MartingaleOrthogonality
+public import Theorem.Measure.Atlas.v1.Probability.code.MeasuresOnR
+public import Theorem.Measure.Atlas.v1.Probability.code.OptionalStoppingExpectation
+public import Theorem.Measure.Atlas.v1.Probability.code.OptionalStoppingUI
+public import Theorem.Measure.Atlas.v1.Probability.code.PairwiseIndepSLLN
+public import Theorem.Measure.Atlas.v1.Probability.code.PoissonConvergence
+public import Theorem.Measure.Atlas.v1.Probability.code.Portmanteau
+public import Theorem.Measure.Atlas.v1.Probability.code.ProbMeasuresRd
+public import Theorem.Measure.Atlas.v1.Probability.code.RandomWalkDichotomy
+public import Theorem.Measure.Atlas.v1.Probability.code.RandomWalkTailMeasurability
+public import Theorem.Measure.Atlas.v1.Probability.code.RegularConditionalDistribution
+public import Theorem.Measure.Atlas.v1.Probability.code.StableConstruction
+public import Theorem.Measure.Atlas.v1.Probability.code.StrongMarkovBMGoal98
+public import Theorem.Measure.Atlas.v1.Probability.code.StrongMarkovChain
+public import Theorem.Measure.Atlas.v1.Probability.code.StrongMarkovIID
+public import Theorem.Measure.Atlas.v1.Probability.code.SubmartingaleConvergence
+public import Theorem.Measure.Atlas.v1.Probability.code.SubmartingaleUIConvergence
+public import Theorem.Measure.Atlas.v1.Probability.code.Tightness
+public import Theorem.Measure.Atlas.v1.Probability.code.UIEquivalences
+public import Theorem.Measure.Atlas.v1.Probability.code.WaldSecondEquation
+public import Def.Probability.BallotTheorem
+public import Def.Probability.code.BerryEsseen
+public import Def.Probability.BirkhoffErgodic
+public import Structure.v1.Atlas.Probability.code.Blumenthal01
+public import Def.Probability.BochnerTheorem
+public import Def.Probability.CLT
+public import Def.Probability.CaratheodoryExtension
+public import Theorem.v1.Atlas.Probability.code.CenteredConvergence
+public import Def.Probability.CharacteristicFunction
+public import Theorem.v1.Atlas.Probability.code.CondExpMartingale
+public import Def.Probability.ConditionalExpectation
+public import Theorem.v1.Atlas.Probability.code.ConditionalVariance
+public import Def.Probability.ContinuousMapping
+public import Def.Probability.CramerTheorem
+public import Theorem.v1.Atlas.Probability.code.CramerRateFunction
+public import Theorem.v1.Atlas.Probability.code.CramerTheorem
+public import Theorem.v1.Atlas.Probability.code.CramerBarycenter
+public import Theorem.v1.Atlas.Probability.code.CramerRateID
+public import Def.Probability.DeMoivreLaplace.Part2
+public import Def.Probability.DomainAttraction
+public import Theorem.v1.Atlas.Probability.code.DominatedConvergence
+public import Theorem.v1.Atlas.Probability.code.DoobDecomposition
+public import Def.Probability.ErgodicMarkovChain
+public import Theorem.v1.Atlas.Probability.code.ExistRegularCondProb
+public import Structure.v1.Atlas.Probability.code.ExpectationEquivalence
+public import Abbrev.v1.Atlas.Probability.code.Filtration
+public import Structure.v1.Atlas.Probability.code.FiniteMarkovChain
+public import Theorem.v1.Atlas.Probability.code.FubiniTheorem
+public import Def.Probability.GeneralOptionalStopping
+public import Def.Probability.HellySelection
+public import Def.Probability.HewittSavage
+public import Def.Probability.InfinitelyDivisible
+public import Theorem.v1.Atlas.Probability.code.IntegrationProperties
+public import Def.Probability.KolmogorovContinuity
+public import Def.Probability.KolmogorovCycle.Part3
+public import Def.Probability.code.KolmogorovMaximal
+public import Def.Probability.KolmogorovThreeSeries
+public import Structure.v1.Atlas.Probability.code.LargeDeviations
+public import Theorem.v1.Atlas.Probability.code.LDPContraction
+public import Def.Probability.LatticeRV
+public import Def.Probability.LegendreTransform
+public import Theorem.v1.Atlas.Probability.code.LevyContinuity
+public import Def.Probability.LindebergFeller
+public import Def.Probability.LocalCLTLattice
+public import Def.Probability.LocalDeMoivreLaplace
+public import Def.Probability.MGF
+public import Structure.v1.Atlas.Probability.code.MarkovChain
+public import Instance.v1.Atlas.Probability.code.MarkovChainConstruction.Part2
+public import Def.Probability.MarkovChainFDD
+public import Def.Probability.MarkovPropertyBM
+public import Def.Probability.MarkovPropertyChain.Part2
+public import Structure.v1.Atlas.Probability.code.Martingale
+public import Theorem.v1.Atlas.Probability.code.MartingaleConvergence
+public import Theorem.v1.Atlas.Probability.code.MartingaleConvergenceUI
+public import Theorem.v1.Atlas.Probability.code.MartingaleLpConvergence
+public import Theorem.v1.Atlas.Probability.code.MartingaleOrthogonality
+public import Theorem.v1.Atlas.Probability.code.MeasuresOnR
+public import Theorem.v1.Atlas.Probability.code.OptionalStoppingAlt
+public import Theorem.v1.Atlas.Probability.code.OptionalStoppingExpectation
+public import Theorem.v1.Atlas.Probability.code.OptionalStoppingUI
+public import Def.Probability.PairwiseIndepSLLN
+public import Def.Probability.PoissonConvergence
+public import Def.Probability.PoissonRV
+public import Theorem.v1.Atlas.Probability.code.Portmanteau
+public import Def.Probability.ProbMeasuresRd
+public import Def.Probability.RandomWalkDichotomy
+public import Theorem.v1.Atlas.Probability.code.RandomWalkDichotomyProof
+public import Abbrev.v1.Atlas.Probability.code.RandomWalkTailMeasurability
+public import Structure.v1.Atlas.Probability.code.RegularConditionalDistribution
+public import Theorem.v1.Atlas.Probability.code.RegularVariation
+public import Theorem.v1.Atlas.Probability.code.SkorokhodRepresentation
+public import Def.Probability.SqMartingaleConvergence
+public import Def.Probability.SqMartingaleMaximal
+public import Theorem.v1.Atlas.Probability.code.StableConstruction
+public import Theorem.v1.Atlas.Probability.code.StoppedSumSqUI
+public import Structure.v1.Atlas.Probability.code.StoppingTime
+public import Abbrev.v1.Atlas.Probability.code.StoppingTimeContinuous
+public import Def.Probability.StrongMarkovBM
+public import Def.Probability.StrongMarkovBMGoal98
+public import Def.Probability.StrongMarkovChain
+public import Def.Probability.StrongMarkovIID
+public import Theorem.v1.Atlas.Probability.code.SubmartingaleConvergence
+public import Theorem.v1.Atlas.Probability.code.SubmartingaleUIConvergence
+public import Abbrev.v1.Atlas.Probability.code.TailSigmaAlgebra
+public import Def.Probability.Tightness
+public import Theorem.v1.Atlas.Probability.code.TightnessCompactness
+public import Def.Probability.TotalVariation
+public import Abbrev.v1.Atlas.Probability.code.TransitionProbability
+public import Abbrev.v1.Atlas.Probability.code.UIEquivalences
+public import Theorem.v1.Atlas.Probability.code.UnifIntegrableLp
+public import Def.Probability.UniformIntegrability
+public import Def.Probability.WaldSecondEquation
+public import Theorem.v1.Atlas.Probability.code.WaldSecondLimit
+public import Def.Probability.WeakConvergence
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/TheoryOfProbability.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,167 +172,4 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.Measure.Atlas.v1.Probability.code.AbsolutelyContinuous
-import Theorem.Measure.Atlas.v1.Probability.code.BorelCantelli
-import Theorem.Measure.Atlas.v1.Probability.code.BorelCantelliSecond
-import Theorem.Measure.Atlas.v1.Probability.code.BoundedConvergence
-import Theorem.Measure.Atlas.v1.Probability.code.ChebyshevInequality
-import Theorem.Measure.Atlas.v1.Probability.code.ConvProbSubseq
-import Theorem.Measure.Atlas.v1.Probability.code.ConvexSubmartingale
-import Theorem.Measure.Atlas.v1.Probability.code.FatouLemma
-import Theorem.Measure.Atlas.v1.Probability.code.HolderInequality
-import Theorem.Measure.Atlas.v1.Probability.code.JensenInequality
-import Theorem.Measure.Atlas.v1.Probability.code.KolmogorovZeroOne
-import Theorem.Measure.Atlas.v1.Probability.code.MarkovInequality
-import Theorem.Measure.Atlas.v1.Probability.code.MeasurabilityGenerators
-import Theorem.Measure.Atlas.v1.Probability.code.MonotoneConvergence
-import Theorem.Measure.Atlas.v1.Probability.code.PiLambdaSystem
-import Theorem.Measure.Atlas.v1.Probability.code.RadonNikodym
-import Theorem.Measure.Atlas.v1.Probability.code.StrongLaw
-import Theorem.Measure.Atlas.v1.Probability.code.UIConvergenceEquiv
-import Theorem.Measure.Atlas.v1.Probability.code.WaldEquation
-import Def.Probability.AeCauchyFromKMI
-import Structure.v1.Atlas.Probability.code.BackwardsMartingales.Part2
-import Theorem.Measure.Atlas.v1.Probability.code.BackwardsMartingales
-import Theorem.Measure.Atlas.v1.Probability.code.BallotTheorem
-import Theorem.Measure.Atlas.v1.Probability.code.Blumenthal01
-import Theorem.Measure.Atlas.v1.Probability.code.CLT
-import Theorem.Measure.Atlas.v1.Probability.code.CaratheodoryExtension
-import Theorem.Measure.Atlas.v1.Probability.code.CenteredConvergence
-import Theorem.Measure.Atlas.v1.Probability.code.CharacteristicFunction
-import Theorem.Measure.Atlas.v1.Probability.code.ConditionalVariance
-import Theorem.Measure.Atlas.v1.Probability.code.ContinuousMapping
-import Theorem.Measure.Atlas.v1.Probability.code.DeMoivreLaplace
-import Theorem.Measure.Atlas.v1.Probability.code.DominatedConvergence
-import Theorem.Measure.Atlas.v1.Probability.code.DoobDecomposition
-import Theorem.Measure.Atlas.v1.Probability.code.ExistRegularCondProb
-import Theorem.Measure.Atlas.v1.Probability.code.FubiniTheorem
-import Theorem.Measure.Atlas.v1.Probability.code.GeneralOptionalStopping
-import Theorem.Measure.Atlas.v1.Probability.code.HellySelection
-import Theorem.Measure.Atlas.v1.Probability.code.HewittSavage
-import Theorem.Measure.Atlas.v1.Probability.code.IntegrationProperties
-import Theorem.Measure.Atlas.v1.Probability.code.KolmogorovCycle
-import Theorem.Measure.Atlas.v1.Probability.code.KolmogorovMaximal
-import Theorem.Measure.Atlas.v1.Probability.code.KolmogorovThreeSeries
-import Theorem.Measure.Atlas.v1.Probability.code.LevyContinuity
-import Theorem.Measure.Atlas.v1.Probability.code.LocalDeMoivreLaplace
-import Theorem.Measure.Atlas.v1.Probability.code.MarkovChainConstruction
-import Theorem.Measure.Atlas.v1.Probability.code.MarkovChainFDD
-import Lemma.Measure.Atlas.v1.Probability.code.MarkovPropertyChain
-import Theorem.Measure.Atlas.v1.Probability.code.MartingaleOrthogonality
-import Theorem.Measure.Atlas.v1.Probability.code.MeasuresOnR
-import Theorem.Measure.Atlas.v1.Probability.code.OptionalStoppingExpectation
-import Theorem.Measure.Atlas.v1.Probability.code.OptionalStoppingUI
-import Theorem.Measure.Atlas.v1.Probability.code.PairwiseIndepSLLN
-import Theorem.Measure.Atlas.v1.Probability.code.PoissonConvergence
-import Theorem.Measure.Atlas.v1.Probability.code.Portmanteau
-import Theorem.Measure.Atlas.v1.Probability.code.ProbMeasuresRd
-import Theorem.Measure.Atlas.v1.Probability.code.RandomWalkDichotomy
-import Theorem.Measure.Atlas.v1.Probability.code.RandomWalkTailMeasurability
-import Theorem.Measure.Atlas.v1.Probability.code.RegularConditionalDistribution
-import Theorem.Measure.Atlas.v1.Probability.code.StableConstruction
-import Theorem.Measure.Atlas.v1.Probability.code.StrongMarkovBMGoal98
-import Lemma.Measure.Atlas.v1.Probability.code.StrongMarkovChain
-import Theorem.Measure.Atlas.v1.Probability.code.StrongMarkovIID
-import Theorem.Measure.Atlas.v1.Probability.code.SubmartingaleConvergence
-import Theorem.Measure.Atlas.v1.Probability.code.SubmartingaleUIConvergence
-import Theorem.Measure.Atlas.v1.Probability.code.Tightness
-import Theorem.Measure.Atlas.v1.Probability.code.UIEquivalences
-import Theorem.Measure.Atlas.v1.Probability.code.WaldSecondEquation
-import Def.Probability.BallotTheorem
-import Def.Probability.code.BerryEsseen
-import Def.Probability.BirkhoffErgodic
-import Structure.v1.Atlas.Probability.code.Blumenthal01
-import Def.Probability.BochnerTheorem
-import Def.Probability.CLT
-import Def.Probability.CaratheodoryExtension
-import Theorem.v1.Atlas.Probability.code.CenteredConvergence
-import Def.Probability.CharacteristicFunction
-import Theorem.v1.Atlas.Probability.code.CondExpMartingale
-import Def.Probability.ConditionalExpectation
-import Theorem.v1.Atlas.Probability.code.ConditionalVariance
-import Def.Probability.ContinuousMapping
-import Def.Probability.CramerTheorem
-import Theorem.v1.Atlas.Probability.code.CramerRateFunction
-import Theorem.v1.Atlas.Probability.code.CramerTheorem
-import Theorem.v1.Atlas.Probability.code.CramerBarycenter
-import Theorem.v1.Atlas.Probability.code.CramerRateID
-import Def.Probability.DeMoivreLaplace.Part2
-import Def.Probability.DomainAttraction
-import Theorem.v1.Atlas.Probability.code.DominatedConvergence
-import Theorem.v1.Atlas.Probability.code.DoobDecomposition
-import Def.Probability.ErgodicMarkovChain
-import Theorem.v1.Atlas.Probability.code.ExistRegularCondProb
-import Structure.v1.Atlas.Probability.code.ExpectationEquivalence
-import Abbrev.v1.Atlas.Probability.code.Filtration
-import Structure.v1.Atlas.Probability.code.FiniteMarkovChain
-import Theorem.v1.Atlas.Probability.code.FubiniTheorem
-import Def.Probability.GeneralOptionalStopping
-import Def.Probability.HellySelection
-import Def.Probability.HewittSavage
-import Def.Probability.InfinitelyDivisible
-import Theorem.v1.Atlas.Probability.code.IntegrationProperties
-import Def.Probability.KolmogorovContinuity
-import Def.Probability.KolmogorovCycle.Part3
-import Def.Probability.code.KolmogorovMaximal
-import Def.Probability.KolmogorovThreeSeries
-import Structure.v1.Atlas.Probability.code.LargeDeviations
-import Theorem.v1.Atlas.Probability.code.LDPContraction
-import Def.Probability.LatticeRV
-import Def.Probability.LegendreTransform
-import Theorem.v1.Atlas.Probability.code.LevyContinuity
-import Def.Probability.LindebergFeller
-import Def.Probability.LocalCLTLattice
-import Def.Probability.LocalDeMoivreLaplace
-import Def.Probability.MGF
-import Structure.v1.Atlas.Probability.code.MarkovChain
-import Instance.v1.Atlas.Probability.code.MarkovChainConstruction.Part2
-import Def.Probability.MarkovChainFDD
-import Def.Probability.MarkovPropertyBM
-import Def.Probability.MarkovPropertyChain.Part2
-import Structure.v1.Atlas.Probability.code.Martingale
-import Theorem.v1.Atlas.Probability.code.MartingaleConvergence
-import Theorem.v1.Atlas.Probability.code.MartingaleConvergenceUI
-import Theorem.v1.Atlas.Probability.code.MartingaleLpConvergence
-import Theorem.v1.Atlas.Probability.code.MartingaleOrthogonality
-import Theorem.v1.Atlas.Probability.code.MeasuresOnR
-import Theorem.v1.Atlas.Probability.code.OptionalStoppingAlt
-import Theorem.v1.Atlas.Probability.code.OptionalStoppingExpectation
-import Theorem.v1.Atlas.Probability.code.OptionalStoppingUI
-import Def.Probability.PairwiseIndepSLLN
-import Def.Probability.PoissonConvergence
-import Def.Probability.PoissonRV
-import Theorem.v1.Atlas.Probability.code.Portmanteau
-import Def.Probability.ProbMeasuresRd
-import Def.Probability.RandomWalkDichotomy
-import Theorem.v1.Atlas.Probability.code.RandomWalkDichotomyProof
-import Abbrev.v1.Atlas.Probability.code.RandomWalkTailMeasurability
-import Structure.v1.Atlas.Probability.code.RegularConditionalDistribution
-import Theorem.v1.Atlas.Probability.code.RegularVariation
-import Theorem.v1.Atlas.Probability.code.SkorokhodRepresentation
-import Def.Probability.SqMartingaleConvergence
-import Def.Probability.SqMartingaleMaximal
-import Theorem.v1.Atlas.Probability.code.StableConstruction
-import Theorem.v1.Atlas.Probability.code.StoppedSumSqUI
-import Structure.v1.Atlas.Probability.code.StoppingTime
-import Abbrev.v1.Atlas.Probability.code.StoppingTimeContinuous
-import Def.Probability.StrongMarkovBM
-import Def.Probability.StrongMarkovBMGoal98
-import Def.Probability.StrongMarkovChain
-import Def.Probability.StrongMarkovIID
-import Theorem.v1.Atlas.Probability.code.SubmartingaleConvergence
-import Theorem.v1.Atlas.Probability.code.SubmartingaleUIConvergence
-import Abbrev.v1.Atlas.Probability.code.TailSigmaAlgebra
-import Def.Probability.Tightness
-import Theorem.v1.Atlas.Probability.code.TightnessCompactness
-import Def.Probability.TotalVariation
-import Abbrev.v1.Atlas.Probability.code.TransitionProbability
-import Abbrev.v1.Atlas.Probability.code.UIEquivalences
-import Theorem.v1.Atlas.Probability.code.UnifIntegrableLp
-import Def.Probability.UniformIntegrability
-import Def.Probability.WaldSecondEquation
-import Theorem.v1.Atlas.Probability.code.WaldSecondLimit
-import Def.Probability.WeakConvergence
-
 

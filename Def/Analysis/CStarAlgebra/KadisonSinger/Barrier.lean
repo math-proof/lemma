@@ -1,30 +1,31 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Barrier.lean -/
+module
+public import Def.Analysis.CStarAlgebra.KadisonSinger.MixedCharPoly
+public import Lemma.Real.CStarAlgebra.KadisonSinger.MixedCharPoly
+public import Theorem.Polynomial.RealRooted
+public import Theorem.Real.CStarAlgebra.KadisonSinger.RealStable
+public import Theorem.MvPolynomial.PDeriv
+public import Theorem.Matrix.MvPolynomial
+public import Def.Algebra.Polynomial.RealRooted.Part2
+public import Mathlib.Analysis.Matrix.PosDef
+public import Def.Analysis.CStarAlgebra.KadisonSinger.RealStable
+public import Mathlib.Topology.Algebra.MvPolynomial
+public import Def.Algebra.MvPolynomial.PDeriv
+public import Def.LinearAlgebra.Matrix.MvPolynomial
+public import Mathlib.Algebra.MvPolynomial.Funext
+public import Mathlib.Analysis.Calculus.Deriv.Polynomial
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.LinearAlgebra.Lagrange
+open scoped BigOperators ComplexOrder Real
+open Filter MvPolynomial
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/Barrier.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
-
-import Def.Analysis.CStarAlgebra.KadisonSinger.MixedCharPoly
-import Lemma.Real.CStarAlgebra.KadisonSinger.MixedCharPoly
-import Theorem.Polynomial.RealRooted
-import Lemma.Real.CStarAlgebra.KadisonSinger.RealStable
-import Theorem.MvPolynomial.PDeriv
-import Theorem.Matrix.MvPolynomial
-import Def.Algebra.Polynomial.RealRooted.Part2
-import Mathlib.Analysis.Matrix.PosDef
-import Def.Analysis.CStarAlgebra.KadisonSinger.RealStable
-import Mathlib.Topology.Algebra.MvPolynomial
-import Def.Algebra.MvPolynomial.PDeriv
-import Def.LinearAlgebra.Matrix.MvPolynomial
-import Mathlib.Algebra.MvPolynomial.Funext
-import Mathlib.Analysis.Calculus.Deriv.Polynomial
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.LinearAlgebra.Lagrange
-open scoped BigOperators ComplexOrder Real
-
-open Filter MvPolynomial
-
 /-!
 # The Marcus--Spielman--Srivastava barrier bound
 
@@ -42,8 +43,6 @@ along every coordinate direction. Hence, when the `i`-th barrier is at most `1 -
 any barrier. Iterating over all coordinates and evaluating the mixed determinant polynomial at
 scalar points gives the bound.
 -/
-
-
 namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 end MathlibExt.Analysis.CStarAlgebra.KadisonSinger

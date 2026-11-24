@@ -1,12 +1,15 @@
-import Mathlib.FieldTheory.Fixed
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.Localization.Basic
-import Mathlib.Algebra.Ring.Action.Group
-import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
-import Lemma.SimpleGraph.MumfordVertexType
-import Structure.CerednikDrinfeld_MumfordQuotient
-
+module
+public import Mathlib.FieldTheory.Fixed
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.Localization.Basic
+public import Mathlib.Algebra.Ring.Action.Group
+public import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
+public import Lemma.SimpleGraph.MumfordVertexType
+public import Structure.CerednikDrinfeld_MumfordQuotient
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

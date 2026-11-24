@@ -1,13 +1,16 @@
-import Mathlib.MeasureTheory.Function.ContinuousMapDense
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.MeasureTheory.Integral.Bochner.Set
-import Mathlib.MeasureTheory.Measure.Regular
-import Mathlib.Topology.MetricSpace.Polish
-import Mathlib.Topology.Metrizable.CompletelyMetrizable
-import Mathlib.Topology.UrysohnsLemma
-import Initialize.Tactic.Attr.Basic
+module
+public import Mathlib.MeasureTheory.Function.ContinuousMapDense
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.MeasureTheory.Integral.Bochner.Set
+public import Mathlib.MeasureTheory.Measure.Regular
+public import Mathlib.Topology.MetricSpace.Polish
+public import Mathlib.Topology.Metrizable.CompletelyMetrizable
+public import Mathlib.Topology.UrysohnsLemma
+public import Initialize.Tactic.Attr.Basic
 open Classical ENNReal Filter MeasureTheory Real Set Topology
 
+
+public section
 
 private lemma singular_close [TopologicalSpace α] [PolishSpace α] [MeasurableSpace α] [BorelSpace α] {μ ν : Measure α} [IsProbabilityMeasure μ] [IsProbabilityMeasure ν] (h : ¬ ν ≪ μ) (M : ℝ) :
   ∃ f : α → ℝ, Continuous f ∧ (∃ C, ∀ x, |f x| ≤ C) ∧ M ≤ ∫ x, f x ∂ν - log (∫ x, exp (f x) ∂μ) := by

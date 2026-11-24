@@ -1,8 +1,11 @@
-import Theorem.Analysis.MeasureTheory.Section_1_1_1.Part16
-import Mathlib.LinearAlgebra.AffineSpace.Simplex.Basic
-import Def.Analysis.MeasureTheory.Section_1_1_2
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_1_1.Part16
+public import Mathlib.LinearAlgebra.AffineSpace.Simplex.Basic
+public import Def.Analysis.MeasureTheory.Section_1_1_2
 open Pointwise
 
+
+public section
 
 /-- A set is Jordan null if it is Jordan measurable with measure zero. -/
 abbrev JordanMeasurable.null {d:ℕ} (E: Set (EuclideanSpace' d)) : Prop := ∃ hE: JordanMeasurable E, hE.measure = 0

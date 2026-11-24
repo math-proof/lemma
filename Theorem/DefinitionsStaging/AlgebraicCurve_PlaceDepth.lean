@@ -1,10 +1,13 @@
-import Mathlib
-import Lemma.Definitions.Def_AlgebraicCurve_GluedPic0
-import Lemma.Definitions.Def_AlgebraicCurve_PlaceEvaluation
-import Lemma.Definitions.Def_AlgebraicCurve_GluedPic0Functoriality
-import Def.AlgebraicCurve_PlaceDepth
+module
+public import Mathlib
+public import Lemma.Definitions.Def_AlgebraicCurve_GluedPic0
+public import Lemma.Definitions.Def_AlgebraicCurve_PlaceEvaluation
+public import Lemma.Definitions.Def_AlgebraicCurve_GluedPic0Functoriality
+public import Def.AlgebraicCurve_PlaceDepth
 set_option autoImplicit false
 
+
+public section
 
 noncomputable section
 

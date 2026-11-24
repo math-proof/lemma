@@ -1,13 +1,14 @@
+module
+public import Def.Combinatorics.Enumerative.Partition.PeakGeneratingFunction.Part9
+public import Theorem.Finset.Enumerative.Partition.PeakGeneratingFunction
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Ring
+public import Def.MathlibExtTest.Combinatorics.Enumerative.Partition.PeakGeneratingFunction
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/Partition/PeakGeneratingFunction.lean -/
-
-
-import Def.Combinatorics.Enumerative.Partition.PeakGeneratingFunction.Part9
-import Lemma.Finset.Enumerative.Partition.PeakGeneratingFunction
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Ring
-import Def.MathlibExtTest.Combinatorics.Enumerative.Partition.PeakGeneratingFunction
-
-
 namespace MathlibExtTest.Combinatorics.Enumerative.Partition.PeakGeneratingFunction
 
 open MetaMathlibExt

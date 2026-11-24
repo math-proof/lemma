@@ -1,11 +1,12 @@
+module
+public import Def.NumberTheory.RidoutPadicRoth
+public import Theorem.Nat.RidoutPadicRoth
+public import Mathlib.RingTheory.Algebraic.Integral
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/RidoutPadicRoth.lean -/
-
-
-import Def.NumberTheory.RidoutPadicRoth
-import Lemma.Nat.RidoutPadicRoth
-import Mathlib.RingTheory.Algebraic.Integral
-
-
 namespace MathlibExtTest.NumberTheory.RidoutPadicRoth
 
 -- Ridout's theorem applies to `√2`, exponent `5/2`, and the prime `2`.

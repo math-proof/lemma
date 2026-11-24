@@ -1,13 +1,15 @@
-import Lemma.Scheme.QMRigidification
-import Structure.CerednikDrinfeld_QMFineModuli
-import Lemma.UpperHalfPlane.QMFineModuliT
-import Def.CerednikDrinfeld_FormalUpperHalfPlaneCharts
-import Structure.CerednikDrinfeld_RigidifiedPairClassModel
-
+module
+public import Lemma.Scheme.QMRigidification
+public import Structure.CerednikDrinfeld_QMFineModuli
+public import Theorem.UpperHalfPlane.QMFineModuliT
+public import Def.CerednikDrinfeld_FormalUpperHalfPlaneCharts
+public import Structure.CerednikDrinfeld_RigidifiedPairClassModel
 set_option autoImplicit false
-
 open scoped TensorProduct Quaternion NumberField
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry QuaternionAlgebra CerednikDrinfeld CerednikDrinfeld.QM NeronModelInfra
+
+
+public section
 
 namespace CerednikDrinfeld.QM.RigidifiedPairClass
 

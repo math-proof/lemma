@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.Int.LevelModuliPackage
 import Lemma.Int.LevelModuliPackageAbs
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 
 /--

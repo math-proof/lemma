@@ -1,14 +1,15 @@
+module
+public import Def.Combinatorics.Order.Dilworth
+public import Theorem.Finset.Order.Dilworth
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Fintype.Defs
+public import Mathlib.Order.Defs.PartialOrder
+public import Def.MathlibExtTest.Combinatorics.Order.Dilworth
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Order/Dilworth.lean -/
-
-
-import Def.Combinatorics.Order.Dilworth
-import Theorem.Finset.Order.Dilworth
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Fintype.Defs
-import Mathlib.Order.Defs.PartialOrder
-import Def.MathlibExtTest.Combinatorics.Order.Dilworth
-
-
 namespace MathlibExt.Combinatorics.Order.DilworthWanted
 
 instance : Fintype Discrete3 := inferInstanceAs (Fintype (Fin 3))

@@ -1,10 +1,14 @@
--- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ThetaGroup.lean: instance decls only.
-import Mathlib
-import Def.AlgebraicGeometry_RiemannForm
-import Theorem.Scheme.ThetaGroup
-import Def.AlgebraicGeometry_ThetaGroup
-
+module
+public import Mathlib
+public import Def.AlgebraicGeometry_RiemannForm
+public import Theorem.Scheme.ThetaGroup
+public import Def.AlgebraicGeometry_ThetaGroup
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ThetaGroup.lean: instance decls only.
 
 noncomputable section
 

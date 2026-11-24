@@ -13,7 +13,7 @@ open Finset BigOperators CoxeterGroup
 [mem_bilinInversions_iff](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/InversionSet.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   [DecidableEq B]
   [Fintype B]
   {M : CoxeterMatrix B}

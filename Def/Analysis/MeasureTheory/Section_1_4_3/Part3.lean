@@ -1,6 +1,9 @@
-import Def.Analysis.MeasureTheory.Section_1_4_2.Part8
-import Theorem.Analysis.MeasureTheory.Section_1_4_3.Part3
+module
+public import Def.Analysis.MeasureTheory.Section_1_4_2.Part8
+public import Theorem.Analysis.MeasureTheory.Section_1_4_3.Part3
 
+
+public section
 
 def FinitelyAdditiveMeasure.isCountablyAdditive {X:Type*} {B: ConcreteBooleanAlgebra X} (μ: FinitelyAdditiveMeasure B) : Prop :=
   B.isSigmaAlgebra ∧ ∀ (E : ℕ → Set X), (∀ n, B.measurable (E n)) → Set.univ.PairwiseDisjoint E →

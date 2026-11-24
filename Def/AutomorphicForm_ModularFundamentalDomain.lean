@@ -1,9 +1,12 @@
-import Mathlib
-import Lemma.UpperHalfPlane.Gamma0ExactVolume
-import Instance.AutomorphicForm_L2ProductionInstance
-
+module
+public import Mathlib
+public import Theorem.UpperHalfPlane.Gamma0ExactVolume
+public import Instance.AutomorphicForm_L2ProductionInstance
 open MeasureTheory Set ModularGroup UpperHalfPlane
 open scoped MatrixGroups Pointwise ENNReal Modular
+
+
+public section
 
 namespace FLT.ModularFundamentalDomain
 

@@ -1,7 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/ChangeModulus.lean -/
+module
+public import Def.NumberTheory.NumberField.RayClass.CongruenceEquivalence
+public import Theorem.Nat.NumberField.RayClass.CongruenceEquivalence
 
-import Def.NumberTheory.NumberField.RayClass.CongruenceEquivalence
-import Lemma.Nat.NumberField.RayClass.CongruenceEquivalence
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/ChangeModulus.lean -/
 /-!
 # Change of modulus (ATLAS NumberTheoryI item N422 / Lemma 22.5)
 
@@ -14,8 +18,6 @@ The definition `changeModulus` is the canonical witness: the pullback of `C1`
 to the `m2`-coprime ideals joined with the `m2`-ray group, which is equivalent
 to `C1` whenever the criterion holds.
 -/
-
-
 noncomputable section
 
 open scoped nonZeroDivisors

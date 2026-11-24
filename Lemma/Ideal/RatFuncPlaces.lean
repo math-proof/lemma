@@ -1,7 +1,10 @@
-import Mathlib
-import Lemma.Valuation.DivisorClassGroup
-
+module
+public import Mathlib
+public import Lemma.Valuation.DivisorClassGroup
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

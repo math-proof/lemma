@@ -1,12 +1,14 @@
+module
+public import Mathlib.Algebra.Field.ZMod
+public import Mathlib.AlgebraicGeometry.EllipticCurve.NormalForms
+public import Def.AlgebraicGeometry.EllipticCurve.PointCount
+public import Theorem.Nat.FrobeniusTrace.eq.SubAddCardF1CardPoint.of.AffineF
+public import Instance.MathlibExtTest.AlgebraicGeometry.EllipticCurve.PointCount.Part3
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/AlgebraicGeometry/EllipticCurve/PointCount.lean -/
-
-import Mathlib.Algebra.Field.ZMod
-import Mathlib.AlgebraicGeometry.EllipticCurve.NormalForms
-import Def.AlgebraicGeometry.EllipticCurve.PointCount
-import Theorem.Nat.FrobeniusTrace.eq.SubAddCardF1CardPoint.of.AffineF
-import Instance.MathlibExtTest.AlgebraicGeometry.EllipticCurve.PointCount.Part3
-
-
 namespace WeierstrassCurve.Affine.PointCountTest.ZModFive
 
 open WeierstrassCurve

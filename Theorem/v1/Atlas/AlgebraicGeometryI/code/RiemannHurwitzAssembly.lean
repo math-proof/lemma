@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/RiemannHurwitzAssembly.lean -/
+module
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitz
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitz
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves.Part2
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzAssembly
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/RiemannHurwitzAssembly.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitz
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitz
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
-import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves.Part2
-import Structure.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzAssembly
-
-
 noncomputable section
 
 open CanonicalSheafCurves

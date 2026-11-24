@@ -1,10 +1,13 @@
-import Mathlib
-import Def.ModularCurve_JHNeronObjectAtP
-import Lemma.Scheme.RegularProlongation
-import Structure.ModularCurve_JHPlaceSpecialization
-import Notation.ModularCurve_JHPlaceSpecialization
-
+module
+public import Mathlib
+public import Def.ModularCurve_JHNeronObjectAtP
+public import Lemma.Scheme.RegularProlongation
+public import Structure.ModularCurve_JHPlaceSpecialization
+public import Notation.ModularCurve_JHPlaceSpecialization
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

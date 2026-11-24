@@ -1,8 +1,11 @@
-import Mathlib
-import Def.ModularCurve_JZeroNeronDataPrime
-import Theorem.HahnSeries.ModularUnit
-
+module
+public import Mathlib
+public import Def.ModularCurve_JZeroNeronDataPrime
+public import Theorem.HahnSeries.ModularUnit
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

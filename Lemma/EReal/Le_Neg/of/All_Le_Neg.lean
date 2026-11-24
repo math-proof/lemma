@@ -1,7 +1,10 @@
-import Mathlib.Data.EReal.Basic
-import Initialize.Tactic.Attr.Basic
+module
+public import Mathlib.Data.EReal.Basic
+public import Initialize.Tactic.Attr.Basic
 open EReal
 
+
+public section
 
 /--
 If `a` is bounded above by `-t` for every real `t` with `↑t < b`, then `a ≤ -b`.

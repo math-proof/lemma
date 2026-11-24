@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexW1ExitGeom.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Universality.HexLattice.Part11
+public import Theorem.StatisticalMechanics.Code.Universality.HexInfraDisplacement.Part4
+public import Theorem.StatisticalMechanics.Code.Universality.HexInfraWinding
+public import Theorem.StatisticalMechanics.Code.Universality.HexInfraHeading
+public import Theorem.StatisticalMechanics.Code.Universality.HexW1Sides.Part3
+public import Def.StatisticalMechanics.Code.Universality.HexW1ExitGeom
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexW1ExitGeom.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Universality.HexLattice.Part11
-import Theorem.StatisticalMechanics.Code.Universality.HexInfraDisplacement.Part4
-import Theorem.StatisticalMechanics.Code.Universality.HexInfraWinding
-import Theorem.StatisticalMechanics.Code.Universality.HexInfraHeading
-import Theorem.StatisticalMechanics.Code.Universality.HexW1Sides.Part3
-import Def.StatisticalMechanics.Code.Universality.HexW1ExitGeom
-
-
 namespace StatMech.Universality
 
 open HexWalk List Complex

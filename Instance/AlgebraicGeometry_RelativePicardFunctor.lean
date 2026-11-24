@@ -1,9 +1,13 @@
--- Carved from Lemma/Definitions/Def_AlgebraicGeometry_RelativePicardFunctor.lean: instance decls only.
-import Mathlib
-import Theorem.Scheme.NeronModelPropertyBundleCarrier
-import Def.AlgebraicGeometry_RelativePicardFunctor
-
+module
+public import Mathlib
+public import Theorem.Scheme.NeronModelPropertyBundleCarrier
+public import Def.AlgebraicGeometry_RelativePicardFunctor
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicGeometry_RelativePicardFunctor.lean: instance decls only.
 
 universe u
 

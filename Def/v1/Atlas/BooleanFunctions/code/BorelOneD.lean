@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/BorelOneD.lean -/
+module
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
+public import Mathlib.MeasureTheory.Integral.Pi
+public import Mathlib.MeasureTheory.Integral.Prod
+public import Def.v1.Atlas.BooleanFunctions.code.GaussianStability.Part2
+public import Def.v1.Atlas.BooleanFunctions.code.Sheppard
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Sheppard
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/BorelOneD.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
-import Mathlib.MeasureTheory.Integral.Pi
-import Mathlib.MeasureTheory.Integral.Prod
-import Def.v1.Atlas.BooleanFunctions.code.GaussianStability.Part2
-import Def.v1.Atlas.BooleanFunctions.code.Sheppard
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Sheppard
-
-
 noncomputable section
 
 open MeasureTheory ProbabilityTheory Real Set

@@ -1,6 +1,6 @@
 import Mathlib
 import Def.FLTPrelim_Ramification
-import Lemma.WeierstrassCurve.FrobeniusTrace
+import Theorem.WeierstrassCurve.FrobeniusTrace
 import Lemma.WeierstrassCurve.TateModule
 import Lemma.MvPolynomial.X1HeckeModule
 import Lemma.WeierstrassCurve.X1PrimitiveSpecialization

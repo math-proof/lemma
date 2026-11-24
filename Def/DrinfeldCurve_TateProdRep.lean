@@ -1,11 +1,13 @@
-import Def.DrinfeldCurve_FunctionField
-import Def.AlgebraicCurve_DivisorClassGroup
-import Def.ModularCurve_JZeroTateModule
-import Initialize.Tactic.Attr.Basic
-
+module
+public import Def.DrinfeldCurve_FunctionField
+public import Def.AlgebraicCurve_DivisorClassGroup
+public import Def.ModularCurve_JZeroTateModule
+public import Initialize.Tactic.Attr.Basic
 set_option autoImplicit false
 open scoped TensorProduct
 
+
+public section
 
 namespace DrinfeldCurve
 

@@ -1,8 +1,11 @@
-import Theorem.Analysis.MeasureTheory.Section_1_3_1.Part11
-import Mathlib.Algebra.Order.Floor.Semifield
-import Theorem.Analysis.MeasureTheory.Section_1_3_2.Part4
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_3_1.Part11
+public import Mathlib.Algebra.Order.Floor.Semifield
+public import Theorem.Analysis.MeasureTheory.Section_1_3_2.Part4
 set_option doc.verso.suggestions false
 
+
+public section
 
 /-- Binary digit extraction: bⱼ(x) = ⌊2^j · x⌋ mod 2.
     For x ∈ \[0,1), this extracts the j-th binary digit.

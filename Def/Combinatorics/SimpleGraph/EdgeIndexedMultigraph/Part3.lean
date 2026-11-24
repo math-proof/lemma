@@ -1,14 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/EdgeIndexedMultigraph.lean -/
+module
+public import Mathlib.Combinatorics.SimpleGraph.DegreeSum
+public import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
+public import Mathlib.Combinatorics.SimpleGraph.Trails
+public import Theorem.SimpleGraph.EulerCircuit
+public import Instance.Combinatorics.SimpleGraph.EdgeIndexedMultigraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/EdgeIndexedMultigraph.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
-
-import Mathlib.Combinatorics.SimpleGraph.DegreeSum
-import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
-import Mathlib.Combinatorics.SimpleGraph.Trails
-import Theorem.SimpleGraph.EulerCircuit
-import Instance.Combinatorics.SimpleGraph.EdgeIndexedMultigraph
 /-!
 # Finite edge-indexed multigraphs
 
@@ -16,8 +19,6 @@ Parallel edges are represented by distinct elements of the edge type. The incide
 turns such a multigraph into a simple bipartite graph and transfers Euler circuits back to an
 edge-distinguishing representation.
 -/
-
-
 namespace SimpleGraph
 
 namespace EdgeIndexedMultigraph

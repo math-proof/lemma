@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/LeeYangZeroFree.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangAsano.Part15
+public import Mathlib.Analysis.Analytic.Polynomial
+public import Mathlib.Analysis.Calculus.LogDeriv
+public import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangZeroFree
+open scoped BigOperators
+open Finset Polynomial
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/LeeYangZeroFree.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangAsano.Part15
-import Mathlib.Analysis.Analytic.Polynomial
-import Mathlib.Analysis.Calculus.LogDeriv
-import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangZeroFree
-open scoped BigOperators
-open Finset Polynomial
-
-
 namespace StatMech.FrontierA
 
 open StatMech.Ising StatMech.FrontierB

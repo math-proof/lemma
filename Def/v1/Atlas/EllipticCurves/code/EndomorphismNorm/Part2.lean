@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/EndomorphismNorm.lean -/
+module
+public import Inductive.v1.Atlas.EllipticCurves.code.EndAlgClassification
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.EndAlgClassification
+public import Instance.v1.Atlas.EllipticCurves.code.EndomorphismNorm.Part2
+open scoped TensorProduct
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/EndomorphismNorm.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Inductive.v1.Atlas.EllipticCurves.code.EndAlgClassification
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.EndAlgClassification
-import Instance.v1.Atlas.EllipticCurves.code.EndomorphismNorm.Part2
-open scoped TensorProduct
-
-
 namespace PositiveDefiniteInvolutionAlgebra
 
 variable {A : Type*} [Ring A] [Algebra ℚ A] [PositiveDefiniteInvolutionAlgebra A]

@@ -1,5 +1,31 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/kc3_core.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
+public import Theorem.StatisticalMechanics.Code.Lattice.DartDef.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.DartNext.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.ContourLinksExits.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanExteriorClosure.Part8
+public import Theorem.StatisticalMechanics.Code.Lattice.MinimalPeriodLoop.Part2
+public import Theorem.StatisticalMechanics.Code.Lattice.ExteriorConnected.Part3
+public import Theorem.StatisticalMechanics.Code.Lattice.EnclosedAreaWitness.Part3
+public import Theorem.StatisticalMechanics.Code.Lattice.OrbitInteriorOdd
+public import Theorem.StatisticalMechanics.Code.Lattice.OrbitExteriorEven
+public import Theorem.StatisticalMechanics.Code.Lattice.ClosedContourSeparation.Part2
+public import Theorem.StatisticalMechanics.Code.Lattice.OrbitWindingWitness.Part2
+public import Theorem.StatisticalMechanics.Code.Lattice.BdEdgeMatchStarHull
+public import Theorem.StatisticalMechanics.Code.Lattice.CornerBalance.Part4
+public import Theorem.StatisticalMechanics.Code.Walls.kc2_core.Part3
+public import Theorem.StatisticalMechanics.Code.Walls.kc3_oddrayeqleftRegion.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.kc3_downfaceheadout.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.kc3_upleftfacecell.Part3
+public import Theorem.StatisticalMechanics.Code.Walls.kc3_tailinK.Part3
+public import Theorem.StatisticalMechanics.Code.Walls.kc3_farleftcell
+open Set SimpleGraph Function
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/kc3_core.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,32 +33,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
-import Theorem.StatisticalMechanics.Code.Lattice.DartDef.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.DartNext.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.ContourLinksExits.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.JordanExteriorClosure.Part8
-import Theorem.StatisticalMechanics.Code.Lattice.MinimalPeriodLoop.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.ExteriorConnected.Part3
-import Theorem.StatisticalMechanics.Code.Lattice.EnclosedAreaWitness.Part3
-import Theorem.StatisticalMechanics.Code.Lattice.OrbitInteriorOdd
-import Theorem.StatisticalMechanics.Code.Lattice.OrbitExteriorEven
-import Theorem.StatisticalMechanics.Code.Lattice.ClosedContourSeparation.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.OrbitWindingWitness.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.BdEdgeMatchStarHull
-import Theorem.StatisticalMechanics.Code.Lattice.CornerBalance.Part4
-import Theorem.StatisticalMechanics.Code.Walls.kc2_core.Part3
-import Theorem.StatisticalMechanics.Code.Walls.kc3_oddrayeqleftRegion.Part2
-import Theorem.StatisticalMechanics.Code.Walls.kc3_downfaceheadout.Part2
-import Theorem.StatisticalMechanics.Code.Walls.kc3_upleftfacecell.Part3
-import Theorem.StatisticalMechanics.Code.Walls.kc3_tailinK.Part3
-import Theorem.StatisticalMechanics.Code.Walls.kc3_farleftcell
-open Set SimpleGraph Function
-
-
 namespace StatMech
 
 namespace Walls

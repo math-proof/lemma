@@ -1,5 +1,28 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/HilbertClassPolynomial.lean -/
+module
+public import Mathlib.Algebra.Polynomial.BigOperators
+public import Mathlib.Algebra.Polynomial.Degree.Operations
+public import Mathlib.Algebra.Polynomial.Lifts
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Data.Nat.Prime.Defs
+public import Mathlib.RingTheory.Algebraic.Basic
+public import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
+public import Mathlib.NumberTheory.Niven
+public import Mathlib.RingTheory.Polynomial.Vieta
+public import Mathlib.GroupTheory.GroupAction.Defs
+public import Mathlib.GroupTheory.GroupAction.Basic
+public import Mathlib.Algebra.Group.Subgroup.Ker
+public import Mathlib.Data.Fintype.EquivFin
+public import Mathlib.Algebra.Polynomial.Splits
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.Algebra.Polynomial.Bivariate
+public import Def.v1.Atlas.EllipticCurves.code.ComplexMultiplication.Part6
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.ComplexMultiplication
+public import Instance.v1.Atlas.EllipticCurves.code.HilbertClassPolynomial
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/HilbertClassPolynomial.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,28 +30,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib.Algebra.Polynomial.BigOperators
-import Mathlib.Algebra.Polynomial.Degree.Operations
-import Mathlib.Algebra.Polynomial.Lifts
-import Mathlib.Data.Complex.Basic
-import Mathlib.Data.Nat.Prime.Defs
-import Mathlib.RingTheory.Algebraic.Basic
-import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
-import Mathlib.NumberTheory.Niven
-import Mathlib.RingTheory.Polynomial.Vieta
-import Mathlib.GroupTheory.GroupAction.Defs
-import Mathlib.GroupTheory.GroupAction.Basic
-import Mathlib.Algebra.Group.Subgroup.Ker
-import Mathlib.Data.Fintype.EquivFin
-import Mathlib.Algebra.Polynomial.Splits
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.Algebra.Polynomial.Bivariate
-import Def.v1.Atlas.EllipticCurves.code.ComplexMultiplication.Part6
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.ComplexMultiplication
-import Instance.v1.Atlas.EllipticCurves.code.HilbertClassPolynomial
-
-
 noncomputable section
 
 open Polynomial Classical

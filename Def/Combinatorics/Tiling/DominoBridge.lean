@@ -1,13 +1,17 @@
+module
+public import Mathlib
+public import Def.Combinatorics.Tiling.DominoTilings.Part13
+public import Def.Combinatorics.Enumerative.WeightedSets.Part26
+public import Theorem.PowerSeries.WeightedSets
+open Finset BigOperators
+
+
+public section
+
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.Combinatorics.Tiling.DominoTilings.Part13
-import Def.Combinatorics.Enumerative.WeightedSets.Part26
-import Lemma.PowerSeries.WeightedSets
-open Finset BigOperators
-
 /-!
 # Bridge between Domino representations
 
@@ -52,8 +56,6 @@ This bridge enables theorem transfer between files when needed.
 
 domino, tiling, bridge, equivalence
 -/
-
-
 namespace DominoBridge
 
 /-! ## Coordinate conversion helpers -/

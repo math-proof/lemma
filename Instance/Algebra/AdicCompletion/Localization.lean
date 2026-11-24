@@ -1,14 +1,16 @@
-import Mathlib
-import Theorem.Algebra.AdicCompletion.PolynomialCompletion.Part8
-import Theorem.Algebra.AdicCompletion.RingFunctoriality.Part7
-import Theorem.Algebra.AdicCompletion.Semilocal.Part6
-import Theorem.Algebra.AdicCompletion.TensorRing.Part4
-import Theorem.Algebra.AdicCompletion.GaloisAction.Part6
-import Def.Algebra.AdicCompletion.Localization
-
+module
+public import Mathlib
+public import Theorem.Algebra.AdicCompletion.PolynomialCompletion.Part8
+public import Theorem.Algebra.AdicCompletion.RingFunctoriality.Part7
+public import Theorem.Algebra.AdicCompletion.Semilocal.Part6
+public import Theorem.Algebra.AdicCompletion.TensorRing.Part4
+public import Theorem.Algebra.AdicCompletion.GaloisAction.Part6
+public import Def.Algebra.AdicCompletion.Localization
 open IsLocalRing
-
 open scoped AdicCompletion.GaloisAction
+
+
+public section
 
 namespace BDescN6
 

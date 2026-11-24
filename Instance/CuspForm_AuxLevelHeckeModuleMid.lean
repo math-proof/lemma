@@ -1,8 +1,12 @@
--- Carved from Lemma/Definitions/Def_CuspForm_AuxLevelHeckeModuleMid.lean: instance decls only.
-import Instance.CuspForm_AuxLevelHeckeModule
-import Abbrev.CuspForm_AuxLevelHeckeModuleMid
-
+module
+public import Instance.CuspForm_AuxLevelHeckeModule
+public import Abbrev.CuspForm_AuxLevelHeckeModuleMid
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_CuspForm_AuxLevelHeckeModuleMid.lean: instance decls only.
 
 noncomputable section
 

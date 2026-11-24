@@ -1,12 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/ListSortTrace.lean -/
+module
+public import Def.CPythonListsort.Code.Assembly.BinarysortSafety.Part2
+public import Def.CPythonListsort.Code.Assembly.CountRunSafety.Part3
+public import Def.CPythonListsort.Code.Assembly.FoundNewRunSafety.Part2
+public import Def.CPythonListsort.Code.Assembly.ListSortInputMode
+public import Def.CPythonListsort.Code.Assembly.ListSortSupport
+public import Def.CPythonListsort.Code.Assembly.MergeForceCollapseSafety.Part2
+public import Def.CPythonListsort.Code.Assembly.ReverseSliceSafety.Part2
 
-import Def.CPythonListsort.Code.Assembly.BinarysortSafety.Part2
-import Def.CPythonListsort.Code.Assembly.CountRunSafety.Part3
-import Def.CPythonListsort.Code.Assembly.FoundNewRunSafety.Part2
-import Def.CPythonListsort.Code.Assembly.ListSortInputMode
-import Def.CPythonListsort.Code.Assembly.ListSortSupport
-import Def.CPythonListsort.Code.Assembly.MergeForceCollapseSafety.Part2
-import Def.CPythonListsort.Code.Assembly.ReverseSliceSafety.Part2
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/ListSortTrace.lean -/
 /-!
 # Traced top-level `list_sort_impl`
 
@@ -22,8 +26,6 @@ reversal in keyed mode.  The final site models only the reversal of
 `saved_ob_item`: synchronized values in keyed mode and keys in unkeyed mode.
 Both physical phases erase to the same paired-snapshot semantic reversal.
 -/
-
-
 namespace CPythonListsort
 
 universe u v

@@ -1,5 +1,22 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/bc11core.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Walls.bc9core
+public import Theorem.StatisticalMechanics.Code.Percolation.TrifurcationExistence.Part4
+public import Theorem.StatisticalMechanics.Code.Percolation.TrifurcationExistence2.Part3
+public import Theorem.StatisticalMechanics.Code.Percolation.BoxMergeFreeMenger.Part2
+public import Theorem.StatisticalMechanics.Code.Percolation.CanonicalTrifCount.Part4
+public import Theorem.StatisticalMechanics.Code.Percolation.LatticeMengerAttach.Part4
+public import Theorem.StatisticalMechanics.Code.Walls.bc7distinctwitnessclusters.Part2
+public import Def.StatisticalMechanics.Code.Walls.bc11core
+open Set SimpleGraph
+open StatMech.Lattice StatMech.ConfigSpace
+open StatMech.Percolation StatMech.Percolation.DisjointPaths
+open MeasureTheory
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/bc11core.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,23 +24,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Walls.bc9core
-import Theorem.StatisticalMechanics.Code.Percolation.TrifurcationExistence.Part4
-import Theorem.StatisticalMechanics.Code.Percolation.TrifurcationExistence2.Part3
-import Theorem.StatisticalMechanics.Code.Percolation.BoxMergeFreeMenger.Part2
-import Theorem.StatisticalMechanics.Code.Percolation.CanonicalTrifCount.Part4
-import Theorem.StatisticalMechanics.Code.Percolation.LatticeMengerAttach.Part4
-import Theorem.StatisticalMechanics.Code.Walls.bc7distinctwitnessclusters.Part2
-import Def.StatisticalMechanics.Code.Walls.bc11core
-open Set SimpleGraph
-open StatMech.Lattice StatMech.ConfigSpace
-open StatMech.Percolation StatMech.Percolation.DisjointPaths
-open MeasureTheory
-
-
 namespace StatMech
 
 namespace Walls

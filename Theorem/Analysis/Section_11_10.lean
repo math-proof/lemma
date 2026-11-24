@@ -1,7 +1,12 @@
-import Mathlib
-import Theorem.Analysis.Section_9_6
-import Theorem.Analysis.Section_10_3
-import Abbrev.Analysis.Section_11_9.Part3
+module
+public import Mathlib
+public import Theorem.Analysis.Section_9_6
+public import Theorem.Analysis.Section_10_3
+public import Abbrev.Analysis.Section_11_9.Part3
+
+
+public section
+
 /-!
 # Analysis I, Section 11.10: Consequences of the fundamental theorems
 
@@ -15,8 +20,6 @@ Main constructions and results of this section:
 - Integration by parts
 
 -/
-
-
 namespace Chapter11
 
 open BoundedInterval Chapter9 Chapter10

@@ -1,7 +1,10 @@
-import Mathlib.Data.Nat.GCD.Basic
-import Def.Data.Tensor.Defs.Part4
-import Def.Data.List.Mul.Part4
+module
+public import Mathlib.Data.Nat.GCD.Basic
+public import Def.Data.Tensor.Defs.Part4
+public import Def.Data.List.Mul.Part4
 
+
+public section
 
 namespace Tensor
 

@@ -1,11 +1,15 @@
--- Carved from Lemma/Definitions/Def_DrinfeldCurve_CoordRing.lean: instance decls only.
-import Mathlib.RingTheory.MvPolynomial.Basic
-import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
-import Mathlib.FieldTheory.Finite.GaloisField
-import Theorem.MvPolynomial.CoordRing
-import Def.DrinfeldCurve_CoordRing
-
+module
+public import Mathlib.RingTheory.MvPolynomial.Basic
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+public import Mathlib.FieldTheory.Finite.GaloisField
+public import Theorem.MvPolynomial.CoordRing
+public import Def.DrinfeldCurve_CoordRing
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_DrinfeldCurve_CoordRing.lean: instance decls only.
 
 universe u
 

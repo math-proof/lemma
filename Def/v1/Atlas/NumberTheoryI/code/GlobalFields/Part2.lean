@@ -1,5 +1,25 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/GlobalFields.lean -/
+module
+public import Mathlib.NumberTheory.NumberField.Discriminant.Basic
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
+public import Mathlib.NumberTheory.NumberField.InfiniteAdeleRing
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+public import Mathlib.RingTheory.SimpleModule.Basic
+public import Mathlib.RingTheory.Ideal.Maps
+public import Mathlib.RingTheory.Unramified.Field
+public import Mathlib.RingTheory.Etale.Field
+public import Mathlib.RingTheory.Artinian.Module
+public import Theorem.v1.Atlas.NumberTheoryI.code.CompleteFields.Part2
+public import Lemma.Nat.Atlas.v1.NumberTheoryI.code.CompleteFields
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.KroneckerWeber
+public import Def.v1.Atlas.NumberTheoryI.code.KroneckerWeber.Part5
+public import Instance.v1.Atlas.NumberTheoryI.code.GlobalFields
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/GlobalFields.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,25 +27,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib.NumberTheory.NumberField.Discriminant.Basic
-import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
-import Mathlib.NumberTheory.NumberField.InfiniteAdeleRing
-import Mathlib.RingTheory.TensorProduct.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
-import Mathlib.RingTheory.SimpleModule.Basic
-import Mathlib.RingTheory.Ideal.Maps
-import Mathlib.RingTheory.Unramified.Field
-import Mathlib.RingTheory.Etale.Field
-import Mathlib.RingTheory.Artinian.Module
-import Theorem.v1.Atlas.NumberTheoryI.code.CompleteFields.Part2
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.CompleteFields
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.KroneckerWeber
-import Def.v1.Atlas.NumberTheoryI.code.KroneckerWeber.Part5
-import Instance.v1.Atlas.NumberTheoryI.code.GlobalFields
-
-
 noncomputable section
 
 open NumberField NumberField.InfinitePlace Module Fintype IsDedekindDomain

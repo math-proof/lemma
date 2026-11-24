@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.v1.Atlas.TensorCategories.code.VecDualMapBridge
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.v1.Atlas.TensorCategories.code.VecDualMapBridge
 open CategoryTheory MonoidalCategory Module
 
+
+public section
 
 /--
 [FGModuleCat.rightAdjointMate_hom_eq_dualMap](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/VecDualMapBridge.lean)

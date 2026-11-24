@@ -1,9 +1,12 @@
-import Mathlib
-import Lemma.Fin.RothDegreeBound.of.All_RothDegreeBound
-import Lemma.Fin.RothDegreeBoundOver_RothMvHasse.of.RothMvIndex
+module
+public import Mathlib
+public import Lemma.Fin.RothDegreeBound.of.All_RothDegreeBound
+public import Lemma.Fin.RothDegreeBoundOver_RothMvHasse.of.RothMvIndex
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [rothHasseDet_degreeBound](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

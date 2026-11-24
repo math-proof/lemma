@@ -1,10 +1,12 @@
-import Lemma.Measure.CarrierPins
-import Lemma.Matrix.AdelicLevel
-import Def.AutomorphicForm_WindowedSiegelSet
-
+module
+public import Lemma.Measure.CarrierPins
+public import Lemma.Matrix.AdelicLevel
+public import Def.AutomorphicForm_WindowedSiegelSet
 open IsDedekindDomain NumberField Matrix MeasureTheory
-
 open scoped ENNReal
+
+
+public section
 
 noncomputable section
 

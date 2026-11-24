@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.RingTheory.DiscreteValuationRing.MaximalIdealGradedPiece
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.RingTheory.DiscreteValuationRing.MaximalIdealGradedPiece
 open IsDiscreteValuationRing
 
+
+public section
 
 namespace IsDiscreteValuationRing
 

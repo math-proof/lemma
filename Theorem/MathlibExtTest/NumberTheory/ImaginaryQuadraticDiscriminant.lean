@@ -1,14 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ImaginaryQuadraticDiscriminant.lean -/
-
-
-import Def.NumberTheory.ImaginaryQuadraticDiscriminant.Part2
-import Lemma.Nat.ImaginaryQuadraticDiscriminant
-import Mathlib.Tactic.NormNum
+module
+public import Def.NumberTheory.ImaginaryQuadraticDiscriminant.Part2
+public import Theorem.Nat.ImaginaryQuadraticDiscriminant
+public import Mathlib.Tactic.NormNum
 set_option autoImplicit false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ImaginaryQuadraticDiscriminant.lean -/
 /-! Tests for the canonical imaginary quadratic discriminant API. -/
-
-
 namespace ImaginaryQuadraticDiscriminant
 
 /-- The canonical fundamental-discriminant predicate holds for `-3`. -/

@@ -1,5 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/bxpxpos.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Walls.bmfmergefree.Part2
+public import Theorem.StatisticalMechanics.Code.Percolation.AvoidingAttachment.Part3
+public import Theorem.StatisticalMechanics.Code.Percolation.PrivateArmProve.Part2
+public import Theorem.StatisticalMechanics.Code.Percolation.TrifurcationConstruction.Part3
+public import Theorem.StatisticalMechanics.Code.Walls.bxpxpos.Part2
+open Set SimpleGraph Finset MeasureTheory Filter Topology
+open scoped BigOperators ENNReal NNReal
+open StatMech StatMech.Lattice StatMech.ConfigSpace
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/bxpxpos.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +20,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Walls.bmfmergefree.Part2
-import Theorem.StatisticalMechanics.Code.Percolation.AvoidingAttachment.Part3
-import Theorem.StatisticalMechanics.Code.Percolation.PrivateArmProve.Part2
-import Theorem.StatisticalMechanics.Code.Percolation.TrifurcationConstruction.Part3
-import Theorem.StatisticalMechanics.Code.Walls.bxpxpos.Part2
-open Set SimpleGraph Finset MeasureTheory Filter Topology
-open scoped BigOperators ENNReal NNReal
-open StatMech StatMech.Lattice StatMech.ConfigSpace
-
-
 namespace StatMech.Walls
 
 open StatMech.Percolation

@@ -1,18 +1,18 @@
-import Lemma.Bool.All.Or.of.All.limits.delete
-open Bool
+import Initialize.Tactic.Attr.Basic
 
 
 @[path]
 private lemma main
-  {p : α → β → Prop}
   {A : Set α}
   {B : Set β}
+  {f : α → β → Prop}
 -- given
-  (h : ∀ x ∈ A, ∀ y ∈ B, p x y) :
+  (h : ∀ y, ∀ x ∈ A, f x y ∨ y ∉ B) :
 -- imply
-  ∀ y ∈ B, ∀ x, p x y ∨ x ∉ A := by
+  ∀ y ∈ B, ∀ x ∈ A, f x y :=
 -- proof
-  apply All.Or.of.All.limits.delete h
+  fun y hy x hx => (h y x hx).resolve_right (not_not.mpr hy)
 
 
 -- created on 2018-12-12
+-- updated on 2026-11-24

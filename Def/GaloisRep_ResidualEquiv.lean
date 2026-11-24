@@ -1,7 +1,10 @@
-import Def.GaloisRep_Residual
-import Structure.GaloisRep_ResidualEquiv
-
+module
+public import Def.GaloisRep_Residual
+public import Structure.GaloisRep_ResidualEquiv
 open scoped TensorProduct
+
+
+public section
 
 namespace ResidualGaloisRep
 

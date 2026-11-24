@@ -1,5 +1,225 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/ArithmeticGeometry.lean -/
+module
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.AbelianVarieties
+public import Def.v1.Atlas.ArithmeticGeometry.code.AbsoluteValues
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.AbsoluteValues
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.AdelePlusFDim
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.AdeleQuotientDim
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.AffineCurve
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.AffineVarieties
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.AlgebraicGeometryBasics
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.BoundedHeightFinite
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CanonicalDivisors
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.ClosedPointMorphism
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CompleteVarieties
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CompletenessResidueK
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CompletenessValuationCriterion
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Conics
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Corollary_20_4
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CotangentLocal
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CurveMorphisms
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CurveTheory
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.DegreePullback
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.DescentFiniteness
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.DivisorLineRatio
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Divisors
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.EffectiveDivisors
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.EllipticCurves
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.FiniteFields
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.FunctionFieldEquiv
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.GaloisCohomology
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.GaloisPlaceHelper
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.GenusOnePlaneCubic
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.GenusZeroP1
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HasseMinkowski
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HasseMinkowskiProof
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Heights
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HenselsLemma
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Hilbert2Adic
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Hilbert2AdicCore
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertBilinear
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertFormulaOdd
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertPrimitiveSolutions
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertProductFormula
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertSymbol
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertSymbol2Adic
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.IdealNorm
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Isogenies
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.IsogenyKernelAut
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.JInvariant
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.JInvariantInK
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.JInvariantTwist
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Lemma2112
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Lemma22_13
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Lemma22_15
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Lemma2417
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.MordellWeil
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Morphisms
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.PadicCompletion
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.PadicElliptic
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.PadicNumbers
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.PadicQpCompletion
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.PicardGroup
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.ProductVarieties
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.ProjectiveComplete
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.ProjectiveMorphisms
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.ProjectiveVarieties
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.QuadraticForms
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.RationalLineCriterion
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.RegularFunctions
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.RegularLocalRings
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.RiemannRoch
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.RiemannRochP1
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.RiemannTheorem
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.ScalingLemma
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.SquareClassApprox
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.TangentSpaces
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.TateShafarevich
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.TensorProductDomain
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Theorem11_1
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Theorem1324
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Theorem22_11
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Theorem22_20
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.TorsorIffJacobian
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.TraceNorm
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Twists
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.ValuationRings
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.ValuedFields
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Varieties
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.VarietyAlgebraEquiv
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.WCGroupH1
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.WeakApproximation
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.WeilChatelet
+public import Def.v1.Atlas.ArithmeticGeometry.code.AdelePlusFDim
+public import Def.v1.Atlas.ArithmeticGeometry.code.AdeleQuotientDim.Part2
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.AffineCurve
+public import Def.v1.Atlas.ArithmeticGeometry.code.AffineVarieties.Part5
+public import Abbrev.v1.Atlas.ArithmeticGeometry.code.AlgebraicGeometryBasics
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.AuditAxiomTrdeg171
+public import Def.v1.Atlas.ArithmeticGeometry.code.BSDConjecture
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.BoundedHeightFinite
+public import Def.v1.Atlas.ArithmeticGeometry.code.CanonicalDivisors.Part2
+public import Instance.v1.Atlas.ArithmeticGeometry.code.ClassGroupRatFunc
+public import Def.v1.Atlas.ArithmeticGeometry.code.ClosedPointMorphism
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.CompileCheck
+public import Instance.v1.Atlas.ArithmeticGeometry.code.CompleteVarieties
+public import Def.v1.Atlas.ArithmeticGeometry.code.CompletenessResidueK
+public import Structure.v1.Atlas.ArithmeticGeometry.code.CompletenessValuationCriterion.Part2
+public import Def.v1.Atlas.ArithmeticGeometry.code.Conics.Part3
+public import Def.v1.Atlas.ArithmeticGeometry.code.CoordinateRingSingular
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Corollary2222
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.DedekindDomains
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.FunctionFieldGenerators
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.GeneratorsModM2
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HasseMinkowskiHelpers
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.IndependenceOfValuations
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Lemma22_10
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.PadicField
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.ProductFormula
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.QuadraticReciprocity
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Theorem22_14
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.ValuationResidue
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.WeakApproxFunctionFields
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.WeierstrassValBound
+public import Instance.v1.Atlas.ArithmeticGeometry.code.Corollary_20_4
+public import Def.v1.Atlas.ArithmeticGeometry.code.CotangentLocal.Part3
+public import Def.v1.Atlas.ArithmeticGeometry.code.CurveMorphisms
+public import Def.v1.Atlas.ArithmeticGeometry.code.CurveTheory.Part10
+public import Def.v1.Atlas.ArithmeticGeometry.code.DegreePullback
+public import Structure.v1.Atlas.ArithmeticGeometry.code.DescentFiniteness
+public import Def.v1.Atlas.ArithmeticGeometry.code.DivisorLineRatio
+public import Def.v1.Atlas.ArithmeticGeometry.code.Divisors.Part11
+public import Def.v1.Atlas.ArithmeticGeometry.code.EffectiveDivisors
+public import Def.v1.Atlas.ArithmeticGeometry.code.EllipticCurves.Part7
+public import Def.v1.Atlas.ArithmeticGeometry.code.FaltingsTheorem.Part2
+public import Def.v1.Atlas.ArithmeticGeometry.code.FiniteFields
+public import Instance.v1.Atlas.ArithmeticGeometry.code.FunctionFieldEquiv.Part4
+public import Abbrev.v1.Atlas.ArithmeticGeometry.code.GaloisCohomology.Part3
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.GaloisPlaceHelper
+public import Structure.v1.Atlas.ArithmeticGeometry.code.GenusBaseExtension
+public import Def.v1.Atlas.ArithmeticGeometry.code.GenusOnePlaneCubic
+public import Def.v1.Atlas.ArithmeticGeometry.code.GenusZeroP1
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.Goal10Status
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.Goal127Verification
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.Goal246Verification
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.Goal78Verification
+public import Def.v1.Atlas.ArithmeticGeometry.code.HasseMinkowski
+public import Def.v1.Atlas.ArithmeticGeometry.code.HasseMinkowskiProof.Part3
+public import Def.v1.Atlas.ArithmeticGeometry.code.Heights.Part4
+public import Abbrev.v1.Atlas.ArithmeticGeometry.code.HenselsLemma
+public import Def.v1.Atlas.ArithmeticGeometry.code.Hilbert2Adic
+public import Def.v1.Atlas.ArithmeticGeometry.code.Hilbert2AdicCore.Part2
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.HilbertBilinear
+public import Def.v1.Atlas.ArithmeticGeometry.code.HilbertFormulaOdd
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.HilbertPrimitiveSolutions.Part2
+public import Def.v1.Atlas.ArithmeticGeometry.code.HilbertProductFormula
+public import Def.v1.Atlas.ArithmeticGeometry.code.HilbertSymbol.Part2
+public import Def.v1.Atlas.ArithmeticGeometry.code.HilbertSymbol2Adic
+public import Abbrev.v1.Atlas.ArithmeticGeometry.code.IdealNorm
+public import Def.v1.Atlas.ArithmeticGeometry.code.IndexOfSpeciality
+public import Def.v1.Atlas.ArithmeticGeometry.code.Isogenies.Part3
+public import Def.v1.Atlas.ArithmeticGeometry.code.IsogenyKernelAut.Part2
+public import Def.v1.Atlas.ArithmeticGeometry.code.JInvariant.Part3
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.JInvariantInK
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.JInvariantTwist
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.LemPrimeDivSquarefreePart
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.Lemma2112
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.Lemma22_13
+public import Def.v1.Atlas.ArithmeticGeometry.code.Lemma22_15
+public import Def.v1.Atlas.ArithmeticGeometry.code.Lemma2417
+public import Def.v1.Atlas.ArithmeticGeometry.code.MordellWeil
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.MordellWeilTheorem
+public import Def.v1.Atlas.ArithmeticGeometry.code.Morphisms.Part6
+public import Def.v1.Atlas.ArithmeticGeometry.code.MorphismsCurves
+public import Def.v1.Atlas.ArithmeticGeometry.code.NewtonPolygon
+public import Def.v1.Atlas.ArithmeticGeometry.code.PadicCompletion.Part2
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.PadicElliptic
+public import Def.v1.Atlas.ArithmeticGeometry.code.PadicNumbers.Part9
+public import Def.v1.Atlas.ArithmeticGeometry.code.PadicQpCompletion
+public import Def.v1.Atlas.ArithmeticGeometry.code.PicardGroup
+public import Def.v1.Atlas.ArithmeticGeometry.code.ProductVarieties.Part5
+public import Structure.v1.Atlas.ArithmeticGeometry.code.ProjectiveComplete
+public import Def.v1.Atlas.ArithmeticGeometry.code.ProjectiveMorphisms.Part6
+public import Def.v1.Atlas.ArithmeticGeometry.code.ProjectiveSpaceInstance
+public import Def.v1.Atlas.ArithmeticGeometry.code.ProjectiveVarieties.Part7
+public import Def.v1.Atlas.ArithmeticGeometry.code.QuadraticForms.Part2
+public import Def.v1.Atlas.ArithmeticGeometry.code.RationalLineCriterion
+public import Def.v1.Atlas.ArithmeticGeometry.code.RegularFunctions.Part9
+public import Abbrev.v1.Atlas.ArithmeticGeometry.code.RegularLocalRings
+public import Def.v1.Atlas.ArithmeticGeometry.code.RiemannRoch.Part6
+public import Def.v1.Atlas.ArithmeticGeometry.code.RiemannRochP1
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.RiemannTheorem
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.ScalingLemma
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.SmoothProjectiveVariety
+public import Def.v1.Atlas.ArithmeticGeometry.code.SquareClassApprox
+public import Def.v1.Atlas.ArithmeticGeometry.code.TangentSpaces.Part4
+public import Def.v1.Atlas.ArithmeticGeometry.code.TateShafarevich.Part2
+public import Def.v1.Atlas.ArithmeticGeometry.code.TaylorExpansion
+public import Def.v1.Atlas.ArithmeticGeometry.code.TensorProductDomain
+public import Def.v1.Atlas.ArithmeticGeometry.code.Theorem11_1
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.Theorem1324
+public import Def.v1.Atlas.ArithmeticGeometry.code.Theorem22_11
+public import Def.v1.Atlas.ArithmeticGeometry.code.Theorem22_20
+public import Def.v1.Atlas.ArithmeticGeometry.code.TorsorIffJacobian.Part2
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.TorsorIffJacobianVerification
+public import Def.v1.Atlas.ArithmeticGeometry.code.Torsors
+public import Def.v1.Atlas.ArithmeticGeometry.code.TraceNorm
+public import Abbrev.v1.Atlas.ArithmeticGeometry.code.Twists.Part2
+public import Def.v1.Atlas.ArithmeticGeometry.code.ValuationRings.Part4
+public import Def.v1.Atlas.ArithmeticGeometry.code.ValuedFields.Part2
+public import Def.v1.Atlas.ArithmeticGeometry.code.Varieties.Part9
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.VarietyAlgebraEquiv.Part2
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.VerifyCorollary1326Part2
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.VerifyGoal4
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.VerifyNotCoveredFinal
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.VerifyVarietyDim
+public import Def.v1.Atlas.ArithmeticGeometry.code.WCGroupH1
+public import Def.v1.Atlas.ArithmeticGeometry.code.WeakApproximation
+public import Def.v1.Atlas.ArithmeticGeometry.code.WeilChatelet.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/ArithmeticGeometry.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,222 +227,4 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.ArithmeticGeometry.code.AbelianVarieties
-import Def.v1.Atlas.ArithmeticGeometry.code.AbsoluteValues
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.AbsoluteValues
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.AdelePlusFDim
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.AdeleQuotientDim
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.AffineCurve
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.AffineVarieties
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.AlgebraicGeometryBasics
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.BoundedHeightFinite
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CanonicalDivisors
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.ClosedPointMorphism
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CompleteVarieties
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CompletenessResidueK
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CompletenessValuationCriterion
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Conics
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Corollary_20_4
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.CotangentLocal
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CurveMorphisms
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CurveTheory
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.DegreePullback
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.DescentFiniteness
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.DivisorLineRatio
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Divisors
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.EffectiveDivisors
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.EllipticCurves
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.FiniteFields
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.FunctionFieldEquiv
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.GaloisCohomology
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.GaloisPlaceHelper
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.GenusOnePlaneCubic
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.GenusZeroP1
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.HasseMinkowski
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.HasseMinkowskiProof
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Heights
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HenselsLemma
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Hilbert2Adic
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Hilbert2AdicCore
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertBilinear
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertFormulaOdd
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertPrimitiveSolutions
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertProductFormula
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertSymbol
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertSymbol2Adic
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.IdealNorm
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Isogenies
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.IsogenyKernelAut
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.JInvariant
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.JInvariantInK
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.JInvariantTwist
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Lemma2112
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Lemma22_13
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Lemma22_15
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Lemma2417
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.MordellWeil
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Morphisms
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.PadicCompletion
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.PadicElliptic
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.PadicNumbers
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.PadicQpCompletion
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.PicardGroup
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.ProductVarieties
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.ProjectiveComplete
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.ProjectiveMorphisms
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.ProjectiveVarieties
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.QuadraticForms
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.RationalLineCriterion
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.RegularFunctions
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.RegularLocalRings
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.RiemannRoch
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.RiemannRochP1
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.RiemannTheorem
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.ScalingLemma
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.SquareClassApprox
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.TangentSpaces
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.TateShafarevich
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.TensorProductDomain
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Theorem11_1
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Theorem1324
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Theorem22_11
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Theorem22_20
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.TorsorIffJacobian
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.TraceNorm
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Twists
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.ValuationRings
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.ValuedFields
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Varieties
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.VarietyAlgebraEquiv
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.WCGroupH1
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.WeakApproximation
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.WeilChatelet
-import Def.v1.Atlas.ArithmeticGeometry.code.AdelePlusFDim
-import Def.v1.Atlas.ArithmeticGeometry.code.AdeleQuotientDim.Part2
-import Theorem.v1.Atlas.ArithmeticGeometry.code.AffineCurve
-import Def.v1.Atlas.ArithmeticGeometry.code.AffineVarieties.Part5
-import Abbrev.v1.Atlas.ArithmeticGeometry.code.AlgebraicGeometryBasics
-import Theorem.v1.Atlas.ArithmeticGeometry.code.AuditAxiomTrdeg171
-import Def.v1.Atlas.ArithmeticGeometry.code.BSDConjecture
-import Theorem.v1.Atlas.ArithmeticGeometry.code.BoundedHeightFinite
-import Def.v1.Atlas.ArithmeticGeometry.code.CanonicalDivisors.Part2
-import Instance.v1.Atlas.ArithmeticGeometry.code.ClassGroupRatFunc
-import Def.v1.Atlas.ArithmeticGeometry.code.ClosedPointMorphism
-import Theorem.v1.Atlas.ArithmeticGeometry.code.CompileCheck
-import Instance.v1.Atlas.ArithmeticGeometry.code.CompleteVarieties
-import Def.v1.Atlas.ArithmeticGeometry.code.CompletenessResidueK
-import Structure.v1.Atlas.ArithmeticGeometry.code.CompletenessValuationCriterion.Part2
-import Def.v1.Atlas.ArithmeticGeometry.code.Conics.Part3
-import Def.v1.Atlas.ArithmeticGeometry.code.CoordinateRingSingular
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Corollary2222
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.DedekindDomains
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.FunctionFieldGenerators
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.GeneratorsModM2
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.HasseMinkowskiHelpers
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.IndependenceOfValuations
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Lemma22_10
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.PadicField
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.ProductFormula
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.QuadraticReciprocity
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Theorem22_14
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.ValuationResidue
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.WeakApproxFunctionFields
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.WeierstrassValBound
-import Instance.v1.Atlas.ArithmeticGeometry.code.Corollary_20_4
-import Def.v1.Atlas.ArithmeticGeometry.code.CotangentLocal.Part3
-import Def.v1.Atlas.ArithmeticGeometry.code.CurveMorphisms
-import Def.v1.Atlas.ArithmeticGeometry.code.CurveTheory.Part10
-import Def.v1.Atlas.ArithmeticGeometry.code.DegreePullback
-import Structure.v1.Atlas.ArithmeticGeometry.code.DescentFiniteness
-import Def.v1.Atlas.ArithmeticGeometry.code.DivisorLineRatio
-import Def.v1.Atlas.ArithmeticGeometry.code.Divisors.Part11
-import Def.v1.Atlas.ArithmeticGeometry.code.EffectiveDivisors
-import Def.v1.Atlas.ArithmeticGeometry.code.EllipticCurves.Part7
-import Def.v1.Atlas.ArithmeticGeometry.code.FaltingsTheorem.Part2
-import Def.v1.Atlas.ArithmeticGeometry.code.FiniteFields
-import Instance.v1.Atlas.ArithmeticGeometry.code.FunctionFieldEquiv.Part4
-import Abbrev.v1.Atlas.ArithmeticGeometry.code.GaloisCohomology.Part3
-import Theorem.v1.Atlas.ArithmeticGeometry.code.GaloisPlaceHelper
-import Structure.v1.Atlas.ArithmeticGeometry.code.GenusBaseExtension
-import Def.v1.Atlas.ArithmeticGeometry.code.GenusOnePlaneCubic
-import Def.v1.Atlas.ArithmeticGeometry.code.GenusZeroP1
-import Theorem.v1.Atlas.ArithmeticGeometry.code.Goal10Status
-import Theorem.v1.Atlas.ArithmeticGeometry.code.Goal127Verification
-import Theorem.v1.Atlas.ArithmeticGeometry.code.Goal246Verification
-import Theorem.v1.Atlas.ArithmeticGeometry.code.Goal78Verification
-import Def.v1.Atlas.ArithmeticGeometry.code.HasseMinkowski
-import Def.v1.Atlas.ArithmeticGeometry.code.HasseMinkowskiProof.Part3
-import Def.v1.Atlas.ArithmeticGeometry.code.Heights.Part4
-import Abbrev.v1.Atlas.ArithmeticGeometry.code.HenselsLemma
-import Def.v1.Atlas.ArithmeticGeometry.code.Hilbert2Adic
-import Def.v1.Atlas.ArithmeticGeometry.code.Hilbert2AdicCore.Part2
-import Theorem.v1.Atlas.ArithmeticGeometry.code.HilbertBilinear
-import Def.v1.Atlas.ArithmeticGeometry.code.HilbertFormulaOdd
-import Theorem.v1.Atlas.ArithmeticGeometry.code.HilbertPrimitiveSolutions.Part2
-import Def.v1.Atlas.ArithmeticGeometry.code.HilbertProductFormula
-import Def.v1.Atlas.ArithmeticGeometry.code.HilbertSymbol.Part2
-import Def.v1.Atlas.ArithmeticGeometry.code.HilbertSymbol2Adic
-import Abbrev.v1.Atlas.ArithmeticGeometry.code.IdealNorm
-import Def.v1.Atlas.ArithmeticGeometry.code.IndexOfSpeciality
-import Def.v1.Atlas.ArithmeticGeometry.code.Isogenies.Part3
-import Def.v1.Atlas.ArithmeticGeometry.code.IsogenyKernelAut.Part2
-import Def.v1.Atlas.ArithmeticGeometry.code.JInvariant.Part3
-import Theorem.v1.Atlas.ArithmeticGeometry.code.JInvariantInK
-import Theorem.v1.Atlas.ArithmeticGeometry.code.JInvariantTwist
-import Theorem.v1.Atlas.ArithmeticGeometry.code.LemPrimeDivSquarefreePart
-import Theorem.v1.Atlas.ArithmeticGeometry.code.Lemma2112
-import Theorem.v1.Atlas.ArithmeticGeometry.code.Lemma22_13
-import Def.v1.Atlas.ArithmeticGeometry.code.Lemma22_15
-import Def.v1.Atlas.ArithmeticGeometry.code.Lemma2417
-import Def.v1.Atlas.ArithmeticGeometry.code.MordellWeil
-import Theorem.v1.Atlas.ArithmeticGeometry.code.MordellWeilTheorem
-import Def.v1.Atlas.ArithmeticGeometry.code.Morphisms.Part6
-import Def.v1.Atlas.ArithmeticGeometry.code.MorphismsCurves
-import Def.v1.Atlas.ArithmeticGeometry.code.NewtonPolygon
-import Def.v1.Atlas.ArithmeticGeometry.code.PadicCompletion.Part2
-import Theorem.v1.Atlas.ArithmeticGeometry.code.PadicElliptic
-import Def.v1.Atlas.ArithmeticGeometry.code.PadicNumbers.Part9
-import Def.v1.Atlas.ArithmeticGeometry.code.PadicQpCompletion
-import Def.v1.Atlas.ArithmeticGeometry.code.PicardGroup
-import Def.v1.Atlas.ArithmeticGeometry.code.ProductVarieties.Part5
-import Structure.v1.Atlas.ArithmeticGeometry.code.ProjectiveComplete
-import Def.v1.Atlas.ArithmeticGeometry.code.ProjectiveMorphisms.Part6
-import Def.v1.Atlas.ArithmeticGeometry.code.ProjectiveSpaceInstance
-import Def.v1.Atlas.ArithmeticGeometry.code.ProjectiveVarieties.Part7
-import Def.v1.Atlas.ArithmeticGeometry.code.QuadraticForms.Part2
-import Def.v1.Atlas.ArithmeticGeometry.code.RationalLineCriterion
-import Def.v1.Atlas.ArithmeticGeometry.code.RegularFunctions.Part9
-import Abbrev.v1.Atlas.ArithmeticGeometry.code.RegularLocalRings
-import Def.v1.Atlas.ArithmeticGeometry.code.RiemannRoch.Part6
-import Def.v1.Atlas.ArithmeticGeometry.code.RiemannRochP1
-import Theorem.v1.Atlas.ArithmeticGeometry.code.RiemannTheorem
-import Theorem.v1.Atlas.ArithmeticGeometry.code.ScalingLemma
-import Theorem.v1.Atlas.ArithmeticGeometry.code.SmoothProjectiveVariety
-import Def.v1.Atlas.ArithmeticGeometry.code.SquareClassApprox
-import Def.v1.Atlas.ArithmeticGeometry.code.TangentSpaces.Part4
-import Def.v1.Atlas.ArithmeticGeometry.code.TateShafarevich.Part2
-import Def.v1.Atlas.ArithmeticGeometry.code.TaylorExpansion
-import Def.v1.Atlas.ArithmeticGeometry.code.TensorProductDomain
-import Def.v1.Atlas.ArithmeticGeometry.code.Theorem11_1
-import Theorem.v1.Atlas.ArithmeticGeometry.code.Theorem1324
-import Def.v1.Atlas.ArithmeticGeometry.code.Theorem22_11
-import Def.v1.Atlas.ArithmeticGeometry.code.Theorem22_20
-import Def.v1.Atlas.ArithmeticGeometry.code.TorsorIffJacobian.Part2
-import Theorem.v1.Atlas.ArithmeticGeometry.code.TorsorIffJacobianVerification
-import Def.v1.Atlas.ArithmeticGeometry.code.Torsors
-import Def.v1.Atlas.ArithmeticGeometry.code.TraceNorm
-import Abbrev.v1.Atlas.ArithmeticGeometry.code.Twists.Part2
-import Def.v1.Atlas.ArithmeticGeometry.code.ValuationRings.Part4
-import Def.v1.Atlas.ArithmeticGeometry.code.ValuedFields.Part2
-import Def.v1.Atlas.ArithmeticGeometry.code.Varieties.Part9
-import Theorem.v1.Atlas.ArithmeticGeometry.code.VarietyAlgebraEquiv.Part2
-import Theorem.v1.Atlas.ArithmeticGeometry.code.VerifyCorollary1326Part2
-import Theorem.v1.Atlas.ArithmeticGeometry.code.VerifyGoal4
-import Theorem.v1.Atlas.ArithmeticGeometry.code.VerifyNotCoveredFinal
-import Theorem.v1.Atlas.ArithmeticGeometry.code.VerifyVarietyDim
-import Def.v1.Atlas.ArithmeticGeometry.code.WCGroupH1
-import Def.v1.Atlas.ArithmeticGeometry.code.WeakApproximation
-import Def.v1.Atlas.ArithmeticGeometry.code.WeilChatelet.Part2
-
 

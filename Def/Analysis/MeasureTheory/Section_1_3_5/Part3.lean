@@ -1,7 +1,10 @@
-import Theorem.Analysis.MeasureTheory.Section_1_3_4.Part7
-import Mathlib.Topology.UrysohnsLemma
-import Theorem.Analysis.MeasureTheory.Section_1_3_5.Part3
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_3_4.Part7
+public import Mathlib.Topology.UrysohnsLemma
+public import Theorem.Analysis.MeasureTheory.Section_1_3_5.Part3
 
+
+public section
 
 def UniformlyConvergesTo {X Y:Type*} [PseudoMetricSpace Y] (f: ℕ → X → Y) (g: X → Y) : Prop := ∀ ε>0, ∃ N, ∀ n ≥ N, ∀ x, dist (f n x) (g x) ≤ ε
 

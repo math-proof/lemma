@@ -1,9 +1,11 @@
-import Theorem.Analysis.MeasureTheory.Section_1_3_3.Part2
-import Def.Analysis.MeasureTheory.Section_1_3_4.Part6
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_3_3.Part2
+public import Def.Analysis.MeasureTheory.Section_1_3_4.Part6
 
+
+public section
 
 /-- Lemma 1.3.19 (Triangle inequality) -/
-
 -- Helper: |∫f| ≤ ∫|f| for real absolutely integrable functions
 lemma RealAbsolutelyIntegrable.abs_integ_le {d:ℕ} {f: EuclideanSpace' d → ℝ}
     (hf: RealAbsolutelyIntegrable f) : |hf.integ| ≤ hf.abs.integ := by

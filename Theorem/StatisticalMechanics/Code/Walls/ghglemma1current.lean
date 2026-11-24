@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/ghglemma1current.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Walls.ghggrahamclose
+public import Theorem.StatisticalMechanics.Code.Sharpness.HcovAssembly.Part4
+open Finset BigOperators SimpleGraph
+open scoped Classical
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/ghglemma1current.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Walls.ghggrahamclose
-import Theorem.StatisticalMechanics.Code.Sharpness.HcovAssembly.Part4
-open Finset BigOperators SimpleGraph
-open scoped Classical
-
-
 namespace StatMech.Walls
 
 theorem ghg_covariance_triangle_current_delta

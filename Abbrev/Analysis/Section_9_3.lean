@@ -1,8 +1,11 @@
-import Mathlib
-import Mathlib.Data.Real.Sign
-import Theorem.Analysis.Section_9_1.Part3
+module
+public import Mathlib
+public import Mathlib.Data.Real.Sign
+public import Theorem.Analysis.Section_9_1.Part3
 set_option doc.verso.suggestions false
 
+
+public section
 
 /-!
 # Analysis I, Section 9.3: Limiting values of functions
@@ -26,7 +29,6 @@ though they can be coerced to such).  To avoid this issue we will deviate from t
 our functions defined on all of {lean}`ℝ` (with the understanding that they are assigned "junk" values
 outside of the domain `X` of interest).
 -/
-
 /-- Definition 9.3.1
 Note the books uses ≤ instead of <, but < matches mathlib's definition of neighborhood.
 -/

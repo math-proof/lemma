@@ -1,6 +1,9 @@
-import Theorem.Analysis.MeasureTheory.Section_1_2_3.Part2
-import Theorem.Analysis.Misc.NatBitwise
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_2_3.Part2
+public import Theorem.Analysis.Misc.NatBitwise
 
+
+public section
 
 /-!
 # Introduction to Measure Theory, Section 1.3.1: Integration of simple functions
@@ -8,9 +11,7 @@ import Theorem.Analysis.Misc.NatBitwise
 A companion to (the introduction to) Section 1.3.1 of the book "An introduction to Measure Theory".
 
 -/
-
 -- some tools to convert between EReal-valued, ℝ-valued, and ℂ-valued functions
-
 def EReal.abs_fun {X Y:Type*} [RCLike Y] (f: X → Y) : X → EReal := fun x ↦ ‖f x‖.toEReal
 
 def Complex.re_fun {X:Type*} (f: X → ℂ) : X → ℝ := fun x ↦ Complex.re (f x)

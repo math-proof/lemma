@@ -1,15 +1,19 @@
--- Carved from Lemma/Definitions/Def_AlgebraicGeometry_RigKerDualNumber.lean: instance decls only.
-import Mathlib
-import Structure.JacJ1Iface
-import Instance.AlgebraicGeometry_RelativePicardFunctor
-import Theorem.Scheme.RepresentsRelSubPic
-import Def.AlgebraicGeometry_RelPicardAlgEquivZeroCut
-import Def.AlgebraicGeometry_RelPicardAlgEquivZeroGroupCut
-import Theorem.Scheme.RelSubPicGroup
-import Theorem.Scheme.TwoAffineOpenCover
-import Def.AlgebraicGeometry_RigKerDualNumber
-
+module
+public import Mathlib
+public import Structure.JacJ1Iface
+public import Instance.AlgebraicGeometry_RelativePicardFunctor
+public import Theorem.Scheme.RepresentsRelSubPic
+public import Def.AlgebraicGeometry_RelPicardAlgEquivZeroCut
+public import Def.AlgebraicGeometry_RelPicardAlgEquivZeroGroupCut
+public import Theorem.Scheme.RelSubPicGroup
+public import Theorem.Scheme.TwoAffineOpenCover
+public import Def.AlgebraicGeometry_RigKerDualNumber
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicGeometry_RigKerDualNumber.lean: instance decls only.
 
 universe u
 

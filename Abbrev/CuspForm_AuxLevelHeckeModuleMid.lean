@@ -1,6 +1,9 @@
-import Instance.CuspForm_AuxLevelHeckeModule
-
+module
+public import Instance.CuspForm_AuxLevelHeckeModule
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

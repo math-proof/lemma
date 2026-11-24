@@ -1,15 +1,18 @@
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
-import Mathlib.InformationTheory.KullbackLeibler.Basic
-import Mathlib.MeasureTheory.Function.ContinuousMapDense
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
-import Mathlib.Topology.MetricSpace.Polish
-import Mathlib.Topology.Metrizable.CompletelyMetrizable
-import Initialize.Tactic.Attr.Basic
+module
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
+public import Mathlib.InformationTheory.KullbackLeibler.Basic
+public import Mathlib.MeasureTheory.Function.ContinuousMapDense
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
+public import Mathlib.Topology.MetricSpace.Polish
+public import Mathlib.Topology.Metrizable.CompletelyMetrizable
+public import Initialize.Tactic.Attr.Basic
 open BoundedContinuousFunction ENNReal Filter InformationTheory Interval MeasureTheory Set Topology Real
 
+
+public section
 
 private lemma measurable_big [MeasurableSpace α] {μ ν : Measure α} [IsProbabilityMeasure μ] [IsProbabilityMeasure ν] (hνμ : ν ≪ μ) (hint : ¬ Integrable (llr ν μ) ν) (M : ℝ) : ∃ f : α → ℝ, Measurable f ∧ (∃ C, ∀ x, |f x| ≤ C) ∧ M ≤ ∫ x, f x ∂ν - log (∫ x, exp (f x) ∂μ) := by
   let g : α → ℝ := fun x => (ν.rnDeriv μ x).toReal

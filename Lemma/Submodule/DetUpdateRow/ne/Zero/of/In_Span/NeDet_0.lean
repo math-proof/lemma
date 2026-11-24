@@ -1,6 +1,9 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
 
+
+public section
 
 /--
 [roth_exists_row_det_ne_zero_of_mem_span](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

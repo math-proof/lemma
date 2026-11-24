@@ -1,8 +1,11 @@
+module
+public import Theorem.NumberTheory.NumberField.Completion.FiniteLiesOverDegreeBound
+public import Theorem.Nat.NumberField.Completion.FiniteLiesOverDegreeBound
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/Completion/FiniteLiesOverDegreeBound.lean -/
-
-
-import Theorem.NumberTheory.NumberField.Completion.FiniteLiesOverDegreeBound
-import Theorem.Nat.NumberField.Completion.FiniteLiesOverDegreeBound
 /-!
 # Tests for the local degree bound under finite-place completion
 
@@ -10,8 +13,6 @@ Generic checks consuming `finrank_adicCompletion_le`: one direct API
 application and one downstream `calc`/transitivity use. These tests
 exercise the public inequality only and do not duplicate its proof.
 -/
-
-
 namespace IsDedekindDomain.HeightOneSpectrum
 
 open scoped NumberField NumberField.LiesOver

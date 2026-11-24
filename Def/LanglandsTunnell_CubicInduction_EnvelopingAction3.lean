@@ -1,8 +1,11 @@
-import Def.LanglandsTunnell_CubicInduction_ArchSmoothSpace3
-import Instance.LanglandsTunnell_CubicInduction_EnvelopingAction3
-import Abbrev.LanglandsTunnell_CubicInduction_EnvelopingAction3
-
+module
+public import Def.LanglandsTunnell_CubicInduction_ArchSmoothSpace3
+public import Instance.LanglandsTunnell_CubicInduction_EnvelopingAction3
+public import Abbrev.LanglandsTunnell_CubicInduction_EnvelopingAction3
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

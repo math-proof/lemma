@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.Buildings.code.Building.AptIsCoxeterProof
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.Buildings.code.Building.AptIsCoxeterProof
 open ChamberComplex AptIsCoxeterProof
 
+
+public section
 
 /--
 [PreApartmentData.toApartmentSystem_apartments](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/AptIsCoxeterProof.lean)

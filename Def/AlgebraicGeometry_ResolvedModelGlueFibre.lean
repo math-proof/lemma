@@ -1,9 +1,11 @@
-import Mathlib
-import Def.AlgebraicGeometry_ResolvedModelGlue
-
+module
+public import Mathlib
+public import Def.AlgebraicGeometry_ResolvedModelGlue
 set_option maxHeartbeats 200000
-
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

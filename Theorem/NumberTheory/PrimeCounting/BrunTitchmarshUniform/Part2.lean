@@ -1,31 +1,32 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeCounting/BrunTitchmarshUniform.lean -/
+module
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Def.NumberTheory.PrimeCounting.ResidueClass
+public import Theorem.Nat.PrimeCounting.ResidueClass
+public import Theorem.Nat.SelbergSieve
+public import Mathlib.Data.Int.CardIntervalMod
+public import Mathlib.NumberTheory.EulerProduct.Basic
+public import Mathlib.NumberTheory.Harmonic.Bounds
+public import Def.NumberTheory.SelbergSieve
+public import Mathlib.NumberTheory.SmoothNumbers
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Lean.Elab.Tactic.Omega
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
+public import Def.NumberTheory.PrimeCounting.BrunTitchmarshUniform.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeCounting/BrunTitchmarshUniform.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
-
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Def.NumberTheory.PrimeCounting.ResidueClass
-import Theorem.Nat.PrimeCounting.ResidueClass
-import Theorem.Nat.SelbergSieve
-import Mathlib.Data.Int.CardIntervalMod
-import Mathlib.NumberTheory.EulerProduct.Basic
-import Mathlib.NumberTheory.Harmonic.Bounds
-import Def.NumberTheory.SelbergSieve
-import Mathlib.NumberTheory.SmoothNumbers
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Lean.Elab.Tactic.Omega
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
-import Def.NumberTheory.PrimeCounting.BrunTitchmarshUniform.Part2
 /-!
 # Uniform Brun–Titchmarsh inequality
 
 This file proves a uniform upper bound for primes in one residue class.
 -/
-
-
 namespace MathlibExt.NumberTheory.PrimeCounting.BrunTitchmarshUniformWanted
 
 open MathlibExt.SelbergSieve

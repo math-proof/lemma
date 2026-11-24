@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/SphericalBuilding/FinsetGapCorrespondenceProof.lean -/
+module
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnGapAnalysis.Part2
+public import Lemma.List.InsertIdx.eq.Take.of.Le_Length
+public import Mathlib.LinearAlgebra.Dimension.Finite
+public import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.FinsetGapCorrespondenceProof.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/SphericalBuilding/FinsetGapCorrespondenceProof.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnGapAnalysis.Part2
-import Lemma.List.InsertIdx.eq.Take.of.Le_Length
-import Mathlib.LinearAlgebra.Dimension.Finite
-import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.FinsetGapCorrespondenceProof.Part2
-
-
 namespace GLnBuilding
 
 section FrameCorrespondence

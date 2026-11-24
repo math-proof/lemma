@@ -3,7 +3,7 @@
 module
 
 public import Def.CPythonListsort.Code.Assembly.MergeMemoryLifecycle.Part2
-public import Lemma.List.Atlas.CPythonListsort.Code.Policy.MergeAtPreservation
+public import Theorem.List.Atlas.CPythonListsort.Code.Policy.MergeAtPreservation
 public import Def.CPythonListsort.Code.Assembly.MergeAtSafety.Part2
 /-!
 # `merge_at` safety

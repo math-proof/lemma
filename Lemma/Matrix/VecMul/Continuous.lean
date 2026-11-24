@@ -1,9 +1,12 @@
-import Initialize.Tactic.Attr.Basic
-import Instance.Probability.Process.StochasticProcessTypes.Part3
-import Mathlib.Topology.Instances.Matrix
+module
+public import Initialize.Tactic.Attr.Basic
+public import Instance.Probability.Process.StochasticProcessTypes.Part3
+public import Mathlib.Topology.Instances.Matrix
 open WithLp PiLp
 open scoped Matrix
 
+
+public section
 
 @[path]
 private lemma main

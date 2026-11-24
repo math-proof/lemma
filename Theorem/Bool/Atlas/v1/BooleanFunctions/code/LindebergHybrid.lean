@@ -14,7 +14,6 @@ namespace BooleanFourier
 /--
 [hybridMeasure_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/LindebergHybrid.lean)
 -/
-@[path]
 public theorem hybridMeasure_zero
   {n : ℕ} :
 -- imply
@@ -29,7 +28,6 @@ namespace BooleanFourier
 /--
 [hybridMeasure_n](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/LindebergHybrid.lean)
 -/
-@[path]
 public theorem hybridMeasure_n
   {n : ℕ} :
 -- imply
@@ -47,7 +45,6 @@ namespace BooleanFourier
 /--
 [hybridExpectation_n](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/LindebergHybrid.lean)
 -/
-@[path]
 public theorem hybridExpectation_n
   {n : ℕ}
   {f : (Fin n → Bool) → ℝ}
@@ -64,7 +61,6 @@ namespace BooleanFourier
 /--
 [pi_rademacher_eq_sum_dirac](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/LindebergHybrid.lean)
 -/
-@[path]
 public theorem pi_rademacher_eq_sum_dirac
   {n : ℕ} :
 -- imply
@@ -111,7 +107,6 @@ namespace BooleanFourier
 /--
 [integral_pi_rademacher](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/LindebergHybrid.lean)
 -/
-@[path]
 public theorem integral_pi_rademacher
   {n : ℕ}
   {g : (Fin n → ℝ) → ℝ} :
@@ -134,7 +129,6 @@ namespace BooleanFourier
 /--
 [hybridExpectation_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/LindebergHybrid.lean)
 -/
-@[path]
 public theorem hybridExpectation_zero
   {n : ℕ}
   {f : (Fin n → Bool) → ℝ}
@@ -158,7 +152,6 @@ namespace BooleanFourier
 /--
 [lindeberg_telescoping](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/LindebergHybrid.lean)
 -/
-@[path]
 public theorem lindeberg_telescoping
   {n : ℕ}
   {f : (Fin n → Bool) → ℝ}

@@ -1,15 +1,17 @@
+module
+public import Mathlib.Order.Interval.Finset.Nat
+public import Mathlib.SetTheory.Cardinal.NatCard
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Combinatorics.SimpleGraph.Acyclic
+public import Mathlib.Data.Finset.Sort
+public import Mathlib.Data.Int.Star
+public import Mathlib.Data.Nat.Choose.Sum
+public import Def.Combinatorics.Enumerative.LunnonDimensionDecomposition.Part8
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/LunnonDimensionDecomposition.lean -/
-
-import Mathlib.Order.Interval.Finset.Nat
-import Mathlib.SetTheory.Cardinal.NatCard
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Combinatorics.SimpleGraph.Acyclic
-import Mathlib.Data.Finset.Sort
-import Mathlib.Data.Int.Star
-import Mathlib.Data.Nat.Choose.Sum
-import Def.Combinatorics.Enumerative.LunnonDimensionDecomposition.Part8
-
-
 section
 
 namespace MetaMathlibExt

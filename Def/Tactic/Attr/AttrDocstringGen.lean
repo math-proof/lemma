@@ -1,9 +1,12 @@
-import Lean
-import Initialize.Tactic.Attr.Basic
-import Def.Data.String.String.Part2
-import Def.Lean.Name
+module
+public import Lean
+public import Initialize.Tactic.Attr.Basic
+public import Def.Data.String.String.Part2
+public import Def.Lean.Name
 open String Lean
 
+
+public section
 
 def nameComponentString (n : Lean.Name) : String :=
   match n with

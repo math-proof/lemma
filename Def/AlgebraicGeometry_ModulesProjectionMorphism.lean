@@ -1,8 +1,11 @@
-import Mathlib
-import Instance.SheafOfModules_Monoidal
-import Instance.AlgebraicGeometry_ModulesPullbackMonoidal
-
+module
+public import Mathlib
+public import Instance.SheafOfModules_Monoidal
+public import Instance.AlgebraicGeometry_ModulesPullbackMonoidal
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

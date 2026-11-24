@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Cor1015.lean -/
+module
+public import Def.v1.Atlas.NumberTheoryI.code.ResidueFieldFunctor
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ResidueFieldFunctor
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.HenselFactorization
+public import Theorem.v1.Atlas.NumberTheoryI.code.HenselFactorization
+public import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
+public import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
+public import Mathlib.Algebra.GCDMonoid.IntegrallyClosed
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Cor1015.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.NumberTheoryI.code.ResidueFieldFunctor
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.ResidueFieldFunctor
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.HenselFactorization
-import Theorem.v1.Atlas.NumberTheoryI.code.HenselFactorization
-import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
-import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
-import Mathlib.Algebra.GCDMonoid.IntegrallyClosed
-import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
-
-
 noncomputable section
 
 open Polynomial IsLocalRing Ideal

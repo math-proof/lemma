@@ -1,5 +1,26 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter3/Cor_3_16.lean -/
+module
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Remark_3_1
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Remark_3_1
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Def_3_10
+public import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_15
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Lemma_3_14
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_4
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_5
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_6
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Def_3_10
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_15.Part2
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Lemma_3_14
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_4
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_5
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_6
+set_option maxHeartbeats 4800000
+set_option maxRecDepth 4096
+open Real MeasureTheory
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter3/Cor_3_16.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,27 +28,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Remark_3_1
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Remark_3_1
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Def_3_10
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_15
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Lemma_3_14
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_4
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_5
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_6
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Def_3_10
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_15.Part2
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Lemma_3_14
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_4
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_5
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_6
-set_option maxHeartbeats 4800000
-set_option maxRecDepth 4096
-
-open Real MeasureTheory
-
-
 namespace Chapter3
 
 /-- `θhat` is a BIC estimator for the trigonometric model with penalty parameter `τ²`:

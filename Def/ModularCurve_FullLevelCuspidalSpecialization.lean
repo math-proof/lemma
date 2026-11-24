@@ -1,7 +1,10 @@
-import Instance.ModularCurve_FullLevelJacobian
-import Theorem.Matrix.TateProdRep.eq.TateRep
-
+module
+public import Instance.ModularCurve_FullLevelJacobian
+public import Theorem.Matrix.TateProdRep.eq.TateRep
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

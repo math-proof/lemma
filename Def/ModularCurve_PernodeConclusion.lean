@@ -1,27 +1,29 @@
-import Lemma.ResidueField.FullLevelSemistableCovering
-import Theorem.Finset.SupersingularNodePlaces
-import Lemma.ResidueField.ConstantReduction
-import Def.FLTPrelim_Ramification
-import Lemma.Scheme.RegularProlongation
-import Theorem.ResidueField.ResidueDiscs
-import Def.ModularCurve_PlaceWidthChar
-import Def.ModularCurve_FullLevelSemistableCoveringW2
-import Theorem.MvPowerSeries.UVCrossingModel
-import Instance.AlgebraicCurve_TwoChartIntegralModel
-import Theorem.UpperHalfPlane.X1
-import Def.ModularCurve_SupersingularModuli
-import Instance.ModularCurve_FullLevelJacobian
-import Instance.DrinfeldCurve_CoordRing
-import Def.ModularCurve_FullLevelLevelAutAt
-import Def.ModularCurve_JqCoeff
-import Instance.AdicCompletionLocalRing
-
+module
+public import Lemma.ResidueField.FullLevelSemistableCovering
+public import Theorem.Finset.SupersingularNodePlaces
+public import Lemma.ResidueField.ConstantReduction
+public import Def.FLTPrelim_Ramification
+public import Lemma.Scheme.RegularProlongation
+public import Theorem.ResidueField.ResidueDiscs
+public import Def.ModularCurve_PlaceWidthChar
+public import Def.ModularCurve_FullLevelSemistableCoveringW2
+public import Theorem.MvPowerSeries.UVCrossingModel
+public import Instance.AlgebraicCurve_TwoChartIntegralModel
+public import Theorem.UpperHalfPlane.X1
+public import Def.ModularCurve_SupersingularModuli
+public import Instance.ModularCurve_FullLevelJacobian
+public import Instance.DrinfeldCurve_CoordRing
+public import Def.ModularCurve_FullLevelLevelAutAt
+public import Def.ModularCurve_JqCoeff
+public import Instance.AdicCompletionLocalRing
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 800000
 set_option maxHeartbeats 12800000
-
 open AlgebraicCurve ModularCurve ModularCurve.FullLevel IsLocalRing CongruenceSubgroup AlgebraicCurve.TwoChartIntegralModel
 open scoped MatrixGroups
+
+
+public section
 
 attribute [local instance] ModularCurve.instDecidableEqResidueFieldSemistable
   ModularCurve.instAlgebraResidueFieldModularFunctionFieldCSemistable

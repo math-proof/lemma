@@ -1,8 +1,11 @@
-import Mathlib
-import Def.ModularCurve_KatzLevelP
-import Instance.ModularCurve_KatzLevelPUniversal
-
+module
+public import Mathlib
+public import Def.ModularCurve_KatzLevelP
+public import Instance.ModularCurve_KatzLevelPUniversal
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

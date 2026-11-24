@@ -1,15 +1,16 @@
+module
+public import Mathlib.Tactic.FinCases
+public import Def.NumberTheory.MultipleZeta.Reversal.Part2
+public import Theorem.Nat.MultipleZeta.Reversal
+public import Def.MathlibExtTest.NumberTheory.MultipleZeta.Reversal
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/MultipleZeta/Reversal.lean -/
-
-
-import Mathlib.Tactic.FinCases
-import Def.NumberTheory.MultipleZeta.Reversal.Part2
-import Theorem.Nat.MultipleZeta.Reversal
-import Def.MathlibExtTest.NumberTheory.MultipleZeta.Reversal
 /-!
 Tests for `MathlibExt.NumberTheory.MultipleZeta.Reversal`.
 -/
-
-
 namespace MetaMathlibExt.MultipleZeta
 
 example : oneEntryIndex.reverse.entries = [2] := by

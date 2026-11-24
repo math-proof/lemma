@@ -1,8 +1,11 @@
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Tactic.FieldSimp
-import Initialize.Tactic.Attr.Basic
+module
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Tactic.FieldSimp
+public import Initialize.Tactic.Attr.Basic
 open Finset Real
 
+
+public section
 
 private lemma ge_0 [Fintype α] {ν m : α → ℝ} (hν : ∀ a, 0 ≤ ν a) (hsumν : ∑ a, ν a = 1) (hm : ∀ a, 0 < m a) (hsumm : ∑ a, m a = 1) :
   0 ≤ ∑ a, ν a * log (ν a / m a) := by

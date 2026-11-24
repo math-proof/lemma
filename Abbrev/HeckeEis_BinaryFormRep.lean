@@ -1,5 +1,9 @@
-import Mathlib
-import Instance.ProjectiveLineMatrixAction
+module
+public import Mathlib
+public import Instance.ProjectiveLineMatrixAction
+
+
+public section
 
 namespace HeckeEis
 

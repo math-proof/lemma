@@ -1,11 +1,15 @@
--- Carved from Lemma/Definitions/Def_CuspForm_TwoCuspLattice.lean: instance decls only.
-import Mathlib
-import Instance.CuspForm_HeckeOperatorFormsGammaH
-import Instance.FLTPrelim_Modularity
-import Theorem.CuspForm.TwoCuspLattice
-import Def.CuspForm_TwoCuspLattice
-
+module
+public import Mathlib
+public import Instance.CuspForm_HeckeOperatorFormsGammaH
+public import Instance.FLTPrelim_Modularity
+public import Theorem.CuspForm.TwoCuspLattice
+public import Def.CuspForm_TwoCuspLattice
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_CuspForm_TwoCuspLattice.lean: instance decls only.
 
 noncomputable section
 

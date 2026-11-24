@@ -1,9 +1,12 @@
-import Mathlib
-import Mathlib.Data.Real.Sign
-import Theorem.Analysis.Section_9_1.Part3
-import Abbrev.Analysis.Section_9_3
+module
+public import Mathlib
+public import Mathlib.Data.Real.Sign
+public import Theorem.Analysis.Section_9_1.Part3
+public import Abbrev.Analysis.Section_9_3
 set_option doc.verso.suggestions false
 
+
+public section
 
 namespace Chapter9
 

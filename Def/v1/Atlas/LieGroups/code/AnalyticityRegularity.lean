@@ -1,5 +1,23 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/AnalyticityRegularity.lean -/
+module
+public import Def.v1.Atlas.LieGroups.code.Admissible.Part3
+public import Theorem.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
+public import Theorem.Real.GetToMonoidHom.in.SmoothSubspace.of.In_SmoothSubspace
+public import Theorem.Complex.IsKFinite0
+public import Def.v1.Atlas.LieGroups.code.SmoothVectors
+public import Def.v1.Atlas.LieGroups.code.KFinite.Part3
+public import Def.v1.Atlas.LieGroups.code.GKModuleDefs.Part2
+public import Mathlib.Geometry.Manifold.Algebra.LieGroup
+public import Mathlib.Geometry.Manifold.ContMDiff.Defs
+public import Mathlib.Topology.ContinuousMap.Basic
+public import Mathlib.Analysis.Analytic.Basic
+public import Mathlib.Analysis.InnerProductSpace.EuclideanDist
+public import Mathlib.LinearAlgebra.Charpoly.Basic
+public import Mathlib.Algebra.Lie.Semisimple.Defs
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/AnalyticityRegularity.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,21 +25,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.LieGroups.code.Admissible.Part3
-import Theorem.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
-import Theorem.Real.GetToMonoidHom.in.SmoothSubspace.of.In_SmoothSubspace
-import Theorem.Complex.IsKFinite0
-import Def.v1.Atlas.LieGroups.code.SmoothVectors
-import Def.v1.Atlas.LieGroups.code.KFinite.Part3
-import Def.v1.Atlas.LieGroups.code.GKModuleDefs.Part2
-import Mathlib.Geometry.Manifold.Algebra.LieGroup
-import Mathlib.Geometry.Manifold.ContMDiff.Defs
-import Mathlib.Topology.ContinuousMap.Basic
-import Mathlib.Analysis.Analytic.Basic
-import Mathlib.Analysis.InnerProductSpace.EuclideanDist
-import Mathlib.LinearAlgebra.Charpoly.Basic
-import Mathlib.Algebra.Lie.Semisimple.Defs
 universe uLie
 
 

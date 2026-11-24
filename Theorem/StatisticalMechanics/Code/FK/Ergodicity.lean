@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/Ergodicity.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Foundations.ProductMeasure.Part2
+public import Theorem.StatisticalMechanics.Code.Foundations.Ergodicity.Part2
+public import Theorem.StatisticalMechanics.Code.Percolation.SubcriticalDecayFull.Part2
+open MeasureTheory ProbabilityTheory MeasurableSpace
+open scoped ENNReal NNReal Pointwise symmDiff
+set_option linter.unusedVariables false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/Ergodicity.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Foundations.ProductMeasure.Part2
-import Theorem.StatisticalMechanics.Code.Foundations.Ergodicity.Part2
-import Theorem.StatisticalMechanics.Code.Percolation.SubcriticalDecayFull.Part2
-open MeasureTheory ProbabilityTheory MeasurableSpace
-open scoped ENNReal NNReal Pointwise symmDiff
-
-
-set_option linter.unusedVariables false
-
-
 namespace StatMech
 
 namespace FK

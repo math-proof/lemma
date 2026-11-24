@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/FKLimitsErgodicUncond.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.FKLimitsAssembly
+public import Theorem.StatisticalMechanics.Code.FK.CrossBoxGeneralKeystone.Part3
+public import Theorem.StatisticalMechanics.Code.FK.DLRUniqueness
+public import Mathlib
+open MeasureTheory Filter Topology
+open StatMech.ConfigSpace StatMech.Lattice
+open scoped ENNReal
+set_option linter.unusedSectionVars false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/FKLimitsErgodicUncond.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FK.FKLimitsAssembly
-import Theorem.StatisticalMechanics.Code.FK.CrossBoxGeneralKeystone.Part3
-import Theorem.StatisticalMechanics.Code.FK.DLRUniqueness
-import Mathlib
-open MeasureTheory Filter Topology
-open StatMech.ConfigSpace StatMech.Lattice
-open scoped ENNReal
-
-set_option linter.unusedSectionVars false
-
-
 namespace StatMech
 
 namespace FK

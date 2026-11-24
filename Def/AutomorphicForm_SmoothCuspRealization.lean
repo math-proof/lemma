@@ -1,11 +1,14 @@
-import Lemma.Matrix.SmoothAutomorphicFnAt
-import Theorem.RingHom.HeckeEigensystemMap
-import Def.Set_HeckePair
-import Structure.LocalLanglands_HeckeCosetSystem
-import Structure.AutomorphicForm_SmoothCuspRealization
-
+module
+public import Theorem.Matrix.SmoothAutomorphicFnAt
+public import Theorem.RingHom.HeckeEigensystemMap
+public import Def.Set_HeckePair
+public import Structure.LocalLanglands_HeckeCosetSystem
+public import Structure.AutomorphicForm_SmoothCuspRealization
 open IsDedekindDomain NumberField MeasureTheory Matrix
 open AutomorphicForm HeckeIntegralSeam Measure RingHom Matrix
+
+
+public section
 
 noncomputable section
 

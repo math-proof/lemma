@@ -1,11 +1,12 @@
+module
+public import Def.NumberTheory.LSeries.PrimeLog
+public import Theorem.Nat.LSeries.PrimeLog
+public import Def.MathlibExtTest.NumberTheory.LSeries.PrimeLog
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/LSeries/PrimeLog.lean -/
-
-
-import Def.NumberTheory.LSeries.PrimeLog
-import Theorem.Nat.LSeries.PrimeLog
-import Def.MathlibExtTest.NumberTheory.LSeries.PrimeLog
-
-
 namespace PrimeLogTest
 
 open scoped LSeries.notation

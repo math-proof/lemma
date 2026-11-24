@@ -1,16 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/Polynomial/Eisenstein/AdjoinRoot.lean -/
+module
+public import Theorem.RingTheory.Polynomial.Eisenstein.AdjoinRoot
+public import Theorem.Int.Polynomial.Eisenstein.AdjoinRoot
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Theorem.MathlibExtTest.RingTheory.Polynomial.Eisenstein.AdjoinRoot.Part2
+open Polynomial
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/Polynomial/Eisenstein/AdjoinRoot.lean -/
 /-
 Author: @toskua, Avocado
 -/
-
-
-import Theorem.RingTheory.Polynomial.Eisenstein.AdjoinRoot
-import Theorem.Int.Polynomial.Eisenstein.AdjoinRoot
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Theorem.MathlibExtTest.RingTheory.Polynomial.Eisenstein.AdjoinRoot.Part2
-open Polynomial
-
 variable {A : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
 
 variable (f : A[X]) (heis : f.IsEisensteinAt (IsLocalRing.maximalIdeal A))

@@ -1,6 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Section_5_4.Part4
-import Theorem.Analysis.Section_5_5.Part4
+module
+public import Mathlib
+public import Theorem.Analysis.Section_5_4.Part4
+public import Theorem.Analysis.Section_5_5.Part4
+
+
+public section
+
 /-!
 # Analysis I, Section 5.5: The least upper bound property
 
@@ -21,8 +26,6 @@ Users of the companion who have completed the exercises in this section are welc
 - (Add tip here)
 
 -/
-
-
 namespace Chapter5
 
 /- Use the notion of supremum in this section to define a Mathlib `sSup` operation -/

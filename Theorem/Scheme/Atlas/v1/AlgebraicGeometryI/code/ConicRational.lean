@@ -1,0 +1,85 @@
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ConicRational.Part3
+open ConicRational
+
+
+public section
+
+namespace ConicRational
+
+/--
+[adjoinRoot_inv_relation](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/ConicRational.lean)
+-/
+@[path]
+theorem adjoinRoot_inv_relation
+  {R : Type*}
+  [CommRing R]
+  {r : R} :
+-- imply
+  AdjoinRoot.of (invertPoly R r) r * AdjoinRoot.root (invertPoly R r) = 1 :=
+-- proof
+  AdjoinRoot.root_isInv r
+
+end ConicRational
+
+namespace ConicRational
+
+/--
+[hyperbola_xy_eq_one](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/ConicRational.lean)
+-/
+@[path]
+theorem hyperbola_xy_eq_one
+  {k : Type*}
+  [CommRing k] :
+-- imply
+  AdjoinRoot.of (hyperbolaPoly k) Polynomial.X * AdjoinRoot.root (hyperbolaPoly k) = 1 :=
+-- proof
+  adjoinRoot_inv_relation (Polynomial k) Polynomial.X
+
+end ConicRational
+
+namespace ConicRational
+
+/--
+[genus_conic_eq_zero](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/ConicRational.lean)
+-/
+@[path]
+theorem genus_conic_eq_zero
+-- imply
+  genusDeg 2 = 0 := by
+-- proof
+rfl
+
+end ConicRational
+
+namespace ConicRational
+
+/--
+[conic_genus_bridge](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/ConicRational.lean)
+-/
+@[path]
+theorem conic_genus_bridge
+-- imply
+  genusDeg 2 = RiemannRoch.genus 2 := by
+-- proof
+  unfold genusDeg RiemannRoch.genus
+  rfl
+
+end ConicRational
+
+/--
+[powers_X_le_nonZeroDivisors](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/ConicRational.lean)
+-/
+@[path]
+private theorem powers_X_le_nonZeroDivisors_eq
+  {k : Type*}
+  [Field k] :
+-- imply
+  Submonoid.powers (Polynomial.X : Polynomial k) ≤ nonZeroDivisors (Polynomial k) := by
+-- proof
+  apply ConicRational.powers_X_le_nonZeroDivisors k
+
+
+-- created on 2026-10-23

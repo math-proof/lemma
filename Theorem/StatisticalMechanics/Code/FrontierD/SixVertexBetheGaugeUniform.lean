@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexBetheGaugeUniform.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheSechFourier.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheGaugeAsymptotics.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBethePhysicalGaugeBase
+open Filter Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexBetheGaugeUniform.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheSechFourier.Part3
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheGaugeAsymptotics.Part2
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBethePhysicalGaugeBase
-open Filter Topology
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

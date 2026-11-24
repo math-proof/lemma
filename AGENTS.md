@@ -10,7 +10,6 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 
 ## Sub-agents
 - Work on https://github.com/math-proof/lemma.
-- Grok bots may use a Remote Control Agent as Self-Hosted Worker on `main` (WSL `~/github/lean`), via [AgentName](https://cursor.com/agents/bc-UUID); never launch Cursor cloud agents unless deliberately demanded.
 - Each agent is assigned a folder (agent name = folder name, e.g. Nat → `Lemma/Nat` or `Theorem/Nat`), and is subordinate to its parent agents, thus the hierarchy of agents form a Directed Acyclic Graph.
 - To modify another folder, send the task to the agent named by that folder (see Inter-agent communication).
 - If multiple colleague agents should work cooperatively, ask its parent agent for help. 
@@ -18,36 +17,28 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 
 ## Inter-agent communication
 - Inter-agent communication should forward necessary context to avoid misunderstanding.
-
-This section has two modes. Both use the same copy-paste contract for **Cursor-like** agents, who cannot talk to other agents: emit exactly one fenced `markdown` block (one-click copy; no nested fences) and let the user be the courier. **Grok** bots/Codex agents skip the paste prompts and talk to `@AgentName` directly.
+- Grok, Cursor, and Codex deliver every message themselves. The programmer is not a courier: do not print a paste prompt, a fenced copy block, or ask anyone to copy text between chats.
 
 ### Instruction (A → B)
-A hands a one-shot task to B. Triggered when the user says "send this issue / problem / bug / job / task to **@AgentName**" (or "send to AgentName").
-- Write a **self-contained prompt** for that agent (assignee, goal, paths, errors, constraints; follow `AGENTS.md` within @AgentName folder or its parent folder if non-existent).
-- Emit that prompt as **exactly one** fenced code block tagged `markdown` (opening line ` ```markdown `, closing ` ``` `). The chat UI must show **exactly one** clickable **copy** control for the whole prompt; the user clicks it instead of selecting text and pressing Ctrl+C.
-- **One clickable only:** do not nest other fenced blocks (` ```… `) inside that prompt — each inner fence can add another copy button and the user cannot tell which to use. Put Lean/shell examples inside the prompt as indented plain text (or prose), never as nested triple-backtick fences.
-- Never put the prompt in prose, a quote, a list, or several blocks — those have no one-click copy for the whole text.
+A hands a one-shot task to B. Triggered when the user says "send this issue / problem / bug / job / task to **@AgentName**" (or "send to AgentName"), or when A's work must change B's folder.
+- Write a **self-contained prompt** (assignee, goal, paths, errors, constraints; follow `AGENTS.md` in @AgentName's folder, or the nearest parent `AGENTS.md` if that folder has none). Put Lean and shell examples in the prompt as indented plain text.
 - Prompt shape: open with
-  `Assignee: AgentName (scope; this chat id <uuid>). Follow AGENTS.md; …`
-  then `## Goal`, repro/paths/errors, constraints. Include the target agent **chat id** in Assignee when the user gave it (or when known).
-- After the block, one short line telling the user to paste into that agent chat, naming the subagent as a markdown link:
-  `[<path-or-scope> / AgentName](<chat-id>)`
-  Example: `[lemmaPath / mjs](dfdec45a-5321-428c-9160-f3c47ec2af53)` — short scope or file path, then `/`, then the agent name; the link target is the agent **chat id** (UUID). Prefer this over bare `@AgentName` when a chat id is available.
-- Do not claim you dispatched a job, and do not wait for a colleague that never receives the message.
+  `Assignee: AgentName (scope). Follow AGENTS.md; …`
+  then `## Goal`, repro/paths/errors, constraints.
+- Deliver that prompt on the direct channel:
+  - **Cursor:** use the Task tool. Resume B when this chat already holds B's subagent id. Otherwise launch a subagent for B's folder and pass the prompt as its task. A transcript UUID, or a path under `agent-transcripts/`, is a chat log, not a subagent id — launch or resume the live subagent, and do not write into the log.
+  - **Grok and Codex:** address `@AgentName` on the same direct channel (Remote Control worker on `main`). Launch a Cursor cloud agent only when the user demands it.
+- Then tell the user, in one short line, who has the task. Link the worker `[<scope> / AgentName](<subagent-id>)` with the id the channel returned.
+- If delivery fails, report the error. Do not fall back to a paste block.
 
 ### Conversation (A ⇄ B)
-A and B keep exchanging messages. Each leg uses the same one-block contract, but the header names the recipient of that leg so the recipient can resume from where the last message left off.
+Follow-ups use the same channel. `Assignee:` starts a task. `To:` names the recipient of a reply so that agent resumes from the previous turn.
 
-Returning a report (A ← B): when A hands a task to B and B finishes it, B must hand back a report so A can resume — B prints a prompt meant to be pasted back into A's chat.
-- B emits the report as **exactly one** fenced ` ```markdown ` block (one-click copy only; no nested fences; Lean/shell examples as indented plain text; never split across prose / quote / list / multiple blocks).
-- Open the block with
-  `To: AgentA (scope; chat id <uuid>). From: AgentB. Report on task: <one-line summary>`
+Returning a report (A ← B): when B finishes A's task, B sends the report back to A on that channel.
+- Open with
+  `To: AgentA (scope). From: AgentB. Report on task: <one-line summary>`
   then `## Result` (what changed — files, build/lint status), `## Decision` (choices made / open questions), `## Next for A` (what A should do now).
-- After the block, one short line telling the user to paste it into the requester's chat, as a markdown link naming A:
-  `[<scope> / AgentA](<chat-id>)`
-- Do **not** wait or claim A already received the report — the user is the courier. Grok/Codex agents send the report to `@AgentA` directly and skip the paste prompt.
-
-Any follow-up leg in either direction uses the same header convention — `Assignee:` for a fresh task, `To:` for a reply naming the recipient.
+- A continues from that report. The programmer does not paste it.
 
 ## Edit Privilege
 - Scratch/temp files (probes, bisect scripts, ad-hoc `tmp_*` / `probe_*` / `test_*` files) live in the gitignored `tmp/` folder, not at the repo root.

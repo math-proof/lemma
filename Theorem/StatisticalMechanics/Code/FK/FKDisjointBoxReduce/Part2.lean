@@ -1,5 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/FKDisjointBoxReduce.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.FKDisjointBoxDomainMarkov.Part3
+public import Theorem.StatisticalMechanics.Code.FK.FKTwoBoxDecoupling.Part2
+public import Theorem.StatisticalMechanics.Code.FK.WiredDomChain.Part4
+public import Theorem.StatisticalMechanics.Code.FK.IvProperties
+public import Def.StatisticalMechanics.Code.FK.FKDisjointBoxReduce
+open MeasureTheory Filter Topology Set SimpleGraph
+open StatMech.ConfigSpace StatMech.Lattice
+open scoped BigOperators
+set_option linter.unusedSectionVars false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/FKDisjointBoxReduce.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,20 +20,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FK.FKDisjointBoxDomainMarkov.Part3
-import Theorem.StatisticalMechanics.Code.FK.FKTwoBoxDecoupling.Part2
-import Theorem.StatisticalMechanics.Code.FK.WiredDomChain.Part4
-import Theorem.StatisticalMechanics.Code.FK.IvProperties
-import Def.StatisticalMechanics.Code.FK.FKDisjointBoxReduce
-open MeasureTheory Filter Topology Set SimpleGraph
-open StatMech.ConfigSpace StatMech.Lattice
-open scoped BigOperators
-
-set_option linter.unusedSectionVars false
-
-
 namespace StatMech
 
 namespace FK

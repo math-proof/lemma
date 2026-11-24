@@ -1,6 +1,9 @@
-import Class.MvFormalGroup_BasicV2
-
+module
+public import Class.MvFormalGroup_BasicV2
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

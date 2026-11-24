@@ -1,14 +1,17 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.Combinatorics.Young.LittlewoodRichardson.Part17
-import Lemma.Partition.NPartition
-import Lemma.MvPolynomial.MonomialSymmetric
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.Combinatorics.Young.LittlewoodRichardson.Part17
+public import Lemma.Partition.NPartition
+public import Lemma.MvPolynomial.MonomialSymmetric
 open AlgebraicCombinatorics hiding IsNPartition
 open Finset
 open MvPolynomial hiding R
 open Polynomial
 open scoped BigOperators Classical
 
+
+public section
 
 section
 -- ac-theorems

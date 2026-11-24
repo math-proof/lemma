@@ -1,9 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.NumberTheoryI.code.Cor2328
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.NumberTheoryI.code.Cor2328
 open GroupCohomology
 open CategoryTheory
 
+
+public section
 
 namespace GroupCohomology
 

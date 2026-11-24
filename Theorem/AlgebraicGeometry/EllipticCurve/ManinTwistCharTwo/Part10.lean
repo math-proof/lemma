@@ -1,33 +1,34 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/AlgebraicGeometry/EllipticCurve/ManinTwistCharTwo.lean -/
+module
+public import Def.AlgebraicGeometry.EllipticCurve.ManinSequence
+public import Theorem.Int.EllipticCurve.ManinSequence
+public import Theorem.Polynomial.PrimitiveTripleManinProjectiveDegreeEllipticCurve.of.All_False.Ne_0
+public import Theorem.Nat.FrobeniusTrace.eq.SubAddCardF1CardPoint.of.AffineF
+public import Mathlib.AlgebraicGeometry.EllipticCurve.NormalForms
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Def.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree
+public import Def.AlgebraicGeometry.EllipticCurve.PointCount
+public import Mathlib.Data.Nat.Log
+public import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.FieldTheory.RatFunc.Degree
+public import Mathlib.Tactic.ComputeDegree
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Ring
+public import Def.AlgebraicGeometry.EllipticCurve.ManinTwistCharTwo.Part11
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/AlgebraicGeometry/EllipticCurve/ManinTwistCharTwo.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
-
-import Def.AlgebraicGeometry.EllipticCurve.ManinSequence
-import Theorem.Int.EllipticCurve.ManinSequence
-import Theorem.Polynomial.PrimitiveTripleManinProjectiveDegreeEllipticCurve.of.All_False.Ne_0
-import Theorem.Nat.FrobeniusTrace.eq.SubAddCardF1CardPoint.of.AffineF
-import Mathlib.AlgebraicGeometry.EllipticCurve.NormalForms
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Def.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree
-import Def.AlgebraicGeometry.EllipticCurve.PointCount
-import Mathlib.Data.Nat.Log
-import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.FieldTheory.RatFunc.Degree
-import Mathlib.Tactic.ComputeDegree
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Ring
-import Def.AlgebraicGeometry.EllipticCurve.ManinTwistCharTwo.Part11
 /-!
 # Manin's elementary proof in characteristic two
 
 This file packages the ordinary and supersingular normal-form cases, following
 Chahal--Soomro--Top, *Rocky Mountain J. Math.* 44 (2014).
 -/
-
-
 namespace MathlibExt.AlgebraicGeometry.EllipticCurve.ManinTwistCharTwo
 
 noncomputable section

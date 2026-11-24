@@ -1,47 +1,50 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch9Entry26Ramanujanpi.lean -/
+module
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Analysis.Asymptotics.Defs
+public import Mathlib.Analysis.Calculus.ContDiff.Basic
+public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.Analysis.Complex.Trigonometric
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Complex
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Data.Finset.Defs
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.NumberTheory.Harmonic.Defs
+public import Mathlib.NumberTheory.LSeries.RiemannZeta
+public import Mathlib.Order.Filter.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Topology.Basic
+public import Def.Analysis.Ramanujan.Part1Ch9Entry24Dougall
+public import Theorem.Real.Part1Ch9Entry24Dougall
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Analysis.Calculus.Deriv.Slope
+public import Mathlib.Analysis.Calculus.MeanValue
+public import Mathlib.Analysis.Calculus.SmoothSeries
+public import Mathlib.Analysis.Normed.Group.FunctionSeries
+public import Mathlib.Analysis.PSeries
+public import Mathlib.Analysis.SpecialFunctions.Complex.Arg
+public import Mathlib.Analysis.SpecialFunctions.Complex.Circle
+public import Mathlib.Analysis.SpecialFunctions.Complex.Log
+public import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
+public import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
+public import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+public import Mathlib.Analysis.SpecificLimits.Normed
+public import Mathlib.NumberTheory.ZetaValues
+public import Mathlib.Tactic.Linarith
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch9Entry26Ramanujanpi.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @akiezun, Avocado, Codex
 -/
-
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Analysis.Asymptotics.Defs
-import Mathlib.Analysis.Calculus.ContDiff.Basic
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.Analysis.Complex.Trigonometric
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Complex
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Basic.Complex.Basic
-import Mathlib.Data.Finset.Defs
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
-import Mathlib.NumberTheory.Bernoulli
-import Mathlib.NumberTheory.Harmonic.Defs
-import Mathlib.NumberTheory.LSeries.RiemannZeta
-import Mathlib.Order.Filter.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Topology.Basic
-import Def.Analysis.Ramanujan.Part1Ch9Entry24Dougall
-import Lemma.Real.Part1Ch9Entry24Dougall
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Analysis.Calculus.Deriv.Slope
-import Mathlib.Analysis.Calculus.MeanValue
-import Mathlib.Analysis.Calculus.SmoothSeries
-import Mathlib.Analysis.Normed.Group.FunctionSeries
-import Mathlib.Analysis.PSeries
-import Mathlib.Analysis.SpecialFunctions.Complex.Arg
-import Mathlib.Analysis.SpecialFunctions.Complex.Circle
-import Mathlib.Analysis.SpecialFunctions.Complex.Log
-import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
-import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
-import Mathlib.Analysis.SpecificLimits.Normed
-import Mathlib.NumberTheory.ZetaValues
-import Mathlib.Tactic.Linarith
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 9
 
@@ -50,8 +53,6 @@ Statements of entries from B. C. Berndt, *Ramanujan's Notebooks, Part I*
 
 This module proves Entry 26, Ramanujan's Landen-type dilogarithm identity.
 -/
-
-
 section
 
 namespace MathlibExt.Analysis.Ramanujan.Part1Ch9

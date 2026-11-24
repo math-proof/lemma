@@ -1,9 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.DifferentialAnalysis.code.SobolevDerivatives
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.DifferentialAnalysis.code.SobolevDerivatives
 open SobolevSpace TemperedDistributions TestFunctions MeasureTheory
 open scoped SchwartzMap FourierTransform
 
+
+public section
 
 namespace SobolevSpace
 

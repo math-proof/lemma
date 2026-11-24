@@ -1,11 +1,14 @@
-import Theorem.Data.Fin.Dot
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Matrix.Mul
-import Notation.Fun
-import Syntax.Data.List
-import Instance.Data.Fin.Dot.Part2
-import Notation.Data.Dot
+module
+public import Theorem.Data.Fin.Dot
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Matrix.Mul
+public import Notation.Fun
+public import Syntax.Data.List
+public import Instance.Data.Fin.Dot.Part2
+public import Notation.Data.Dot
 
+
+public section
 
 theorem Dot.fun_out_eq [AddCommMonoid α] [Mul α] {m : ℕ} (s : Slice)
     (v : Fin m → α) (w : FunSlice.Out α s) :

@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/ABInequalities.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Inequalities.Russo
+public import Theorem.StatisticalMechanics.Code.Inequalities.BK.Part4
+public import Theorem.StatisticalMechanics.Code.Foundations.CylinderDeriv.Part2
+public import Theorem.StatisticalMechanics.Code.Sharpness.AizenmanBarsky.Part2
+open MeasureTheory Set Finset
+open scoped NNReal ENNReal
+set_option linter.unusedVariables false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/ABInequalities.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Inequalities.Russo
-import Theorem.StatisticalMechanics.Code.Inequalities.BK.Part4
-import Theorem.StatisticalMechanics.Code.Foundations.CylinderDeriv.Part2
-import Theorem.StatisticalMechanics.Code.Sharpness.AizenmanBarsky.Part2
-open MeasureTheory Set Finset
-open scoped NNReal ENNReal
-
-
-set_option linter.unusedVariables false
-
-
 namespace StatMech
 
 namespace Sharpness

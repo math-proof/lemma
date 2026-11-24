@@ -1,10 +1,14 @@
--- Carved from Lemma/Definitions/Def_PDivisibleGroup_PrimaryTorsion.lean: instance decls only.
-import Mathlib
-import Instance.EllipticCurve_TateModule
-import Theorem.LinearMap.PrimaryTorsion
-import Def.LinearMap_PrimaryTorsion
-
+module
+public import Mathlib
+public import Instance.EllipticCurve_TateModule
+public import Theorem.LinearMap.PrimaryTorsion
+public import Def.LinearMap_PrimaryTorsion
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_PDivisibleGroup_PrimaryTorsion.lean: instance decls only.
 
 namespace PrimaryTorsion
 

@@ -1,15 +1,17 @@
-import Theorem.ZMod.Inst
-import Instance.IharaLemma_IdempotentSplitting
-import Def.CuspForm_CornerPairingFamily
-import Instance.CuspForm_HeckeLocal
-import Def.GaloisRep_LocalConditions
-import Instance.GaloisRep_Residual
-import Def.GaloisRep_Adic
-
+module
+public import Theorem.ZMod.Inst
+public import Instance.IharaLemma_IdempotentSplitting
+public import Def.CuspForm_CornerPairingFamily
+public import Instance.CuspForm_HeckeLocal
+public import Def.GaloisRep_LocalConditions
+public import Instance.GaloisRep_Residual
+public import Def.GaloisRep_Adic
 set_option autoImplicit false
-
 set_option synthInstance.maxHeartbeats 400000
 set_option maxHeartbeats 800000
+
+
+public section
 
 namespace CuspForm.heckeLocal
 

@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/SheafCohDerived.lean -/
+module
+public import Def.v1.Atlas.AlgebraicGeometryI.code.EffaceableUniversal
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.EffaceableUniversal
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology.Part2
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.SheafCohDerived
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/SheafCohDerived.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.AlgebraicGeometryI.code.EffaceableUniversal
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.EffaceableUniversal
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology.Part2
-import Structure.v1.Atlas.AlgebraicGeometryI.code.SheafCohDerived
-
-
 noncomputable section
 
 open CohomologyP1 SheafCohomology CategoryTheory CategoryTheory.Limits

@@ -1,7 +1,10 @@
-import Mathlib
-import Abbrev.Analysis.Section_6_3
-import Theorem.Analysis.Section_6_4.Part2
+module
+public import Mathlib
+public import Abbrev.Analysis.Section_6_3
+public import Theorem.Analysis.Section_6_4.Part2
 
+
+public section
 
 namespace Chapter6
 

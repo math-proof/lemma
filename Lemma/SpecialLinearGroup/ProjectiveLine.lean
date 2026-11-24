@@ -1,5 +1,8 @@
-import Mathlib.LinearAlgebra.Matrix.SpecialLinearGroup
+module
+public import Mathlib.LinearAlgebra.Matrix.SpecialLinearGroup
 
+
+public section
 
 namespace ModularCurve
 

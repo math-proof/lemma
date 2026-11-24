@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
 open scoped Polynomial
 open IntermediateField
 
+
+public section
 
 namespace Algebra
 

@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
 open MeasureTheory Real ProbabilityTheory SubGaussian
 
+
+public section
 
 namespace SubGaussian
 

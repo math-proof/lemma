@@ -1,5 +1,21 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/OrdinarySupersingular.lean -/
+module
+public import Def.v1.Atlas.EllipticCurves.code.Isogenies.Part13
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Isogenies
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.PointCounting
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.JInvariant
+public import Lemma.Complex.Atlas.v1.EllipticCurves.code.EndomorphismAlgebra
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.EndAlgClassification
+public import Def.v1.Atlas.EllipticCurves.code.PointCounting.Part2
+public import Def.v1.Atlas.EllipticCurves.code.JInvariant
+public import Instance.v1.Atlas.EllipticCurves.code.EndomorphismAlgebra.Part2
+public import Inductive.v1.Atlas.EllipticCurves.code.EndAlgClassification
+public import Mathlib.Algebra.CharP.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/OrdinarySupersingular.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +23,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.EllipticCurves.code.Isogenies.Part13
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.Isogenies
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.PointCounting
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.JInvariant
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.EndomorphismAlgebra
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.EndAlgClassification
-import Def.v1.Atlas.EllipticCurves.code.PointCounting.Part2
-import Def.v1.Atlas.EllipticCurves.code.JInvariant
-import Instance.v1.Atlas.EllipticCurves.code.EndomorphismAlgebra.Part2
-import Inductive.v1.Atlas.EllipticCurves.code.EndAlgClassification
-import Mathlib.Algebra.CharP.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
 universe u
 
 

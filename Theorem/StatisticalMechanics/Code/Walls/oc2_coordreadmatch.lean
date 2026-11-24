@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/oc2_coordreadmatch.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.OSSS.Coding.Part6
+public import Theorem.StatisticalMechanics.Code.OSSS.CovLowerBound
+public import Theorem.StatisticalMechanics.Code.OSSS.Lindeberg.Part4
+open scoped BigOperators
+open Finset
+set_option linter.style.longLine false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/oc2_coordreadmatch.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.OSSS.Coding.Part6
-import Theorem.StatisticalMechanics.Code.OSSS.CovLowerBound
-import Theorem.StatisticalMechanics.Code.OSSS.Lindeberg.Part4
-open scoped BigOperators
-open Finset
-
-set_option linter.style.longLine false
-
-
 namespace StatMech.Walls
 
 open StatMech.OSSS

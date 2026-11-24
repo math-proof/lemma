@@ -1,12 +1,15 @@
-import Mathlib
-import Def.ModularCurve_JZeroNeronData
-import Theorem.MvPolynomial.HeckeModule
-import Def.ModularCurve_HeckeInputsAll
-import Def.FLTPrelim_Ramification
-import Def.GaloisRep_Flat
-import Structure.ModularCurve_JZeroNeronDataPrime
-
+module
+public import Mathlib
+public import Def.ModularCurve_JZeroNeronData
+public import Theorem.MvPolynomial.HeckeModule
+public import Def.ModularCurve_HeckeInputsAll
+public import Def.FLTPrelim_Ramification
+public import Def.GaloisRep_Flat
+public import Structure.ModularCurve_JZeroNeronDataPrime
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

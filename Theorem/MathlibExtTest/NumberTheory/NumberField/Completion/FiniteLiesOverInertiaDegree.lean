@@ -1,13 +1,14 @@
+module
+public import Instance.NumberTheory.NumberField.Completion.FiniteLiesOverInertiaDegree
+public import Theorem.Nat.NumberField.Completion.FiniteLiesOverInertiaDegree
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/Completion/FiniteLiesOverInertiaDegree.lean -/
-
-
-import Instance.NumberTheory.NumberField.Completion.FiniteLiesOverInertiaDegree
-import Theorem.Nat.NumberField.Completion.FiniteLiesOverInertiaDegree
 /-!
 # Test file
 -/
-
-
 namespace IsDedekindDomain.HeightOneSpectrum
 
 open scoped NumberField NumberField.LiesOver

@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/BeffaraDC/LongRectangleTorusPushforward.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.BeffaraDC.LongRectangleTorusCover.Part6
+public import Theorem.StatisticalMechanics.Code.FK.FKG
+public import Def.StatisticalMechanics.Code.BeffaraDC.LongRectangleTorusPushforward
+open MeasureTheory Set
+open scoped ENNReal NNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/BeffaraDC/LongRectangleTorusPushforward.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.BeffaraDC.LongRectangleTorusCover.Part6
-import Theorem.StatisticalMechanics.Code.FK.FKG
-import Def.StatisticalMechanics.Code.BeffaraDC.LongRectangleTorusPushforward
-open MeasureTheory Set
-open scoped ENNReal NNReal
-
-
 namespace StatMech.BeffaraDC
 
 open StatMech.Lattice

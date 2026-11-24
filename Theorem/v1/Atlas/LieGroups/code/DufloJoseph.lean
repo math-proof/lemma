@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/DufloJoseph.lean -/
+module
+public import Instance.v1.Atlas.LieGroups.code.MaximalQuotients
+public import Theorem.Int.Any_EqUeaAction
+public import Theorem.Fin.Any_Eq.of.Ne_0
+public import Theorem.Complex.Any_Any_And_All_Eq_AdjointAction.All_Finite.of.IsHarishChandraBimodule.IsIrreducible
+public import Def.v1.Atlas.LieGroups.code.HighestWeightModules.Part2
+public import Theorem.v1.Atlas.LieGroups.code.HarishChandraCorollaries
+public import Def.v1.Atlas.LieGroups.code.DufloJoseph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/DufloJoseph.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Instance.v1.Atlas.LieGroups.code.MaximalQuotients
-import Theorem.Int.Any_EqUeaAction
-import Theorem.Fin.Any_Eq.of.Ne_0
-import Theorem.Complex.Any_Any_And_All_Eq_AdjointAction.All_Finite.of.IsHarishChandraBimodule.IsIrreducible
-import Def.v1.Atlas.LieGroups.code.HighestWeightModules.Part2
-import Theorem.v1.Atlas.LieGroups.code.HarishChandraCorollaries
-import Def.v1.Atlas.LieGroups.code.DufloJoseph
-
-
 noncomputable section
 
 variable {R : Type*} [CommRing R]

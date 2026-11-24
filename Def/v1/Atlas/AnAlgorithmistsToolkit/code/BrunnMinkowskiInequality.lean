@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AnAlgorithmistsToolkit/code/BrunnMinkowskiInequality.lean -/
+module
+public import Def.v1.Atlas.AnAlgorithmistsToolkit.code.BrunnMinkowski
+public import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.BrunnMinkowski
+public import Mathlib.Analysis.InnerProductSpace.PiL2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AnAlgorithmistsToolkit/code/BrunnMinkowskiInequality.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.AnAlgorithmistsToolkit.code.BrunnMinkowski
-import Lemma.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.BrunnMinkowski
-import Mathlib.Analysis.InnerProductSpace.PiL2
-
-
 namespace BrunnMinkowskiInequality
 
 open MeasureTheory Measure Pointwise

@@ -17,7 +17,7 @@ open Nat
 [SetTheory.Set.nat_coe_eq_iff](https://github.com/teorth/analysis/blob/main/Analysis/Section_3_1.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   [SetTheory]
   {m n : ℕ} :
 -- imply

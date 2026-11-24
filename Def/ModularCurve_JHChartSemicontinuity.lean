@@ -1,11 +1,13 @@
-import Mathlib
-import Instance.ModularCurve_JHNeronObjectAtP
-import Def.ModularCurve_JHPlaceSpecialization
-
+module
+public import Mathlib
+public import Instance.ModularCurve_JHNeronObjectAtP
+public import Def.ModularCurve_JHPlaceSpecialization
 set_option autoImplicit false
-
 open AlgebraicCurve IsLocalRing ModularCurve
 open scoped MatrixGroups
+
+
+public section
 
 namespace ModularCurve
 

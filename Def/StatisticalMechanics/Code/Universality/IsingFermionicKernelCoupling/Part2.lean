@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicKernelCoupling.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicReflectionEstimates.Part13
+public import Instance.StatisticalMechanics.Code.Universality.IsingFermionicKernelCoupling
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicKernelCoupling.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicReflectionEstimates.Part13
-import Instance.StatisticalMechanics.Code.Universality.IsingFermionicKernelCoupling
-
-
 namespace StatMech.Universality
 
 open Finset

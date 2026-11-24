@@ -1,6 +1,9 @@
-import Theorem.Analysis.MeasureTheory.Section_1_1_1.Part16
-import Mathlib.LinearAlgebra.AffineSpace.Simplex.Basic
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_1_1.Part16
+public import Mathlib.LinearAlgebra.AffineSpace.Simplex.Basic
 
+
+public section
 
 /-!
 # Introduction to Measure Theory, Section 1.1.2: Jordan measure
@@ -8,7 +11,6 @@ import Mathlib.LinearAlgebra.AffineSpace.Simplex.Basic
 A companion to Section 1.1.2 of the book "An introduction to Measure Theory".
 
 -/
-
 /-- Definition 1.1.4.  We intend these concepts to only be applied for bounded sets {lean}`E`, but
 it is convenient to permit {lean}`E` to be unbounded for the purposes of making the definitions.
 -/

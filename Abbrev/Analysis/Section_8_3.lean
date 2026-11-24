@@ -1,7 +1,12 @@
-import Mathlib
-import Theorem.Analysis.Section_8_1.Part4
-import Theorem.Analysis.Section_8_2.Part4
-import Theorem.Analysis.Section_8_3
+module
+public import Mathlib
+public import Theorem.Analysis.Section_8_1.Part4
+public import Theorem.Analysis.Section_8_2.Part4
+public import Theorem.Analysis.Section_8_3
+
+
+public section
+
 /-!
 # Analysis I, Section 8.3: Uncountable sets
 
@@ -19,8 +24,6 @@ Some non-trivial API is provided beyond what is given in the textbook in order c
 notions with existing summation notions.
 
 -/
-
-
 namespace Chapter8
 
 abbrev LeCard (X Y: Type) : Prop := ∃ f: X → Y, Function.Injective f

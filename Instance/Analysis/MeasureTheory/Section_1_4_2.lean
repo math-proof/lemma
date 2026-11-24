@@ -1,7 +1,10 @@
-import Mathlib.SetTheory.Cardinal.Aleph
-import Instance.Analysis.MeasureTheory.Section_1_4_1.Part4
-import Def.Analysis.MeasureTheory.Section_1_4_2.Part4
+module
+public import Mathlib.SetTheory.Cardinal.Aleph
+public import Instance.Analysis.MeasureTheory.Section_1_4_1.Part4
+public import Def.Analysis.MeasureTheory.Section_1_4_2.Part4
 
+
+public section
 
 instance ConcreteSigmaAlgebra.instLE (X:Type*) : LE (ConcreteSigmaAlgebra X) :=
   ⟨fun B1 B2 => ∀ E, B1.measurable E → B2.measurable E⟩

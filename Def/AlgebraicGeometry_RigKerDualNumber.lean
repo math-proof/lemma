@@ -1,15 +1,18 @@
-import Mathlib
-import Structure.JacJ1Iface
-import Def.AlgebraicGeometry_RelativePicardFunctor
-import Lemma.Scheme.RepresentsRelSubPic
-import Def.AlgebraicGeometry_RelPicardAlgEquivZeroCut
-import Def.AlgebraicGeometry_RelPicardAlgEquivZeroGroupCut
-import Lemma.Scheme.RelSubPicGroup
-import Lemma.Scheme.TwoAffineOpenCover
-import Instance.AlgebraicGeometry_RigKerDualNumber
-import Abbrev.AlgebraicGeometry_RigKerDualNumber
-
+module
+public import Mathlib
+public import Structure.JacJ1Iface
+public import Def.AlgebraicGeometry_RelativePicardFunctor
+public import Lemma.Scheme.RepresentsRelSubPic
+public import Def.AlgebraicGeometry_RelPicardAlgEquivZeroCut
+public import Def.AlgebraicGeometry_RelPicardAlgEquivZeroGroupCut
+public import Lemma.Scheme.RelSubPicGroup
+public import Lemma.Scheme.TwoAffineOpenCover
+public import Instance.AlgebraicGeometry_RigKerDualNumber
+public import Abbrev.AlgebraicGeometry_RigKerDualNumber
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

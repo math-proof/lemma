@@ -1,12 +1,15 @@
--- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ResolvedModelGlue.lean: instance decls only.
-import Mathlib
-import Theorem.Scheme.ResolvedModelGlue
-import Def.AlgebraicGeometry_ResolvedModelGlue
-
+module
+public import Mathlib
+public import Theorem.Scheme.ResolvedModelGlue
+public import Def.AlgebraicGeometry_ResolvedModelGlue
 set_option autoImplicit false
 set_option maxHeartbeats 200000
-
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ResolvedModelGlue.lean: instance decls only.
 
 noncomputable section
 

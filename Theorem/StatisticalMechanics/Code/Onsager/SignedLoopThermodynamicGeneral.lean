@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/SignedLoopThermodynamicGeneral.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopThermodynamicLimit.Part3
+public import Def.StatisticalMechanics.Code.Onsager.SignedLoopThermodynamicGeneral
+open Finset SimpleGraph MeasureTheory Filter Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/SignedLoopThermodynamicGeneral.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopThermodynamicLimit.Part3
-import Def.StatisticalMechanics.Code.Onsager.SignedLoopThermodynamicGeneral
-open Finset SimpleGraph MeasureTheory Filter Topology
-
-
 namespace StatMech.Onsager
 
 open StatMech.Ising StatMech.Lattice StatMech.FrontierA StatMech.FrontierB

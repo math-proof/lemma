@@ -1,32 +1,32 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/MSS.lean -/
+module
+public import Def.Analysis.CStarAlgebra.KadisonSinger.MixedCharPoly
+public import Lemma.Real.CStarAlgebra.KadisonSinger.MixedCharPoly
+public import Theorem.Complex.CStarAlgebra.KadisonSinger.Paving
+public import Theorem.Polynomial.RealRooted
+public import Theorem.Real.CStarAlgebra.KadisonSinger.Barrier
+public import Theorem.Real.CStarAlgebra.KadisonSinger.RealStable
+public import Lemma.Polynomial.Interlacing
+public import Theorem.Matrix.Spectrum
+public import Def.Analysis.CStarAlgebra.KadisonSinger.Paving
+public import Def.Algebra.Polynomial.RealRooted.Part2
+public import Def.Analysis.CStarAlgebra.KadisonSinger.Barrier
+public import Def.Analysis.CStarAlgebra.KadisonSinger.RealStable
+public import Def.Algebra.Polynomial.Interlacing
+open scoped BigOperators ComplexOrder Matrix.Norms.L2Operator
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/CStarAlgebra/KadisonSinger/MSS.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
-
-import Def.Analysis.CStarAlgebra.KadisonSinger.MixedCharPoly
-import Lemma.Real.CStarAlgebra.KadisonSinger.MixedCharPoly
-import Lemma.Complex.CStarAlgebra.KadisonSinger.Paving
-import Theorem.Polynomial.RealRooted
-import Lemma.Real.CStarAlgebra.KadisonSinger.Barrier
-import Lemma.Real.CStarAlgebra.KadisonSinger.RealStable
-import Lemma.Polynomial.Interlacing
-import Theorem.Matrix.Spectrum
-import Def.Analysis.CStarAlgebra.KadisonSinger.Paving
-import Def.Algebra.Polynomial.RealRooted.Part2
-import Def.Analysis.CStarAlgebra.KadisonSinger.Barrier
-import Def.Analysis.CStarAlgebra.KadisonSinger.RealStable
-import Def.Algebra.Polynomial.Interlacing
-open scoped BigOperators ComplexOrder Matrix.Norms.L2Operator
-
 /-!
 # The finite Marcus--Spielman--Srivastava bound
 
 This file assembles interlacing families, mixed characteristic polynomials, and the barrier
 estimate for finitely supported independent random vectors.
 -/
-
-
 namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 universe u

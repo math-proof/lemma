@@ -1,5 +1,20 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/FKLimitsAssembly.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.MonotoneWeakLimit.Part2
+public import Theorem.StatisticalMechanics.Code.FK.FreeWeakLimit.Part8
+public import Theorem.StatisticalMechanics.Code.FK.MonotoneVolumeLimit
+public import Theorem.StatisticalMechanics.Code.FK.BulkDeviationProof.Part2
+public import Theorem.StatisticalMechanics.Code.FK.FKLimitsClose.Part3
+public import Theorem.StatisticalMechanics.Code.FK.FKErgodicClose.Part2
+public import Mathlib
+open MeasureTheory Filter Topology
+open StatMech.ConfigSpace StatMech.Lattice
+open scoped ENNReal
+set_option linter.unusedSectionVars false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/FKLimitsAssembly.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,22 +22,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FK.MonotoneWeakLimit.Part2
-import Theorem.StatisticalMechanics.Code.FK.FreeWeakLimit.Part8
-import Theorem.StatisticalMechanics.Code.FK.MonotoneVolumeLimit
-import Theorem.StatisticalMechanics.Code.FK.BulkDeviationProof.Part2
-import Theorem.StatisticalMechanics.Code.FK.FKLimitsClose.Part3
-import Theorem.StatisticalMechanics.Code.FK.FKErgodicClose.Part2
-import Mathlib
-open MeasureTheory Filter Topology
-open StatMech.ConfigSpace StatMech.Lattice
-open scoped ENNReal
-
-set_option linter.unusedSectionVars false
-
-
 namespace StatMech
 
 namespace FK

@@ -1,7 +1,10 @@
-import Instance.NarrowRayClassGroup
-import Mathlib.RingTheory.DedekindDomain.Different
-
+module
+public import Instance.NarrowRayClassGroup
+public import Mathlib.RingTheory.DedekindDomain.Different
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

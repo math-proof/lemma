@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/SphericalBuilding/GLnCommonApartmentUnconditional.lean -/
+module
+public import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.JordanHolderFrame.Part2
+public import Theorem.Fin.JhLine.in.SpacesAddVal1.of.IsStrictFlag.IsStrictFlag
+public import Theorem.Submodule.Any_LtAndLtAndEqFinrankK_AddFinrankK1.of.LeAddFinrankK2_FinrankK.Lt
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.AdaptedBasisProof
+public import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.GLnCommonApartmentUnconditional.Part2
+set_option maxHeartbeats 1600000
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/SphericalBuilding/GLnCommonApartmentUnconditional.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.JordanHolderFrame.Part2
-import Lemma.Fin.JhLine.in.SpacesAddVal1.of.IsStrictFlag.IsStrictFlag
-import Lemma.Submodule.Any_LtAndLtAndEqFinrankK_AddFinrankK1.of.LeAddFinrankK2_FinrankK.Lt
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.AdaptedBasisProof
-import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.GLnCommonApartmentUnconditional.Part2
-set_option maxHeartbeats 1600000
-
-
 namespace GLnBuilding
 
 open Submodule Module

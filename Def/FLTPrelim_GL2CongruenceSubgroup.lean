@@ -1,9 +1,11 @@
-import Mathlib
-import Instance.RepTheory_GL2CongruenceSubgroup
-
+module
+public import Mathlib
+public import Instance.RepTheory_GL2CongruenceSubgroup
 set_option autoImplicit false
-
 open scoped Topology
+
+
+public section
 
 namespace FLT.SmoothVectors
 

@@ -1,9 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.NumberTheory.PrimeCounting.WeightedLargeSieve
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.NumberTheory.PrimeCounting.WeightedLargeSieve
 open scoped BigOperators ComplexConjugate
 open MathlibExt.NumberTheory.PrimeCounting
 
+
+public section
 
 namespace MathlibExt.NumberTheory.PrimeCounting
 

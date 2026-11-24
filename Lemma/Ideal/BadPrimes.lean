@@ -1,9 +1,12 @@
-import Def.FrobeniusDensity_DegOneAsymptotic
-import Mathlib.RingTheory.DedekindDomain.Factorization
-import Mathlib.RingTheory.UniqueFactorizationDomain.NormalizedFactors
-import Mathlib.Data.ZMod.QuotientRing
-
+module
+public import Def.FrobeniusDensity_DegOneAsymptotic
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Mathlib.RingTheory.UniqueFactorizationDomain.NormalizedFactors
+public import Mathlib.Data.ZMod.QuotientRing
 set_option autoImplicit false
+
+
+public section
 
 namespace FrobeniusDensity
 

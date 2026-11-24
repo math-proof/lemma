@@ -1,12 +1,15 @@
-import Structure.ModularCurve_FullLevelSemistableCovering
-import Theorem.AlgEquiv.SemistableChartsComap
-import Structure.AlgebraicCurve_ConstantReduction
-import Abbrev.DrinfeldCurve_FunctionField
-import Def.GaloisRep_TameCharacter
-import Def.FLTPrelim_Ramification
-import Instance.ModularCurve_ArithmeticGalois
-
+module
+public import Structure.ModularCurve_FullLevelSemistableCovering
+public import Theorem.AlgEquiv.SemistableChartsComap
+public import Structure.AlgebraicCurve_ConstantReduction
+public import Abbrev.DrinfeldCurve_FunctionField
+public import Def.GaloisRep_TameCharacter
+public import Def.FLTPrelim_Ramification
+public import Instance.ModularCurve_ArithmeticGalois
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

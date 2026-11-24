@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/TriangularIsingTorusPhysical.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusShiftedAssembly
+public import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusSectorSandwich.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingSymbol.Part2
+public import Theorem.StatisticalMechanics.Code.Onsager.KWDetLimit.Part2
+open scoped BigOperators
+open MeasureTheory
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/TriangularIsingTorusPhysical.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusShiftedAssembly
-import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusSectorSandwich.Part2
-import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingSymbol.Part2
-import Theorem.StatisticalMechanics.Code.Onsager.KWDetLimit.Part2
-open scoped BigOperators
-open MeasureTheory
-
-
 namespace StatMech.FrontierA
 
 open StatMech.Onsager

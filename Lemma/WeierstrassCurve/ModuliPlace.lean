@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.HahnSeries.X0ModL
+import Theorem.HahnSeries.X0ModL
 import Lemma.HahnSeries.QAdicPlaceMod
 import Lemma.WeierstrassCurve.ModuliPointMap
 import Lemma.WeierstrassCurve.ReduceHom

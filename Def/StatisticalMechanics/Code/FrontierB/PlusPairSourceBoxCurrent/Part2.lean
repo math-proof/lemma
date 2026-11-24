@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/PlusPairSourceBoxCurrent.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierB.FiniteBoundarySourceLaw.Part4
+public import Theorem.StatisticalMechanics.Code.FrontierB.PairSourceBoxCurrent.Part3
+public import Theorem.StatisticalMechanics.Code.IsingFK.HisingBoxClose.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierB.PlusPairSourceBoxCurrent
+open MeasureTheory
+open scoped ENNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/PlusPairSourceBoxCurrent.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierB.FiniteBoundarySourceLaw.Part4
-import Theorem.StatisticalMechanics.Code.FrontierB.PairSourceBoxCurrent.Part3
-import Theorem.StatisticalMechanics.Code.IsingFK.HisingBoxClose.Part3
-import Theorem.StatisticalMechanics.Code.FrontierB.PlusPairSourceBoxCurrent
-open MeasureTheory
-open scoped ENNReal
-
-
 namespace StatMech.FrontierB
 
 open Sharpness Lattice

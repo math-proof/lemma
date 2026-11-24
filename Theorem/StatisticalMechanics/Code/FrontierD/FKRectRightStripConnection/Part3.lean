@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectRightStripConnection.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectInducedConditionalLower.Part3
+public import Theorem.StatisticalMechanics.Code.FK.FKG
+public import Theorem.StatisticalMechanics.Code.FK.TwoPoint.Part4
+public import Def.StatisticalMechanics.Code.FrontierD.FKRectRightStripConnection.Part3
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectRightStripConnection.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectInducedConditionalLower.Part3
-import Theorem.StatisticalMechanics.Code.FK.FKG
-import Theorem.StatisticalMechanics.Code.FK.TwoPoint.Part4
-import Def.StatisticalMechanics.Code.FrontierD.FKRectRightStripConnection.Part3
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

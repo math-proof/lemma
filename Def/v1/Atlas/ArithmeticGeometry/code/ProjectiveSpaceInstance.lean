@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/ProjectiveSpaceInstance.lean -/
+module
+public import Def.v1.Atlas.ArithmeticGeometry.code.EllipticCurves.Part7
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.EllipticCurves
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/ProjectiveSpaceInstance.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,9 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.ArithmeticGeometry.code.EllipticCurves.Part7
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.EllipticCurves
 universe u
 
 

@@ -1,10 +1,14 @@
--- Carved from Lemma/Definitions/Def_LanglandsTunnell_CubicInduction_EnvelopingAction3.lean: instance decls only.
-import Theorem.Matrix.CubicInduction_ArchSmoothSpace3
-import Theorem.Matrix.CubicInduction_EnvelopingAction3
-import Def.LanglandsTunnell_CubicInduction_ArchSmoothSpace3
-import Def.LanglandsTunnell_CubicInduction_EnvelopingAction3
-
+module
+public import Theorem.Matrix.CubicInduction_ArchSmoothSpace3
+public import Theorem.Matrix.CubicInduction_EnvelopingAction3
+public import Def.LanglandsTunnell_CubicInduction_ArchSmoothSpace3
+public import Def.LanglandsTunnell_CubicInduction_EnvelopingAction3
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_LanglandsTunnell_CubicInduction_EnvelopingAction3.lean: instance decls only.
 
 noncomputable section
 

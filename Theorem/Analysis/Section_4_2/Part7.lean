@@ -1,7 +1,11 @@
-import Mathlib
-import Mathlib.Algebra.Group.MinimalAxioms
-import Instance.Analysis.Section_4_2.Part5
+module
+public import Mathlib
+public import Mathlib.Algebra.Group.MinimalAxioms
+public import Instance.Analysis.Section_4_2.Part5
 set_option doc.verso.suggestions false
+
+
+public section
 
 /-!
 # Analysis I, Section 4.2
@@ -35,8 +39,6 @@ Users of the companion who have completed the exercises in this section are welc
 - (Add tip here)
 
 -/
-
-
 namespace Section_4_2
 
 theorem Rat.lt_iff (x y:Rat) : x < y ↔ (x-y).isNeg := by rfl

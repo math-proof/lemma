@@ -1,6 +1,9 @@
-import Instance.LanglandsTunnell_ArtinCoreCTM
-
+module
+public import Instance.LanglandsTunnell_ArtinCoreCTM
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

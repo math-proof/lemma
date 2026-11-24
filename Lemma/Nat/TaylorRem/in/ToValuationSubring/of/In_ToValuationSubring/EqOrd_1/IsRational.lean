@@ -3,7 +3,7 @@ import Initialize.Tactic.Attr.Basic
 import Def.AlgebraicCurve_PlaceTaylorCoeff
 import Lemma.Scheme.PlaceEvaluationAlgebra
 import Lemma.Submodule.Repartitions
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open AlgebraicCurve AlgebraicCurve.Place Submodule
 

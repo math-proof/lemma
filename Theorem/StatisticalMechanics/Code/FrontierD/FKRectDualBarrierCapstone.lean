@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectDualBarrierCapstone.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDiagonalBlockLower.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDualSourceBarrierPattern
+open Filter Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectDualBarrierCapstone.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDiagonalBlockLower.Part2
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDualSourceBarrierPattern
-open Filter Topology
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

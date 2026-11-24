@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/TriHexPeriodicDualPairAssembly.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.TriHexPairOrbitCharts.Part17
+public import Theorem.StatisticalMechanics.Code.FK.TriHexCoarseGeometry.Part3
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarDualPair.Part3
+open MeasureTheory Set SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/TriHexPeriodicDualPairAssembly.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FK.TriHexPairOrbitCharts.Part17
-import Theorem.StatisticalMechanics.Code.FK.TriHexCoarseGeometry.Part3
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarDualPair.Part3
-open MeasureTheory Set SimpleGraph
-
-
 namespace StatMech.FK.PeriodicPlanar
 
 open BeffaraDC Lattice

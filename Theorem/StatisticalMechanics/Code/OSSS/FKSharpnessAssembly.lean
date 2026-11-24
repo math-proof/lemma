@@ -1,5 +1,19 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/FKSharpnessAssembly.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.OSSS.Lindeberg.Part4
+public import Theorem.StatisticalMechanics.Code.OSSS.SharpnessFK
+public import Theorem.StatisticalMechanics.Code.OSSS.Integration.Part2
+public import Theorem.StatisticalMechanics.Code.FK.RussoDerivative.Part5
+public import Theorem.StatisticalMechanics.Code.FK.FKQ2Sharp
+public import Theorem.StatisticalMechanics.Code.Inequalities.IncreasingEvent.Part2
+open scoped BigOperators Classical
+open Finset Real Set Filter Topology
+set_option linter.style.longLine false
+set_option linter.unusedSectionVars false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/FKSharpnessAssembly.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,21 +21,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.OSSS.Lindeberg.Part4
-import Theorem.StatisticalMechanics.Code.OSSS.SharpnessFK
-import Theorem.StatisticalMechanics.Code.OSSS.Integration.Part2
-import Theorem.StatisticalMechanics.Code.FK.RussoDerivative.Part5
-import Theorem.StatisticalMechanics.Code.FK.FKQ2Sharp
-import Theorem.StatisticalMechanics.Code.Inequalities.IncreasingEvent.Part2
-open scoped BigOperators Classical
-open Finset Real Set Filter Topology
-
-set_option linter.style.longLine false
-set_option linter.unusedSectionVars false
-
-
 namespace StatMech
 
 namespace OSSS

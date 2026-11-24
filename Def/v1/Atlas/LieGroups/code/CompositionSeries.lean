@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/CompositionSeries.lean -/
+module
+public import Def.v1.Atlas.LieGroups.code.CategoryOII.Part3
+public import Theorem.Int.WeightLE.of.BruhatLE
+public import Structure.v1.Atlas.LieGroups.code.CompositionSeries
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/CompositionSeries.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.LieGroups.code.CategoryOII.Part3
-import Theorem.Int.WeightLE.of.BruhatLE
-import Structure.v1.Atlas.LieGroups.code.CompositionSeries
-
-
 noncomputable section
 
 universe uCatO

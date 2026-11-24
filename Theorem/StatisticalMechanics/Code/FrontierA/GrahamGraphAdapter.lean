@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/GrahamGraphAdapter.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.GrahamCorrections.Part3
+public import Theorem.StatisticalMechanics.Code.Sharpness.CurrentRep.Part5
+public import Instance.StatisticalMechanics.Code.FrontierA.GrahamGraphAdapter
+open Finset SimpleGraph
+open scoped BigOperators
+open Classical
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/GrahamGraphAdapter.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.GrahamCorrections.Part3
-import Theorem.StatisticalMechanics.Code.Sharpness.CurrentRep.Part5
-import Instance.StatisticalMechanics.Code.FrontierA.GrahamGraphAdapter
-open Finset SimpleGraph
-open scoped BigOperators
-open Classical
-
-
 namespace StatMech.FrontierA
 
 open StatMech.Ising StatMech.Sharpness

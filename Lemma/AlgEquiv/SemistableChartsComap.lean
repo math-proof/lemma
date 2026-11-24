@@ -1,8 +1,11 @@
-import Lemma.ValuationSubring.SemistableCharts
-
+module
+public import Lemma.ValuationSubring.SemistableCharts
 set_option maxHeartbeats 200000
 set_option synthInstance.maxHeartbeats 20000
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

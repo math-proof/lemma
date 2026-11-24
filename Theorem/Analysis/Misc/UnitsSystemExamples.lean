@@ -1,6 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Misc.UnitsSystem.Part23
+module
+public import Mathlib
+public import Theorem.Analysis.Misc.UnitsSystem.Part23
 open UnitsSystem
+
+
+public section
+
 variable [UnitsSystem]
 
 

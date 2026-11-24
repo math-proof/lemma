@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/TriHexCriticalCapstone.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.TriHexFKCriticalSurface
+public import Theorem.StatisticalMechanics.Code.FK.TriHexCriticalCandidate
+public import Theorem.StatisticalMechanics.Code.FK.TriangularSharpnessCritical.Part10
+public import Theorem.StatisticalMechanics.Code.FK.HexagonalSharpnessCritical.Part7
+open Set
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/TriHexCriticalCapstone.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FK.TriHexFKCriticalSurface
-import Theorem.StatisticalMechanics.Code.FK.TriHexCriticalCandidate
-import Theorem.StatisticalMechanics.Code.FK.TriangularSharpnessCritical.Part10
-import Theorem.StatisticalMechanics.Code.FK.HexagonalSharpnessCritical.Part7
-open Set
-
-
 namespace StatMech.FK.PeriodicPlanar
 
 open BeffaraDC FrontierA

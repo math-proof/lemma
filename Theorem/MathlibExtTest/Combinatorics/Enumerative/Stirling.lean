@@ -1,10 +1,11 @@
+module
+public import Def.Combinatorics.Enumerative.Stirling.Part4
+public import Theorem.Finset.Enumerative.Stirling
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/Stirling.lean -/
-
-
-import Def.Combinatorics.Enumerative.Stirling.Part4
-import Theorem.Finset.Enumerative.Stirling
-
-
 namespace MathlibExtTest.Combinatorics.Enumerative.Stirling
 
 open MetaMathlibExt

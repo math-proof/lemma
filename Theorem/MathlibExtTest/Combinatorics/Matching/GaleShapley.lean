@@ -1,10 +1,11 @@
+module
+public import Theorem.Combinatorics.Matching.GaleShapley.Part7
+public import Theorem.Finset.Matching.GaleShapley
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Matching/GaleShapley.lean -/
-
-
-import Theorem.Combinatorics.Matching.GaleShapley.Part7
-import Lemma.Finset.Matching.GaleShapley
-
-
 namespace MathlibExt.Combinatorics.Matching.GaleShapley
 
 example {M W : Type*} (mp : MPrefs M W) (m : M) (a b : W) (h : (mp m).lt a b) :

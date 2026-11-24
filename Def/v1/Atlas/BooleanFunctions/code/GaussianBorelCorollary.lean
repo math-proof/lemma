@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/GaussianBorelCorollary.lean -/
+module
+public import Def.v1.Atlas.BooleanFunctions.code.Borel
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Borel
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/GaussianBorelCorollary.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,11 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.BooleanFunctions.code.Borel
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Borel
-
-
 noncomputable section
 
 open MeasureTheory ProbabilityTheory Real

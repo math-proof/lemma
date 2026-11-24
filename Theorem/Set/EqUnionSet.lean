@@ -20,7 +20,7 @@ open Set
 [SetTheory.Set.pair_union_pair](https://github.com/teorth/analysis/blob/main/Analysis/Section_3_1.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   [SetTheory]
   {a b c:Object} :
 -- imply

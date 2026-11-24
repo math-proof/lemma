@@ -1,5 +1,20 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/LocalityPrinciple.lean -/
+module
+public import Theorem.v1.Atlas.AlgebraicTopologyI.code.SubdivisionSmall.Part3
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.SubdivisionSmall
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section6
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section13
+public import Structure.v1.Atlas.AlgebraicTopologyI.code.Section6
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section13.Part3
+public import Mathlib.Algebra.Homology.QuasiIso
+public import Mathlib.Algebra.Homology.Homotopy
+public import Mathlib.Algebra.Category.Grp.EpiMono
+public import Mathlib.Algebra.Homology.ShortComplex.Ab
+public import Theorem.v1.Atlas.AlgebraicTopologyI.code.LocalityPrinciple
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/LocalityPrinciple.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,20 +22,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.AlgebraicTopologyI.code.SubdivisionSmall.Part3
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.SubdivisionSmall
-import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section6
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section13
-import Structure.v1.Atlas.AlgebraicTopologyI.code.Section6
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section13.Part3
-import Mathlib.Algebra.Homology.QuasiIso
-import Mathlib.Algebra.Homology.Homotopy
-import Mathlib.Algebra.Category.Grp.EpiMono
-import Mathlib.Algebra.Homology.ShortComplex.Ab
-import Theorem.v1.Atlas.AlgebraicTopologyI.code.LocalityPrinciple
-
-
 noncomputable section
 
 open CategoryTheory AlgebraicTopologyI Finset BigOperators BarycentricSubdivision

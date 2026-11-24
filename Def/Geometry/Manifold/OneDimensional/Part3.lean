@@ -1,34 +1,35 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Geometry/Manifold/OneDimensional.lean -/
-
-/-
-Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
--/
-
-import Mathlib.Geometry.Manifold.Instances.Sphere
-import Theorem.Set.Manifold.RiemannianMetricExistence
-import Mathlib.Geometry.Manifold.LocalDiffeomorph
-import Mathlib.Geometry.Manifold.Instances.Icc
-import Mathlib.Geometry.Manifold.ContMDiffMFDeriv
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv
-import Mathlib.Analysis.SpecialFunctions.Exp
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.Analysis.SpecialFunctions.Complex.Arg
-import Mathlib.Analysis.SpecialFunctions.Complex.Circle
-import Mathlib.Analysis.SpecialFunctions.Complex.Log
-import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
-import Mathlib.Analysis.Complex.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Sqrt
-import Mathlib.Topology.Order.IntermediateValue
-import Mathlib.Analysis.Calculus.Deriv.MeanValue
-import Mathlib.Analysis.SpecialFunctions.SmoothTransition
-import Mathlib.Analysis.Calculus.InverseFunctionTheorem.Deriv
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-import Theorem.Geometry.Manifold.OneDimensional.Part3
+module
+public import Mathlib.Geometry.Manifold.Instances.Sphere
+public import Theorem.Set.Manifold.RiemannianMetricExistence
+public import Mathlib.Geometry.Manifold.LocalDiffeomorph
+public import Mathlib.Geometry.Manifold.Instances.Icc
+public import Mathlib.Geometry.Manifold.ContMDiffMFDeriv
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv
+public import Mathlib.Analysis.SpecialFunctions.Exp
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Mathlib.Analysis.SpecialFunctions.Complex.Arg
+public import Mathlib.Analysis.SpecialFunctions.Complex.Circle
+public import Mathlib.Analysis.SpecialFunctions.Complex.Log
+public import Mathlib.Analysis.SpecialFunctions.Complex.LogDeriv
+public import Mathlib.Analysis.Complex.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Sqrt
+public import Mathlib.Topology.Order.IntermediateValue
+public import Mathlib.Analysis.Calculus.Deriv.MeanValue
+public import Mathlib.Analysis.SpecialFunctions.SmoothTransition
+public import Mathlib.Analysis.Calculus.InverseFunctionTheorem.Deriv
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+public import Theorem.Geometry.Manifold.OneDimensional.Part3
 open scoped Manifold ContDiff Topology Bundle
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Geometry/Manifold/OneDimensional.lean -/
+/-
+Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
+-/
 section LocalDiffeomorphConstructors
 
 variable {𝕜 : Type*} [NontriviallyNormedField 𝕜]

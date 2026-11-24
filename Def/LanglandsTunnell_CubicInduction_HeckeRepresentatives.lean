@@ -1,10 +1,12 @@
-import Def.LanglandsTunnell_CubicInduction_Structure
-import Instance.LanglandsTunnell_CubicInduction_HeckeRepresentatives
-import Structure.LanglandsTunnell_CubicInduction_HeckeRepresentatives
-
+module
+public import Def.LanglandsTunnell_CubicInduction_Structure
+public import Instance.LanglandsTunnell_CubicInduction_HeckeRepresentatives
+public import Structure.LanglandsTunnell_CubicInduction_HeckeRepresentatives
 set_option autoImplicit false
-
 open Matrix IsDedekindDomain NumberField Measure
+
+
+public section
 
 noncomputable section
 

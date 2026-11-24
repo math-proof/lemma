@@ -1,7 +1,7 @@
 import Mathlib
 import Lemma.CuspForm.PeriodLattice
 import Lemma.UpperHalfPlane.PeriodMap
-import Lemma.UpperHalfPlane.PeriodMapBundled
+import Theorem.UpperHalfPlane.PeriodMapBundled
 import Lemma.CuspForm.Petersson
 
 set_option autoImplicit false

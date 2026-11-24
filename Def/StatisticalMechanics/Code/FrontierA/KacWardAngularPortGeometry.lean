@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/KacWardAngularPortGeometry.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPortChainGeneral.Part32
+public import Mathlib.Analysis.Convex.StrictConvexSpace
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/KacWardAngularPortGeometry.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPortChainGeneral.Part32
-import Mathlib.Analysis.Convex.StrictConvexSpace
-
-
 namespace StatMech.FrontierA
 
 open Set SimpleGraph

@@ -1,5 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/Globalization.lean -/
+module
+public import Def.v1.Atlas.LieGroups.code.GKModule.Part2
+public import Def.v1.Atlas.LieGroups.code.GKModuleDefs.Part2
+public import Def.v1.Atlas.LieGroups.code.DixmierLemma
+public import Lemma.Set.In_RangeAlgebraMap.of.IsAlgebraic
+public import Theorem.v1.Atlas.LieGroups.code.InfinitesimalEquivalence
+public import Mathlib.LinearAlgebra.FreeAlgebra
+public import Mathlib.Topology.DenseEmbedding
+public import Mathlib.Algebra.Lie.UniversalEnveloping
+public import Mathlib.Algebra.Lie.OfAssociative
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/Globalization.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +20,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.LieGroups.code.GKModule.Part2
-import Def.v1.Atlas.LieGroups.code.GKModuleDefs.Part2
-import Def.v1.Atlas.LieGroups.code.DixmierLemma
-import Lemma.Set.In_RangeAlgebraMap.of.IsAlgebraic
-import Theorem.v1.Atlas.LieGroups.code.InfinitesimalEquivalence
-import Mathlib.LinearAlgebra.FreeAlgebra
-import Mathlib.Topology.DenseEmbedding
-import Mathlib.Algebra.Lie.UniversalEnveloping
-import Mathlib.Algebra.Lie.OfAssociative
-
-
 noncomputable section
 
 open scoped Cardinal

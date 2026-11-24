@@ -11,7 +11,7 @@ open scoped Matrix
 
 
 @[path]
-public theorem main
+private theorem main
   {S : Type*} [Fintype S]
 -- given
   (P : Matrix S S ℝ) :

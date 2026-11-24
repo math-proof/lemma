@@ -1,9 +1,12 @@
-import Lemma.ModularForm.HeckeOperatorForms
-import Theorems.Thm_CuspForm_heckeTLin_comm
-import Theorems.Thm_CuspForm_heckeTLin_heckeULin_comm
-import Theorems.Thm_CuspForm_heckeULin_comm
-
+module
+public import Theorem.ModularForm.HeckeOperatorForms
+public import Theorems.Thm_CuspForm_heckeTLin_comm
+public import Theorems.Thm_CuspForm_heckeTLin_heckeULin_comm
+public import Theorems.Thm_CuspForm_heckeULin_comm
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

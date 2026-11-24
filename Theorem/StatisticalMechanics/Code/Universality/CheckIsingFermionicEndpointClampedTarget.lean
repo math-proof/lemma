@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicEndpointClampedTarget.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicEndpointClampedTarget.Part3
+set_option linter.style.longLine false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicEndpointClampedTarget.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,9 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicEndpointClampedTarget.Part3
-set_option linter.style.longLine false
 
 #print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.boundaryTrace_abs_sub_le_of_lipschitz
 #print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.isingFiniteGraphLaplacian_boundaryClamp_sub_le_four

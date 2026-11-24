@@ -1,11 +1,13 @@
-import Def.AutomorphicForm_AdelicLsXi
-import Def.AutomorphicForm_ConstantTerm
-import Lemma.Matrix.AdelicLevel
-import Abbrev.LanglandsTunnell_CubicInduction_Carrier
-
+module
+public import Def.AutomorphicForm_AdelicLsXi
+public import Def.AutomorphicForm_ConstantTerm
+public import Lemma.Matrix.AdelicLevel
+public import Abbrev.LanglandsTunnell_CubicInduction_Carrier
 set_option autoImplicit false
-
 open IsDedekindDomain NumberField Matrix
+
+
+public section
 
 noncomputable section
 

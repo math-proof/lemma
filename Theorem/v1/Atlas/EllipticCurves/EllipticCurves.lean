@@ -1,5 +1,144 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/EllipticCurves.lean -/
+module
+public import Def.v1.Atlas.EllipticCurves.code.AlgebraicGeometry.Part6
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.AlgebraicGeometry
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.AlgebraicNumbers
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.BerlekampRabin
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.CMDefinition
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.CMFieldOfDefinition
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.CMTorsor
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.ComplexAnalysis
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.ComplexMultiplication
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.ComplexTorus
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.CurveMorphism
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.CyclicSublattices
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.DiscreteValuation
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.DivisionPolynomials
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Divisors
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.DualIsogeny
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.ECDLP
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.ECM
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.EisensteinSeries
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.EllipticFunction
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.EndAlgClassification
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.EndAlgebra
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.EndomorphismAlgebra
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.EndomorphismNorm
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.FastEuclidDiv
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.FermatsLastTheorem
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.FiniteFieldArith
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.FiniteFields
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.FrobeniusEndomorphism
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.HilbertClassPolynomial
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.IdealEquivalence
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.IdealNorm
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.IntegerFactorization
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Isogenies
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.IsogenyKernels
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.IsogenyVolcano
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.JInvariant
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.JInvariantDef
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Lattice
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.LocalRingAtPoint
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.ModularCurves
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.ModularForms
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.ModularFunctionField
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.ModularInvariants
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.ModularPolynomial
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.OrdinaryIsogenyGraph
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.OrdinarySupersingular
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.OrdinaryVolcanoStructure
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.PointCounting
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.PrimalityProving
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.ProjectiveSpace
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.ProjectiveVariety
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.RingClassField
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.TateModuleTrace
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Theorem136
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Theorem151
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Theorem161
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.TorsionEndomorphism
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Uniformization
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.WeierstrassP
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.WeierstrassPOrder
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.WeilPairing
+public import Def.v1.Atlas.EllipticCurves.code.AlgebraicNumbers
+public import Structure.v1.Atlas.EllipticCurves.code.BerlekampRabin.Part2
+public import Def.v1.Atlas.EllipticCurves.code.CMDefinition
+public import Abbrev.v1.Atlas.EllipticCurves.code.CMFieldOfDefinition
+public import Def.v1.Atlas.EllipticCurves.code.CMTorsor.Part7
+public import Def.v1.Atlas.EllipticCurves.code.CarmichaelNumbers
+public import Def.v1.Atlas.EllipticCurves.code.ComplexAnalysis.Part3
+public import Def.v1.Atlas.EllipticCurves.code.ComplexMultiplication.Part6
+public import Instance.v1.Atlas.EllipticCurves.code.ComplexTorus
+public import Def.v1.Atlas.EllipticCurves.code.CurveMorphism.Part3
+public import Def.v1.Atlas.EllipticCurves.code.CyclicSublattices
+public import Def.v1.Atlas.EllipticCurves.code.DiscreteValuation
+public import Def.v1.Atlas.EllipticCurves.code.DivisionPolynomials.Part10
+public import Def.v1.Atlas.EllipticCurves.code.Divisors.Part5
+public import Def.v1.Atlas.EllipticCurves.code.DualIsogeny
+public import Def.v1.Atlas.EllipticCurves.code.ECDLP.Part4
+public import Def.v1.Atlas.EllipticCurves.code.ECM.Part3
+public import Def.v1.Atlas.EllipticCurves.code.EisensteinSeries
+public import Def.v1.Atlas.EllipticCurves.code.EllipticFunction.Part3
+public import Inductive.v1.Atlas.EllipticCurves.code.EndAlgClassification
+public import Instance.v1.Atlas.EllipticCurves.code.EndAlgebra.Part5
+public import Instance.v1.Atlas.EllipticCurves.code.EndomorphismAlgebra.Part2
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.EndomorphismClassification
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Lemma53
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.MaximalOrder
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Schoof
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Supersingular
+public import Def.v1.Atlas.EllipticCurves.code.EndomorphismNorm.Part2
+public import Def.v1.Atlas.EllipticCurves.code.FastEuclidDiv
+public import Def.v1.Atlas.EllipticCurves.code.FermatsLastTheorem.Part3
+public import Structure.v1.Atlas.EllipticCurves.code.FiniteFieldArith.Part3
+public import Def.v1.Atlas.EllipticCurves.code.FiniteFields.Part5
+public import Def.v1.Atlas.EllipticCurves.code.FrobeniusEndomorphism.Part2
+public import Def.v1.Atlas.EllipticCurves.code.HilbertClassPolynomial.Part2
+public import Def.v1.Atlas.EllipticCurves.code.IdealEquivalence.Part2
+public import Def.v1.Atlas.EllipticCurves.code.IdealNorm
+public import Def.v1.Atlas.EllipticCurves.code.IntegerFactorization.Part4
+public import Def.v1.Atlas.EllipticCurves.code.Isogenies.Part13
+public import Def.v1.Atlas.EllipticCurves.code.IsogenyKernels.Part4
+public import Structure.v1.Atlas.EllipticCurves.code.IsogenyVolcano.Part3
+public import Def.v1.Atlas.EllipticCurves.code.JInvariant
+public import Def.v1.Atlas.EllipticCurves.code.JInvariantDef
+public import Def.v1.Atlas.EllipticCurves.code.Lattice.Part2
+public import Def.v1.Atlas.EllipticCurves.code.LocalRingAtPoint
+public import Theorem.v1.Atlas.EllipticCurves.code.MeromorphicRational
+public import Def.v1.Atlas.EllipticCurves.code.MillerRabinBound
+public import Def.v1.Atlas.EllipticCurves.code.ModularCurves.Part3
+public import Abbrev.v1.Atlas.EllipticCurves.code.ModularForms.Part5
+public import Abbrev.v1.Atlas.EllipticCurves.code.ModularFunctionField
+public import Def.v1.Atlas.EllipticCurves.code.ModularInvariants
+public import Def.v1.Atlas.EllipticCurves.code.ModularPolynomial.Part5
+public import Def.v1.Atlas.EllipticCurves.code.NewtonPolygon.Part2
+public import Theorem.v1.Atlas.EllipticCurves.code.OrdinaryIsogenyGraph
+public import Def.v1.Atlas.EllipticCurves.code.OrdinarySupersingular
+public import Structure.v1.Atlas.EllipticCurves.code.OrdinaryVolcanoStructure.Part2
+public import Def.v1.Atlas.EllipticCurves.code.PointCounting.Part2
+public import Structure.v1.Atlas.EllipticCurves.code.PrimalityCertificate
+public import Structure.v1.Atlas.EllipticCurves.code.PrimalityProving
+public import Theorem.v1.Atlas.EllipticCurves.code.ProjectiveSpace
+public import Def.v1.Atlas.EllipticCurves.code.ProjectiveVariety
+public import Def.v1.Atlas.EllipticCurves.code.QExpansions
+public import Def.v1.Atlas.EllipticCurves.code.RingClassField.Part3
+public import Theorem.v1.Atlas.EllipticCurves.code.SmoothProjectiveCurve
+public import Theorem.v1.Atlas.EllipticCurves.code.SupersingularIsogenyGraph
+public import Def.v1.Atlas.EllipticCurves.code.TateModuleTrace
+public import Def.v1.Atlas.EllipticCurves.code.Theorem136.Part4
+public import Class.v1.Atlas.EllipticCurves.code.Theorem151
+public import Structure.v1.Atlas.EllipticCurves.code.Theorem161
+public import Def.v1.Atlas.EllipticCurves.code.TorsionEndomorphism.Part3
+public import Def.v1.Atlas.EllipticCurves.code.Uniformization
+public import Def.v1.Atlas.EllipticCurves.code.WeierstrassP
+public import Theorem.v1.Atlas.EllipticCurves.code.WeierstrassPOrder
+public import Def.v1.Atlas.EllipticCurves.code.WeilPairing
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/EllipticCurves.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,141 +146,4 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.EllipticCurves.code.AlgebraicGeometry.Part6
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.AlgebraicGeometry
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.AlgebraicNumbers
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.BerlekampRabin
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.CMDefinition
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.CMFieldOfDefinition
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.CMTorsor
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.ComplexAnalysis
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.ComplexMultiplication
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.ComplexTorus
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.CurveMorphism
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.CyclicSublattices
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.DiscreteValuation
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.DivisionPolynomials
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.Divisors
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.DualIsogeny
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.ECDLP
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.ECM
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.EisensteinSeries
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.EllipticFunction
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.EndAlgClassification
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.EndAlgebra
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.EndomorphismAlgebra
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.EndomorphismNorm
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.FastEuclidDiv
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.FermatsLastTheorem
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.FiniteFieldArith
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.FiniteFields
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.FrobeniusEndomorphism
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.HilbertClassPolynomial
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.IdealEquivalence
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.IdealNorm
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.IntegerFactorization
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.Isogenies
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.IsogenyKernels
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.IsogenyVolcano
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.JInvariant
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.JInvariantDef
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.Lattice
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.LocalRingAtPoint
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.ModularCurves
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.ModularForms
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.ModularFunctionField
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.ModularInvariants
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.ModularPolynomial
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.OrdinaryIsogenyGraph
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.OrdinarySupersingular
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.OrdinaryVolcanoStructure
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.PointCounting
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.PrimalityProving
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.ProjectiveSpace
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.ProjectiveVariety
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.RingClassField
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.TateModuleTrace
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.Theorem136
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.Theorem151
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.Theorem161
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.TorsionEndomorphism
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.Uniformization
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.WeierstrassP
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.WeierstrassPOrder
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.WeilPairing
-import Def.v1.Atlas.EllipticCurves.code.AlgebraicNumbers
-import Structure.v1.Atlas.EllipticCurves.code.BerlekampRabin.Part2
-import Def.v1.Atlas.EllipticCurves.code.CMDefinition
-import Abbrev.v1.Atlas.EllipticCurves.code.CMFieldOfDefinition
-import Def.v1.Atlas.EllipticCurves.code.CMTorsor.Part7
-import Def.v1.Atlas.EllipticCurves.code.CarmichaelNumbers
-import Def.v1.Atlas.EllipticCurves.code.ComplexAnalysis.Part3
-import Def.v1.Atlas.EllipticCurves.code.ComplexMultiplication.Part6
-import Instance.v1.Atlas.EllipticCurves.code.ComplexTorus
-import Def.v1.Atlas.EllipticCurves.code.CurveMorphism.Part3
-import Def.v1.Atlas.EllipticCurves.code.CyclicSublattices
-import Def.v1.Atlas.EllipticCurves.code.DiscreteValuation
-import Def.v1.Atlas.EllipticCurves.code.DivisionPolynomials.Part10
-import Def.v1.Atlas.EllipticCurves.code.Divisors.Part5
-import Def.v1.Atlas.EllipticCurves.code.DualIsogeny
-import Def.v1.Atlas.EllipticCurves.code.ECDLP.Part4
-import Def.v1.Atlas.EllipticCurves.code.ECM.Part3
-import Def.v1.Atlas.EllipticCurves.code.EisensteinSeries
-import Def.v1.Atlas.EllipticCurves.code.EllipticFunction.Part3
-import Inductive.v1.Atlas.EllipticCurves.code.EndAlgClassification
-import Instance.v1.Atlas.EllipticCurves.code.EndAlgebra.Part5
-import Instance.v1.Atlas.EllipticCurves.code.EndomorphismAlgebra.Part2
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.EndomorphismClassification
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.Lemma53
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.MaximalOrder
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.Schoof
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.Supersingular
-import Def.v1.Atlas.EllipticCurves.code.EndomorphismNorm.Part2
-import Def.v1.Atlas.EllipticCurves.code.FastEuclidDiv
-import Def.v1.Atlas.EllipticCurves.code.FermatsLastTheorem.Part3
-import Structure.v1.Atlas.EllipticCurves.code.FiniteFieldArith.Part3
-import Def.v1.Atlas.EllipticCurves.code.FiniteFields.Part5
-import Def.v1.Atlas.EllipticCurves.code.FrobeniusEndomorphism.Part2
-import Def.v1.Atlas.EllipticCurves.code.HilbertClassPolynomial.Part2
-import Def.v1.Atlas.EllipticCurves.code.IdealEquivalence.Part2
-import Def.v1.Atlas.EllipticCurves.code.IdealNorm
-import Def.v1.Atlas.EllipticCurves.code.IntegerFactorization.Part4
-import Def.v1.Atlas.EllipticCurves.code.Isogenies.Part13
-import Def.v1.Atlas.EllipticCurves.code.IsogenyKernels.Part4
-import Structure.v1.Atlas.EllipticCurves.code.IsogenyVolcano.Part3
-import Def.v1.Atlas.EllipticCurves.code.JInvariant
-import Def.v1.Atlas.EllipticCurves.code.JInvariantDef
-import Def.v1.Atlas.EllipticCurves.code.Lattice.Part2
-import Def.v1.Atlas.EllipticCurves.code.LocalRingAtPoint
-import Theorem.v1.Atlas.EllipticCurves.code.MeromorphicRational
-import Def.v1.Atlas.EllipticCurves.code.MillerRabinBound
-import Def.v1.Atlas.EllipticCurves.code.ModularCurves.Part3
-import Abbrev.v1.Atlas.EllipticCurves.code.ModularForms.Part5
-import Abbrev.v1.Atlas.EllipticCurves.code.ModularFunctionField
-import Def.v1.Atlas.EllipticCurves.code.ModularInvariants
-import Def.v1.Atlas.EllipticCurves.code.ModularPolynomial.Part5
-import Def.v1.Atlas.EllipticCurves.code.NewtonPolygon.Part2
-import Theorem.v1.Atlas.EllipticCurves.code.OrdinaryIsogenyGraph
-import Def.v1.Atlas.EllipticCurves.code.OrdinarySupersingular
-import Structure.v1.Atlas.EllipticCurves.code.OrdinaryVolcanoStructure.Part2
-import Def.v1.Atlas.EllipticCurves.code.PointCounting.Part2
-import Structure.v1.Atlas.EllipticCurves.code.PrimalityCertificate
-import Structure.v1.Atlas.EllipticCurves.code.PrimalityProving
-import Theorem.v1.Atlas.EllipticCurves.code.ProjectiveSpace
-import Def.v1.Atlas.EllipticCurves.code.ProjectiveVariety
-import Def.v1.Atlas.EllipticCurves.code.QExpansions
-import Def.v1.Atlas.EllipticCurves.code.RingClassField.Part3
-import Theorem.v1.Atlas.EllipticCurves.code.SmoothProjectiveCurve
-import Theorem.v1.Atlas.EllipticCurves.code.SupersingularIsogenyGraph
-import Def.v1.Atlas.EllipticCurves.code.TateModuleTrace
-import Def.v1.Atlas.EllipticCurves.code.Theorem136.Part4
-import Class.v1.Atlas.EllipticCurves.code.Theorem151
-import Structure.v1.Atlas.EllipticCurves.code.Theorem161
-import Def.v1.Atlas.EllipticCurves.code.TorsionEndomorphism.Part3
-import Def.v1.Atlas.EllipticCurves.code.Uniformization
-import Def.v1.Atlas.EllipticCurves.code.WeierstrassP
-import Theorem.v1.Atlas.EllipticCurves.code.WeierstrassPOrder
-import Def.v1.Atlas.EllipticCurves.code.WeilPairing
-
 

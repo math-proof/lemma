@@ -1,9 +1,12 @@
-import Mathlib
-import Instance.PresheafOfModules_InternalHom
-import Abbrev.PresheafOfModules_InternalHom
+module
+public import Mathlib
+public import Instance.PresheafOfModules_InternalHom
+public import Abbrev.PresheafOfModules_InternalHom
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
+
+public section
 
 universe u v' u'
 

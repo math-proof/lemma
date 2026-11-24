@@ -1,6 +1,9 @@
-import Mathlib
-import Instance.Analysis.Section_2_3_api
+module
+public import Mathlib
+public import Instance.Analysis.Section_2_3_api
 
+
+public section
 
 /-!
 # Analysis I, Chapter 2 epilogue: Isomorphism with the Mathlib natural numbers
@@ -30,7 +33,6 @@ Users of the companion who have completed the exercises in this section are welc
 - (Add tip here)
 
 -/
-
 /-- Converting a Chapter 2 natural number to a Mathlib natural number. -/
 abbrev Chapter2.Nat.toNat (n : Chapter2.Nat) : ℕ := match n with
   | zero => 0

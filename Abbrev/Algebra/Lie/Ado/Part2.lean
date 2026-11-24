@@ -1,38 +1,42 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/Ado.lean -/
+module
+public import Mathlib.Algebra.Lie.Semisimple.Defs
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.LinearAlgebra.Charpoly.Basic
+public import Mathlib.Algebra.Lie.Abelian
+public import Mathlib.Algebra.Lie.AdjointAction.Derivation
+public import Mathlib.Algebra.Lie.CartanCriterion
+public import Mathlib.Algebra.Lie.Engel
+public import Mathlib.Algebra.Lie.LieTheorem
+public import Mathlib.Algebra.Lie.Nilpotent
+public import Mathlib.Algebra.Lie.Prod
+public import Mathlib.Algebra.Lie.SemiDirect
+public import Mathlib.Algebra.Lie.UniversalEnveloping
+public import Mathlib.Algebra.Algebra.Bilinear
+public import Mathlib.Algebra.TrivSqZeroExt.Basic
+public import Mathlib.Combinatorics.Pigeonhole
+public import Mathlib.Data.Fintype.Fin
+public import Mathlib.Data.List.Sort
+public import Mathlib.Data.Set.Finite.List
+public import Mathlib.LinearAlgebra.Dual.Lemmas
+public import Mathlib.LinearAlgebra.Prod
+public import Mathlib.LinearAlgebra.Projection
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Mathlib.RingTheory.TwoSidedIdeal.Operations
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.NoncommRing
+public import Def.Algebra.Lie.LeviDecomposition.Part15
+public import Theorem.Fin.EqSum_SMul.of.Basis
+public import Def.Algebra.Lie.Ado.Part6
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Algebra/Lie/Ado.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
 
-import Mathlib.Algebra.Lie.Semisimple.Defs
-import Mathlib.LinearAlgebra.Dimension.Free
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.LinearAlgebra.Charpoly.Basic
-import Mathlib.Algebra.Lie.Abelian
-import Mathlib.Algebra.Lie.AdjointAction.Derivation
-import Mathlib.Algebra.Lie.CartanCriterion
-import Mathlib.Algebra.Lie.Engel
-import Mathlib.Algebra.Lie.LieTheorem
-import Mathlib.Algebra.Lie.Nilpotent
-import Mathlib.Algebra.Lie.Prod
-import Mathlib.Algebra.Lie.SemiDirect
-import Mathlib.Algebra.Lie.UniversalEnveloping
-import Mathlib.Algebra.Algebra.Bilinear
-import Mathlib.Algebra.TrivSqZeroExt.Basic
-import Mathlib.Combinatorics.Pigeonhole
-import Mathlib.Data.Fintype.Fin
-import Mathlib.Data.List.Sort
-import Mathlib.Data.Set.Finite.List
-import Mathlib.LinearAlgebra.Dual.Lemmas
-import Mathlib.LinearAlgebra.Prod
-import Mathlib.LinearAlgebra.Projection
-import Mathlib.RingTheory.Finiteness.Basic
-import Mathlib.RingTheory.TwoSidedIdeal.Operations
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.NoncommRing
-import Def.Algebra.Lie.LeviDecomposition.Part15
-import Lemma.Fin.EqSum_SMul.of.Basis
-import Def.Algebra.Lie.Ado.Part6
 attribute [local instance 100] LieRing.ofAssociativeRing
 
 /-!

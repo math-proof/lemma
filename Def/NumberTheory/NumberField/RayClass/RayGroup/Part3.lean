@@ -1,10 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/RayGroup.lean -/
+module
+public import Theorem.NumberTheory.NumberField.RayClass.Modulus.Part5
+public import Theorem.Nat.NumberField.RayClass.Modulus
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Mathlib.RingTheory.ClassGroup.Basic
+public import Theorem.NumberTheory.NumberField.RayClass.RayGroup.Part2
 
-import Theorem.NumberTheory.NumberField.RayClass.Modulus.Part5
-import Lemma.Nat.NumberField.RayClass.Modulus
-import Mathlib.RingTheory.DedekindDomain.Factorization
-import Mathlib.RingTheory.ClassGroup.Basic
-import Theorem.NumberTheory.NumberField.RayClass.RayGroup.Part2
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/RayGroup.lean -/
 @[expose] noncomputable section
 
 open scoped nonZeroDivisors

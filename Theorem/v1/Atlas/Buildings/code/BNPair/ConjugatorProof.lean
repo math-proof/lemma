@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/BNPair/ConjugatorProof.lean -/
+module
+public import Structure.v1.Atlas.Buildings.code.BNPair.Basic.Part2
+public import Def.v1.Atlas.Buildings.code.BNPair.ParabolicDefs.Part2
+public import Theorem.Nat.NonemptyBruhatCell
+public import Theorem.Nat.B.le.Closure_BruhatCell
+public import Def.v1.Atlas.Buildings.code.BNPair.NormalizerParabolicProof
+public import Mathlib.Tactic.Group
+set_option linter.unusedSectionVars false
+set_option maxHeartbeats 800000
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/BNPair/ConjugatorProof.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Structure.v1.Atlas.Buildings.code.BNPair.Basic.Part2
-import Def.v1.Atlas.Buildings.code.BNPair.ParabolicDefs.Part2
-import Theorem.Nat.NonemptyBruhatCell
-import Lemma.Nat.B.le.Closure_BruhatCell
-import Def.v1.Atlas.Buildings.code.BNPair.NormalizerParabolicProof
-import Mathlib.Tactic.Group
-set_option linter.unusedSectionVars false
-set_option maxHeartbeats 800000
-
 variable {G : Type*} [Group G] {B_idx : Type*} {M : CoxeterMatrix B_idx}
 
 

@@ -1,9 +1,12 @@
-import Mathlib
-import Lemma.Fin.RothMvHasse.eq.Zero.of.Lt
-import Lemma.Fin.CoeffRothTranslateM.eq.EvalRothMvHasse
+module
+public import Mathlib
+public import Lemma.Fin.RothMvHasse.eq.Zero.of.Lt
+public import Lemma.Fin.CoeffRothTranslateM.eq.EvalRothMvHasse
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin Set
 
+
+public section
 
 /--
 [rothDegreeBoundOver_translate](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

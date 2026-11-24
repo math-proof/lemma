@@ -1,7 +1,10 @@
-import Mathlib.SetTheory.Cardinal.Aleph
-import Instance.Analysis.MeasureTheory.Section_1_4_1.Part4
-import Theorem.Analysis.MeasureTheory.Section_1_4_2.Part2
+module
+public import Mathlib.SetTheory.Cardinal.Aleph
+public import Instance.Analysis.MeasureTheory.Section_1_4_1.Part4
+public import Theorem.Analysis.MeasureTheory.Section_1_4_2.Part2
 
+
+public section
 
 def LebesgueMeasurable.sigmaAlgebra (d:ℕ) : ConcreteSigmaAlgebra (EuclideanSpace' d) :=
   (LebesgueMeasurable.boolean_algebra.isSigmaAlgebra d).toSigmaAlgebra

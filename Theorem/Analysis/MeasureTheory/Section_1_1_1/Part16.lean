@@ -1,10 +1,12 @@
-import Def.Analysis.MeasureTheory.Notation.Part2
-import Theorem.Analysis.Section_9_1.Part3
-import Abbrev.Analysis.MeasureTheory.Section_1_1_1.Part7
+module
+public import Def.Analysis.MeasureTheory.Notation.Part2
+public import Theorem.Analysis.Section_9_1.Part3
+public import Abbrev.Analysis.MeasureTheory.Section_1_1_1.Part7
 open BoundedInterval
-
 open Pointwise
 
+
+public section
 
 /-- Unfold {name}`Box.prod` on a coordinate. -/
 lemma Box.prod_side {d₁ d₂:ℕ} (B₁: Box d₁) (B₂: Box d₂) (i : Fin (d₁ + d₂)) :

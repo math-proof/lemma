@@ -1,8 +1,11 @@
-import Lemma.Scheme.RelativeGroupLawAlgPointsV2
-import Lemma.WeierstrassCurve.TateModule
-import Abbrev.AlgebraicGeometry_RiemannForm
-
+module
+public import Lemma.Scheme.RelativeGroupLawAlgPointsV2
+public import Lemma.WeierstrassCurve.TateModule
+public import Abbrev.AlgebraicGeometry_RiemannForm
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

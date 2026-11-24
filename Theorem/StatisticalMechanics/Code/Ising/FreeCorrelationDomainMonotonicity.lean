@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/FreeCorrelationDomainMonotonicity.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Sharpness.Claim1IsingComplete.Part4
+public import Theorem.StatisticalMechanics.Code.Sharpness.MeanfieldIsingMass.Part3
+public import Def.StatisticalMechanics.Code.Sharpness.TildeBc.Part9
+open Finset SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/FreeCorrelationDomainMonotonicity.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Sharpness.Claim1IsingComplete.Part4
-import Theorem.StatisticalMechanics.Code.Sharpness.MeanfieldIsingMass.Part3
-import Def.StatisticalMechanics.Code.Sharpness.TildeBc.Part9
-open Finset SimpleGraph
-
-
 namespace StatMech.Sharpness
 
 variable {V : Type*} [Fintype V] [DecidableEq V]

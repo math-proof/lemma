@@ -1,10 +1,13 @@
-import Mathlib
-import Def.AlgebraicGeometry_RelativePicardFunctor
-import Lemma.Scheme.RepresentsRelSubPic
-import Def.AlgebraicGeometry_RelPicardAlgEquivZeroCut
-import Structure.JacJ1Iface
-
+module
+public import Mathlib
+public import Def.AlgebraicGeometry_RelativePicardFunctor
+public import Lemma.Scheme.RepresentsRelSubPic
+public import Def.AlgebraicGeometry_RelPicardAlgEquivZeroCut
+public import Structure.JacJ1Iface
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

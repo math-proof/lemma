@@ -1,10 +1,13 @@
-import Mathlib
-import Def.MvPolynomial_CrossingResolution
-import Inductive.MvPolynomial_GlueIndex
-import Instance.MvPolynomial_CrossingResolutionScheme
-import Abbrev.MvPolynomial_CrossingResolutionScheme
-
+module
+public import Mathlib
+public import Def.MvPolynomial_CrossingResolution
+public import Inductive.MvPolynomial_GlueIndex
+public import Instance.MvPolynomial_CrossingResolutionScheme
+public import Abbrev.MvPolynomial_CrossingResolutionScheme
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexAllWidthBoundaryWinding.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.HexAllWidthStripOrbits.Part6
+public import Theorem.StatisticalMechanics.Code.Universality.HexEndpointVertex.Part14
+public import Def.StatisticalMechanics.Code.Universality.HexAllWidthBoundaryWinding
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexAllWidthBoundaryWinding.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.HexAllWidthStripOrbits.Part6
-import Theorem.StatisticalMechanics.Code.Universality.HexEndpointVertex.Part14
-import Def.StatisticalMechanics.Code.Universality.HexAllWidthBoundaryWinding
-
-
 namespace StatMech.Universality
 
 open Complex HexWalk

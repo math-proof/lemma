@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/CurrentContinuityAxisInfrared.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingTorusSparseGreenDecay
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingTorusEmbedding.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityFreeLeftContinuous
+public import Theorem.StatisticalMechanics.Code.FrontierB.MixedCurrentAxisPersistence.Part2
+open Filter Finset MeasureTheory Set Topology
+open scoped BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/CurrentContinuityAxisInfrared.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingTorusSparseGreenDecay
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingTorusEmbedding.Part3
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityFreeLeftContinuous
-import Theorem.StatisticalMechanics.Code.FrontierB.MixedCurrentAxisPersistence.Part2
-open Filter Finset MeasureTheory Set Topology
-open scoped BigOperators
-
-
 namespace StatMech.FrontierB
 
 open StatMech.FrontierA StatMech.Ising StatMech.Lattice

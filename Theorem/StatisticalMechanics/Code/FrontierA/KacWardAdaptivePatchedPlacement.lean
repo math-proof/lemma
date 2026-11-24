@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/KacWardAdaptivePatchedPlacement.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAdaptivePatchedTurns
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardStaircaseCorePlacement
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardVertexNeighborhood
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/KacWardAdaptivePatchedPlacement.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAdaptivePatchedTurns
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardStaircaseCorePlacement
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardVertexNeighborhood
-
-
 namespace StatMech.FrontierA
 
 open scoped NNReal Convex

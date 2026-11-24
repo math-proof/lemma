@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/ClusterAdaptiveProjection.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.ClusterExplorationFreeBoundary
+public import Theorem.StatisticalMechanics.Code.FK.FKDisjointBoxDomainMarkov.Part3
+public import Def.StatisticalMechanics.Code.FK.ClusterAdaptiveProjection.Part2
+open SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/ClusterAdaptiveProjection.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FK.ClusterExplorationFreeBoundary
-import Theorem.StatisticalMechanics.Code.FK.FKDisjointBoxDomainMarkov.Part3
-import Def.StatisticalMechanics.Code.FK.ClusterAdaptiveProjection.Part2
-open SimpleGraph
-
-
 namespace StatMech.FK
 
 noncomputable section

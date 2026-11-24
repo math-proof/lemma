@@ -1,3 +1,12 @@
+module
+public import Mathlib
+public import Def.GroupTheory.Perm.Inversions1
+public import Instance.GroupTheory.Perm.Basics.Part2
+public import Def.GroupTheory.Perm.Inversions2.Part4
+
+
+public section
+
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -5,10 +14,6 @@ All rights reserved.
 /-
 Copyright (c) 2025. All rights reserved.
 -/
-import Mathlib
-import Def.GroupTheory.Perm.Inversions1
-import Instance.GroupTheory.Perm.Basics.Part2
-import Def.GroupTheory.Perm.Inversions2.Part4
 /-!
 # More about lengths and simples
 
@@ -85,8 +90,6 @@ rewrite between the two forms automatically.
 
 permutation, inversion, length, simple transposition, reduced word, Lehmer code
 -/
-
-
 namespace Equiv.Perm
 
 open Finset

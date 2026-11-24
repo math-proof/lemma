@@ -1,18 +1,22 @@
--- Carved from Lemma/Definitions/Def_ModularCurve_IgusaScheme.lean: instance decls only.
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.Limits
-import Mathlib.RingTheory.Ideal.IntegralClosure
-import Mathlib.RingTheory.Localization.Integral
-import Mathlib.RingTheory.Polynomial.ScaleRoots
-import Mathlib.Algebra.Polynomial.Lifts
-import Theorem.HahnSeries.X0
-import Def.GaloisRep_Flat
-import Abbrev.ModularCurve_IgusaScheme
-import Theorem.Scheme.IgusaScheme
-import Def.ModularCurve_IgusaScheme
-
+module
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.Limits
+public import Mathlib.RingTheory.Ideal.IntegralClosure
+public import Mathlib.RingTheory.Localization.Integral
+public import Mathlib.RingTheory.Polynomial.ScaleRoots
+public import Mathlib.Algebra.Polynomial.Lifts
+public import Theorem.HahnSeries.X0
+public import Def.GaloisRep_Flat
+public import Abbrev.ModularCurve_IgusaScheme
+public import Theorem.Scheme.IgusaScheme
+public import Def.ModularCurve_IgusaScheme
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_ModularCurve_IgusaScheme.lean: instance decls only.
 
 noncomputable section
 

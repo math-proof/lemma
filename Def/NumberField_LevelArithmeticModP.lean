@@ -1,12 +1,15 @@
-import Mathlib
-import Def.NumberField_SUnitsModule
-import Instance.ExtEndgame_ProductionDatum
-import Def.ClassGroup_GaloisAction
-import Def.Ideal_Mathlib430
-import Instance.NumberField_LevelArithmeticModP
-import Abbrev.NumberField_LevelArithmeticModP
-
+module
+public import Mathlib
+public import Def.NumberField_SUnitsModule
+public import Instance.ExtEndgame_ProductionDatum
+public import Def.ClassGroup_GaloisAction
+public import Def.Ideal_Mathlib430
+public import Instance.NumberField_LevelArithmeticModP
+public import Abbrev.NumberField_LevelArithmeticModP
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

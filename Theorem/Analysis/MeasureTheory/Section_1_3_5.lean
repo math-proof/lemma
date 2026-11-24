@@ -1,6 +1,9 @@
-import Theorem.Analysis.MeasureTheory.Section_1_3_4.Part7
-import Mathlib.Topology.UrysohnsLemma
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_3_4.Part7
+public import Mathlib.Topology.UrysohnsLemma
 
+
+public section
 
 /-!
 # Introduction to Measure Theory, Section 1.3.5: Littlewood's three principles
@@ -8,7 +11,6 @@ import Mathlib.Topology.UrysohnsLemma
 A companion to (the introduction to) Section 1.3.5 of the book "An introduction to Measure Theory".
 
 -/
-
 /-- Helper: extract a simple function approximation from the sSup definition of the unsigned integral.
   Given an unsigned absolutely integrable f and ε > 0, there exists a simple g ≤ f pointwise
   whose integral is within ε of the integral of f. -/

@@ -1,9 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.NumberTheory.PrimeInterval.Breusch.Lower
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.NumberTheory.PrimeInterval.Breusch.Lower
 open MathlibExt MathlibExt.NumberTheory MathlibExt.NumberTheory.BreuschWanted MathlibExt.NumberTheory.BreuschWanted.Internal
 open Nat Finset
 
+
+public section
 
 namespace MathlibExt.NumberTheory.BreuschWanted.Internal
 

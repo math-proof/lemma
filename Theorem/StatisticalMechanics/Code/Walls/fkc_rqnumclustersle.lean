@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/fkc_rqnumclustersle.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.FK.RandomCluster.Part6
+open scoped BigOperators
+open SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/fkc_rqnumclustersle.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.FK.RandomCluster.Part6
-open scoped BigOperators
-open SimpleGraph
-
-
 namespace StatMech.Walls
 
 theorem fkc_card_connectedComponent_le {V : Type*} [Fintype V] (G : SimpleGraph V)

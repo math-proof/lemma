@@ -1,8 +1,11 @@
-import Mathlib
-import Lemma.Ideal.FiniteUnitIdeles
-import Def.IsDedekindDomain_FiniteUnitIdelesOutside
-
+module
+public import Mathlib
+public import Lemma.Ideal.FiniteUnitIdeles
+public import Def.IsDedekindDomain_FiniteUnitIdelesOutside
 set_option autoImplicit false
+
+
+public section
 
 namespace IsDedekindDomain.FiniteAdeleRing
 

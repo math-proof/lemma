@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/rc4_occursrestrictwitness.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Walls.rc3_core.Part3
+public import Theorem.StatisticalMechanics.Code.Inequalities.PerOrbitCardClose.Part8
+public import Theorem.StatisticalMechanics.Code.Walls.rc2_slabimgeqinter.Part3
+public import Def.StatisticalMechanics.Code.Walls.rc4_occursrestrictwitness.Part4
+open Finset
+open scoped StatMech
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/rc4_occursrestrictwitness.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Walls.rc3_core.Part3
-import Theorem.StatisticalMechanics.Code.Inequalities.PerOrbitCardClose.Part8
-import Theorem.StatisticalMechanics.Code.Walls.rc2_slabimgeqinter.Part3
-import Def.StatisticalMechanics.Code.Walls.rc4_occursrestrictwitness.Part4
-open Finset
-open scoped StatMech
-
-
 namespace StatMech.Walls
 
 open StatMech ConfigSpace

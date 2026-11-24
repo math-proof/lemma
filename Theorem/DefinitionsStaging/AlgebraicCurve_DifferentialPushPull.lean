@@ -1,8 +1,11 @@
-import Mathlib
-import Lemma.Definitions.Def_AlgebraicCurve_Correspondence
-import Def.AlgebraicCurve_DifferentialPushPull
+module
+public import Mathlib
+public import Lemma.Definitions.Def_AlgebraicCurve_Correspondence
+public import Def.AlgebraicCurve_DifferentialPushPull
 set_option autoImplicit false
 
+
+public section
 
 noncomputable section
 

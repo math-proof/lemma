@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_6
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_6
 open MeasureTheory ProbabilityTheory Real BigOperators Finset
 
+
+public section
 
 /--
 [theorem_1_6_subgaussian_vector](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter1/Thm_1_6.lean)

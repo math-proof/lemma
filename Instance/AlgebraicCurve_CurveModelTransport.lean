@@ -1,9 +1,13 @@
--- Carved from Lemma/Definitions/Def_AlgebraicCurve_CurveModelTransport.lean: instance decls only.
-import Mathlib
-import Theorem.Scheme.CurveModelTransport
-import Def.AlgebraicCurve_CurveModelTransport
-
+module
+public import Mathlib
+public import Theorem.Scheme.CurveModelTransport
+public import Def.AlgebraicCurve_CurveModelTransport
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicCurve_CurveModelTransport.lean: instance decls only.
 
 universe u v
 

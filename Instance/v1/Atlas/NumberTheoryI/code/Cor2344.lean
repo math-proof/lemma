@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Cor2344.lean -/
+module
+public import Instance.v1.Atlas.NumberTheoryI.code.TateCohomology.Part4
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.GroupTheory.FiniteAbelian.Basic
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Mathlib.LinearAlgebra.FreeModule.PID
+public import Mathlib.LinearAlgebra.Dimension.Torsion.Basic
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Cor2344.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Instance.v1.Atlas.NumberTheoryI.code.TateCohomology.Part4
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.GroupTheory.FiniteAbelian.Basic
-import Mathlib.RingTheory.Noetherian.Basic
-import Mathlib.LinearAlgebra.FreeModule.PID
-import Mathlib.LinearAlgebra.Dimension.Torsion.Basic
-
-
 noncomputable section
 
 universe u

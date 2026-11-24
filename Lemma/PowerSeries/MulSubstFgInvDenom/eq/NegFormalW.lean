@@ -6,7 +6,7 @@ import Lemma.WeierstrassCurve.FormalGroupLaw
 import Lemma.WeierstrassCurve.FormalGroup
 import Def.WeierstrassCurve_HasseInvariant
 import Def.FormalGroup_PointTransport
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open FormalGroup
 open PowerSeries

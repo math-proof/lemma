@@ -1,6 +1,10 @@
-import Mathlib
-import Lemma.HahnSeries.X0
-import Def.ModularCurve_KroneckerTransport
+module
+public import Mathlib
+public import Lemma.HahnSeries.X0
+public import Def.ModularCurve_KroneckerTransport
+
+
+public section
 
 noncomputable section
 

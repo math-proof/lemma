@@ -1,12 +1,15 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Lemma.List.IsReducedDrop.of.IsReduced
-import Lemma.List.Any_And_IsReduced_EraseIdx.of.LtLengthMulWordProdSimple_Length_WordProd.IsReduced.SignChangeExchangeHyp
-import Lemma.Nat.SatisfiesDeletionCondition.of.SignChangeExchangeHyp
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.StrongExchangeBridge
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionProof
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Lemma.List.IsReducedDrop.of.IsReduced
+public import Lemma.List.Any_And_IsReduced_EraseIdx.of.LtLengthMulWordProdSimple_Length_WordProd.IsReduced.SignChangeExchangeHyp
+public import Lemma.Nat.SatisfiesDeletionCondition.of.SignChangeExchangeHyp
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.StrongExchangeBridge
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionProof
 open CoxeterGroup CoxeterExchangeGenuine StrongExchangeBridge
 
+
+public section
 
 namespace CoxeterExchange
 

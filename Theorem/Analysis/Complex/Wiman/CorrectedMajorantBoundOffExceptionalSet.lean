@@ -1,11 +1,13 @@
+module
+public import Theorem.Analysis.Complex.Wiman.CorrectedRosenbloom
+public import Theorem.Complex.Wiman.CorrectedRosenbloom
+public import Theorem.Complex.Wiman.TwoPowerBadSets
+public import Def.Analysis.Complex.Wiman.TwoPowerBadSets
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/CorrectedMajorantBoundOffExceptionalSet.lean -/
-
-import Theorem.Analysis.Complex.Wiman.CorrectedRosenbloom
-import Theorem.Complex.Wiman.CorrectedRosenbloom
-import Theorem.Complex.Wiman.TwoPowerBadSets
-import Def.Analysis.Complex.Wiman.TwoPowerBadSets
-
-
 noncomputable section
 end
 namespace Complex

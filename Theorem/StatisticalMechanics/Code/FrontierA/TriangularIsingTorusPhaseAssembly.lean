@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/TriangularIsingTorusPhaseAssembly.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusPeriodicPhase.Part6
+public import Def.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusPhaseAssembly
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/TriangularIsingTorusPhaseAssembly.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,11 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusPeriodicPhase.Part6
-import Def.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusPhaseAssembly
-
-
 namespace StatMech.FrontierA
 
 theorem triangularTorus_cyclePhaseProduct_eq_neg_baseSpinSign

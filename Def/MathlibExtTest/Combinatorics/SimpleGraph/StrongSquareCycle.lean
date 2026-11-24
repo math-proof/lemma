@@ -1,11 +1,12 @@
+module
+public import Def.Combinatorics.SimpleGraph.StrongSquareCycle
+public import Theorem.SimpleGraph.StrongSquareCycle
+public import Theorem.MathlibExtTest.Combinatorics.SimpleGraph.StrongSquareCycle
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/StrongSquareCycle.lean -/
-
-
-import Def.Combinatorics.SimpleGraph.StrongSquareCycle
-import Theorem.SimpleGraph.StrongSquareCycle
-import Theorem.MathlibExtTest.Combinatorics.SimpleGraph.StrongSquareCycle
-
-
 namespace MathlibExtTest.Combinatorics.SimpleGraph.StrongSquareCycle
 
 def triangleWalk :

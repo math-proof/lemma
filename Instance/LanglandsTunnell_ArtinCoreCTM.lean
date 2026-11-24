@@ -1,9 +1,13 @@
--- Carved from Lemma/Definitions/Def_LanglandsTunnell_ArtinCoreCTM.lean: instance decls only.
-import Instance.LanglandsTunnell_ArtinFrobenius
-import Def.M4aHerbrand_IdeleClassVocab
-import Def.LanglandsTunnell_ArtinCoreCTM
-
+module
+public import Instance.LanglandsTunnell_ArtinFrobenius
+public import Def.M4aHerbrand_IdeleClassVocab
+public import Def.LanglandsTunnell_ArtinCoreCTM
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_LanglandsTunnell_ArtinCoreCTM.lean: instance decls only.
 
 noncomputable section
 

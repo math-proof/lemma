@@ -1,13 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Probability/LevyKhintchin.lean -/
-
-
-import Theorem.Probability.LevyKhintchin.Part17
-import Lemma.Measure.LevyKhintchin
-import Mathlib.Probability.Distributions.Gaussian.Real
+module
+public import Theorem.Probability.LevyKhintchin.Part17
+public import Theorem.Measure.LevyKhintchin
+public import Mathlib.Probability.Distributions.Gaussian.Real
 open MeasureTheory ProbabilityTheory
 open scoped ENNReal MeasureTheory NNReal
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Probability/LevyKhintchin.lean -/
 namespace MathlibExtTest.Probability.LevyKhintchin
 
 -- The standard Gaussian has convolution roots of every positive order.

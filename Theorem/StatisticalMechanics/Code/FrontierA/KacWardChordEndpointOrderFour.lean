@@ -1,5 +1,10 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/KacWardChordEndpointOrderFour.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardChordEndpointOrderReverse
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/KacWardChordEndpointOrderFour.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,11 +12,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardChordEndpointOrderReverse
-
-
 namespace StatMech.FrontierA
 
 theorem KWFiniteSimplePolygon.phaseCycle_eq_neg_one_four

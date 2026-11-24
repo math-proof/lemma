@@ -1,10 +1,11 @@
+module
+public import Theorem.Analysis.Complex.Wiman.Filevych
+public import Theorem.Complex.Wiman.Filevych
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Complex/Wiman.lean -/
-
-
-import Theorem.Analysis.Complex.Wiman.Filevych
-import Theorem.Complex.Wiman.Filevych
-
-
 namespace Complex
 
 example (f : ℂ → ℂ) (r : ℝ) (n : ℕ) :

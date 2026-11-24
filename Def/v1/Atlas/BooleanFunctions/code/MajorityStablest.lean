@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/MajorityStablest.lean -/
+module
+public import Def.v1.Atlas.BooleanFunctions.code.Stability
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Stability
+public import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
+public import Def.v1.Atlas.BooleanFunctions.code.GaussianStability.Part2
+public import Def.v1.Atlas.BooleanFunctions.code.InfluenceFourier
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/MajorityStablest.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.BooleanFunctions.code.Stability
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Stability
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
-import Def.v1.Atlas.BooleanFunctions.code.GaussianStability.Part2
-import Def.v1.Atlas.BooleanFunctions.code.InfluenceFourier
-
-
 noncomputable section
 
 open Finset BigOperators MeasureTheory ProbabilityTheory

@@ -1,4 +1,4 @@
-import Lemma.Finsupp.JZeroNaiveHeight
+import Theorem.Finsupp.JZeroNaiveHeight
 import Def.AlgebraicCurve_PlaceEvaluation
 import Lemma.Submodule.Repartitions
 import Lemma.Ideal.Mathlib430

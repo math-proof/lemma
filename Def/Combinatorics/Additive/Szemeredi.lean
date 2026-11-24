@@ -1,21 +1,22 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Additive/Szemeredi.lean -/
+module
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Basic.Real.Basic
+public import Theorem.Combinatorics.DensityHalesJewett.Part13
+public import Theorem.Finset.DensityHalesJewett
+public import Mathlib.Tactic
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Additive/Szemeredi.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
-
-import Mathlib.Data.Finset.Card
-import Mathlib.Basic.Real.Basic
-import Theorem.Combinatorics.DensityHalesJewett.Part13
-import Lemma.Finset.DensityHalesJewett
-import Mathlib.Tactic
 /-!
 # Szemerédi's theorem
 
 This file proves the finitary density form of Szemerédi's theorem.
 -/
-
-
 namespace MathlibExt.Combinatorics.Additive.SzemerediWanted
 
 open scoped Finset

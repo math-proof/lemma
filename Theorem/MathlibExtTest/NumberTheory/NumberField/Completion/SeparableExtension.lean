@@ -1,11 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/Completion/SeparableExtension.lean -/
+module
+public import Theorem.Nat.NumberField.Completion.SeparableExtension
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/Completion/SeparableExtension.lean -/
 /-
 Author: Muse Code
 -/
-
-
-import Lemma.Nat.NumberField.Completion.SeparableExtension
 /-!
 # Tests for the finite-place number-field clause of ATLAS Theorem 11.20
 
@@ -15,8 +17,6 @@ reproduce the dependent conclusion exactly, then a substantive consumer that
 destructures the theorem and returns the same existential field/place data with
 both the global/local degree equality and the completion finrank equality.
 -/
-
-
 namespace IsDedekindDomain.HeightOneSpectrum
 
 open IsDedekindDomain

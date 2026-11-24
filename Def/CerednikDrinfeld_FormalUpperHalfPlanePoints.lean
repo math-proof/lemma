@@ -1,9 +1,12 @@
-import Mathlib
-import Theorem.Submodule.FormalUpperHalfPlaneFunctor
-import Lemma.Set.OmegaTubes
-import Structure.CerednikDrinfeld_FormalUpperHalfPlanePoints
-
+module
+public import Mathlib
+public import Theorem.Submodule.FormalUpperHalfPlaneFunctor
+public import Theorem.Set.OmegaTubes
+public import Structure.CerednikDrinfeld_FormalUpperHalfPlanePoints
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

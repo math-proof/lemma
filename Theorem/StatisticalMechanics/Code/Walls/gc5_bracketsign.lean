@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/gc5_bracketsign.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Ising.EnsembleGHS
+public import Def.StatisticalMechanics.Code.Walls.gc5_bracketsign
+open Finset Classical
+open scoped symmDiff BigOperators
+set_option linter.unusedSectionVars false
+set_option linter.style.longLine false
+set_option maxHeartbeats 800000
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/gc5_bracketsign.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Ising.EnsembleGHS
-import Def.StatisticalMechanics.Code.Walls.gc5_bracketsign
-open Finset Classical
-open scoped symmDiff BigOperators
-
-set_option linter.unusedSectionVars false
-set_option linter.style.longLine false
-set_option maxHeartbeats 800000
-
-
 namespace StatMech.Walls
 
 open StatMech.Ising

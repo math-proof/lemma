@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicCenteredTensorTentRegularity.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicBoundaryRadialCellRegularity
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalCenteredRadialPatch.Part12
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicTensorTentMorera.Part17
+public import Mathlib.Topology.UnitInterval
+public import Def.StatisticalMechanics.Code.Universality.IsingFermionicCenteredTensorTentRegularity.Part7
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicCenteredTensorTentRegularity.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicBoundaryRadialCellRegularity
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalCenteredRadialPatch.Part12
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicTensorTentMorera.Part17
-import Mathlib.Topology.UnitInterval
-import Def.StatisticalMechanics.Code.Universality.IsingFermionicCenteredTensorTentRegularity.Part7
-
-
 namespace StatMech.Universality
 
 open Metric Set

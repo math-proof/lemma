@@ -1,6 +1,9 @@
-import Lemma.Matrix.SiegelReduction
-
+module
+public import Theorem.Matrix.SiegelReduction
 open NumberField IsDedekindDomain Matrix
+
+
+public section
 
 noncomputable section
 

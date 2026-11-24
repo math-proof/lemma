@@ -1,8 +1,12 @@
-import Mathlib
-import Theorem.Analysis.Section_5_5.Part5
-import Theorem.Analysis.Section_5_epilogue.Part5
-import Abbrev.Analysis.Section_6_2
+module
+public import Mathlib
+public import Theorem.Analysis.Section_5_5.Part5
+public import Theorem.Analysis.Section_5_epilogue.Part5
+public import Abbrev.Analysis.Section_6_2
 open EReal
+
+
+public section
 
 /-!
 # Analysis I, Section 6.2: The extended real number system
@@ -19,8 +23,6 @@ Main constructions and results of this section:
   operation {name}`sSup` and infimum operation {name}`sInf`.
 
 -/
-
-
 theorem EReal.infinite_iff_not_finite (x:EReal): x.IsInfinite ↔ ¬ x.IsFinite := by
   obtain ⟨ y, rfl ⟩ | rfl | rfl := EReal.def x <;> simp [IsFinite, IsInfinite]
 

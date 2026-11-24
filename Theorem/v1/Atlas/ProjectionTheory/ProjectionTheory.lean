@@ -1,5 +1,169 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ProjectionTheory/ProjectionTheory.lean -/
+module
+public import Def.v1.Atlas.ProjectionTheory.code.ABCSumProduct
+public import Def.v1.Atlas.ProjectionTheory.code.AuxiliaryLemma
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.AuxiliaryLemma
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.BKTLemma2
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.BKTLemma3
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.BSGProposition
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.BorsukUlam
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.BourgainCorollary
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.CellDecomposition
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.DilatedSumsetExpansion
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.DoubleCountingFF
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.DoubleCountingLower
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.DoubleCountingReal
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.DoubleCountingRealCor
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.EuclideanProjectionBound
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.FourierAffinePlane
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.FourierBoundFF
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.FourierFF
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.FourierProjectionDictionary
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.FourierProjectionDiscrete
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.GSW
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.HamSandwich
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.HighFreqMultConv
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.KeyLemmaBSG
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.L2MixingSigma1
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.LMWY
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.LargeSieveCorollary
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.LargeSieveSize
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.LinnikLargeSieve
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.MainLemma2F
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.MainLemma2R
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.MainLemmaFF
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.MainLemmaReal
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.MultConvLinftyBound
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.MultConvProjection
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.MultiplicativeConvolution
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.OrthogonalityLines
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.OrthogonalityTubes
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.ParsevalHighFreq
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.PolynomialHamSandwich
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.ProjectionSmoothing
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.SelbergExpansion
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.Submultiplicative
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.SubmultiplicativeProjective
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.SzemerediTrotter
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.SzemerediTrotterProjection
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.Uniformization
+public import Theorem.v1.Atlas.ProjectionTheory.code.BKT2Robust
+public import Theorem.v1.Atlas.ProjectionTheory.code.BKTLemma1
+public import Def.v1.Atlas.ProjectionTheory.code.BKTLemma2
+public import Def.v1.Atlas.ProjectionTheory.code.BKTLemma3
+public import Theorem.v1.Atlas.ProjectionTheory.code.BKTLemma4
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.BKTProposition
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.BalogSzemerediGowers
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.ContagiousStructure
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.FareySeparation
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.GridProjectionBound
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.HamSandwichFinite
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.L2BoundLineSum
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.ParsevalFF
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.Plunnecke
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.RuzsaTriangle
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.SieveTheorem1S
+public import Theorem.v1.Atlas.ProjectionTheory.code.BKTSumProduct
+public import Theorem.v1.Atlas.ProjectionTheory.code.BKTTheorem
+public import Def.v1.Atlas.ProjectionTheory.code.BSGProposition
+public import Theorem.v1.Atlas.ProjectionTheory.code.BSGVar
+public import Theorem.v1.Atlas.ProjectionTheory.code.BSGVariant
+public import Structure.v1.Atlas.ProjectionTheory.code.BandlimitedBound
+public import Theorem.v1.Atlas.ProjectionTheory.code.BeckLemma
+public import Def.v1.Atlas.ProjectionTheory.code.BeckTheorem
+public import Def.v1.Atlas.ProjectionTheory.code.BombieriVinogradov
+public import Def.v1.Atlas.ProjectionTheory.code.BorsukUlam
+public import Def.v1.Atlas.ProjectionTheory.code.BourgainCorollary
+public import Theorem.v1.Atlas.ProjectionTheory.code.BourgainKatzTao
+public import Def.v1.Atlas.ProjectionTheory.code.BourgainLemma.Part2
+public import Structure.v1.Atlas.ProjectionTheory.code.BourgainLemma2
+public import Def.v1.Atlas.ProjectionTheory.code.BourgainProjection
+public import Def.v1.Atlas.ProjectionTheory.code.BourgainProjectionRestated
+public import Theorem.v1.Atlas.ProjectionTheory.code.BourgainPropositions
+public import Def.v1.Atlas.ProjectionTheory.code.CellDecomposition
+public import Def.v1.Atlas.ProjectionTheory.code.ContinuumBeck
+public import Def.v1.Atlas.ProjectionTheory.code.DeltaRegular
+public import Def.v1.Atlas.ProjectionTheory.code.DilatedSumsetExpansion
+public import Def.v1.Atlas.ProjectionTheory.code.DirichletPrimesAP
+public import Def.v1.Atlas.ProjectionTheory.code.DoubleCountingFF
+public import Def.v1.Atlas.ProjectionTheory.code.DoubleCountingLower
+public import Def.v1.Atlas.ProjectionTheory.code.DoubleCountingReal.Part3
+public import Structure.v1.Atlas.ProjectionTheory.code.DoubleCountingRealCor
+public import Def.v1.Atlas.ProjectionTheory.code.DoubleCountingSimple
+public import Def.v1.Atlas.ProjectionTheory.code.EpsilonBadPairs.Part2
+public import Structure.v1.Atlas.ProjectionTheory.code.EpsilonImprovement
+public import Theorem.v1.Atlas.ProjectionTheory.code.ErdosVolkmann
+public import Def.v1.Atlas.ProjectionTheory.code.EuclideanProjectionBound
+public import Def.v1.Atlas.ProjectionTheory.code.FiniteFieldProjection
+public import Def.v1.Atlas.ProjectionTheory.code.FourierAffinePlane
+public import Def.v1.Atlas.ProjectionTheory.code.FourierBoundFF
+public import Structure.v1.Atlas.ProjectionTheory.code.FourierBoundReal
+public import Def.v1.Atlas.ProjectionTheory.code.FourierFF
+public import Def.v1.Atlas.ProjectionTheory.code.FourierProjectionDictionary
+public import Def.v1.Atlas.ProjectionTheory.code.FourierProjectionDiscrete
+public import Def.v1.Atlas.ProjectionTheory.code.FourierProjectionSubspace
+public import Def.v1.Atlas.ProjectionTheory.code.FreimanRuzsa
+public import Theorem.v1.Atlas.ProjectionTheory.code.FurstenbergConjecture
+public import Structure.v1.Atlas.ProjectionTheory.code.FurstenbergCorollary
+public import Structure.v1.Atlas.ProjectionTheory.code.FurstenbergProposition
+public import Def.v1.Atlas.ProjectionTheory.code.GGGHMW
+public import Def.v1.Atlas.ProjectionTheory.code.GSW
+public import Def.v1.Atlas.ProjectionTheory.code.HamSandwich
+public import Def.v1.Atlas.ProjectionTheory.code.HausdorffSpacing
+public import Def.v1.Atlas.ProjectionTheory.code.HighFreqMultConv
+public import Theorem.v1.Atlas.ProjectionTheory.code.IncidenceLemma
+public import Def.v1.Atlas.ProjectionTheory.code.KeyLemmaBSG
+public import Theorem.v1.Atlas.ProjectionTheory.code.L2MixingSigma1
+public import Def.v1.Atlas.ProjectionTheory.code.LMWY.Part3
+public import Def.v1.Atlas.ProjectionTheory.code.LargeSieveAvg
+public import Def.v1.Atlas.ProjectionTheory.code.LargeSieveCorollary
+public import Def.v1.Atlas.ProjectionTheory.code.LargeSieveMultConv
+public import Def.v1.Atlas.ProjectionTheory.code.LargeSieveSize
+public import Theorem.v1.Atlas.ProjectionTheory.code.Linnik
+public import Def.v1.Atlas.ProjectionTheory.code.LinnikLargeSieve
+public import Theorem.v1.Atlas.ProjectionTheory.code.LinnikParseval
+public import Def.v1.Atlas.ProjectionTheory.code.MainLemma2F
+public import Structure.v1.Atlas.ProjectionTheory.code.MainLemma2R.Part3
+public import Def.v1.Atlas.ProjectionTheory.code.MainLemmaFF
+public import Def.v1.Atlas.ProjectionTheory.code.MainLemmaReal.Part2
+public import Def.v1.Atlas.ProjectionTheory.code.Marstrand
+public import Theorem.v1.Atlas.ProjectionTheory.code.MultConvLemma
+public import Def.v1.Atlas.ProjectionTheory.code.MultConvLinftyBound
+public import Def.v1.Atlas.ProjectionTheory.code.MultConvProjection
+public import Def.v1.Atlas.ProjectionTheory.code.MultiplicativeConvolution
+public import Theorem.v1.Atlas.ProjectionTheory.code.OSFurstenberg
+public import Def.v1.Atlas.ProjectionTheory.code.OSRW
+public import Def.v1.Atlas.ProjectionTheory.code.OSRWSharp
+public import Def.v1.Atlas.ProjectionTheory.code.Oppenheim
+public import Theorem.v1.Atlas.ProjectionTheory.code.OrponenShmerkin2021
+public import Def.v1.Atlas.ProjectionTheory.code.OrthogonalityLines
+public import Def.v1.Atlas.ProjectionTheory.code.OrthogonalityTubes.Part3
+public import Def.v1.Atlas.ProjectionTheory.code.ParsevalHighFreq
+public import Theorem.v1.Atlas.ProjectionTheory.code.PlunneckeCorollary
+public import Theorem.v1.Atlas.ProjectionTheory.code.PlunneckeLemma
+public import Theorem.v1.Atlas.ProjectionTheory.code.PlunneckeSumProduct
+public import Def.v1.Atlas.ProjectionTheory.code.PolyK
+public import Theorem.v1.Atlas.ProjectionTheory.code.PolyKGrowth
+public import Def.v1.Atlas.ProjectionTheory.code.PolynomialHamSandwich
+public import Def.v1.Atlas.ProjectionTheory.code.ProjectionIncidence
+public import Def.v1.Atlas.ProjectionTheory.code.ProjectionSmoothing
+public import Def.v1.Atlas.ProjectionTheory.code.ProjectivePair
+public import Theorem.v1.Atlas.ProjectionTheory.code.STProjectionVariant
+public import Def.v1.Atlas.ProjectionTheory.code.SelbergExpansion.Part2
+public import Def.v1.Atlas.ProjectionTheory.code.SelbergSpectralGap
+public import Def.v1.Atlas.ProjectionTheory.code.SiegelWalfisz
+public import Structure.v1.Atlas.ProjectionTheory.code.Submultiplicative
+public import Structure.v1.Atlas.ProjectionTheory.code.SubmultiplicativeProjective
+public import Def.v1.Atlas.ProjectionTheory.code.SzemerediTrotter.Part2
+public import Def.v1.Atlas.ProjectionTheory.code.SzemerediTrotterProjection
+public import Structure.v1.Atlas.ProjectionTheory.code.TheoremOS
+public import Structure.v1.Atlas.ProjectionTheory.code.TwoEnds
+public import Def.v1.Atlas.ProjectionTheory.code.UniformSet
+public import Def.v1.Atlas.ProjectionTheory.code.Uniformization
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ProjectionTheory/ProjectionTheory.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,166 +171,4 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.ProjectionTheory.code.ABCSumProduct
-import Def.v1.Atlas.ProjectionTheory.code.AuxiliaryLemma
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.AuxiliaryLemma
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.BKTLemma2
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.BKTLemma3
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.BSGProposition
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.BorsukUlam
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.BourgainCorollary
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.CellDecomposition
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.DilatedSumsetExpansion
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.DoubleCountingFF
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.DoubleCountingLower
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.DoubleCountingReal
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.DoubleCountingRealCor
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.EuclideanProjectionBound
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.FourierAffinePlane
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.FourierBoundFF
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.FourierFF
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.FourierProjectionDictionary
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.FourierProjectionDiscrete
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.GSW
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.HamSandwich
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.HighFreqMultConv
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.KeyLemmaBSG
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.L2MixingSigma1
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.LMWY
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.LargeSieveCorollary
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.LargeSieveSize
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.LinnikLargeSieve
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.MainLemma2F
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.MainLemma2R
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.MainLemmaFF
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.MainLemmaReal
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.MultConvLinftyBound
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.MultConvProjection
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.MultiplicativeConvolution
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.OrthogonalityLines
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.OrthogonalityTubes
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.ParsevalHighFreq
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.PolynomialHamSandwich
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.ProjectionSmoothing
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.SelbergExpansion
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.Submultiplicative
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.SubmultiplicativeProjective
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.SzemerediTrotter
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.SzemerediTrotterProjection
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.Uniformization
-import Theorem.v1.Atlas.ProjectionTheory.code.BKT2Robust
-import Theorem.v1.Atlas.ProjectionTheory.code.BKTLemma1
-import Def.v1.Atlas.ProjectionTheory.code.BKTLemma2
-import Def.v1.Atlas.ProjectionTheory.code.BKTLemma3
-import Theorem.v1.Atlas.ProjectionTheory.code.BKTLemma4
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.BKTProposition
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.BalogSzemerediGowers
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.ContagiousStructure
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.FareySeparation
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.GridProjectionBound
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.HamSandwichFinite
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.L2BoundLineSum
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.ParsevalFF
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.Plunnecke
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.RuzsaTriangle
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.SieveTheorem1S
-import Theorem.v1.Atlas.ProjectionTheory.code.BKTSumProduct
-import Theorem.v1.Atlas.ProjectionTheory.code.BKTTheorem
-import Def.v1.Atlas.ProjectionTheory.code.BSGProposition
-import Theorem.v1.Atlas.ProjectionTheory.code.BSGVar
-import Theorem.v1.Atlas.ProjectionTheory.code.BSGVariant
-import Structure.v1.Atlas.ProjectionTheory.code.BandlimitedBound
-import Theorem.v1.Atlas.ProjectionTheory.code.BeckLemma
-import Def.v1.Atlas.ProjectionTheory.code.BeckTheorem
-import Def.v1.Atlas.ProjectionTheory.code.BombieriVinogradov
-import Def.v1.Atlas.ProjectionTheory.code.BorsukUlam
-import Def.v1.Atlas.ProjectionTheory.code.BourgainCorollary
-import Theorem.v1.Atlas.ProjectionTheory.code.BourgainKatzTao
-import Def.v1.Atlas.ProjectionTheory.code.BourgainLemma.Part2
-import Structure.v1.Atlas.ProjectionTheory.code.BourgainLemma2
-import Def.v1.Atlas.ProjectionTheory.code.BourgainProjection
-import Def.v1.Atlas.ProjectionTheory.code.BourgainProjectionRestated
-import Theorem.v1.Atlas.ProjectionTheory.code.BourgainPropositions
-import Def.v1.Atlas.ProjectionTheory.code.CellDecomposition
-import Def.v1.Atlas.ProjectionTheory.code.ContinuumBeck
-import Def.v1.Atlas.ProjectionTheory.code.DeltaRegular
-import Def.v1.Atlas.ProjectionTheory.code.DilatedSumsetExpansion
-import Def.v1.Atlas.ProjectionTheory.code.DirichletPrimesAP
-import Def.v1.Atlas.ProjectionTheory.code.DoubleCountingFF
-import Def.v1.Atlas.ProjectionTheory.code.DoubleCountingLower
-import Def.v1.Atlas.ProjectionTheory.code.DoubleCountingReal.Part3
-import Structure.v1.Atlas.ProjectionTheory.code.DoubleCountingRealCor
-import Def.v1.Atlas.ProjectionTheory.code.DoubleCountingSimple
-import Def.v1.Atlas.ProjectionTheory.code.EpsilonBadPairs.Part2
-import Structure.v1.Atlas.ProjectionTheory.code.EpsilonImprovement
-import Theorem.v1.Atlas.ProjectionTheory.code.ErdosVolkmann
-import Def.v1.Atlas.ProjectionTheory.code.EuclideanProjectionBound
-import Def.v1.Atlas.ProjectionTheory.code.FiniteFieldProjection
-import Def.v1.Atlas.ProjectionTheory.code.FourierAffinePlane
-import Def.v1.Atlas.ProjectionTheory.code.FourierBoundFF
-import Structure.v1.Atlas.ProjectionTheory.code.FourierBoundReal
-import Def.v1.Atlas.ProjectionTheory.code.FourierFF
-import Def.v1.Atlas.ProjectionTheory.code.FourierProjectionDictionary
-import Def.v1.Atlas.ProjectionTheory.code.FourierProjectionDiscrete
-import Def.v1.Atlas.ProjectionTheory.code.FourierProjectionSubspace
-import Def.v1.Atlas.ProjectionTheory.code.FreimanRuzsa
-import Theorem.v1.Atlas.ProjectionTheory.code.FurstenbergConjecture
-import Structure.v1.Atlas.ProjectionTheory.code.FurstenbergCorollary
-import Structure.v1.Atlas.ProjectionTheory.code.FurstenbergProposition
-import Def.v1.Atlas.ProjectionTheory.code.GGGHMW
-import Def.v1.Atlas.ProjectionTheory.code.GSW
-import Def.v1.Atlas.ProjectionTheory.code.HamSandwich
-import Def.v1.Atlas.ProjectionTheory.code.HausdorffSpacing
-import Def.v1.Atlas.ProjectionTheory.code.HighFreqMultConv
-import Theorem.v1.Atlas.ProjectionTheory.code.IncidenceLemma
-import Def.v1.Atlas.ProjectionTheory.code.KeyLemmaBSG
-import Theorem.v1.Atlas.ProjectionTheory.code.L2MixingSigma1
-import Def.v1.Atlas.ProjectionTheory.code.LMWY.Part3
-import Def.v1.Atlas.ProjectionTheory.code.LargeSieveAvg
-import Def.v1.Atlas.ProjectionTheory.code.LargeSieveCorollary
-import Def.v1.Atlas.ProjectionTheory.code.LargeSieveMultConv
-import Def.v1.Atlas.ProjectionTheory.code.LargeSieveSize
-import Theorem.v1.Atlas.ProjectionTheory.code.Linnik
-import Def.v1.Atlas.ProjectionTheory.code.LinnikLargeSieve
-import Theorem.v1.Atlas.ProjectionTheory.code.LinnikParseval
-import Def.v1.Atlas.ProjectionTheory.code.MainLemma2F
-import Structure.v1.Atlas.ProjectionTheory.code.MainLemma2R.Part3
-import Def.v1.Atlas.ProjectionTheory.code.MainLemmaFF
-import Def.v1.Atlas.ProjectionTheory.code.MainLemmaReal.Part2
-import Def.v1.Atlas.ProjectionTheory.code.Marstrand
-import Theorem.v1.Atlas.ProjectionTheory.code.MultConvLemma
-import Def.v1.Atlas.ProjectionTheory.code.MultConvLinftyBound
-import Def.v1.Atlas.ProjectionTheory.code.MultConvProjection
-import Def.v1.Atlas.ProjectionTheory.code.MultiplicativeConvolution
-import Theorem.v1.Atlas.ProjectionTheory.code.OSFurstenberg
-import Def.v1.Atlas.ProjectionTheory.code.OSRW
-import Def.v1.Atlas.ProjectionTheory.code.OSRWSharp
-import Def.v1.Atlas.ProjectionTheory.code.Oppenheim
-import Theorem.v1.Atlas.ProjectionTheory.code.OrponenShmerkin2021
-import Def.v1.Atlas.ProjectionTheory.code.OrthogonalityLines
-import Def.v1.Atlas.ProjectionTheory.code.OrthogonalityTubes.Part3
-import Def.v1.Atlas.ProjectionTheory.code.ParsevalHighFreq
-import Theorem.v1.Atlas.ProjectionTheory.code.PlunneckeCorollary
-import Theorem.v1.Atlas.ProjectionTheory.code.PlunneckeLemma
-import Theorem.v1.Atlas.ProjectionTheory.code.PlunneckeSumProduct
-import Def.v1.Atlas.ProjectionTheory.code.PolyK
-import Theorem.v1.Atlas.ProjectionTheory.code.PolyKGrowth
-import Def.v1.Atlas.ProjectionTheory.code.PolynomialHamSandwich
-import Def.v1.Atlas.ProjectionTheory.code.ProjectionIncidence
-import Def.v1.Atlas.ProjectionTheory.code.ProjectionSmoothing
-import Def.v1.Atlas.ProjectionTheory.code.ProjectivePair
-import Theorem.v1.Atlas.ProjectionTheory.code.STProjectionVariant
-import Def.v1.Atlas.ProjectionTheory.code.SelbergExpansion.Part2
-import Def.v1.Atlas.ProjectionTheory.code.SelbergSpectralGap
-import Def.v1.Atlas.ProjectionTheory.code.SiegelWalfisz
-import Structure.v1.Atlas.ProjectionTheory.code.Submultiplicative
-import Structure.v1.Atlas.ProjectionTheory.code.SubmultiplicativeProjective
-import Def.v1.Atlas.ProjectionTheory.code.SzemerediTrotter.Part2
-import Def.v1.Atlas.ProjectionTheory.code.SzemerediTrotterProjection
-import Structure.v1.Atlas.ProjectionTheory.code.TheoremOS
-import Structure.v1.Atlas.ProjectionTheory.code.TwoEnds
-import Def.v1.Atlas.ProjectionTheory.code.UniformSet
-import Def.v1.Atlas.ProjectionTheory.code.Uniformization
-
 

@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Percolation/TrifurcationPatternMeasure.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Percolation.GeneralTrifurcationPattern
+public import Theorem.StatisticalMechanics.Code.Percolation.HrouteDisjointPaths.Part4
+public import Theorem.StatisticalMechanics.Code.Percolation.CanonTrifProb
+public import Theorem.StatisticalMechanics.Code.FK.InfiniteFiniteEnergy.Part2
+open Set MeasureTheory Finset
+open StatMech.Lattice StatMech.ConfigSpace
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Percolation/TrifurcationPatternMeasure.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Percolation.GeneralTrifurcationPattern
-import Theorem.StatisticalMechanics.Code.Percolation.HrouteDisjointPaths.Part4
-import Theorem.StatisticalMechanics.Code.Percolation.CanonTrifProb
-import Theorem.StatisticalMechanics.Code.FK.InfiniteFiniteEnergy.Part2
-open Set MeasureTheory Finset
-open StatMech.Lattice StatMech.ConfigSpace
-
-
 namespace StatMech.Percolation
 
 variable {d : ℕ}

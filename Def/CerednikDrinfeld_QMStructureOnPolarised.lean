@@ -1,7 +1,10 @@
-import Def.CerednikDrinfeld_QMCanonicalPol
-import Structure.CerednikDrinfeld_QMStructureOnPolarised
-
+module
+public import Def.CerednikDrinfeld_QMCanonicalPol
+public import Structure.CerednikDrinfeld_QMStructureOnPolarised
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

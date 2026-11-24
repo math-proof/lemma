@@ -1,6 +1,9 @@
-import Def.PrimeNormIndex_AdmissibleExpAt
-
+module
+public import Def.PrimeNormIndex_AdmissibleExpAt
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

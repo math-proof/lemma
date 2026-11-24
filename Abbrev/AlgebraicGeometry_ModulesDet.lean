@@ -1,7 +1,10 @@
-import Mathlib
-import Instance.PresheafOfModules_ExteriorPower
-
+module
+public import Mathlib
+public import Instance.PresheafOfModules_ExteriorPower
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

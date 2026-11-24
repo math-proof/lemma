@@ -1,12 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Convex/KKM.lean -/
+module
+public import Theorem.Analysis.Convex.KKM.Part4
+open MathlibExt.Analysis.Convex.KKM
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Convex/KKM.lean -/
 -- Author: @toskua, Avocado
 -- Original focused tests by @akiezun in d855ffa90ad200e1ae118101768bd192d0d3c59f.
 -- @toskua, Avocado migrated only the representation to Convexity.StdSimplex.
-
-import Theorem.Analysis.Convex.KKM.Part4
-open MathlibExt.Analysis.Convex.KKM
-
 /-!
 # Tests for the Knaster–Kuratowski–Mazurkiewicz lemma
 
@@ -14,9 +16,8 @@ Focused API checks for `MathlibExt.Analysis.Convex.KKM.kkm_lemma`:
 the exact generic signature applies as stated, and the zero-dimensional
 (`n = 0`) boundary case holds for the trivial one-piece closed cover.
 -/
-
-
 /-- The generic `kkm_lemma` signature applies as stated. -/
+
 example {n : ℕ}
     (F : Fin (n + 1) → Set (Convexity.StdSimplex ℝ (Fin (n + 1))))
     (hF_closed : ∀ i, IsClosed (F i))

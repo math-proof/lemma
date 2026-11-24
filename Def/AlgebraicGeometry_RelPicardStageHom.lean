@@ -1,8 +1,11 @@
-import Mathlib
-import Instance.AlgebraicGeometry_RelativePicardFunctor
-import Lemma.Scheme.TwoAffineOpenCover
-
+module
+public import Mathlib
+public import Instance.AlgebraicGeometry_RelativePicardFunctor
+public import Lemma.Scheme.TwoAffineOpenCover
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

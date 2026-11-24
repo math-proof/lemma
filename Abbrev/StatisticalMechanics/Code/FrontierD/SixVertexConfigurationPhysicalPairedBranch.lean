@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexConfigurationPhysicalPairedBranch.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FiniteTwoBranchWeightedTransport
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexMarkedPairTotalCMonotone.Part2
+public import Instance.StatisticalMechanics.Code.FrontierD.SixVertexConfigurationPhysicalPairedBranch
+open Finset Matrix Polynomial
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexConfigurationPhysicalPairedBranch.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FiniteTwoBranchWeightedTransport
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexMarkedPairTotalCMonotone.Part2
-import Instance.StatisticalMechanics.Code.FrontierD.SixVertexConfigurationPhysicalPairedBranch
-open Finset Matrix Polynomial
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.AutomorphicForm_FormalBaseChange
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open NumberField IsDedekindDomain AutomorphicForm
 open scoped BigOperators NumberField

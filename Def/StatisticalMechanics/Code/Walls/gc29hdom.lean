@@ -1,25 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/gc29hdom.lean -/
-
-/-
-Copyright (c) Meta Platforms, Inc. and affiliates.
-All rights reserved.
-
-This source code is licensed under the license found in the
-LICENSE file in the root directory of this source tree.
--/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Walls.gc28ghsrigid
-import Theorem.StatisticalMechanics.Code.Ising.TwoCurrentProbBound
-import Theorem.StatisticalMechanics.Code.Ising.CrossClassHdom
-import Theorem.StatisticalMechanics.Code.Ising.HdomMultiplicity.Part2
-import Theorem.StatisticalMechanics.Code.Walls.gc15core.Part5
-import Theorem.StatisticalMechanics.Code.Walls.gc29hdom
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Walls.gc28ghsrigid
+public import Theorem.StatisticalMechanics.Code.Ising.TwoCurrentProbBound
+public import Theorem.StatisticalMechanics.Code.Ising.CrossClassHdom
+public import Theorem.StatisticalMechanics.Code.Ising.HdomMultiplicity.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.gc15core.Part5
+public import Theorem.StatisticalMechanics.Code.Walls.gc29hdom
 open Finset BigOperators SimpleGraph
 open scoped symmDiff
 open Classical
-
 set_option linter.unusedSectionVars false
 set_option linter.unusedVariables false
 set_option linter.style.longLine false
@@ -29,6 +18,16 @@ set_option linter.unusedDecidableInType false
 set_option maxHeartbeats 1600000
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/gc29hdom.lean -/
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
 namespace StatMech.Walls
 
 open StatMech StatMech.Ising StatMech.Sharpness

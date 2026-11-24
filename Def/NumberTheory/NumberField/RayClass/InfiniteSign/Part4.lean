@@ -1,9 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/InfiniteSign.lean -/
+module
+public import Theorem.NumberTheory.NumberField.RayClass.RayGroup.Part3
+public import Theorem.Nat.NumberField.RayClass.RayGroup
+public import Mathlib.Data.ZMod.Basic
+public import Theorem.NumberTheory.NumberField.RayClass.InfiniteSign.Part3
 
-import Theorem.NumberTheory.NumberField.RayClass.RayGroup.Part3
-import Lemma.Nat.NumberField.RayClass.RayGroup
-import Mathlib.Data.ZMod.Basic
-import Theorem.NumberTheory.NumberField.RayClass.InfiniteSign.Part3
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/InfiniteSign.lean -/
 @[expose] noncomputable section
 
 /-!

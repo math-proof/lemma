@@ -1,6 +1,10 @@
-import Mathlib
-import Def.Matrix_ProjectiveLineMatrixAction
-import Abbrev.HeckeEis_BinaryFormRep
+module
+public import Mathlib
+public import Def.Matrix_ProjectiveLineMatrixAction
+public import Abbrev.HeckeEis_BinaryFormRep
+
+
+public section
 
 namespace HeckeEis
 

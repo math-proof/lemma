@@ -1,9 +1,12 @@
-import Mathlib
-import Lemma.Fin.RothMvL1Add.le.AddRothSMvL1
-import Lemma.Fin.RothMvL1Neg.eq.RothMvL1
+module
+public import Mathlib
+public import Lemma.Fin.RothMvL1Add.le.AddRothSMvL1
+public import Lemma.Fin.RothMvL1Neg.eq.RothMvL1
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [rothMvL1_sub](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

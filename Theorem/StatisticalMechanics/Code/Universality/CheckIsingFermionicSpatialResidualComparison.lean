@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicSpatialResidualComparison.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSpatialResidualComparison.Part2
+open StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicSpatialResidualComparison.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,9 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSpatialResidualComparison.Part2
-open StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm
 
 #print axioms vertexSpatialTargetResidualPotential_nonneg
 #print axioms vertexSpatialTargetResidualPotential_eq_sum_point

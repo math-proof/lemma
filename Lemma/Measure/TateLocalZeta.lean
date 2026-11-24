@@ -1,6 +1,10 @@
-import Mathlib.MeasureTheory.Measure.Haar.DistribChar
-import Mathlib.Topology.LocallyConstant.Basic
-import Def.LanglandsTunnell_TateLocalZeta
+module
+public import Mathlib.MeasureTheory.Measure.Haar.DistribChar
+public import Mathlib.Topology.LocallyConstant.Basic
+public import Def.LanglandsTunnell_TateLocalZeta
+
+
+public section
 
 noncomputable section
 

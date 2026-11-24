@@ -1,5 +1,268 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingSurfaceTensionNOneStateSumCertificate.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionNOneBlocksGenerated.Part17
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionNOnePolynomialSemantics.Part5
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block00
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block01
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block02
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block03
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block04
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block05
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block06
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block07
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block08
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block09
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block10
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block11
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block12
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block13
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block14
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block15
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block16
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block17
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block18
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block19
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block20
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block21
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block22
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block23
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block24
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block25
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block26
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block27
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block28
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block29
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block30
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block31
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block32
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block33
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block34
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block35
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block36
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block37
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block38
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block39
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block40
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block41
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block42
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block43
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block44
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block45
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block46
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block47
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block48
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block49
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block50
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block51
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block52
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block53
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block54
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block55
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block56
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block57
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block58
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block59
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block60
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block61
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block62
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block63
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block64
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block65
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block66
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block67
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block68
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block69
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block70
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block71
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block72
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block73
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block74
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block75
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block76
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block77
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block78
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block79
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block80
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block81
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block82
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block83
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block84
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block85
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block86
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block87
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block88
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block89
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block90
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block91
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block92
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block93
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block94
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block95
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block96
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block97
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block98
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block99
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block100
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block101
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block102
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block103
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block104
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block105
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block106
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block107
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block108
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block109
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block110
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block111
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block112
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block113
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block114
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block115
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block116
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block117
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block118
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block119
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block120
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block121
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block122
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block123
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block124
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block125
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block126
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block127
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block128
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block129
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block130
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block131
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block132
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block133
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block134
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block135
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block136
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block137
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block138
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block139
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block140
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block141
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block142
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block143
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block144
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block145
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block146
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block147
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block148
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block149
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block150
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block151
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block152
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block153
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block154
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block155
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block156
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block157
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block158
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block159
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block160
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block161
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block162
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block163
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block164
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block165
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block166
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block167
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block168
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block169
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block170
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block171
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block172
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block173
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block174
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block175
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block176
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block177
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block178
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block179
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block180
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block181
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block182
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block183
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block184
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block185
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block186
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block187
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block188
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block189
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block190
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block191
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block192
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block193
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block194
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block195
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block196
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block197
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block198
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block199
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block200
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block201
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block202
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block203
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block204
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block205
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block206
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block207
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block208
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block209
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block210
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block211
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block212
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block213
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block214
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block215
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block216
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block217
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block218
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block219
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block220
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block221
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block222
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block223
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block224
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block225
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block226
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block227
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block228
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block229
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block230
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block231
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block232
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block233
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block234
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block235
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block236
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block237
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block238
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block239
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block240
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block241
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block242
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block243
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block244
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block245
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block246
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block247
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block248
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block249
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block250
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block251
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block252
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block253
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block254
+public import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block255
+public import Def.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionNOneStateSumCertificate
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingSurfaceTensionNOneStateSumCertificate.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,268 +270,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionNOneBlocksGenerated.Part17
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionNOnePolynomialSemantics.Part5
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block00
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block01
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block02
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block03
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block04
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block05
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block06
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block07
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block08
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block09
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block10
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block11
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block12
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block13
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block14
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block15
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block16
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block17
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block18
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block19
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block20
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block21
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block22
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block23
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block24
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block25
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block26
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block27
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block28
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block29
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block30
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block31
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block32
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block33
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block34
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block35
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block36
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block37
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block38
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block39
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block40
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block41
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block42
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block43
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block44
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block45
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block46
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block47
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block48
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block49
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block50
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block51
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block52
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block53
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block54
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block55
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block56
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block57
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block58
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block59
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block60
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block61
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block62
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block63
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block64
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block65
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block66
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block67
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block68
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block69
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block70
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block71
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block72
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block73
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block74
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block75
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block76
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block77
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block78
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block79
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block80
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block81
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block82
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block83
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block84
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block85
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block86
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block87
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block88
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block89
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block90
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block91
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block92
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block93
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block94
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block95
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block96
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block97
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block98
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block99
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block100
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block101
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block102
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block103
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block104
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block105
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block106
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block107
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block108
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block109
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block110
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block111
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block112
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block113
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block114
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block115
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block116
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block117
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block118
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block119
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block120
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block121
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block122
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block123
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block124
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block125
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block126
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block127
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block128
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block129
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block130
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block131
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block132
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block133
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block134
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block135
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block136
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block137
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block138
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block139
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block140
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block141
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block142
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block143
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block144
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block145
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block146
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block147
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block148
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block149
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block150
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block151
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block152
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block153
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block154
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block155
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block156
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block157
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block158
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block159
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block160
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block161
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block162
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block163
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block164
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block165
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block166
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block167
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block168
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block169
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block170
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block171
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block172
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block173
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block174
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block175
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block176
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block177
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block178
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block179
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block180
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block181
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block182
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block183
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block184
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block185
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block186
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block187
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block188
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block189
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block190
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block191
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block192
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block193
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block194
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block195
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block196
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block197
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block198
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block199
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block200
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block201
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block202
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block203
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block204
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block205
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block206
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block207
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block208
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block209
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block210
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block211
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block212
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block213
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block214
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block215
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block216
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block217
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block218
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block219
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block220
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block221
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block222
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block223
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block224
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block225
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block226
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block227
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block228
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block229
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block230
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block231
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block232
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block233
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block234
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block235
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block236
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block237
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block238
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block239
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block240
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block241
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block242
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block243
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block244
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block245
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block246
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block247
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block248
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block249
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block250
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block251
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block252
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block253
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block254
-import Theorem.StatisticalMechanics.Code.FrontierA.NOneStateSumBlocks.Block255
-import Def.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionNOneStateSumCertificate
-
 
 namespace StatMech.FrontierA.NOneSymmetricMeanCertificate
 

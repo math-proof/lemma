@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Ideal.ViaCompactCuspNotion
+import Theorem.Ideal.ViaCompactCuspNotion
 import Def.AutomorphicForm_ArchLowestWeight
 
 set_option autoImplicit false

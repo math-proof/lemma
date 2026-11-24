@@ -1,8 +1,11 @@
-import Mathlib
-import Lemma.WeierstrassCurve.ProjModel
-import Abbrev.AlgebraicGeometry_RelEffCartierDivSum
-
+module
+public import Mathlib
+public import Lemma.WeierstrassCurve.ProjModel
+public import Abbrev.AlgebraicGeometry_RelEffCartierDivSum
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

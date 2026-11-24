@@ -1,11 +1,14 @@
-import Mathlib
-import Theorem.Ideal.RegularLocalRingQuotientRegular
-import Theorems.Thm_IsRegularLocalRing_isDomain
-import Lemma.Ideal.RegularLocalRingRegularSequenceAscent
-
+module
+public import Mathlib
+public import Theorem.Ideal.RegularLocalRingQuotientRegular
+public import Theorems.Thm_IsRegularLocalRing_isDomain
+public import Lemma.Ideal.RegularLocalRingRegularSequenceAscent
 set_option autoImplicit false
 set_option maxHeartbeats 800000
 set_option synthInstance.maxHeartbeats 400000
+
+
+public section
 
 noncomputable section
 

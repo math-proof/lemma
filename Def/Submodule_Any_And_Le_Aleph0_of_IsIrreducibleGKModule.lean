@@ -1,9 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.LieGroups.code.Globalization
-
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.LieGroups.code.Globalization
 open scoped Cardinal
 
+
+public section
 
 /--
 [gkmodule_has_countable_spanning_set](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/Globalization.lean)

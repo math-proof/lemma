@@ -1,3 +1,11 @@
+module
+public import Mathlib
+public import Theorem.Combinatorics.Enumerative.QBinomialBasic.Part4
+public import Def.Combinatorics.Enumerative.AlternatingSums
+
+
+public section
+
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -5,9 +13,6 @@ All rights reserved.
 /-
 Copyright (c) 2025. All rights reserved.
 -/
-import Mathlib
-import Theorem.Combinatorics.Enumerative.QBinomialBasic.Part4
-import Def.Combinatorics.Enumerative.AlternatingSums
 /-!
 # Cancellations in Alternating Sums
 
@@ -56,8 +61,6 @@ The local definition is in namespace `AlgebraicCombinatorics.SignedCounting` to 
 alternating sums, sign-reversing involution, cancellation principle, q-binomial,
 hockey-stick identity, roots of unity, q-Lucas theorem
 -/
-
-
 namespace AlgebraicCombinatorics.SignedCounting
 
 open Finset BigOperators

@@ -1,8 +1,10 @@
-import Lemma.Matrix.ArchType
-
+module
+public import Lemma.Matrix.ArchType
 open AutomorphicForm AutomorphicForm.WindowedSiegel NumberField IsDedekindDomain Matrix
-
 open scoped Classical
+
+
+public section
 
 namespace AutomorphicForm
 

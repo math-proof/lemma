@@ -1,5 +1,20 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/FreeIVErgodicClose.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.CrossBoxGeneralKeystone.Part3
+public import Theorem.StatisticalMechanics.Code.FK.FKTwoBoxDecoupling.Part2
+public import Theorem.StatisticalMechanics.Code.FK.FKWiredDomainMonotone.Part2
+public import Theorem.StatisticalMechanics.Code.FK.FKMixingUpperClose.Part5
+public import Def.StatisticalMechanics.Code.FK.FreeIVErgodicClose
+open MeasureTheory Filter Topology Set
+open StatMech.ConfigSpace StatMech.Lattice
+open scoped BigOperators
+set_option linter.unusedSectionVars false
+set_option linter.style.longLine false
+set_option linter.unusedVariables false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/FreeIVErgodicClose.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,22 +22,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FK.CrossBoxGeneralKeystone.Part3
-import Theorem.StatisticalMechanics.Code.FK.FKTwoBoxDecoupling.Part2
-import Theorem.StatisticalMechanics.Code.FK.FKWiredDomainMonotone.Part2
-import Theorem.StatisticalMechanics.Code.FK.FKMixingUpperClose.Part5
-import Def.StatisticalMechanics.Code.FK.FreeIVErgodicClose
-open MeasureTheory Filter Topology Set
-open StatMech.ConfigSpace StatMech.Lattice
-open scoped BigOperators
-
-set_option linter.unusedSectionVars false
-set_option linter.style.longLine false
-set_option linter.unusedVariables false
-
-
 namespace StatMech
 
 namespace FK

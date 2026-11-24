@@ -1,11 +1,15 @@
-import Mathlib
-import Theorem.Analysis.Section_5_1.Part9
-import Theorem.Analysis.Section_5_3.Part12
-import Theorem.Analysis.Section_5_epilogue.Part5
-import Theorem.Analysis.Section_6_1.Part24
+module
+public import Mathlib
+public import Theorem.Analysis.Section_5_1.Part9
+public import Theorem.Analysis.Section_5_3.Part12
+public import Theorem.Analysis.Section_5_epilogue.Part5
+public import Theorem.Analysis.Section_6_1.Part24
 
+
+public section
 
 -- additional definitions for exercise 6.1.10
+
 abbrev Real.SeqCloseSeq (ε: ℝ) (a b: Chapter5.Sequence) : Prop :=
   ∀ n, n ≥ a.n₀ → n ≥ b.n₀ → ε.Close (a n) (b n)
 

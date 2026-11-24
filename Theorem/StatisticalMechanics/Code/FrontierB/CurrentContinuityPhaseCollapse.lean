@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/CurrentContinuityPhaseCollapse.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.EdgeMarginalInfinite
+public import Theorem.StatisticalMechanics.Code.Ising.IsingPlusTIFromPlacement.Part11
+public import Theorem.StatisticalMechanics.Code.Ising.FVConsistencyProve.Part2
+public import Theorem.StatisticalMechanics.Code.Ising.Peierls.Part4
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityReduction.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierB.GenMixingCofinite
+open Filter MeasureTheory Set Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/CurrentContinuityPhaseCollapse.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FK.EdgeMarginalInfinite
-import Theorem.StatisticalMechanics.Code.Ising.IsingPlusTIFromPlacement.Part11
-import Theorem.StatisticalMechanics.Code.Ising.FVConsistencyProve.Part2
-import Theorem.StatisticalMechanics.Code.Ising.Peierls.Part4
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityReduction.Part2
-import Theorem.StatisticalMechanics.Code.FrontierB.GenMixingCofinite
-open Filter MeasureTheory Set Topology
-
-
 namespace StatMech.FrontierB
 
 open ConfigSpace FK Ising Lattice Percolation

@@ -1,5 +1,20 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/gc5_ensembleurselleq.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Ising.HdomNativeWeight.Part3
+public import Theorem.StatisticalMechanics.Code.Ising.TwoCurrentProbBound
+public import Theorem.StatisticalMechanics.Code.Ising.EnsembleGHS
+public import Def.StatisticalMechanics.Code.Walls.gc5_ensembleurselleq
+open Finset BigOperators SimpleGraph Set Classical
+open scoped symmDiff
+set_option linter.unusedSectionVars false
+set_option linter.style.longLine false
+set_option linter.style.openClassical false
+set_option maxHeartbeats 800000
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/gc5_ensembleurselleq.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,22 +22,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Ising.HdomNativeWeight.Part3
-import Theorem.StatisticalMechanics.Code.Ising.TwoCurrentProbBound
-import Theorem.StatisticalMechanics.Code.Ising.EnsembleGHS
-import Def.StatisticalMechanics.Code.Walls.gc5_ensembleurselleq
-open Finset BigOperators SimpleGraph Set Classical
-open scoped symmDiff
-
-set_option linter.unusedSectionVars false
-set_option linter.style.longLine false
-set_option linter.style.openClassical false
-set_option maxHeartbeats 800000
-
-
 namespace StatMech.Walls
 
 open StatMech.Ising

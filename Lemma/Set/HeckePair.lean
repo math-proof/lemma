@@ -1,12 +1,14 @@
-import Mathlib
-import Instance.AbstractHeckeOperator
-import Instance.LocalLanglands_HeckePair
-import Lemma.Set.HeckeAlgebra
-
+module
+public import Mathlib
+public import Instance.AbstractHeckeOperator
+public import Instance.LocalLanglands_HeckePair
+public import Lemma.Set.HeckeAlgebra
 set_option autoImplicit false
-
 open scoped Pointwise
 open Function MulAction
+
+
+public section
 
 namespace HeckePair
 

@@ -1,7 +1,10 @@
-import Mathlib
-import Lemma.Submodule.ContinuousH2
-
+module
+public import Mathlib
+public import Lemma.Submodule.ContinuousH2
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

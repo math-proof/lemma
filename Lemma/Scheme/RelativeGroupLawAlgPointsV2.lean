@@ -1,9 +1,12 @@
-import Mathlib
-import Lemma.Scheme.RelativeGroupLawKernel
-import Lemma.Scheme.RelativeGroupLawEndDegree
-import Instance.GoodReductionJacobian_RelativeGroupLawAlgPointsV2
-
+module
+public import Mathlib
+public import Lemma.Scheme.RelativeGroupLawKernel
+public import Lemma.Scheme.RelativeGroupLawEndDegree
+public import Instance.GoodReductionJacobian_RelativeGroupLawAlgPointsV2
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

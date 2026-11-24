@@ -1,19 +1,23 @@
--- Carved from Lemma/Definitions/Def_AlgebraicCurve_CurveModelConstruction.lean: instance decls only.
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Affine
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.ValuativeCriterion
-import Mathlib.Algebra.GCDMonoid.IntegrallyClosed
-import Mathlib.AlgebraicGeometry.FunctionField
-import Mathlib.AlgebraicGeometry.AlgClosed.Basic
-import Mathlib.AlgebraicGeometry.Limits
-import Mathlib.FieldTheory.RatFunc.AsPolynomial
-import Instance.JacJ1_ChartAlgebra
-import Instance.AlgebraicCurve_CurveModelSmooth
-import Theorem.Scheme.CurveModelConstruction
-import Def.AlgebraicCurve_CurveModelConstruction
-
+module
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.ValuativeCriterion
+public import Mathlib.Algebra.GCDMonoid.IntegrallyClosed
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Mathlib.AlgebraicGeometry.AlgClosed.Basic
+public import Mathlib.AlgebraicGeometry.Limits
+public import Mathlib.FieldTheory.RatFunc.AsPolynomial
+public import Instance.JacJ1_ChartAlgebra
+public import Instance.AlgebraicCurve_CurveModelSmooth
+public import Theorem.Scheme.CurveModelConstruction
+public import Def.AlgebraicCurve_CurveModelConstruction
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicCurve_CurveModelConstruction.lean: instance decls only.
 
 noncomputable section
 

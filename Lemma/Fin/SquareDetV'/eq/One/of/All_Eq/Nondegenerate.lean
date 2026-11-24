@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.Oriflamme.Part5
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.Oriflamme.Part5
 open Oriflamme
 
+
+public section
 
 /--
 [isometry_det_sq_eq_one](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/SphericalBuilding/Oriflamme.lean)

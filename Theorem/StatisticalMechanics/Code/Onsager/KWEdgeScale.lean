@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/KWEdgeScale.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Onsager.KWWeighted.Part2
+public import Theorem.StatisticalMechanics.Code.Onsager.FirstReturnScale
+public import Def.StatisticalMechanics.Code.Onsager.KWEdgeScale
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/KWEdgeScale.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.Onsager.KWWeighted.Part2
-import Theorem.StatisticalMechanics.Code.Onsager.FirstReturnScale
-import Def.StatisticalMechanics.Code.Onsager.KWEdgeScale
-
-
 namespace StatMech.Onsager
 
 open Matrix BigOperators

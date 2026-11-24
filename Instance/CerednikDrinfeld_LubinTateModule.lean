@@ -1,14 +1,17 @@
--- Carved from Lemma/Definitions/Def_CerednikDrinfeld_LubinTateModule.lean: instance decls only.
-import Mathlib
-import Instance.MvFormalGroup_NegV2
-import Theorem.MvPowerSeries.SpecialFormalModule
-import Theorem.MvPowerSeries.LubinTateModule
-import Notation.CerednikDrinfeld_LubinTateModule
-import Def.CerednikDrinfeld_LubinTateModule
-
+module
+public import Mathlib
+public import Instance.MvFormalGroup_NegV2
+public import Theorem.MvPowerSeries.SpecialFormalModule
+public import Theorem.MvPowerSeries.LubinTateModule
+public import Notation.CerednikDrinfeld_LubinTateModule
+public import Def.CerednikDrinfeld_LubinTateModule
 set_option autoImplicit false
 set_option linter.unusedSectionVars false
 
+
+public section
+
+-- Carved from Lemma/Definitions/Def_CerednikDrinfeld_LubinTateModule.lean: instance decls only.
 
 universe u v in
 set_option autoImplicit false

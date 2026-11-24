@@ -1,9 +1,11 @@
-import Def.LanglandsTunnell_CubicInduction_Structure
-import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
-
+module
+public import Def.LanglandsTunnell_CubicInduction_Structure
+public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 set_option autoImplicit false
-
 open Matrix IsDedekindDomain NumberField Matrix.AdelicLevel LanglandsTunnell.TateLocal
+
+
+public section
 
 noncomputable section
 

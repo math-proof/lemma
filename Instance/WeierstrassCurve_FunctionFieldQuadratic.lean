@@ -1,9 +1,13 @@
--- Carved from Lemma/Definitions/Def_WeierstrassCurve_FunctionFieldQuadratic.lean: instance decls only.
-import Mathlib
-import Theorem.WeierstrassCurve.FunctionFieldQuadratic
-import Def.WeierstrassCurve_FunctionFieldQuadratic
-
+module
+public import Mathlib
+public import Theorem.WeierstrassCurve.FunctionFieldQuadratic
+public import Def.WeierstrassCurve_FunctionFieldQuadratic
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_WeierstrassCurve_FunctionFieldQuadratic.lean: instance decls only.
 
 noncomputable section
 

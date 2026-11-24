@@ -1,4 +1,4 @@
-import Lemma.Matrix.CubicInduction_TorusValues
+import Theorem.Matrix.CubicInduction_TorusValues
 import Abbrev.LanglandsTunnell_CubicInduction_SphericalValues
 
 set_option autoImplicit false

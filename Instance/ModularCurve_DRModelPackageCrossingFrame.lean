@@ -1,11 +1,14 @@
--- Carved from Lemma/Definitions/Def_ModularCurve_DRModelPackageCrossingFrame.lean: instance decls only.
-import Mathlib
-import Def.ModularCurve_DRResolvedModelPackageV4
-import Abbrev.ModularCurve_DRModelPackageCrossingFrame
-
+module
+public import Mathlib
+public import Def.ModularCurve_DRResolvedModelPackageV4
+public import Abbrev.ModularCurve_DRModelPackageCrossingFrame
 set_option autoImplicit false
-
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry ModularCurve
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_ModularCurve_DRModelPackageCrossingFrame.lean: instance decls only.
 
 noncomputable section
 

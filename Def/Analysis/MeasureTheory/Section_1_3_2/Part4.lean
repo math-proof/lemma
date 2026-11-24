@@ -1,8 +1,11 @@
-import Theorem.Analysis.MeasureTheory.Section_1_3_1.Part11
-import Mathlib.Algebra.Order.Floor.Semifield
-import Theorem.Analysis.MeasureTheory.Section_1_3_2.Part3
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_3_1.Part11
+public import Mathlib.Algebra.Order.Floor.Semifield
+public import Theorem.Analysis.MeasureTheory.Section_1_3_2.Part3
 set_option doc.verso.suggestions false
 
+
+public section
 
 def UniformConvergesTo {X:Type*} (f: ℕ → X → EReal) (g: X → EReal) : Prop := ∀ ε:NNReal, ε > 0 → ∃ N:ℕ, ∀ n ≥ N, ∀ x, f n x > g x - ε ∧ f n x < g x + ε
 

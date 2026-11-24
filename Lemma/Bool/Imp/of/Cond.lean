@@ -1,4 +1,5 @@
 import Lemma.Bool.Imp.is.OrNot
+import Lemma.Bool.Imp.of.Cond.invert.given
 
 
 @[path]
@@ -10,18 +11,6 @@ private lemma main
   q → p := by
 -- proof
   simp [h]
-
-
-@[path]
-private lemma invert.given
-  {p q : Prop}
--- given
-  (h : ¬p) :
--- imply
-  p → q := by
--- proof
-  intro hp
-  exact absurd hp h
 
 
 @[path]

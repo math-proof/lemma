@@ -1,8 +1,11 @@
-import Def.Analysis.MeasureTheory.Notation.Part2
-import Theorem.Analysis.Section_9_1.Part3
-import Instance.Analysis.MeasureTheory.Section_1_1_1.Part5
+module
+public import Def.Analysis.MeasureTheory.Notation.Part2
+public import Theorem.Analysis.Section_9_1.Part3
+public import Instance.Analysis.MeasureTheory.Section_1_1_1.Part5
 open BoundedInterval
 
+
+public section
 
 /-- Subset of {name}`BoundedInterval`s is equivalent to subset of their underlying sets. -/
 @[simp]

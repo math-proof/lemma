@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/TorusDecoration.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.TrivalentCycles
+public import Theorem.StatisticalMechanics.Code.Onsager.TurningTelescope.Part3
+public import Theorem.StatisticalMechanics.Code.Onsager.Torus
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/TorusDecoration.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.TrivalentCycles
-import Theorem.StatisticalMechanics.Code.Onsager.TurningTelescope.Part3
-import Theorem.StatisticalMechanics.Code.Onsager.Torus
-
-
 namespace StatMech.Onsager
 
 open Finset SimpleGraph

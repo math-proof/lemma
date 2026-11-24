@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/DecorationFormalMultiaffine.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Onsager.DecorationMiddleBalanced
+public import Theorem.StatisticalMechanics.Code.Onsager.DecorationFormalClose
+public import Theorem.StatisticalMechanics.Code.Onsager.DecorationEdgeClassification
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/DecorationFormalMultiaffine.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.Onsager.DecorationMiddleBalanced
-import Theorem.StatisticalMechanics.Code.Onsager.DecorationFormalClose
-import Theorem.StatisticalMechanics.Code.Onsager.DecorationEdgeClassification
-
-
 namespace StatMech.Onsager
 
 open BigOperators

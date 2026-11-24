@@ -1,5 +1,21 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/CramerTheorem.lean -/
+module
+public import Mathlib.InformationTheory.KullbackLeibler.Basic
+public import Mathlib.Probability.Moments.Tilted
+public import Mathlib.Probability.Moments.MGFAnalytic
+public import Mathlib.Analysis.Calculus.FDeriv.Analytic
+public import Mathlib.Analysis.Convex.Continuous
+public import Mathlib.Analysis.Calculus.LocalExtr.Basic
+public import Mathlib.Topology.Order.Compact
+public import Mathlib.Analysis.InnerProductSpace.Continuous
+public import Theorem.v1.Atlas.Probability.code.CramerRateFunction
+public import Theorem.v1.Atlas.Probability.code.CramerTheorem
+open InformationTheory MeasureTheory ProbabilityMeasure ProbabilityTheory Filter
+open scoped InnerProductSpace ENNReal Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/CramerTheorem.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,20 +23,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib.InformationTheory.KullbackLeibler.Basic
-import Mathlib.Probability.Moments.Tilted
-import Mathlib.Probability.Moments.MGFAnalytic
-import Mathlib.Analysis.Calculus.FDeriv.Analytic
-import Mathlib.Analysis.Convex.Continuous
-import Mathlib.Analysis.Calculus.LocalExtr.Basic
-import Mathlib.Topology.Order.Compact
-import Mathlib.Analysis.InnerProductSpace.Continuous
-import Theorem.v1.Atlas.Probability.code.CramerRateFunction
-import Theorem.v1.Atlas.Probability.code.CramerTheorem
-open InformationTheory MeasureTheory ProbabilityMeasure ProbabilityTheory Filter
-open scoped InnerProductSpace ENNReal Topology
-
 /-!
 # Rate identification core: contracted Sanov ↔ Cramér Legendre
 
@@ -37,7 +39,6 @@ Strengthens the tilt-fiber glue in `CramerTheorem` toward a global equality
 * Residual: prove the covering (every finite-Λ* point is a tilt barycenter) by convex analysis
   / essential smoothness of `logMGFVec` under vector hMGF.
 -/
-
 /-- Tilting by a dual direction preserves vector exponential moments. -/
 theorem HasFiniteMGF.tilted {d : ℕ}
     {μ₀ : Measure (EuclideanSpace ℝ (Fin d))} [IsProbabilityMeasure μ₀]

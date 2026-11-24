@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKQgt4SquareFaceDualPercolation.lean -/
+module
+public import Def.StatisticalMechanics.Code.FrontierD.FKQgt4SquareDualOpenBoundary.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareAnchoredShell.Part4
+public import Theorem.StatisticalMechanics.Code.FrontierA.NearestSetGeometry.Part4
+open Filter MeasureTheory Set SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKQgt4SquareFaceDualPercolation.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Def.StatisticalMechanics.Code.FrontierD.FKQgt4SquareDualOpenBoundary.Part2
-import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareAnchoredShell.Part4
-import Theorem.StatisticalMechanics.Code.FrontierA.NearestSetGeometry.Part4
-open Filter MeasureTheory Set SimpleGraph
-
-
 namespace StatMech.FrontierD
 
 open StatMech.Lattice StatMech.Percolation StatMech.ConfigSpace

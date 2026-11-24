@@ -1,6 +1,11 @@
-import Mathlib
-import Abbrev.Analysis.Section_9_3.Part2
-import Theorem.Analysis.Section_9_4.Part2
+module
+public import Mathlib
+public import Abbrev.Analysis.Section_9_3.Part2
+public import Theorem.Analysis.Section_9_4.Part2
+
+
+public section
+
 /-!
 # Analysis I, Section 9.7: The intermediate value theorem
 
@@ -13,8 +18,6 @@ doing so.
 Main constructions and results of this section:
 - The intermediate value theorem.
 -/
-
-
 namespace Chapter9
 
 open Classical in

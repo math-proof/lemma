@@ -1,46 +1,49 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch6Entry14LambertSeries.lean -/
+module
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Order.Floor.Defs
+public import Mathlib.Analysis.Calculus.ContDiff.Basic
+public import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
+public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Combinatorics.Enumerative.Stirling
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Data.Finset.Defs
+public import Mathlib.Data.Finset.Range
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.Data.Set.Defs
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.NumberTheory.Harmonic.EulerMascheroni
+public import Mathlib.Order.Filter.Basic
+public import Mathlib.Order.Interval.Finset.Defs
+public import Mathlib.Order.Interval.Set.Defs
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Topology.Basic
+public import Mathlib.Analysis.Calculus.SmoothSeries
+public import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
+public import Mathlib.Analysis.Complex.RealDeriv
+public import Mathlib.Analysis.Normed.Group.Tannery
+public import Mathlib.Analysis.Real.Pi.Bounds
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
+public import Mathlib.NumberTheory.ZetaValues
+public import Mathlib.Tactic
+public import Def.Analysis.Calculus.EulerMaclaurinFormula
+public import Theorem.Real.Calculus.EulerMaclaurinFormula
+public import Theorem.Real.ExpSubOneMittagLeffler
+public import Def.Analysis.SpecialFunctions.ExpSubOneMittagLeffler
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch6Entry14LambertSeries.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @akiezun, Avocado, Codex
 -/
-
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Order.Floor.Defs
-import Mathlib.Analysis.Calculus.ContDiff.Basic
-import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Combinatorics.Enumerative.Stirling
-import Mathlib.Basic.Complex.Basic
-import Mathlib.Data.Finset.Defs
-import Mathlib.Data.Finset.Range
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Data.Set.Defs
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
-import Mathlib.NumberTheory.Bernoulli
-import Mathlib.NumberTheory.Harmonic.EulerMascheroni
-import Mathlib.Order.Filter.Basic
-import Mathlib.Order.Interval.Finset.Defs
-import Mathlib.Order.Interval.Set.Defs
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Topology.Basic
-import Mathlib.Analysis.Calculus.SmoothSeries
-import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
-import Mathlib.Analysis.Complex.RealDeriv
-import Mathlib.Analysis.Normed.Group.Tannery
-import Mathlib.Analysis.Real.Pi.Bounds
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
-import Mathlib.NumberTheory.ZetaValues
-import Mathlib.Tactic
-import Def.Analysis.Calculus.EulerMaclaurinFormula
-import Theorem.Real.Calculus.EulerMaclaurinFormula
-import Lemma.Real.ExpSubOneMittagLeffler
-import Def.Analysis.SpecialFunctions.ExpSubOneMittagLeffler
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 6, Entry 14
 
@@ -52,8 +55,6 @@ two theorem names `ramanujan_part1_ch6_entry10_centralbinomialexpansion` /
 `ramanujan_part1_ch6_entry10_centralbinomialfull` are frozen Wanted identifiers and are
 kept unchanged.
 -/
-
-
 namespace MathlibExt.Analysis.Ramanujan.Part1Ch6
 
 namespace Entry10Centralbinomialexpansion

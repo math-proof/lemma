@@ -1,7 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/Reversal.lean -/
+module
+public import Def.NumberTheory.MultipleZeta.Series.Part3
+public import Theorem.Nat.MultipleZeta.Series
 
-import Def.NumberTheory.MultipleZeta.Series.Part3
-import Lemma.Nat.MultipleZeta.Series
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/Reversal.lean -/
 /-!
 # Reversing multiple-zeta summation conventions
 

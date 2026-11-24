@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/LebowitzPfisterReplicaFourFunctions.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaCollisionResummation.Part10
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaAggregateSwitching
+open Finset
+open scoped BigOperators symmDiff
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/LebowitzPfisterReplicaFourFunctions.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaCollisionResummation.Part10
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterReplicaAggregateSwitching
-open Finset
-open scoped BigOperators symmDiff
-
-
 namespace StatMech.Ising
 
 open StatMech.Sharpness

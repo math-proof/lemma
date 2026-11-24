@@ -1,7 +1,10 @@
-import Lemma.HahnSeries.X0
-import Def.ModularCurve_JqCoeff
-
+module
+public import Lemma.HahnSeries.X0
+public import Def.ModularCurve_JqCoeff
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

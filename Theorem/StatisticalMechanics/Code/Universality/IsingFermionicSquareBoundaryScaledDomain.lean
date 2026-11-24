@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicSquareBoundaryScaledDomain.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareScaledDomain.Part4
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalFullSquareBoundaryLayer.Part8
+public import Theorem.StatisticalMechanics.Code.Universality.FiniteHolomorphicInterpolation
+public import Def.StatisticalMechanics.Code.Universality.IsingFermionicSquareBoundaryScaledDomain
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicSquareBoundaryScaledDomain.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareScaledDomain.Part4
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalFullSquareBoundaryLayer.Part8
-import Theorem.StatisticalMechanics.Code.Universality.FiniteHolomorphicInterpolation
-import Def.StatisticalMechanics.Code.Universality.IsingFermionicSquareBoundaryScaledDomain
-
-
 namespace StatMech.Universality
 
 open StatMech StatMech.FK StatMech.Lattice StatMech.BeffaraDC

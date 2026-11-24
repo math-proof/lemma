@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/SheafCohCurvesFiniteness.lean -/
+module
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology.Part2
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSheavesCurves
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CoherentSheavesCurves.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/SheafCohCurvesFiniteness.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology.Part2
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSheavesCurves
-import Def.v1.Atlas.AlgebraicGeometryI.code.CoherentSheavesCurves.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
-
-
 namespace SheafCohCurvesFiniteness
 
 open CohomologyP1 SheafCohomology

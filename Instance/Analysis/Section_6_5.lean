@@ -1,5 +1,10 @@
-import Mathlib
-import Abbrev.Analysis.Section_6_4.Part3
+module
+public import Mathlib
+public import Abbrev.Analysis.Section_6_4.Part3
+
+
+public section
+
 /-!
 # Analysis I, Section 6.5: Some standard limits
 
@@ -14,8 +19,6 @@ Main constructions and results of this section:
 - Some standard limits, including limits of sequences of the form 1/n^α, x^n, and x^(1/n).
 
 -/
-
-
 namespace Chapter6
 
 instance Sequence.inst_npow : NPow Sequence where

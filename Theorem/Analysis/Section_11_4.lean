@@ -1,6 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Section_9_6
-import Abbrev.Analysis.Section_11_3.Part5
+module
+public import Mathlib
+public import Theorem.Analysis.Section_9_6
+public import Abbrev.Analysis.Section_11_3.Part5
+
+
+public section
+
 /-!
 # Analysis I, Section 11.4: Basic properties of the Riemann integral
 
@@ -14,8 +19,6 @@ Main constructions and results of this section:
 - Basic properties of the Riemann integral.
 
 -/
-
-
 namespace Chapter11
 
 open Chapter9

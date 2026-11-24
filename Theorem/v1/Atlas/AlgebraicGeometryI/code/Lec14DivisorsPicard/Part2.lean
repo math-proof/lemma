@@ -1,5 +1,24 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/Lec14DivisorsPicard.lean -/
+module
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CartierDivisorScheme.Part3
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CartierDivisorScheme
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CartierDivisorGroup
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.LocallyFactorialDivisors
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DivisorsPicard
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.WeilDivisor
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PicardGroup
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CartierDivisorGroup.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.LocallyFactorialDivisors.Part7
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.DivisorsPicard.Part3
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.WeilDivisor
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.PicardGroup
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.CohomologyPicard
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec14DivisorsPicard.Part2
+open AlgebraicGeometry CategoryTheory
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/Lec14DivisorsPicard.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,24 +26,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.AlgebraicGeometryI.code.CartierDivisorScheme.Part3
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CartierDivisorScheme
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CartierDivisorGroup
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.LocallyFactorialDivisors
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.DivisorsPicard
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.WeilDivisor
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PicardGroup
-import Def.v1.Atlas.AlgebraicGeometryI.code.CartierDivisorGroup.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.LocallyFactorialDivisors.Part7
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.DivisorsPicard.Part3
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.WeilDivisor
-import Instance.v1.Atlas.AlgebraicGeometryI.code.PicardGroup
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.CohomologyPicard
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec14DivisorsPicard.Part2
-open AlgebraicGeometry CategoryTheory
-
-
 noncomputable section
 
 universe u

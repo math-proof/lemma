@@ -1,7 +1,12 @@
-import Mathlib
-import Mathlib.Data.Real.Sign
-import Abbrev.Analysis.Section_9_3.Part2
-import Theorem.Analysis.Section_9_4.Part2
+module
+public import Mathlib
+public import Mathlib.Data.Real.Sign
+public import Abbrev.Analysis.Section_9_3.Part2
+public import Theorem.Analysis.Section_9_4.Part2
+
+
+public section
+
 /-!
 # Analysis I, Section 9.5: Left and right limits
 
@@ -14,8 +19,6 @@ doing so.
 Main constructions and results of this section:
 - Left and right limits.
 -/
-
-
 namespace Chapter9
 
 /-- Definition 9.5.1.  We give left and right limits the "junk" value of 0 if the limit does not exist. -/

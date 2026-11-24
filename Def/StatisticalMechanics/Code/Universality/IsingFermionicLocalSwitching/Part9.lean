@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicLocalSwitching.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicDobrushin.Part8
+public import Theorem.StatisticalMechanics.Code.FK.FinitePatternEnergy.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicLocalSwitching.Part9
+open Finset Complex
+open scoped BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicLocalSwitching.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicDobrushin.Part8
-import Theorem.StatisticalMechanics.Code.FK.FinitePatternEnergy.Part3
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicLocalSwitching.Part9
-open Finset Complex
-open scoped BigOperators
-
-
 namespace StatMech.Universality
 
 open StatMech StatMech.FK StatMech.Lattice StatMech.BeffaraDC

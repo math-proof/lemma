@@ -1,9 +1,13 @@
--- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ThetaGroupLaw.lean: instance decls only.
-import Instance.AlgebraicGeometry_ThetaGroup
-import Theorem.Scheme.ThetaGroupLaw
-import Def.AlgebraicGeometry_ThetaGroupLaw
-
+module
+public import Instance.AlgebraicGeometry_ThetaGroup
+public import Theorem.Scheme.ThetaGroupLaw
+public import Def.AlgebraicGeometry_ThetaGroupLaw
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ThetaGroupLaw.lean: instance decls only.
 
 noncomputable section
 

@@ -1,13 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Topology/KuratowskiClosureComplement.lean -/
-
-import Lemma.Set.KuratowskiClosureComplement
-import Instance.MathlibExtTest.Topology.KuratowskiClosureComplement
+module
+public import Theorem.Set.KuratowskiClosureComplement
+public import Instance.MathlibExtTest.Topology.KuratowskiClosureComplement
 open Set
 open Topology.ClosureCompl
 open MathlibExt.Topology.KuratowskiClosureComplement
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Topology/KuratowskiClosureComplement.lean -/
 /-- Mathlib's canonical obtainability predicate contains its seed set. -/
+
 example : IsObtainable ({0} : Set (Fin 2)) {0} :=
   .base
 

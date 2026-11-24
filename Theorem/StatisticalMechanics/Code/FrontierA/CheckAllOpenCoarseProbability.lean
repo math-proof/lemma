@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/CheckAllOpenCoarseProbability.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.AllOpenCoarseProbability.Part2
+open StatMech.FrontierA
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/CheckAllOpenCoarseProbability.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,9 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.FrontierA.AllOpenCoarseProbability.Part2
-open StatMech.FrontierA
 
 #check measurableSet_faithfulAllOpenTrifAt
 #check faithfulAllOpenTrifAt_shift_centre

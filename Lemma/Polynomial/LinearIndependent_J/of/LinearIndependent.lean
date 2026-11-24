@@ -1,10 +1,13 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.NumberTheory.RothAuxiliary
-import Lemma.Polynomial.Any_Eq_SMul.of.EqWronskian_0.Ne_0
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.NumberTheory.RothAuxiliary
+public import Lemma.Polynomial.Any_Eq_SMul.of.EqWronskian_0.Ne_0
 open MathlibExt.NumberTheory.RothAuxiliary
 open Polynomial
 
+
+public section
 
 /--
 [rothPolyWronskian_tail_linearIndependent](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

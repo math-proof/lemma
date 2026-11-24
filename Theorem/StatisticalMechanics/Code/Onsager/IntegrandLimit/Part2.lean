@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/IntegrandLimit.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.CriticalPoint
+public import Theorem.StatisticalMechanics.Code.Onsager.FreeEnergy
+public import Theorem.StatisticalMechanics.Code.Onsager.RiemannPeriodic2D
+public import Theorem.StatisticalMechanics.Code.Onsager.SymbolDet
+public import Def.StatisticalMechanics.Code.Onsager.IntegrandLimit
+open scoped Real
+open MeasureTheory
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/IntegrandLimit.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.CriticalPoint
-import Theorem.StatisticalMechanics.Code.Onsager.FreeEnergy
-import Theorem.StatisticalMechanics.Code.Onsager.RiemannPeriodic2D
-import Theorem.StatisticalMechanics.Code.Onsager.SymbolDet
-import Def.StatisticalMechanics.Code.Onsager.IntegrandLimit
-open scoped Real
-open MeasureTheory
-
-
 namespace StatMech.Onsager
 
 theorem ons_symbolDispersion_eq (β k₁ k₂ : ℝ) :

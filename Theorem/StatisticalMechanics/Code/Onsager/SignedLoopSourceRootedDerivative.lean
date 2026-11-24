@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/SignedLoopSourceRootedDerivative.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopAddedEdgeRooted
+public import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopHighTempResummation.Part7
+open scoped BigOperators
+open Filter SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/SignedLoopSourceRootedDerivative.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopAddedEdgeRooted
-import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopHighTempResummation.Part7
-open scoped BigOperators
-open Filter SimpleGraph
-
-
 namespace StatMech.Onsager
 
 open StatMech.FrontierA

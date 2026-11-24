@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ProjectionTheory/code/LargeSieveMultConv.lean -/
+module
+public import Def.v1.Atlas.ProjectionTheory.code.LinnikLargeSieve
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.LinnikLargeSieve
+public import Theorem.Real.Atlas.v1.ProjectionTheory.code.MultConvLinftyBound
+public import Def.v1.Atlas.ProjectionTheory.code.MultConvLinftyBound
+open Finset Complex BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ProjectionTheory/code/LargeSieveMultConv.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.ProjectionTheory.code.LinnikLargeSieve
-import Theorem.Real.Atlas.v1.ProjectionTheory.code.LinnikLargeSieve
-import Lemma.Real.Atlas.v1.ProjectionTheory.code.MultConvLinftyBound
-import Def.v1.Atlas.ProjectionTheory.code.MultConvLinftyBound
-open Finset Complex BigOperators
-
-
 noncomputable section
 
 namespace LargeSieveMultConv

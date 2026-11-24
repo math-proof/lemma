@@ -1,7 +1,10 @@
-import Mathlib.NumberTheory.ModularForms.SlashActions
-import Def.ModularForm_HeckeOperator
-
+module
+public import Mathlib.NumberTheory.ModularForms.SlashActions
+public import Def.ModularForm_HeckeOperator
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

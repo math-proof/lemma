@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/Section9.lean -/
+module
+public import Mathlib.Algebra.FiveLemma
+public import Mathlib.Algebra.Homology.HomologySequence
+public import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section11
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section11
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section9
+open CategoryTheory
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/Section9.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib.Algebra.FiveLemma
-import Mathlib.Algebra.Homology.HomologySequence
-import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section11
-import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section11
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section9
-open CategoryTheory
-
-
 namespace HomologyLongExactSequence
 
 variable {C ι : Type*} [Category C] [Abelian C] {c : ComplexShape ι}

@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/SmoothVectorsProps.lean -/
+module
+public import Def.v1.Atlas.LieGroups.code.SmoothVectors
+public import Def.v1.Atlas.LieGroups.code.KFinite.Part3
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.MeasureTheory.Measure.Haar.Basic
+public import Mathlib.Algebra.Lie.Basic
+public import Mathlib.Geometry.Manifold.BumpFunction
+public import Def.v1.Atlas.LieGroups.code.SmoothVectorsProps
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/SmoothVectorsProps.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.LieGroups.code.SmoothVectors
-import Def.v1.Atlas.LieGroups.code.KFinite.Part3
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.MeasureTheory.Measure.Haar.Basic
-import Mathlib.Algebra.Lie.Basic
-import Mathlib.Geometry.Manifold.BumpFunction
-import Def.v1.Atlas.LieGroups.code.SmoothVectorsProps
-
-
 section GStable
 
 variable {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]

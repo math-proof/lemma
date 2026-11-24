@@ -1,9 +1,13 @@
--- Carved from Lemma/Definitions/Def_WeierstrassCurve_Generic.lean: instance decls only.
-import Mathlib
-import Theorem.WeierstrassCurve.Generic
-import Def.WeierstrassCurve_Generic
-
+module
+public import Mathlib
+public import Theorem.WeierstrassCurve.Generic
+public import Def.WeierstrassCurve_Generic
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_WeierstrassCurve_Generic.lean: instance decls only.
 
 universe u v
 

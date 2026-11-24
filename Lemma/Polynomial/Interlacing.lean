@@ -1,9 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.Algebra.Polynomial.Interlacing
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.Algebra.Polynomial.Interlacing
 open scoped ComplexOrder NNReal
 open Polynomial
 
+
+public section
 
 namespace Polynomial
 

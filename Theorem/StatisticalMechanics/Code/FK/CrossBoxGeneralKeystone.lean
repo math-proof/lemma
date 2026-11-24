@@ -1,5 +1,21 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/CrossBoxGeneralKeystone.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.FKDisjointBoxReduce.Part2
+public import Theorem.StatisticalMechanics.Code.FK.DisjointGraphFactorizeClose.Part2
+public import Theorem.StatisticalMechanics.Code.FK.OffCentreDomination.Part13
+public import Theorem.StatisticalMechanics.Code.FK.WiredDomChain.Part4
+public import Theorem.StatisticalMechanics.Code.FK.MultiEdgeDecay.Part4
+public import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeane.Part5
+open MeasureTheory Filter Topology Set SimpleGraph
+open StatMech.ConfigSpace StatMech.Lattice
+open scoped BigOperators
+set_option linter.unusedSectionVars false
+set_option linter.style.longLine false
+set_option linter.unusedVariables false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/CrossBoxGeneralKeystone.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,23 +23,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FK.FKDisjointBoxReduce.Part2
-import Theorem.StatisticalMechanics.Code.FK.DisjointGraphFactorizeClose.Part2
-import Theorem.StatisticalMechanics.Code.FK.OffCentreDomination.Part13
-import Theorem.StatisticalMechanics.Code.FK.WiredDomChain.Part4
-import Theorem.StatisticalMechanics.Code.FK.MultiEdgeDecay.Part4
-import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeane.Part5
-open MeasureTheory Filter Topology Set SimpleGraph
-open StatMech.ConfigSpace StatMech.Lattice
-open scoped BigOperators
-
-set_option linter.unusedSectionVars false
-set_option linter.style.longLine false
-set_option linter.unusedVariables false
-
-
 namespace StatMech
 
 namespace FK

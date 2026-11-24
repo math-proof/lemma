@@ -1,37 +1,38 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeCounting/BrunTitchmarsh.lean -/
+module
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Def.NumberTheory.PrimeCounting.ResidueClass
+public import Theorem.Nat.PrimeCounting.ResidueClass
+public import Lemma.Nat.PrimeCounting.WeightedLargeSieve
+public import Theorem.Nat.PrimeCounting.ArithmeticLargeSieve
+public import Theorem.Nat.PrimeCounting.SquarefreeTotientWeighted
+public import Def.NumberTheory.PrimeCounting.WeightedLargeSieve
+public import Def.NumberTheory.PrimeCounting.ArithmeticLargeSieve.Part3
+public import Def.NumberTheory.PrimeCounting.SquarefreeTotientWeighted
+public import Mathlib.Analysis.Calculus.Deriv.MeanValue
+public import Mathlib.Analysis.Complex.ExponentialBounds
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Mathlib.Analysis.SpecialFunctions.Log.Monotone
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Data.Int.CardIntervalMod
+public import Mathlib.NumberTheory.ArithmeticFunction.Moebius
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeCounting/BrunTitchmarsh.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
-
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Def.NumberTheory.PrimeCounting.ResidueClass
-import Theorem.Nat.PrimeCounting.ResidueClass
-import Lemma.Nat.PrimeCounting.WeightedLargeSieve
-import Lemma.Nat.PrimeCounting.ArithmeticLargeSieve
-import Lemma.Nat.PrimeCounting.SquarefreeTotientWeighted
-import Def.NumberTheory.PrimeCounting.WeightedLargeSieve
-import Def.NumberTheory.PrimeCounting.ArithmeticLargeSieve.Part3
-import Def.NumberTheory.PrimeCounting.SquarefreeTotientWeighted
-import Mathlib.Analysis.Calculus.Deriv.MeanValue
-import Mathlib.Analysis.Complex.ExponentialBounds
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.Analysis.SpecialFunctions.Log.Monotone
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Data.Int.CardIntervalMod
-import Mathlib.NumberTheory.ArithmeticFunction.Moebius
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
 /-!
 # Brun–Titchmarsh inequality
 
 This file records the standard upper bound for primes in one residue class.
 -/
-
-
 namespace MathlibExt.NumberTheory.PrimeCounting.BrunTitchmarshWanted
 
 noncomputable def btSieveFunction (α β v : ℝ) : ℝ :=

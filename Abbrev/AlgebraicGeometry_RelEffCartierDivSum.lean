@@ -1,10 +1,12 @@
-import Mathlib.AlgebraicGeometry.Limits
-import Instance.AlgebraicGeometry_RelEffCartierDivOfPoint
-import Structure.AlgebraicCurve_SymmetricPower
-
+module
+public import Mathlib.AlgebraicGeometry.Limits
+public import Instance.AlgebraicGeometry_RelEffCartierDivOfPoint
+public import Structure.AlgebraicCurve_SymmetricPower
 set_option autoImplicit false
-
 open CategoryTheory CategoryTheory.Limits
+
+
+public section
 
 universe u
 

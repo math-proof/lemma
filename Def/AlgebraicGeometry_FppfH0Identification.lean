@@ -1,8 +1,12 @@
-import Mathlib.CategoryTheory.Sites.Continuous
-import Instance.AlgebraicGeometry_FppfSiteCohomology
-import Def.Scheme_FppfCohomologyLES
-import Instance.AlgebraicGeometry_FppfH0Identification
-import Abbrev.AlgebraicGeometry_FppfH0Identification
+module
+public import Mathlib.CategoryTheory.Sites.Continuous
+public import Instance.AlgebraicGeometry_FppfSiteCohomology
+public import Def.Scheme_FppfCohomologyLES
+public import Instance.AlgebraicGeometry_FppfH0Identification
+public import Abbrev.AlgebraicGeometry_FppfH0Identification
+
+
+public section
 
 universe v' u' wE vE uE v₁ v₂ u₁ u₂ u w' w v
 

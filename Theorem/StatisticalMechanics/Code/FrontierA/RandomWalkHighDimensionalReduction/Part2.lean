@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/RandomWalkHighDimensionalReduction.lean -/
+module
+public import Mathlib.Topology.Algebra.Order.LiminfLimsup
+public import Theorem.StatisticalMechanics.Code.Sharpness.IsingSharpness
+public import Def.StatisticalMechanics.Code.FrontierA.RandomWalkHighDimensionalReduction.Part2
+open Filter Finset Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/RandomWalkHighDimensionalReduction.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib.Topology.Algebra.Order.LiminfLimsup
-import Theorem.StatisticalMechanics.Code.Sharpness.IsingSharpness
-import Def.StatisticalMechanics.Code.FrontierA.RandomWalkHighDimensionalReduction.Part2
-open Filter Finset Topology
-
-
 namespace StatMech.FrontierA
 
 @[simp] theorem randomWalkPartial_zero {X : Type*}

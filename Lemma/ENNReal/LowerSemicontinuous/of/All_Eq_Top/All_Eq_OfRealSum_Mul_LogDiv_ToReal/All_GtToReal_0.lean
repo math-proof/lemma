@@ -1,12 +1,15 @@
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
-import Mathlib.Probability.ProbabilityMassFunction.Basic
-import Mathlib.Topology.Algebra.Monoid
-import Mathlib.Topology.Order.OrderClosed
-import Mathlib.Topology.Semicontinuity.Basic
-import Initialize.Tactic.Attr.Basic
+module
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.NegMulLog
+public import Mathlib.Probability.ProbabilityMassFunction.Basic
+public import Mathlib.Topology.Algebra.Monoid
+public import Mathlib.Topology.Order.OrderClosed
+public import Mathlib.Topology.Semicontinuity.Basic
+public import Initialize.Tactic.Attr.Basic
 open Finset Real Set
 
+
+public section
 
 private lemma continuous_entropy {m : ℝ} (hm : 0 < m) : Continuous fun t : ℝ => t * log (t / m) := by
   have hfun : (fun t : ℝ => t * log (t / m)) = fun t => t * log t - t * log m := by

@@ -1,13 +1,15 @@
-import Mathlib
-import Lemma.Matrix.LocalHeckeInstance
-import Lemma.Matrix.IntegralSubgroupOpen
-import Instance.AbstractHeckeOperator
-import Def.AbstractHeckeOperator_Main
-
+module
+public import Mathlib
+public import Theorem.Matrix.LocalHeckeInstance
+public import Theorem.Matrix.IntegralSubgroupOpen
+public import Instance.AbstractHeckeOperator
+public import Def.AbstractHeckeOperator_Main
 set_option autoImplicit false
-
 open Matrix MulAction
 open scoped Pointwise
+
+
+public section
 
 namespace LocalGL2
 

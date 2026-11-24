@@ -1,11 +1,12 @@
+module
+public import Def.NumberTheory.PrimeCounting.SquarefreeTotientWeighted
+public import Theorem.Nat.PrimeCounting.SquarefreeTotientWeighted
+public import Mathlib.Tactic.NormNum
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PrimeCounting/SquarefreeTotientWeighted.lean -/
-
-
-import Def.NumberTheory.PrimeCounting.SquarefreeTotientWeighted
-import Theorem.Nat.PrimeCounting.SquarefreeTotientWeighted
-import Mathlib.Tactic.NormNum
-
-
 namespace MathlibExtTest.NumberTheory.PrimeCounting.SquarefreeTotientWeighted
 
 open scoped BigOperators

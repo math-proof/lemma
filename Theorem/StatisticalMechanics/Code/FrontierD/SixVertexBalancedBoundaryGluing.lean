@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexBalancedBoundaryGluing.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexRectangleGluing.Part6
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexRectangleTorusCut.Part5
+public import Def.StatisticalMechanics.Code.FrontierD.SixVertexBalancedBoundaryGluing
+open Finset
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexBalancedBoundaryGluing.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexRectangleGluing.Part6
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexRectangleTorusCut.Part5
-import Def.StatisticalMechanics.Code.FrontierD.SixVertexBalancedBoundaryGluing
-open Finset
-
-
 namespace StatMech.FrontierD
 
 theorem sixVertexDoubledToroidalBoundary_balanced {N M : ℕ}

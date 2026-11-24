@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexCentralSectorDominance.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexWidthFreeEnergy.Part4
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexParticleHole.Part5
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBethePerronContinuation.Part13
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexCoordinateBetheOne.Part2
+open Finset Matrix
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexCentralSectorDominance.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexWidthFreeEnergy.Part4
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexParticleHole.Part5
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBethePerronContinuation.Part13
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexCoordinateBetheOne.Part2
-open Finset Matrix
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

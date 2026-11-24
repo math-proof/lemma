@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter2/Thm_2_14_Bridge.lean -/
+module
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_19
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_19
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_4
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Thm_2_4
+public import Mathlib
+open Matrix MeasureTheory Metric Set Real ENNReal Finset
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter2/Thm_2_14_Bridge.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_19
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_19
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_4
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Thm_2_4
-import Mathlib
-open Matrix MeasureTheory Metric Set Real ENNReal Finset
-
-
 noncomputable section
 
 /-- Identification `Fin n → ℝ → EuclideanSpace ℝ (Fin n)` used to switch between

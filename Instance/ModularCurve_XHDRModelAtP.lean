@@ -1,16 +1,20 @@
--- Carved from Lemma/Definitions/Def_ModularCurve_XHDRModelAtP.lean: instance decls only.
-import Mathlib
-import Instance.ModularCurve_XHDifferentialsModL
-import Lemma.UpperHalfPlane.XHOperators
-import Abbrev.ModularCurve_IgusaScheme
-import Instance.AlgebraicCurve_TwoChartIntegralModel
-import Theorem.Scheme.CurveModel
-import Theorem.Scheme.NeronModelPropertyBundleCarrier
-import Abbrev.ModularCurve_XHDRModelAtP
-
+module
+public import Mathlib
+public import Instance.ModularCurve_XHDifferentialsModL
+public import Theorem.UpperHalfPlane.XHOperators
+public import Abbrev.ModularCurve_IgusaScheme
+public import Instance.AlgebraicCurve_TwoChartIntegralModel
+public import Theorem.Scheme.CurveModel
+public import Theorem.Scheme.NeronModelPropertyBundleCarrier
+public import Abbrev.ModularCurve_XHDRModelAtP
 set_option autoImplicit false
 set_option maxHeartbeats 800000
 set_option synthInstance.maxHeartbeats 400000
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_ModularCurve_XHDRModelAtP.lean: instance decls only.
 
 noncomputable section
 

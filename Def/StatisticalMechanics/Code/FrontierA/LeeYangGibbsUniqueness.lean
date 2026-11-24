@@ -1,5 +1,21 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/LeeYangGibbsUniqueness.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangBoundaryPressure
+public import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangLocalCorrelationReduction.Part4
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityPhaseCollapse
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityVaryingTemperature.Part2
+public import Theorem.StatisticalMechanics.Code.Ising.GibbsSimplexInfinite.Part3
+public import Theorem.StatisticalMechanics.Code.Ising.IsingPlusTIFromPlacement.Part11
+public import Theorem.StatisticalMechanics.Code.Ising.MinusStateDLR
+public import Theorem.StatisticalMechanics.Code.Ising.Peierls.Part4
+public import Theorem.StatisticalMechanics.Code.Ising.ZeroBetaDLRUniqueness
+public import Theorem.StatisticalMechanics.Code.Sharpness.MeanfieldIsingPlusBridge
+open Filter Finset MeasureTheory ProbabilityTheory Set Topology
+open scoped BigOperators BoundedContinuousFunction ENNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/LeeYangGibbsUniqueness.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,22 +23,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangBoundaryPressure
-import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangLocalCorrelationReduction.Part4
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityPhaseCollapse
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityVaryingTemperature.Part2
-import Theorem.StatisticalMechanics.Code.Ising.GibbsSimplexInfinite.Part3
-import Theorem.StatisticalMechanics.Code.Ising.IsingPlusTIFromPlacement.Part11
-import Theorem.StatisticalMechanics.Code.Ising.MinusStateDLR
-import Theorem.StatisticalMechanics.Code.Ising.Peierls.Part4
-import Theorem.StatisticalMechanics.Code.Ising.ZeroBetaDLRUniqueness
-import Theorem.StatisticalMechanics.Code.Sharpness.MeanfieldIsingPlusBridge
-open Filter Finset MeasureTheory ProbabilityTheory Set Topology
-open scoped BigOperators BoundedContinuousFunction ENNReal
-
-
 namespace StatMech.FrontierA
 
 open StatMech.ConfigSpace StatMech.FK StatMech.Ising StatMech.Lattice

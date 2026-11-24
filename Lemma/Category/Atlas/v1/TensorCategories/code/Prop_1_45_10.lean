@@ -1,13 +1,16 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
-import Lemma.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
-import Lemma.Category.Atlas.v1.TensorCategories.code.GrothendieckRing
-import Lemma.Category.Atlas.v1.TensorCategories.code.RegularElement
-import Theorem.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
-import Structure.v1.Atlas.TensorCategories.code.RegularElement
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
+public import Lemma.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
+public import Lemma.Category.Atlas.v1.TensorCategories.code.GrothendieckRing
+public import Lemma.Category.Atlas.v1.TensorCategories.code.RegularElement
+public import Theorem.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
+public import Structure.v1.Atlas.TensorCategories.code.RegularElement
 open Finset BigOperators FusionRing FusionRing.FPdimData
 
+
+public section
 
 /--
 [FPdim_preserved](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/Prop_1_45_10.lean)

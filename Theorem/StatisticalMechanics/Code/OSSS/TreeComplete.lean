@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/TreeComplete.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.OSSS.RevealmentConstruction.Part7
+open scoped BigOperators
+open Finset
+open StatMech.Lattice
+set_option linter.style.longLine false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/TreeComplete.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.OSSS.RevealmentConstruction.Part7
-open scoped BigOperators
-open Finset
-open StatMech.Lattice
-
-set_option linter.style.longLine false
-
-
 namespace StatMech
 
 namespace OSSS

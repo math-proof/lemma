@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/SpinCharacter.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.KWPhaseLoops
+public import Theorem.StatisticalMechanics.Code.Onsager.TorusSpinSectors.Part3
+public import Theorem.StatisticalMechanics.Code.Onsager.SpinCharacter
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/SpinCharacter.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.KWPhaseLoops
-import Theorem.StatisticalMechanics.Code.Onsager.TorusSpinSectors.Part3
-import Theorem.StatisticalMechanics.Code.Onsager.SpinCharacter
-
-
 namespace StatMech.Onsager
 
 open BigOperators StatMech.Ising

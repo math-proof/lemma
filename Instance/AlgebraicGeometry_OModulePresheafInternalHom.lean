@@ -1,11 +1,14 @@
--- Carved from Lemma/Definitions/Def_AlgebraicGeometry_OModulePresheafInternalHom.lean: instance decls only.
-import Mathlib
-
-import Def.AlgebraicGeometry_OModulePresheafHom
-import Theorem.Scheme.OModulePresheafInternalHom
-import Def.AlgebraicGeometry_OModulePresheafInternalHom
-
+module
+public import Mathlib
+public import Def.AlgebraicGeometry_OModulePresheafHom
+public import Theorem.Scheme.OModulePresheafInternalHom
+public import Def.AlgebraicGeometry_OModulePresheafInternalHom
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicGeometry_OModulePresheafInternalHom.lean: instance decls only.
 
 noncomputable section
 

@@ -1,8 +1,11 @@
-import Mathlib
-import Lemma.MvPowerSeries.NegV2
-import Lemma.MvPowerSeries.CartierModule
-
+module
+public import Mathlib
+public import Lemma.MvPowerSeries.NegV2
+public import Lemma.MvPowerSeries.CartierModule
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

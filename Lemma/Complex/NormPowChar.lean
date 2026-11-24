@@ -1,6 +1,9 @@
-import Lemma.Measure.TateGlobalZeta
-
+module
+public import Lemma.Measure.TateGlobalZeta
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

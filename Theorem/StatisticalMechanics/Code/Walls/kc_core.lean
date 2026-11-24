@@ -1,5 +1,31 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/kc_core.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Foundations.ConfigSpace
+public import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanEnclosure.Part6
+public import Theorem.StatisticalMechanics.Code.Lattice.CrossingParity.Part2
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanExteriorClosure.Part8
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanLeftRegionInterior
+public import Theorem.StatisticalMechanics.Code.Lattice.MinimalPeriodLoop.Part2
+public import Theorem.StatisticalMechanics.Code.Lattice.OrbitWindingWitness.Part2
+public import Theorem.StatisticalMechanics.Code.Lattice.BdEdgeMatchStarHull
+public import Theorem.StatisticalMechanics.Code.Lattice.BdEdgeMatchClose
+public import Theorem.StatisticalMechanics.Code.Lattice.ClosedContourSeparation.Part2
+public import Theorem.StatisticalMechanics.Code.Lattice.EnclosedAreaWitness.Part3
+public import Theorem.StatisticalMechanics.Code.Lattice.WindingEarInduction.Part3
+public import Theorem.StatisticalMechanics.Code.Lattice.ExteriorConnected.Part3
+public import Theorem.StatisticalMechanics.Code.Lattice.ExteriorConnectedDischarge
+public import Theorem.StatisticalMechanics.Code.Lattice.LexMinOrientation.Part3
+public import Theorem.StatisticalMechanics.Code.Lattice.LeftFenceAnchor
+public import Theorem.StatisticalMechanics.Code.Lattice.NoDiagTouchClose.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.StarHullFinite
+public import Theorem.StatisticalMechanics.Code.Lattice.StarHullWinding.Part2
+open Set SimpleGraph Function
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/kc_core.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,32 +33,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Foundations.ConfigSpace
-import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
-import Theorem.StatisticalMechanics.Code.Lattice.JordanEnclosure.Part6
-import Theorem.StatisticalMechanics.Code.Lattice.CrossingParity.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.JordanExteriorClosure.Part8
-import Theorem.StatisticalMechanics.Code.Lattice.JordanLeftRegionInterior
-import Theorem.StatisticalMechanics.Code.Lattice.MinimalPeriodLoop.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.OrbitWindingWitness.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.BdEdgeMatchStarHull
-import Theorem.StatisticalMechanics.Code.Lattice.BdEdgeMatchClose
-import Theorem.StatisticalMechanics.Code.Lattice.ClosedContourSeparation.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.EnclosedAreaWitness.Part3
-import Theorem.StatisticalMechanics.Code.Lattice.WindingEarInduction.Part3
-import Theorem.StatisticalMechanics.Code.Lattice.ExteriorConnected.Part3
-import Theorem.StatisticalMechanics.Code.Lattice.ExteriorConnectedDischarge
-import Theorem.StatisticalMechanics.Code.Lattice.LexMinOrientation.Part3
-import Theorem.StatisticalMechanics.Code.Lattice.LeftFenceAnchor
-import Theorem.StatisticalMechanics.Code.Lattice.NoDiagTouchClose.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.StarHullFinite
-import Theorem.StatisticalMechanics.Code.Lattice.StarHullWinding.Part2
-open Set SimpleGraph Function
-
-
 namespace StatMech
 
 namespace Walls

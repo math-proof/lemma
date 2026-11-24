@@ -1,16 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/CongruenceSubgroup.lean -/
+module
+public import Def.NumberTheory.NumberField.RayClass.Group
+public import Theorem.Nat.NumberField.RayClass.Group
+public import Structure.NumberTheory.NumberField.RayClass.CongruenceSubgroup
 
-import Def.NumberTheory.NumberField.RayClass.Group
-import Theorem.Nat.NumberField.RayClass.Group
-import Structure.NumberTheory.NumberField.RayClass.CongruenceSubgroup
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/CongruenceSubgroup.lean -/
 /-!
 # Congruence subgroups (N419 Definition 22.1)
 A congruence subgroup is a subgroup of the coprime ideals
 containing the ray group. Its image in the ray class group,
 ambient version, smallest/largest examples follow.
 -/
-
-
 noncomputable section
 
 open scoped nonZeroDivisors

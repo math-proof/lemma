@@ -1,10 +1,12 @@
-import Lemma.Definitions.Def_LanglandsTunnell_CubicInduction_Structure
-import Structure.LanglandsTunnell_CubicInduction_DataOn
-import Def.LanglandsTunnell_CubicInduction_DataOn
+module
+public import Lemma.Definitions.Def_LanglandsTunnell_CubicInduction_Structure
+public import Structure.LanglandsTunnell_CubicInduction_DataOn
+public import Def.LanglandsTunnell_CubicInduction_DataOn
 set_option autoImplicit false
-
 open Matrix IsDedekindDomain NumberField MeasureTheory AutomorphicForm
 
+
+public section
 
 noncomputable section
 

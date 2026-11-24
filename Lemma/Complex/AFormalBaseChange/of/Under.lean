@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.AutomorphicForm_FormalBaseChange
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 -- `Def.AutomorphicForm_FormalBaseChange` still uses the deprecated `Ideal.inertiaDeg'`.
 set_option linter.deprecated false

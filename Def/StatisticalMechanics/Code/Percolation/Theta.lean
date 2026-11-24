@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Percolation/Theta.lean -/
+module
+public import Def.StatisticalMechanics.Code.Lattice.Clusters.Part7
+public import Theorem.StatisticalMechanics.Code.Foundations.ProductMeasure.Part2
+open MeasureTheory
+open scoped NNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Percolation/Theta.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Def.StatisticalMechanics.Code.Lattice.Clusters.Part7
-import Theorem.StatisticalMechanics.Code.Foundations.ProductMeasure.Part2
-open MeasureTheory
-open scoped NNReal
-
-
 namespace StatMech
 
 namespace Percolation

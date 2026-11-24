@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open AutomorphicFreeness Deformation Deformation.IteratedPowerSeries ProartinianCat
 open FLT.Gapsw50T4PieceICompletedElementProduction

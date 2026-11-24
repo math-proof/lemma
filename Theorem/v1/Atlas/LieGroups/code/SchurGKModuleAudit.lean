@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/SchurGKModuleAudit.lean -/
+module
+public import Def.v1.Atlas.LieGroups.code.Globalization
+public import Theorem.Submodule.Any_And_Le_Aleph0.of.IsIrreducibleGKModule
+public import Theorem.Int.Mul
+public import Def.v1.Atlas.LieGroups.code.UnivEnvelopingAction.Part4
+open UnivEnvelopingAction
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/SchurGKModuleAudit.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.LieGroups.code.Globalization
-import Theorem.Submodule.Any_And_Le_Aleph0.of.IsIrreducibleGKModule
-import Theorem.Int.Mul
-import Def.v1.Atlas.LieGroups.code.UnivEnvelopingAction.Part4
-open UnivEnvelopingAction
-
-
 noncomputable section
 
 example {𝔤 : Type*} [LieRing 𝔤] [LieAlgebra ℂ 𝔤]

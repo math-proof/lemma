@@ -1,9 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/Character.lean -/
+module
+public import Def.NumberTheory.NumberField.RayClass.Group
+public import Theorem.Nat.NumberField.RayClass.Group
+public import Mathlib.Analysis.Complex.Circle
+public import Abbrev.NumberTheory.NumberField.RayClass.Character
 
-import Def.NumberTheory.NumberField.RayClass.Group
-import Theorem.Nat.NumberField.RayClass.Group
-import Mathlib.Analysis.Complex.Circle
-import Abbrev.NumberTheory.NumberField.RayClass.Character
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/Character.lean -/
 @[expose] noncomputable section
 
 open scoped nonZeroDivisors

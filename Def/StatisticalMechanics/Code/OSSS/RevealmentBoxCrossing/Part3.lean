@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/RevealmentBoxCrossing.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.OSSS.RevealmentBoundAssembly
+public import Theorem.StatisticalMechanics.Code.OSSS.CrossMonotone
+public import Theorem.StatisticalMechanics.Code.OSSS.RevealmentBoxCrossing.Part2
+open scoped BigOperators
+open MeasureTheory
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/RevealmentBoxCrossing.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.OSSS.RevealmentBoundAssembly
-import Theorem.StatisticalMechanics.Code.OSSS.CrossMonotone
-import Theorem.StatisticalMechanics.Code.OSSS.RevealmentBoxCrossing.Part2
-open scoped BigOperators
-open MeasureTheory
-
-
 namespace StatMech
 
 namespace OSSS

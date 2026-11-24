@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.GroupTheory.BurnsidePaqb.CharacterOrthogonality
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.GroupTheory.BurnsidePaqb.CharacterOrthogonality
 open CategoryTheory BurnsidePaqb
 
+
+public section
 
 /--
 [simple_fdrep_of_irreducible](?module=Theorem.GroupTheory.BurnsidePaqb.CharacterOrthogonality)

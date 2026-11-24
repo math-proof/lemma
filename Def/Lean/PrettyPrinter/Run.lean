@@ -1,9 +1,13 @@
+module
+public import Def.Lean.PrettyPrinter.Json
+public import Def.Lean.Io
+public import Mathlib
+
+
+public section
+
 -- lake env lean --run Def/Lean/PrettyPrinter/Run.lean add_mul
 -- lake env lean Def/Lean/PrettyPrinter/Run.lean
-import Def.Lean.PrettyPrinter.Json
-import Def.Lean.Io
-import Mathlib
-
 
 def main (args : List String) : IO Unit := do
   IO.println <| ← Name.toJson args.head!.toName |> exec

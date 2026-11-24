@@ -1,6 +1,9 @@
-import Def.Analysis.MeasureTheory.Section_1_4_2.Part8
-import Def.Analysis.MeasureTheory.Section_1_4_3.Part2
+module
+public import Def.Analysis.MeasureTheory.Section_1_4_2.Part8
+public import Def.Analysis.MeasureTheory.Section_1_4_3.Part2
 
+
+public section
 
 /-- Boolean algebras are closed under intersection. -/
 lemma ConcreteBooleanAlgebra.inter_mem {X:Type*} (B: ConcreteBooleanAlgebra X) {E F : Set X}

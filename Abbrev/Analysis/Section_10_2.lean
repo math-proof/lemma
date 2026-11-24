@@ -1,7 +1,12 @@
-import Mathlib
-import Theorem.Analysis.Section_9_6
-import Theorem.Analysis.Section_10_2
+module
+public import Mathlib
+public import Theorem.Analysis.Section_9_6
+public import Theorem.Analysis.Section_10_2
 open Chapter9
+
+
+public section
+
 /-!
 # Analysis I, Section 10.2: Local maxima, local minima, and derivatives
 
@@ -17,8 +22,6 @@ Main constructions and results of this section:
 - mean value theorem.
 
 -/
-
-
 namespace Chapter10
 
 /-- Example 10.2.3 -/

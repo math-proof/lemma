@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/SL2Classification.lean -/
+module
+public import Def.v1.Atlas.LieGroups.code.SL2Representations.Part2
+public import Theorem.Complex.IsIsomorphicGK.of.IsIsomorphicGK.IsIsomorphicGK
+public import Def.v1.Atlas.LieGroups.code.SL2Classification.Part2
+open SL2SimpleModule
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/SL2Classification.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.LieGroups.code.SL2Representations.Part2
-import Theorem.Complex.IsIsomorphicGK.of.IsIsomorphicGK.IsIsomorphicGK
-import Def.v1.Atlas.LieGroups.code.SL2Classification.Part2
-open SL2SimpleModule
-
-
 /-- Every SL2 irreducible label admits some realization. -/
 theorem sl2IrredGKModule_realization_exists
     (μ : SL2IrredGKModule)

@@ -1,7 +1,10 @@
-import Lemma.Random.Integral_Sub_Log_Integral_Exp.le.ToRealKlDiv.of.Any_All_LeAbs.Measurable.Integrable_Llr
-import Initialize.Tactic.Attr.Basic
+module
+public import Lemma.Random.Integral_Sub_Log_Integral_Exp.le.ToRealKlDiv.of.Any_All_LeAbs.Measurable.Integrable_Llr
+public import Initialize.Tactic.Attr.Basic
 open InformationTheory MeasureTheory Random Real
 
+
+public section
 
 /--
 A bounded continuous test function obeys the same Donsker–Varadhan upper bound as a bounded

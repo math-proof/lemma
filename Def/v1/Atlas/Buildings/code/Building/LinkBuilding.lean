@@ -1,5 +1,20 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/LinkBuilding.lean -/
+module
+public import Theorem.v1.Atlas.Buildings.code.Building.Link
+public import Theorem.Finset.Disjoint.of.In_FacesLinkComplex.In_Faces
+public import Theorem.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
+public import Theorem.Finset.IsMaximalUnion.of.IsMaximalLinkComplex.In_Faces
+public import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
+public import Theorem.v1.Atlas.Buildings.code.Building.LinkBuildingIsoHelper
+public import Theorem.Finset.IsMaximalLinkComplex.of.IsMaximalUnion.In_FacesLinkComplex.In_Faces
+public import Lemma.Finset.IsFacetToSimplicialComplexAndIsMaximalToSimplicialComplex.Unique.of.IsMaximalToSimplicialComplex.IsFacetToSimplicialComplex.IsThin
+public import Theorem.Finset.IsMaximalToSimplicialComplexToChamberComplexUnion.of.IsMaximalLinkComplexToSimplicialComplexToChamberComplex.In_FacesToSimplicialComplexToChamberComplex
+public import Theorem.v1.Atlas.Buildings.code.Building.LinkBuilding
+open scoped Classical
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/LinkBuilding.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,20 +22,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.Buildings.code.Building.Link
-import Theorem.Finset.Disjoint.of.In_FacesLinkComplex.In_Faces
-import Theorem.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
-import Lemma.Finset.IsMaximalUnion.of.IsMaximalLinkComplex.In_Faces
-import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
-import Theorem.v1.Atlas.Buildings.code.Building.LinkBuildingIsoHelper
-import Theorem.Finset.IsMaximalLinkComplex.of.IsMaximalUnion.In_FacesLinkComplex.In_Faces
-import Lemma.Finset.IsFacetToSimplicialComplexAndIsMaximalToSimplicialComplex.Unique.of.IsMaximalToSimplicialComplex.IsFacetToSimplicialComplex.IsThin
-import Theorem.Finset.IsMaximalToSimplicialComplexToChamberComplexUnion.of.IsMaximalLinkComplexToSimplicialComplexToChamberComplex.In_FacesToSimplicialComplexToChamberComplex
-import Theorem.v1.Atlas.Buildings.code.Building.LinkBuilding
-open scoped Classical
-
-
 variable {V : Type} [DecidableEq V]
 
 

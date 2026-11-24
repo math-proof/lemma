@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/KacWardAdaptiveIdealMiddleGeometry.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveConnectorClosedSeparation
+public import Def.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveIdealMiddleGeometry
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/KacWardAdaptiveIdealMiddleGeometry.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveConnectorClosedSeparation
-import Def.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveIdealMiddleGeometry
-
-
 namespace StatMech.FrontierA
 
 open scoped Convex

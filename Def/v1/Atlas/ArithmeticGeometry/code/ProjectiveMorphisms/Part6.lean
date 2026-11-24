@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/ProjectiveMorphisms.lean -/
+module
+public import Def.v1.Atlas.ArithmeticGeometry.code.ProjectiveVarieties.Part7
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.ProjectiveVarieties
+public import Mathlib.Algebra.MvPolynomial.Monad
+public import Structure.v1.Atlas.ArithmeticGeometry.code.ProjectiveMorphisms.Part6
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/ProjectiveMorphisms.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.ArithmeticGeometry.code.ProjectiveVarieties.Part7
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.ProjectiveVarieties
-import Mathlib.Algebra.MvPolynomial.Monad
-import Structure.v1.Atlas.ArithmeticGeometry.code.ProjectiveMorphisms.Part6
-
-
 noncomputable section
 
 open MvPolynomial

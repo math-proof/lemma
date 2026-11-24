@@ -1,11 +1,14 @@
-import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
-import Mathlib.GroupTheory.Transfer
-import Mathlib.GroupTheory.FreeGroup.NielsenSchreier
-import Def.ModularCurve_PeriodMap
-import Instance.ModularCurve_PDPairing
-import Abbrev.ModularCurve_PDPairing
-
+module
+public import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
+public import Mathlib.GroupTheory.Transfer
+public import Mathlib.GroupTheory.FreeGroup.NielsenSchreier
+public import Def.ModularCurve_PeriodMap
+public import Instance.ModularCurve_PDPairing
+public import Abbrev.ModularCurve_PDPairing
 set_option autoImplicit false
+
+
+public section
 
 namespace Matrix.PDPairing
 

@@ -1,8 +1,11 @@
-import Mathlib
-import Def.GaloisRep_Residual
-import Notation.GaloisRep_AdZero
-
+module
+public import Mathlib
+public import Def.GaloisRep_Residual
+public import Notation.GaloisRep_AdZero
 set_option autoImplicit false
+
+
+public section
 
 namespace ResidualGaloisRep
 

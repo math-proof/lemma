@@ -1,6 +1,10 @@
-import Mathlib
-import Lemma.Polynomial.KroneckerTransport
-import Def.ModularCurve_FibrePoly
+module
+public import Mathlib
+public import Lemma.Polynomial.KroneckerTransport
+public import Def.ModularCurve_FibrePoly
+
+
+public section
 
 noncomputable section
 

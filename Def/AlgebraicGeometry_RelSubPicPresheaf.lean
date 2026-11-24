@@ -1,8 +1,11 @@
-import Mathlib
-import Def.AlgebraicGeometry_RelativePicardFunctor
-import Lemma.Scheme.RepresentsRelSubPic
-
+module
+public import Mathlib
+public import Def.AlgebraicGeometry_RelativePicardFunctor
+public import Lemma.Scheme.RepresentsRelSubPic
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

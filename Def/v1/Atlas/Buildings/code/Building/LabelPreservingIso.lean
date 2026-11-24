@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/LabelPreservingIso.lean -/
+module
+public import Def.v1.Atlas.Buildings.code.Building.AptIsoFixesIntersection
+public import Theorem.Finset.ImageRetractionMap.in.Faces.of.IsMaximal.In_Faces.In_Apartments
+public import Theorem.Finset.LabelMap.eq.ImageLabelMap.of.EqLabelMap_Head_ImageLabelMap_Head.IsChainAdjacent.Ne.All_EqLabelMap_ImageLabelMap
+public import Def.v1.Atlas.Buildings.code.Building.Labels
+open scoped Classical
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/LabelPreservingIso.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.Buildings.code.Building.AptIsoFixesIntersection
-import Theorem.Finset.ImageRetractionMap.in.Faces.of.IsMaximal.In_Faces.In_Apartments
-import Theorem.Finset.LabelMap.eq.ImageLabelMap.of.EqLabelMap_Head_ImageLabelMap_Head.IsChainAdjacent.Ne.All_EqLabelMap_ImageLabelMap
-import Def.v1.Atlas.Buildings.code.Building.Labels
-open scoped Classical
-
 variable {V : Type*} [DecidableEq V]
 
 

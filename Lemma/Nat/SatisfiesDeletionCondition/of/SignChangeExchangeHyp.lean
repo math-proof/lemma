@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionProof
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionProof
 open CoxeterGroup CoxeterExchangeGenuine CoxeterExchange
 
+
+public section
 
 namespace Definitions
 end Definitions

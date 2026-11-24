@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.GaloisRep_Adic
 import Def.FLTPrelim_Ramification
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open GaloisRepAdic
 

@@ -1,19 +1,21 @@
-import Mathlib.RepresentationTheory.Subrepresentation
-import Mathlib.LinearAlgebra.Projectivization.Action
-import Mathlib.LinearAlgebra.Projectivization.Cardinality
-import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
-import Mathlib.LinearAlgebra.Matrix.ToLin
-import Mathlib.LinearAlgebra.Charpoly.Basic
-import Mathlib.LinearAlgebra.Dimension.Free
-import Mathlib.FieldTheory.Finite.GaloisField
-import Lemma.Ideal.Mathlib430
-import Instance.CuspidalType_IsCuspidalOfType
-import Structure.CuspidalType_IsCuspidalOfType
-import Abbrev.CuspidalType_IsCuspidalOfType
-
+module
+public import Mathlib.RepresentationTheory.Subrepresentation
+public import Mathlib.LinearAlgebra.Projectivization.Action
+public import Mathlib.LinearAlgebra.Projectivization.Cardinality
+public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+public import Mathlib.LinearAlgebra.Matrix.ToLin
+public import Mathlib.LinearAlgebra.Charpoly.Basic
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.FieldTheory.Finite.GaloisField
+public import Lemma.Ideal.Mathlib430
+public import Instance.CuspidalType_IsCuspidalOfType
+public import Structure.CuspidalType_IsCuspidalOfType
+public import Abbrev.CuspidalType_IsCuspidalOfType
 set_option autoImplicit false
-
 open Polynomial
+
+
+public section
 
 namespace CuspidalType
 

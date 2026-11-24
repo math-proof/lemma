@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/bindindep.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Walls.bmfmergefree.Part2
+open Set SimpleGraph Finset MeasureTheory
+open scoped ENNReal NNReal
+open StatMech StatMech.Lattice StatMech.ConfigSpace
+open StatMech.Percolation
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/bindindep.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Walls.bmfmergefree.Part2
-open Set SimpleGraph Finset MeasureTheory
-open scoped ENNReal NNReal
-open StatMech StatMech.Lattice StatMech.ConfigSpace
-open StatMech.Percolation
-
-
 namespace StatMech.Walls
 
 set_option linter.style.longLine false

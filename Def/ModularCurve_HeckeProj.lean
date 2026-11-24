@@ -1,5 +1,9 @@
-import Def.HeckeGalois_EichlerShimura
-import Instance.CuspForm_HeckeAlgebra
+module
+public import Def.HeckeGalois_EichlerShimura
+public import Instance.CuspForm_HeckeAlgebra
+
+
+public section
 
 noncomputable section
 

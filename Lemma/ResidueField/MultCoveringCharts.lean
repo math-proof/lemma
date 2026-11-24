@@ -1,6 +1,6 @@
 import Lemma.ValuationSubring.SemistableCharts
 import Def.AlgebraicCurve_ChordalProximity
-import Lemma.WeierstrassCurve.SupersingularModuli
+import Theorem.WeierstrassCurve.SupersingularModuli
 import Def.ModularCurve_LevelOneProlongationPair
 import Lemma.AlgEquiv.SemistableChartsComap
 import Lemma.ResidueField.LevelOneChartFst

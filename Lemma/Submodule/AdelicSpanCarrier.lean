@@ -1,5 +1,5 @@
-import Lemma.Measure.AutomorphicFnAt
-import Lemma.Matrix.ConductorDatum
+import Theorem.Measure.AutomorphicFnAt
+import Theorem.Matrix.ConductorDatum
 import Def.AdelicDock_LocalEmbedding
 
 open NumberField MeasureTheory AutomorphicForm Measure

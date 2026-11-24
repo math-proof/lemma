@@ -1,7 +1,10 @@
-import Abbrev.Analysis.Section_3_2
-import Lemma.Nat.NotAxiomOfUniversalSpecification
-import Lemma.Set.Any_All_Disjoint.of.Ne_Empty
+module
+public import Abbrev.Analysis.Section_3_2
+public import Theorem.Nat.NotAxiomOfUniversalSpecification
+public import Theorem.Set.Any_All_Disjoint.of.Ne_Empty
 
+
+public section
 
 namespace Chapter3
 

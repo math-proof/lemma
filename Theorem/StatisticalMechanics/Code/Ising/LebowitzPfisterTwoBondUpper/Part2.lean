@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/LebowitzPfisterTwoBondUpper.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterSingleBondUpper.Part2
+public import Theorem.StatisticalMechanics.Code.Ising.GHSInhomogeneous.Part11
+public import Theorem.StatisticalMechanics.Code.Sharpness.Simon.Part3
+public import Def.StatisticalMechanics.Code.Ising.LebowitzPfisterTwoBondUpper.Part2
+open Set
+open scoped BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/LebowitzPfisterTwoBondUpper.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterSingleBondUpper.Part2
-import Theorem.StatisticalMechanics.Code.Ising.GHSInhomogeneous.Part11
-import Theorem.StatisticalMechanics.Code.Sharpness.Simon.Part3
-import Def.StatisticalMechanics.Code.Ising.LebowitzPfisterTwoBondUpper.Part2
-open Set
-open scoped BigOperators
-
-
 namespace StatMech.Ising
 
 noncomputable section

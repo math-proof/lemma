@@ -1,8 +1,12 @@
--- Carved from Lemma/Definitions/Def_CuspForm_TWLevelHeckeRing.lean: instance decls only.
-import Instance.CuspForm_TWLevelHeckeModule
-import Lemma.CuspForm.TWLevelHeckeRing
-
+module
+public import Instance.CuspForm_TWLevelHeckeModule
+public import Theorem.CuspForm.TWLevelHeckeRing
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_CuspForm_TWLevelHeckeRing.lean: instance decls only.
 
 noncomputable section
 

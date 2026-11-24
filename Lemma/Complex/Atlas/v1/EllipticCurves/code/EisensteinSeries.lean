@@ -1,10 +1,13 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.EllipticCurves.code.EisensteinSeries
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.EllipticCurves.code.EisensteinSeries
 open Complex ComplexLattice
 open scoped UpperHalfPlane
 open ComplexLattice Pointwise
 
+
+public section
 
 namespace ComplexLattice
 

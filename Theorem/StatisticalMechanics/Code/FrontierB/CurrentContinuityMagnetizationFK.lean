@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/CurrentContinuityMagnetizationFK.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityEdwardsSokal
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityPhaseCollapse
+public import Theorem.StatisticalMechanics.Code.FK.PairMixingGenMixing
+public import Theorem.StatisticalMechanics.Code.FK.FreePairMixingFromTail.Part3
+public import Theorem.StatisticalMechanics.Code.IsingFK.MagnetizationCorrespondence
+open Filter MeasureTheory Set Topology BoundedContinuousFunction
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/CurrentContinuityMagnetizationFK.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityEdwardsSokal
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityPhaseCollapse
-import Theorem.StatisticalMechanics.Code.FK.PairMixingGenMixing
-import Theorem.StatisticalMechanics.Code.FK.FreePairMixingFromTail.Part3
-import Theorem.StatisticalMechanics.Code.IsingFK.MagnetizationCorrespondence
-open Filter MeasureTheory Set Topology BoundedContinuousFunction
-
-
 namespace StatMech.FrontierB
 
 open ConfigSpace FK Ising Lattice Percolation

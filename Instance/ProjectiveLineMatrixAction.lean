@@ -1,9 +1,13 @@
--- Carved from Lemma/Definitions/Def_ProjectiveLineMatrixAction.lean: instance decls only.
-import Mathlib
-import Instance.ModularCurve_ProjectiveLine
-import Theorem.Matrix.ProjectiveLineMatrixAction
-import Def.Matrix_ProjectiveLineMatrixAction
+module
+public import Mathlib
+public import Instance.ModularCurve_ProjectiveLine
+public import Theorem.Matrix.ProjectiveLineMatrixAction
+public import Def.Matrix_ProjectiveLineMatrixAction
 
+
+public section
+
+-- Carved from Lemma/Definitions/Def_ProjectiveLineMatrixAction.lean: instance decls only.
 
 namespace HeckeEis
 

@@ -1,24 +1,24 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/CyclicSumMultipleZetaStar.lean -/
-
-/- Authors: Adam Kiezun, Muse Spark 1.3 -/
-
-import Def.NumberTheory.MultipleZeta.Series.Part3
-import Lemma.Nat.MultipleZeta.Series
-import Mathlib.Data.List.Rotate
-import Mathlib.Topology.Algebra.InfiniteSum.Real
-import Mathlib.Analysis.PSeries
-import Mathlib.NumberTheory.Harmonic.Bounds
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
+public import Def.NumberTheory.MultipleZeta.Series.Part3
+public import Theorem.Nat.MultipleZeta.Series
+public import Mathlib.Data.List.Rotate
+public import Mathlib.Topology.Algebra.InfiniteSum.Real
+public import Mathlib.Analysis.PSeries
+public import Mathlib.NumberTheory.Harmonic.Bounds
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
 open scoped ENNReal
-
 open Topology
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/CyclicSumMultipleZetaStar.lean -/
+/- Authors: Adam Kiezun, Muse Spark 1.3 -/
 section
 
 open scoped BigOperators

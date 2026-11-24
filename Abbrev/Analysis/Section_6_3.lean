@@ -1,7 +1,12 @@
-import Mathlib
-import Abbrev.Analysis.Section_6_1.Part17
-import Abbrev.Analysis.Section_6_2.Part2
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+module
+public import Mathlib
+public import Abbrev.Analysis.Section_6_1.Part17
+public import Abbrev.Analysis.Section_6_2.Part2
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+
+
+public section
+
 /-!
 # Analysis I, Section 6.3: Suprema and infima of sequences
 
@@ -16,8 +21,6 @@ Main constructions and results of this section:
 - Suprema and infima of sequences.
 
 -/
-
-
 namespace Chapter6
 
 /-- Definition 6.3.1 (supremum of a sequence) -/

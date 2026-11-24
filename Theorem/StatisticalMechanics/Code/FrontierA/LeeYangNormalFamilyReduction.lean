@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/LeeYangNormalFamilyReduction.lean -/
+module
+public import Mathlib.Analysis.Analytic.IsolatedZeros
+public import Mathlib.Analysis.Complex.LocallyUniformLimit
+public import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangThermodynamicPrereq.Part2
+public import Def.StatisticalMechanics.Code.FrontierA.LeeYangNormalFamilyReduction
+open Filter Set Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/LeeYangNormalFamilyReduction.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib.Analysis.Analytic.IsolatedZeros
-import Mathlib.Analysis.Complex.LocallyUniformLimit
-import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangThermodynamicPrereq.Part2
-import Def.StatisticalMechanics.Code.FrontierA.LeeYangNormalFamilyReduction
-open Filter Set Topology
-
-
 namespace StatMech.FrontierA
 
 theorem tendstoLocallyUniformlyOn_of_subsequential_limits_unique

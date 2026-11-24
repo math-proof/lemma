@@ -1,4 +1,4 @@
-import Lemma.Nat.EqMul_0'0
+import Theorem.Nat.EqMul_0'0
 import Lemma.Tensor.UFnSumStack.eq.SumStack_UFn.All_EqUFnAdd.EqUFn_0
 open Nat Tensor
 

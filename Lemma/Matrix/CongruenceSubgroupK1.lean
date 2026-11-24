@@ -1,12 +1,15 @@
-import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.RingTheory.Ideal.Operations
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib.Tactic.LinearCombination
-import Def.LocalNewvector_CongruenceSubgroupK1
-import Abbrev.LocalNewvector_CongruenceSubgroupK1
-
+module
+public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Mathlib.RingTheory.Ideal.Operations
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Mathlib.Tactic.LinearCombination
+public import Def.LocalNewvector_CongruenceSubgroupK1
+public import Abbrev.LocalNewvector_CongruenceSubgroupK1
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

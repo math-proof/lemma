@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/Prop30_6.lean -/
+module
+public import Def.v1.Atlas.AlgebraicTopologyI.code.BilinFormClassification
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.BilinFormClassification
+open Matrix
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/Prop30_6.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.AlgebraicTopologyI.code.BilinFormClassification
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.BilinFormClassification
-open Matrix
-
-
 namespace SymmetricBilinearForms
 
 /-- **The standard normal form (matrix presentation) of Proposition 30.6.**

@@ -1,8 +1,11 @@
-import Lemma.MvPolynomial.CoordRing
-import Mathlib.RingTheory.Localization.FractionRing
-import Abbrev.DrinfeldCurve_FunctionField
-
+module
+public import Lemma.MvPolynomial.CoordRing
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Abbrev.DrinfeldCurve_FunctionField
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

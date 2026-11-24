@@ -1,7 +1,10 @@
-import Lemma.Measure.TwistedOrbital
-import Def.NumberField_AdelicHeight
-
+module
+public import Lemma.Measure.TwistedOrbital
+public import Def.NumberField_AdelicHeight
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

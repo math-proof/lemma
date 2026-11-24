@@ -1,10 +1,11 @@
+module
+public import Theorem.FieldTheory.PuiseuxTheorem.Part24
+public import Theorem.PowerSeries.PuiseuxTheorem
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/FieldTheory/PuiseuxTheorem.lean -/
-
-
-import Theorem.FieldTheory.PuiseuxTheorem.Part24
-import Lemma.PowerSeries.PuiseuxTheorem
-
-
 namespace MathlibExtTest.FieldTheory.PuiseuxTheorem
 
 open Polynomial

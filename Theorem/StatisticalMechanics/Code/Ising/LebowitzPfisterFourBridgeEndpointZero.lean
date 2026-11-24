@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/LebowitzPfisterFourBridgeEndpointZero.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterFourBridgeMarginalRank.Part3
+public import Mathlib.Analysis.Matrix.PosDef
+open Finset
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/LebowitzPfisterFourBridgeEndpointZero.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterFourBridgeMarginalRank.Part3
-import Mathlib.Analysis.Matrix.PosDef
-open Finset
-
-
 namespace StatMech.Ising
 
 open StatMech.FrontierA

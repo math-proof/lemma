@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.v1.Atlas.TensorCategories.code.SweedlerConcrete.Part4
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.v1.Atlas.TensorCategories.code.SweedlerConcrete.Part4
 open SweedlerH4
 
+
+public section
 
 namespace SweedlerH4
 

@@ -1,10 +1,13 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.v1.Atlas.NumberTheoryI.code.CompleteFields.Part2
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.v1.Atlas.NumberTheoryI.code.CompleteFields.Part2
 open UniformSpace Filter Topology Finset in IsDedekindDomain
 open scoped Topology
 open IsDedekindDomain
 
+
+public section
 
 /--
 [completion_universal_property](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/CompleteFields.lean)

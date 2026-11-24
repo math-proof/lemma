@@ -1,14 +1,18 @@
+module
+public import Mathlib
+public import Def.Data.Fin.SkipTwo
+public import Def.LinearAlgebra.Matrix.Determinant.PermFinset
+public import Theorem.Finset.PermFinset
+public import Def.LinearAlgebra.Matrix.Determinant.DesnanotJacobi.Part6
+open Matrix BigOperators Finset
+
+
+public section
+
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.Data.Fin.SkipTwo
-import Def.LinearAlgebra.Matrix.Determinant.PermFinset
-import Theorem.Finset.PermFinset
-import Def.LinearAlgebra.Matrix.Determinant.DesnanotJacobi.Part6
-open Matrix BigOperators Finset
-
 /-!
 # Determinants: Factor Hunting and Desnanot-Jacobi Identity
 
@@ -64,8 +68,6 @@ Many of these results are already in Mathlib under `Matrix.det_vandermonde`, `Ma
 `Matrix.det_laplace_row`, etc. This file provides the statements matching the textbook
 presentation and connects them to Mathlib's API.
 -/
-
-
 /-!
 ## Fin.succAbove computation lemmas
 
@@ -73,16 +75,12 @@ These simp lemmas allow efficient computation of `Fin.succAbove` for concrete Fi
 They are used throughout this file for determinant expansions involving submatrices.
 All lemmas are proved by `rfl` for maximum efficiency.
 -/
-
-
 /-!
 ## Fin 3 product lemmas
 
 These lemmas simplify products over pairs and singletons in `Fin 3`.
 They are used in Cauchy determinant computations for the n = 3 case.
 -/
-
-
 namespace AlgebraicCombinatorics
 
 namespace Determinants

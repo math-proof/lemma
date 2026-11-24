@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicAnalyticFourthOrder.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalRobinCompatibility.Part3
+public import Mathlib.Analysis.InnerProductSpace.Harmonic.Constructions
+public import Mathlib.Analysis.Calculus.IteratedDeriv.FaaDiBruno
+public import Mathlib.Analysis.Calculus.ContDiff.RestrictScalars
+public import Mathlib.Analysis.Convex.Segment
+public import Mathlib.Analysis.Normed.Group.Bounded
+public import Def.StatisticalMechanics.Code.Universality.IsingFermionicAnalyticFourthOrder
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicAnalyticFourthOrder.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalRobinCompatibility.Part3
-import Mathlib.Analysis.InnerProductSpace.Harmonic.Constructions
-import Mathlib.Analysis.Calculus.IteratedDeriv.FaaDiBruno
-import Mathlib.Analysis.Calculus.ContDiff.RestrictScalars
-import Mathlib.Analysis.Convex.Segment
-import Mathlib.Analysis.Normed.Group.Bounded
-import Def.StatisticalMechanics.Code.Universality.IsingFermionicAnalyticFourthOrder
-
-
 namespace StatMech.Universality
 
 open InnerProductSpace

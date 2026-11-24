@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicCombinatorics/code/InvariantPreserve.lean -/
+module
+public import Def.v1.Atlas.AlgebraicCombinatorics.code.OrbitBasis.Part4
+public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.OrbitBasis
+public import Mathlib.Algebra.Group.Action.Pointwise.Finset
+public import Mathlib.LinearAlgebra.Finsupp.LSum
+set_option autoImplicit false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicCombinatorics/code/InvariantPreserve.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.AlgebraicCombinatorics.code.OrbitBasis.Part4
-import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.OrbitBasis
-import Mathlib.Algebra.Group.Action.Pointwise.Finset
-import Mathlib.LinearAlgebra.Finsupp.LSum
-set_option autoImplicit false
-
-
 noncomputable section
 
 open scoped Classical Pointwise

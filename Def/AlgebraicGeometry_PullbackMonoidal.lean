@@ -1,11 +1,13 @@
-import Mathlib
-import Instance.PresheafOfModules_PullbackMonoidal
-import Abbrev.PresheafOfModules_PullbackMonoidal
-import Notation.PresheafOfModules_PullbackMonoidal
-
+module
+public import Mathlib
+public import Instance.PresheafOfModules_PullbackMonoidal
+public import Abbrev.PresheafOfModules_PullbackMonoidal
+public import Notation.PresheafOfModules_PullbackMonoidal
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
+
+public section
 
 universe v u v₁ u₁ v₂ u₂
 

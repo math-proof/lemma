@@ -1,14 +1,18 @@
--- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ProjSpace.lean: instance decls only.
-import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Proper
-import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Functor
-import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.RingTheory.MvPolynomial.Ideal
-import Theorem.MvPolynomial.ProjSpace
-import Def.AlgebraicGeometry_ProjSpace
-
+module
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Proper
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Functor
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.RingTheory.MvPolynomial.Ideal
+public import Theorem.MvPolynomial.ProjSpace
+public import Def.AlgebraicGeometry_ProjSpace
 set_option autoImplicit false
 set_option linter.unusedVariables false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ProjSpace.lean: instance decls only.
 
 noncomputable section
 

@@ -1,9 +1,12 @@
-import Mathlib
-import Instance.CuspForm_HeckeAlgebra
-import Def.ModularCurve_MazurPrincipleCore
-import Instance.FLTPrelim_Modularity
-
+module
+public import Mathlib
+public import Instance.CuspForm_HeckeAlgebra
+public import Def.ModularCurve_MazurPrincipleCore
+public import Instance.FLTPrelim_Modularity
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

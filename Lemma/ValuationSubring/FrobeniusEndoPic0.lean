@@ -1,6 +1,9 @@
-import Lemma.Polynomial.FrobeniusEndo
-
+module
+public import Lemma.Polynomial.FrobeniusEndo
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

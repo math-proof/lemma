@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/DensityBounds.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Foundations.ConfigSpace
+public import Theorem.StatisticalMechanics.Code.FK.RandomCluster.Part6
+public import Theorem.StatisticalMechanics.Code.FK.FiniteEnergy.Part4
+public import Theorem.StatisticalMechanics.Code.Inequalities.Pivotal.Part2
+public import Def.StatisticalMechanics.Code.FK.DensityBounds
+open scoped BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/DensityBounds.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Foundations.ConfigSpace
-import Theorem.StatisticalMechanics.Code.FK.RandomCluster.Part6
-import Theorem.StatisticalMechanics.Code.FK.FiniteEnergy.Part4
-import Theorem.StatisticalMechanics.Code.Inequalities.Pivotal.Part2
-import Def.StatisticalMechanics.Code.FK.DensityBounds
-open scoped BigOperators
-
-
 namespace StatMech
 
 namespace FK

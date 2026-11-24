@@ -1,8 +1,11 @@
-import Mathlib.RingTheory.LaurentSeries
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
-import Def.ModularCurve_LaurentCoeff
-
+module
+public import Mathlib.RingTheory.LaurentSeries
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+public import Def.ModularCurve_LaurentCoeff
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Mathlib.Analysis.SpecialFunctions.Gamma.Deligne
-import Structure.LanglandsTunnell_HonestLDatum
+module
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Deligne
+public import Structure.LanglandsTunnell_HonestLDatum
+
+
+public section
 
 noncomputable section
 

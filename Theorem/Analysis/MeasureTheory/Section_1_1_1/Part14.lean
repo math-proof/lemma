@@ -1,10 +1,12 @@
-import Def.Analysis.MeasureTheory.Notation.Part2
-import Theorem.Analysis.Section_9_1.Part3
-import Def.Analysis.MeasureTheory.Section_1_1_1.Part5
+module
+public import Def.Analysis.MeasureTheory.Notation.Part2
+public import Theorem.Analysis.Section_9_1.Part3
+public import Def.Analysis.MeasureTheory.Section_1_1_1.Part5
 open BoundedInterval
-
 open Pointwise
 
+
+public section
 
 /-- Helper lemma for Lemma 1.1.2(ii): The set of lattice points in a box is finite. -/
 theorem Box.sample_finite {d:ℕ} (B: Box d) {N:ℕ} (hN: N ≠ 0):

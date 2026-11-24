@@ -1,12 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/ArakelovDivisor.lean -/
-
-import Mathlib.Algebra.Order.Positive.Field
-import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
-import Mathlib.RingTheory.ClassGroup.Basic
-import Mathlib.RingTheory.FractionalIdeal.Norm
-import Def.NumberTheory.NumberField.ArakelovDivisor.Part2
+module
+public import Mathlib.Algebra.Order.Positive.Field
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
+public import Mathlib.RingTheory.ClassGroup.Basic
+public import Mathlib.RingTheory.FractionalIdeal.Norm
+public import Def.NumberTheory.NumberField.ArakelovDivisor.Part2
 open scoped NumberField nonZeroDivisors
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/ArakelovDivisor.lean -/
 /-!
 # Arakelov divisors of a number field
 
@@ -39,8 +42,6 @@ complex squaring appears only in the size homomorphism, never in the section-set
 The two bullets above are the two sides of the product formula; the size-one theorem
 below is their combination, not a new normalization.
 -/
-
-
 namespace NumberField
 
 variable (K : Type*) [Field K] [NumberField K]

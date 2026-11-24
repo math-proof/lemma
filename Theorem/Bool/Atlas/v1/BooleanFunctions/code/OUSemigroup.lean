@@ -15,7 +15,6 @@ namespace GaussianSpace
 /--
 [gaussian_sum_pushforward](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/OUSemigroup.lean)
 -/
-@[path]
 public theorem gaussian_sum_pushforward
   {E : Type*}
   [NormedAddCommGroup E]
@@ -60,7 +59,6 @@ namespace GaussianSpace
 /--
 [integral_gaussian_sum](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/OUSemigroup.lean)
 -/
-@[path]
 public theorem integral_gaussian_sum
   {E : Type*}
   [NormedAddCommGroup E]
@@ -96,7 +94,6 @@ namespace GaussianSpace
 /--
 [ornsteinUhlenbeckOp_comp](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/OUSemigroup.lean)
 -/
-@[path]
 public theorem ornsteinUhlenbeckOp_comp
   {n : ℕ}
   {ρ σ : ℝ}

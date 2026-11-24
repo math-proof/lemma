@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/LebowitzPfisterTwoGhostVarianceSector.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterTwoGhostPinned.Part5
+public import Def.StatisticalMechanics.Code.Ising.LebowitzPfisterTwoGhostVarianceSector
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/LebowitzPfisterTwoGhostVarianceSector.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterTwoGhostPinned.Part5
-import Def.StatisticalMechanics.Code.Ising.LebowitzPfisterTwoGhostVarianceSector
-
-
 namespace StatMech.Ising
 
 noncomputable section

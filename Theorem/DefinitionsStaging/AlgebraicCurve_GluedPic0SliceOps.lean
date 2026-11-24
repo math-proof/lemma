@@ -1,10 +1,13 @@
-import Mathlib
-import Lemma.Definitions.Def_AlgebraicCurve_GluedPic0Functoriality
-import Def.AlgebraicCurve_GluedPic0Pushforward
-import Lemma.Definitions.Def_ModularCurve_CharacterLatticePairings
-import Def.AlgebraicCurve_GluedPic0SliceOps
+module
+public import Mathlib
+public import Lemma.Definitions.Def_AlgebraicCurve_GluedPic0Functoriality
+public import Def.AlgebraicCurve_GluedPic0Pushforward
+public import Lemma.Definitions.Def_ModularCurve_CharacterLatticePairings
+public import Def.AlgebraicCurve_GluedPic0SliceOps
 set_option autoImplicit false
 
+
+public section
 
 namespace AlgebraicCurve
 

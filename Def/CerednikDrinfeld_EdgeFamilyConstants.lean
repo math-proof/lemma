@@ -1,8 +1,11 @@
-import Mathlib
-import Instance.CerednikDrinfeld_FormalUpperHalfPlaneChartRings
-import Abbrev.CerednikDrinfeld_EdgeFamilyConstants
-
+module
+public import Mathlib
+public import Instance.CerednikDrinfeld_FormalUpperHalfPlaneChartRings
+public import Abbrev.CerednikDrinfeld_EdgeFamilyConstants
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

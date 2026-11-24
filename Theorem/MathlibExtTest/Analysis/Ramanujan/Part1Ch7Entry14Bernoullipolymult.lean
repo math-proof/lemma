@@ -1,10 +1,11 @@
+module
+public import Def.Analysis.Ramanujan.Part1Ch7Entry14Bernoullipolymult
+public import Theorem.Real.Ramanujan.Part1Ch7Entry14Bernoullipolymult
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Ramanujan/Part1Ch7Entry14Bernoullipolymult.lean -/
-
-
-import Def.Analysis.Ramanujan.Part1Ch7Entry14Bernoullipolymult
-import Lemma.Real.Ramanujan.Part1Ch7Entry14Bernoullipolymult
-
-
 namespace MathlibExtTest.Analysis.Ramanujan.Part1Ch7Entry14Bernoullipolymult
 
 open Asymptotics Filter

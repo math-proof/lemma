@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/Lec20EulerSequence.lean -/
+module
+public import Def.v1.Atlas.AlgebraicGeometryI.code.TwistSheaf.Part2
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TwistSheaf
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleProjective
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleProjective.Part4
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.Lec20EulerSequence
+set_option maxHeartbeats 800000
+open QCohProjective TwistSheaf
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/Lec20EulerSequence.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.AlgebraicGeometryI.code.TwistSheaf.Part2
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TwistSheaf
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleProjective
-import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleProjective.Part4
-import Structure.v1.Atlas.AlgebraicGeometryI.code.Lec20EulerSequence
-set_option maxHeartbeats 800000
-
-open QCohProjective TwistSheaf
-
-
 noncomputable section
 
 namespace EulerSequence

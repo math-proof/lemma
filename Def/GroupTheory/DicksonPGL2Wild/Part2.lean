@@ -1,29 +1,32 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/DicksonPGL2Wild.lean -/
+module
+public import Mathlib.FieldTheory.Finite.GaloisField
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Mathlib.GroupTheory.SemidirectProduct
+public import Mathlib.GroupTheory.SpecificGroups.Alternating
+public import Mathlib.GroupTheory.SpecificGroups.Dihedral
+public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Projective
+public import Mathlib.LinearAlgebra.Matrix.ProjectiveSpecialLinearGroup
+public import Theorem.GroupTheory.DicksonPGL2Tame.Part4
+public import Theorem.Nat.Card_Stabilizer
+public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Card
+public import Mathlib.Algebra.Group.IsCommutative
+public import Mathlib.Algebra.Module.ZMod
+public import Mathlib.FieldTheory.Separable
+public import Mathlib.GroupTheory.PGroup
+public import Mathlib.GroupTheory.SchurZassenhaus
+public import Mathlib.GroupTheory.GroupAction.Quotient
+public import Mathlib.LinearAlgebra.Eigenspace.Semisimple
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+public import Mathlib.Topology.Compactification.OnePoint.ProjectiveLine
+public import Instance.GroupTheory.DicksonPGL2Wild
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/DicksonPGL2Wild.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
-
-import Mathlib.FieldTheory.Finite.GaloisField
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Mathlib.GroupTheory.SemidirectProduct
-import Mathlib.GroupTheory.SpecificGroups.Alternating
-import Mathlib.GroupTheory.SpecificGroups.Dihedral
-import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Projective
-import Mathlib.LinearAlgebra.Matrix.ProjectiveSpecialLinearGroup
-import Theorem.GroupTheory.DicksonPGL2Tame.Part4
-import Lemma.Nat.Card_Stabilizer
-import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Card
-import Mathlib.Algebra.Group.IsCommutative
-import Mathlib.Algebra.Module.ZMod
-import Mathlib.FieldTheory.Separable
-import Mathlib.GroupTheory.PGroup
-import Mathlib.GroupTheory.SchurZassenhaus
-import Mathlib.GroupTheory.GroupAction.Quotient
-import Mathlib.LinearAlgebra.Eigenspace.Semisimple
-import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
-import Mathlib.Topology.Compactification.OnePoint.ProjectiveLine
-import Instance.GroupTheory.DicksonPGL2Wild
 /-!
 # Dickson's classification in the wild case
 
@@ -31,8 +34,6 @@ This file classifies finite subgroups of `PGL₂` over an algebraic closure of a
 field when the characteristic divides the group order. It also supplies the projective linear
 group order formulas and characteristic-order element facts used by the classification.
 -/
-
-
 namespace MetaMathlibExt
 
 namespace Dickson

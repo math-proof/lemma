@@ -1,15 +1,18 @@
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.Limits
-import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
-import Mathlib.RingTheory.Localization.Integral
-import Mathlib.RingTheory.Polynomial.ScaleRoots
-import Mathlib.Algebra.Polynomial.Lifts
-import Theorem.HahnSeries.X0
-import Def.GaloisRep_Flat
-import Notation.ModularCurve_IgusaScheme
-
+module
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.Limits
+public import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
+public import Mathlib.RingTheory.Localization.Integral
+public import Mathlib.RingTheory.Polynomial.ScaleRoots
+public import Mathlib.Algebra.Polynomial.Lifts
+public import Theorem.HahnSeries.X0
+public import Def.GaloisRep_Flat
+public import Notation.ModularCurve_IgusaScheme
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

@@ -8,7 +8,7 @@ import Def.AlgebraicGeometry_RelPicardAlgEquivZeroCut
 import Def.AlgebraicGeometry_RelPicardAlgEquivZeroGroupCut
 import Abbrev.AlgebraicGeometry_IdealSheafModule
 import Lemma.Scheme.RelEffCartierDiv
-import Lemma.Scheme.RelEffCartierDivOfPoint
+import Theorem.Scheme.RelEffCartierDivOfPoint
 import Structure.ModularCurve_JZeroNeronObjectAtP_LevelModel
 
 set_option autoImplicit false

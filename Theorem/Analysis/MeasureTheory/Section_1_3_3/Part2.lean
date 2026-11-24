@@ -1,6 +1,9 @@
-import Theorem.Analysis.MeasureTheory.Section_1_3_2.Part9
-import Def.Analysis.MeasureTheory.Section_1_3_3.Part2
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_3_2.Part9
+public import Def.Analysis.MeasureTheory.Section_1_3_3.Part2
 
+
+public section
 
 /-- Corollary 1.3.14 (Finite additivity of Lebesgue integral ). -/
 theorem LowerUnsignedLebesgueIntegral.add {d:ℕ} {f g: EuclideanSpace' d → EReal} (hf: UnsignedMeasurable f) (hg: UnsignedMeasurable g)

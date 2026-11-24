@@ -1,12 +1,13 @@
+module
+public import Def.Order.PosetMatrix
+public import Theorem.Set.PosetMatrix
+public import Mathlib.Tactic.FinCases
+public import Def.MathlibExtTest.Order.PosetMatrix.Part3
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Order/PosetMatrix.lean -/
-
-
-import Def.Order.PosetMatrix
-import Theorem.Set.PosetMatrix
-import Mathlib.Tactic.FinCases
-import Def.MathlibExtTest.Order.PosetMatrix.Part3
-
-
 namespace MetaMathlibExt
 
 example : twoMat 1 0 = false :=

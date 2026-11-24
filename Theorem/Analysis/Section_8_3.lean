@@ -1,6 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Section_8_1.Part4
-import Theorem.Analysis.Section_8_2.Part4
+module
+public import Mathlib
+public import Theorem.Analysis.Section_8_1.Part4
+public import Theorem.Analysis.Section_8_2.Part4
+
+
+public section
+
 /-!
 # Analysis I, Section 8.3: Uncountable sets
 
@@ -18,8 +23,6 @@ Some non-trivial API is provided beyond what is given in the textbook in order c
 notions with existing summation notions.
 
 -/
-
-
 namespace Chapter8
 
 /-- Theorem 8.3.1 -/

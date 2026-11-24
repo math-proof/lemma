@@ -13,7 +13,7 @@ open Matrix DVRContext
 [mkGL2_val_apply](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Valuation/IwahoriDecomp.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   {C : DVRContext}
   [DVRClosureGL2 C]
   {f : Fin 2 → Fin 2 → C.k}

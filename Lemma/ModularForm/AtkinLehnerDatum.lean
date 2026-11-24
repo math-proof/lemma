@@ -1,10 +1,12 @@
-import Mathlib
-import Structure.ModularForm_AtkinLehnerDatum
-
+module
+public import Mathlib
+public import Structure.ModularForm_AtkinLehnerDatum
 set_option autoImplicit false
-
 open Matrix UpperHalfPlane CongruenceSubgroup
 open scoped MatrixGroups ModularForm
+
+
+public section
 
 noncomputable section
 

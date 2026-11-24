@@ -1,8 +1,11 @@
-import Mathlib
-import Lemma.Definitions.Def_AlgebraicCurve_DivisorClassGroup
-import Def.AlgebraicCurve_PlaceEvaluation
+module
+public import Mathlib
+public import Lemma.Definitions.Def_AlgebraicCurve_DivisorClassGroup
+public import Def.AlgebraicCurve_PlaceEvaluation
 set_option autoImplicit false
 
+
+public section
 
 noncomputable section
 

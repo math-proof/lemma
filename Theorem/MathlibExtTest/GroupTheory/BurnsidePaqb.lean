@@ -1,18 +1,19 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/GroupTheory/BurnsidePaqb.lean -/
-
-
-import Lemma.Nat.IsSolvableG.of.EqCardG_MulPowS.Prime.Prime
-import Mathlib.Data.ZMod.Basic
+module
+public import Theorem.Nat.IsSolvableG.of.EqCardG_MulPowS.Prime.Prime
+public import Mathlib.Data.ZMod.Basic
 open BurnsidePaqb
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/GroupTheory/BurnsidePaqb.lean -/
 /-!
 # Compile-time tests for Burnside's `p^a q^b` theorem
 
 Authors: Muse Spark 1.3
 -/
-
-
 -- Exact API shape of the headline theorem.
+
 example {G : Type*} [Group G] [Fintype G]
     (p q a b : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hcard : Fintype.card G = p ^ a * q ^ b) : Group.IsSolvable G :=

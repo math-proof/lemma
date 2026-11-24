@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/AffineCoxeter/TitsConeFiniteParabolic.lean -/
+module
+public import Def.v1.Atlas.Buildings.code.AffineCoxeter.TitsCone.Part3
+public import Def.v1.Atlas.Buildings.code.AffineCoxeter.TitsConeConvexity.Part3
+public import Mathlib.Order.Filter.Basic
+set_option linter.unusedSectionVars false
+open Finset BigOperators CoxeterGroup TitsCone
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/AffineCoxeter/TitsConeFiniteParabolic.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.Buildings.code.AffineCoxeter.TitsCone.Part3
-import Def.v1.Atlas.Buildings.code.AffineCoxeter.TitsConeConvexity.Part3
-import Mathlib.Order.Filter.Basic
-set_option linter.unusedSectionVars false
-
-open Finset BigOperators CoxeterGroup TitsCone
-
-
 namespace TitsCone
 
 variable {B : Type*} [DecidableEq B] [Fintype B]

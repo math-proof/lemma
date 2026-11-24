@@ -1,10 +1,11 @@
+module
+public import Theorem.RingTheory.GradedAlgebra.MultigradedBaseChangedDegreeComplex
+public import Theorem.Int.GradedAlgebra.MultigradedBaseChangedDegreeComplex
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/GradedAlgebra/MultigradedBaseChangedDegreeComplex.lean -/
-
-
-import Theorem.RingTheory.GradedAlgebra.MultigradedBaseChangedDegreeComplex
-import Lemma.Int.GradedAlgebra.MultigradedBaseChangedDegreeComplex
-
-
 namespace MetaMathlibExt
 
 universe u

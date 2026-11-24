@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.AlgebraicGeometryI.code.CartierDivisorScheme.Part3
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CartierDivisorScheme.Part3
 open AlgebraicGeometry CategoryTheory TopologicalSpace Opposite CartierDivisorScheme
 
+
+public section
 
 namespace CartierDivisorScheme
 

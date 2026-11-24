@@ -1,8 +1,11 @@
-import Mathlib
-import Instance.ExtEndgame_ProductionDatum
-import Instance.EllipticCurve_FrobeniusTrace
-
+module
+public import Mathlib
+public import Instance.ExtEndgame_ProductionDatum
+public import Instance.EllipticCurve_FrobeniusTrace
 set_option autoImplicit false
+
+
+public section
 
 namespace ExtCitation
 

@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.ArithmeticGeometry.code.Hilbert2AdicCore.Part2
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.ArithmeticGeometry.code.Hilbert2AdicCore.Part2
 open PadicInt HilbertSymbol
 
+
+public section
 
 /--
 [toZModPow_unit_coe](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/Hilbert2AdicCore.lean)

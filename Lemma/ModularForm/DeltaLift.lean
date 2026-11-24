@@ -1,4 +1,4 @@
-import Lemma.Measure.ProductionPinsCompact
+import Theorem.Measure.ProductionPinsCompact
 import Lemma.Ideal.ArithCuspRealization
 import Def.LanglandsTunnell_DeltaLift
 

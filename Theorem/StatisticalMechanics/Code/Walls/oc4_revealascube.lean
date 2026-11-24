@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/oc4_revealascube.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.OSSS.RevealmentBoxCrossing.Part3
+public import Theorem.StatisticalMechanics.Code.Walls.oc3_core
+open scoped BigOperators ENNReal
+open Finset MeasureTheory
+set_option linter.style.longLine false
+set_option linter.unusedSectionVars false
+set_option linter.unusedVariables false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/oc4_revealascube.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.OSSS.RevealmentBoxCrossing.Part3
-import Theorem.StatisticalMechanics.Code.Walls.oc3_core
-open scoped BigOperators ENNReal
-open Finset MeasureTheory
-
-set_option linter.style.longLine false
-set_option linter.unusedSectionVars false
-set_option linter.unusedVariables false
-
-
 namespace StatMech
 
 namespace Walls

@@ -1,5 +1,28 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/ModularPolynomial.lean -/
+module
+public import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
+public import Mathlib.Analysis.Complex.UpperHalfPlane.MoebiusAction
+public import Mathlib.Analysis.Meromorphic.Basic
+public import Mathlib.Analysis.Complex.UpperHalfPlane.FunctionsBoundedAtInfty
+public import Mathlib.Analysis.SpecialFunctions.Complex.Analytic
+public import Mathlib.RingTheory.MvPolynomial.Basic
+public import Mathlib.Algebra.MvPolynomial.Degrees
+public import Mathlib.Data.Nat.Factorization.Basic
+public import Mathlib.RingTheory.LaurentSeries
+public import Mathlib.RingTheory.Polynomial.Basic
+public import Mathlib.Algebra.Polynomial.EraseLead
+public import Mathlib.Algebra.CharP.Defs
+public import Def.v1.Atlas.EllipticCurves.code.ModularCurves.Part3
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.ModularCurves
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Uniformization
+public import Def.v1.Atlas.EllipticCurves.code.Uniformization
+public import Theorem.v1.Atlas.EllipticCurves.code.ModularPolynomial.Part2
+open scoped MatrixGroups UpperHalfPlane
+open CongruenceSubgroup Complex
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/ModularPolynomial.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,28 +30,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
-import Mathlib.Analysis.Complex.UpperHalfPlane.MoebiusAction
-import Mathlib.Analysis.Meromorphic.Basic
-import Mathlib.Analysis.Complex.UpperHalfPlane.FunctionsBoundedAtInfty
-import Mathlib.Analysis.SpecialFunctions.Complex.Analytic
-import Mathlib.RingTheory.MvPolynomial.Basic
-import Mathlib.Algebra.MvPolynomial.Degrees
-import Mathlib.Data.Nat.Factorization.Basic
-import Mathlib.RingTheory.LaurentSeries
-import Mathlib.RingTheory.Polynomial.Basic
-import Mathlib.Algebra.Polynomial.EraseLead
-import Mathlib.Algebra.CharP.Defs
-import Def.v1.Atlas.EllipticCurves.code.ModularCurves.Part3
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.ModularCurves
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.Uniformization
-import Def.v1.Atlas.EllipticCurves.code.Uniformization
-import Theorem.v1.Atlas.EllipticCurves.code.ModularPolynomial.Part2
-open scoped MatrixGroups UpperHalfPlane
-open CongruenceSubgroup Complex
-
-
 noncomputable section
 
 open ModularFunction

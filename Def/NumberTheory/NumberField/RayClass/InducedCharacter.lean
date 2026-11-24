@@ -1,8 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/InducedCharacter.lean -/
+module
+public import Def.NumberTheory.NumberField.RayClass.Character
+public import Theorem.Nat.NumberField.RayClass.Character
+public import Theorem.NumberTheory.NumberField.RayClass.InducedCharacter
 
-import Def.NumberTheory.NumberField.RayClass.Character
-import Lemma.Nat.NumberField.RayClass.Character
-import Theorem.NumberTheory.NumberField.RayClass.InducedCharacter
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/InducedCharacter.lean -/
 @[expose] noncomputable section
 
 open scoped nonZeroDivisors

@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/KWLoopWeight.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.KWMatrix
+public import Theorem.StatisticalMechanics.Code.Onsager.ShermanLoop
+public import Theorem.StatisticalMechanics.Code.Onsager.TurningTelescope.Part3
+public import Theorem.StatisticalMechanics.Code.Onsager.TurnReversal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/KWLoopWeight.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.KWMatrix
-import Theorem.StatisticalMechanics.Code.Onsager.ShermanLoop
-import Theorem.StatisticalMechanics.Code.Onsager.TurningTelescope.Part3
-import Theorem.StatisticalMechanics.Code.Onsager.TurnReversal
-
-
 namespace StatMech.Onsager
 
 open Matrix BigOperators

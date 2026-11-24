@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/TranslationInvariance.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.FK.DensityFiniteToInfinite.Part2
+public import Def.StatisticalMechanics.Code.FK.TranslationInvariance.Part4
+open MeasureTheory Filter Topology SimpleGraph Set
+open scoped BigOperators
+set_option linter.unusedSectionVars false
+set_option linter.unusedFintypeInType false
+set_option linter.unusedDecidableInType false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/TranslationInvariance.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.FK.DensityFiniteToInfinite.Part2
-import Def.StatisticalMechanics.Code.FK.TranslationInvariance.Part4
-open MeasureTheory Filter Topology SimpleGraph Set
-open scoped BigOperators
-
-set_option linter.unusedSectionVars false
-set_option linter.unusedFintypeInType false
-set_option linter.unusedDecidableInType false
-
-
 namespace StatMech
 
 namespace FK

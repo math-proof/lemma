@@ -1,10 +1,14 @@
--- Carved from Lemma/Definitions/Def_CerednikDrinfeld_FormalUpperHalfPlaneChartRings.lean: instance decls only.
-import Mathlib
-import Def.CerednikDrinfeld_FormalUpperHalfPlaneCharts
-import Theorem.MvPolynomial.FormalUpperHalfPlaneChartRings
-import Def.CerednikDrinfeld_FormalUpperHalfPlaneChartRings
-
+module
+public import Mathlib
+public import Def.CerednikDrinfeld_FormalUpperHalfPlaneCharts
+public import Theorem.MvPolynomial.FormalUpperHalfPlaneChartRings
+public import Def.CerednikDrinfeld_FormalUpperHalfPlaneChartRings
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_CerednikDrinfeld_FormalUpperHalfPlaneChartRings.lean: instance decls only.
 
 noncomputable section
 

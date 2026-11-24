@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/BeffaraDC/TorusSquareCrossingCover.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.BeffaraDC.TorusSquareCrossingCounterexample
+public import Theorem.StatisticalMechanics.Code.Universality.ConnectedRCoastClose.Part13
+public import Theorem.StatisticalMechanics.Code.Universality.BXPAllAspect
+open SimpleGraph Set
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/BeffaraDC/TorusSquareCrossingCover.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.BeffaraDC.TorusSquareCrossingCounterexample
-import Theorem.StatisticalMechanics.Code.Universality.ConnectedRCoastClose.Part13
-import Theorem.StatisticalMechanics.Code.Universality.BXPAllAspect
-open SimpleGraph Set
-
-
 namespace StatMech.BeffaraDC
 
 open StatMech.Lattice

@@ -1,11 +1,12 @@
+module
+public import Def.Analysis.SpecialFunctions.ExpSubOneMittagLeffler
+public import Theorem.Real.ExpSubOneMittagLeffler
+public import Mathlib.Tactic
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/ExpSubOneMittagLeffler.lean -/
-
-
-import Def.Analysis.SpecialFunctions.ExpSubOneMittagLeffler
-import Lemma.Real.ExpSubOneMittagLeffler
-import Mathlib.Tactic
-
-
 namespace MathlibExtTest.Analysis.SpecialFunctions.ExpSubOneMittagLeffler
 
 open Asymptotics Filter

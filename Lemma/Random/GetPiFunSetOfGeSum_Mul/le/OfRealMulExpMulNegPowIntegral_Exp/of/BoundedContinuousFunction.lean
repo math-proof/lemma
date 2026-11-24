@@ -1,13 +1,16 @@
-import Mathlib.Analysis.SpecialFunctions.Exp
-import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
-import Mathlib.MeasureTheory.Constructions.Pi
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.MeasureTheory.Integral.Lebesgue.Markov
-import Mathlib.MeasureTheory.Integral.Pi
-import Mathlib.Topology.ContinuousMap.Bounded.Basic
-import Initialize.Tactic.Attr.Basic
+module
+public import Mathlib.Analysis.SpecialFunctions.Exp
+public import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
+public import Mathlib.MeasureTheory.Constructions.Pi
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.MeasureTheory.Integral.Lebesgue.Markov
+public import Mathlib.MeasureTheory.Integral.Pi
+public import Mathlib.Topology.ContinuousMap.Bounded.Basic
+public import Initialize.Tactic.Attr.Basic
 open ENNReal Finset MeasureTheory Real
 
+
+public section
 
 /--
 Markov's inequality applied to the exponential of a bounded continuous function, on an i.i.d. sample.

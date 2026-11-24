@@ -1,8 +1,11 @@
-import Mathlib.NumberTheory.ModularForms.Basic
-import Lemma.ZMod.Inst
-import Lemma.ModularForm.HeckeOperator
-
+module
+public import Mathlib.NumberTheory.ModularForms.Basic
+public import Lemma.ZMod.Inst
+public import Lemma.ModularForm.HeckeOperator
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

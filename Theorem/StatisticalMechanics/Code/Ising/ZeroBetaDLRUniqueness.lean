@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/ZeroBetaDLRUniqueness.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Ising.MinusStateDLR
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityVaryingTemperature.Part2
+public import Theorem.StatisticalMechanics.Code.FK.FKGeneralQTranslation.Part2
+open MeasureTheory Set
+open scoped BigOperators BoundedContinuousFunction
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/ZeroBetaDLRUniqueness.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Ising.MinusStateDLR
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityVaryingTemperature.Part2
-import Theorem.StatisticalMechanics.Code.FK.FKGeneralQTranslation.Part2
-open MeasureTheory Set
-open scoped BigOperators BoundedContinuousFunction
-
-
 namespace StatMech.Ising
 
 open ConfigSpace FK Lattice

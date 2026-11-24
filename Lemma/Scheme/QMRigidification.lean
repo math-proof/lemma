@@ -1,14 +1,16 @@
-import Structure.CerednikDrinfeld_QMFineModuli
-import Def.CerednikDrinfeld_QMIsogeny
-import Def.CerednikDrinfeld_QMFormalModuleOf
-import Def.CerednikDrinfeld_QMModuliProps
-import Structure.CerednikDrinfeld_QMRigidification
-import Abbrev.CerednikDrinfeld_QMRigidification
-
+module
+public import Structure.CerednikDrinfeld_QMFineModuli
+public import Def.CerednikDrinfeld_QMIsogeny
+public import Def.CerednikDrinfeld_QMFormalModuleOf
+public import Def.CerednikDrinfeld_QMModuliProps
+public import Structure.CerednikDrinfeld_QMRigidification
+public import Abbrev.CerednikDrinfeld_QMRigidification
 set_option autoImplicit false
-
 open scoped Quaternion
 open CategoryTheory AlgebraicGeometry NeronModelInfra
+
+
+public section
 
 namespace CerednikDrinfeld.QM.FakeEllipticCurve
 

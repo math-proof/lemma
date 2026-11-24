@@ -1,3 +1,11 @@
+module
+public import Mathlib
+public import Def.RingTheory.PowerSeries.InfiniteProducts2.Part6
+open scoped Polynomial BigOperators
+
+
+public section
+
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -6,10 +14,6 @@ All rights reserved.
 Copyright (c) 2024 AlgebraicCombinatorics Contributors. All rights reserved.
 Authors: AlgebraicCombinatorics Contributors
 -/
-import Mathlib
-import Def.RingTheory.PowerSeries.InfiniteProducts2.Part6
-open scoped Polynomial BigOperators
-
 /-!
 # Infinite Products of Formal Power Series - Part 2
 
@@ -62,8 +66,6 @@ The main content includes:
 
 * [Loehr, *Bijective Combinatorics*, Details: Infinite Products (Part 2)]
 -/
-
-
 namespace PowerSeries
 
 variable {K : Type*} [CommRing K]

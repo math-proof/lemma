@@ -1,4 +1,4 @@
-import Lemma.Matrix.ConductorDatum
+import Theorem.Matrix.ConductorDatum
 import Instance.LocalNewvector_PrincipalSeriesCarrier
 
 set_option autoImplicit false

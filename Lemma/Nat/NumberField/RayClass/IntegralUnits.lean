@@ -1,10 +1,14 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.NumberTheory.NumberField.RayClass.IntegralUnits.Part4
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.NumberTheory.NumberField.RayClass.IntegralUnits.Part4
 open NumberField
 open Modulus
-
 set_option synthInstance.maxHeartbeats 100000
+
+
+public section
+
 noncomputable section
 
 

@@ -1,17 +1,18 @@
+module
+public import Def.Topology.InverseLimit
+public import Theorem.Set.InverseLimit
+public import Def.MathlibExtTest.Topology.InverseLimit.Part2
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Topology/InverseLimit.lean -/
-
-
-import Def.Topology.InverseLimit
-import Theorem.Set.InverseLimit
-import Def.MathlibExtTest.Topology.InverseLimit.Part2
 /-!
 # Inverse-limit smoke tests
 
 Concrete identity systems over `Fin 2` and `Unit` exercising
 `InverseLimit.carrier`, compatibility, closedness, and compactness.
 -/
-
-
 namespace InverseLimitTest
 
 example : mixed ∉ InverseLimit.carrier boolId := by

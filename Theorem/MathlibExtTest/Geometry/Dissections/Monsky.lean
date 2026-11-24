@@ -1,11 +1,12 @@
+module
+public import Theorem.Geometry.Dissections.Monsky.Part11
+public import Theorem.Set.Dissections.Monsky
+public import Mathlib.Tactic
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Geometry/Dissections/Monsky.lean -/
-
-
-import Theorem.Geometry.Dissections.Monsky.Part11
-import Lemma.Set.Dissections.Monsky
-import Mathlib.Tactic
-
-
 namespace MathlibExtTest.Geometry.Dissections.Monsky
 
 open MeasureTheory

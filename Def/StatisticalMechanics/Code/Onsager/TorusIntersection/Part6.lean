@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/TorusIntersection.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Onsager.TorusPeriodicLift
+public import Theorem.StatisticalMechanics.Code.Onsager.TorusIntersection.Part5
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/TorusIntersection.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,11 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.Onsager.TorusPeriodicLift
-import Theorem.StatisticalMechanics.Code.Onsager.TorusIntersection.Part5
-
-
 namespace StatMech.Onsager
 
 open BigOperators StatMech.Ising

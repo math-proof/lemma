@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/SL2RepWired.lean -/
+module
+public import Theorem.v1.Atlas.LieGroups.code.SL2Classification
+public import Theorem.Complex.Nonempty_Realization
+public import Inductive.v1.Atlas.LieGroups.code.SL2RepWired
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/SL2RepWired.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.LieGroups.code.SL2Classification
-import Lemma.Complex.Nonempty_Realization
-import Inductive.v1.Atlas.LieGroups.code.SL2RepWired
-
-
 namespace SL2GKModule
 
 variable {𝔤 : Type*} [LieRing 𝔤] [LieAlgebra ℂ 𝔤]

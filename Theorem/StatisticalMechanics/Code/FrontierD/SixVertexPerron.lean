@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexPerron.lean -/
+module
+public import Def.StatisticalMechanics.Code.FrontierD.SixVertex.Part9
+public import Mathlib.Analysis.InnerProductSpace.Rayleigh
+public import Mathlib.LinearAlgebra.Matrix.Irreducible.Defs
+open Finset Matrix
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexPerron.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Def.StatisticalMechanics.Code.FrontierD.SixVertex.Part9
-import Mathlib.Analysis.InnerProductSpace.Rayleigh
-import Mathlib.LinearAlgebra.Matrix.Irreducible.Defs
-open Finset Matrix
-
-
 namespace StatMech.FrontierD
 
 theorem pairwise_flatMap_pairs {ι α : Type*} [Preorder α]

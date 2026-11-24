@@ -1,10 +1,11 @@
+module
+public import Theorem.GameTheory.SpragueGrundy.Part4
+public import Theorem.Set.SpragueGrundy
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/GameTheory/SpragueGrundy.lean -/
-
-
-import Theorem.GameTheory.SpragueGrundy.Part4
-import Lemma.Set.SpragueGrundy
-
-
 namespace MetaMathlibExt.SpragueGrundy
 
 -- Terminal position: the empty heap has no moves, so it is a P-position.

@@ -1,10 +1,13 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.NumberTheory.RothAuxiliary
-import Lemma.Polynomial.PowDen.le.NatAbsLeadingCoeff.of.Ne_0
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.NumberTheory.RothAuxiliary
+public import Lemma.Polynomial.PowDen.le.NatAbsLeadingCoeff.of.Ne_0
 open MathlibExt.NumberTheory.RothAuxiliary
 open Polynomial
 
+
+public section
 
 /--
 [roth_univariate_index_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

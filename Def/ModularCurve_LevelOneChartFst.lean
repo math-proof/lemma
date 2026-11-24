@@ -1,14 +1,17 @@
-import Mathlib
-import Def.ModularCurve_LevelOneProlongationPair
-import Def.AlgebraicCurve_SemistableCharts
-import Def.ModularCurve_SpecializeModuli
-import Lemma.WeierstrassCurve.SupersingularModuli
-import Def.ModularCurve_SupersingularNodePlaces
-import Structure.ModularCurve_LevelOneChartFst
-
+module
+public import Mathlib
+public import Def.ModularCurve_LevelOneProlongationPair
+public import Def.AlgebraicCurve_SemistableCharts
+public import Def.ModularCurve_SpecializeModuli
+public import Theorem.WeierstrassCurve.SupersingularModuli
+public import Def.ModularCurve_SupersingularNodePlaces
+public import Structure.ModularCurve_LevelOneChartFst
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 400000
 set_option maxHeartbeats 800000
+
+
+public section
 
 noncomputable section
 

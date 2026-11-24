@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/bc4_avoidingsurvives.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
+public import Def.StatisticalMechanics.Code.Lattice.Clusters.Part7
+public import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeaneUniqueness.Part3
+open Set SimpleGraph
+open StatMech.Lattice StatMech.ConfigSpace
+open StatMech.Percolation
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/bc4_avoidingsurvives.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
-import Def.StatisticalMechanics.Code.Lattice.Clusters.Part7
-import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeaneUniqueness.Part3
-open Set SimpleGraph
-open StatMech.Lattice StatMech.ConfigSpace
-open StatMech.Percolation
-
-
 namespace StatMech
 
 namespace Walls

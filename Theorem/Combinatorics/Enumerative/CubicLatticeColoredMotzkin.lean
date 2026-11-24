@@ -1,17 +1,19 @@
+module
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Fintype.BigOperators
+public import Def.Combinatorics.Enumerative.ULDMotzkinNumberOfRankR.Part2
+public import Theorem.Finset.Enumerative.ULDMotzkinNumberOfRankR
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Order.Ring.Nat
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Data.Fintype.Prod
+public import Mathlib.Data.Fintype.Sum
+public import Def.Combinatorics.Enumerative.CubicLatticeColoredMotzkin
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/CubicLatticeColoredMotzkin.lean -/
-
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Fintype.BigOperators
-import Def.Combinatorics.Enumerative.ULDMotzkinNumberOfRankR.Part2
-import Theorem.Finset.Enumerative.ULDMotzkinNumberOfRankR
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Order.Ring.Nat
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Data.Fintype.Prod
-import Mathlib.Data.Fintype.Sum
-import Def.Combinatorics.Enumerative.CubicLatticeColoredMotzkin
-
-
 namespace MetaMathlibExt
 
 /-- Value of the flat color index. -/

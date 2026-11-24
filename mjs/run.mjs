@@ -22,7 +22,7 @@ import {
   moduleToLeanPath,
   fileExists,
 } from './lean/modulePath.mjs';
-import { conclusionSearchJson } from './lemmaPath.mjs';
+import { lemmaSearchDocuments } from './lemmaPath.mjs';
 import { writeLemmaIndex } from './leanInvertedIndex.mjs';
 
 function jsonCol(v) {
@@ -91,14 +91,19 @@ function resolveLeanFile(input) {
 async function replaceLemmaRow(conn, module, code, abs, startedAt) {
   const errs = Array.isArray(code.error) ? code.error : [];
   let fingerprint = null;
+  let documents = null;
   try {
-    if (abs) fingerprint = conclusionSearchJson(abs);
+    if (abs) {
+      const extracted = lemmaSearchDocuments(abs);
+      fingerprint = extracted.fingerprint;
+      documents = extracted.documents;
+    }
   } catch {
     fingerprint = null;
+    documents = null;
   }
   const meta = {};
   if (errs.length) meta.error = errs;
-  if (fingerprint != null) meta.fingerprint = fingerprint;
   const metaJson = Object.keys(meta).length ? JSON.stringify(meta) : null;
 
   const fields = [
@@ -156,6 +161,7 @@ async function replaceLemmaRow(conn, module, code, abs, startedAt) {
       id,
       module,
       json: fingerprint,
+      documents,
       startedAt,
     });
     await conn.commit();

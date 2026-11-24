@@ -1,5 +1,21 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Friedgut.lean -/
+module
+public import Def.v1.Atlas.BooleanFunctions.code.FKN
+public import Def.v1.Atlas.BooleanFunctions.code.Influence
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Influence
+public import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.MonotoneFourier
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Stability
+public import Def.v1.Atlas.BooleanFunctions.code.InfluenceFourier
+public import Def.v1.Atlas.BooleanFunctions.code.MonotoneFourier
+public import Def.v1.Atlas.BooleanFunctions.code.Stability
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.Complex.ExponentialBounds
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Friedgut.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,21 +23,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.BooleanFunctions.code.FKN
-import Def.v1.Atlas.BooleanFunctions.code.Influence
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Influence
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.MonotoneFourier
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Stability
-import Def.v1.Atlas.BooleanFunctions.code.InfluenceFourier
-import Def.v1.Atlas.BooleanFunctions.code.MonotoneFourier
-import Def.v1.Atlas.BooleanFunctions.code.Stability
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.Complex.ExponentialBounds
-
-
 namespace BooleanFourier
 
 def IsBoolFnJunta {n : ℕ} (g : (Fin n → Bool) → Bool) (J : ℕ) : Prop :=

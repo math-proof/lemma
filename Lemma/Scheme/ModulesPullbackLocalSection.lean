@@ -1,8 +1,11 @@
-import Mathlib
-import Def.AlgebraicGeometry_ModulesPullbackLocalSection
-
+module
+public import Mathlib
+public import Def.AlgebraicGeometry_ModulesPullbackLocalSection
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
+
+
+public section
 
 universe u
 

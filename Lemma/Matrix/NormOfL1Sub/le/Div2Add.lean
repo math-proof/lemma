@@ -1,11 +1,14 @@
-import Lemma.Matrix.VecMulSum.eq.Sum_VecMul
-import Lemma.Matrix.VecMulSMul.eq.SMul_VecMul
-import Lemma.Matrix.L1Norm.eq.One.of.StochasticVec
-import Lemma.Matrix.OfL1.eq.Sub
-import Lemma.Matrix.OfL1.eq.SMul
+module
+public import Lemma.Matrix.VecMulSum.eq.Sum_VecMul
+public import Lemma.Matrix.VecMulSMul.eq.SMul_VecMul
+public import Lemma.Matrix.L1Norm.eq.One.of.StochasticVec
+public import Lemma.Matrix.OfL1.eq.Sub
+public import Lemma.Matrix.OfL1.eq.SMul
 open WithLp Matrix
 open scoped Matrix BigOperators
 
+
+public section
 
 @[path]
 private lemma main

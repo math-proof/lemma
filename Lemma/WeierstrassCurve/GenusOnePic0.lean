@@ -1,9 +1,12 @@
-import Mathlib
-import Class.AlgebraicCurve_DivisorClassGroup
-import Class.WeierstrassCurve_GenusOnePic0
-import Abbrev.WeierstrassCurve_GenusOnePic0
-
+module
+public import Mathlib
+public import Class.AlgebraicCurve_DivisorClassGroup
+public import Class.WeierstrassCurve_GenusOnePic0
+public import Abbrev.WeierstrassCurve_GenusOnePic0
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

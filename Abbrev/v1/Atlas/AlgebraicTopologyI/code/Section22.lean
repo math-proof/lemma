@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/Section22.lean -/
+module
+public import Mathlib.CategoryTheory.Abelian.Projective.Resolution
+public import Mathlib.Algebra.Module.Projective
+public import Def.v1.Atlas.AlgebraicTopologyI.code.FundamentalThm.Part5
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.FundamentalThm
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/Section22.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib.CategoryTheory.Abelian.Projective.Resolution
-import Mathlib.Algebra.Module.Projective
-import Def.v1.Atlas.AlgebraicTopologyI.code.FundamentalThm.Part5
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.FundamentalThm
-
-
 namespace ProjectiveModules
 
 /-- **Definition 22.2 (Projective module).**  An `R`-module `P` is

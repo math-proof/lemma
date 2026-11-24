@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexBetheTailConvolution.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheCyclicQuadrature
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Periodic
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexBetheTailConvolution.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheCyclicQuadrature
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Periodic
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

@@ -1,13 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/NormOneIdeleClassGroup.lean -/
+module
+public import Abbrev.NumberTheory.NumberField.NormOneIdeleClassGroup
+public import Theorem.Nat.NumberField.NormOneIdeleClassGroup
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/NormOneIdeleClassGroup.lean -/
 /-
 Author: @toskua, Avocado
 -/
-
-import Abbrev.NumberTheory.NumberField.NormOneIdeleClassGroup
-import Lemma.Nat.NumberField.NormOneIdeleClassGroup
-
-
 noncomputable section
 
 open NumberField

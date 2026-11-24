@@ -1,7 +1,10 @@
-import Mathlib
-import Lemma.Scheme.NeronModelPropertyBundleCarrier
-
+module
+public import Mathlib
+public import Lemma.Scheme.NeronModelPropertyBundleCarrier
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

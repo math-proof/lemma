@@ -1,11 +1,15 @@
--- Carved from Lemma/Definitions/Def_ModularCurve_JLinePlaces.lean: instance decls only.
-import Mathlib
-import Def.ModularCurve_RouteBCoordRing
-import Instance.AlgebraicCurve_RatFuncPlaces
-import Theorem.Valuation.RatFuncPlaceInfty
-import Theorems.Thm_ModularCurve_transcendental_jq
-
+module
+public import Mathlib
+public import Def.ModularCurve_RouteBCoordRing
+public import Instance.AlgebraicCurve_RatFuncPlaces
+public import Theorem.Valuation.RatFuncPlaceInfty
+public import Theorems.Thm_ModularCurve_transcendental_jq
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_ModularCurve_JLinePlaces.lean: instance decls only.
 
 noncomputable section
 

@@ -1,12 +1,13 @@
+module
+public import Def.Combinatorics.Enumerative.MeshPatternRStirling.Part3
+public import Theorem.Finset.Enumerative.MeshPatternRStirling
+public import Theorem.Finset.Enumerative.MeshPatternStirlingRecursion
+public import Theorem.Combinatorics.Enumerative.MeshPatternStirlingRecursion.Part3
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/MeshPatternRStirling.lean -/
-
-
-import Def.Combinatorics.Enumerative.MeshPatternRStirling.Part3
-import Lemma.Finset.Enumerative.MeshPatternRStirling
-import Lemma.Finset.Enumerative.MeshPatternStirlingRecursion
-import Theorem.Combinatorics.Enumerative.MeshPatternStirlingRecursion.Part3
-
-
 namespace MetaMathlibExt
 
 -- Decidability inference for the public mesh predicates.

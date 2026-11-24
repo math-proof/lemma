@@ -1,9 +1,12 @@
-import Mathlib
-import Def.FLTPrelim_Ramification
-import Def.ModularCurve_X1Diamond
-import Instance.EllipticCurve_TateModule
-
+module
+public import Mathlib
+public import Def.FLTPrelim_Ramification
+public import Def.ModularCurve_X1Diamond
+public import Instance.EllipticCurve_TateModule
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

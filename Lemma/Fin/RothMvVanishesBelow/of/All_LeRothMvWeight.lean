@@ -1,15 +1,18 @@
-import Mathlib
-import Lemma.Fin.RothMvVanishesBelowNeg
-import Lemma.Fin.RothMvVanishesBelow.of.Le
-import Lemma.Fin.RothMvVanishesBelow_Max
-import Lemma.Fin.RothMvVanishesBelow_Sum.of.All_RothMvVanishesBelow
-import Lemma.Fin.RothMvVanishesBelow.of.All_RothMvVanishesBelow
-import Lemma.Fin.RothMvVanishesBelow_Sub.of.RothMvIndex
-import Lemma.Fin.RothMvWeightAdd.eq.AddRothSMvWeight.of.RothMvIndex
-import Lemma.Fin.RothMvVanishesBelow.of.Le_0
+module
+public import Mathlib
+public import Lemma.Fin.RothMvVanishesBelowNeg
+public import Lemma.Fin.RothMvVanishesBelow.of.Le
+public import Lemma.Fin.RothMvVanishesBelow_Max
+public import Lemma.Fin.RothMvVanishesBelow_Sum.of.All_RothMvVanishesBelow
+public import Lemma.Fin.RothMvVanishesBelow.of.All_RothMvVanishesBelow
+public import Lemma.Fin.RothMvVanishesBelow_Sub.of.RothMvIndex
+public import Lemma.Fin.RothMvWeightAdd.eq.AddRothSMvWeight.of.RothMvIndex
+public import Lemma.Fin.RothMvVanishesBelow.of.Le_0
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [rothHasseDet_vanishesBelow_of_rowWeight_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

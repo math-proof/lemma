@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.v1.Atlas.Buildings.code.Building.UniqueRetraction
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.v1.Atlas.Buildings.code.Building.UniqueRetraction
 open scoped Classical
 
+
+public section
 
 /--
 [apartment_iso_sending_chamber](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/UniqueRetraction.lean)

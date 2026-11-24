@@ -1,9 +1,12 @@
-import Def.AlgebraicGeometry_FramedPolarisedAbelianScheme
-import Lemma.Scheme.PolarisationRosati
-import Structure.AlgebraicGeometry_PolarisedAbelianSchemeOfType
-import Abbrev.AlgebraicGeometry_PolarisedAbelianSchemeOfType
-
+module
+public import Def.AlgebraicGeometry_FramedPolarisedAbelianScheme
+public import Theorem.Scheme.PolarisationRosati
+public import Structure.AlgebraicGeometry_PolarisedAbelianSchemeOfType
+public import Abbrev.AlgebraicGeometry_PolarisedAbelianSchemeOfType
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

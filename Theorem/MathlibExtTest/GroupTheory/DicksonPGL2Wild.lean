@@ -1,11 +1,12 @@
+module
+public import Theorem.GroupTheory.DicksonPGL2Wild.Part6
+public import Theorem.Fin.Card.eq.MulCardSubSquareCard1
+public import Instance.MathlibExtTest.GroupTheory.DicksonPGL2Wild
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/GroupTheory/DicksonPGL2Wild.lean -/
-
-
-import Theorem.GroupTheory.DicksonPGL2Wild.Part6
-import Lemma.Fin.Card.eq.MulCardSubSquareCard1
-import Instance.MathlibExtTest.GroupTheory.DicksonPGL2Wild
-
-
 namespace MathlibExtTest.GroupTheory.DicksonPGL2Wild
 
 open MetaMathlibExt.Dickson

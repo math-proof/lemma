@@ -1,10 +1,12 @@
-import Instance.NarrowRayClassGroup
-import Mathlib.NumberTheory.LSeries.Basic
-import Mathlib.Analysis.SpecialFunctions.Gamma.Deligne
-
+module
+public import Instance.NarrowRayClassGroup
+public import Mathlib.NumberTheory.LSeries.Basic
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Deligne
 set_option autoImplicit false
-
 open NumberField NumberField.InfinitePlace Complex Deep.NTSupply nonZeroDivisors
+
+
+public section
 
 namespace M4aTorus
 

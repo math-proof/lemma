@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Probability/KKLfromHC.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Probability.VectorTwoPoint
+public import Theorem.StatisticalMechanics.Code.Probability.KKLInequality.Part4
+public import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
+public import Theorem.StatisticalMechanics.Code.Probability.KKLfromHC.Part3
+open scoped BigOperators
+open Finset
+set_option linter.style.longLine false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Probability/KKLfromHC.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Probability.VectorTwoPoint
-import Theorem.StatisticalMechanics.Code.Probability.KKLInequality.Part4
-import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
-import Theorem.StatisticalMechanics.Code.Probability.KKLfromHC.Part3
-open scoped BigOperators
-open Finset
-
-set_option linter.style.longLine false
-
-
 namespace StatMech
 
 namespace Probability

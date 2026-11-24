@@ -1,7 +1,10 @@
-import Initialize.Tactic.Attr.Basic
-import Mathlib.Data.Matrix.Mul
+module
+public import Initialize.Tactic.Attr.Basic
+public import Mathlib.Data.Matrix.Mul
 open scoped Matrix
 
+
+public section
 
 @[path, comm]
 private lemma main

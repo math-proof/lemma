@@ -1,11 +1,14 @@
-import Mathlib
-import Def.GaloisRep_Flat
-import Def.FLTPrelim_Ramification
-import Instance.GaloisRep_InertiaRing
-import Abbrev.GaloisRep_InertiaRing
-import Notation.GaloisRep_InertiaRing
-
+module
+public import Mathlib
+public import Def.GaloisRep_Flat
+public import Def.FLTPrelim_Ramification
+public import Instance.GaloisRep_InertiaRing
+public import Abbrev.GaloisRep_InertiaRing
+public import Notation.GaloisRep_InertiaRing
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/PeriodicPlanarBurtonKeaneMerge.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarBurtonKeaneCore.Part3
+public import Def.StatisticalMechanics.Code.FK.PeriodicPlanarBurtonKeaneMerge.Part2
+open MeasureTheory Set SimpleGraph
+open scoped ENNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/PeriodicPlanarBurtonKeaneMerge.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarBurtonKeaneCore.Part3
-import Def.StatisticalMechanics.Code.FK.PeriodicPlanarBurtonKeaneMerge.Part2
-open MeasureTheory Set SimpleGraph
-open scoped ENNReal
-
-
 namespace StatMech.FK.PeriodicPlanar
 
 open Lattice

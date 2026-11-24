@@ -1,9 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.GroupTheory.BurnsidePaqbReduction.Part2
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.GroupTheory.BurnsidePaqbReduction.Part2
 open BurnsidePaqb
 open Classical
 
+
+public section
 
 namespace Definitions
 end Definitions

@@ -1,5 +1,26 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter3/Thm_3_5.lean -/
+module
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Setup
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_6
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Lemma_2_17
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_6
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Lemma_2_17
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.Complex.ExponentialBounds
+public import Mathlib.Order.ConditionallyCompleteLattice.Basic
+public import Mathlib.MeasureTheory.Measure.MeasureSpace
+public import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.Algebra.Order.Chebyshev
+set_option maxHeartbeats 4800000
+set_option maxRecDepth 4096
+open Matrix Finset MeasureTheory
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter3/Thm_3_5.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,27 +28,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Setup
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_6
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Lemma_2_17
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_6
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Lemma_2_17
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.Complex.ExponentialBounds
-import Mathlib.Order.ConditionallyCompleteLattice.Basic
-import Mathlib.MeasureTheory.Measure.MeasureSpace
-import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.Algebra.Order.Chebyshev
-set_option maxHeartbeats 4800000
-set_option maxRecDepth 4096
-
-open Matrix Finset MeasureTheory
-
-
 namespace Rigollet.Chapter3
 
 /-- Squared Euclidean norm of a real vector `v : Fin n → ℝ`. -/

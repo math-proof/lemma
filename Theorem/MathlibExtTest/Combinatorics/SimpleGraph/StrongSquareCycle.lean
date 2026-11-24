@@ -1,10 +1,11 @@
+module
+public import Def.Combinatorics.SimpleGraph.StrongSquareCycle
+public import Theorem.SimpleGraph.StrongSquareCycle
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/StrongSquareCycle.lean -/
-
-
-import Def.Combinatorics.SimpleGraph.StrongSquareCycle
-import Theorem.SimpleGraph.StrongSquareCycle
-
-
 namespace MathlibExtTest.Combinatorics.SimpleGraph.StrongSquareCycle
 
 theorem adj_zero_one :

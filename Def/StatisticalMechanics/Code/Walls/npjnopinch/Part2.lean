@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/npjnopinch.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanEnclosureDuality.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanCoresUnify.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.dg2degree.Part5
+public import Theorem.StatisticalMechanics.Code.Walls.npjnopinch
+open SimpleGraph Set
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/npjnopinch.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Lattice.JordanEnclosureDuality.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.JordanCoresUnify.Part2
-import Theorem.StatisticalMechanics.Code.Walls.dg2degree.Part5
-import Theorem.StatisticalMechanics.Code.Walls.npjnopinch
-open SimpleGraph Set
-
-
 namespace StatMech
 
 namespace Walls

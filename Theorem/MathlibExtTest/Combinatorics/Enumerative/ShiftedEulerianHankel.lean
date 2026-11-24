@@ -1,10 +1,11 @@
+module
+public import Theorem.Combinatorics.Enumerative.ShiftedEulerianHankel
+public import Theorem.Finset.Enumerative.ShiftedEulerianHankel
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/ShiftedEulerianHankel.lean -/
-
-
-import Theorem.Combinatorics.Enumerative.ShiftedEulerianHankel
-import Lemma.Finset.Enumerative.ShiftedEulerianHankel
-
-
 namespace MetaMathlibExt
 
 -- The theorem specializes directly to the order-three Hankel determinant.

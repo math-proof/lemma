@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/CurrentSelectionIndependence.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentParityLimits
+public import Theorem.StatisticalMechanics.Code.FrontierB.BoxCurrentPatternFactor.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierB.InfiniteCurrentMeasures
+public import Def.StatisticalMechanics.Code.FrontierB.CurrentSelectionIndependence.Part3
+open MeasureTheory Filter Topology
+open scoped BigOperators ENNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/CurrentSelectionIndependence.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentParityLimits
-import Theorem.StatisticalMechanics.Code.FrontierB.BoxCurrentPatternFactor.Part2
-import Theorem.StatisticalMechanics.Code.FrontierB.InfiniteCurrentMeasures
-import Def.StatisticalMechanics.Code.FrontierB.CurrentSelectionIndependence.Part3
-open MeasureTheory Filter Topology
-open scoped BigOperators ENNReal
-
-
 namespace StatMech.FrontierB
 
 open Sharpness Ising Lattice

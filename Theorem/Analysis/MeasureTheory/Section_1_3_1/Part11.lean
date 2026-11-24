@@ -1,7 +1,10 @@
-import Theorem.Analysis.MeasureTheory.Section_1_2_3.Part2
-import Theorem.Analysis.Misc.NatBitwise
-import Def.Analysis.MeasureTheory.Section_1_3_1.Part11
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_2_3.Part2
+public import Theorem.Analysis.Misc.NatBitwise
+public import Def.Analysis.MeasureTheory.Section_1_3_1.Part11
 
+
+public section
 
 /-- Exercise 1.3.2(iii) (Compatibility with Lebesgue measure, indicator) -/
 lemma RealSimpleFunction.indicator {d:ℕ} {E: Set (EuclideanSpace' d)} (hE: LebesgueMeasurable E) :

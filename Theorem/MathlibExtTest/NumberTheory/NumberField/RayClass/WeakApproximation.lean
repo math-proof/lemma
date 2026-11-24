@@ -1,7 +1,10 @@
+module
+public import Theorem.NumberTheory.NumberField.RayClass.WeakApproximation
+public import Theorem.Nat.NumberField.RayClass.WeakApproximation
+
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/RayClass/WeakApproximation.lean -/
 
-import Theorem.NumberTheory.NumberField.RayClass.WeakApproximation
-import Lemma.Nat.NumberField.RayClass.WeakApproximation
 @[expose] public noncomputable section
 
 open scoped nonZeroDivisors

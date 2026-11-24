@@ -1,12 +1,14 @@
-import Mathlib
-import Def.TateCurve_XMultIdentities
-
+module
+public import Mathlib
+public import Def.TateCurve_XMultIdentities
 set_option autoImplicit false
 set_option linter.unusedSectionVars false
-
 open scoped NNReal
 open IsUltrametricDist Filter
 open WeierstrassCurve.Affine
+
+
+public section
 
 namespace TateCurve
 

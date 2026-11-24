@@ -3,20 +3,22 @@ import Initialize.Tactic.Attr.Basic
 
 @[path]
 private lemma main
-  {f g : ℕ → ℝ}
-  {n : ℕ}
+  {P : ℕ → Prop}
 -- given
-  (h₀ : f 0 > g 0)
-  (h₁ : ∀ k < n, f k > g k → f n > g n) :
+  (h₀ : P 0)
+  (h₁ : ∀ n > 0, (∀ k < n, P k) → P n) :
 -- imply
-  f n > g n := by
+  ∀ n, P n := by
 -- proof
-  cases n with
-  | zero =>
-    apply h₀
-  | succ n =>
-    apply h₁ 0 (by omega) h₀
+  intro n
+  induction n using Nat.strong_induction_on with
+  | _ n ih =>
+    rcases Nat.eq_zero_or_pos n with rfl | hn
+    ·
+      exact h₀
+    ·
+      exact h₁ n hn ih
 
 
 -- created on 2026-10-11
--- updated on 2026-10-26
+-- updated on 2026-11-24

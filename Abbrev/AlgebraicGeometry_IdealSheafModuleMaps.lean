@@ -1,6 +1,9 @@
-import Abbrev.AlgebraicGeometry_IdealSheafModule
-
+module
+public import Abbrev.AlgebraicGeometry_IdealSheafModule
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

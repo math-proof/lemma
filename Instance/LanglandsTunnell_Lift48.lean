@@ -1,11 +1,15 @@
--- Carved from Lemma/Definitions/Def_LanglandsTunnell_Lift48.lean: instance decls only.
-import Def.LanglandsTunnell_ExplicitLift
-import Mathlib.Algebra.Group.Submonoid.Membership
-import Mathlib.LinearAlgebra.Matrix.Trace
-import Theorem.Matrix.Lift48
-import Def.Matrix_Lift48
-
+module
+public import Def.LanglandsTunnell_ExplicitLift
+public import Mathlib.Algebra.Group.Submonoid.Membership
+public import Mathlib.LinearAlgebra.Matrix.Trace
+public import Theorem.Matrix.Lift48
+public import Def.Matrix_Lift48
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_LanglandsTunnell_Lift48.lean: instance decls only.
 
 namespace LanglandsTunnell.Lift48
 

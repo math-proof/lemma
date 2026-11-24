@@ -5,7 +5,7 @@ import Lemma.PowerSeries.CartierModuleHomothety
 import Lemma.MvPowerSeries.CartierModuleWittAction
 import Lemma.MvPowerSeries.CartierModuleBaseChange
 import Lemma.MvPowerSeries.SpecialFormalModule
-import Lemma.FormalGroup.CartierGradedPiece
+import Theorem.FormalGroup.CartierGradedPiece
 import Lemma.FormalGroup.CriticalIndexChart
 import Abbrev.CerednikDrinfeld_CritChartEndMatrix
 

@@ -1,5 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Percolation/PcNontrivial.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Percolation.Theta
+public import Def.StatisticalMechanics.Code.Percolation.TildePc.Part4
+public import Theorem.StatisticalMechanics.Code.Inequalities.Harris
+public import Theorem.StatisticalMechanics.Code.Percolation.PcNontrivial.Part3
+open MeasureTheory Set SimpleGraph
+open scoped NNReal ENNReal
+open Finset
+set_option linter.deprecated false
+set_option linter.style.longLine false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Percolation/PcNontrivial.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,20 +20,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Percolation.Theta
-import Def.StatisticalMechanics.Code.Percolation.TildePc.Part4
-import Theorem.StatisticalMechanics.Code.Inequalities.Harris
-import Theorem.StatisticalMechanics.Code.Percolation.PcNontrivial.Part3
-open MeasureTheory Set SimpleGraph
-open scoped NNReal ENNReal
-open Finset
-
-set_option linter.deprecated false
-set_option linter.style.longLine false
-
-
 namespace StatMech
 
 namespace Percolation

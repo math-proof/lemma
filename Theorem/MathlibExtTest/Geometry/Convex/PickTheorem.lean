@@ -1,10 +1,12 @@
+module
+public import Theorem.Geometry.Convex.PickTheorem.Part18
+public import Theorem.Set.Convex.PickTheorem
+public import Mathlib.Tactic
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Geometry/Convex/PickTheorem.lean -/
-
-import Theorem.Geometry.Convex.PickTheorem.Part18
-import Lemma.Set.Convex.PickTheorem
-import Mathlib.Tactic
-
-
 namespace MathlibExtTest.Geometry.Convex.PickTheorem
 
 open MeasureTheory

@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKMedialLoopTurnWalk.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialLoopTurningFiber.Part4
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialBoundaryPermutation.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialBoundaryToggleParity.Part3
+public import Theorem.StatisticalMechanics.Code.Onsager.PeriodicTurnClosure.Part9
+public import Def.StatisticalMechanics.Code.FrontierD.FKMedialLoopTurnWalk
+open Equiv
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKMedialLoopTurnWalk.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialLoopTurningFiber.Part4
-import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialBoundaryPermutation.Part3
-import Theorem.StatisticalMechanics.Code.FrontierD.FKMedialBoundaryToggleParity.Part3
-import Theorem.StatisticalMechanics.Code.Onsager.PeriodicTurnClosure.Part9
-import Def.StatisticalMechanics.Code.FrontierD.FKMedialLoopTurnWalk
-open Equiv
-
-
 namespace StatMech.FrontierD
 
 open StatMech.Onsager

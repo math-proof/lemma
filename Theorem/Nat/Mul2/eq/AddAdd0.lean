@@ -1,0 +1,28 @@
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Instance.Analysis.Section_2_3.Part2
+public import Theorem.Nat.Mul.eq.AddMul
+public import Theorem.Nat.Mul1.eq.Add0
+open Chapter2 hiding Nat
+open Chapter2.Nat
+open Nat
+
+
+public section
+
+/--
+[Nat.two_mul](https://github.com/teorth/analysis/blob/main/Analysis/Section_2_3.lean)
+-/
+@[path]
+private theorem main
+  {m: Chapter2.Nat} :
+-- imply
+  2 * m = 0 + m + m :=
+-- proof
+  by
+    rw [← one_succ, Mul.eq.AddMul, Mul1.eq.Add0]
+
+
+-- created on 2026-10-22
+-- updated on 2026-10-26

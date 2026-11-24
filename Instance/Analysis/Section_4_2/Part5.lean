@@ -1,7 +1,11 @@
-import Mathlib
-import Mathlib.Algebra.Group.MinimalAxioms
-import Def.Analysis.Section_4_2
+module
+public import Mathlib
+public import Mathlib.Algebra.Group.MinimalAxioms
+public import Def.Analysis.Section_4_2
 set_option doc.verso.suggestions false
+
+
+public section
 
 /-!
 # Analysis I, Section 4.2
@@ -35,8 +39,6 @@ Users of the companion who have completed the exercises in this section are welc
 - (Add tip here)
 
 -/
-
-
 namespace Section_4_2
 
 /-- Definition 4.2.8 (Ordering of the rationals, strict) -/

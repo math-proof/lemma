@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/CheckTriHexFKTorusSweep.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.TriHexFKTorusSweep.Part15
+open StatMech.FK.PeriodicPlanar
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/CheckTriHexFKTorusSweep.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,9 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.FK.TriHexFKTorusSweep.Part15
-open StatMech.FK.PeriodicPlanar
 
 #print axioms triHexTorusTriangleIndexEquiv
 #print axioms triHexTorusTriangleSweepEdgeEquiv

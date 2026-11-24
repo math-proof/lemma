@@ -1,10 +1,13 @@
-import Mathlib
-import Lemma.Fin.RothMvL1_Sum.le.Sum_RothMvL1
-import Lemma.Fin.RothMvL1_Prod.le.Prod_RothMvL1
-import Lemma.Fin.RothMvL1Neg.eq.RothMvL1
+module
+public import Mathlib
+public import Lemma.Fin.RothMvL1_Sum.le.Sum_RothMvL1
+public import Lemma.Fin.RothMvL1_Prod.le.Prod_RothMvL1
+public import Lemma.Fin.RothMvL1Neg.eq.RothMvL1
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [rothMvL1_det_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

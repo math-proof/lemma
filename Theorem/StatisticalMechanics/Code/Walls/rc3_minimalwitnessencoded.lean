@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/rc3_minimalwitnessencoded.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Walls.rc2_minimalwitness
+public import Structure.StatisticalMechanics.Code.Walls.rc3_minimalwitnessencoded
+open Finset
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/rc3_minimalwitnessencoded.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Walls.rc2_minimalwitness
-import Structure.StatisticalMechanics.Code.Walls.rc3_minimalwitnessencoded
-open Finset
-
-
 namespace StatMech.Walls
 
 open StatMech ConfigSpace

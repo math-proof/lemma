@@ -1,5 +1,20 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Lattice/JordanSeparationFull.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
+public import Theorem.StatisticalMechanics.Code.Lattice.DartDef.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.DartNext.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.CornerBalance.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanExteriorClosure.Part8
+public import Theorem.StatisticalMechanics.Code.Lattice.ClosedContourSeparation.Part2
+public import Theorem.StatisticalMechanics.Code.Lattice.BdEdgeMatchStarHull
+public import Theorem.StatisticalMechanics.Code.Lattice.NoDiagTouchClose.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.MinimalPeriodLoop.Part2
+open Set SimpleGraph Function
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Lattice/JordanSeparationFull.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,21 +22,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
-import Theorem.StatisticalMechanics.Code.Lattice.DartDef.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.DartNext.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.CornerBalance.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.JordanExteriorClosure.Part8
-import Theorem.StatisticalMechanics.Code.Lattice.ClosedContourSeparation.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.BdEdgeMatchStarHull
-import Theorem.StatisticalMechanics.Code.Lattice.NoDiagTouchClose.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.MinimalPeriodLoop.Part2
-open Set SimpleGraph Function
-
-
 namespace StatMech
 
 namespace Lattice

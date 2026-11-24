@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/KacWardAdaptiveIdealWalk.lean -/
+module
+public import Def.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveConnectorScales
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveIdealWalk.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/KacWardAdaptiveIdealWalk.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Def.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveConnectorScales
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveIdealWalk.Part2
-
-
 namespace StatMech.FrontierA
 
 noncomputable def KWAdaptivePatchedData.idealVertex

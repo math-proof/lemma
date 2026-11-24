@@ -14,7 +14,6 @@ namespace BooleanFourier
 /--
 [fourierCoeff_sq_le_fourierInfluence](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Talagrand.lean)
 -/
-@[path]
 lemma fourierCoeff_sq_le_fourierInfluence
   {n : ℕ}
   {f : (Fin n → Bool) → ℝ}
@@ -41,7 +40,6 @@ namespace BooleanFourier
 /--
 [fourierCoeff_sq_le_avg_fourierInfluence](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Talagrand.lean)
 -/
-@[path]
 lemma fourierCoeff_sq_le_avg_fourierInfluence
   {n : ℕ}
   {f : (Fin n → Bool) → ℝ}

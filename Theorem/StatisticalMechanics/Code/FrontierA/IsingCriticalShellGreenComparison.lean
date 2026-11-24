@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingCriticalShellGreenComparison.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingCriticalAxisGreenComparison
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingTorusCoordinateSymmetry
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingLatticeGreenBlockDecay
+open Filter MeasureTheory Set Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingCriticalShellGreenComparison.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingCriticalAxisGreenComparison
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingTorusCoordinateSymmetry
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingLatticeGreenBlockDecay
-open Filter MeasureTheory Set Topology
-
-
 namespace StatMech.FrontierA
 
 open StatMech Ising Lattice Percolation Sharpness StatMech.FrontierB

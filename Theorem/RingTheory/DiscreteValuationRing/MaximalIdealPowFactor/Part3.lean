@@ -1,17 +1,19 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DiscreteValuationRing/MaximalIdealPowFactor.lean -/
+module
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+public import Def.RingTheory.DiscreteValuationRing.MaximalIdealGradedPiece
+public import Theorem.Int.DiscreteValuationRing.MaximalIdealGradedPiece
+public import Def.RingTheory.DiscreteValuationRing.MaximalIdealPowFactor.Part2
+open IsLocalRing
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DiscreteValuationRing/MaximalIdealPowFactor.lean -/
 /-
 Author: Muse Code
 -/
-
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.RingTheory.LocalRing.ResidueField.Basic
-import Def.RingTheory.DiscreteValuationRing.MaximalIdealGradedPiece
-import Theorem.Int.DiscreteValuationRing.MaximalIdealGradedPiece
-import Def.RingTheory.DiscreteValuationRing.MaximalIdealPowFactor.Part2
-open IsLocalRing
-
 variable (A B : Type*) [CommRing A] [CommRing B] [IsDomain A] [IsDomain B]
   [IsDiscreteValuationRing A] [IsDiscreteValuationRing B] [Algebra A B]
 

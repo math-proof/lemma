@@ -1,9 +1,11 @@
-import Lemma.Matrix.CubicInduction_Carrier
-import Instance.LanglandsTunnell_CubicInduction_IotaTorus
-
+module
+public import Lemma.Matrix.CubicInduction_Carrier
+public import Instance.LanglandsTunnell_CubicInduction_IotaTorus
 set_option autoImplicit false
-
 open IsDedekindDomain NumberField Matrix
+
+
+public section
 
 noncomputable section
 

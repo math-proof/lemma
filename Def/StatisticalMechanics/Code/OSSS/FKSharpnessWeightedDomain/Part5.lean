@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/FKSharpnessWeightedDomain.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedPeriodic.Part3
+public import Theorem.StatisticalMechanics.Code.FK.MonoBC.Part4
+public import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedDomain.Part4
+open scoped BigOperators Classical
+open Finset Set
+set_option linter.unusedSectionVars false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/FKSharpnessWeightedDomain.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedPeriodic.Part3
-import Theorem.StatisticalMechanics.Code.FK.MonoBC.Part4
-import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedDomain.Part4
-open scoped BigOperators Classical
-open Finset Set
-
-set_option linter.unusedSectionVars false
-
-
 namespace StatMech
 
 namespace FK

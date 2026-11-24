@@ -1,12 +1,15 @@
-import Lemma.LaurentSeries.ArithmeticGalois
-import Def.HeckeGalois_EichlerShimura
-import Lemma.WeierstrassCurve.TateModule
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.Algebra.Algebra.Subalgebra.Lattice
-import Mathlib.LinearAlgebra.Basis.Defs
-import Abbrev.ModularCurve_JZeroTateModule
-
+module
+public import Lemma.LaurentSeries.ArithmeticGalois
+public import Def.HeckeGalois_EichlerShimura
+public import Lemma.WeierstrassCurve.TateModule
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.Algebra.Algebra.Subalgebra.Lattice
+public import Mathlib.LinearAlgebra.Basis.Defs
+public import Abbrev.ModularCurve_JZeroTateModule
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

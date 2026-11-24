@@ -1,8 +1,11 @@
-import Mathlib
-import Lemma.Fin.RothMvL1Mul.le.MulRothSMvL1
+module
+public import Mathlib
+public import Lemma.Fin.RothMvL1Mul.le.MulRothSMvL1
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [rothMvL1_finset_prod](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

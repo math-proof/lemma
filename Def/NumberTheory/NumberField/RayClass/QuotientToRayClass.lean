@@ -1,11 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/QuotientToRayClass.lean -/
+module
+public import Theorem.NumberTheory.NumberField.RayClass.IntegralUnits.Part4
+public import Lemma.Nat.NumberField.RayClass.IntegralUnits
+public import Theorem.Nat.NumberField.RayClass.PrincipalIdeal
+public import Theorem.Nat.NumberField.RayClass.Group
+public import Theorem.NumberTheory.NumberField.RayClass.PrincipalIdeal
+public import Def.NumberTheory.NumberField.RayClass.Group
 
-import Theorem.NumberTheory.NumberField.RayClass.IntegralUnits.Part4
-import Lemma.Nat.NumberField.RayClass.IntegralUnits
-import Lemma.Nat.NumberField.RayClass.PrincipalIdeal
-import Theorem.Nat.NumberField.RayClass.Group
-import Theorem.NumberTheory.NumberField.RayClass.PrincipalIdeal
-import Def.NumberTheory.NumberField.RayClass.Group
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/QuotientToRayClass.lean -/
 @[expose] noncomputable section
 
 open scoped nonZeroDivisors

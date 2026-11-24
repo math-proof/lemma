@@ -1,5 +1,19 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/rc86consolidation.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Walls.rc85smallfamily
+public import Theorem.StatisticalMechanics.Code.Walls.rc84targetstatus
+public import Theorem.StatisticalMechanics.Code.Walls.rc64consolidation.Part3
+public import Theorem.StatisticalMechanics.Code.Walls.rc72configpair.Part3
+public import Theorem.StatisticalMechanics.Code.Walls.rc73seqcompress.Part3
+set_option linter.style.longLine false
+set_option linter.unusedDecidableInType false
+set_option linter.unusedFintypeInType false
+open Finset MeasureTheory
+open scoped FinsetFamily StatMech NNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/rc86consolidation.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,23 +21,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Walls.rc85smallfamily
-import Theorem.StatisticalMechanics.Code.Walls.rc84targetstatus
-import Theorem.StatisticalMechanics.Code.Walls.rc64consolidation.Part3
-import Theorem.StatisticalMechanics.Code.Walls.rc72configpair.Part3
-import Theorem.StatisticalMechanics.Code.Walls.rc73seqcompress.Part3
-set_option linter.style.longLine false
-
-
-set_option linter.unusedDecidableInType false
-set_option linter.unusedFintypeInType false
-
-open Finset MeasureTheory
-open scoped FinsetFamily StatMech NNReal
-
-
 namespace StatMech.Walls
 
 open StatMech ConfigSpace

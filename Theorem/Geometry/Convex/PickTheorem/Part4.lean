@@ -1,28 +1,30 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Geometry/Convex/PickTheorem.lean -/
+module
+public import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+public import Mathlib.Algebra.Module.ZLattice.Basic
+public import Mathlib.Analysis.Convex.Between
+public import Mathlib.Analysis.Convex.Independent
+public import Mathlib.Analysis.Convex.KreinMilman
+public import Mathlib.Analysis.Convex.Radon
+public import Mathlib.Analysis.Convex.Strict.Extreme
+public import Mathlib.Analysis.Normed.Affine.AddTorsorBases
+public import Mathlib.LinearAlgebra.FreeModule.Finite.CardQuotient
+public import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
+public import Mathlib.Topology.Instances.ZMultiples
+public import Def.Geometry.Convex.PickTheorem.Part3
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Geometry/Convex/PickTheorem.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
-import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
-import Mathlib.Algebra.Module.ZLattice.Basic
-import Mathlib.Analysis.Convex.Between
-import Mathlib.Analysis.Convex.Independent
-import Mathlib.Analysis.Convex.KreinMilman
-import Mathlib.Analysis.Convex.Radon
-import Mathlib.Analysis.Convex.Strict.Extreme
-import Mathlib.Analysis.Normed.Affine.AddTorsorBases
-import Mathlib.LinearAlgebra.FreeModule.Finite.CardQuotient
-import Mathlib.LinearAlgebra.Matrix.ToLinearEquiv
-import Mathlib.Topology.Instances.ZMultiples
-import Def.Geometry.Convex.PickTheorem.Part3
 /-!
 # Pick's theorem for convex lattice polygons
 
 This file proves Pick's area formula for full-dimensional convex hulls of finite sets of points in
 the standard integer lattice. It also supplies the corresponding lattice-triangle theorem.
 -/
-
-
 namespace MetaMathlibExt
 
 open Filter MeasureTheory

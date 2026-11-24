@@ -1,0 +1,19 @@
+import Initialize.Tactic.Attr.Basic
+
+
+@[path]
+private lemma main
+  {A : Set α}
+  {p : α → Prop}
+-- given
+  (h : ∀ x ∈ A, p x ∧ x ∈ A) :
+-- imply
+  ∀ x ∈ A, p x :=
+-- proof
+  fun x hx => (h x hx).1
+
+
+
+
+-- created on 2018-12-12
+-- updated on 2026-11-24

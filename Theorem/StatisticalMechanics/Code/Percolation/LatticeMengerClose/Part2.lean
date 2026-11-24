@@ -1,5 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Percolation/LatticeMengerClose.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Percolation.AxisAssignmentClose.Part2
+public import Theorem.StatisticalMechanics.Code.Percolation.ClusterReachesRay.Part3
+public import Theorem.StatisticalMechanics.Code.Percolation.LatticeMengerAttach.Part4
+public import Theorem.StatisticalMechanics.Code.Percolation.TrifurcationFiniteEnergy.Part3
+public import Def.StatisticalMechanics.Code.Percolation.LatticeMengerClose
+open MeasureTheory Set Finset
+open scoped ENNReal BigOperators
+open StatMech.Lattice StatMech.ConfigSpace
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Percolation/LatticeMengerClose.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +20,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Percolation.AxisAssignmentClose.Part2
-import Theorem.StatisticalMechanics.Code.Percolation.ClusterReachesRay.Part3
-import Theorem.StatisticalMechanics.Code.Percolation.LatticeMengerAttach.Part4
-import Theorem.StatisticalMechanics.Code.Percolation.TrifurcationFiniteEnergy.Part3
-import Def.StatisticalMechanics.Code.Percolation.LatticeMengerClose
-open MeasureTheory Set Finset
-open scoped ENNReal BigOperators
-open StatMech.Lattice StatMech.ConfigSpace
-
-
 namespace StatMech
 
 namespace Percolation

@@ -1,13 +1,17 @@
+module
+public import Mathlib
+public import Def.RingTheory.PowerSeries.ExpLog.Part6
+public import Notation.RingTheory.PowerSeries.NonIntegerPowers
+open scoped Polynomial PowerSeries
+open PowerSeries Finset
+
+
+public section
+
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.RingTheory.PowerSeries.ExpLog.Part6
-import Notation.RingTheory.PowerSeries.NonIntegerPowers
-open scoped Polynomial PowerSeries
-open PowerSeries Finset
-
 /-!
 # Non-integer Powers of Formal Power Series
 
@@ -42,8 +46,6 @@ both sides are polynomials in c that agree on ℕ, hence they agree everywhere.
 
 * Source: NonIntegerPowers.tex, Section sec.gf.nips
 -/
-
-
 namespace AlgebraicCombinatorics
 
 namespace FPS

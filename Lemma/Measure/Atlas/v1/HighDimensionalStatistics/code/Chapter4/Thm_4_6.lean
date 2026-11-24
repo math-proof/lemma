@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_6
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_6
 open MeasureTheory ProbabilityTheory Matrix Real Finset BigOperators Rigollet Rigollet.Chapter4 Rigollet.Chapter4.Thm_4_6
 
+
+public section
 
 namespace Rigollet.Chapter4.Thm_4_6
 

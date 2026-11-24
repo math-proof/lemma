@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/RSWCanonicalOrbitSides.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.RSWEulerianWinding
+public import Theorem.StatisticalMechanics.Code.Universality.RSWTraceSeparation.Part3
+public import Theorem.StatisticalMechanics.Code.Ising.OuterContourWindingClose.Part3
+public import Theorem.StatisticalMechanics.Code.Lattice.CanonicalContour.Part6
+public import Theorem.StatisticalMechanics.Code.Lattice.OutsideCoveringClose
+public import Theorem.StatisticalMechanics.Code.Walls.kc_orbitloopedges
+open Function MeasureTheory Set
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/RSWCanonicalOrbitSides.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.Universality.RSWEulerianWinding
-import Theorem.StatisticalMechanics.Code.Universality.RSWTraceSeparation.Part3
-import Theorem.StatisticalMechanics.Code.Ising.OuterContourWindingClose.Part3
-import Theorem.StatisticalMechanics.Code.Lattice.CanonicalContour.Part6
-import Theorem.StatisticalMechanics.Code.Lattice.OutsideCoveringClose
-import Theorem.StatisticalMechanics.Code.Walls.kc_orbitloopedges
-open Function MeasureTheory Set
-
-
 namespace StatMech
 
 namespace Universality

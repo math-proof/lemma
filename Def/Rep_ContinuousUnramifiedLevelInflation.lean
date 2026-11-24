@@ -1,11 +1,13 @@
-import Mathlib
-import Def.Submodule_ContinuousUnramifiedLevel
-import Instance.GroupCohomology_LevelSubgroup
-import Def.Rep_ContinuousH2Inflation
-
+module
+public import Mathlib
+public import Def.Submodule_ContinuousUnramifiedLevel
+public import Instance.GroupCohomology_LevelSubgroup
+public import Def.Rep_ContinuousH2Inflation
 set_option autoImplicit false
-
 open CategoryTheory
+
+
+public section
 
 noncomputable section
 namespace groupCohomology

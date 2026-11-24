@@ -1,9 +1,12 @@
-import Mathlib.MeasureTheory.Measure.Dirac.Basic
-import Mathlib.MeasureTheory.Measure.Module
-import Initialize.Tactic.Attr.Basic
+module
+public import Mathlib.MeasureTheory.Measure.Dirac.Basic
+public import Mathlib.MeasureTheory.Measure.Module
+public import Initialize.Tactic.Attr.Basic
 open Finset MeasureTheory
 open scoped ENNReal
 
+
+public section
 
 /--
 The empirical measure of a positive number of sample points is a probability measure: the

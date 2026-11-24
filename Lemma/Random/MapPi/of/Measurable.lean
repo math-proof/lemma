@@ -1,9 +1,12 @@
-import Mathlib.MeasureTheory.Constructions.Pi
-import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
-import Lemma.Fin.Pi_ToMeasure.of.EqSum
-import Initialize.Tactic.Attr.Basic
+module
+public import Mathlib.MeasureTheory.Constructions.Pi
+public import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+public import Lemma.Fin.Pi_ToMeasure.of.EqSum
+public import Initialize.Tactic.Attr.Basic
 open Fin MeasureTheory
 
+
+public section
 
 private lemma map_freq [MeasurableSpace β] [Fintype α] [DecidableEq α] [MeasurableSpace α] [MeasurableSingletonClass α] {μ : Measure β} [IsProbabilityMeasure μ] {φ : β → α} (hφ : Measurable φ) (n : ℕ) :
   (Measure.pi fun _ : Fin n => μ).map (fun ω a => (countVec (fun i => φ (ω i)) a : ℝ) / n) = (Measure.pi fun _ : Fin n => μ.map φ).map (fun η a => (countVec η a : ℝ) / n) := by

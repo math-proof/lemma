@@ -1,9 +1,12 @@
-import Mathlib
-import Structure.AlgebraicCurve_SemistableCharts
-import Instance.AlgebraicCurve_SemistableModel
-import Structure.AlgebraicCurve_SemistableModel
-
+module
+public import Mathlib
+public import Structure.AlgebraicCurve_SemistableCharts
+public import Instance.AlgebraicCurve_SemistableModel
+public import Structure.AlgebraicCurve_SemistableModel
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

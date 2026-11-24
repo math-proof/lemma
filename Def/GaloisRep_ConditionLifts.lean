@@ -1,6 +1,10 @@
-import Mathlib
-import Def.GaloisRep_Adic
-import Lemma.Matrix.TraceAlgebra
+module
+public import Mathlib
+public import Def.GaloisRep_Adic
+public import Lemma.Matrix.TraceAlgebra
+
+
+public section
 
 namespace GaloisRep
 

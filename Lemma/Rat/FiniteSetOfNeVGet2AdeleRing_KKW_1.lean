@@ -3,7 +3,7 @@ import Initialize.Tactic.Attr.Basic
 import Lemma.Set.FiniteUnitIdelesOutside
 import Def.M4aHerbrand_IdeleClassVocab
 import Lemma.Valuation.PlaceTransport
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open IsDedekindDomain NumberField Set Valuation
 open scoped Valuation.PlaceTransport

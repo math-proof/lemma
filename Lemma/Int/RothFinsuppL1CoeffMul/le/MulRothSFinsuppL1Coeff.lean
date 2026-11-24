@@ -1,11 +1,14 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.NumberTheory.RothAuxiliary
-import Lemma.Int.RothFinsuppL1_Single.eq.NatAbs
-import Lemma.Int.RothFinsuppL1Add.le.AddRothSFinsuppL1
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.NumberTheory.RothAuxiliary
+public import Lemma.Int.RothFinsuppL1_Single.eq.NatAbs
+public import Lemma.Int.RothFinsuppL1Add.le.AddRothSFinsuppL1
 open MathlibExt.NumberTheory.RothAuxiliary
 open Int
 
+
+public section
 
 private lemma finsuppL1_finset_sum
   (s : Finset ι)

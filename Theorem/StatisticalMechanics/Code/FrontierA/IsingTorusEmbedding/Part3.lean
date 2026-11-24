@@ -1,5 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingTorusEmbedding.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingTorusGraph.Part4
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingDyadicGreenRiemann.Part6
+public import Theorem.StatisticalMechanics.Code.Percolation.PcNontrivial.Part4
+public import Theorem.StatisticalMechanics.Code.Sharpness.IsingSusceptibilityPlus.Part2
+public import Theorem.StatisticalMechanics.Code.Ising.FiniteVolumeRelabel
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingCriticalSimonMass
+public import Def.StatisticalMechanics.Code.FrontierA.IsingTorusEmbedding.Part2
+open Finset Set
+open scoped BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingTorusEmbedding.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +20,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingTorusGraph.Part4
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingDyadicGreenRiemann.Part6
-import Theorem.StatisticalMechanics.Code.Percolation.PcNontrivial.Part4
-import Theorem.StatisticalMechanics.Code.Sharpness.IsingSusceptibilityPlus.Part2
-import Theorem.StatisticalMechanics.Code.Ising.FiniteVolumeRelabel
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingCriticalSimonMass
-import Def.StatisticalMechanics.Code.FrontierA.IsingTorusEmbedding.Part2
-open Finset Set
-open scoped BigOperators
-
-
 namespace StatMech.FrontierA
 
 open StatMech.Ising StatMech.Sharpness StatMech.Lattice

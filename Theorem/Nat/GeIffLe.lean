@@ -14,7 +14,7 @@ open Chapter2.Nat
 [Nat.ge_iff_le](https://github.com/teorth/analysis/blob/main/Analysis/Section_2_2.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   {n m:Chapter2.Nat} :
 -- imply
   n ≥ m ↔ m ≤ n :=

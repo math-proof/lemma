@@ -1,8 +1,11 @@
-import Def.Analysis.MeasureTheory.Notation.Part2
-import Theorem.Analysis.Section_9_1.Part3
-import Macro.Analysis.MeasureTheory.Section_1_1_1.Part2
+module
+public import Def.Analysis.MeasureTheory.Notation.Part2
+public import Theorem.Analysis.Section_9_1.Part3
+public import Macro.Analysis.MeasureTheory.Section_1_1_1.Part2
 open BoundedInterval
 
+
+public section
 
 /-- Helper lemma: If a box is empty, its volume is zero -/
 lemma Box.volume_eq_zero_of_empty {d:ℕ} (B: Box d) (h: B.toSet = ∅) : |B|ᵥ = 0 := by

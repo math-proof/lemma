@@ -1,49 +1,48 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean -/
+module
+public import Mathlib.NumberTheory.Real.Irrational
+public import Mathlib.RingTheory.Algebraic.Defs
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Algebra.BigOperators.Field
+public import Mathlib.Algebra.MvPolynomial.Degrees
+public import Mathlib.Algebra.MvPolynomial.Equiv
+public import Mathlib.Algebra.MvPolynomial.PDeriv
+public import Mathlib.Algebra.Polynomial.Coeff
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Fin.SuccPred
+public import Mathlib.Data.Int.NatAbs
+public import Mathlib.Data.Nat.Choose.Bounds
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.NumberTheory.SiegelsLemma
+public import Mathlib.NumberTheory.Transcendental.Liouville.LiouvilleWith
+public import Mathlib.RingTheory.MvPolynomial.Localization
+public import Mathlib.RingTheory.Polynomial.GaussLemma
+public import Mathlib.RingTheory.Polynomial.Wronskian
+public import Mathlib.RingTheory.Algebraic.Integral
+public import Mathlib.Tactic
+public import Def.NumberTheory.RothAuxiliary.Part7
+public import Theorem.Fin.CardRothLowIndex.Gt_0.of.Lt_Div1'2.Gt_0.Gt_0
+public import Theorem.Real.RothCoordinateBase.Gt_0
+public import Theorem.Fin.CardRothBox.le.Pow2Sum.of.All_Gt_0
+public import Theorem.Fin.RothMvL1_RothMvOfCoeff.le.Sum_NatAbs.of.RothCoeff
+public import Theorem.Real.NormRothRidoutAuxMatrix.le.PowMul_2RothCoordinateBaseSum
+public import Theorem.Matrix.MulVecRothAuxMatrix.eq.Zero.of.EqMulVecRothRidoutAuxMatrix_0.RothCoeff
+public import Theorem.Matrix.RothHasseEval_1.eq.Zero.of.EqMulVecRothAuxMatrix_0.RothCoeff.IsAlgebraic
+public import Theorem.Matrix.Mul_SubDiv1'2.le.RothWeightAndRothWeight.le.Sub_Mul_SubDiv1'2.of.Ne_0.RothBox.EqMulVecRothRidoutAuxMatrix_0.All_Gt_0.RothCoeff
+set_option maxHeartbeats 999999
+open scoped BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
 -/
-
-import Mathlib.NumberTheory.Real.Irrational
-import Mathlib.RingTheory.Algebraic.Defs
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Algebra.MvPolynomial.Degrees
-import Mathlib.Algebra.MvPolynomial.Equiv
-import Mathlib.Algebra.MvPolynomial.PDeriv
-import Mathlib.Algebra.Polynomial.Coeff
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Fin.SuccPred
-import Mathlib.Data.Int.NatAbs
-import Mathlib.Data.Nat.Choose.Bounds
-import Mathlib.LinearAlgebra.Dimension.Free
-import Mathlib.NumberTheory.SiegelsLemma
-import Mathlib.NumberTheory.Transcendental.Liouville.LiouvilleWith
-import Mathlib.RingTheory.MvPolynomial.Localization
-import Mathlib.RingTheory.Polynomial.GaussLemma
-import Mathlib.RingTheory.Polynomial.Wronskian
-import Mathlib.RingTheory.Algebraic.Integral
-import Mathlib.Tactic
-import Def.NumberTheory.RothAuxiliary.Part7
-import Lemma.Fin.CardRothLowIndex.Gt_0.of.Lt_Div1'2.Gt_0.Gt_0
-import Lemma.Real.RothCoordinateBase.Gt_0
-import Theorem.Fin.CardRothBox.le.Pow2Sum.of.All_Gt_0
-import Theorem.Fin.RothMvL1_RothMvOfCoeff.le.Sum_NatAbs.of.RothCoeff
-import Lemma.Real.NormRothRidoutAuxMatrix.le.PowMul_2RothCoordinateBaseSum
-import Lemma.Matrix.MulVecRothAuxMatrix.eq.Zero.of.EqMulVecRothRidoutAuxMatrix_0.RothCoeff
-import Lemma.Matrix.RothHasseEval_1.eq.Zero.of.EqMulVecRothAuxMatrix_0.RothCoeff.IsAlgebraic
-import Lemma.Matrix.Mul_SubDiv1'2.le.RothWeightAndRothWeight.le.Sub_Mul_SubDiv1'2.of.Ne_0.RothBox.EqMulVecRothRidoutAuxMatrix_0.All_Gt_0.RothCoeff
-set_option maxHeartbeats 999999
-
-open scoped BigOperators
-
 /-!
 This file contains the auxiliary-polynomial machinery shared by Roth's theorem and Ridout's
 S-adic extension. The public theorem abstracts their integrality difference as finite divisibility
 data; the ordinary archimedean theorem is the specialization with no divisibility places.
 -/
-
-
 namespace MathlibExt.NumberTheory.RothAuxiliary
 
 open scoped BigOperators nonZeroDivisors Polynomial

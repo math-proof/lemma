@@ -1,11 +1,14 @@
-import Mathlib
-import Lemma.ModularForm.AtkinLehnerDatum
-import Theorems.Thm_ModularForm_alSlash_slash_eq_self_of_mem_Gamma0
-import Theorems.Thm_ModularForm_mdifferentiable_alSlash
-import Theorems.Thm_ModularForm_isBoundedAt_alSlash
-import Theorems.Thm_ModularForm_isZeroAt_alSlash
-
+module
+public import Mathlib
+public import Lemma.ModularForm.AtkinLehnerDatum
+public import Theorems.Thm_ModularForm_alSlash_slash_eq_self_of_mem_Gamma0
+public import Theorems.Thm_ModularForm_mdifferentiable_alSlash
+public import Theorems.Thm_ModularForm_isBoundedAt_alSlash
+public import Theorems.Thm_ModularForm_isZeroAt_alSlash
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

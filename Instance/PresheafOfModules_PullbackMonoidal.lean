@@ -1,10 +1,14 @@
--- Carved from Lemma/Definitions/Def_PresheafOfModules_PullbackMonoidal.lean: instance decls only.
-import Mathlib
-import Theorem.LinearMap.PullbackMonoidal
-import Def.AlgebraicGeometry_PullbackMonoidal
-
+module
+public import Mathlib
+public import Theorem.LinearMap.PullbackMonoidal
+public import Def.AlgebraicGeometry_PullbackMonoidal
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_PresheafOfModules_PullbackMonoidal.lean: instance decls only.
 
 universe v u v₁ u₁ v₂ u₂
 

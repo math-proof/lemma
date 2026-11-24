@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.WeierstrassCurve.ConditionalCurrency
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 set_option maxHeartbeats 800000
 open AlgebraicCurve WeierstrassCurve WeierstrassCurve.Affine Int
 

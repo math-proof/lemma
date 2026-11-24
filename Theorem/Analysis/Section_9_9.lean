@@ -1,8 +1,12 @@
-import Mathlib
-import Abbrev.Analysis.Section_6_1.Part17
-import Mathlib.Data.Nat.Nth
-import Theorem.Analysis.Section_9_6
+module
+public import Mathlib
+public import Abbrev.Analysis.Section_6_1.Part17
+public import Mathlib.Data.Nat.Nth
+public import Theorem.Analysis.Section_9_6
 open Chapter6 Filter
+
+
+public section
 
 /-!
 # Analysis I, Section 9.9: Uniform continuity
@@ -18,8 +22,6 @@ Main constructions and results of this section:
 - Continuous functions on compact intervals are uniformly continuous.
 
 -/
-
-
 namespace Chapter9
 
 theorem UniformContinuousOn.iff (f: ℝ → ℝ) (X:Set ℝ) : UniformContinuousOn f X  ↔

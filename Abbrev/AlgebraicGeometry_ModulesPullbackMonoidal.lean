@@ -1,11 +1,14 @@
-import Mathlib
-import Instance.PresheafOfModules_InternalHom
-import Theorems.Thm_PresheafOfModules_isMonoidal_inverseImage_W_toPresheaf
-import Instance.SheafOfModules_Monoidal
-import Instance.PresheafOfModules_PullbackMonoidal
-
+module
+public import Mathlib
+public import Instance.PresheafOfModules_InternalHom
+public import Theorems.Thm_PresheafOfModules_isMonoidal_inverseImage_W_toPresheaf
+public import Instance.SheafOfModules_Monoidal
+public import Instance.PresheafOfModules_PullbackMonoidal
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
+
+
+public section
 
 universe u
 

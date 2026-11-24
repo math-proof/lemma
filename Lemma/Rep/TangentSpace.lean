@@ -1,6 +1,9 @@
-import Mathlib
-
+module
+public import Mathlib
 open scoped DualNumber RightActions
+
+
+public section
 
 universe u
 

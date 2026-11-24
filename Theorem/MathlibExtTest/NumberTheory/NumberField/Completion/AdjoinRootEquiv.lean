@@ -1,7 +1,10 @@
+module
+public import Theorem.Nat.NumberField.Completion.AdjoinRootEquiv
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/Completion/AdjoinRootEquiv.lean -/
-
-
-import Lemma.Nat.NumberField.Completion.AdjoinRootEquiv
 /-!
 # Tests for the completion adjoin-root equivalence from a local root
 
@@ -10,8 +13,6 @@ direct API application and one destructing the `Nonempty` result to
 obtain/use the equivalence. These tests exercise the public statement only
 and do not duplicate its proof.
 -/
-
-
 namespace IsDedekindDomain.HeightOneSpectrum
 
 open scoped NumberField NumberField.LiesOver

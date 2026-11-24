@@ -1,20 +1,21 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/Partition/MexPartitionCongruenceLift.lean -/
+module
+public import Mathlib.Combinatorics.Enumerative.Partition.Basic
+public import Mathlib.Tactic.Ring
+public import Def.Combinatorics.Enumerative.Partition.MexPartitionCongruenceLift.Part4
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/Partition/MexPartitionCongruenceLift.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
-
-import Mathlib.Combinatorics.Enumerative.Partition.Basic
-import Mathlib.Tactic.Ring
-import Def.Combinatorics.Enumerative.Partition.MexPartitionCongruenceLift.Part4
 /-!
 # Lifting partition congruences to mex partition functions
 
 This file proves the Barman-Singh lift by removing the forced parts preceding a partition's
 minimal excludant and then summing the resulting exact-mex fibers.
 -/
-
-
 namespace MetaMathlibExt
 
 theorem mex_linear_target_iff {N A : ℕ} (hA : 0 < A) (p : Nat.Partition N) :

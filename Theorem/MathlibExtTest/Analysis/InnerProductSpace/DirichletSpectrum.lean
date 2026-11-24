@@ -1,18 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/InnerProductSpace/DirichletSpectrum.lean -/
+module
+public import Def.Analysis.InnerProductSpace.DirichletSpectrum
+public import Theorem.Real.InnerProductSpace.DirichletSpectrum
+open TopologicalSpace DirichletLaplacian MeasureTheory
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/InnerProductSpace/DirichletSpectrum.lean -/
 /-
 Author: Muse Spark 1.3
 -/
-
-import Def.Analysis.InnerProductSpace.DirichletSpectrum
-import Lemma.Real.InnerProductSpace.DirichletSpectrum
-open TopologicalSpace DirichletLaplacian MeasureTheory
-
 /-!
 # Tests for the variational Dirichlet spectrum bridge
 -/
-
-
 namespace DirichletLaplacianTest
 
 variable {n : ℕ}

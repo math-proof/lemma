@@ -1,14 +1,16 @@
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
-import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
-import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
-import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
-import Lemma.Scheme.UniversalDivisor
-import Structure.AlgebraicGeometry_RelEffCartierDiv
-
+module
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+public import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
+public import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
+public import Lemma.Scheme.UniversalDivisor
+public import Structure.AlgebraicGeometry_RelEffCartierDiv
 set_option autoImplicit false
-
 open CategoryTheory CategoryTheory.Limits
+
+
+public section
 
 universe u
 

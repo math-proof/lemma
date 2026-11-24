@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/GrothendieckRingCategorical.lean -/
+module
+public import Theorem.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
+public import Theorem.Category.Atlas.v1.TensorCategories.code.GrothendieckRing
+public import Theorem.Category.Atlas.v1.TensorCategories.code.TensorCategoryDef
+public import Abbrev.v1.Atlas.TensorCategories.code.TensorCategoryDef.Part3
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Prop_1_45_10
+public import Abbrev.v1.Atlas.TensorCategories.code.GrothendieckRingCategorical
+open CategoryTheory MonoidalCategory Limits Finset
+open TensorCategories
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/GrothendieckRingCategorical.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
-import Theorem.Category.Atlas.v1.TensorCategories.code.GrothendieckRing
-import Theorem.Category.Atlas.v1.TensorCategories.code.TensorCategoryDef
-import Abbrev.v1.Atlas.TensorCategories.code.TensorCategoryDef.Part3
-import Theorem.Category.Atlas.v1.TensorCategories.code.Prop_1_45_10
-import Abbrev.v1.Atlas.TensorCategories.code.GrothendieckRingCategorical
-open CategoryTheory MonoidalCategory Limits Finset
-open TensorCategories
-
 universe v u
 
 

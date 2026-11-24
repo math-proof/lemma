@@ -2,10 +2,10 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.Submodule.ContinuousH2
 import Lemma.Rep.ContinuousH2Map
-import Lemma.Rep.ContinuousH1
+import Theorem.Rep.ContinuousH1
 import Lemma.Rep.CupProduct
 import Def.GroupCohomology_ContinuousDuality
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 open CategoryTheory groupCohomology
 open Int
 set_option maxHeartbeats 999999

@@ -1,7 +1,10 @@
-import Def.AlgebraicGeometry_PolarisedAbelianScheme
-import Structure.AlgebraicGeometry_FramedPolarisedAbelianScheme
-
+module
+public import Def.AlgebraicGeometry_PolarisedAbelianScheme
+public import Structure.AlgebraicGeometry_FramedPolarisedAbelianScheme
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

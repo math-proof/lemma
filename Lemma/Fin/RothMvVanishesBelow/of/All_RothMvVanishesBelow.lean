@@ -1,9 +1,12 @@
-import Mathlib
-import Lemma.Fin.RothMvVanishesBelow
-import Lemma.Fin.RothMvWeight.ge.Zero.of.RothMvIndex
+module
+public import Mathlib
+public import Lemma.Fin.RothMvVanishesBelow
+public import Lemma.Fin.RothMvWeight.ge.Zero.of.RothMvIndex
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [rothMvVanishesBelow_finset_prod](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

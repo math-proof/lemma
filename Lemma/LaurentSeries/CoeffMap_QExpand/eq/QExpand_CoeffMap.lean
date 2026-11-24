@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.LaurentSeries.LaurentCoeff
 import Lemma.HahnSeries.X0
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open ModularCurve IntermediateField HahnSeries LaurentSeries
 

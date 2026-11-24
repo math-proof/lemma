@@ -1,5 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/DifferentialAnalysis/code/OuterMeasureFromFunctional.lean -/
+module
+public import Mathlib.MeasureTheory.Measure.Content
+public import Mathlib.MeasureTheory.OuterMeasure.Induced
+public import Mathlib.Topology.ContinuousMap.ZeroAtInfty
+public import Mathlib.Topology.Order
+public import Def.v1.Atlas.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras.Part3
+public import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ContinuousFunctions
+public import Def.v1.Atlas.DifferentialAnalysis.code.ContinuousFunctions.Part2
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.OuterMeasureFromFunctional
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/DifferentialAnalysis/code/OuterMeasureFromFunctional.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +20,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib.MeasureTheory.Measure.Content
-import Mathlib.MeasureTheory.OuterMeasure.Induced
-import Mathlib.Topology.ContinuousMap.ZeroAtInfty
-import Mathlib.Topology.Order
-import Def.v1.Atlas.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras.Part3
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ContinuousFunctions
-import Def.v1.Atlas.DifferentialAnalysis.code.ContinuousFunctions.Part2
-import Theorem.v1.Atlas.DifferentialAnalysis.code.OuterMeasureFromFunctional
-
-
 noncomputable section
 
 open Set TopologicalSpace MeasureTheory

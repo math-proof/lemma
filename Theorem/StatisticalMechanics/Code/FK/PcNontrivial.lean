@@ -1,5 +1,22 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/PcNontrivial.lean -/
+module
+public import Mathlib
+public import Def.StatisticalMechanics.Code.FK.CriticalPoint.Part3
+public import Theorem.StatisticalMechanics.Code.FK.InfiniteVolume.Part7
+public import Theorem.StatisticalMechanics.Code.FK.Limits
+public import Theorem.StatisticalMechanics.Code.FK.Comparison
+public import Theorem.StatisticalMechanics.Code.Percolation.PcNontrivial.Part4
+public import Theorem.StatisticalMechanics.Code.Foundations.MonotoneLimit
+public import Theorem.StatisticalMechanics.Code.Inequalities.FKG
+open MeasureTheory Filter Topology Set SimpleGraph
+open scoped NNReal ENNReal BigOperators Classical
+set_option linter.unusedSectionVars false
+set_option linter.style.longLine false
+set_option linter.unusedVariables false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/PcNontrivial.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,24 +24,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Def.StatisticalMechanics.Code.FK.CriticalPoint.Part3
-import Theorem.StatisticalMechanics.Code.FK.InfiniteVolume.Part7
-import Theorem.StatisticalMechanics.Code.FK.Limits
-import Theorem.StatisticalMechanics.Code.FK.Comparison
-import Theorem.StatisticalMechanics.Code.Percolation.PcNontrivial.Part4
-import Theorem.StatisticalMechanics.Code.Foundations.MonotoneLimit
-import Theorem.StatisticalMechanics.Code.Inequalities.FKG
-open MeasureTheory Filter Topology Set SimpleGraph
-open scoped NNReal ENNReal BigOperators Classical
-
-set_option linter.unusedSectionVars false
-set_option linter.style.longLine false
-set_option linter.unusedVariables false
-
-
 namespace StatMech
 
 namespace FK

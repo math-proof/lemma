@@ -1,5 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/Infinity/Sectors.lean -/
+module
+public import Def.v1.Atlas.Buildings.code.Building.AffineMetric.Part5
+public import Theorem.Set.IsBoundedImage.of.IsBounded.IsSimilitude
+public import Theorem.Finset.AreOpposite.of.AreOpposite
+public import Theorem.Finset.ImageRetractionMap.in.Faces.of.IsMaximal.In_Faces.In_Apartments
+public import Def.v1.Atlas.Buildings.code.Building.Spherical
+public import Def.v1.Atlas.Buildings.code.Building.AptIsoFixesIntersection
+public import Structure.v1.Atlas.Buildings.code.Building.Infinity.Sectors.Part3
+set_option linter.unusedSectionVars false
+open ChamberComplex
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/Infinity/Sectors.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +20,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.Buildings.code.Building.AffineMetric.Part5
-import Theorem.Set.IsBoundedImage.of.IsBounded.IsSimilitude
-import Theorem.Finset.AreOpposite.of.AreOpposite
-import Theorem.Finset.ImageRetractionMap.in.Faces.of.IsMaximal.In_Faces.In_Apartments
-import Def.v1.Atlas.Buildings.code.Building.Spherical
-import Def.v1.Atlas.Buildings.code.Building.AptIsoFixesIntersection
-import Structure.v1.Atlas.Buildings.code.Building.Infinity.Sectors.Part3
-set_option linter.unusedSectionVars false
-
-open ChamberComplex
-
 variable {V : Type} [DecidableEq V]
 
 

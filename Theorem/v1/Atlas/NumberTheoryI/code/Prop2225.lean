@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Prop2225.lean -/
+module
+public import Structure.v1.Atlas.NumberTheoryI.code.GlobalCFT.Part3
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GlobalCFT
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Ch22Conductor
+public import Def.v1.Atlas.NumberTheoryI.code.Ch22Conductor
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Prop2225.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Structure.v1.Atlas.NumberTheoryI.code.GlobalCFT.Part3
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GlobalCFT
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Ch22Conductor
-import Def.v1.Atlas.NumberTheoryI.code.Ch22Conductor
-
-
 noncomputable section
 
 open NumberField RayClassField GlobalConductor KroneckerWeber

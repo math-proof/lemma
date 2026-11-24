@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingSurfaceTensionNOneCoefficientSemantics.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionNOnePolynomialSemantics.Part5
+public import Def.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionNOneCoefficientSemantics.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingSurfaceTensionNOneCoefficientSemantics.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionNOnePolynomialSemantics.Part5
-import Def.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionNOneCoefficientSemantics.Part2
-
-
 namespace StatMech.FrontierA.NOneSymmetricMeanCertificate
 
 theorem addRawMomentState_eq_addRawMomentVStates

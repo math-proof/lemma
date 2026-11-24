@@ -1,5 +1,30 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/AlgGeoStructuralAudit.lean -/
+module
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves.Part2
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DedekindCurve
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzFormula
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzApplications
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BertiniDimensionCount
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochRiemannForm
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckBirkhoffGeometric
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ProjectiveIntersection
+public import Def.v1.Atlas.AlgebraicGeometryI.code.DedekindCurve
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochCurves
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzFormula
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzApplications
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.BertiniDimensionCount.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityCurves.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochRiemannForm
+public import Def.v1.Atlas.AlgebraicGeometryI.code.GrothendieckBirkhoffGeometric.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ProjectiveIntersection
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GAGA
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/AlgGeoStructuralAudit.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,30 +32,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves.Part2
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DedekindCurve
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzFormula
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzApplications
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BertiniDimensionCount
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityCurves
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochRiemannForm
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckBirkhoffGeometric
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.ProjectiveIntersection
-import Def.v1.Atlas.AlgebraicGeometryI.code.DedekindCurve
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochCurves
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzFormula
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzApplications
-import Structure.v1.Atlas.AlgebraicGeometryI.code.BertiniDimensionCount.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityCurves.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochRiemannForm
-import Def.v1.Atlas.AlgebraicGeometryI.code.GrothendieckBirkhoffGeometric.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.ProjectiveIntersection
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.GAGA
-
-
 noncomputable section
 
 open CanonicalSheafCurves RiemannRochCurves

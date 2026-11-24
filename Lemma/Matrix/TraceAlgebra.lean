@@ -1,8 +1,11 @@
-import Mathlib
-import Lemma.Matrix.LiftFunctor
-import Abbrev.Deformations_TraceAlgebra
-
+module
+public import Mathlib
+public import Lemma.Matrix.LiftFunctor
+public import Abbrev.Deformations_TraceAlgebra
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

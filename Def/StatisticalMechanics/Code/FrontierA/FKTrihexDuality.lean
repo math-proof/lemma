@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/FKTrihexDuality.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.FKCriticalAlgebra
+public import Theorem.StatisticalMechanics.Code.BeffaraDC.Duality
+public import Theorem.StatisticalMechanics.Code.Universality.STT.Part4
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/FKTrihexDuality.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.FKCriticalAlgebra
-import Theorem.StatisticalMechanics.Code.BeffaraDC.Duality
-import Theorem.StatisticalMechanics.Code.Universality.STT.Part4
-
-
 namespace StatMech.FrontierA
 
 noncomputable def fkEdgeOdds (p : ℝ) : ℝ := p / (1 - p)

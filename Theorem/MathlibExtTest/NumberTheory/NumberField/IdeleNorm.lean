@@ -1,13 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/IdeleNorm.lean -/
+module
+public import Def.NumberTheory.NumberField.IdeleNorm
+public import Theorem.Nat.NumberField.IdeleNorm
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/IdeleNorm.lean -/
 /-
 Author: @toskua, Avocado
 -/
-
-import Def.NumberTheory.NumberField.IdeleNorm
-import Lemma.Nat.NumberField.IdeleNorm
-
-
 noncomputable section
 
 open NumberField IsDedekindDomain

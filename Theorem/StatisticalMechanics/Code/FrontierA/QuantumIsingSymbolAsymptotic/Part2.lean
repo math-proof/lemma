@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/QuantumIsingSymbolAsymptotic.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingSymbolReduction.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingBogoliubovLimit
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
+public import Def.StatisticalMechanics.Code.FrontierA.QuantumIsingSymbolAsymptotic
+open Filter
+open scoped Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/QuantumIsingSymbolAsymptotic.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingSymbolReduction.Part2
-import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingBogoliubovLimit
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.DerivHyp
-import Def.StatisticalMechanics.Code.FrontierA.QuantumIsingSymbolAsymptotic
-open Filter
-open scoped Topology
-
-
 namespace StatMech.FrontierA
 
 theorem quantumIsingReducedParameterAtScale_eq

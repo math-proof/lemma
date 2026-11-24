@@ -16,7 +16,7 @@ open Chapter3.SetTheory.Object
 [SetTheory.Object.ofnat_eq'''](https://github.com/teorth/analysis/blob/main/Analysis/Section_3_1.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   [SetTheory]
   {n:ℕ}
   {hn} :

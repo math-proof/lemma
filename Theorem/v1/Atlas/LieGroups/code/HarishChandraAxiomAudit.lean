@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/HarishChandraAxiomAudit.lean -/
+module
+public import Structure.v1.Atlas.LieGroups.code.HarishChandraIsomorphism.Part2
+public import Theorem.Int.Any_All_Eq.of.LeKer_Ker.Surjective
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/HarishChandraAxiomAudit.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,11 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Structure.v1.Atlas.LieGroups.code.HarishChandraIsomorphism.Part2
-import Lemma.Int.Any_All_Eq.of.LeKer_Ker.Surjective
-
-
 noncomputable section AuditChecks
 
 variable {R : Type*} [CommRing R]

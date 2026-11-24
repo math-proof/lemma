@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectDualBarrierForceTopology.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDualBarrierLocalizedCycle
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectFaithfulDualConfinement
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectFaithfulVerticalRepeat
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectFaithfulWalkExtrema
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectFaithfulHorizontalExtension
+open SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectDualBarrierForceTopology.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDualBarrierLocalizedCycle
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectFaithfulDualConfinement
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectFaithfulVerticalRepeat
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectFaithfulWalkExtrema
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectFaithfulHorizontalExtension
-open SimpleGraph
-
-
 namespace StatMech.FrontierD
 
 open StatMech.Lattice

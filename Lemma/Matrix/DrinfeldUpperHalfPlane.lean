@@ -1,9 +1,11 @@
-import Mathlib
-import Def.CerednikDrinfeld_DrinfeldUpperHalfPlane
-
+module
+public import Mathlib
+public import Def.CerednikDrinfeld_DrinfeldUpperHalfPlane
 set_option autoImplicit false
-
 open scoped MatrixGroups Topology
+
+
+public section
 
 namespace CerednikDrinfeld
 namespace Omega

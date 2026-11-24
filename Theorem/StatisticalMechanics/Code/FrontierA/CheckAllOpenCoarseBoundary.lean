@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/CheckAllOpenCoarseBoundary.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.AllOpenCoarseBoundary.Part3
+open StatMech.FrontierA
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/CheckAllOpenCoarseBoundary.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,9 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.FrontierA.AllOpenCoarseBoundary.Part3
-open StatMech.FrontierA
 
 #check bgf2_deleted_reachable_of_cut_connected
 #check bgf2_q_eq_centre_iff

@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexCoordinateBethe.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheScattering.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheSymmetricProduct.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPerron.Part9
+public import Mathlib.GroupTheory.Perm.Fin
+open Finset Matrix
+open scoped symmDiff
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexCoordinateBethe.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheScattering.Part3
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheSymmetricProduct.Part3
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexPerron.Part9
-import Mathlib.GroupTheory.Perm.Fin
-open Finset Matrix
-open scoped symmDiff
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

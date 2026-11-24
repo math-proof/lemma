@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/CheckNearestSetGeometry.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.NearestSetGeometry.Part4
+open Set
+open StatMech Lattice FrontierA
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/CheckNearestSetGeometry.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,10 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.FrontierA.NearestSetGeometry.Part4
-open Set
-open StatMech Lattice FrontierA
 
 #check exists_pair_setL1Distance
 #check nearestSourceSet_nonempty

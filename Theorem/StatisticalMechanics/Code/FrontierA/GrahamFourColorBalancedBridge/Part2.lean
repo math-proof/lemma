@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/GrahamFourColorBalancedBridge.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.GrahamFourColorBalancedCore.Part17
+public import Theorem.StatisticalMechanics.Code.FrontierA.GrahamLemmaOneFourColor
+public import Def.StatisticalMechanics.Code.FrontierA.GrahamFourColorBalancedBridge.Part2
+open Finset
+open Classical
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/GrahamFourColorBalancedBridge.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.GrahamFourColorBalancedCore.Part17
-import Theorem.StatisticalMechanics.Code.FrontierA.GrahamLemmaOneFourColor
-import Def.StatisticalMechanics.Code.FrontierA.GrahamFourColorBalancedBridge.Part2
-open Finset
-open Classical
-
-
 namespace StatMech.FrontierA
 
 open StatMech.Sharpness.RandomCurrent

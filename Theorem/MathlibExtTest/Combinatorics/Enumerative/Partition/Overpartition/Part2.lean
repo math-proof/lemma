@@ -1,11 +1,12 @@
+module
+public import Def.Combinatorics.Enumerative.Partition.Overpartition
+public import Theorem.Nat.Enumerative.Partition.Overpartition
+public import Def.MathlibExtTest.Combinatorics.Enumerative.Partition.Overpartition
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/Partition/Overpartition.lean -/
-
-
-import Def.Combinatorics.Enumerative.Partition.Overpartition
-import Theorem.Nat.Enumerative.Partition.Overpartition
-import Def.MathlibExtTest.Combinatorics.Enumerative.Partition.Overpartition
-
-
 namespace Nat.Overpartition
 
 -- Selective overlining, membership, positivity, and the `full` constructor.

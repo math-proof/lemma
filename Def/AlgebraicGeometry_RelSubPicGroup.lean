@@ -1,16 +1,19 @@
-import Mathlib
-import Def.AlgebraicGeometry_RelativePicardFunctor
-import Def.AlgebraicGeometry_RepresentsRelSubPic
-import Def.AlgebraicGeometry_RelSubPicPresheaf
-import Lemma.Scheme.RelativeGroupLawGrpObj
-import Structure.JacJ1Iface
-import Instance.SheafOfModules_Monoidal
-import Instance.AlgebraicGeometry_ModulesPullbackMonoidal
-import Theorems.Thm_AlgebraicGeometry_Scheme_Modules_IsInvertible_tensor
-import Theorems.Thm_AlgebraicGeometry_Scheme_Modules_IsInvertible_exists_tensor_inverse
-import Structure.AlgebraicGeometry_RelSubPicGroup
-
+module
+public import Mathlib
+public import Def.AlgebraicGeometry_RelativePicardFunctor
+public import Def.AlgebraicGeometry_RepresentsRelSubPic
+public import Def.AlgebraicGeometry_RelSubPicPresheaf
+public import Theorem.Scheme.RelativeGroupLawGrpObj
+public import Structure.JacJ1Iface
+public import Instance.SheafOfModules_Monoidal
+public import Instance.AlgebraicGeometry_ModulesPullbackMonoidal
+public import Theorems.Thm_AlgebraicGeometry_Scheme_Modules_IsInvertible_tensor
+public import Theorems.Thm_AlgebraicGeometry_Scheme_Modules_IsInvertible_exists_tensor_inverse
+public import Structure.AlgebraicGeometry_RelSubPicGroup
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/RectangularBlockTiling.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionThermodynamic.Part3
+public import Def.StatisticalMechanics.Code.FrontierA.RectangularBlockTiling
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/RectangularBlockTiling.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionThermodynamic.Part3
-import Def.StatisticalMechanics.Code.FrontierA.RectangularBlockTiling
-
-
 namespace StatMech.FrontierA
 
 theorem hasRectangularBlockGluing_of_separatelySubadditive_areaBound

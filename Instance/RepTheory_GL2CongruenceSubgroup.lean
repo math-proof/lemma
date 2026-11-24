@@ -1,11 +1,14 @@
--- Carved from Lemma/Definitions/Def_RepTheory_GL2CongruenceSubgroup.lean: instance decls only.
-import Mathlib
-import Theorem.Matrix.GL2CongruenceSubgroup
-import Def.FLTPrelim_GL2CongruenceSubgroup
-
+module
+public import Mathlib
+public import Theorem.Matrix.GL2CongruenceSubgroup
+public import Def.FLTPrelim_GL2CongruenceSubgroup
 set_option autoImplicit false
-
 open scoped Topology
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_RepTheory_GL2CongruenceSubgroup.lean: instance decls only.
 
 namespace FLT.SmoothVectors
 

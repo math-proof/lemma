@@ -1,59 +1,60 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch9Entry16Tan.lean -/
+module
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Data.Finset.Defs
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.Order.Filter.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Topology.Basic
+public import Def.Analysis.Ramanujan.Part1Ch9Entry16Tanseries
+public import Theorem.Real.Ramanujan.Part1Ch9Entry16Tanseries
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Algebra.Polynomial.Smeval
+public import Mathlib.Analysis.Analytic.Binomial
+public import Mathlib.Analysis.Asymptotics.Defs
+public import Mathlib.Analysis.Calculus.ContDiff.Basic
+public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.Analysis.Complex.Trigonometric
+public import Mathlib.Analysis.Normed.Group.Tannery
+public import Mathlib.Analysis.PSeries
+public import Mathlib.Analysis.SpecialFunctions.Complex.LogBounds
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+public import Mathlib.Analysis.SpecialFunctions.Integrals.LogTrigonometric
+public import Mathlib.Analysis.SpecialFunctions.Pow.Complex
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.InverseDeriv
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+public import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.NumberTheory.Harmonic.Defs
+public import Mathlib.NumberTheory.LSeries.RiemannZeta
+public import Mathlib.RingTheory.Binomial
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch9Entry16Tan.lean -/
 /-
 Author: @akiezun, Avocado
 -/
-
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Data.Finset.Defs
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.Order.Filter.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Topology.Basic
-import Def.Analysis.Ramanujan.Part1Ch9Entry16Tanseries
-import Lemma.Real.Ramanujan.Part1Ch9Entry16Tanseries
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Algebra.Polynomial.Smeval
-import Mathlib.Analysis.Analytic.Binomial
-import Mathlib.Analysis.Asymptotics.Defs
-import Mathlib.Analysis.Calculus.ContDiff.Basic
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.Analysis.Complex.Trigonometric
-import Mathlib.Analysis.Normed.Group.Tannery
-import Mathlib.Analysis.PSeries
-import Mathlib.Analysis.SpecialFunctions.Complex.LogBounds
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Analysis.SpecialFunctions.Integrals.LogTrigonometric
-import Mathlib.Analysis.SpecialFunctions.Pow.Complex
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.InverseDeriv
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Basic.Complex.Basic
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
-import Mathlib.NumberTheory.Bernoulli
-import Mathlib.NumberTheory.Harmonic.Defs
-import Mathlib.NumberTheory.LSeries.RiemannZeta
-import Mathlib.RingTheory.Binomial
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 9
 
 Statements of entries from B. C. Berndt, *Ramanujan's Notebooks, Part I*
 (Springer, 1985), with proofs.
 -/
-
-
 section
 
 namespace MathlibExt.Analysis.Ramanujan.Part1Ch9

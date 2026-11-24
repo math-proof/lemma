@@ -1,10 +1,13 @@
-import Mathlib
-import Lemma.ZMod.Inst
-import Lemma.CuspForm.HeckeOperatorFormsGammaH
-import Lemma.ModularForm.AtkinLehnerDatum
-import Def.FLTPrelim_Modularity
-
+module
+public import Mathlib
+public import Lemma.ZMod.Inst
+public import Lemma.CuspForm.HeckeOperatorFormsGammaH
+public import Lemma.ModularForm.AtkinLehnerDatum
+public import Def.FLTPrelim_Modularity
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

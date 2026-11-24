@@ -1,5 +1,539 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/Buildings.lean -/
+module
+public import Def.v1.Atlas.Buildings.code.AffineCoxeter.AffineCoxeterHypProof
+public import Instance.v1.Atlas.Buildings.code.AffineCoxeter.AffineCriterion.Part2
+public import Theorem.Real.Ge_0.of.In_pos
+public import Theorem.Real.Any_All_GeNormGetE0.of.All_All_EqGetEAdd_GetE0.All_Disjoint.NonemptySet.IsOpenSet
+public import Theorem.Real.IsWInvariantEuclideanDist
+public import Theorem.Matrix.Any_Gt_0AndAll_EqEuclideanDist_Mul_EuclideanDistAndEqChamberDiameter_Mul_ChamberDiameter.of.All_Eq_VertexMap
+public import Theorem.Real.Zero.notin.AffineHyperplane.of.All_Gt_0
+public import Theorem.Real.BilinForm.eq.One.of.In_Standardpos
+public import Theorem.Real.QF.eq.BF
+public import Theorem.Real.NormalSubgroupOfTranslationSubgroupGroup
+public import Theorem.Real.DualSigma.eq.Neg
+public import Theorem.List.All_All_All_All_All_Any_All_Ge_0AndLeLengthAndEq_WordAction
+public import Theorem.Finset.NuFiniteAt_pos.of.In_TitsFaceDual.Ne_Univ
+public import Theorem.Nat.TitsConeInterior.sub.TitsConeSet
+public import Theorem.Set.All_In_Set.of.All_In_Set.In_Group
+public import Theorem.Set.ConjugateParabolicMul.eq.ImageConjugateParabolic
+public import Theorem.Nat.In_BruhatCell1.of.In_B
+public import Theorem.Nat.Simple.ne.One
+public import Theorem.Nat.In_BruhatCell.of.In_BruhatCell
+public import Theorem.Set.SetMul_SetMul
+public import Lemma.Group.Atlas.v1.Buildings.code.BNPair.CellMulParabolicProof
+public import Theorem.Set.All_In_StandardParabolic
+public import Theorem.Fin.T.eq.B
+public import Theorem.Real.In_G.of.All_Eq_SimpleToCoxeterSystemAndEqGMulMul_G.In_Tt
+public import Theorem.Nat.Tt.le.Bt
+public import Theorem.Nat.B.le.Closure_BruhatCell
+public import Theorem.Nat.NonemptyBruhatCell
+public import Lemma.Group.Atlas.v1.Buildings.code.BNPair.Parabolics
+public import Lemma.Group.Atlas.v1.Buildings.code.BNPair.PropositionParabolics
+public import Theorem.Set.ClosureSimple.eq.One
+public import Theorem.Set.BruhatCell.sub.SetG.of.In_BruhatCell.In_SetG.LeB
+public import Theorem.Nat.EqApartmentActionFun.of.InGT
+public import Theorem.Fin.BuildingDist.ge.Zero
+public import Theorem.Nat.Embed_Add1S.ne.Zero
+public import Theorem.Fin.IsUpperTriangularModMIsometry.of.IsCongruentToIdentityIsometry
+public import Theorem.Set.IsBoundedImage.of.IsBounded.IsSimilitude
+public import Theorem.Fin.DistFn.of.Any_In.Any_In.Any_In.Any_In
+public import Lemma.Set.IsHomothetic_πLattice
+public import Theorem.Set.IsOpen_SLVSet_SLV.of.IsOpen_SetOfIsInMaxIdeal.IsOpen_SetOfIsInO.All_Continuous.EqSet_SLVIwahoriSetSLV.IsAdicComplete_MaxIdeal
+public import Theorem.Finset.IsMaximalToSimplicialComplex.of.IsMaximal.In_Apartments
+public import Theorem.Nat.TopologicalGroupDef
+public import Theorem.Finset.Any_And_All_EqAndAll_IsMaximalAndAll_EqImageSOrAdjacentAndAll_Eq.of.IsMaximal.In_Apartments
+public import Theorem.Set.ApartmentsToApartmentSystem.eq.Apartments.of.IsThick
+public import Theorem.Finset.ImageRetractionMap.in.Faces.of.IsMaximal.In_Faces.In_Apartments
+public import Theorem.Finset.Any_And_Subset.of.In_Faces.In_Apartments
+public import Theorem.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
+public import Theorem.Set.Empty.in.Bounded
+public import Theorem.Set.IsBoundedSetOrbit.of.IsBounded.IsBoundedPointOrbit.All_All_Dist
+public import Theorem.Set.RadiusFrom.ge.Zero
+public import Theorem.Set.IsCompact_Closure_Image.of.IsCompact_Closure.Isometry
+public import Theorem.Finset.AdjacentToSimplicialComplex.of.Adjacent.In_Faces.In_Faces.In_Apartments
+public import Theorem.Finset.Eq.In_H.of.GtGalleryDist
+public import Structure.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.ThreeChamber
+public import Def.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.ThreeChamber
+public import Theorem.Set.BNPairBoundedPredicate_SetMul.of.BNPairBoundedPredicate.BNPairBoundedPredicate
+public import Theorem.List.Any.of.Not.In_A.IsChainA
+public import Theorem.Fin.Simple
+public import Theorem.Fin.EqDiagBlockEmbedMatrix
+public import Theorem.Finset.InjOnMap.of.In_FacesToSimplicialComplexToChamberComplex
+public import Theorem.Set.NonemptyOrbitSetSetGt
+public import Lemma.Group.Atlas.v1.Buildings.code.Building.GoodMaximalBounded
+public import Theorem.Set.ConjSet.eq.Image
+public import Theorem.Set.Functional.ge.Zero
+public import Theorem.Finset.Any_In_ApartmentsAndIn_FacesAndAny_And_SetInApartmentVertices.of.IsMaximalToSimplicialComplex
+public import Theorem.Finset.IsMaximal_ImageToFun.of.IsMaximal.In_Faces.In_Apartments.In_Apartments
+public import Theorem.Fin.SameDirection.of.Parallel
+public import Theorem.Fin.All_All_Any_And_InAndAll_In_Vertices
+public import Theorem.Set.PointsAtInfinity.of.Vertices
+public import Theorem.Fin.OriginPushforwardRay.eq.ToFunOrigin
+public import Theorem.Fin.One.in.IwahoriGLn
+public import Theorem.Fin.Val.lt.Val.is.Eq_0AndEq_1
+public import Theorem.Finset.Sum_Mul.eq.Add_Sum_Mul.of.All_Eq_0.Eq_1
+public import Theorem.Matrix.Any_And_In_LowerUnipAndIn_DiagAndIn_UpperUnip.of.In_IwahoriGLn
+public import Theorem.Fin.ValElimMatrix.eq.Transvection.of.Ne
+public import Theorem.Fin.ExtMulVal.eq.MulVal.of.In_DiagGLn
+public import Theorem.Finset.LabelMap_Image.eq.LabelMap.of.All_Eq.All_InImageFaces.IsMaximalToSimplicialComplexToChamberComplex.In_Faces.In_Faces.In_Apartments.In_Apartments
+public import Theorem.Finset.LabelMap.eq.ImageLabelMap.of.EqLabelMap_Head_ImageLabelMap_Head.IsChainAdjacent.Ne.All_EqLabelMap_ImageLabelMap
+public import Theorem.Finset.Disjoint.of.In_FacesLinkComplex.In_Faces
+public import Theorem.Equiv.All_All_All_Any_And_Eq_ImageAndAll_All_Eq_Image.of.All_ChamberAdjacent.All_Any_And_Eq.All_All_Eq.EqToSimplicialComplex
+public import Theorem.Finset.IsMaximalUnion.of.IsMaximalLinkComplex.In_Faces
+public import Theorem.Equiv.All_EqImage.of.EqImage.All_IffIn_Faces_InImageFaces.Bijective.IsMaximalToSimplicialComplexToChamberComplex.In_Faces.In_Apartments
+public import Theorem.Finset.OppositeSides.of.EqToSimplicialComplex.AreOppositeToSimplicialComplexToChamberComplex.IsMaximal.IsMaximal.In_Faces.In_Faces.In_Apartments.OppositeChamberHyp
+public import Theorem.Set.IsBoundedBorn.is.Any_IsBoundedOrbitSetAction
+public import Theorem.Finset.AreOpposite.of.AreOpposite
+public import Theorem.List.LengthMulHeadGetLast.le.SubLength1.of.IsChain_Any_Eq_Mul_Simple.Ne
+public import Theorem.Finset.Any_All_In_FacesAndIsMaximalAndAll_EqAndAll_EqDeltaSAndAll_EqDeltaSAndAll_EqOrAdjacent.of.IsMaximal.In_ApartmentsApartmentSystem
+public import Theorem.List.Any.of.Any_Not.Ne.IsChain
+public import Theorem.Set.Any_EqToSimplicialComplexAndAny_And_All_Any_And_EqAndAll_ChamberAdjacentAndIsThin.of.In_Apartments.IsThick
+public import Theorem.Fin.TitsTheoremHypV
+public import Theorem.Finset.Any_And_EqImageToFunMorph.of.AdjacentToSimplicialComplex.HasSufficientFoldings
+public import Theorem.Equiv.Any_And_In_Faces.is.Image.in.FacesAndEqImage.of.IsMaximalToSimplicialComplexToChamberComplex.In_Faces.IsMaximalToSimplicialComplexToChamberComplex.In_Faces.In_Apartments.In_Apartments
+public import Theorem.Finset.EqImageRefl.of.Ne.EqImageToFun.EqImageToFun.IsMaximalToSimplicialComplex
+public import Theorem.Finset.Any_EqImageAndEqImage.of.Adjacent.HasSufficientFoldings
+public import Theorem.Finset.Adjacent
+public import Theorem.Nat.NotChamberAdjacent
+public import Theorem.List.All.of.All.IsChain.Ne
+public import Theorem.Fin.CoxeterHalfGroupMap_CoxeterHalfGroupMap.eq.CoxeterHalfGroupMap
+public import Theorem.Finset.SeparatedByWall.of.AdjacentToSimplicialComplex.HasSufficientReversibleFoldings
+public import Theorem.Set.EqSimpleDeletionImpliesCoxeterSystem.of.SatisfiesDeletionConditionGen.EqClosure_Range_Top.All_NeMul_1.All_EqMul_1
+public import Theorem.Finset.AgreeOnImage.of.AgreeOn
+public import Theorem.List.ImageGalleryStutters.is.GalleryStuttersUnderToFun
+public import Theorem.Nat.FormVal
+public import Theorem.Real.EqSigma.of.EqBilinForm_E_0
+public import Theorem.Nat.PowSigma_SigmaGetME.eq.E.of.NeM_0.Ne
+public import Theorem.Real.SubMulMul2CosMul2SinSin_Sub.eq.SinAdd_Mul2
+public import Theorem.Nat.MulSimpleS.eq.One
+public import Theorem.List.Any_And_Eq_WordProd.of.Eq_WordProd.IsReduced.BruhatLE.ReducedSublistProperty.StrongExchangeCondition
+public import Theorem.Nat.IsLiftable_SigmaLinearEquiv
+public import Theorem.Nat.OrderOfMul.of.All_EqMul_1
+public import Theorem.Nat.Any_And_EqAdd_1AndAll_Eq_Add_1.of.Gt.All_Eq_Add_1OrEqAdd_1.Eq_0
+public import Theorem.Set.InjectiveDeletionCanonicalHom.of.SatisfiesDeletionConditionGen.EqClosure_Range_Top.All_NeMul_1.All_EqMul_1
+public import Theorem.List.AddLengthEraseIdxEraseIdx2.eq.Length.of.Lt_Length.Lt
+public import Theorem.Real.IsPositive_Sigma.of.Eq_0.All_Eq_0.IsPositive.Ne
+public import Theorem.Real.SinMulAdd_2.eq.SubMulMul2CosSinMulAdd_1SinMul
+public import Theorem.Nat.SatisfiesExchangeCondition
+public import Theorem.Nat.SatisfiesDeletionCondition.of.SignChangeExchangeHyp
+public import Theorem.Nat.SatisfiesExchangeCondition.of.SignChangeExchangeHyp
+public import Theorem.Nat.Any_And_EqAdd1AndEqAdd1.of.Gt.EqAdd_1OrEqAdd1.Eq0
+public import Theorem.Real.BilinFormAdd.eq.AddBilinSForm
+public import Theorem.List.BilinInversions_ListB.eq.Empty
+public import Theorem.Nat.SigmaWord.eq.SigmaLin
+public import Theorem.List.WordSigma.eq.AddSSMul.of.All_Eq_0.Ne
+public import Theorem.Int.Pow.eq.OneOrEqPow.of.EqMul_1
+public import Theorem.Nat.ParitySign.eq.PowNeg1Length
+public import Theorem.List.WordSigma.eq.AddMulS_WordSigma_E.of.All_Eq_0.Ne
+public import Theorem.Nat.StrongExchangeForBruhat
+public import Theorem.List.IsReduced_Drop.of.IsReduced
+public import Theorem.Real.IsRoot_Sigma
+public import Theorem.Real.IsPositiveNeg.is.IsNegative
+public import Theorem.Fin.TypeA.eq.Eq
+public import Theorem.Real.BilinForm.eq.NegBilinForm
+public import Theorem.List.IsReducedDrop.of.IsReduced
+public import Theorem.Nat.CardSignedPermGroup.eq.MulPow2Factorial
+public import Theorem.Nat.EqBilinInversions
+public import Theorem.List.Any_And_IsReduced_EraseIdx.of.LtLengthMulWordProdSimple_Length_WordProd.IsReduced.SignChangeExchangeHyp
+public import Theorem.Nat.LengthMul_Simple.eq.Length.LengthMul_Simple.eq.Length.of.IsRightDescent.NotIsRightDescent.EqAddLength1_Length
+public import Theorem.Nat.GlnCoxeterMatrixA.eq.MA
+public import Theorem.Set.Closure_RangeAdjTransp.eq.Top
+public import Theorem.Fin.All_EqGetLift1
+public import Theorem.Fin.PermCoxeterMulEquiv_AdjTransposition.eq.Simple_A
+public import Theorem.List.Any_And_IsReduced_EraseIdx.of.LtLengthMulWordProdSimple_Length_WordProd.IsReduced
+public import Theorem.List.ProdMap.eq.PowMul.of.All_EqGet_GetAdd_2.Ge_1.EqLength_Mul2
+public import Theorem.List.EqWordSSigma.of.WordProd
+public import Theorem.Fin.Any_And_Eq_0AndEq_1.of.Eq_0.Ne_0.IsSymm.Nondegenerate
+public import Theorem.Fin.IsFormPreserving1
+public import Theorem.Fin.Eq1AndEq0AndEq1.of.Eq0.Ne0.IsSymm.Nondegenerate
+public import Theorem.Submodule.OfEq.eq.M.of.Eq
+public import Theorem.Submodule.Any_EqMapToLinearMap.of.FinrankK
+public import Theorem.Fin.EqLinearEquivToGLV_GlvToLinearEquiv
+public import Theorem.Int.OrthogonalSum.eq.Add
+public import Theorem.Fin.IsGlobalIsometry
+public import Theorem.Submodule.Any_LeAndDisjointAndEq.of.Le
+public import Theorem.Submodule.NondegenerateRestrict.is.IsCompl_OrthogonalBilinForm.of.IsRefl
+public import Theorem.Fin.SwapCompositionInvariant
+public import Theorem.Submodule.EqSwapComplement.of.In.IsCompl.IsCompl
+public import Theorem.Fin.Len
+public import Theorem.Fin.IsCompl
+public import Theorem.Submodule.Any_All_EqMapSpacesSpacesAndAll_EqMapSpacesSpacesAndAll_EqMapSpacesSpacesAndAll_All_InSubToLinearMapBotAndToLinearMap.of.All_EqMapSpacesToLinearMap_Spaces.EqSpacesSubLen1_Top.GtLen0.All_EqSpaces_TopAndEqSpaces_Bot.Len
+public import Theorem.Fin.IsFormedSpaceIso_ExtractEquiv.of.All_Eq_0.IsFormedSpaceIso.IsNondegenerate'
+public import Theorem.Fin.Eq.of.Ne_0.All_Eq
+public import Theorem.Nat.BorelInLabelPreserving
+public import Theorem.Int.LengthMulMulSimpleSimple.gt.LengthMulSimple.of.GtLengthMul_Simple_Length.LtLengthMulSimple_Length
+public import Theorem.Int.Basis.of.Basis
+public import Theorem.Int.InjectiveAlgHomOmega
+public import Theorem.Finsupp.LambdaLift.eq.SMul
+public import Theorem.Real.All_All_Eq
+public import Theorem.Matrix.Eq.of.Offset.Normal.AffineHyperplaneE
+public import Theorem.Set.InteriorCarrier.eq.Empty
+public import Theorem.Real.IsLocallyFiniteAffineArr
+public import Theorem.Real.Eq.of.GetE0.LinearPartHomE
+public import Theorem.Real.LinearReflection.eq.Sub_SMul.of.EqNorm_1
+public import Theorem.Real.LinearReflectionLM.eq.LinearReflection
+public import Theorem.Finset.All_In_Roots.of.WeylGroupMem
+public import Theorem.Finset.Inner.ne.Zero.of.Nonempty.All_Ne_0
+public import Theorem.Matrix.BasePoint.in.Carrier
+public import Theorem.Real.NormInwardUnitNormal.eq.One
+public import Theorem.Real.SimplyTransitive
+public import Theorem.Set.IsClosedCarrier
+public import Theorem.Set.In_PositiveHalfSpaceOrIn_NegativeHalfSpace.of.In_Hyperplanes.In_Complement
+public import Theorem.Set.Any_Any_IsWallSetAndSeparatesChambers.of.IsLocallyFinite.NeSetSet
+public import Theorem.Submodule.Any_LtAndLtAndEqFinrankK_AddFinrankK1.of.LeAddFinrankK2_FinrankK.Lt
+public import Theorem.Fin.EqLinesFrameOfBasis
+public import Theorem.Fin.All_Eq_Val.of.Eq.Eq_0.StrictMono
+public import Theorem.Fin.LeCard
+public import Theorem.Nat.TypeA_CoxeterMatrixA
+public import Theorem.Nat.InjectiveJoinSub
+public import Theorem.Fin.LinearIndependent_GetBasisFunFinVal
+public import Theorem.List.Lt.of.Lt.Lt_Length.Lt_Length.IsChainLt
+public import Theorem.List.InsertIdx.eq.Take.of.Le_Length
+public import Theorem.Set.Simplices.of.In_StandardApartments.In_StandardApartments
+public import Theorem.Fin.JhLine.in.SpacesAddVal1.of.IsStrictFlag.IsStrictFlag
+public import Theorem.Fin.LeFinrank.of.Le.GtVal_0
+public import Theorem.Matrix.Det.eq.MulDetS.of.ProdMap
+public import Theorem.Fin.SquareDetV'.eq.One.of.All_Eq.Nondegenerate
+public import Theorem.Fin.GapVector.in.Spaces.of.LtVal_Val.IsStrictFlag
+public import Theorem.Fin.FinrankKSpacesValAdd1.of.IsStrictFlag
+public import Theorem.Fin.SpacesVal.lt.SpacesAddVal1.of.IsStrictFlag
+public import Theorem.Fin.SquareDetV.eq.One.of.All_Eq.Nondegenerate
+public import Theorem.Fin.SchreierCell_0.eq.SpacesSubVal1.of.GtVal_0
+public import Theorem.Equiv.Any_Lt.of.Ne_1
+public import Theorem.Nat.TopologicalGroupProp
+public import Theorem.Fin.EqValMkGL2.of.DetMatrix.ne.Zero
+public import Theorem.Nat.IsInO
+public import Theorem.Fin.Form.eq.Mul_Form
+public import Def.v1.Atlas.Buildings.code.AffineCoxeter.AffineWeylBook.Part2
+public import Def.v1.Atlas.Buildings.code.AffineCoxeter.CanonicalMetric.Part2
+public import Theorem.v1.Atlas.Buildings.code.AffineCoxeter.CoxeterComplexIsometry
+public import Theorem.v1.Atlas.Buildings.code.AffineCoxeter.CoxeterSimilitude
+public import Def.v1.Atlas.Buildings.code.AffineCoxeter.Faces
+public import Def.v1.Atlas.Buildings.code.AffineCoxeter.FiniteProperParabolicsInstance
+public import Def.v1.Atlas.Buildings.code.AffineCoxeter.GeometricRealization.Part2
+public import Theorem.Set.Finite.of.All_All_Any_Eq.All_Le.All_All_Ge_0.All_LeMul_Sum_Square.Gt_0
+public import Theorem.Real.Pairing_AddMulSub1Mul.Gt_0.of.GtPairing_0.GtPairing_0.Le_1.Ge_0
+public import Theorem.Fin.QF
+public import Theorem.Real.Continuous_Pairing
+public import Theorem.Nat.All_Any_In_BruhatCell
+public import Theorem.Set.ImageImage.eq.Image
+public import Theorem.Nat.Mul.in.BruhatCell.of.In_B.In_BruhatCell
+public import Theorem.Set.B.sub.StandardParabolic
+public import Theorem.Equiv.Any_EqToFunAndAll_EqLabelSMap.All_EqLabelSMap.of.In_Faces.IsMaximal.In_Apartments.In_Apartments
+public import Theorem.Set.Any_And_IsThinAndHasSufficientFoldings.of.In_Apartments.IsThick
+public import Lemma.Group.Atlas.v1.Buildings.code.Building.CombinatorialGeometry.PropStrongIsoCombinatorial
+public import Theorem.Finset.Any_All_In_FacesAndIsMaximalAndAll_EqAndAll_EqDeltaSAndAll_EqDeltaSAndAll_EqOrAdjacent.of.IsMaximal.In_Apartments
+public import Theorem.Finset.IsMaximalToSimplicialComplexToChamberComplexUnion.of.IsMaximalLinkComplexToSimplicialComplexToChamberComplex.In_FacesToSimplicialComplexToChamberComplex
+public import Theorem.Set.Functional.Gt_0OrFunctional.Lt_0.of.Apartment
+public import Theorem.Finset.Eq.of.Union.Disjoint.Disjoint
+public import Theorem.Finset.IsMaximalLinkComplex.of.IsMaximalUnion.In_FacesLinkComplex.In_Faces
+public import Theorem.Finset.IsMaximal.of.IsMaximalToSimplicialComplexToChamberComplex.All_In_Faces.In_Apartments
+public import Theorem.Finset.GalleryDist.le.Length.of.Connects
+public import Theorem.Finset.Eq.of.Eq.Any_And_Any_All_Eq_Mul.IsMaximal.In_Faces.IsMaximal.In_Faces.IsMaximal.In_Apartments
+public import Theorem.Finset.GalleryDistToSimplicialComplexToChamberComplex.eq.LengthToCoxeterSystemCoxeterMatrix_Delta
+public import Theorem.Set.Any_And_All_Any_And_Eq.of.Any_Adjacent.NotIn_Image.IsMaximal.In_Faces.All_IsMaximalToSimplicialComplexToChamberComplex.All_In_Faces.IsStrongIsometry_Image.In_Apartments
+public import Theorem.Finset.IsMaximal.of.IsMaximalToSimplicialComplex.In_Faces.In_Apartments
+public import Theorem.List.WordProduct.eq.Mul_WordProdToCoxeterSystem
+public import Theorem.Finset.IsFacetToSimplicialComplexAndIsMaximalToSimplicialComplex.Unique.of.IsMaximalToSimplicialComplex.IsFacetToSimplicialComplex.IsThin
+public import Theorem.Finset.Adjacent.of.Adjacent
+public import Theorem.List.NeChambers
+public import Theorem.Finset.Any_All_IsFacetToSimplicialComplex.of.IsMaximalToSimplicialComplex.IsFacetToSimplicialComplex.All_Any_And_IsMaximalToSimplicialComplexAndIsFacetToSimplicialComplex.All_AdjacentToSimplicialComplex.All_ChamberAdjacent.All_Any_And_Eq.All_All_Eq
+public import Theorem.Fin.Any_EqAndEqAndAll_BruhatLTAndEqAddLengthToCoxeterSystem1LengthToCoxeterSystem.of.BruhatLTToCoxeterSystem.ReducedSublistPropertyToCoxeterSystem.StrongExchangeConditionToCoxeterSystem
+public import Theorem.List.ProdRotate.eq.One.of.EqProd_1
+public import Theorem.Nat.Injective.of.All_NeMul_1.All_EqMul_1
+public import Theorem.List.WordSigma.of.WordProd
+public import Theorem.Real.Pi_AlternatingWordAdd_Mul_2.eq.Pi_AlternatingWord
+public import Lemma.List.IsChain_NeAlternatingWord.of.Ne
+public import Theorem.Real.EqSMul_E
+public import Theorem.List.Eq_2.eq.Zero.of.All_Eq_Add_2.GeLength_2
+public import Theorem.Nat.EqOrEq.of.In_AlternatingWord
+public import Theorem.Real.EqSigma.of.Ne
+public import Theorem.Real.GetCoxeterRepresentationMulMul_Simple.eq.GeneralizedReflection_CoxeterRepresentation_E
+public import Theorem.List.EqGeneralizedReflection.of.ConjSimple
+public import Theorem.List.IsReduced.of.IsReduced
+public import Theorem.List.IsReduced.of.IsReducedA
+public import Theorem.Fin.All_Eq_0.of.IsHyperbolic.IsAnisotropic
+public import Theorem.Fin.Nondegenerate.of.EqOrthogonalBilinFormTop_Bot.IsRefl
+public import Theorem.Fin.Eq_Neg.of.IsAlt
+public import Theorem.Submodule.Finrank.eq.SubFinrankS
+public import Theorem.Matrix.Det.eq.OneOrDet.eq.Neg1.of.EqMulMulTranspose.NeDet_0
+public import Theorem.Int.IsNondegenerate'
+public import Theorem.Fin.Nondegenerate
+public import Theorem.Submodule.LeOrthogonal.of.Finrank.le.Mul2Finrank.All_All_Eq_0.Nondegenerate
+public import Theorem.Fin.WittCancellationProp.of.EqOrthogonalBilinFormTop_Bot.All_Eq
+public import Theorem.Submodule.Any_EqAndAll_Eq_V.of.IsSubspaceIsometry.EqOrthogonalBilinFormTop
+public import Theorem.Int.All_EqMul_Basis1AndAll_EqMul_Basis1AndAll_Mul_MulAndAll_All_Eq_Mul
+public import Theorem.Submodule.Any_EqAndAll_Eq_V.of.IsSubspaceIsometry.EqOrthogonalBilinFormTop_Bot.All_Eq
+public import Instance.v1.Atlas.Buildings.code.AffineCoxeter.PerronFrobeniusProof
+public import Def.v1.Atlas.Buildings.code.AffineCoxeter.SemidirectProduct
+public import Instance.v1.Atlas.Buildings.code.AffineCoxeter.SphericalFiniteInstance
+public import Def.v1.Atlas.Buildings.code.AffineCoxeter.TitsCone.Part3
+public import Def.v1.Atlas.Buildings.code.AffineCoxeter.TitsConeConvexity.Part3
+public import Theorem.v1.Atlas.Buildings.code.AffineCoxeter.TitsConeFiniteParabolic.Part4
+public import Def.v1.Atlas.Buildings.code.AffineCoxeter.TitsConeInterior
+public import Theorem.v1.Atlas.Buildings.code.AffineCoxeter.TitsConeProperties
+public import Theorem.v1.Atlas.Buildings.code.AffineCoxeter.TransitiveAlcovesHelper
+public import Structure.v1.Atlas.Buildings.code.BNPair.Basic.Part2
+public import Def.v1.Atlas.Buildings.code.BNPair.BruhatPropertiesInstance
+public import Def.v1.Atlas.Buildings.code.BNPair.BuildingsFromBNPairs.Part6
+public import Theorem.v1.Atlas.Buildings.code.BNPair.CellCoverProof
+public import Theorem.v1.Atlas.Buildings.code.BNPair.CellDisjointProof
+public import Theorem.v1.Atlas.Buildings.code.BNPair.CellInvProof
+public import Theorem.v1.Atlas.Buildings.code.BNPair.CellMulFiniteProof.Part2
+public import Theorem.v1.Atlas.Buildings.code.BNPair.CellMulParabolicProof
+public import Theorem.v1.Atlas.Buildings.code.BNPair.ConjugatorProof
+public import Def.v1.Atlas.Buildings.code.BNPair.FromBuilding.Part4
+public import Def.v1.Atlas.Buildings.code.BNPair.FurtherBruhatTits
+public import Structure.v1.Atlas.Buildings.code.BNPair.Generalized.Defs
+public import Def.v1.Atlas.Buildings.code.BNPair.Generalized.Theorems
+public import Def.v1.Atlas.Buildings.code.BNPair.Generalized.TypePreserving
+public import Theorem.v1.Atlas.Buildings.code.BNPair.Generalized
+public import Def.v1.Atlas.Buildings.code.BNPair.NormalizerParabolicProof
+public import Def.v1.Atlas.Buildings.code.BNPair.ParabolicDefs.Part2
+public import Def.v1.Atlas.Buildings.code.BNPair.Parabolics
+public import Theorem.v1.Atlas.Buildings.code.BNPair.ParabolicsUnconditional
+public import Def.v1.Atlas.Buildings.code.BNPair.PropositionParabolics
+public import Def.v1.Atlas.Buildings.code.BNPair.SphericalCase
+public import Theorem.v1.Atlas.Buildings.code.BNPair.SubgroupOverBProof
+public import Def.v1.Atlas.Buildings.code.BNPair.TKernel.Part2
+public import Def.v1.Atlas.Buildings.code.Building.Affine.Part2
+public import Def.v1.Atlas.Buildings.code.Building.AffineCurvature.Part2
+public import Structure.v1.Atlas.Buildings.code.Building.AffineIsometry.Contexts
+public import Structure.v1.Atlas.Buildings.code.Building.AffineIsometry.LatticeChains
+public import Def.v1.Atlas.Buildings.code.Building.AffineIsometry.Theorems
+public import Theorem.v1.Atlas.Buildings.code.Building.AffineIsometry
+public import Def.v1.Atlas.Buildings.code.Building.AffineIsometryAxiomsAction
+public import Def.v1.Atlas.Buildings.code.Building.AffineIsometryGroups.GroupAction
+public import Def.v1.Atlas.Buildings.code.Building.AffineIsometryGroups.StrongTransitivity.Part4
+public import Theorem.v1.Atlas.Buildings.code.Building.AffineIsometryGroups
+public import Def.v1.Atlas.Buildings.code.Building.AffineMetric.Part5
+public import Def.v1.Atlas.Buildings.code.Building.AffineMetricGR.Part2
+public import Def.v1.Atlas.Buildings.code.Building.AffineSLV.Part4
+public import Def.v1.Atlas.Buildings.code.Building.AffineSLVStrong.Part5
+public import Theorem.v1.Atlas.Buildings.code.Building.AffineSLVWellDef
+public import Structure.v1.Atlas.Buildings.code.Building.ApartmentsCoxeter
+public import Structure.v1.Atlas.Buildings.code.Building.ApplicationsToGroups.Part4
+public import Theorem.v1.Atlas.Buildings.code.Building.AptFoldingFromRetraction
+public import Def.v1.Atlas.Buildings.code.Building.AptIsCoxeterProof
+public import Def.v1.Atlas.Buildings.code.Building.AptIsCoxeterUnconditional
+public import Def.v1.Atlas.Buildings.code.Building.AptIsoFixesIntersection
+public import Theorem.v1.Atlas.Buildings.code.Building.AptThinness.Part2
+public import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
+public import Def.v1.Atlas.Buildings.code.Building.BornologyGroups.Part3
+public import Def.v1.Atlas.Buildings.code.Building.BornologyProposition
+public import Def.v1.Atlas.Buildings.code.Building.BruhatTitsFixedPoint.Part2
+public import Def.v1.Atlas.Buildings.code.Building.ChamberCompactClosure
+public import Structure.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.GateConvex
+public import Structure.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.PrescribedGallery.Part2
+public import Structure.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.RetractionHalfApartments
+public import Structure.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.ThreeChamber.Part2
+public import Theorem.v1.Atlas.Buildings.code.Building.CombinatorialGeometry
+public import Theorem.v1.Atlas.Buildings.code.Building.CompactOpenPointwiseFixer
+public import Structure.v1.Atlas.Buildings.code.Building.CompactSubgroups.Part2
+public import Def.v1.Atlas.Buildings.code.Building.Convexity
+public import Def.v1.Atlas.Buildings.code.Building.CoxeterComplexFoldings
+public import Def.v1.Atlas.Buildings.code.Building.DiagBlockEmbed.Part2
+public import Def.v1.Atlas.Buildings.code.Building.DiscreteFibers.Part2
+public import Structure.v1.Atlas.Buildings.code.Building.FixedPointSubgroups
+public import Structure.v1.Atlas.Buildings.code.Building.GoodMaximalBounded
+public import Structure.v1.Atlas.Buildings.code.Building.GroupApplicationsCh17
+public import Def.v1.Atlas.Buildings.code.Building.Infinity.AffineFunc.Part2
+public import Def.v1.Atlas.Buildings.code.Building.Infinity.ChamberSectorConfig
+public import Def.v1.Atlas.Buildings.code.Building.Infinity.SectorGallery
+public import Def.v1.Atlas.Buildings.code.Building.Infinity.SectorParallelism
+public import Def.v1.Atlas.Buildings.code.Building.Infinity.Sectors.Part3
+public import Def.v1.Atlas.Buildings.code.Building.Infinity.SimplexAtInfinity
+public import Theorem.v1.Atlas.Buildings.code.Building.Infinity
+public import Structure.v1.Atlas.Buildings.code.Building.InfinityConstruction.Part3
+public import Def.v1.Atlas.Buildings.code.Building.InfinityMaps.Part7
+public import Def.v1.Atlas.Buildings.code.Building.InfinityTheorem
+public import Theorem.v1.Atlas.Buildings.code.Building.IwahoriDecompCheck
+public import Theorem.v1.Atlas.Buildings.code.Building.IwahoriGLn
+public import Theorem.v1.Atlas.Buildings.code.Building.IwahoriGLnBaseCase
+public import Theorem.v1.Atlas.Buildings.code.Building.IwahoriGLnClearing
+public import Def.v1.Atlas.Buildings.code.Building.IwahoriGLnDefs
+public import Theorem.v1.Atlas.Buildings.code.Building.IwahoriGLnExistence
+public import Def.v1.Atlas.Buildings.code.Building.IwahoriGLnHelpers
+public import Theorem.v1.Atlas.Buildings.code.Building.IwahoriGLnUniqueness
+public import Def.v1.Atlas.Buildings.code.Building.LabelPreservingIso
+public import Def.v1.Atlas.Buildings.code.Building.Labels
+public import Theorem.v1.Atlas.Buildings.code.Building.Link
+public import Def.v1.Atlas.Buildings.code.Building.LinkBuilding
+public import Theorem.v1.Atlas.Buildings.code.Building.LinkBuildingIsoHelper
+public import Def.v1.Atlas.Buildings.code.Building.MaximalApartments.Part2
+public import Theorem.v1.Atlas.Buildings.code.Building.MaximalAptSystemVerification
+public import Structure.v1.Atlas.Buildings.code.Building.OppositeChambers
+public import Theorem.v1.Atlas.Buildings.code.Building.PropositionRetractionProperties
+public import Theorem.v1.Atlas.Buildings.code.Building.Retraction
+public import Def.v1.Atlas.Buildings.code.Building.RetractionDef
+public import Def.v1.Atlas.Buildings.code.Building.Spherical
+public import Structure.v1.Atlas.Buildings.code.Building.SphericalFiniteDiameter
+public import Def.v1.Atlas.Buildings.code.Building.StrongIsometryExt
+public import Theorem.v1.Atlas.Buildings.code.Building.ThicknessFoldings
+public import Def.v1.Atlas.Buildings.code.Building.ThicknessHypAssembly
+public import Theorem.v1.Atlas.Buildings.code.Building.TitsTheoremAssembly
+public import Def.v1.Atlas.Buildings.code.Building.TitsTheoremProof
+public import Theorem.v1.Atlas.Buildings.code.Building.UniqueRetraction
+public import Theorem.v1.Atlas.Buildings.code.Building.VertexActionHelper
+public import Def.v1.Atlas.Buildings.code.Building.WallReflectionAction
+public import Theorem.v1.Atlas.Buildings.code.BuildingsStructuralAudit
+public import Theorem.v1.Atlas.Buildings.code.ChamberComplex.Basic
+public import Def.v1.Atlas.Buildings.code.ChamberComplex.CoxeterComplex.Part2
+public import Def.v1.Atlas.Buildings.code.ChamberComplex.Folding.Part3
+public import Def.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.CoxeterFoldingHelpers
+public import Theorem.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.CoxeterProperties.Part2
+public import Def.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.IsCoxeterCharacterized.Part2
+public import Structure.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.ThinFolding
+public import Theorem.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.TitsForwardHelpers
+public import Structure.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.WallCrossing
+public import Theorem.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes
+public import Def.v1.Atlas.Buildings.code.ChamberComplex.Uniqueness
+public import Def.v1.Atlas.Buildings.code.ChamberComplex.UniquenessBook
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.Basic.Part3
+public import Structure.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelation
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelationProof.Assembly.Part2
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelationProof.DihedralHelpers.Part2
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelationProof
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.BruhatOrder
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.BruhatOrderUnconditional
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.BruhatSubexpression
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.CoxeterHomomorphism.Part2
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.CoxeterSystemFromDeletion.Part3
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.DeletionCondition
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.DeletionInjectivity
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.DeletionInjectivityHelpers
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.DihedralPositivity.Part2
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.DihedralPositivityFinite
+public import Structure.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionGenuine
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionProof
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionWiring
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeDeletion
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeUniqueness
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.GeometricRepresentation.Part4
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.InversionSet
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.LengthDecreaseNeg
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.LengthInduction
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.LuckyCaseInductiveStep
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.OrderAxiom
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.ParabolicPositivity
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.ParabolicSubgroups
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.ParitySign
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.PosOfAscentProof
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.ReflectionIdentificationGenuine
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.ReflectionInvolution
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.Reflections
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.RootReflectionLemmas
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.RootSignChangeProof
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.RootSystem
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.Roots
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.SevenFamilies.Part3
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.SigmaOrder
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.SignChangeExchangeProof
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.SignChangeGeneratorIdentity
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.SignedPermGroup.Part2
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.SimpleReflectionInversions
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.StrongExchangeBridge
+public import Structure.v1.Atlas.Buildings.code.CoxeterGroup.StrongExchangeProof
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.TypeABridge
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.TypeACoxeterSystem.Part2
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.TypeAInjectivityHelper
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.TypeAIsomorphism.Part3
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.TypeCInjectivityHelper
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.UnluckyCase
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.WordSigmaInvariance
+public import Abbrev.v1.Atlas.Buildings.code.CoxeterGroup.Words
+public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.AnisotropicDecomposition
+public import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.AnisotropicReflectionStep
+public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.BilinearForms
+public import Structure.v1.Atlas.Buildings.code.GeometricAlgebra.CoordinateExamples
+public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.CorBilinearHermitianForms
+public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.ExtendingIsometries
+public import Instance.v1.Atlas.Buildings.code.GeometricAlgebra.FlagEquivalenceInstance
+public import Class.v1.Atlas.Buildings.code.GeometricAlgebra.FlagsParabolics.Part3
+public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.HyperbolicCancellation
+public import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.IsotropicExtensionStep
+public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.IsotropicFlagsParabolics.Part2
+public import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.KernelDecompInductionHelper
+public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.KernelDecomposition
+public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.LagrangianHardProof
+public import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.NondegenerateThreeWay
+public import Structure.v1.Atlas.Buildings.code.GeometricAlgebra.OppositeConjugacyComposition
+public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.OppositeConjugacyInstance.Part2
+public import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.OppositeConjugacyProof
+public import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.SemidirectExistence
+public import Instance.v1.Atlas.Buildings.code.GeometricAlgebra.SemidirectExistenceInstance
+public import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.WittAssembly
+public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.WittCancellationDirectSum.Part3
+public import Def.v1.Atlas.Buildings.code.GeometricAlgebra.WittTheorem.Part2
+public import Structure.v1.Atlas.Buildings.code.HeckeAlgebra.Generalized.Part3
+public import Def.v1.Atlas.Buildings.code.HeckeAlgebra.Generic.Part2
+public import Structure.v1.Atlas.Buildings.code.HeckeAlgebra.GenericAlgebraUniqueness
+public import Def.v1.Atlas.Buildings.code.HeckeAlgebra.HeckeStructureTheorem.Part2
+public import Def.v1.Atlas.Buildings.code.HeckeAlgebra.OperatorCommutativity.Part2
+public import Theorem.v1.Atlas.Buildings.code.IsometryAffine
+public import Theorem.v1.Atlas.Buildings.code.Reflection.AffineReflectionProposition
+public import Def.v1.Atlas.Buildings.code.Reflection.AffineWeylGroupConstruction
+public import Structure.v1.Atlas.Buildings.code.Reflection.AffineWeylGroups.Part3
+public import Theorem.v1.Atlas.Buildings.code.Reflection.AffineWeylProposition12_5
+public import Def.v1.Atlas.Buildings.code.Reflection.AffineWeylSemidirectMulEquiv.Part3
+public import Theorem.v1.Atlas.Buildings.code.Reflection.AlcoveWallHyperplanes
+public import Theorem.v1.Atlas.Buildings.code.Reflection.DihedralRootHelpers
+public import Def.v1.Atlas.Buildings.code.Reflection.FiniteReflectionGroups.Defs.Part4
+public import Def.v1.Atlas.Buildings.code.Reflection.FiniteReflectionGroups.Theorems
+public import Theorem.v1.Atlas.Buildings.code.Reflection.FiniteReflectionGroups
+public import Theorem.v1.Atlas.Buildings.code.Reflection.GenericFunctional
+public import Def.v1.Atlas.Buildings.code.Reflection.HyperplaneChambers.Part4
+public import Def.v1.Atlas.Buildings.code.Reflection.InnerProductWalls
+public import Theorem.v1.Atlas.Buildings.code.Reflection.NonParallelWallsProof
+public import Def.v1.Atlas.Buildings.code.Reflection.ReflectionGroupsCoxeter.Part2
+public import Theorem.v1.Atlas.Buildings.code.Reflection.UniqueAdjacentChamber
+public import Def.v1.Atlas.Buildings.code.Reflection.WallSeparation
+public import Theorem.v1.Atlas.Buildings.code.Reflection.WallSeparationCorollary
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.AdaptedBasisProof
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.AdaptedBasisSingle
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.BasisExtensionChain
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.BasisFromFlagProof
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.FinsetGapCorrespondenceProof.Part2
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLn.Part3
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnApartmentIsoUnconditional.Part2
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnB0Cascade
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnBaseFlag.Part3
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnBuildingInstance
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnChainRefinement.Part2
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnCommonApartment
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnCommonApartmentUnconditional.Part3
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnFlagToFrame
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnGapAnalysis.Part2
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnInstance
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnPanelExtension
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnSimultaneousRefinement
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnThinApartment
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnThinApartmentUnconditional
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.IsometryApartmentExchange
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.IsometryBuildingInstance.Part2
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.IsometryBuildingWiring
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.IsometryCommonApartment
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.IsometryGroups.Part3
+public import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.JordanHolderFrame.Part2
+public import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.JordanHolderPermutation.Part3
+public import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.LagrangianExtension
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.Oriflamme.Part5
+public import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.OriflammeBuilding
+public import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.RefinementCompatibility
+public import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.RefinementDimJumps
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.RefinementFrame
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.SOActionLemma
+public import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.SchreierRefinement
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.TwoChamberHypFinal
+public import Instance.v1.Atlas.Buildings.code.Valuation.DVRInstances
+public import Def.v1.Atlas.Buildings.code.Valuation.DiscreteValuationBook
+public import Def.v1.Atlas.Buildings.code.Valuation.IwahoriDecomp
+public import Class.v1.Atlas.Buildings.code.Valuation.LatticesValuations
+public import Def.v1.Atlas.Buildings.code.Valuation.MaximalLattice
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/Buildings.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,536 +541,4 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.Buildings.code.AffineCoxeter.AffineCoxeterHypProof
-import Instance.v1.Atlas.Buildings.code.AffineCoxeter.AffineCriterion.Part2
-import Lemma.Real.Ge_0.of.In_pos
-import Theorem.Real.Any_All_GeNormGetE0.of.All_All_EqGetEAdd_GetE0.All_Disjoint.NonemptySet.IsOpenSet
-import Theorem.Real.IsWInvariantEuclideanDist
-import Lemma.Matrix.Any_Gt_0AndAll_EqEuclideanDist_Mul_EuclideanDistAndEqChamberDiameter_Mul_ChamberDiameter.of.All_Eq_VertexMap
-import Lemma.Real.Zero.notin.AffineHyperplane.of.All_Gt_0
-import Lemma.Real.BilinForm.eq.One.of.In_Standardpos
-import Theorem.Real.QF.eq.BF
-import Theorem.Real.NormalSubgroupOfTranslationSubgroupGroup
-import Theorem.Real.DualSigma.eq.Neg
-import Lemma.List.All_All_All_All_All_Any_All_Ge_0AndLeLengthAndEq_WordAction
-import Lemma.Finset.NuFiniteAt_pos.of.In_TitsFaceDual.Ne_Univ
-import Lemma.Nat.TitsConeInterior.sub.TitsConeSet
-import Theorem.Set.All_In_Set.of.All_In_Set.In_Group
-import Lemma.Set.ConjugateParabolicMul.eq.ImageConjugateParabolic
-import Theorem.Nat.In_BruhatCell1.of.In_B
-import Lemma.Nat.Simple.ne.One
-import Theorem.Nat.In_BruhatCell.of.In_BruhatCell
-import Theorem.Set.SetMul_SetMul
-import Lemma.Group.Atlas.v1.Buildings.code.BNPair.CellMulParabolicProof
-import Lemma.Set.All_In_StandardParabolic
-import Lemma.Fin.T.eq.B
-import Theorem.Real.In_G.of.All_Eq_SimpleToCoxeterSystemAndEqGMulMul_G.In_Tt
-import Theorem.Nat.Tt.le.Bt
-import Lemma.Nat.B.le.Closure_BruhatCell
-import Theorem.Nat.NonemptyBruhatCell
-import Lemma.Group.Atlas.v1.Buildings.code.BNPair.Parabolics
-import Lemma.Group.Atlas.v1.Buildings.code.BNPair.PropositionParabolics
-import Theorem.Set.ClosureSimple.eq.One
-import Lemma.Set.BruhatCell.sub.SetG.of.In_BruhatCell.In_SetG.LeB
-import Theorem.Nat.EqApartmentActionFun.of.InGT
-import Theorem.Fin.BuildingDist.ge.Zero
-import Theorem.Nat.Embed_Add1S.ne.Zero
-import Lemma.Fin.IsUpperTriangularModMIsometry.of.IsCongruentToIdentityIsometry
-import Theorem.Set.IsBoundedImage.of.IsBounded.IsSimilitude
-import Lemma.Fin.DistFn.of.Any_In.Any_In.Any_In.Any_In
-import Lemma.Set.IsHomothetic_πLattice
-import Lemma.Set.IsOpen_SLVSet_SLV.of.IsOpen_SetOfIsInMaxIdeal.IsOpen_SetOfIsInO.All_Continuous.EqSet_SLVIwahoriSetSLV.IsAdicComplete_MaxIdeal
-import Theorem.Finset.IsMaximalToSimplicialComplex.of.IsMaximal.In_Apartments
-import Theorem.Nat.TopologicalGroupDef
-import Theorem.Finset.Any_And_All_EqAndAll_IsMaximalAndAll_EqImageSOrAdjacentAndAll_Eq.of.IsMaximal.In_Apartments
-import Theorem.Set.ApartmentsToApartmentSystem.eq.Apartments.of.IsThick
-import Theorem.Finset.ImageRetractionMap.in.Faces.of.IsMaximal.In_Faces.In_Apartments
-import Lemma.Finset.Any_And_Subset.of.In_Faces.In_Apartments
-import Theorem.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
-import Lemma.Set.Empty.in.Bounded
-import Lemma.Set.IsBoundedSetOrbit.of.IsBounded.IsBoundedPointOrbit.All_All_Dist
-import Theorem.Set.RadiusFrom.ge.Zero
-import Theorem.Set.IsCompact_Closure_Image.of.IsCompact_Closure.Isometry
-import Theorem.Finset.AdjacentToSimplicialComplex.of.Adjacent.In_Faces.In_Faces.In_Apartments
-import Theorem.Finset.Eq.In_H.of.GtGalleryDist
-import Structure.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.ThreeChamber
-import Def.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.ThreeChamber
-import Theorem.Set.BNPairBoundedPredicate_SetMul.of.BNPairBoundedPredicate.BNPairBoundedPredicate
-import Theorem.List.Any.of.Not.In_A.IsChainA
-import Theorem.Fin.Simple
-import Lemma.Fin.EqDiagBlockEmbedMatrix
-import Lemma.Finset.InjOnMap.of.In_FacesToSimplicialComplexToChamberComplex
-import Theorem.Set.NonemptyOrbitSetSetGt
-import Lemma.Group.Atlas.v1.Buildings.code.Building.GoodMaximalBounded
-import Theorem.Set.ConjSet.eq.Image
-import Lemma.Set.Functional.ge.Zero
-import Lemma.Finset.Any_In_ApartmentsAndIn_FacesAndAny_And_SetInApartmentVertices.of.IsMaximalToSimplicialComplex
-import Lemma.Finset.IsMaximal_ImageToFun.of.IsMaximal.In_Faces.In_Apartments.In_Apartments
-import Lemma.Fin.SameDirection.of.Parallel
-import Theorem.Fin.All_All_Any_And_InAndAll_In_Vertices
-import Theorem.Set.PointsAtInfinity.of.Vertices
-import Theorem.Fin.OriginPushforwardRay.eq.ToFunOrigin
-import Lemma.Fin.One.in.IwahoriGLn
-import Lemma.Fin.Val.lt.Val.is.Eq_0AndEq_1
-import Lemma.Finset.Sum_Mul.eq.Add_Sum_Mul.of.All_Eq_0.Eq_1
-import Lemma.Matrix.Any_And_In_LowerUnipAndIn_DiagAndIn_UpperUnip.of.In_IwahoriGLn
-import Lemma.Fin.ValElimMatrix.eq.Transvection.of.Ne
-import Lemma.Fin.ExtMulVal.eq.MulVal.of.In_DiagGLn
-import Lemma.Finset.LabelMap_Image.eq.LabelMap.of.All_Eq.All_InImageFaces.IsMaximalToSimplicialComplexToChamberComplex.In_Faces.In_Faces.In_Apartments.In_Apartments
-import Theorem.Finset.LabelMap.eq.ImageLabelMap.of.EqLabelMap_Head_ImageLabelMap_Head.IsChainAdjacent.Ne.All_EqLabelMap_ImageLabelMap
-import Theorem.Finset.Disjoint.of.In_FacesLinkComplex.In_Faces
-import Lemma.Equiv.All_All_All_Any_And_Eq_ImageAndAll_All_Eq_Image.of.All_ChamberAdjacent.All_Any_And_Eq.All_All_Eq.EqToSimplicialComplex
-import Lemma.Finset.IsMaximalUnion.of.IsMaximalLinkComplex.In_Faces
-import Lemma.Equiv.All_EqImage.of.EqImage.All_IffIn_Faces_InImageFaces.Bijective.IsMaximalToSimplicialComplexToChamberComplex.In_Faces.In_Apartments
-import Theorem.Finset.OppositeSides.of.EqToSimplicialComplex.AreOppositeToSimplicialComplexToChamberComplex.IsMaximal.IsMaximal.In_Faces.In_Faces.In_Apartments.OppositeChamberHyp
-import Theorem.Set.IsBoundedBorn.is.Any_IsBoundedOrbitSetAction
-import Theorem.Finset.AreOpposite.of.AreOpposite
-import Theorem.List.LengthMulHeadGetLast.le.SubLength1.of.IsChain_Any_Eq_Mul_Simple.Ne
-import Theorem.Finset.Any_All_In_FacesAndIsMaximalAndAll_EqAndAll_EqDeltaSAndAll_EqDeltaSAndAll_EqOrAdjacent.of.IsMaximal.In_ApartmentsApartmentSystem
-import Lemma.List.Any.of.Any_Not.Ne.IsChain
-import Lemma.Set.Any_EqToSimplicialComplexAndAny_And_All_Any_And_EqAndAll_ChamberAdjacentAndIsThin.of.In_Apartments.IsThick
-import Lemma.Fin.TitsTheoremHypV
-import Lemma.Finset.Any_And_EqImageToFunMorph.of.AdjacentToSimplicialComplex.HasSufficientFoldings
-import Theorem.Equiv.Any_And_In_Faces.is.Image.in.FacesAndEqImage.of.IsMaximalToSimplicialComplexToChamberComplex.In_Faces.IsMaximalToSimplicialComplexToChamberComplex.In_Faces.In_Apartments.In_Apartments
-import Theorem.Finset.EqImageRefl.of.Ne.EqImageToFun.EqImageToFun.IsMaximalToSimplicialComplex
-import Lemma.Finset.Any_EqImageAndEqImage.of.Adjacent.HasSufficientFoldings
-import Theorem.Finset.Adjacent
-import Theorem.Nat.NotChamberAdjacent
-import Theorem.List.All.of.All.IsChain.Ne
-import Theorem.Fin.CoxeterHalfGroupMap_CoxeterHalfGroupMap.eq.CoxeterHalfGroupMap
-import Lemma.Finset.SeparatedByWall.of.AdjacentToSimplicialComplex.HasSufficientReversibleFoldings
-import Theorem.Set.EqSimpleDeletionImpliesCoxeterSystem.of.SatisfiesDeletionConditionGen.EqClosure_Range_Top.All_NeMul_1.All_EqMul_1
-import Theorem.Finset.AgreeOnImage.of.AgreeOn
-import Theorem.List.ImageGalleryStutters.is.GalleryStuttersUnderToFun
-import Theorem.Nat.FormVal
-import Theorem.Real.EqSigma.of.EqBilinForm_E_0
-import Theorem.Nat.PowSigma_SigmaGetME.eq.E.of.NeM_0.Ne
-import Theorem.Real.SubMulMul2CosMul2SinSin_Sub.eq.SinAdd_Mul2
-import Theorem.Nat.MulSimpleS.eq.One
-import Theorem.List.Any_And_Eq_WordProd.of.Eq_WordProd.IsReduced.BruhatLE.ReducedSublistProperty.StrongExchangeCondition
-import Theorem.Nat.IsLiftable_SigmaLinearEquiv
-import Lemma.Nat.OrderOfMul.of.All_EqMul_1
-import Theorem.Nat.Any_And_EqAdd_1AndAll_Eq_Add_1.of.Gt.All_Eq_Add_1OrEqAdd_1.Eq_0
-import Lemma.Set.InjectiveDeletionCanonicalHom.of.SatisfiesDeletionConditionGen.EqClosure_Range_Top.All_NeMul_1.All_EqMul_1
-import Lemma.List.AddLengthEraseIdxEraseIdx2.eq.Length.of.Lt_Length.Lt
-import Lemma.Real.IsPositive_Sigma.of.Eq_0.All_Eq_0.IsPositive.Ne
-import Lemma.Real.SinMulAdd_2.eq.SubMulMul2CosSinMulAdd_1SinMul
-import Theorem.Nat.SatisfiesExchangeCondition
-import Theorem.Nat.SatisfiesDeletionCondition.of.SignChangeExchangeHyp
-import Theorem.Nat.SatisfiesExchangeCondition.of.SignChangeExchangeHyp
-import Theorem.Nat.Any_And_EqAdd1AndEqAdd1.of.Gt.EqAdd_1OrEqAdd1.Eq0
-import Theorem.Real.BilinFormAdd.eq.AddBilinSForm
-import Theorem.List.BilinInversions_ListB.eq.Empty
-import Lemma.Nat.SigmaWord.eq.SigmaLin
-import Lemma.List.WordSigma.eq.AddSSMul.of.All_Eq_0.Ne
-import Theorem.Int.Pow.eq.OneOrEqPow.of.EqMul_1
-import Theorem.Nat.ParitySign.eq.PowNeg1Length
-import Lemma.List.WordSigma.eq.AddMulS_WordSigma_E.of.All_Eq_0.Ne
-import Theorem.Nat.StrongExchangeForBruhat
-import Theorem.List.IsReduced_Drop.of.IsReduced
-import Theorem.Real.IsRoot_Sigma
-import Lemma.Real.IsPositiveNeg.is.IsNegative
-import Lemma.Fin.TypeA.eq.Eq
-import Lemma.Real.BilinForm.eq.NegBilinForm
-import Theorem.List.IsReducedDrop.of.IsReduced
-import Theorem.Nat.CardSignedPermGroup.eq.MulPow2Factorial
-import Lemma.Nat.EqBilinInversions
-import Theorem.List.Any_And_IsReduced_EraseIdx.of.LtLengthMulWordProdSimple_Length_WordProd.IsReduced.SignChangeExchangeHyp
-import Theorem.Nat.LengthMul_Simple.eq.Length.LengthMul_Simple.eq.Length.of.IsRightDescent.NotIsRightDescent.EqAddLength1_Length
-import Theorem.Nat.GlnCoxeterMatrixA.eq.MA
-import Theorem.Set.Closure_RangeAdjTransp.eq.Top
-import Theorem.Fin.All_EqGetLift1
-import Lemma.Fin.PermCoxeterMulEquiv_AdjTransposition.eq.Simple_A
-import Theorem.List.Any_And_IsReduced_EraseIdx.of.LtLengthMulWordProdSimple_Length_WordProd.IsReduced
-import Lemma.List.ProdMap.eq.PowMul.of.All_EqGet_GetAdd_2.Ge_1.EqLength_Mul2
-import Theorem.List.EqWordSSigma.of.WordProd
-import Theorem.Fin.Any_And_Eq_0AndEq_1.of.Eq_0.Ne_0.IsSymm.Nondegenerate
-import Theorem.Fin.IsFormPreserving1
-import Theorem.Fin.Eq1AndEq0AndEq1.of.Eq0.Ne0.IsSymm.Nondegenerate
-import Theorem.Submodule.OfEq.eq.M.of.Eq
-import Theorem.Submodule.Any_EqMapToLinearMap.of.FinrankK
-import Theorem.Fin.EqLinearEquivToGLV_GlvToLinearEquiv
-import Theorem.Int.OrthogonalSum.eq.Add
-import Lemma.Fin.IsGlobalIsometry
-import Theorem.Submodule.Any_LeAndDisjointAndEq.of.Le
-import Theorem.Submodule.NondegenerateRestrict.is.IsCompl_OrthogonalBilinForm.of.IsRefl
-import Theorem.Fin.SwapCompositionInvariant
-import Lemma.Submodule.EqSwapComplement.of.In.IsCompl.IsCompl
-import Theorem.Fin.Len
-import Theorem.Fin.IsCompl
-import Theorem.Submodule.Any_All_EqMapSpacesSpacesAndAll_EqMapSpacesSpacesAndAll_EqMapSpacesSpacesAndAll_All_InSubToLinearMapBotAndToLinearMap.of.All_EqMapSpacesToLinearMap_Spaces.EqSpacesSubLen1_Top.GtLen0.All_EqSpaces_TopAndEqSpaces_Bot.Len
-import Theorem.Fin.IsFormedSpaceIso_ExtractEquiv.of.All_Eq_0.IsFormedSpaceIso.IsNondegenerate'
-import Theorem.Fin.Eq.of.Ne_0.All_Eq
-import Theorem.Nat.BorelInLabelPreserving
-import Theorem.Int.LengthMulMulSimpleSimple.gt.LengthMulSimple.of.GtLengthMul_Simple_Length.LtLengthMulSimple_Length
-import Theorem.Int.Basis.of.Basis
-import Theorem.Int.InjectiveAlgHomOmega
-import Theorem.Finsupp.LambdaLift.eq.SMul
-import Lemma.Real.All_All_Eq
-import Theorem.Matrix.Eq.of.Offset.Normal.AffineHyperplaneE
-import Theorem.Set.InteriorCarrier.eq.Empty
-import Theorem.Real.IsLocallyFiniteAffineArr
-import Theorem.Real.Eq.of.GetE0.LinearPartHomE
-import Theorem.Real.LinearReflection.eq.Sub_SMul.of.EqNorm_1
-import Theorem.Real.LinearReflectionLM.eq.LinearReflection
-import Theorem.Finset.All_In_Roots.of.WeylGroupMem
-import Theorem.Finset.Inner.ne.Zero.of.Nonempty.All_Ne_0
-import Theorem.Matrix.BasePoint.in.Carrier
-import Theorem.Real.NormInwardUnitNormal.eq.One
-import Theorem.Real.SimplyTransitive
-import Theorem.Set.IsClosedCarrier
-import Theorem.Set.In_PositiveHalfSpaceOrIn_NegativeHalfSpace.of.In_Hyperplanes.In_Complement
-import Theorem.Set.Any_Any_IsWallSetAndSeparatesChambers.of.IsLocallyFinite.NeSetSet
-import Lemma.Submodule.Any_LtAndLtAndEqFinrankK_AddFinrankK1.of.LeAddFinrankK2_FinrankK.Lt
-import Theorem.Fin.EqLinesFrameOfBasis
-import Theorem.Fin.All_Eq_Val.of.Eq.Eq_0.StrictMono
-import Lemma.Fin.LeCard
-import Theorem.Nat.TypeA_CoxeterMatrixA
-import Lemma.Nat.InjectiveJoinSub
-import Lemma.Fin.LinearIndependent_GetBasisFunFinVal
-import Lemma.List.Lt.of.Lt.Lt_Length.Lt_Length.IsChainLt
-import Theorem.List.InsertIdx.eq.Take.of.Le_Length
-import Theorem.Set.Simplices.of.In_StandardApartments.In_StandardApartments
-import Lemma.Fin.JhLine.in.SpacesAddVal1.of.IsStrictFlag.IsStrictFlag
-import Lemma.Fin.LeFinrank.of.Le.GtVal_0
-import Theorem.Matrix.Det.eq.MulDetS.of.ProdMap
-import Theorem.Fin.SquareDetV'.eq.One.of.All_Eq.Nondegenerate
-import Lemma.Fin.GapVector.in.Spaces.of.LtVal_Val.IsStrictFlag
-import Theorem.Fin.FinrankKSpacesValAdd1.of.IsStrictFlag
-import Lemma.Fin.SpacesVal.lt.SpacesAddVal1.of.IsStrictFlag
-import Theorem.Fin.SquareDetV.eq.One.of.All_Eq.Nondegenerate
-import Theorem.Fin.SchreierCell_0.eq.SpacesSubVal1.of.GtVal_0
-import Lemma.Equiv.Any_Lt.of.Ne_1
-import Theorem.Nat.TopologicalGroupProp
-import Theorem.Fin.EqValMkGL2.of.DetMatrix.ne.Zero
-import Theorem.Nat.IsInO
-import Theorem.Fin.Form.eq.Mul_Form
-import Def.v1.Atlas.Buildings.code.AffineCoxeter.AffineWeylBook.Part2
-import Def.v1.Atlas.Buildings.code.AffineCoxeter.CanonicalMetric.Part2
-import Theorem.v1.Atlas.Buildings.code.AffineCoxeter.CoxeterComplexIsometry
-import Theorem.v1.Atlas.Buildings.code.AffineCoxeter.CoxeterSimilitude
-import Def.v1.Atlas.Buildings.code.AffineCoxeter.Faces
-import Def.v1.Atlas.Buildings.code.AffineCoxeter.FiniteProperParabolicsInstance
-import Def.v1.Atlas.Buildings.code.AffineCoxeter.GeometricRealization.Part2
-import Theorem.Set.Finite.of.All_All_Any_Eq.All_Le.All_All_Ge_0.All_LeMul_Sum_Square.Gt_0
-import Lemma.Real.Pairing_AddMulSub1Mul.Gt_0.of.GtPairing_0.GtPairing_0.Le_1.Ge_0
-import Theorem.Fin.QF
-import Lemma.Real.Continuous_Pairing
-import Theorem.Nat.All_Any_In_BruhatCell
-import Lemma.Set.ImageImage.eq.Image
-import Theorem.Nat.Mul.in.BruhatCell.of.In_B.In_BruhatCell
-import Lemma.Set.B.sub.StandardParabolic
-import Lemma.Equiv.Any_EqToFunAndAll_EqLabelSMap.All_EqLabelSMap.of.In_Faces.IsMaximal.In_Apartments.In_Apartments
-import Lemma.Set.Any_And_IsThinAndHasSufficientFoldings.of.In_Apartments.IsThick
-import Lemma.Group.Atlas.v1.Buildings.code.Building.CombinatorialGeometry.PropStrongIsoCombinatorial
-import Lemma.Finset.Any_All_In_FacesAndIsMaximalAndAll_EqAndAll_EqDeltaSAndAll_EqDeltaSAndAll_EqOrAdjacent.of.IsMaximal.In_Apartments
-import Theorem.Finset.IsMaximalToSimplicialComplexToChamberComplexUnion.of.IsMaximalLinkComplexToSimplicialComplexToChamberComplex.In_FacesToSimplicialComplexToChamberComplex
-import Lemma.Set.Functional.Gt_0OrFunctional.Lt_0.of.Apartment
-import Lemma.Finset.Eq.of.Union.Disjoint.Disjoint
-import Theorem.Finset.IsMaximalLinkComplex.of.IsMaximalUnion.In_FacesLinkComplex.In_Faces
-import Lemma.Finset.IsMaximal.of.IsMaximalToSimplicialComplexToChamberComplex.All_In_Faces.In_Apartments
-import Lemma.Finset.GalleryDist.le.Length.of.Connects
-import Theorem.Finset.Eq.of.Eq.Any_And_Any_All_Eq_Mul.IsMaximal.In_Faces.IsMaximal.In_Faces.IsMaximal.In_Apartments
-import Theorem.Finset.GalleryDistToSimplicialComplexToChamberComplex.eq.LengthToCoxeterSystemCoxeterMatrix_Delta
-import Theorem.Set.Any_And_All_Any_And_Eq.of.Any_Adjacent.NotIn_Image.IsMaximal.In_Faces.All_IsMaximalToSimplicialComplexToChamberComplex.All_In_Faces.IsStrongIsometry_Image.In_Apartments
-import Theorem.Finset.IsMaximal.of.IsMaximalToSimplicialComplex.In_Faces.In_Apartments
-import Lemma.List.WordProduct.eq.Mul_WordProdToCoxeterSystem
-import Theorem.Finset.IsFacetToSimplicialComplexAndIsMaximalToSimplicialComplex.Unique.of.IsMaximalToSimplicialComplex.IsFacetToSimplicialComplex.IsThin
-import Theorem.Finset.Adjacent.of.Adjacent
-import Theorem.List.NeChambers
-import Theorem.Finset.Any_All_IsFacetToSimplicialComplex.of.IsMaximalToSimplicialComplex.IsFacetToSimplicialComplex.All_Any_And_IsMaximalToSimplicialComplexAndIsFacetToSimplicialComplex.All_AdjacentToSimplicialComplex.All_ChamberAdjacent.All_Any_And_Eq.All_All_Eq
-import Theorem.Fin.Any_EqAndEqAndAll_BruhatLTAndEqAddLengthToCoxeterSystem1LengthToCoxeterSystem.of.BruhatLTToCoxeterSystem.ReducedSublistPropertyToCoxeterSystem.StrongExchangeConditionToCoxeterSystem
-import Theorem.List.ProdRotate.eq.One.of.EqProd_1
-import Lemma.Nat.Injective.of.All_NeMul_1.All_EqMul_1
-import Lemma.List.WordSigma.of.WordProd
-import Theorem.Real.Pi_AlternatingWordAdd_Mul_2.eq.Pi_AlternatingWord
-import Lemma.List.IsChain_NeAlternatingWord.of.Ne
-import Theorem.Real.EqSMul_E
-import Theorem.List.Eq_2.eq.Zero.of.All_Eq_Add_2.GeLength_2
-import Theorem.Nat.EqOrEq.of.In_AlternatingWord
-import Theorem.Real.EqSigma.of.Ne
-import Lemma.Real.GetCoxeterRepresentationMulMul_Simple.eq.GeneralizedReflection_CoxeterRepresentation_E
-import Lemma.List.EqGeneralizedReflection.of.ConjSimple
-import Lemma.List.IsReduced.of.IsReduced
-import Theorem.List.IsReduced.of.IsReducedA
-import Theorem.Fin.All_Eq_0.of.IsHyperbolic.IsAnisotropic
-import Theorem.Fin.Nondegenerate.of.EqOrthogonalBilinFormTop_Bot.IsRefl
-import Theorem.Fin.Eq_Neg.of.IsAlt
-import Theorem.Submodule.Finrank.eq.SubFinrankS
-import Theorem.Matrix.Det.eq.OneOrDet.eq.Neg1.of.EqMulMulTranspose.NeDet_0
-import Theorem.Int.IsNondegenerate'
-import Theorem.Fin.Nondegenerate
-import Theorem.Submodule.LeOrthogonal.of.Finrank.le.Mul2Finrank.All_All_Eq_0.Nondegenerate
-import Theorem.Fin.WittCancellationProp.of.EqOrthogonalBilinFormTop_Bot.All_Eq
-import Theorem.Submodule.Any_EqAndAll_Eq_V.of.IsSubspaceIsometry.EqOrthogonalBilinFormTop
-import Theorem.Int.All_EqMul_Basis1AndAll_EqMul_Basis1AndAll_Mul_MulAndAll_All_Eq_Mul
-import Theorem.Submodule.Any_EqAndAll_Eq_V.of.IsSubspaceIsometry.EqOrthogonalBilinFormTop_Bot.All_Eq
-import Instance.v1.Atlas.Buildings.code.AffineCoxeter.PerronFrobeniusProof
-import Def.v1.Atlas.Buildings.code.AffineCoxeter.SemidirectProduct
-import Instance.v1.Atlas.Buildings.code.AffineCoxeter.SphericalFiniteInstance
-import Def.v1.Atlas.Buildings.code.AffineCoxeter.TitsCone.Part3
-import Def.v1.Atlas.Buildings.code.AffineCoxeter.TitsConeConvexity.Part3
-import Theorem.v1.Atlas.Buildings.code.AffineCoxeter.TitsConeFiniteParabolic.Part4
-import Def.v1.Atlas.Buildings.code.AffineCoxeter.TitsConeInterior
-import Theorem.v1.Atlas.Buildings.code.AffineCoxeter.TitsConeProperties
-import Theorem.v1.Atlas.Buildings.code.AffineCoxeter.TransitiveAlcovesHelper
-import Structure.v1.Atlas.Buildings.code.BNPair.Basic.Part2
-import Def.v1.Atlas.Buildings.code.BNPair.BruhatPropertiesInstance
-import Def.v1.Atlas.Buildings.code.BNPair.BuildingsFromBNPairs.Part6
-import Theorem.v1.Atlas.Buildings.code.BNPair.CellCoverProof
-import Theorem.v1.Atlas.Buildings.code.BNPair.CellDisjointProof
-import Theorem.v1.Atlas.Buildings.code.BNPair.CellInvProof
-import Theorem.v1.Atlas.Buildings.code.BNPair.CellMulFiniteProof.Part2
-import Theorem.v1.Atlas.Buildings.code.BNPair.CellMulParabolicProof
-import Theorem.v1.Atlas.Buildings.code.BNPair.ConjugatorProof
-import Def.v1.Atlas.Buildings.code.BNPair.FromBuilding.Part4
-import Def.v1.Atlas.Buildings.code.BNPair.FurtherBruhatTits
-import Structure.v1.Atlas.Buildings.code.BNPair.Generalized.Defs
-import Def.v1.Atlas.Buildings.code.BNPair.Generalized.Theorems
-import Def.v1.Atlas.Buildings.code.BNPair.Generalized.TypePreserving
-import Theorem.v1.Atlas.Buildings.code.BNPair.Generalized
-import Def.v1.Atlas.Buildings.code.BNPair.NormalizerParabolicProof
-import Def.v1.Atlas.Buildings.code.BNPair.ParabolicDefs.Part2
-import Def.v1.Atlas.Buildings.code.BNPair.Parabolics
-import Theorem.v1.Atlas.Buildings.code.BNPair.ParabolicsUnconditional
-import Def.v1.Atlas.Buildings.code.BNPair.PropositionParabolics
-import Def.v1.Atlas.Buildings.code.BNPair.SphericalCase
-import Theorem.v1.Atlas.Buildings.code.BNPair.SubgroupOverBProof
-import Def.v1.Atlas.Buildings.code.BNPair.TKernel.Part2
-import Def.v1.Atlas.Buildings.code.Building.Affine.Part2
-import Def.v1.Atlas.Buildings.code.Building.AffineCurvature.Part2
-import Structure.v1.Atlas.Buildings.code.Building.AffineIsometry.Contexts
-import Structure.v1.Atlas.Buildings.code.Building.AffineIsometry.LatticeChains
-import Def.v1.Atlas.Buildings.code.Building.AffineIsometry.Theorems
-import Theorem.v1.Atlas.Buildings.code.Building.AffineIsometry
-import Def.v1.Atlas.Buildings.code.Building.AffineIsometryAxiomsAction
-import Def.v1.Atlas.Buildings.code.Building.AffineIsometryGroups.GroupAction
-import Def.v1.Atlas.Buildings.code.Building.AffineIsometryGroups.StrongTransitivity.Part4
-import Theorem.v1.Atlas.Buildings.code.Building.AffineIsometryGroups
-import Def.v1.Atlas.Buildings.code.Building.AffineMetric.Part5
-import Def.v1.Atlas.Buildings.code.Building.AffineMetricGR.Part2
-import Def.v1.Atlas.Buildings.code.Building.AffineSLV.Part4
-import Def.v1.Atlas.Buildings.code.Building.AffineSLVStrong.Part5
-import Theorem.v1.Atlas.Buildings.code.Building.AffineSLVWellDef
-import Structure.v1.Atlas.Buildings.code.Building.ApartmentsCoxeter
-import Structure.v1.Atlas.Buildings.code.Building.ApplicationsToGroups.Part4
-import Theorem.v1.Atlas.Buildings.code.Building.AptFoldingFromRetraction
-import Def.v1.Atlas.Buildings.code.Building.AptIsCoxeterProof
-import Def.v1.Atlas.Buildings.code.Building.AptIsCoxeterUnconditional
-import Def.v1.Atlas.Buildings.code.Building.AptIsoFixesIntersection
-import Theorem.v1.Atlas.Buildings.code.Building.AptThinness.Part2
-import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
-import Def.v1.Atlas.Buildings.code.Building.BornologyGroups.Part3
-import Def.v1.Atlas.Buildings.code.Building.BornologyProposition
-import Def.v1.Atlas.Buildings.code.Building.BruhatTitsFixedPoint.Part2
-import Def.v1.Atlas.Buildings.code.Building.ChamberCompactClosure
-import Structure.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.GateConvex
-import Structure.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.PrescribedGallery.Part2
-import Structure.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.RetractionHalfApartments
-import Structure.v1.Atlas.Buildings.code.Building.CombinatorialGeometry.ThreeChamber.Part2
-import Theorem.v1.Atlas.Buildings.code.Building.CombinatorialGeometry
-import Theorem.v1.Atlas.Buildings.code.Building.CompactOpenPointwiseFixer
-import Structure.v1.Atlas.Buildings.code.Building.CompactSubgroups.Part2
-import Def.v1.Atlas.Buildings.code.Building.Convexity
-import Def.v1.Atlas.Buildings.code.Building.CoxeterComplexFoldings
-import Def.v1.Atlas.Buildings.code.Building.DiagBlockEmbed.Part2
-import Def.v1.Atlas.Buildings.code.Building.DiscreteFibers.Part2
-import Structure.v1.Atlas.Buildings.code.Building.FixedPointSubgroups
-import Structure.v1.Atlas.Buildings.code.Building.GoodMaximalBounded
-import Structure.v1.Atlas.Buildings.code.Building.GroupApplicationsCh17
-import Def.v1.Atlas.Buildings.code.Building.Infinity.AffineFunc.Part2
-import Def.v1.Atlas.Buildings.code.Building.Infinity.ChamberSectorConfig
-import Def.v1.Atlas.Buildings.code.Building.Infinity.SectorGallery
-import Def.v1.Atlas.Buildings.code.Building.Infinity.SectorParallelism
-import Def.v1.Atlas.Buildings.code.Building.Infinity.Sectors.Part3
-import Def.v1.Atlas.Buildings.code.Building.Infinity.SimplexAtInfinity
-import Theorem.v1.Atlas.Buildings.code.Building.Infinity
-import Structure.v1.Atlas.Buildings.code.Building.InfinityConstruction.Part3
-import Def.v1.Atlas.Buildings.code.Building.InfinityMaps.Part7
-import Def.v1.Atlas.Buildings.code.Building.InfinityTheorem
-import Theorem.v1.Atlas.Buildings.code.Building.IwahoriDecompCheck
-import Theorem.v1.Atlas.Buildings.code.Building.IwahoriGLn
-import Theorem.v1.Atlas.Buildings.code.Building.IwahoriGLnBaseCase
-import Theorem.v1.Atlas.Buildings.code.Building.IwahoriGLnClearing
-import Def.v1.Atlas.Buildings.code.Building.IwahoriGLnDefs
-import Theorem.v1.Atlas.Buildings.code.Building.IwahoriGLnExistence
-import Def.v1.Atlas.Buildings.code.Building.IwahoriGLnHelpers
-import Theorem.v1.Atlas.Buildings.code.Building.IwahoriGLnUniqueness
-import Def.v1.Atlas.Buildings.code.Building.LabelPreservingIso
-import Def.v1.Atlas.Buildings.code.Building.Labels
-import Theorem.v1.Atlas.Buildings.code.Building.Link
-import Def.v1.Atlas.Buildings.code.Building.LinkBuilding
-import Theorem.v1.Atlas.Buildings.code.Building.LinkBuildingIsoHelper
-import Def.v1.Atlas.Buildings.code.Building.MaximalApartments.Part2
-import Theorem.v1.Atlas.Buildings.code.Building.MaximalAptSystemVerification
-import Structure.v1.Atlas.Buildings.code.Building.OppositeChambers
-import Theorem.v1.Atlas.Buildings.code.Building.PropositionRetractionProperties
-import Theorem.v1.Atlas.Buildings.code.Building.Retraction
-import Def.v1.Atlas.Buildings.code.Building.RetractionDef
-import Def.v1.Atlas.Buildings.code.Building.Spherical
-import Structure.v1.Atlas.Buildings.code.Building.SphericalFiniteDiameter
-import Def.v1.Atlas.Buildings.code.Building.StrongIsometryExt
-import Theorem.v1.Atlas.Buildings.code.Building.ThicknessFoldings
-import Def.v1.Atlas.Buildings.code.Building.ThicknessHypAssembly
-import Theorem.v1.Atlas.Buildings.code.Building.TitsTheoremAssembly
-import Def.v1.Atlas.Buildings.code.Building.TitsTheoremProof
-import Theorem.v1.Atlas.Buildings.code.Building.UniqueRetraction
-import Theorem.v1.Atlas.Buildings.code.Building.VertexActionHelper
-import Def.v1.Atlas.Buildings.code.Building.WallReflectionAction
-import Theorem.v1.Atlas.Buildings.code.BuildingsStructuralAudit
-import Theorem.v1.Atlas.Buildings.code.ChamberComplex.Basic
-import Def.v1.Atlas.Buildings.code.ChamberComplex.CoxeterComplex.Part2
-import Def.v1.Atlas.Buildings.code.ChamberComplex.Folding.Part3
-import Def.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.CoxeterFoldingHelpers
-import Theorem.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.CoxeterProperties.Part2
-import Def.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.IsCoxeterCharacterized.Part2
-import Structure.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.ThinFolding
-import Theorem.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.TitsForwardHelpers
-import Structure.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.WallCrossing
-import Theorem.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes
-import Def.v1.Atlas.Buildings.code.ChamberComplex.Uniqueness
-import Def.v1.Atlas.Buildings.code.ChamberComplex.UniquenessBook
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.Basic.Part3
-import Structure.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelation
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelationProof.Assembly.Part2
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelationProof.DihedralHelpers.Part2
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.BraidRelationProof
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.BruhatOrder
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.BruhatOrderUnconditional
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.BruhatSubexpression
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.CoxeterHomomorphism.Part2
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.CoxeterSystemFromDeletion.Part3
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.DeletionCondition
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.DeletionInjectivity
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.DeletionInjectivityHelpers
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.DihedralPositivity.Part2
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.DihedralPositivityFinite
-import Structure.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionGenuine
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionProof
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionWiring
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeDeletion
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeUniqueness
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.GeometricRepresentation.Part4
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.InversionSet
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.LengthDecreaseNeg
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.LengthInduction
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.LuckyCaseInductiveStep
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.OrderAxiom
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.ParabolicPositivity
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.ParabolicSubgroups
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.ParitySign
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.PosOfAscentProof
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.ReflectionIdentificationGenuine
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.ReflectionInvolution
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.Reflections
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.RootReflectionLemmas
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.RootSignChangeProof
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.RootSystem
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.Roots
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.SevenFamilies.Part3
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.SigmaOrder
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.SignChangeExchangeProof
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.SignChangeGeneratorIdentity
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.SignedPermGroup.Part2
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.SimpleReflectionInversions
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.StrongExchangeBridge
-import Structure.v1.Atlas.Buildings.code.CoxeterGroup.StrongExchangeProof
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.TypeABridge
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.TypeACoxeterSystem.Part2
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.TypeAInjectivityHelper
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.TypeAIsomorphism.Part3
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.TypeCInjectivityHelper
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.UnluckyCase
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.WordSigmaInvariance
-import Abbrev.v1.Atlas.Buildings.code.CoxeterGroup.Words
-import Def.v1.Atlas.Buildings.code.GeometricAlgebra.AnisotropicDecomposition
-import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.AnisotropicReflectionStep
-import Def.v1.Atlas.Buildings.code.GeometricAlgebra.BilinearForms
-import Structure.v1.Atlas.Buildings.code.GeometricAlgebra.CoordinateExamples
-import Def.v1.Atlas.Buildings.code.GeometricAlgebra.CorBilinearHermitianForms
-import Def.v1.Atlas.Buildings.code.GeometricAlgebra.ExtendingIsometries
-import Instance.v1.Atlas.Buildings.code.GeometricAlgebra.FlagEquivalenceInstance
-import Class.v1.Atlas.Buildings.code.GeometricAlgebra.FlagsParabolics.Part3
-import Def.v1.Atlas.Buildings.code.GeometricAlgebra.HyperbolicCancellation
-import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.IsotropicExtensionStep
-import Def.v1.Atlas.Buildings.code.GeometricAlgebra.IsotropicFlagsParabolics.Part2
-import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.KernelDecompInductionHelper
-import Def.v1.Atlas.Buildings.code.GeometricAlgebra.KernelDecomposition
-import Def.v1.Atlas.Buildings.code.GeometricAlgebra.LagrangianHardProof
-import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.NondegenerateThreeWay
-import Structure.v1.Atlas.Buildings.code.GeometricAlgebra.OppositeConjugacyComposition
-import Def.v1.Atlas.Buildings.code.GeometricAlgebra.OppositeConjugacyInstance.Part2
-import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.OppositeConjugacyProof
-import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.SemidirectExistence
-import Instance.v1.Atlas.Buildings.code.GeometricAlgebra.SemidirectExistenceInstance
-import Theorem.v1.Atlas.Buildings.code.GeometricAlgebra.WittAssembly
-import Def.v1.Atlas.Buildings.code.GeometricAlgebra.WittCancellationDirectSum.Part3
-import Def.v1.Atlas.Buildings.code.GeometricAlgebra.WittTheorem.Part2
-import Structure.v1.Atlas.Buildings.code.HeckeAlgebra.Generalized.Part3
-import Def.v1.Atlas.Buildings.code.HeckeAlgebra.Generic.Part2
-import Structure.v1.Atlas.Buildings.code.HeckeAlgebra.GenericAlgebraUniqueness
-import Def.v1.Atlas.Buildings.code.HeckeAlgebra.HeckeStructureTheorem.Part2
-import Def.v1.Atlas.Buildings.code.HeckeAlgebra.OperatorCommutativity.Part2
-import Theorem.v1.Atlas.Buildings.code.IsometryAffine
-import Theorem.v1.Atlas.Buildings.code.Reflection.AffineReflectionProposition
-import Def.v1.Atlas.Buildings.code.Reflection.AffineWeylGroupConstruction
-import Structure.v1.Atlas.Buildings.code.Reflection.AffineWeylGroups.Part3
-import Theorem.v1.Atlas.Buildings.code.Reflection.AffineWeylProposition12_5
-import Def.v1.Atlas.Buildings.code.Reflection.AffineWeylSemidirectMulEquiv.Part3
-import Theorem.v1.Atlas.Buildings.code.Reflection.AlcoveWallHyperplanes
-import Theorem.v1.Atlas.Buildings.code.Reflection.DihedralRootHelpers
-import Def.v1.Atlas.Buildings.code.Reflection.FiniteReflectionGroups.Defs.Part4
-import Def.v1.Atlas.Buildings.code.Reflection.FiniteReflectionGroups.Theorems
-import Theorem.v1.Atlas.Buildings.code.Reflection.FiniteReflectionGroups
-import Theorem.v1.Atlas.Buildings.code.Reflection.GenericFunctional
-import Def.v1.Atlas.Buildings.code.Reflection.HyperplaneChambers.Part4
-import Def.v1.Atlas.Buildings.code.Reflection.InnerProductWalls
-import Theorem.v1.Atlas.Buildings.code.Reflection.NonParallelWallsProof
-import Def.v1.Atlas.Buildings.code.Reflection.ReflectionGroupsCoxeter.Part2
-import Theorem.v1.Atlas.Buildings.code.Reflection.UniqueAdjacentChamber
-import Def.v1.Atlas.Buildings.code.Reflection.WallSeparation
-import Theorem.v1.Atlas.Buildings.code.Reflection.WallSeparationCorollary
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.AdaptedBasisProof
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.AdaptedBasisSingle
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.BasisExtensionChain
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.BasisFromFlagProof
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.FinsetGapCorrespondenceProof.Part2
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLn.Part3
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnApartmentIsoUnconditional.Part2
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnB0Cascade
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnBaseFlag.Part3
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnBuildingInstance
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnChainRefinement.Part2
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnCommonApartment
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnCommonApartmentUnconditional.Part3
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnFlagToFrame
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnGapAnalysis.Part2
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnInstance
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnPanelExtension
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnSimultaneousRefinement
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnThinApartment
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnThinApartmentUnconditional
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.IsometryApartmentExchange
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.IsometryBuildingInstance.Part2
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.IsometryBuildingWiring
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.IsometryCommonApartment
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.IsometryGroups.Part3
-import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.JordanHolderFrame.Part2
-import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.JordanHolderPermutation.Part3
-import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.LagrangianExtension
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.Oriflamme.Part5
-import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.OriflammeBuilding
-import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.RefinementCompatibility
-import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.RefinementDimJumps
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.RefinementFrame
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.SOActionLemma
-import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.SchreierRefinement
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.TwoChamberHypFinal
-import Instance.v1.Atlas.Buildings.code.Valuation.DVRInstances
-import Def.v1.Atlas.Buildings.code.Valuation.DiscreteValuationBook
-import Def.v1.Atlas.Buildings.code.Valuation.IwahoriDecomp
-import Class.v1.Atlas.Buildings.code.Valuation.LatticesValuations
-import Def.v1.Atlas.Buildings.code.Valuation.MaximalLattice
-
 

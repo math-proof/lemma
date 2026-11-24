@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/SurfaceKacWardShiftedCycleAssembly.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.SurfaceKacWardQuadraticAssembly.Part4
+public import Theorem.StatisticalMechanics.Code.FrontierA.SurfaceKacWardFlatSpinor
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAngularSplitUnitCycleReduction
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPortChainHomology
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardLocalAngularSplitCycleReversal
+public import Def.StatisticalMechanics.Code.FrontierA.SurfaceKacWardShiftedCycleAssembly
+open scoped BigOperators
+open Finset SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/SurfaceKacWardShiftedCycleAssembly.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.FrontierA.SurfaceKacWardQuadraticAssembly.Part4
-import Theorem.StatisticalMechanics.Code.FrontierA.SurfaceKacWardFlatSpinor
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAngularSplitUnitCycleReduction
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPortChainHomology
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardLocalAngularSplitCycleReversal
-import Def.StatisticalMechanics.Code.FrontierA.SurfaceKacWardShiftedCycleAssembly
-open scoped BigOperators
-open Finset SimpleGraph
-
-
 namespace StatMech.FrontierA
 
 open StatMech.Ising StatMech.Onsager Polynomial

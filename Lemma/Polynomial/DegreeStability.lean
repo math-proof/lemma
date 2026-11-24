@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.Algebra.Polynomial.L1Norm
-import Lemma.Polynomial.L1Norm
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.Algebra.Polynomial.L1Norm
+public import Lemma.Polynomial.L1Norm
 
+
+public section
 
 namespace Polynomial
 

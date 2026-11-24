@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/Proposition_1_15_5.lean -/
+module
+public import Def.v1.Atlas.TensorCategories.code.SemisimpleMultitensor.Part6
+public import Theorem.Category.Atlas.v1.TensorCategories.code.SemisimpleMultitensor
+public import Structure.v1.Atlas.TensorCategories.code.Proposition_1_15_5
+open CategoryTheory MonoidalCategory Limits
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/Proposition_1_15_5.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.TensorCategories.code.SemisimpleMultitensor.Part6
-import Theorem.Category.Atlas.v1.TensorCategories.code.SemisimpleMultitensor
-import Structure.v1.Atlas.TensorCategories.code.Proposition_1_15_5
-open CategoryTheory MonoidalCategory Limits
-
 universe u v
 
 

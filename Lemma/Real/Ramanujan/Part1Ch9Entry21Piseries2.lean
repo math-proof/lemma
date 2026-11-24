@@ -1,13 +1,16 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.Analysis.Ramanujan.Part1Ch9Entry21Piseries2
-import Def.Analysis.Ramanujan.Part1Ch9Entry8Arcsin
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.Analysis.Ramanujan.Part1Ch9Entry21Piseries2
+public import Def.Analysis.Ramanujan.Part1Ch9Entry8Arcsin
 open scoped Nat Real BigOperators Interval Polynomial ContDiff
 open Filter Finset MeasureTheory
 open MathlibExt.Analysis.Ramanujan.Part1Ch9
 open MathlibExt.Analysis.Ramanujan.Part1Ch9.Entry8Arcsin (chapter9OddHarmonic)
 open Entry21Piseries2
 
+
+public section
 
 namespace MathlibExt.Analysis.Ramanujan.Part1Ch9.Entry21Piseries2
 

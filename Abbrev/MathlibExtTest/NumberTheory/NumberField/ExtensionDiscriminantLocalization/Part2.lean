@@ -1,10 +1,11 @@
+module
+public import Theorem.Nat.NumberField.ExtensionDiscriminantLocalization
+public import Instance.MathlibExtTest.NumberTheory.NumberField.ExtensionDiscriminantLocalization
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/ExtensionDiscriminantLocalization.lean -/
-
-
-import Lemma.Nat.NumberField.ExtensionDiscriminantLocalization
-import Instance.MathlibExtTest.NumberTheory.NumberField.ExtensionDiscriminantLocalization
-
-
 namespace ConcreteLocalization
 
 noncomputable abbrev q : SA :=

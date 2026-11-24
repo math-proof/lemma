@@ -18,7 +18,7 @@ open Set
 [SetTheory.Set.specification_axiom''](https://github.com/teorth/analysis/blob/main/Analysis/Section_3_1.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   [SetTheory]
   {A:Chapter3.Set}
   {x:Object}

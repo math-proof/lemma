@@ -1,7 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOverMaximalIdeal.lean -/
+module
+public import Def.NumberTheory.NumberField.Completion.FiniteLiesOverValuation
+public import Theorem.Nat.NumberField.Completion.FiniteLiesOverValuation
 
-import Def.NumberTheory.NumberField.Completion.FiniteLiesOverValuation
-import Theorem.Nat.NumberField.Completion.FiniteLiesOverValuation
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOverMaximalIdeal.lean -/
 /-!
 # Finite place completion maximal ideal lies over
 
@@ -39,8 +43,6 @@ different from one) is preserved and reflected, yielding equality of maximal
 ideals. This proves only the contraction prerequisite; residue-field
 equivalences and degree formulas remain outside this module.
 -/
-
-
 namespace IsDedekindDomain.HeightOneSpectrum
 
 open scoped NumberField

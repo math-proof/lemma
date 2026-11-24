@@ -1,15 +1,17 @@
-import Def.LanglandsTunnell_JLConverse
-import Lemma.Measure.CarrierPins
-import Def.NumberField_AdelicBox
-import Lemma.Matrix.CentreCutSiegelSet
-import Abbrev.LanglandsTunnell_JLSynthesis
-
+module
+public import Def.LanglandsTunnell_JLConverse
+public import Lemma.Measure.CarrierPins
+public import Def.NumberField_AdelicBox
+public import Theorem.Matrix.CentreCutSiegelSet
+public import Abbrev.LanglandsTunnell_JLSynthesis
 set_option autoImplicit false
-
 open IsDedekindDomain NumberField AutomorphicForm
 open NumberField.AdelicLevel NumberField.AdelicBox
 open AutomorphicForm.WindowedSiegel
 open LanglandsTunnell.Converse
+
+
+public section
 
 noncomputable section
 

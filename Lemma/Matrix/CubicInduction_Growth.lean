@@ -1,10 +1,12 @@
-import Lemma.Matrix.CubicInduction_Carrier
-import Lemma.Measure.TruncationOperator
-import Def.LanglandsTunnell_CubicInduction_Growth
-
+module
+public import Lemma.Matrix.CubicInduction_Carrier
+public import Lemma.Measure.TruncationOperator
+public import Def.LanglandsTunnell_CubicInduction_Growth
 set_option autoImplicit false
-
 open IsDedekindDomain NumberField Matrix
+
+
+public section
 
 noncomputable section
 

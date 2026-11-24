@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/SignedLoopLowTempDual.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopLowTempCorrelation.Part2
+public import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopGeometricDualWeighted
+public import Def.StatisticalMechanics.Code.Onsager.SignedLoopLowTempDual.Part2
+open scoped BigOperators
+open Finset SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/SignedLoopLowTempDual.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopLowTempCorrelation.Part2
-import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopGeometricDualWeighted
-import Def.StatisticalMechanics.Code.Onsager.SignedLoopLowTempDual.Part2
-open scoped BigOperators
-open Finset SimpleGraph
-
-
 namespace StatMech.Onsager
 
 open StatMech.Ising StatMech.Lattice StatMech.Walls

@@ -1,7 +1,12 @@
+module
+public import Mathlib
+public import Theorem.Ideal.HomogeneousIdealQuotientGradingInfra
+public import Def.Ideal_HomogeneousIdealQuotientGradingInfra
+
+
+public section
+
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_HomogeneousIdealQuotientGradingInfra.lean: instance decls only.
-import Mathlib
-import Theorem.Ideal.HomogeneousIdealQuotientGradingInfra
-import Def.Ideal_HomogeneousIdealQuotientGradingInfra
 
 namespace HomogeneousIdealQuotientGrading
 

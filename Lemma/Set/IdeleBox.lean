@@ -1,8 +1,11 @@
-import Mathlib
-import Lemma.Set.FiniteUnitIdelesOutside
-import Def.NumberField_IdeleBox
-
+module
+public import Mathlib
+public import Lemma.Set.FiniteUnitIdelesOutside
+public import Def.NumberField_IdeleBox
 set_option autoImplicit false
+
+
+public section
 
 namespace IsDedekindDomain.FiniteAdeleRing
 

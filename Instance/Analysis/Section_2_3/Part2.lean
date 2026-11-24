@@ -1,6 +1,11 @@
-import Mathlib
-import Instance.Analysis.Section_2_2_api
-import Abbrev.Analysis.Section_2_3.Part2
+module
+public import Mathlib
+public import Instance.Analysis.Section_2_2_api
+public import Abbrev.Analysis.Section_2_3.Part2
+
+
+public section
+
 /-!
 # Analysis I, Section 2.3: Multiplication
 
@@ -29,8 +34,6 @@ Users of the companion who have completed the exercises in this section are welc
 - (Add tip here)
 
 -/
-
-
 namespace Chapter2
 
 instance Nat.instPow : HomogeneousPow Nat where

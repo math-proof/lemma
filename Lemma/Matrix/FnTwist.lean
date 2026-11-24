@@ -1,4 +1,4 @@
-import Lemma.Matrix.SmoothAutomorphicFnAt
+import Theorem.Matrix.SmoothAutomorphicFnAt
 import Def.AutomorphicForm_FnTwist
 
 open IsDedekindDomain NumberField MeasureTheory Matrix

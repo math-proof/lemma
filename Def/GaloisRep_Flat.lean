@@ -1,7 +1,11 @@
-import Mathlib.RingTheory.HopfAlgebra.Basic
-import Mathlib.RingTheory.Bialgebra.Convolution
-import Mathlib.RingTheory.Flat.Basic
-import Def.GaloisRep_LocalConditions
+module
+public import Mathlib.RingTheory.HopfAlgebra.Basic
+public import Mathlib.RingTheory.Bialgebra.Convolution
+public import Mathlib.RingTheory.Flat.Basic
+public import Def.GaloisRep_LocalConditions
+
+
+public section
 
 namespace GaloisRep
 

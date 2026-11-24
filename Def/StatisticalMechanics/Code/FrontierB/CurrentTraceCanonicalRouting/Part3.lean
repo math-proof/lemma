@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/CurrentTraceCanonicalRouting.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentTraceClusterUniqueness
+public import Theorem.StatisticalMechanics.Code.Percolation.HrouteDisjointPaths.Part4
+public import Theorem.StatisticalMechanics.Code.Percolation.MengerRouting.Part3
+public import Theorem.StatisticalMechanics.Code.Percolation.TrifurcationExistence.Part4
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentTraceCanonicalRouting.Part3
+open MeasureTheory Set
+open scoped ENNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/CurrentTraceCanonicalRouting.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentTraceClusterUniqueness
-import Theorem.StatisticalMechanics.Code.Percolation.HrouteDisjointPaths.Part4
-import Theorem.StatisticalMechanics.Code.Percolation.MengerRouting.Part3
-import Theorem.StatisticalMechanics.Code.Percolation.TrifurcationExistence.Part4
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentTraceCanonicalRouting.Part3
-open MeasureTheory Set
-open scoped ENNReal
-
-
 namespace StatMech.FrontierB
 
 open Lattice ConfigSpace Percolation

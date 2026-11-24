@@ -1,13 +1,16 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
-import Lemma.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
-import Lemma.Set.ApartmentsToApartmentSystem.eq.Apartments.of.IsThick
-import Lemma.Nat.NotChamberAdjacent
-import Def.v1.Atlas.Buildings.code.Building.AptIsCoxeterProof
-import Def.v1.Atlas.Buildings.code.ChamberComplex.CoxeterComplex.Part2
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
+public import Lemma.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
+public import Lemma.Set.ApartmentsToApartmentSystem.eq.Apartments.of.IsThick
+public import Lemma.Nat.NotChamberAdjacent
+public import Def.v1.Atlas.Buildings.code.Building.AptIsCoxeterProof
+public import Def.v1.Atlas.Buildings.code.ChamberComplex.CoxeterComplex.Part2
 open scoped Classical
 
+
+public section
 
 /--
 [thin_unique_other_chamber](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/UniqueLabellingHelper.lean)

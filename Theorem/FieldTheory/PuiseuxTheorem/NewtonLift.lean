@@ -1,24 +1,27 @@
+module
+public import Mathlib.RingTheory.LaurentSeries
+public import Mathlib.Algebra.Polynomial.OfFn
+public import Mathlib.RingTheory.AdicCompletion.Completeness
+public import Mathlib.RingTheory.HahnSeries.Summable
+public import Mathlib.RingTheory.HahnSeries.Valuation
+public import Mathlib.RingTheory.Valuation.ValuationSubring
+public import Theorem.Polynomial.HenselFactorization
+public import Def.FieldTheory.PuiseuxTheorem.Part8
+
+
+public section
+
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
-import Mathlib.RingTheory.LaurentSeries
-import Mathlib.Algebra.Polynomial.OfFn
-import Mathlib.RingTheory.AdicCompletion.Completeness
-import Mathlib.RingTheory.HahnSeries.Summable
-import Mathlib.RingTheory.HahnSeries.Valuation
-import Mathlib.RingTheory.Valuation.ValuationSubring
-import Theorem.Polynomial.HenselFactorization
-import Def.FieldTheory.PuiseuxTheorem.Part8
-
 /-!
 # Helper theorems for Puiseux algebraic closedness
 
-These theorems were originally private lemmas in Lemma.PowerSeries.PuiseuxTheorem,
+These theorems were originally private lemmas in Theorem.PowerSeries.PuiseuxTheorem,
 which imports a later part of the split and therefore cannot be used by
 Theorem.FieldTheory.PuiseuxTheorem.Part6. They are recorded here so that
 HahnSeries.isAlgClosed_rat can be proved in that file.
 -/
-
 namespace MetaMathlibExt
 
 noncomputable section

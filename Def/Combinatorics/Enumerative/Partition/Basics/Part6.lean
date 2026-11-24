@@ -1,3 +1,12 @@
+module
+public import Mathlib
+public import Theorem.Combinatorics.Enumerative.Partition.Basics.Part5
+open Nat Finset BigOperators PowerSeries
+open scoped PowerSeries.WithPiTopology
+
+
+public section
+
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -6,10 +15,6 @@ All rights reserved.
 Copyright (c) 2025 AlgebraicCombinatorics contributors. All rights reserved.
 Authors: AlgebraicCombinatorics contributors
 -/
-import Mathlib
-import Theorem.Combinatorics.Enumerative.Partition.Basics.Part5
-open Nat Finset BigOperators PowerSeries
-open scoped PowerSeries.WithPiTopology
 /-!
 # Partition basics
 
@@ -106,8 +111,6 @@ in the power series topology. The identity `∏_{k≥1} 1/(1-x^k)` is expressed 
 * Mathlib: `Mathlib.Combinatorics.Enumerative.Partition.GenFun`
 * Mathlib: `Mathlib.Combinatorics.Enumerative.Partition.Glaisher`
 -/
-
-
 /-! ### Iverson bracket notation (Definition \ref{def.pars.iverson})
 
 The **Iverson bracket notation** represents the truth value of a proposition `P`:
@@ -118,8 +121,6 @@ In Lean, this is represented as `if P then 1 else 0` or equivalently `(decide P)
 
 The Kronecker delta `δ_{i,j}` is a special case: `δ_{i,j} = [i = j]`.
 -/
-
-
 namespace Nat.Partition
 
 /-! #### API for IsOddParts and IsDistinctParts -/

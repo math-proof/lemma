@@ -1,8 +1,11 @@
-import Mathlib
-import Lemma.Fin.NatAbsCoeff.le.RothMvL1.of.RothMvIndex
+module
+public import Mathlib
+public import Lemma.Fin.NatAbsCoeff.le.RothMvL1.of.RothMvIndex
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [rothMvL1_pos](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

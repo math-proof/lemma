@@ -1,8 +1,11 @@
-import Mathlib
-import Instance.MvPolynomial_CrossingResolutionScheme
-
+module
+public import Mathlib
+public import Instance.MvPolynomial_CrossingResolutionScheme
 set_option maxHeartbeats 200000
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

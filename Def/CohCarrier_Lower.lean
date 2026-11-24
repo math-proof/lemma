@@ -1,8 +1,11 @@
-import Def.CohCarrier_Level
-import Instance.CohCarrier_Lower
-import Abbrev.CohCarrier_Lower
-
+module
+public import Def.CohCarrier_Level
+public import Instance.CohCarrier_Lower
+public import Abbrev.CohCarrier_Lower
 set_option autoImplicit false
+
+
+public section
 
 namespace CohCarrier
 

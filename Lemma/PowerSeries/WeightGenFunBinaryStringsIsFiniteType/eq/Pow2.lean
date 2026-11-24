@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.Enumerative.WeightedSets.Part26
-import Lemma.PowerSeries.WeightedSets
+import Theorem.PowerSeries.WeightedSets
 open scoped BigOperators
 open PowerSeries Finset
 open WeightedSet WeightedSetExamples

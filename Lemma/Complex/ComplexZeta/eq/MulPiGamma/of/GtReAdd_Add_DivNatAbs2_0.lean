@@ -2,8 +2,8 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.Measure.ArchPlace
 import Lemma.Measure.TateLocalZeta
-import Lemma.Complex.ArchEpsilon
-import Lemma.Int.P2MUtil
+import Theorem.Complex.ArchEpsilon
+import Theorem.Int.P2MUtil
 
 open scoped Real
 open Real Set MeasureTheory MeasureTheory.Measure

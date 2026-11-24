@@ -1,8 +1,12 @@
--- Carved from Lemma/Definitions/Def_Gamma0CoeffCohomologyEigen.lean: instance decls only.
-import Mathlib
-import Instance.Gamma0CoeffCohomology
-
+module
+public import Mathlib
+public import Instance.Gamma0CoeffCohomology
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_Gamma0CoeffCohomologyEigen.lean: instance decls only.
 
 namespace HeckeEis
 

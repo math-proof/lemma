@@ -1,13 +1,14 @@
+module
+public import Def.NumberTheory.NumberField.Completion.FiniteLiesOverResidueNaturality
+public import Theorem.Nat.NumberField.Completion.FiniteLiesOverResidueNaturality
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/Completion/FiniteLiesOverResidueNaturality.lean -/
-
-
-import Def.NumberTheory.NumberField.Completion.FiniteLiesOverResidueNaturality
-import Theorem.Nat.NumberField.Completion.FiniteLiesOverResidueNaturality
 /-!
 # Checks for the explicit residue-field naturality square
 -/
-
-
 namespace IsDedekindDomain.HeightOneSpectrum
 
 open scoped NumberField

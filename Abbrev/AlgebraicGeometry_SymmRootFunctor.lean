@@ -1,9 +1,12 @@
-import Mathlib
-import Instance.AlgebraicGeometry_RelativePicardFunctor
-import Def.AlgebraicGeometry_PolarisationRosati
-import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
-
+module
+public import Mathlib
+public import Instance.AlgebraicGeometry_RelativePicardFunctor
+public import Def.AlgebraicGeometry_PolarisationRosati
+public import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

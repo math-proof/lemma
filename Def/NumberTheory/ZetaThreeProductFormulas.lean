@@ -1,26 +1,27 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ZetaThreeProductFormulas.lean -/
+module
+public import Mathlib.NumberTheory.LSeries.RiemannZeta
+public import Mathlib.Analysis.Complex.Trigonometric
+public import Mathlib.Analysis.PSeries
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Cotangent
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Mathlib.Analysis.SpecificLimits.Normed
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
+public import Mathlib.Topology.Algebra.InfiniteSum.NatInt
+public import Def.Analysis.Ramanujan.Part1Ch9Entry13Bernoulligen
+public import Theorem.Real.Part1Ch9Entry13Bernoulligen
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/ZetaThreeProductFormulas.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
-
-import Mathlib.NumberTheory.LSeries.RiemannZeta
-import Mathlib.Analysis.Complex.Trigonometric
-import Mathlib.Analysis.PSeries
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Cotangent
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Analysis.SpecificLimits.Normed
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-import Mathlib.Topology.Algebra.InfiniteSum.NatInt
-import Def.Analysis.Ramanujan.Part1Ch9Entry13Bernoulligen
-import Lemma.Real.Part1Ch9Entry13Bernoulligen
-
-
 namespace MetaMathlibExt
 
 open MathlibExt.Analysis.Ramanujan.Part1Ch9.Entry13Bernoulligen

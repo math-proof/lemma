@@ -18,7 +18,7 @@ open Set
 [SetTheory.Set.mem_insert](https://github.com/teorth/analysis/blob/main/Analysis/Section_3_1.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   [SetTheory]
   {a b: Object}
   {X: Chapter3.Set} :

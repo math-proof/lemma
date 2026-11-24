@@ -1,9 +1,12 @@
-import Mathlib
-import Theorem.Scheme.NeronModelPropertyBundleCarrier
-import Instance.AlgebraicGeometry_RelativePicardFunctor
-import Structure.AlgebraicGeometry_RelativePicardFunctor
-
+module
+public import Mathlib
+public import Theorem.Scheme.NeronModelPropertyBundleCarrier
+public import Instance.AlgebraicGeometry_RelativePicardFunctor
+public import Structure.AlgebraicGeometry_RelativePicardFunctor
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/TriangularIsingTorusAngularSplit.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusHomology.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPortChainHomology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/TriangularIsingTorusAngularSplit.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,11 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusHomology.Part2
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPortChainHomology
-
-
 namespace StatMech.FrontierA
 
 theorem triangularTorus_orderedSplit_surfaceQuadraticEvenPolynomial_eq

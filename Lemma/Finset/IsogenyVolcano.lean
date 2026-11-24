@@ -1,10 +1,13 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Instance.Combinatorics.IsogenyVolcano.Part2
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Instance.Combinatorics.IsogenyVolcano.Part2
 open BigOperators
 open Multigraph
 open IsogenyVolcano
 
+
+public section
 
 namespace Multigraph
 

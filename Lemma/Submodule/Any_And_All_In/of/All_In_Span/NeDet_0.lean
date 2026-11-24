@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Lemma.Submodule.DetUpdateRow.ne.Zero.of.In_Span.NeDet_0
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Lemma.Submodule.DetUpdateRow.ne.Zero.of.In_Span.NeDet_0
 open Submodule
 
+
+public section
 
 /--
 [roth_exists_nonsingular_rows_of_mem_span](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

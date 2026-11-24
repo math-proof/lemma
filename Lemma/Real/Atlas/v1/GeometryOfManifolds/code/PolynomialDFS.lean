@@ -1,7 +1,10 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Instance.v1.Atlas.GeometryOfManifolds.code.PolynomialDFS.Part3
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Instance.v1.Atlas.GeometryOfManifolds.code.PolynomialDFS.Part3
 
+
+public section
 
 /--
 [derivative_antideriv](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/code/PolynomialDFS.lean)

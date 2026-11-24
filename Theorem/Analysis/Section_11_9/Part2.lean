@@ -1,13 +1,18 @@
-import Mathlib
-import Mathlib.Topology.ContinuousOn
-import Theorem.Analysis.Section_7_3
-import Theorem.Analysis.Section_9_4.Part2
-import Abbrev.Analysis.Section_9_8
-import Theorem.Analysis.Section_10_1.Part2
-import Abbrev.Analysis.Section_10_2
-import Theorem.Analysis.Section_11_6
-import Abbrev.Analysis.Section_11_8.Part7
-import Abbrev.Analysis.Section_11_9
+module
+public import Mathlib
+public import Mathlib.Topology.ContinuousOn
+public import Theorem.Analysis.Section_7_3
+public import Theorem.Analysis.Section_9_4.Part2
+public import Abbrev.Analysis.Section_9_8
+public import Theorem.Analysis.Section_10_1.Part2
+public import Abbrev.Analysis.Section_10_2
+public import Theorem.Analysis.Section_11_6
+public import Abbrev.Analysis.Section_11_8.Part7
+public import Abbrev.Analysis.Section_11_9
+
+
+public section
+
 /-!
 # Analysis I, Section 11.9: The two fundamental theorems of calculus
 
@@ -20,8 +25,6 @@ have consciously avoided doing so.
 Main constructions and results of this section:
 - The fundamental theorems of calculus.
 -/
-
-
 namespace Chapter11
 
 open Chapter9 Chapter10 BoundedInterval

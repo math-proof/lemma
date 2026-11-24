@@ -1,6 +1,9 @@
-import Def.Analysis.MeasureTheory.Section_1_4_2.Part8
-import Class.Analysis.MeasureTheory.Section_1_4_3
+module
+public import Def.Analysis.MeasureTheory.Section_1_4_2.Part8
+public import Class.Analysis.MeasureTheory.Section_1_4_3
 
+
+public section
 
 /-- Two finitely additive measures on the same algebra are equal as soon as they assign the same
 value to every set; the other fields are propositions, so proof irrelevance disposes of them.

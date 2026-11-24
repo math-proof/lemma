@@ -1,10 +1,13 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.NumberTheory.RothAuxiliary
-import Lemma.Polynomial.Det_PowDerivativeGetVal.ne.Zero.of.LinearIndependent
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.NumberTheory.RothAuxiliary
+public import Lemma.Polynomial.Det_PowDerivativeGetVal.ne.Zero.of.LinearIndependent
 open MathlibExt.NumberTheory.RothAuxiliary
 open Polynomial
 
+
+public section
 
 /--
 [roth_poly_hasse_wronskian_ne_zero](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

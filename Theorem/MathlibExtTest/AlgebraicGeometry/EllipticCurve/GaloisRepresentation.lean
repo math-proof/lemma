@@ -1,15 +1,16 @@
+module
+public import Def.AlgebraicGeometry.EllipticCurve.GaloisRepresentation.Part4
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/AlgebraicGeometry/EllipticCurve/GaloisRepresentation.lean -/
-
-
-import Def.AlgebraicGeometry.EllipticCurve.GaloisRepresentation.Part4
 /-!
 # Tests for the Galois action on `p`-torsion
 
 Exercises the concrete production API of `GaloisRepresentation` (point action,
 linear action, bijectivity, determinant character) on `E[p]`.
 -/
-
-
 namespace MetaMathlibExt
 
 open WeierstrassCurve

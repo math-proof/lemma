@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/FreeTailTriviality.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.FreeDLRExtreme
+public import Theorem.StatisticalMechanics.Code.FK.FreeTailErgodicityPrereq.Part3
+public import Theorem.StatisticalMechanics.Code.FK.FKDisjointBoxDomainMarkov.Part3
+public import Theorem.StatisticalMechanics.Code.FK.MultiEdgeDecay.Part4
+public import Theorem.StatisticalMechanics.Code.FK.FKGeneralQConsumer.Part5
+public import Theorem.StatisticalMechanics.Code.Foundations.AeTailInvariant.Part4
+open MeasureTheory ProbabilityTheory Set Filter Topology
+open scoped BigOperators ENNReal StatMech symmDiff
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/FreeTailTriviality.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FK.FreeDLRExtreme
-import Theorem.StatisticalMechanics.Code.FK.FreeTailErgodicityPrereq.Part3
-import Theorem.StatisticalMechanics.Code.FK.FKDisjointBoxDomainMarkov.Part3
-import Theorem.StatisticalMechanics.Code.FK.MultiEdgeDecay.Part4
-import Theorem.StatisticalMechanics.Code.FK.FKGeneralQConsumer.Part5
-import Theorem.StatisticalMechanics.Code.Foundations.AeTailInvariant.Part4
-open MeasureTheory ProbabilityTheory Set Filter Topology
-open scoped BigOperators ENNReal StatMech symmDiff
-
-
 namespace StatMech
 
 namespace FK

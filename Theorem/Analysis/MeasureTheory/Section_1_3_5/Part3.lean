@@ -1,9 +1,13 @@
-import Theorem.Analysis.MeasureTheory.Section_1_3_4.Part7
-import Mathlib.Topology.UrysohnsLemma
-import Def.Analysis.MeasureTheory.Section_1_3_5.Part2
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_3_4.Part7
+public import Mathlib.Topology.UrysohnsLemma
+public import Def.Analysis.MeasureTheory.Section_1_3_5.Part2
 
+
+public section
 
 -- Helper: approximate a scaled box indicator by a continuous compactly supported function
+
 private lemma Box.scaled_indicator_approx_continuous {d:ℕ} (B : Box d) (c : ℝ) (δ : ℝ) (hδ : 0 < δ) :
     ∃ (g : EuclideanSpace' d → ℝ), Continuous g ∧ CompactlySupported g ∧
       RealAbsolutelyIntegrable g ∧ PreL1.norm (c • B.toSet.indicator' - g) ≤ δ := by

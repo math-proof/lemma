@@ -1,13 +1,15 @@
-import Mathlib
-import Def.LinearMap_DatumAndHonda
-import Def.RingHom_WittVectorHom
-import Def.Int_WittHomColimit
-import Def.Ideal_FontaineHodge
-import Instance.Dieudonne_UnipotentWittCovector
-
+module
+public import Mathlib
+public import Def.LinearMap_DatumAndHonda
+public import Def.RingHom_WittVectorHom
+public import Def.Int_WittHomColimit
+public import Def.Ideal_FontaineHodge
+public import Instance.Dieudonne_UnipotentWittCovector
 set_option autoImplicit false
-
 open Function
+
+
+public section
 
 universe u v w u' v'
 

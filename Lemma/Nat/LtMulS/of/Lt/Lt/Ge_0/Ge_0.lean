@@ -1,4 +1,4 @@
-import Lemma.Nat.EqMul_0'0
+import Theorem.Nat.EqMul_0'0
 import Lemma.Nat.Lt.of.Le.Lt
 import Lemma.Nat.LtMulS.of.Lt.Lt.Gt_0.Gt_0
 open Nat

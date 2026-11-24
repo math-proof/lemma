@@ -1,8 +1,11 @@
-import Mathlib.AlgebraicGeometry.IdealSheaf.Basic
-import Instance.AlgebraicGeometry_IdealSheafHom
-import Structure.AlgebraicGeometry_IdealSheafHom
-
+module
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Basic
+public import Instance.AlgebraicGeometry_IdealSheafHom
+public import Structure.AlgebraicGeometry_IdealSheafHom
 open CategoryTheory TopologicalSpace Opposite
+
+
+public section
 
 universe u
 

@@ -1,8 +1,12 @@
-import Theorem.Analysis.MeasureTheory.Section_1_1_3.Part7
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Data.Set.Countable
-import Mathlib.Topology.Instances.Irrational
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_1_3.Part7
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Data.Set.Countable
+public import Mathlib.Topology.Instances.Irrational
 open BoundedInterval
+
+
+public section
 
 /-!
 # Introduction to Measure Theory, Section 1.2: Lebesgue measure
@@ -10,8 +14,6 @@ open BoundedInterval
 A companion to (the introduction to) Section 1.2 of the book "An introduction to Measure Theory".
 
 -/
-
-
 /-- Exercise 1.2.1 (countable union) -/
 lemma exercise_1_2_1_union :
     ∃ E: ℕ → Set ℝ, (∀ n, Bornology.IsBounded (E n)) ∧

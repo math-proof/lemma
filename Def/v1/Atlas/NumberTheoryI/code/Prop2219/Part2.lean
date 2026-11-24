@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Prop2219.lean -/
+module
+public import Instance.v1.Atlas.NumberTheoryI.code.Ch22WeberLFunction
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Ch22WeberLFunction
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.AnalyticClassNumber
+public import Instance.v1.Atlas.NumberTheoryI.code.AnalyticClassNumber.Part3
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor1838
+public import Structure.v1.Atlas.NumberTheoryI.code.Prop2219
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Prop2219.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Instance.v1.Atlas.NumberTheoryI.code.Ch22WeberLFunction
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Ch22WeberLFunction
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.AnalyticClassNumber
-import Instance.v1.Atlas.NumberTheoryI.code.AnalyticClassNumber.Part3
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor1838
-import Structure.v1.Atlas.NumberTheoryI.code.Prop2219
-
-
 noncomputable section
 
 open scoped NumberField

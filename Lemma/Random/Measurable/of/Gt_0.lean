@@ -1,13 +1,16 @@
-import Lemma.Random.IsProbabilityMeasure.of.Gt_0
-import Mathlib.MeasureTheory.Measure.Dirac.Basic
-import Mathlib.MeasureTheory.Measure.GiryMonad
-import Mathlib.MeasureTheory.Measure.Module
-import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
-import Mathlib.MeasureTheory.MeasurableSpace.Constructions
-import Initialize.Tactic.Attr.Basic
+module
+public import Lemma.Random.IsProbabilityMeasure.of.Gt_0
+public import Mathlib.MeasureTheory.Measure.Dirac.Basic
+public import Mathlib.MeasureTheory.Measure.GiryMonad
+public import Mathlib.MeasureTheory.Measure.Module
+public import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+public import Mathlib.MeasureTheory.MeasurableSpace.Constructions
+public import Initialize.Tactic.Attr.Basic
 open Finset MeasureTheory Random
 open scoped ENNReal
 
+
+public section
 
 /--
 The empirical probability measure depends measurably on the sample. For a positive sample size, the

@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/DecorationFormalExternal.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Onsager.DecorationFormalSurgery.Part2
+public import Def.StatisticalMechanics.Code.Onsager.DecorationFormalExternal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/DecorationFormalExternal.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,11 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.Onsager.DecorationFormalSurgery.Part2
-import Def.StatisticalMechanics.Code.Onsager.DecorationFormalExternal
-
-
 namespace StatMech.Onsager
 
 open BigOperators Finset

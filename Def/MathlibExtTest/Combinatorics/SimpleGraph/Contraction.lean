@@ -1,11 +1,12 @@
+module
+public import Theorem.Combinatorics.SimpleGraph.Contraction.Part3
+public import Theorem.SimpleGraph.Contraction
+public import Abbrev.MathlibExtTest.Combinatorics.SimpleGraph.Contraction
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/Contraction.lean -/
-
-
-import Theorem.Combinatorics.SimpleGraph.Contraction.Part3
-import Theorem.SimpleGraph.Contraction
-import Abbrev.MathlibExtTest.Combinatorics.SimpleGraph.Contraction
-
-
 namespace MathlibExtTest.Combinatorics.SimpleGraph.Contraction
 
 def zero : retained := ⟨0, by simp [retained]⟩

@@ -1,11 +1,15 @@
--- Carved from Lemma/Definitions/Def_ModularCurve_FullLevelJacobian.lean: instance decls only.
-import Lemma.UpperHalfPlane.XHOperators
-import Instance.CuspidalType_IsCuspidalOfType
-import Def.HeckeGalois_EichlerShimura
-import Theorem.Matrix.FullLevelJacobian
-import Def.ModularCurve_FullLevelJacobian
-
+module
+public import Theorem.UpperHalfPlane.XHOperators
+public import Instance.CuspidalType_IsCuspidalOfType
+public import Def.HeckeGalois_EichlerShimura
+public import Theorem.Matrix.FullLevelJacobian
+public import Def.ModularCurve_FullLevelJacobian
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_ModularCurve_FullLevelJacobian.lean: instance decls only.
 
 noncomputable section
 

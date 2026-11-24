@@ -1,5 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/oc4_scalesum.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.OSSS.RevealmentSum
+public import Theorem.StatisticalMechanics.Code.Walls.oc3_core
+public import Def.StatisticalMechanics.Code.Walls.oc4_scalesum
+open scoped BigOperators ENNReal
+open Finset MeasureTheory
+set_option linter.style.longLine false
+set_option linter.unusedVariables false
+set_option linter.unusedSectionVars false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/oc4_scalesum.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,20 +20,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.OSSS.RevealmentSum
-import Theorem.StatisticalMechanics.Code.Walls.oc3_core
-import Def.StatisticalMechanics.Code.Walls.oc4_scalesum
-open scoped BigOperators ENNReal
-open Finset MeasureTheory
-
-set_option linter.style.longLine false
-set_option linter.unusedVariables false
-set_option linter.unusedSectionVars false
-
-
 namespace StatMech
 
 namespace Walls

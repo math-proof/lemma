@@ -1,13 +1,16 @@
--- Carved from Lemma/Definitions/Def_Dieudonne_UnipotentWittCovector.lean: instance decls only.
-import Mathlib
-import Instance.Dieudonne_WittVectorHom
-import Instance.Dieudonne_WittHomColimit
-import Theorem.Int.UnipotentWittCovector
-import Def.Int_UnipotentWittCovector
-
+module
+public import Mathlib
+public import Instance.Dieudonne_WittVectorHom
+public import Instance.Dieudonne_WittHomColimit
+public import Theorem.Int.UnipotentWittCovector
+public import Def.Int_UnipotentWittCovector
 set_option autoImplicit false
-
 open Function
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_Dieudonne_UnipotentWittCovector.lean: instance decls only.
 
 universe u v w u' v'
 

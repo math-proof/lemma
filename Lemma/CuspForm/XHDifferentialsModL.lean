@@ -1,13 +1,16 @@
-import Mathlib
-import Lemma.UpperHalfPlane.XHDiamondModL
-import Lemma.LaurentSeries.QExpFrobeniusModL
-import Lemma.LaurentSeries.HeckeDifferential
-import Lemma.Set.PolarDifferentials
-import Lemma.WeierstrassCurve.SupersingularModuli
-import Lemma.CuspForm.TwoCuspLattice
-import Abbrev.ModularCurve_XHDifferentialsModL
-
+module
+public import Mathlib
+public import Theorem.UpperHalfPlane.XHDiamondModL
+public import Lemma.LaurentSeries.QExpFrobeniusModL
+public import Lemma.LaurentSeries.HeckeDifferential
+public import Lemma.Set.PolarDifferentials
+public import Theorem.WeierstrassCurve.SupersingularModuli
+public import Lemma.CuspForm.TwoCuspLattice
+public import Abbrev.ModularCurve_XHDifferentialsModL
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

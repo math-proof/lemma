@@ -1,5 +1,20 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/DifferentialAnalysis/code/RieszRepresentation.lean -/
+module
+public import Mathlib.MeasureTheory.Integral.RieszMarkovKakutani.Real
+public import Mathlib.MeasureTheory.Integral.CompactlySupported
+public import Mathlib.Topology.ContinuousMap.ZeroAtInfty
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.MeasureTheory.Measure.Real
+public import Mathlib.MeasureTheory.Measure.LevyConvergence
+public import Mathlib.Topology.UrysohnsLemma
+public import Def.v1.Atlas.DifferentialAnalysis.code.JordanDecomposition.Part5
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.JordanDecomposition
+public import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras
+public import Def.v1.Atlas.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras.Part3
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/DifferentialAnalysis/code/RieszRepresentation.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,20 +22,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib.MeasureTheory.Integral.RieszMarkovKakutani.Real
-import Mathlib.MeasureTheory.Integral.CompactlySupported
-import Mathlib.Topology.ContinuousMap.ZeroAtInfty
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.MeasureTheory.Measure.Real
-import Mathlib.MeasureTheory.Measure.LevyConvergence
-import Mathlib.Topology.UrysohnsLemma
-import Def.v1.Atlas.DifferentialAnalysis.code.JordanDecomposition.Part5
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.JordanDecomposition
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras
-import Def.v1.Atlas.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras.Part3
-
-
 section PositiveCase
 
 end PositiveCase

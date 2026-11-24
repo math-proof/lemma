@@ -1,12 +1,15 @@
-import Mathlib
-import Def.AlgebraicGeometry_RelativePicardFunctor
-import Lemma.Scheme.PolarisationRosati
-import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
-import Instance.AlgebraicGeometry_SymmRootFunctor
-import Structure.AlgebraicGeometry_SymmRootFunctor
-import Abbrev.AlgebraicGeometry_SymmRootFunctor
-
+module
+public import Mathlib
+public import Def.AlgebraicGeometry_RelativePicardFunctor
+public import Theorem.Scheme.PolarisationRosati
+public import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
+public import Instance.AlgebraicGeometry_SymmRootFunctor
+public import Structure.AlgebraicGeometry_SymmRootFunctor
+public import Abbrev.AlgebraicGeometry_SymmRootFunctor
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

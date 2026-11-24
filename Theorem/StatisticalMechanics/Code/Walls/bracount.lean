@@ -1,5 +1,19 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/bracount.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Walls.bri2reconcile.Part3
+public import Theorem.StatisticalMechanics.Code.Walls.briraysintree.Part3
+public import Theorem.StatisticalMechanics.Code.Walls.bof2leafcount.Part2
+open Set SimpleGraph Finset
+open StatMech StatMech.Lattice StatMech.ConfigSpace StatMech.Percolation
+set_option linter.style.longLine false
+set_option linter.unusedVariables false
+set_option linter.unusedSectionVars false
+set_option maxRecDepth 4000
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/bracount.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,21 +21,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Walls.bri2reconcile.Part3
-import Theorem.StatisticalMechanics.Code.Walls.briraysintree.Part3
-import Theorem.StatisticalMechanics.Code.Walls.bof2leafcount.Part2
-open Set SimpleGraph Finset
-open StatMech StatMech.Lattice StatMech.ConfigSpace StatMech.Percolation
-
-set_option linter.style.longLine false
-set_option linter.unusedVariables false
-set_option linter.unusedSectionVars false
-set_option maxRecDepth 4000
-
-
 namespace StatMech.Walls
 
 theorem bra_G_le_lattice (ω : ConfigSpace (Sym2 (Site 2))) (L : ℕ) :

@@ -1,20 +1,21 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Contraction.lean -/
+module
+public import Theorem.Combinatorics.SimpleGraph.VertexConnectivity
+public import Theorem.SimpleGraph.VertexConnectivity
+public import Theorem.Combinatorics.SimpleGraph.Contraction.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Contraction.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
-
-import Theorem.Combinatorics.SimpleGraph.VertexConnectivity
-import Theorem.SimpleGraph.VertexConnectivity
-import Theorem.Combinatorics.SimpleGraph.Contraction.Part2
 /-!
 # Contracting the complement of a vertex set
 
 This file contracts every vertex outside a set to one new vertex. The construction is used by
 the induction in Fleischner's theorem.
 -/
-
-
 namespace SimpleGraph
 
 noncomputable def induceContractOutsideSomeHom {V : Type*}

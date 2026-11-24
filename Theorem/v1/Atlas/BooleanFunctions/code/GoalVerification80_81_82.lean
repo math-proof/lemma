@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/GoalVerification80_81_82.lean -/
+module
+public import Def.v1.Atlas.BooleanFunctions.code.Borel
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Borel
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.NoiseStabilityBounds
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.NoiseStabilityMono
+set_option maxHeartbeats 800000
+open Finset BigOperators Real MeasureTheory ProbabilityTheory
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/GoalVerification80_81_82.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.BooleanFunctions.code.Borel
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Borel
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.NoiseStabilityBounds
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.NoiseStabilityMono
-set_option maxHeartbeats 800000
-
-open Finset BigOperators Real MeasureTheory ProbabilityTheory
-
 
 example {n : ℕ} (f : EuclideanSpace ℝ (Fin n) → ℝ)
     (hf_range : ∀ x, f x ∈ Set.Icc (-1 : ℝ) 1)

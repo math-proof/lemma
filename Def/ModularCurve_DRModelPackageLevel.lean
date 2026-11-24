@@ -1,19 +1,22 @@
-import Mathlib
-import Lemma.Scheme.IgusaScheme
-import Def.GaloisRep_Flat
-import Lemma.AlgEquiv.AtkinLehnerPartial
-import Lemma.Scheme.CurveModel
-import Lemma.LaurentSeries.GeometricBaseChange
-import Lemma.LaurentSeries.ArithmeticGalois
-import Theorem.Nat.PlaceWidthChar
-import Theorem.LaurentSeries.CoeffSemilinearAut
-import Theorem.Scheme.NeronModelPropertyBundleCarrier
-import Structure.ModularCurve_DRModelPackageLevel
-import Abbrev.ModularCurve_DRModelPackageLevel
-
+module
+public import Mathlib
+public import Lemma.Scheme.IgusaScheme
+public import Def.GaloisRep_Flat
+public import Lemma.AlgEquiv.AtkinLehnerPartial
+public import Lemma.Scheme.CurveModel
+public import Lemma.LaurentSeries.GeometricBaseChange
+public import Lemma.LaurentSeries.ArithmeticGalois
+public import Theorem.Nat.PlaceWidthChar
+public import Theorem.LaurentSeries.CoeffSemilinearAut
+public import Theorem.Scheme.NeronModelPropertyBundleCarrier
+public import Structure.ModularCurve_DRModelPackageLevel
+public import Abbrev.ModularCurve_DRModelPackageLevel
 set_option autoImplicit false
 set_option maxHeartbeats 800000
 set_option synthInstance.maxHeartbeats 400000
+
+
+public section
 
 noncomputable section
 

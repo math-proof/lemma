@@ -1,4 +1,4 @@
-import Lemma.Finset.ConverseData
+import Theorem.Finset.ConverseData
 import Def.LanglandsTunnell_ArchBaseChange
 import Abbrev.LanglandsTunnell_ArchBaseChange
 

@@ -1,7 +1,10 @@
+module
+public import Theorem.NumberTheory.NumberField.RayClass.IntegralUnits.Part4
+public import Theorem.Nat.NumberField.RayClass.IntegralUnits
+
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/RayClass/IntegralUnits.lean -/
 
-import Theorem.NumberTheory.NumberField.RayClass.IntegralUnits.Part4
-import Theorem.Nat.NumberField.RayClass.IntegralUnits
 @[expose] public noncomputable section
 
 open NumberField

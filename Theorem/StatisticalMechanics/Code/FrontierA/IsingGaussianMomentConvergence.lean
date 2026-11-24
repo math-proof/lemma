@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingGaussianMomentConvergence.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianExponentialTightness
+public import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+public import Def.StatisticalMechanics.Code.FrontierA.IsingGaussianMomentConvergence
+open Filter MeasureTheory Set Topology
+open ProbabilityTheory
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingGaussianMomentConvergence.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianExponentialTightness
-import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
-import Def.StatisticalMechanics.Code.FrontierA.IsingGaussianMomentConvergence
-open Filter MeasureTheory Set Topology
-open ProbabilityTheory
-
-
 namespace StatMech.FrontierA
 
 theorem clippedPower_eq_self

@@ -1,8 +1,11 @@
-import Mathlib
-import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
-import Instance.GoodReductionJacobian_RelativeGroupLawKerPair
-
+module
+public import Mathlib
+public import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
+public import Instance.GoodReductionJacobian_RelativeGroupLawKerPair
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

@@ -1,10 +1,13 @@
-import Mathlib
-import Def.AlgHom_Points
-import Def.LinearMap_CartierDual
-import Instance.HopfAlgebra_CartierDualInstances
-import Structure.PDivisibleGroup_CartierDuality
-
+module
+public import Mathlib
+public import Def.AlgHom_Points
+public import Def.LinearMap_CartierDual
+public import Instance.HopfAlgebra_CartierDualInstances
+public import Structure.PDivisibleGroup_CartierDuality
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

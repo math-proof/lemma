@@ -1,12 +1,14 @@
+module
+public import Def.AlgebraicGeometry.EllipticCurve.VariableChangePoint.Part3
+public import Theorem.Scheme.EllipticCurve.VariableChangePoint
+public import Mathlib.Algebra.Field.ZMod
+public import Mathlib.Tactic.NormNum
+public import Def.MathlibExtTest.AlgebraicGeometry.EllipticCurve.VariableChangePoint.Part2
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/AlgebraicGeometry/EllipticCurve/VariableChangePoint.lean -/
-
-import Def.AlgebraicGeometry.EllipticCurve.VariableChangePoint.Part3
-import Theorem.Scheme.EllipticCurve.VariableChangePoint
-import Mathlib.Algebra.Field.ZMod
-import Mathlib.Tactic.NormNum
-import Def.MathlibExtTest.AlgebraicGeometry.EllipticCurve.VariableChangePoint.Part2
-
-
 namespace MathlibExtTest.AlgebraicGeometry.EllipticCurve.VariableChangePoint
 
 open WeierstrassCurve

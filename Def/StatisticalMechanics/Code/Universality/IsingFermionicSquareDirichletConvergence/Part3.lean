@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicSquareDirichletConvergence.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicDirichletComparison.Part5
+public import Theorem.StatisticalMechanics.Code.FrontierB.BoxGraphPath.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareDirichletConvergence.Part2
+open Finset SimpleGraph Filter Set Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicSquareDirichletConvergence.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicDirichletComparison.Part5
-import Theorem.StatisticalMechanics.Code.FrontierB.BoxGraphPath.Part2
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareDirichletConvergence.Part2
-open Finset SimpleGraph Filter Set Topology
-
-
 namespace StatMech.Universality
 
 open StatMech StatMech.FK StatMech.Lattice StatMech.FrontierD

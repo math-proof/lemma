@@ -1,6 +1,9 @@
-import Def.Analysis.MeasureTheory.Section_1_4_2.Part8
-import Def.Analysis.MeasureTheory.Section_1_4_3.Part3
+module
+public import Def.Analysis.MeasureTheory.Section_1_4_2.Part8
+public import Def.Analysis.MeasureTheory.Section_1_4_3.Part3
 
+
+public section
 
 /-- Example 1.4.28 -/
 theorem FinitelyAdditiveMeasure.lebesgue_isCountablyAdditive (d:ℕ) : (FinitelyAdditiveMeasure.lebesgue d).isCountablyAdditive :=

@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingDiagonalReflectionGeometry.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingMarkovReflectionFold
+public import Theorem.StatisticalMechanics.Code.Lattice.PathVisitsRow.Part2
+public import Theorem.StatisticalMechanics.Code.Percolation.PcNontrivial.Part4
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingDiagonalReflectionGeometry.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingMarkovReflectionFold
-import Theorem.StatisticalMechanics.Code.Lattice.PathVisitsRow.Part2
-import Theorem.StatisticalMechanics.Code.Percolation.PcNontrivial.Part4
-
-
 namespace StatMech.FrontierA
 
 open StatMech.Lattice StatMech.Percolation

@@ -1,7 +1,10 @@
-import Mathlib
-import Instance.IsLocalRing_SmallExtensionTangent
-
+module
+public import Mathlib
+public import Instance.IsLocalRing_SmallExtensionTangent
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

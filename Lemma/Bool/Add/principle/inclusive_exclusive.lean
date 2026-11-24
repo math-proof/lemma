@@ -3,14 +3,12 @@ import Initialize.Tactic.Attr.Basic
 
 @[path]
 private lemma main
-  {p q : Prop}
-  [Decidable p]
-  [Decidable q] :
+  [Decidable p] [Decidable q] :
 -- imply
-  Bool.toNat (p ∨ q) + Bool.toNat (p ∧ q) = Bool.toNat p + Bool.toNat q := by
+  (decide p).toNat + (decide q).toNat = (decide (p ∨ q)).toNat + (decide (p ∧ q)).toNat := by
 -- proof
-  obtain hp | hp := em p <;> obtain hq | hq := em q <;> simp [hp, hq]
+  by_cases hp : p <;> by_cases hq : q <;> simp [hp, hq]
 
 
 -- created on 2018-08-03
--- updated on 2026-10-26
+-- updated on 2026-11-24

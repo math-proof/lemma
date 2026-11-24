@@ -1,5 +1,21 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/IsotypicPeterWeyl.lean -/
+module
+public import Def.v1.Atlas.LieGroups.code.KFinite.Part3
+public import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
+public import Theorem.Complex.IsKFinite0
+public import Def.v1.Atlas.LieGroups.code.KFiniteProps.Part4
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.Analysis.InnerProductSpace.Basic
+public import Mathlib.MeasureTheory.Measure.Haar.Basic
+public import Mathlib.MeasureTheory.Measure.Haar.Unique
+public import Mathlib.Analysis.InnerProductSpace.l2Space
+public import Mathlib.MeasureTheory.Function.L2Space
+public import Mathlib.MeasureTheory.Function.LpSpace.ContinuousCompMeasurePreserving
+public import Def.v1.Atlas.LieGroups.code.IsotypicPeterWeyl.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/IsotypicPeterWeyl.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,21 +23,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.LieGroups.code.KFinite.Part3
-import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
-import Theorem.Complex.IsKFinite0
-import Def.v1.Atlas.LieGroups.code.KFiniteProps.Part4
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.Analysis.InnerProductSpace.Basic
-import Mathlib.MeasureTheory.Measure.Haar.Basic
-import Mathlib.MeasureTheory.Measure.Haar.Unique
-import Mathlib.Analysis.InnerProductSpace.l2Space
-import Mathlib.MeasureTheory.Function.L2Space
-import Mathlib.MeasureTheory.Function.LpSpace.ContinuousCompMeasurePreserving
-import Def.v1.Atlas.LieGroups.code.IsotypicPeterWeyl.Part2
-
-
 noncomputable section
 
 open scoped ComplexOrder

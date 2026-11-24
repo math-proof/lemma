@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/CheckSignedLoopCriticalEndpoint.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopPhaseEndpoint
+open StatMech Onsager
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/CheckSignedLoopCriticalEndpoint.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,9 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopPhaseEndpoint
-open StatMech Onsager
 
 #print axioms summable_ons_rectDualPathCriticalCycleCoverTerm
 #print axioms tsum_ons_rectDualPathCriticalCycleCoverTerm

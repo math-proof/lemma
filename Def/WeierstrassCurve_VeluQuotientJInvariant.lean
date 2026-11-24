@@ -1,6 +1,10 @@
-import Mathlib
-import Def.WeierstrassCurve_VeluQuotientMap
-import Instance.WeierstrassCurve_VeluQuotientJInvariant
+module
+public import Mathlib
+public import Def.WeierstrassCurve_VeluQuotientMap
+public import Instance.WeierstrassCurve_VeluQuotientJInvariant
+
+
+public section
 
 namespace WeierstrassCurve
 

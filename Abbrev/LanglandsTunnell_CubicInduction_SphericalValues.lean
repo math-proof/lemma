@@ -1,6 +1,9 @@
-import Def.LanglandsTunnell_CubicInduction_TorusValues
-
+module
+public import Def.LanglandsTunnell_CubicInduction_TorusValues
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

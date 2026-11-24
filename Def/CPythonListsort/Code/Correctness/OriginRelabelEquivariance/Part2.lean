@@ -1,8 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/OriginRelabelEquivariance.lean -/
+module
+public import Def.CPythonListsort.Code.Correctness.ScanStepCorrectness.Part3
+public import Def.CPythonListsort.Code.Correctness.MergeForceCollapseCorrectness.Part2
+public import Theorem.CPythonListsort.Code.Correctness.OriginRelabelEquivariance
 
-import Def.CPythonListsort.Code.Correctness.ScanStepCorrectness.Part3
-import Def.CPythonListsort.Code.Correctness.MergeForceCollapseCorrectness.Part2
-import Theorem.CPythonListsort.Code.Correctness.OriginRelabelEquivariance
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/OriginRelabelEquivariance.lean -/
 /-!
 # Equivariance under mirrored occurrence origins
 
@@ -12,8 +16,6 @@ reversed source.  This file supplies the explicit relabeling and proves that
 the implementation observes only occurrence values: changing every origin by
 the same mirror map commutes with the data-moving evaluator.
 -/
-
-
 namespace CPythonListsort
 
 universe u v

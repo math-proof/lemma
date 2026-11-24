@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.Polynomial_DeuringPolynomial
 import Def.WeierstrassCurve_HasseInvariant
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 open Polynomial
 open WeierstrassCurve Int
 

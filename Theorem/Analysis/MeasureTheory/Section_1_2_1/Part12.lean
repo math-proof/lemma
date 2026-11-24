@@ -1,8 +1,12 @@
-import Def.Analysis.MeasureTheory.Section_1_2_0.Part2
-import Theorem.Analysis.Misc.RealERealENNReal
-import Theorem.Analysis.Misc.Combinatorics
-import Def.Analysis.MeasureTheory.Section_1_2_1.Part10
+module
+public import Def.Analysis.MeasureTheory.Section_1_2_0.Part2
+public import Theorem.Analysis.Misc.RealERealENNReal
+public import Theorem.Analysis.Misc.Combinatorics
+public import Def.Analysis.MeasureTheory.Section_1_2_1.Part10
 open BoundedInterval
+
+
+public section
 
 /-!
 # Introduction to Measure Theory, Section 1.2.1: Properties of Lebesgue outer measure
@@ -10,8 +14,6 @@ open BoundedInterval
 A companion to (the introduction to) Section 1.2.1 of the book "An introduction to Measure Theory".
 
 -/
-
-
 -- Helpers for theorem IsElementary.almost_disjoint
 /-- Measure is additive on unions of elementary sets with disjoint interiors: μ(E ∪ F) = μ(E) + μ(F). -/
 lemma IsElementary.measure_of_almostDisjUnion {d:ℕ} {E F: Set (EuclideanSpace' d)}

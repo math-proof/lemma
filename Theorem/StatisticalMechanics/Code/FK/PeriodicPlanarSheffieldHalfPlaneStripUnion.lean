@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/PeriodicPlanarSheffieldHalfPlaneStripUnion.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldHalfPlaneMerge
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldHalfPlaneStrip.Part3
+public import Def.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldHalfPlaneStripUnion
+open Filter MeasureTheory Set SimpleGraph Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/PeriodicPlanarSheffieldHalfPlaneStripUnion.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldHalfPlaneMerge
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldHalfPlaneStrip.Part3
-import Def.StatisticalMechanics.Code.FK.PeriodicPlanarSheffieldHalfPlaneStripUnion
-open Filter MeasureTheory Set SimpleGraph Topology
-
-
 namespace StatMech.FK.PeriodicPlanar
 
 open BeffaraDC Lattice

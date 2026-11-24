@@ -1,9 +1,12 @@
-import Mathlib
-import Lemma.Fin.Sum_SquareRothCentered.le.DivCardRothBox4.of.All_Gt_0
-import Lemma.Fin.Sum_MulRothSCentered.eq.Zero.of.Ne.All_Gt_0
+module
+public import Mathlib
+public import Lemma.Fin.Sum_SquareRothCentered.le.DivCardRothBox4.of.All_Gt_0
+public import Lemma.Fin.Sum_MulRothSCentered.eq.Zero.of.Ne.All_Gt_0
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [rothCentered_second_moment_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

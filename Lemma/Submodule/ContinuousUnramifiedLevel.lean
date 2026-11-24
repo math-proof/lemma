@@ -1,6 +1,6 @@
 import Mathlib
 import Lemma.Submodule.ContinuousH2
-import Lemma.Rep.ContinuousH1
+import Theorem.Rep.ContinuousH1
 set_option autoImplicit false
 open CategoryTheory
 

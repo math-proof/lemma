@@ -1,13 +1,16 @@
-import Mathlib
-import Structure.JacJ1Iface
-import Instance.AlgebraicGeometry_RelativePicardFunctor
-import Structure.AlgebraicGeometry_RepresentsRelSubPic
-import Def.AlgebraicGeometry_RelPicardAlgEquivZeroCut
-import Def.AlgebraicGeometry_RelPicardAlgEquivZeroGroupCut
-import Structure.AlgebraicGeometry_RelSubPicGroup
-import Structure.AlgebraicGeometry_TwoAffineOpenCover
-
+module
+public import Mathlib
+public import Structure.JacJ1Iface
+public import Instance.AlgebraicGeometry_RelativePicardFunctor
+public import Structure.AlgebraicGeometry_RepresentsRelSubPic
+public import Def.AlgebraicGeometry_RelPicardAlgEquivZeroCut
+public import Def.AlgebraicGeometry_RelPicardAlgEquivZeroGroupCut
+public import Structure.AlgebraicGeometry_RelSubPicGroup
+public import Structure.AlgebraicGeometry_TwoAffineOpenCover
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

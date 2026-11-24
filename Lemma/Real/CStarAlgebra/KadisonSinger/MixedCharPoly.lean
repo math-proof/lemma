@@ -1,11 +1,14 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.Analysis.CStarAlgebra.KadisonSinger.MixedCharPoly
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.Analysis.CStarAlgebra.KadisonSinger.MixedCharPoly
 open scoped BigOperators
 open Polynomial
 open MvPolynomial
 open MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
+
+public section
 
 namespace MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 

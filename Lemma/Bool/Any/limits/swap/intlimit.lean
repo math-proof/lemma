@@ -3,28 +3,19 @@ import Initialize.Tactic.Attr.Basic
 
 @[path]
 private lemma main
-  {f : ℤ → Prop}
-  {g : ℤ → ℤ → Prop}
-  {a d n : ℤ} :
+  {a d n : ℤ}
+  {f : ℤ → ℤ → Prop} :
 -- imply
-  (∃ i, ∃ j, i ∈ Set.Ico (a + d) (j + d) ∧ j ∈ Set.Ico (a + 1) n ∧ f i ∧ g i j)
-    ↔ ∃ j, ∃ i, j ∈ Set.Ico (i + 1 - d) n ∧ i ∈ Set.Ico (a + d) (n + d - 1) ∧ f i ∧ g i j := by
+  (∃ j, a + 1 ≤ j ∧ j < n ∧ ∃ i, a + d ≤ i ∧ i < j + d ∧ f i j) ↔ ∃ i, a + d ≤ i ∧ i < n - 1 + d ∧ ∃ j, i - d + 1 ≤ j ∧ j < n ∧ f i j := by
 -- proof
   constructor
   ·
-    rintro ⟨i, j, ⟨hi1, hi2⟩, ⟨hj1, hj2⟩, hf, hg⟩
-    refine ⟨j, i, ⟨?_, hj2⟩, ⟨hi1, ?_⟩, hf, hg⟩
-    ·
-      omega
-    ·
-      omega
+    rintro ⟨j, hj₀, hj₁, i, hi₀, hi₁, h⟩
+    exact ⟨i, hi₀, by omega, j, by omega, hj₁, h⟩
   ·
-    rintro ⟨j, i, ⟨hj1, hj2⟩, ⟨hi1, hi2⟩, hf, hg⟩
-    refine ⟨i, j, ⟨hi1, ?_⟩, ⟨?_, hj2⟩, hf, hg⟩
-    ·
-      omega
-    ·
-      omega
+    rintro ⟨i, hi₀, hi₁, j, hj₀, hj₁, h⟩
+    exact ⟨j, by omega, hj₁, i, hi₀, by omega, h⟩
 
 
 -- created on 2022-01-28
+-- updated on 2026-11-24

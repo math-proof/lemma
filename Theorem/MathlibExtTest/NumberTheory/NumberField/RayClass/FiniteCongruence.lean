@@ -1,10 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/RayClass/FiniteCongruence.lean -/
-
-import Theorem.NumberTheory.NumberField.RayClass.FiniteCongruence.Part4
-import Lemma.Nat.NumberField.RayClass.FiniteCongruence
+module
+public import Theorem.NumberTheory.NumberField.RayClass.FiniteCongruence.Part4
+public import Theorem.Nat.NumberField.RayClass.FiniteCongruence
 open scoped nonZeroDivisors
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/RayClass/FiniteCongruence.lean -/
 namespace NumberField
 
 namespace Modulus

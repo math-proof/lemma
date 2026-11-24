@@ -1,12 +1,16 @@
-import Mathlib.Algebra.Exact
-import Mathlib.Algebra.Category.Grp.Ulift
-import Mathlib.CategoryTheory.Sites.LocallySurjective
-import Mathlib.RingTheory.AdjoinRoot
-import Mathlib.RingTheory.Flat.Rank
-import Mathlib.AlgebraicGeometry.Morphisms.Flat
-import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
-import Instance.AlgebraicGeometry_FppfCohomologyLES
-import Instance.AlgebraicGeometry_FppfGmRepresentable
+module
+public import Mathlib.Algebra.Exact
+public import Mathlib.Algebra.Category.Grp.Ulift
+public import Mathlib.CategoryTheory.Sites.LocallySurjective
+public import Mathlib.RingTheory.AdjoinRoot
+public import Mathlib.RingTheory.Flat.Rank
+public import Mathlib.AlgebraicGeometry.Morphisms.Flat
+public import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
+public import Instance.AlgebraicGeometry_FppfCohomologyLES
+public import Instance.AlgebraicGeometry_FppfGmRepresentable
+
+
+public section
 
 namespace ModularCurve
 

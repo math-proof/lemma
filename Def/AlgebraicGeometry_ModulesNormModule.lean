@@ -1,8 +1,11 @@
-import Mathlib
-import Abbrev.AlgebraicGeometry_ModulesDet
-import Instance.SheafOfModules_Monoidal
-
+module
+public import Mathlib
+public import Abbrev.AlgebraicGeometry_ModulesDet
+public import Instance.SheafOfModules_Monoidal
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

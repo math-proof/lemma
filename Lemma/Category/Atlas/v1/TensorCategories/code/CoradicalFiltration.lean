@@ -1,10 +1,13 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.TensorCategories.code.CoradicalFiltration.Part8
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.TensorCategories.code.CoradicalFiltration.Part8
 open Coalgebra Submodule
 open scoped TensorProduct
 open CategoryTheory CategoryTheory.Abelian CategoryTheory.Limits
 
+
+public section
 
 namespace Submodule
 

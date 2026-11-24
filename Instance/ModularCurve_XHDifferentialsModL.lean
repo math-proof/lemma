@@ -1,11 +1,15 @@
--- Carved from Lemma/Definitions/Def_ModularCurve_XHDifferentialsModL.lean: instance decls only.
-import Mathlib
-import Instance.ModularCurve_HeckeDifferential
-import Instance.CuspForm_TwoCuspLattice
-import Theorem.CuspForm.XHDifferentialsModL
-import Def.ModularCurve_XHDifferentialsModL
-
+module
+public import Mathlib
+public import Instance.ModularCurve_HeckeDifferential
+public import Instance.CuspForm_TwoCuspLattice
+public import Theorem.CuspForm.XHDifferentialsModL
+public import Def.ModularCurve_XHDifferentialsModL
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_ModularCurve_XHDifferentialsModL.lean: instance decls only.
 
 noncomputable section
 

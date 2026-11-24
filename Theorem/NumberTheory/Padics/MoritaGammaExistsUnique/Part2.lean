@@ -1,22 +1,24 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/MoritaGammaExistsUnique.lean -/
+module
+public import Def.NumberTheory.Padics.MoritaGamma
+public import Theorem.Nat.Padics.MoritaGamma
+public import Mathlib.Algebra.Order.Ring.Star
+public import Mathlib.NumberTheory.Padics.RingHoms
+public import Mathlib.RingTheory.ZMod.UnitsCyclic
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Connected.Separation
+public import Mathlib.Topology.GDelta.MetrizableSpace
+public import Mathlib.Topology.MetricSpace.Ultra.TotallySeparated
+public import Mathlib.Topology.Separation.CompletelyRegular
+public import Def.NumberTheory.Padics.MoritaGammaExistsUnique.Part2
 
-import Def.NumberTheory.Padics.MoritaGamma
-import Theorem.Nat.Padics.MoritaGamma
-import Mathlib.Algebra.Order.Ring.Star
-import Mathlib.NumberTheory.Padics.RingHoms
-import Mathlib.RingTheory.ZMod.UnitsCyclic
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Connected.Separation
-import Mathlib.Topology.GDelta.MetrizableSpace
-import Mathlib.Topology.MetricSpace.Ultra.TotallySeparated
-import Mathlib.Topology.Separation.CompletelyRegular
-import Def.NumberTheory.Padics.MoritaGammaExistsUnique.Part2
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Padics/MoritaGammaExistsUnique.lean -/
 /-!
 # Existence of Morita's p-adic gamma function
 -/
-
-
 section
 
 namespace MetaMathlibExt

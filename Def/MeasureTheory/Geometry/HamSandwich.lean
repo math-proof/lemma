@@ -1,21 +1,22 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Geometry/HamSandwich.lean -/
-
-/-
-Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
--/
-
-import Mathlib.MeasureTheory.Measure.Haar.OfBasis
-import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
-import Theorem.Topology.Homotopy.BorsukUlam.Part11
-import Lemma.Set.Homotopy.BorsukUlam
-import Mathlib.MeasureTheory.Integral.Indicator
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Topology.Order.OrderClosed
+module
+public import Mathlib.MeasureTheory.Measure.Haar.OfBasis
+public import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
+public import Theorem.Topology.Homotopy.BorsukUlam.Part11
+public import Theorem.Set.Homotopy.BorsukUlam
+public import Mathlib.MeasureTheory.Integral.Indicator
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Topology.Order.OrderClosed
 open MeasureTheory
 open Metric
 open scoped InnerProductSpace MeasureTheory
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/Geometry/HamSandwich.lean -/
+/-
+Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
+-/
 namespace MathlibExt.MeasureTheory.Geometry.HamSandwichWanted
 
 /-- Tail projection `EuclideanSpace ℝ (Fin (n+1)) → EuclideanSpace ℝ (Fin n)`,

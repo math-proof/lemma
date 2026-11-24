@@ -1,8 +1,11 @@
-import Mathlib
-import Instance.CuspForm_AuxLevelHeckeModule
-import Inductive.CuspForm_TWLevelHeckeModule_Gen
-
+module
+public import Mathlib
+public import Instance.CuspForm_AuxLevelHeckeModule
+public import Inductive.CuspForm_TWLevelHeckeModule_Gen
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/MonotoneAutomatonNearestTransport.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonPairLaw.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierA.NearestSetGeometry.Part4
+public import Theorem.StatisticalMechanics.Code.FrontierA.FiniteTargetTransport
+public import Def.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonNearestTransport.Part2
+open Set
+open scoped ENNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/MonotoneAutomatonNearestTransport.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonPairLaw.Part3
-import Theorem.StatisticalMechanics.Code.FrontierA.NearestSetGeometry.Part4
-import Theorem.StatisticalMechanics.Code.FrontierA.FiniteTargetTransport
-import Def.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonNearestTransport.Part2
-open Set
-open scoped ENNReal
-
-
 namespace StatMech.FrontierA
 
 open StatMech.Lattice StatMech.Percolation StatMech.ConfigSpace

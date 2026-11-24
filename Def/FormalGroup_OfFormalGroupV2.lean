@@ -1,11 +1,14 @@
-import Class.MvFormalGroup_BasicV2
-import Theorem.FormalGroup.NSeries
-import Def.FormalGroup_PointTransport
-import Mathlib.RingTheory.FormalGroup.Basic
-import Mathlib.RingTheory.MvPowerSeries.Rename
-import Instance.MvFormalGroup_OfFormalGroupV2
-
+module
+public import Class.MvFormalGroup_BasicV2
+public import Theorem.FormalGroup.NSeries
+public import Def.FormalGroup_PointTransport
+public import Mathlib.RingTheory.FormalGroup.Basic
+public import Mathlib.RingTheory.MvPowerSeries.Rename
+public import Instance.MvFormalGroup_OfFormalGroupV2
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

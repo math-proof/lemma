@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Def2213.lean -/
+module
+public import Instance.v1.Atlas.NumberTheoryI.code.Ch22WeberLFunction
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Ch22WeberLFunction
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Ch22ConductorDef
+public import Def.v1.Atlas.NumberTheoryI.code.Ch22ConductorDef
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Def2213.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Instance.v1.Atlas.NumberTheoryI.code.Ch22WeberLFunction
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Ch22WeberLFunction
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Ch22ConductorDef
-import Def.v1.Atlas.NumberTheoryI.code.Ch22ConductorDef
-
-
 noncomputable section
 
 open scoped NumberField

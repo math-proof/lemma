@@ -1,13 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/DiscreteValuationRing/MaximalIdealGradedPieceMul.lean -/
+module
+public import Def.RingTheory.DiscreteValuationRing.MaximalIdealGradedPieceMul
+public import Theorem.Int.DiscreteValuationRing.MaximalIdealGradedPieceMul
+open IsLocalRing IsDiscreteValuationRing
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/DiscreteValuationRing/MaximalIdealGradedPieceMul.lean -/
 /-
 Author: Muse Code
 -/
-
-import Def.RingTheory.DiscreteValuationRing.MaximalIdealGradedPieceMul
-import Theorem.Int.DiscreteValuationRing.MaximalIdealGradedPieceMul
-open IsLocalRing IsDiscreteValuationRing
-
 variable (R : Type*) [CommRing R] [IsDomain R] [IsDiscreteValuationRing R]
 
 /-!

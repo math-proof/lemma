@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_2
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_2
 open MeasureTheory Real
 
+
+public section
 
 /--
 [IsSubGaussian.integrable](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter1/Def_1_2.lean)

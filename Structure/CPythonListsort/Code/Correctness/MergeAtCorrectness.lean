@@ -8,7 +8,7 @@ public import Def.CPythonListsort.Code.Correctness.MergeAtCorrectnessSupport
 public import Def.CPythonListsort.Code.Correctness.MergeHiCorrectness
 public import Structure.CPythonListsort.Code.Correctness.MergeLoCorrectness
 public import Def.CPythonListsort.Code.Correctness.PendingRunCorrectness
-public import Lemma.List.Atlas.CPythonListsort.Code.Policy.MergeAtPreservation
+public import Theorem.List.Atlas.CPythonListsort.Code.Policy.MergeAtPreservation
 public import Theorem.List.Atlas.CPythonListsort.Code.Policy.MergeTopPowerPreservation
 public import Def.CPythonListsort.Code.Correctness.MergeAtCorrectness
 /-!

@@ -1,13 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/DiscreteValuationRing/MaximalIdealPowQuotientTrace.lean -/
+module
+public import Theorem.RingTheory.DiscreteValuationRing.MaximalIdealPowQuotientTrace
+public import Theorem.Int.DiscreteValuationRing.MaximalIdealPowQuotientTrace
+open IsLocalRing
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/DiscreteValuationRing/MaximalIdealPowQuotientTrace.lean -/
 /-
 Author: Muse Code
 -/
-
-import Theorem.RingTheory.DiscreteValuationRing.MaximalIdealPowQuotientTrace
-import Lemma.Int.DiscreteValuationRing.MaximalIdealPowQuotientTrace
-open IsLocalRing
-
 variable (A B : Type*) [CommRing A] [CommRing B] [IsDomain A] [IsDomain B]
   [IsDiscreteValuationRing A] [IsDiscreteValuationRing B] [Algebra A B]
 

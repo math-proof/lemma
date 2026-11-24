@@ -1,12 +1,15 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Instance.v1.Atlas.EllipticCurves.code.EndomorphismAlgebra.Part2
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Instance.v1.Atlas.EllipticCurves.code.EndomorphismAlgebra.Part2
 open NumberField Module ConductorOrder
 open scoped Quaternion
 open Module
 open TensorProduct
 open WeierstrassCurve.Affine
 
+
+public section
 
 /--
 [ringOfIntegers_isOrder](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/EndomorphismAlgebra.lean)

@@ -1,22 +1,25 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/GradedAlgebra/MultigradedHilbertSyzygy.lean -/
+module
+public import Structure.RingTheory.GradedAlgebra.MultigradedFreeResolution
+public import Mathlib.LinearAlgebra.Dimension.Finite
+public import Theorem.Int.GradedAlgebra.FiniteHomogeneousGenerators
+public import Def.RingTheory.Polynomial.HilbertSyzygy
+public import Theorem.Int.Polynomial.HilbertSyzygy
+public import Mathlib.Algebra.Category.ModuleCat.Projective
+public import Mathlib.Algebra.Category.ModuleCat.Abelian
+public import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
+public import Mathlib.Algebra.Homology.QuasiIso
+public import Mathlib.CategoryTheory.Abelian.Projective.Dimension
+public import Mathlib.RingTheory.Polynomial.Basic
+public import Mathlib.RingTheory.Finiteness.Nakayama
+public import Theorem.RingTheory.GradedAlgebra.MultigradedHilbertSyzygy.Part13
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/GradedAlgebra/MultigradedHilbertSyzygy.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
-
-import Structure.RingTheory.GradedAlgebra.MultigradedFreeResolution
-import Mathlib.LinearAlgebra.Dimension.Finite
-import Theorem.Int.GradedAlgebra.FiniteHomogeneousGenerators
-import Def.RingTheory.Polynomial.HilbertSyzygy
-import Theorem.Int.Polynomial.HilbertSyzygy
-import Mathlib.Algebra.Category.ModuleCat.Projective
-import Mathlib.Algebra.Category.ModuleCat.Abelian
-import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
-import Mathlib.Algebra.Homology.QuasiIso
-import Mathlib.CategoryTheory.Abelian.Projective.Dimension
-import Mathlib.RingTheory.Polynomial.Basic
-import Mathlib.RingTheory.Finiteness.Nakayama
-import Theorem.RingTheory.GradedAlgebra.MultigradedHilbertSyzygy.Part13
 /-!
 # Finite multigraded free resolutions over polynomial rings
 
@@ -40,8 +43,6 @@ is not its proof source.
 This edge claims finite termination only: no numerical bound `≤ n`, no
 minimality or uniqueness, no base change, and no Poincaré-series conclusion.
 -/
-
-
 namespace MetaMathlibExt
 
 universe u

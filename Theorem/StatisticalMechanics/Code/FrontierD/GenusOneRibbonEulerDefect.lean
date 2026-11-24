@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/GenusOneRibbonEulerDefect.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialCellularRibbonDuality.Part2
+public import Mathlib.Data.Finset.Interval
+public import Def.StatisticalMechanics.Code.FrontierD.GenusOneRibbonEulerDefect
+open Finset Equiv
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/GenusOneRibbonEulerDefect.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.IsoradialCellularRibbonDuality.Part2
-import Mathlib.Data.Finset.Interval
-import Def.StatisticalMechanics.Code.FrontierD.GenusOneRibbonEulerDefect
-open Finset Equiv
-
-
 namespace StatMech.FrontierD
 
 open StatMech.FrontierA

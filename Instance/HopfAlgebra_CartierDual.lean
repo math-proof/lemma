@@ -1,14 +1,17 @@
--- Carved from Lemma/Definitions/Def_HopfAlgebra_CartierDual.lean: instance decls only.
-import Mathlib
-import Theorem.LinearMap.CartierDual
-import Def.LinearMap_CartierDual
-
+module
+public import Mathlib
+public import Theorem.LinearMap.CartierDual
+public import Def.LinearMap_CartierDual
 set_option autoImplicit false
 set_option maxHeartbeats 1600000
 set_option synthInstance.maxHeartbeats 400000
-
 open Coalgebra
 open scoped TensorProduct
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_HopfAlgebra_CartierDual.lean: instance decls only.
 
 universe u v
 

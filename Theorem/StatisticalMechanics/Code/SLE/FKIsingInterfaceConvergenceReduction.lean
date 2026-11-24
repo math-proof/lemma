@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/SLE/FKIsingInterfaceConvergenceReduction.lean -/
+module
+public import Mathlib.MeasureTheory.Measure.Prokhorov
+public import Mathlib.MeasureTheory.Measure.LevyProkhorovMetric
+public import Def.StatisticalMechanics.Code.SLE.ChainCapacity.Part2
+public import Theorem.StatisticalMechanics.Code.SLE.CardyCLE.Part5
+public import Theorem.StatisticalMechanics.Code.Universality.IsingSHolo.Part7
+public import Def.StatisticalMechanics.Code.SLE.FKIsingInterfaceConvergenceReduction
+open Filter MeasureTheory Set Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/SLE/FKIsingInterfaceConvergenceReduction.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib.MeasureTheory.Measure.Prokhorov
-import Mathlib.MeasureTheory.Measure.LevyProkhorovMetric
-import Def.StatisticalMechanics.Code.SLE.ChainCapacity.Part2
-import Theorem.StatisticalMechanics.Code.SLE.CardyCLE.Part5
-import Theorem.StatisticalMechanics.Code.Universality.IsingSHolo.Part7
-import Def.StatisticalMechanics.Code.SLE.FKIsingInterfaceConvergenceReduction
-open Filter MeasureTheory Set Topology
-
-
 namespace StatMech.SLE
 
 theorem weaklySequentiallyPrecompact_of_tight

@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.Scheme.RelEffCartierDivOfPoint
-import Lemma.Int.P2MUtil
+import Theorem.Scheme.RelEffCartierDivOfPoint
+import Theorem.Int.P2MUtil
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Scheme
 open Scheme.RelEffCartierDiv

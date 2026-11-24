@@ -1,10 +1,13 @@
-import Lemma.Definitions.Def_MeasureTheory_ScalingDichotomy
-import Theorem.Matrix.WindowedSiegelTopology
-import Instance.NumberField_AdelicCentre
-import Def.NumberField_AdelicVolume
+module
+public import Lemma.Definitions.Def_MeasureTheory_ScalingDichotomy
+public import Theorem.Matrix.WindowedSiegelTopology
+public import Instance.NumberField_AdelicCentre
+public import Def.NumberField_AdelicVolume
 open MeasureTheory Set IsDedekindDomain NumberField MeasureTheory.ScalingDichotomy
 open scoped ENNReal
 
+
+public section
 
 noncomputable section
 

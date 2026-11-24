@@ -1,9 +1,11 @@
-import Lemma.Matrix.ArchWeightChar
-
+module
+public import Lemma.Matrix.ArchWeightChar
 open AutomorphicForm AutomorphicForm.WindowedSiegel NumberField IsDedekindDomain Matrix
 open NumberField.InfinitePlace NumberField.InfinitePlace.Completion
-
 open scoped Classical
+
+
+public section
 
 namespace AutomorphicForm
 

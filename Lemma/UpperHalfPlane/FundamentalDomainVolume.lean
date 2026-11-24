@@ -1,8 +1,11 @@
-import Mathlib
-import Instance.AutomorphicForm_HyperbolicMeasure
-
+module
+public import Mathlib
+public import Instance.AutomorphicForm_HyperbolicMeasure
 open MeasureTheory Set ModularGroup UpperHalfPlane
 open scoped MatrixGroups Modular Pointwise NNReal ENNReal
+
+
+public section
 
 noncomputable section
 

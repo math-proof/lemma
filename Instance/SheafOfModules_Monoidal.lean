@@ -1,8 +1,12 @@
--- Carved from Lemma/Definitions/Def_SheafOfModules_Monoidal.lean: instance decls only.
-import Mathlib
-import Theorems.Thm_PresheafOfModules_isMonoidal_inverseImage_W_toPresheaf
-
+module
+public import Mathlib
+public import Theorems.Thm_PresheafOfModules_isMonoidal_inverseImage_W_toPresheaf
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_SheafOfModules_Monoidal.lean: instance decls only.
 
 universe u
 

@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectRankOneWindingTail.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryVerticalFlux.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectEssentialBoundaryInduction
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectSeparatedWindingNoNet
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusWindingCountBridge.Part5
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectRankOneWindingTail.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryVerticalFlux.Part3
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectEssentialBoundaryInduction
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectSeparatedWindingNoNet
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusWindingCountBridge.Part5
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

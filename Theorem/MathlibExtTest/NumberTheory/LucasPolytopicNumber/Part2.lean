@@ -1,12 +1,13 @@
+module
+public import Def.NumberTheory.LucasPolytopicNumber.Part2
+public import Theorem.Nat.LucasPolytopicNumber
+public import Mathlib.Tactic
+public import Def.MathlibExtTest.NumberTheory.LucasPolytopicNumber
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/LucasPolytopicNumber.lean -/
-
-
-import Def.NumberTheory.LucasPolytopicNumber.Part2
-import Theorem.Nat.LucasPolytopicNumber
-import Mathlib.Tactic
-import Def.MathlibExtTest.NumberTheory.LucasPolytopicNumber
-
-
 namespace MetaMathlibExt
 
 example : lucasBracket naturalLucasParameters 0 = 0 := by

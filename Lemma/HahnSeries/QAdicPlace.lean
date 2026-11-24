@@ -1,7 +1,10 @@
-import Lemma.HahnSeries.X0
-import Lemma.Valuation.DivisorClassGroup
-
+module
+public import Lemma.HahnSeries.X0
+public import Lemma.Valuation.DivisorClassGroup
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

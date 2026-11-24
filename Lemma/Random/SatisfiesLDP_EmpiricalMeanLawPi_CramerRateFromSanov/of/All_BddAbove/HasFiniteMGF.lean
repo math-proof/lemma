@@ -1,5 +1,5 @@
 import Def.Probability.CramerTheorem
-import Lemma.Random.SatisfiesLDP
+import Theorem.Random.SatisfiesLDP
 import Theorem.v1.Atlas.Probability.code.CramerBarycenter
 import Theorem.v1.Atlas.Probability.code.CramerRateIDCore
 import Initialize.Tactic.Attr.Basic

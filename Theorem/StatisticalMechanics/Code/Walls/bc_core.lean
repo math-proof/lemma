@@ -1,5 +1,21 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/bc_core.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Percolation.LatticeMengerAttach.Part4
+public import Theorem.StatisticalMechanics.Code.Percolation.LatticeMengerClose.Part2
+public import Theorem.StatisticalMechanics.Code.Percolation.ClusterRunsAxisFE.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.bc_cutmeetsaxis
+public import Theorem.StatisticalMechanics.Code.Walls.bc_mouthcorridor
+public import Theorem.StatisticalMechanics.Code.Walls.bc_raydisjoint
+public import Theorem.StatisticalMechanics.Code.Walls.bc_forcemono
+public import Def.StatisticalMechanics.Code.Walls.bc_core
+open MeasureTheory Set
+open scoped ENNReal BigOperators
+open StatMech.Lattice StatMech.ConfigSpace
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/bc_core.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,22 +23,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Percolation.LatticeMengerAttach.Part4
-import Theorem.StatisticalMechanics.Code.Percolation.LatticeMengerClose.Part2
-import Theorem.StatisticalMechanics.Code.Percolation.ClusterRunsAxisFE.Part2
-import Theorem.StatisticalMechanics.Code.Walls.bc_cutmeetsaxis
-import Theorem.StatisticalMechanics.Code.Walls.bc_mouthcorridor
-import Theorem.StatisticalMechanics.Code.Walls.bc_raydisjoint
-import Theorem.StatisticalMechanics.Code.Walls.bc_forcemono
-import Def.StatisticalMechanics.Code.Walls.bc_core
-open MeasureTheory Set
-open scoped ENNReal BigOperators
-open StatMech.Lattice StatMech.ConfigSpace
-
-
 namespace StatMech
 
 namespace Walls

@@ -12,7 +12,7 @@ namespace Deformation
 
 
 @[path]
-public theorem main
+private theorem main
   [Group G]
   [Field k]
   {n : Type} [Fintype n] [DecidableEq n]

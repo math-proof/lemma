@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/GrahamCanonicalTransferCoverageNesting.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.GrahamCanonicalTransferCoverageHall
+public import Theorem.StatisticalMechanics.Code.FrontierA.GrahamWeightedLemmaOneFiberClosure
+public import Def.StatisticalMechanics.Code.FrontierA.GrahamCanonicalTransferCoverageNesting
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/GrahamCanonicalTransferCoverageNesting.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.GrahamCanonicalTransferCoverageHall
-import Theorem.StatisticalMechanics.Code.FrontierA.GrahamWeightedLemmaOneFiberClosure
-import Def.StatisticalMechanics.Code.FrontierA.GrahamCanonicalTransferCoverageNesting
-
-
 namespace StatMech.GrahamGHS.FourColor
 
 variable {I W : Type*} [Fintype I] [DecidableEq I]

@@ -1,7 +1,10 @@
-import Theorem.Analysis.MeasureTheory.Section_1_2_3.Part2
-import Theorem.Analysis.Misc.NatBitwise
-import Instance.Analysis.MeasureTheory.Section_1_3_1
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_2_3.Part2
+public import Theorem.Analysis.Misc.NatBitwise
+public import Instance.Analysis.MeasureTheory.Section_1_3_1
 
+
+public section
 
 lemma UnsignedSimpleFunction.add {d:ℕ} {f g: EuclideanSpace' d → EReal} (hf: UnsignedSimpleFunction f) (hg: UnsignedSimpleFunction g) : UnsignedSimpleFunction (f + g) := by
   obtain ⟨k₁, c₁, E₁, ⟨hmes₁, heq₁⟩⟩ := hf

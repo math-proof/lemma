@@ -1,110 +1,113 @@
+module
+public import Def.CPythonListsort.Code.Transcription.Comparator
+public import Theorem.CPythonListsort.Code.Transcription.SortSlice
+public import Def.CPythonListsort.Code.Transcription.Powerloop
+public import Def.CPythonListsort.Code.Transcription.Minrun.Part3
+public import Def.CPythonListsort.Code.Transcription.MergeState.Part3
+public import Def.CPythonListsort.Code.Transcription.TempStorageInvariant
+public import Def.CPythonListsort.Code.Transcription.MergeInitStorage
+public import Def.CPythonListsort.Code.Transcription.ReverseSlice
+public import Def.CPythonListsort.Code.Transcription.Binarysort.Part3
+public import Def.CPythonListsort.Code.Transcription.CountRun.Part4
+public import Def.CPythonListsort.Code.Transcription.Gallop.Part2
+public import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
+public import Def.CPythonListsort.Code.Transcription.MergeLo.Part6
+public import Def.CPythonListsort.Code.Transcription.MergeHi.Part6
+public import Theorem.CPythonListsort.Code.Transcription.MergeAt
+public import Theorem.CPythonListsort.Code.Transcription.FoundNewRun
+public import Theorem.CPythonListsort.Code.Transcription.MergeForceCollapse
+public import Theorem.CPythonListsort.Code.Transcription.ListSortImpl
+public import Def.CPythonListsort.Code.Equivalence.Minrun.Part2
+public import Theorem.CPythonListsort.Code.Equivalence.MinrunResults.Part3
+public import Def.CPythonListsort.Code.Equivalence.Powerloop
+public import Def.CPythonListsort.Code.Equivalence.PowerloopResults.Part2
+public import Def.CPythonListsort.Code.Policy.PendingLayout
+public import Def.CPythonListsort.Code.Policy.StackPowers.Part2
+public import Theorem.List.Atlas.CPythonListsort.Code.Policy.MergeAtPreservation
+public import Theorem.List.Atlas.CPythonListsort.Code.Policy.MergeTopPowerPreservation
+public import Theorem.List.Atlas.CPythonListsort.Code.Policy.FoundNewRunPreservation
+public import Theorem.List.Atlas.CPythonListsort.Code.Policy.StackDepth
+public import Theorem.List.Atlas.CPythonListsort.Code.Policy.MergeForceCollapsePreservation
+public import Theorem.List.Atlas.CPythonListsort.Code.Assembly.ListSortScanPolicy
+public import Theorem.List.Atlas.CPythonListsort.Code.Assembly.ListSortPolicyBridge
+public import Theorem.List.Atlas.CPythonListsort.Code.Assembly.GallopLeftSafety
+public import Theorem.List.Atlas.CPythonListsort.Code.Assembly.GallopRightSafety
+public import Theorem.List.Atlas.CPythonListsort.Code.Assembly.TempStorageLiveness
+public import Theorem.List.Atlas.CPythonListsort.Code.Assembly.ListSortSafety
+public import Theorem.List.Atlas.CPythonListsort.Code.Correctness.ReverseRangeSupport
+public import Theorem.List.Atlas.CPythonListsort.Code.Correctness.MergeTargetConsistency
+public import Def.CPythonListsort.Code.Policy.BoundaryPowerGeometry
+public import Theorem.CPythonListsort.Code.Policy.PushRunPreservation
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
+public import Def.CPythonListsort.Code.Assembly.MergeCost.Part3
+public import Inductive.CPythonListsort.Code.Assembly.MergeTreeCost
+public import Def.CPythonListsort.Code.Assembly.MergePolicyReplay.Part4
+public import Def.CPythonListsort.Code.Assembly.PowerEntropyBound
+public import Def.CPythonListsort.Code.Assembly.PowerTreeEntropy
+public import Structure.CPythonListsort.Code.Assembly.PowerSortPolicyCost.Part2
+public import Def.CPythonListsort.Code.Assembly.AlphabeticCostBound.Part2
+public import Structure.CPythonListsort.Code.Assembly.ScanPowerForestInvariant.Part2
+public import Inductive.CPythonListsort.Code.Assembly.ListSortScanReached
+public import Theorem.CPythonListsort.Code.Assembly.ListSortMergePolicy
+public import Structure.CPythonListsort.Code.Assembly.ListSortPolicyEndpoints
+public import Def.CPythonListsort.Code.Assembly.ListSortCollapseCost
+public import Def.CPythonListsort.Code.Assembly.ListSortCostBound
+public import Def.CPythonListsort.Code.Assembly.PowerSortCostRegression
+public import Structure.CPythonListsort.Code.Assembly.SortSliceSafety
+public import Def.CPythonListsort.Code.Assembly.ReverseSliceSafety.Part2
+public import Def.CPythonListsort.Code.Assembly.CountRunSafety.Part3
+public import Def.CPythonListsort.Code.Assembly.BinarysortSafety.Part2
+public import Def.CPythonListsort.Code.Assembly.ListSortInputMode
+public import Def.CPythonListsort.Code.Assembly.MergeMemcpyProvenance
+public import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
+public import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
+public import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part5
+public import Structure.CPythonListsort.Code.Assembly.MergeLoSafety.Part4
+public import Theorem.CPythonListsort.Code.Assembly.MergeHiSafety.Part5
+public import Def.CPythonListsort.Code.Assembly.MergeAtSafety.Part4
+public import Def.CPythonListsort.Code.Assembly.FoundNewRunSafety.Part2
+public import Def.CPythonListsort.Code.Assembly.MergeForceCollapseSafety.Part2
+public import Def.CPythonListsort.Code.Assembly.MergeMemorySafety
+public import Def.CPythonListsort.Code.Assembly.Order.Part4
+public import Def.CPythonListsort.Code.Assembly.GallopCorrectness
+public import Structure.CPythonListsort.Code.Correctness.ReverseSliceCorrectness
+public import Def.CPythonListsort.Code.Correctness.PendingRunCorrectness
+public import Def.CPythonListsort.Code.Correctness.SortSliceRange
+public import Def.CPythonListsort.Code.Correctness.ScanRemainder.Part3
+public import Def.CPythonListsort.Code.Correctness.DescendingRunNormalization
+public import Def.CPythonListsort.Code.Correctness.DescendingRunInvariant.Part2
+public import Def.CPythonListsort.Code.Correctness.EntrySnapshotPermutation
+public import Def.CPythonListsort.Code.Correctness.BinarysortCorrectness.Part3
+public import Def.CPythonListsort.Code.Correctness.CountRunCorrectness.Part2
+public import Def.CPythonListsort.Code.Correctness.StableMerge
+public import Def.CPythonListsort.Code.Correctness.MergeMovementCorrectness.Part2
+public import Structure.CPythonListsort.Code.Correctness.MergeSemanticPre
+public import Structure.CPythonListsort.Code.Correctness.MergeLoInvariant
+public import Structure.CPythonListsort.Code.Correctness.MergeLoCorrectness
+public import Theorem.CPythonListsort.Code.Correctness.MergeHiInvariant
+public import Def.CPythonListsort.Code.Correctness.MergeHiCorrectness
+public import Def.CPythonListsort.Code.Correctness.MergeAtCorrectnessSupport
+public import Def.CPythonListsort.Code.Correctness.MergeAtCorrectness.Part2
+public import Def.CPythonListsort.Code.Correctness.FoundNewRunCorrectness
+public import Def.CPythonListsort.Code.Correctness.MergeForceCollapseCorrectness.Part2
+public import Theorem.CPythonListsort.Code.Correctness.ScanCorrectnessSupport
+public import Theorem.CPythonListsort.Code.Correctness.ScanStepSupport
+public import Def.CPythonListsort.Code.Correctness.ScanStepCorrectness.Part3
+public import Def.CPythonListsort.Code.Correctness.OriginRelabelEquivariance.Part6
+public import Structure.CPythonListsort.Code.Correctness.OriginRelabelMerges
+public import Def.CPythonListsort.Code.Correctness.OriginRelabelScan.Part2
+public import Def.CPythonListsort.Code.Correctness.ReverseModeAlgebra.Part4
+public import Structure.CPythonListsort.Code.Correctness.ScanLoopCorrectness
+public import Structure.CPythonListsort.Code.Correctness.ReverseScanTransport
+public import Structure.CPythonListsort.Code.Correctness.ReverseModeCorrectness
+public import Def.CPythonListsort.Code.Correctness.OccurrenceErasure
+public import Theorem.CPythonListsort.Code.Correctness.OccurrenceErasureMerges.Part2
+public import Def.CPythonListsort.Code.Correctness.OccurrenceErasureScan.Part2
+public import Def.CPythonListsort.Code.Correctness.ListSortCorrectness.Part2
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code.lean -/
-
-import Def.CPythonListsort.Code.Transcription.Comparator
-import Theorem.CPythonListsort.Code.Transcription.SortSlice
-import Def.CPythonListsort.Code.Transcription.Powerloop
-import Def.CPythonListsort.Code.Transcription.Minrun.Part3
-import Def.CPythonListsort.Code.Transcription.MergeState.Part3
-import Def.CPythonListsort.Code.Transcription.TempStorageInvariant
-import Def.CPythonListsort.Code.Transcription.MergeInitStorage
-import Def.CPythonListsort.Code.Transcription.ReverseSlice
-import Def.CPythonListsort.Code.Transcription.Binarysort.Part3
-import Def.CPythonListsort.Code.Transcription.CountRun.Part4
-import Def.CPythonListsort.Code.Transcription.Gallop.Part2
-import Def.CPythonListsort.Code.Transcription.MergeMemory.Part3
-import Def.CPythonListsort.Code.Transcription.MergeLo.Part6
-import Def.CPythonListsort.Code.Transcription.MergeHi.Part6
-import Theorem.CPythonListsort.Code.Transcription.MergeAt
-import Theorem.CPythonListsort.Code.Transcription.FoundNewRun
-import Theorem.CPythonListsort.Code.Transcription.MergeForceCollapse
-import Theorem.CPythonListsort.Code.Transcription.ListSortImpl
-import Def.CPythonListsort.Code.Equivalence.Minrun.Part2
-import Theorem.CPythonListsort.Code.Equivalence.MinrunResults.Part3
-import Def.CPythonListsort.Code.Equivalence.Powerloop
-import Def.CPythonListsort.Code.Equivalence.PowerloopResults.Part2
-import Def.CPythonListsort.Code.Policy.PendingLayout
-import Def.CPythonListsort.Code.Policy.StackPowers.Part2
-import Lemma.List.Atlas.CPythonListsort.Code.Policy.MergeAtPreservation
-import Theorem.List.Atlas.CPythonListsort.Code.Policy.MergeTopPowerPreservation
-import Lemma.List.Atlas.CPythonListsort.Code.Policy.FoundNewRunPreservation
-import Lemma.List.Atlas.CPythonListsort.Code.Policy.StackDepth
-import Lemma.List.Atlas.CPythonListsort.Code.Policy.MergeForceCollapsePreservation
-import Theorem.List.Atlas.CPythonListsort.Code.Assembly.ListSortScanPolicy
-import Theorem.List.Atlas.CPythonListsort.Code.Assembly.ListSortPolicyBridge
-import Theorem.List.Atlas.CPythonListsort.Code.Assembly.GallopLeftSafety
-import Theorem.List.Atlas.CPythonListsort.Code.Assembly.GallopRightSafety
-import Theorem.List.Atlas.CPythonListsort.Code.Assembly.TempStorageLiveness
-import Theorem.List.Atlas.CPythonListsort.Code.Assembly.ListSortSafety
-import Theorem.List.Atlas.CPythonListsort.Code.Correctness.ReverseRangeSupport
-import Lemma.List.Atlas.CPythonListsort.Code.Correctness.MergeTargetConsistency
-import Def.CPythonListsort.Code.Policy.BoundaryPowerGeometry
-import Theorem.CPythonListsort.Code.Policy.PushRunPreservation
-import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
-import Def.CPythonListsort.Code.Assembly.MergeCost.Part3
-import Inductive.CPythonListsort.Code.Assembly.MergeTreeCost
-import Def.CPythonListsort.Code.Assembly.MergePolicyReplay.Part4
-import Def.CPythonListsort.Code.Assembly.PowerEntropyBound
-import Def.CPythonListsort.Code.Assembly.PowerTreeEntropy
-import Structure.CPythonListsort.Code.Assembly.PowerSortPolicyCost.Part2
-import Def.CPythonListsort.Code.Assembly.AlphabeticCostBound.Part2
-import Structure.CPythonListsort.Code.Assembly.ScanPowerForestInvariant.Part2
-import Inductive.CPythonListsort.Code.Assembly.ListSortScanReached
-import Theorem.CPythonListsort.Code.Assembly.ListSortMergePolicy
-import Structure.CPythonListsort.Code.Assembly.ListSortPolicyEndpoints
-import Def.CPythonListsort.Code.Assembly.ListSortCollapseCost
-import Def.CPythonListsort.Code.Assembly.ListSortCostBound
-import Def.CPythonListsort.Code.Assembly.PowerSortCostRegression
-import Structure.CPythonListsort.Code.Assembly.SortSliceSafety
-import Def.CPythonListsort.Code.Assembly.ReverseSliceSafety.Part2
-import Def.CPythonListsort.Code.Assembly.CountRunSafety.Part3
-import Def.CPythonListsort.Code.Assembly.BinarysortSafety.Part2
-import Def.CPythonListsort.Code.Assembly.ListSortInputMode
-import Def.CPythonListsort.Code.Assembly.MergeMemcpyProvenance
-import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
-import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
-import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part5
-import Structure.CPythonListsort.Code.Assembly.MergeLoSafety.Part4
-import Theorem.CPythonListsort.Code.Assembly.MergeHiSafety.Part5
-import Def.CPythonListsort.Code.Assembly.MergeAtSafety.Part4
-import Def.CPythonListsort.Code.Assembly.FoundNewRunSafety.Part2
-import Def.CPythonListsort.Code.Assembly.MergeForceCollapseSafety.Part2
-import Def.CPythonListsort.Code.Assembly.MergeMemorySafety
-import Def.CPythonListsort.Code.Assembly.Order.Part4
-import Def.CPythonListsort.Code.Assembly.GallopCorrectness
-import Structure.CPythonListsort.Code.Correctness.ReverseSliceCorrectness
-import Def.CPythonListsort.Code.Correctness.PendingRunCorrectness
-import Def.CPythonListsort.Code.Correctness.SortSliceRange
-import Def.CPythonListsort.Code.Correctness.ScanRemainder.Part3
-import Def.CPythonListsort.Code.Correctness.DescendingRunNormalization
-import Def.CPythonListsort.Code.Correctness.DescendingRunInvariant.Part2
-import Def.CPythonListsort.Code.Correctness.EntrySnapshotPermutation
-import Def.CPythonListsort.Code.Correctness.BinarysortCorrectness.Part3
-import Def.CPythonListsort.Code.Correctness.CountRunCorrectness.Part2
-import Def.CPythonListsort.Code.Correctness.StableMerge
-import Def.CPythonListsort.Code.Correctness.MergeMovementCorrectness.Part2
-import Structure.CPythonListsort.Code.Correctness.MergeSemanticPre
-import Structure.CPythonListsort.Code.Correctness.MergeLoInvariant
-import Structure.CPythonListsort.Code.Correctness.MergeLoCorrectness
-import Theorem.CPythonListsort.Code.Correctness.MergeHiInvariant
-import Def.CPythonListsort.Code.Correctness.MergeHiCorrectness
-import Def.CPythonListsort.Code.Correctness.MergeAtCorrectnessSupport
-import Def.CPythonListsort.Code.Correctness.MergeAtCorrectness.Part2
-import Def.CPythonListsort.Code.Correctness.FoundNewRunCorrectness
-import Def.CPythonListsort.Code.Correctness.MergeForceCollapseCorrectness.Part2
-import Theorem.CPythonListsort.Code.Correctness.ScanCorrectnessSupport
-import Theorem.CPythonListsort.Code.Correctness.ScanStepSupport
-import Def.CPythonListsort.Code.Correctness.ScanStepCorrectness.Part3
-import Def.CPythonListsort.Code.Correctness.OriginRelabelEquivariance.Part6
-import Structure.CPythonListsort.Code.Correctness.OriginRelabelMerges
-import Def.CPythonListsort.Code.Correctness.OriginRelabelScan.Part2
-import Def.CPythonListsort.Code.Correctness.ReverseModeAlgebra.Part4
-import Structure.CPythonListsort.Code.Correctness.ScanLoopCorrectness
-import Structure.CPythonListsort.Code.Correctness.ReverseScanTransport
-import Structure.CPythonListsort.Code.Correctness.ReverseModeCorrectness
-import Def.CPythonListsort.Code.Correctness.OccurrenceErasure
-import Theorem.CPythonListsort.Code.Correctness.OccurrenceErasureMerges.Part2
-import Def.CPythonListsort.Code.Correctness.OccurrenceErasureScan.Part2
-import Def.CPythonListsort.Code.Correctness.ListSortCorrectness.Part2
 /-! Root module for the CPython listsort formalization. -/
-
 

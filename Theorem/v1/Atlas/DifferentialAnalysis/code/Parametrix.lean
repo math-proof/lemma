@@ -1,5 +1,22 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/DifferentialAnalysis/code/Parametrix.lean -/
+module
+public import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.CauchyKernelIntegrability
+public import Def.v1.Atlas.DifferentialAnalysis.code.CauchyKernelIntegrability
+public import Mathlib.MeasureTheory.Function.LocallyIntegrable
+public import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
+public import Mathlib.MeasureTheory.Constructions.Pi
+public import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
+public import Mathlib.MeasureTheory.Integral.Asymptotics
+public import Mathlib.MeasureTheory.MeasurableSpace.MeasurablyGenerated
+public import Def.v1.Atlas.DifferentialAnalysis.code.Parametrix
+open scoped SchwartzMap
+open MvPolynomial MeasureTheory ContinuousLinearMap Filter Asymptotics
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/DifferentialAnalysis/code/Parametrix.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,22 +24,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.CauchyKernelIntegrability
-import Def.v1.Atlas.DifferentialAnalysis.code.CauchyKernelIntegrability
-import Mathlib.MeasureTheory.Function.LocallyIntegrable
-import Mathlib.MeasureTheory.Measure.Haar.InnerProductSpace
-import Mathlib.MeasureTheory.Constructions.Pi
-import Mathlib.Analysis.Distribution.SchwartzSpace.Basic
-import Mathlib.MeasureTheory.Integral.Asymptotics
-import Mathlib.MeasureTheory.MeasurableSpace.MeasurablyGenerated
-import Def.v1.Atlas.DifferentialAnalysis.code.Parametrix
-open scoped SchwartzMap
-open MvPolynomial MeasureTheory ContinuousLinearMap Filter Asymptotics
-
-
 noncomputable section
 
 namespace DifferentialOperators

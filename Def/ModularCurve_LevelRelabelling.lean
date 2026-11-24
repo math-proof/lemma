@@ -1,11 +1,14 @@
-import Mathlib
-import Instance.ModularCurve_LevelModuliPackage
-import Def.ModularCurve_WeierstrassLevelModuliDatum
-import Def.ModularCurve_WeierstrassLevelComponents
-import Instance.ModularCurve_KatzLevelP
-import Def.WeierstrassCurve_DrinfeldLevelFunctor
-
+module
+public import Mathlib
+public import Instance.ModularCurve_LevelModuliPackage
+public import Def.ModularCurve_WeierstrassLevelModuliDatum
+public import Def.ModularCurve_WeierstrassLevelComponents
+public import Instance.ModularCurve_KatzLevelP
+public import Def.WeierstrassCurve_DrinfeldLevelFunctor
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

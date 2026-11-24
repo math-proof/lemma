@@ -1,9 +1,12 @@
-import Theorem.LaurentSeries.X1HeckeOperator
-import Def.ModularCurve_X1Diamond
-import Abbrev.ModularCurve_JZeroTateModule
-import Mathlib.Algebra.MvPolynomial.CommRing
-
+module
+public import Theorem.LaurentSeries.X1HeckeOperator
+public import Def.ModularCurve_X1Diamond
+public import Abbrev.ModularCurve_JZeroTateModule
+public import Mathlib.Algebra.MvPolynomial.CommRing
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

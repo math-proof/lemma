@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/BNPair/PropositionParabolics.lean -/
+module
+public import Def.v1.Atlas.Buildings.code.BNPair.NormalizerParabolicProof
+public import Theorem.Nat.B.le.Closure_BruhatCell
+public import Theorem.Set.BruhatCell.sub.SetG.of.In_BruhatCell.In_SetG.LeB
+public import Theorem.v1.Atlas.Buildings.code.BNPair.SubgroupOverBProof
+public import Def.v1.Atlas.Buildings.code.BNPair.BruhatPropertiesInstance
+public import Mathlib.Tactic.Group
+set_option linter.unusedSectionVars false
+set_option maxHeartbeats 800000
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/BNPair/PropositionParabolics.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.Buildings.code.BNPair.NormalizerParabolicProof
-import Lemma.Nat.B.le.Closure_BruhatCell
-import Lemma.Set.BruhatCell.sub.SetG.of.In_BruhatCell.In_SetG.LeB
-import Theorem.v1.Atlas.Buildings.code.BNPair.SubgroupOverBProof
-import Def.v1.Atlas.Buildings.code.BNPair.BruhatPropertiesInstance
-import Mathlib.Tactic.Group
-set_option linter.unusedSectionVars false
-set_option maxHeartbeats 800000
-
 variable {G : Type*} [Group G] {B_idx : Type*} {M : CoxeterMatrix B_idx}
 
 

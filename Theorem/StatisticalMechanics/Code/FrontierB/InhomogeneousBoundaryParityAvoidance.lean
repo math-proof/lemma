@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/InhomogeneousBoundaryParityAvoidance.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierB.NonnegativeBoundaryCurrentConditionalPMF
+public import Theorem.StatisticalMechanics.Code.FrontierB.InhomogeneousParityAvoidance.Part3
+public import Def.StatisticalMechanics.Code.FrontierB.InhomogeneousBoundaryParityAvoidance
+open MeasureTheory
+open scoped BigOperators ENNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/InhomogeneousBoundaryParityAvoidance.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierB.NonnegativeBoundaryCurrentConditionalPMF
-import Theorem.StatisticalMechanics.Code.FrontierB.InhomogeneousParityAvoidance.Part3
-import Def.StatisticalMechanics.Code.FrontierB.InhomogeneousBoundaryParityAvoidance
-open MeasureTheory
-open scoped BigOperators ENNReal
-
-
 namespace StatMech.FrontierB
 
 open Sharpness Ising

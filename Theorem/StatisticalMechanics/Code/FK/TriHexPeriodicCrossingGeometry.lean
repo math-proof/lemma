@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/TriHexPeriodicCrossingGeometry.lean -/
+module
+public import Def.StatisticalMechanics.Code.FK.TriHexPeriodicStraightIntersection.Part2
+open Set SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/TriHexPeriodicCrossingGeometry.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Def.StatisticalMechanics.Code.FK.TriHexPeriodicStraightIntersection.Part2
-open Set SimpleGraph
-
-
 namespace StatMech.FK.PeriodicPlanar
 
 open Lattice

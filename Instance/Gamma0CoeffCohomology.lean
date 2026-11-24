@@ -1,6 +1,11 @@
+module
+public import Mathlib
+public import Instance.Gamma0HeckeOperatorHom
+
+
+public section
+
 -- Carved from Lemma/Definitions/Def_Gamma0CoeffCohomology.lean: instance decls only.
-import Mathlib
-import Instance.Gamma0HeckeOperatorHom
 
 namespace HeckeEis
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Theorem.Analysis.Section_8_4
+module
+public import Mathlib
+public import Theorem.Analysis.Section_8_4
 set_option doc.verso.suggestions false
+
+
+public section
 
 /-!
 # Analysis I, Section 8.5: Ordered sets
@@ -18,8 +22,6 @@ Main constructions and results of this section:
 - Zorn's lemma.
 
 -/
-
-
 namespace Chapter8
 
 @[implicit_reducible] def PartialOrder.mk {X:Type} [LE X]

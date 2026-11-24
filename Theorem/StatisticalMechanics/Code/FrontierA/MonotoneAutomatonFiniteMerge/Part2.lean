@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/MonotoneAutomatonFiniteMerge.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonInsertion.Part3
+public import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeaneMergeGeom
+public import Theorem.StatisticalMechanics.Code.Percolation.OffClusterIndep.Part4
+public import Def.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonFiniteMerge.Part2
+open MeasureTheory Set
+open scoped ENNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/MonotoneAutomatonFiniteMerge.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonInsertion.Part3
-import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeaneMergeGeom
-import Theorem.StatisticalMechanics.Code.Percolation.OffClusterIndep.Part4
-import Def.StatisticalMechanics.Code.FrontierA.MonotoneAutomatonFiniteMerge.Part2
-open MeasureTheory Set
-open scoped ENNReal
-
-
 namespace StatMech.FrontierA
 
 open StatMech.Lattice StatMech.ConfigSpace StatMech.Percolation

@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Inequalities/ReimerButterflyProve3.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Inequalities.ReimerButterflyProve2.Part2
+public import Mathlib.Combinatorics.SetFamily.HarrisKleitman
+public import Def.StatisticalMechanics.Code.Inequalities.ReimerButterflyProve3
+open Finset
+open scoped FinsetFamily
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Inequalities/ReimerButterflyProve3.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Inequalities.ReimerButterflyProve2.Part2
-import Mathlib.Combinatorics.SetFamily.HarrisKleitman
-import Def.StatisticalMechanics.Code.Inequalities.ReimerButterflyProve3
-open Finset
-open scoped FinsetFamily
-
-
 namespace StatMech
 
 variable {α : Type*} [DecidableEq α]

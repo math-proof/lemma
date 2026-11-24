@@ -1,8 +1,11 @@
-import Def.LanglandsTunnell_CubicInduction_SlabL2
-import Def.LanglandsTunnell_CubicInduction_Structure
-import Mathlib.Analysis.Calculus.ContDiff.Defs
-
+module
+public import Def.LanglandsTunnell_CubicInduction_SlabL2
+public import Def.LanglandsTunnell_CubicInduction_Structure
+public import Mathlib.Analysis.Calculus.ContDiff.Defs
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

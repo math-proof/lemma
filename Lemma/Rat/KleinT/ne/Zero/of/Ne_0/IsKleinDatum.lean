@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.EllipticCurve_RubinSilverbergFamily
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 open Polynomial
 open RubinSilverberg
 

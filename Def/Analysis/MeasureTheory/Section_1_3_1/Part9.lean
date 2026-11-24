@@ -1,7 +1,10 @@
-import Theorem.Analysis.MeasureTheory.Section_1_2_3.Part2
-import Theorem.Analysis.Misc.NatBitwise
-import Theorem.Analysis.MeasureTheory.Section_1_3_1.Part8
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_2_3.Part2
+public import Theorem.Analysis.Misc.NatBitwise
+public import Theorem.Analysis.MeasureTheory.Section_1_3_1.Part8
 
+
+public section
 
 /-- Definition 1.3.5 (almost always) -/
 def AlmostAlways {d:ℕ} (P: EuclideanSpace' d → Prop) : Prop :=

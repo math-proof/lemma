@@ -1,6 +1,9 @@
-import Theorem.Analysis.MeasureTheory.Section_1_3_3.Part2
-import Def.Analysis.MeasureTheory.Section_1_3_4
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_3_3.Part2
+public import Def.Analysis.MeasureTheory.Section_1_3_4
 
+
+public section
 
 lemma ComplexAbsolutelyIntegrable.abs {d:ℕ} (f: EuclideanSpace' d → ℂ) (hf: ComplexAbsolutelyIntegrable f) : UnsignedAbsolutelyIntegrable (EReal.abs_fun f) := by
   constructor

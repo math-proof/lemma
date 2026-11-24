@@ -1,5 +1,20 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/RamificationTypes.lean -/
+module
+public import Abbrev.v1.Atlas.NumberTheoryI.code.EisensteinRamified
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.EisensteinRamified
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Thm1023
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor1015
+public import Theorem.v1.Atlas.NumberTheoryI.code.Thm1023
+public import Abbrev.v1.Atlas.NumberTheoryI.code.Cor1015
+public import Mathlib.RingTheory.AdicCompletion.Algebra
+public import Mathlib.RingTheory.AdicCompletion.Functoriality
+public import Mathlib.RingTheory.AdicCompletion.AsTensorProduct
+public import Structure.v1.Atlas.NumberTheoryI.code.RamificationTypes
+open Ideal IsLocalRing
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/RamificationTypes.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,20 +22,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Abbrev.v1.Atlas.NumberTheoryI.code.EisensteinRamified
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.EisensteinRamified
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Thm1023
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor1015
-import Theorem.v1.Atlas.NumberTheoryI.code.Thm1023
-import Abbrev.v1.Atlas.NumberTheoryI.code.Cor1015
-import Mathlib.RingTheory.AdicCompletion.Algebra
-import Mathlib.RingTheory.AdicCompletion.Functoriality
-import Mathlib.RingTheory.AdicCompletion.AsTensorProduct
-import Structure.v1.Atlas.NumberTheoryI.code.RamificationTypes
-open Ideal IsLocalRing
-
-
 section RamificationTransitivity
 
 variable {p e_EK e_EL e_LK : ℕ}

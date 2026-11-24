@@ -1,10 +1,11 @@
+module
+public import Def.Analysis.SpecialFunctions.ArcsinTaylorSeries
+public import Theorem.Real.ArcsinTaylorSeries
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/ArcsinTaylorSeries.lean -/
-
-
-import Def.Analysis.SpecialFunctions.ArcsinTaylorSeries
-import Lemma.Real.ArcsinTaylorSeries
-
-
 namespace MathlibExtTest.Analysis.SpecialFunctions.ArcsinTaylorSeries
 
 open MathlibExt.Analysis.SpecialFunctions.ArcsinTaylorSeries

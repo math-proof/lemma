@@ -1,9 +1,12 @@
-import Mathlib
-import Lemma.Fin.RothMvHasse_Single1.eq.Pderiv
-import Lemma.Fin.RothMvHasse_RothMvHasse.eq.SMul_RothMvHasse.of.RothMvIndex
+module
+public import Mathlib
+public import Lemma.Fin.RothMvHasse_Single1.eq.Pderiv
+public import Lemma.Fin.RothMvHasse_RothMvHasse.eq.SMul_RothMvHasse.of.RothMvIndex
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [roth_pderiv_hasse](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

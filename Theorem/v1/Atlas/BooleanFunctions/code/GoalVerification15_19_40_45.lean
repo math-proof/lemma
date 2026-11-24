@@ -1,5 +1,20 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/GoalVerification15_19_40_45.lean -/
+module
+public import Def.v1.Atlas.BooleanFunctions.code.Influence
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Influence
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Juntas
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.InfluenceDerivative
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
+public import Def.v1.Atlas.BooleanFunctions.code.Juntas
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierSampling
+public import Def.v1.Atlas.BooleanFunctions.code.InfluenceDerivative
+public import Def.v1.Atlas.BooleanFunctions.code.Talagrand
+public import Def.v1.Atlas.BooleanFunctions.code.MajorityStablest
+open Finset BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/GoalVerification15_19_40_45.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,20 +22,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.BooleanFunctions.code.Influence
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Influence
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Juntas
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.InfluenceDerivative
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
-import Def.v1.Atlas.BooleanFunctions.code.Juntas
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierSampling
-import Def.v1.Atlas.BooleanFunctions.code.InfluenceDerivative
-import Def.v1.Atlas.BooleanFunctions.code.Talagrand
-import Def.v1.Atlas.BooleanFunctions.code.MajorityStablest
-open Finset BigOperators
-
-
 namespace BooleanFourier
 
 example {n : ℕ} (f : (Fin n → Bool) → ℝ) (S : Finset (Fin n))

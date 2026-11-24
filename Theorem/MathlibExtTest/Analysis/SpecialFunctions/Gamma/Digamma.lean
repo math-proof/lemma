@@ -1,10 +1,12 @@
+module
+public import Def.Analysis.SpecialFunctions.Gamma.Digamma
+public import Theorem.Complex.Digamma
+public import Theorem.Real.Digamma
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/Gamma/Digamma.lean -/
-
-
-import Def.Analysis.SpecialFunctions.Gamma.Digamma
-import Theorem.Complex.Digamma
-import Theorem.Real.Digamma
-
 
 example (x : ℝ) (hx : 0 < x) :
     HasSum (fun j : ℕ => 1 / ((j : ℝ) + 1) - 1 / (x + (j : ℝ) + 1))

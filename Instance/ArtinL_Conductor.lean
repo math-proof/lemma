@@ -1,10 +1,14 @@
--- Carved from Lemma/Definitions/Def_ArtinL_Conductor.lean: instance decls only.
-import Mathlib
-import Instance.Mathlib_RingTheory_Valuation_LowerRamificationGroup
-import Theorem.Matrix.Conductor
-import Def.Matrix_Conductor
-
+module
+public import Mathlib
+public import Instance.Mathlib_RingTheory_Valuation_LowerRamificationGroup
+public import Theorem.Matrix.Conductor
+public import Def.Matrix_Conductor
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_ArtinL_Conductor.lean: instance decls only.
 
 noncomputable section
 

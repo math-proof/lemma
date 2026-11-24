@@ -1,8 +1,11 @@
-import Mathlib
-import Lemma.Fin.RothDegreeBoundAdd
+module
+public import Mathlib
+public import Lemma.Fin.RothDegreeBoundAdd
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [rothDegreeBound_finset_sum](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

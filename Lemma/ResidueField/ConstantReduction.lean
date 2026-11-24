@@ -1,9 +1,12 @@
-import Mathlib
-import Lemma.Valuation.DivisorClassGroup
-import Lemma.Submodule.Repartitions
-import Structure.AlgebraicCurve_ConstantReduction
-
+module
+public import Mathlib
+public import Lemma.Valuation.DivisorClassGroup
+public import Lemma.Submodule.Repartitions
+public import Structure.AlgebraicCurve_ConstantReduction
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

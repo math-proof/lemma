@@ -1,11 +1,16 @@
+module
+public import Mathlib
+public import Def.Combinatorics.Young.SchurBasics.Part11
+public import Def.Combinatorics.Young.PieriJacobiTrudi.Part32
+public import Theorem.Partition.NPartition
+
+
+public section
+
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.Combinatorics.Young.SchurBasics.Part11
-import Def.Combinatorics.Young.PieriJacobiTrudi.Part32
-import Theorem.Partition.NPartition
 /-!
 # Equivalence Between SSYT Definitions
 
@@ -71,8 +76,6 @@ Both equivalences are provided for API convenience:
 
 semistandard Young tableau, SSYT, equivalence, Young diagram, Schur polynomial
 -/
-
-
 noncomputable section
 
 open Finset BigOperators MvPolynomial

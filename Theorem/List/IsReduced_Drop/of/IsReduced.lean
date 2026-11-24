@@ -13,7 +13,7 @@ open Finset BigOperators CoxeterGroup CoxeterExchangeGenuine CoxeterRootSignChan
 [isReduced_drop](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/RootSignChangeProof.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   [DecidableEq B]
   [Fintype B]
   [Group W]

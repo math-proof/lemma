@@ -1,11 +1,12 @@
+module
+public import Def.Algebra.Lie.LeviDecomposition.Part15
+public import Theorem.Fin.EqSum_SMul.of.Basis
+public import Mathlib.Algebra.Lie.Semisimple.Basic
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/Lie/LeviDecomposition.lean -/
-
-
-import Def.Algebra.Lie.LeviDecomposition.Part15
-import Lemma.Fin.EqSum_SMul.of.Basis
-import Mathlib.Algebra.Lie.Semisimple.Basic
-
-
 namespace MathlibExtTest.Algebra.Lie.LeviDecomposition
 
 -- For a semisimple algebra, the Levi factor supplied by the theorem spans the whole algebra.

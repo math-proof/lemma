@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexCorrectedCriticalDivergence.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripInfiniteIdentity
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripColumns.Part3
+public import Def.StatisticalMechanics.Code.Universality.HexCorrectedCriticalDivergence
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexCorrectedCriticalDivergence.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripInfiniteIdentity
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripColumns.Part3
-import Def.StatisticalMechanics.Code.Universality.HexCorrectedCriticalDivergence
-
-
 namespace StatMech.Universality
 
 open HexWalk

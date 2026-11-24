@@ -1,11 +1,14 @@
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Lemma.Definitions.Def_AlgebraicGeometry_NeronModelPropertyBundleCarrier
-import Lemma.Definitions.Def_AlgebraicGeometry_RelativeGroupLaw
-import Structure.JacJ1Iface
-import Def.JacJ1Iface
+module
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Lemma.Definitions.Def_AlgebraicGeometry_NeronModelPropertyBundleCarrier
+public import Lemma.Definitions.Def_AlgebraicGeometry_RelativeGroupLaw
+public import Structure.JacJ1Iface
+public import Def.JacJ1Iface
 set_option autoImplicit false
 
+
+public section
 
 section AbstractCarriers
 

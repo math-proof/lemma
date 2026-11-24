@@ -1,16 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/Completion/FiniteLiesOverRamificationIndex.lean -/
+module
+public import Theorem.Nat.NumberField.Completion.FiniteLiesOverRamificationIndex
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/Completion/FiniteLiesOverRamificationIndex.lean -/
 /-
 Author: @toskua, Avocado
 -/
-
-
-import Theorem.Nat.NumberField.Completion.FiniteLiesOverRamificationIndex
 /-!
 # Test file
 -/
-
-
 namespace IsDedekindDomain.HeightOneSpectrum
 
 open scoped NumberField NumberField.LiesOver

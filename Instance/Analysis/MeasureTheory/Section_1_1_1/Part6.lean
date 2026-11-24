@@ -1,8 +1,11 @@
-import Def.Analysis.MeasureTheory.Notation.Part2
-import Theorem.Analysis.Section_9_1.Part3
-import Theorem.Analysis.MeasureTheory.Section_1_1_1.Part9
+module
+public import Def.Analysis.MeasureTheory.Notation.Part2
+public import Theorem.Analysis.Section_9_1.Part3
+public import Theorem.Analysis.MeasureTheory.Section_1_1_1.Part9
 open BoundedInterval
 
+
+public section
 
 /-- Enables coercion from {lean}`Box d` to {lean}`Set (EuclideanSpace' d)`. -/
 instance Box.inst_coeSet {d:ℕ} : Coe (Box d) (Set (EuclideanSpace' d)) where

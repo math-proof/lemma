@@ -1,9 +1,12 @@
-import Mathlib
-import Theorem.Analysis.Section_5_1.Part9
-import Theorem.Analysis.Section_5_3.Part12
-import Theorem.Analysis.Section_5_epilogue.Part5
-import Abbrev.Analysis.Section_6_1.Part5
+module
+public import Mathlib
+public import Theorem.Analysis.Section_5_1.Part9
+public import Theorem.Analysis.Section_5_3.Part12
+public import Theorem.Analysis.Section_5_epilogue.Part5
+public import Abbrev.Analysis.Section_6_1.Part5
 
+
+public section
 
 /-- Definition 6.1.3 (ε-steady, def) -/
 lemma Real.steady_def (ε: ℝ) (a: Chapter6.Sequence) :

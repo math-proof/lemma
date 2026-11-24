@@ -14,7 +14,6 @@ namespace BooleanFourier
 /--
 [multilinearExtension_eq_on_boolToReal](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/MultilinearExtension.lean)
 -/
-@[path]
 lemma multilinearExtension_eq_on_boolToReal
   {n : ℕ}
   {f : (Fin n → Bool) → ℝ}
@@ -32,7 +31,6 @@ namespace BooleanFourier
 /--
 [multilinearExtension_unique](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/MultilinearExtension.lean)
 -/
-@[path]
 lemma multilinearExtension_unique
   {n : ℕ}
   {f : (Fin n → Bool) → ℝ}
@@ -81,7 +79,6 @@ namespace BooleanFourier
 /--
 [multilinearExtension_unique'](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/MultilinearExtension.lean)
 -/
-@[path]
 lemma multilinearExtension_unique'
   {n : ℕ}
   {f : (Fin n → Bool) → ℝ}

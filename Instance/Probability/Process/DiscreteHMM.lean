@@ -1,9 +1,12 @@
-import Theorem.Random.SinglePSpace.of.Measurable.Measurable
-import Theorem.Random.SinglePSpace.of.Measurable
-import Def.Probability.Process.HiddenMarkovSequence.Part2
-import Theorem.Probability.Process.DiscreteHMM
+module
+public import Theorem.Random.SinglePSpace.of.Measurable.Measurable
+public import Theorem.Random.SinglePSpace.of.Measurable
+public import Def.Probability.Process.HiddenMarkovSequence.Part2
+public import Theorem.Probability.Process.DiscreteHMM
 open MeasureTheory
 
+
+public section
 
 section
 

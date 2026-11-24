@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open Algebra CategoryTheory.Algebra IsLocalRing TensorProduct Algebra.TensorProduct
 

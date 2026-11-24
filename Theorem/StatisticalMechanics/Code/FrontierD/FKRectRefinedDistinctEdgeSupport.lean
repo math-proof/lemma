@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectRefinedDistinctEdgeSupport.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedEdgeCenterClass
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedBoundaryLocalSupport
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectRefinedDistinctEdgeSupport.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedEdgeCenterClass
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedBoundaryLocalSupport
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

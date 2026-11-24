@@ -1,9 +1,12 @@
-import Mathlib
-import Lemma.Fin.RothKronecker.eq.Sum_Monomial
-import Lemma.Fin.Eq.of.EqRothKroneckerEncode.All_Lt.All_Lt.Gt_1
+module
+public import Mathlib
+public import Lemma.Fin.RothKronecker.eq.Sum_Monomial
+public import Lemma.Fin.Eq.of.EqRothKroneckerEncode.All_Lt.All_Lt.Gt_1
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [rothKronecker_ne_zero_of_bounded](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

@@ -1,14 +1,17 @@
-import Def.NumberField_AdelicBox
-import Mathlib.RingTheory.DedekindDomain.Factorization
-import Mathlib.RingTheory.Ideal.Norm.AbsNorm
-import Mathlib.NumberTheory.NumberField.Basic
-import Mathlib.RingTheory.Trace.Basic
-import Mathlib.Set.Algebra.RestrictedProduct.Basic
-import Mathlib.Topology.Algebra.IsUniformGroup.Basic
-import Mathlib.Topology.UniformSpace.UniformEmbedding
-import Mathlib.Topology.DenseEmbedding
-
+module
+public import Def.NumberField_AdelicBox
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Mathlib.RingTheory.Ideal.Norm.AbsNorm
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.RingTheory.Trace.Basic
+public import Mathlib.Set.Algebra.RestrictedProduct.Basic
+public import Mathlib.Topology.Algebra.IsUniformGroup.Basic
+public import Mathlib.Topology.UniformSpace.UniformEmbedding
+public import Mathlib.Topology.DenseEmbedding
 set_option autoImplicit false
+
+
+public section
 
 namespace NumberField.AdelicTrace
 

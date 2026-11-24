@@ -1,6 +1,9 @@
-import Theorem.Analysis.MeasureTheory.Section_1_3_3.Part2
-import Structure.Analysis.MeasureTheory.Section_1_3_4
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_3_3.Part2
+public import Structure.Analysis.MeasureTheory.Section_1_3_4
 
+
+public section
 
 noncomputable def PreL1.norm {d:ℕ} {X:Type*} [RCLike X] (f: EuclideanSpace' d → X) := UnsignedLebesgueIntegral (EReal.abs_fun f)
 

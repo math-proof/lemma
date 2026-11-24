@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/StandardFormBridge.lean -/
+module
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Prop30_6
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Prop30_6
+public import Mathlib.LinearAlgebra.Matrix.BilinearForm
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/StandardFormBridge.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.AlgebraicTopologyI.code.Prop30_6
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Prop30_6
-import Mathlib.LinearAlgebra.Matrix.BilinearForm
-
-
 noncomputable section
 
 set_option autoImplicit false

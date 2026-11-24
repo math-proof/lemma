@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Exact3D/FinitePlusTailPowerLawBridge.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Exact3D.PowerLawBridge
+public import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailRG
+public import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailBlockRG.Part5
+public import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailClosedBallRG.Part5
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Exact3D/FinitePlusTailPowerLawBridge.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.Exact3D.PowerLawBridge
-import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailRG
-import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailBlockRG.Part5
-import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailClosedBallRG.Part5
-
-
 namespace StatMech
 
 namespace Exact3D

@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Lemma26Lec10.lean -/
+module
+public import Def.v1.Atlas.BooleanFunctions.code.DisagreementStability
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.DisagreementStability
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.UniqueGames
+public import Def.v1.Atlas.BooleanFunctions.code.UniqueGames.Part8
+open Finset BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Lemma26Lec10.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.BooleanFunctions.code.DisagreementStability
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.DisagreementStability
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.UniqueGames
-import Def.v1.Atlas.BooleanFunctions.code.UniqueGames.Part8
-open Finset BigOperators
-
-
 namespace BooleanFourier
 
 noncomputable def vertexAvgFunc {V W : Type*} [DecidableEq V] [DecidableEq W] {k : ℕ}

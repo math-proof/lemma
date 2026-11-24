@@ -1,7 +1,10 @@
+module
+public import Theorem.NumberTheory.NumberField.RayClass.RayGroup.Part3
+public import Theorem.Nat.NumberField.RayClass.RayGroup
+
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/RayClass/RayGroup.lean -/
 
-import Theorem.NumberTheory.NumberField.RayClass.RayGroup.Part3
-import Lemma.Nat.NumberField.RayClass.RayGroup
 @[expose] public noncomputable section
 
 open scoped Classical nonZeroDivisors

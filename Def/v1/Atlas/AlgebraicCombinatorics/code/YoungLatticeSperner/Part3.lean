@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicCombinatorics/code/YoungLatticeSperner.lean -/
+module
+public import Def.v1.Atlas.AlgebraicCombinatorics.code.QuotientIsoLmn.Part7
+public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.QuotientIsoLmn
+public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.GroupActions
+public import Abbrev.v1.Atlas.AlgebraicCombinatorics.code.GroupActions
+public import Theorem.v1.Atlas.AlgebraicCombinatorics.code.YoungLatticeSperner.Part2
+set_option autoImplicit false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicCombinatorics/code/YoungLatticeSperner.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.AlgebraicCombinatorics.code.QuotientIsoLmn.Part7
-import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.QuotientIsoLmn
-import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.GroupActions
-import Abbrev.v1.Atlas.AlgebraicCombinatorics.code.GroupActions
-import Theorem.v1.Atlas.AlgebraicCombinatorics.code.YoungLatticeSperner.Part2
-set_option autoImplicit false
-
-
 noncomputable section
 
 open scoped Classical Pointwise

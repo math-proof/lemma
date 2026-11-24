@@ -1,13 +1,18 @@
+module
+public import Mathlib.Algebra.Exact
+public import Mathlib.Algebra.Category.Grp.Ulift
+public import Mathlib.CategoryTheory.Sites.LocallySurjective
+public import Mathlib.RingTheory.AdjoinRoot
+public import Mathlib.RingTheory.Flat.Rank
+public import Mathlib.AlgebraicGeometry.Morphisms.Flat
+public import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
+public import Instance.AlgebraicGeometry_FppfCohomologyLES
+public import Instance.AlgebraicGeometry_FppfGmRepresentable
+
+
+public section
+
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_FppfKummerProp17.lean: instance decls only.
-import Mathlib.Algebra.Exact
-import Mathlib.Algebra.Category.Grp.Ulift
-import Mathlib.CategoryTheory.Sites.LocallySurjective
-import Mathlib.RingTheory.AdjoinRoot
-import Mathlib.RingTheory.Flat.Rank
-import Mathlib.AlgebraicGeometry.Morphisms.Flat
-import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
-import Instance.AlgebraicGeometry_FppfCohomologyLES
-import Instance.AlgebraicGeometry_FppfGmRepresentable
 
 namespace ModularCurve
 

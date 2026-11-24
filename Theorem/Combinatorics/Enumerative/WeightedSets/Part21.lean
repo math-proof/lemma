@@ -1,11 +1,15 @@
+module
+public import Mathlib
+public import Def.Combinatorics.Enumerative.WeightedSets.Part25
+open PowerSeries Finset BigOperators
+
+
+public section
+
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.Combinatorics.Enumerative.WeightedSets.Part25
-open PowerSeries Finset BigOperators
-
 /-!
 # The Generating Function of a Weighted Set
 
@@ -52,8 +56,6 @@ Note: Height-3 domino tilings are handled in `Details/DominoTilings.lean`.
 
 weighted set, generating function, combinatorial class, domino tiling
 -/
-
-
 noncomputable section
 
 variable {R : Type*} [CommSemiring R]

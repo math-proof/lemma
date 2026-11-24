@@ -1,22 +1,25 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.NumberTheory.RothAuxiliary.Part7
-import Structure.NumberTheory.RothAuxiliary
-import Structure.NumberTheory.RothAuxiliary.Part2
-import Lemma.Matrix.MulVecRothAuxMatrix.eq.Zero.of.EqMulVecRothRidoutAuxMatrix_0.RothCoeff
-import Lemma.Matrix.Mul_SubDiv1'2.le.RothWeightAndRothWeight.le.Sub_Mul_SubDiv1'2.of.Ne_0.RothBox.EqMulVecRothRidoutAuxMatrix_0.All_Gt_0.RothCoeff
-import Lemma.Matrix.RothHasseEval_1.eq.Zero.of.EqMulVecRothAuxMatrix_0.RothCoeff.IsAlgebraic
-import Lemma.Real.Any_Ge_2AndAll_Le2Rpow.of.Gt_0
-import Lemma.Real.Any_Lt_Den.of.Infinite.Subset_SetOfLtAbsSub_Div1RpowDen.Gt_0
-import Lemma.Real.MulPowS.le.RpowMulMulAdd_Mul.of.Le_MulMul.Le_RpowMul.Le_Rpow.Ge_0.Ge
-import Lemma.Real.NormRothRidoutAuxMatrix.le.PowMul_2RothCoordinateBaseSum
-import Lemma.Real.RothCoordinateBase.Gt_0
-import Lemma.Real.RpowMul.le.RpowMul.of.LePow_Pow.Ge_0
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.NumberTheory.RothAuxiliary.Part7
+public import Structure.NumberTheory.RothAuxiliary
+public import Structure.NumberTheory.RothAuxiliary.Part2
+public import Theorem.Matrix.MulVecRothAuxMatrix.eq.Zero.of.EqMulVecRothRidoutAuxMatrix_0.RothCoeff
+public import Theorem.Matrix.Mul_SubDiv1'2.le.RothWeightAndRothWeight.le.Sub_Mul_SubDiv1'2.of.Ne_0.RothBox.EqMulVecRothRidoutAuxMatrix_0.All_Gt_0.RothCoeff
+public import Theorem.Matrix.RothHasseEval_1.eq.Zero.of.EqMulVecRothAuxMatrix_0.RothCoeff.IsAlgebraic
+public import Lemma.Real.Any_Ge_2AndAll_Le2Rpow.of.Gt_0
+public import Lemma.Real.Any_Lt_Den.of.Infinite.Subset_SetOfLtAbsSub_Div1RpowDen.Gt_0
+public import Lemma.Real.MulPowS.le.RpowMulMulAdd_Mul.of.Le_MulMul.Le_RpowMul.Le_Rpow.Ge_0.Ge
+public import Theorem.Real.NormRothRidoutAuxMatrix.le.PowMul_2RothCoordinateBaseSum
+public import Theorem.Real.RothCoordinateBase.Gt_0
+public import Lemma.Real.RpowMul.le.RpowMul.of.LePow_Pow.Ge_0
 open MathlibExt.NumberTheory.RothAuxiliary
 open scoped BigOperators nonZeroDivisors Polynomial
 open Real Matrix
 set_option maxHeartbeats 999999
 
+
+public section
 
 attribute [local instance] Matrix.seminormedAddCommGroup
 

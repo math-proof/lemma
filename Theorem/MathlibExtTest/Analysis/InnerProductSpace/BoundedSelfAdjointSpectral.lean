@@ -1,9 +1,10 @@
+module
+public import Theorem.Analysis.InnerProductSpace.BoundedSelfAdjointSpectral.Part17
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/InnerProductSpace/BoundedSelfAdjointSpectral.lean -/
-
-
-import Theorem.Analysis.InnerProductSpace.BoundedSelfAdjointSpectral.Part17
-
-
 namespace MathlibExtTest.Analysis.InnerProductSpace.BoundedSelfAdjointSpectral
 
 open MeasureTheory MathlibExt.Analysis.InnerProductSpace.BoundedSelfAdjointSpectralWanted

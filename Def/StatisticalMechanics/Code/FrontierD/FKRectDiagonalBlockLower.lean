@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectDiagonalBlockLower.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKFiniteConnectionApproximation
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectLocalBoxEmbedding.Part7
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectWindingBlockSource.Part3
+public import Theorem.StatisticalMechanics.Code.FK.TwoPointPathLower
+public import Theorem.StatisticalMechanics.Code.FrontierD.FiniteProductExceptions
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectDiagonalBlockLower.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKFiniteConnectionApproximation
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectLocalBoxEmbedding.Part7
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectWindingBlockSource.Part3
-import Theorem.StatisticalMechanics.Code.FK.TwoPointPathLower
-import Theorem.StatisticalMechanics.Code.FrontierD.FiniteProductExceptions
-
-
 namespace StatMech.FrontierD
 
 open StatMech.Lattice StatMech.Percolation Filter Topology

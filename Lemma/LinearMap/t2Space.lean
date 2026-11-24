@@ -1,7 +1,10 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
 open IsModuleTopology
 
+
+public section
 
 @[path]
 private lemma main

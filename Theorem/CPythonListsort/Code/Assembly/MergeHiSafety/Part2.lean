@@ -7,9 +7,9 @@ public import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
 public import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
 public import Def.CPythonListsort.Code.Assembly.MergeHiSafety
 public import Theorem.CPythonListsort.Code.Assembly.MergeHiSafety.Helpers
-public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.AccessTrace
-public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.MergeTracePrimitives
-public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopSafety
+public import Theorem.List.Atlas.CPythonListsort.Code.Assembly.AccessTrace
+public import Theorem.List.Atlas.CPythonListsort.Code.Assembly.MergeTracePrimitives
+public import Theorem.List.Atlas.CPythonListsort.Code.Assembly.GallopSafety
 /-!
 # `merge_hi` traced execution and safety
 

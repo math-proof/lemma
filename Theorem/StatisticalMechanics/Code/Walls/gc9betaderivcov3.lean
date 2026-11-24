@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/gc9betaderivcov3.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Ising.AizenmanBarsky.Part5
+public import Theorem.StatisticalMechanics.Code.Walls.ghc_fieldfluct
+open scoped BigOperators
+open Finset SimpleGraph
+set_option linter.unusedSectionVars false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/gc9betaderivcov3.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Ising.AizenmanBarsky.Part5
-import Theorem.StatisticalMechanics.Code.Walls.ghc_fieldfluct
-open scoped BigOperators
-open Finset SimpleGraph
-
-set_option linter.unusedSectionVars false
-
-
 namespace StatMech.Walls
 
 open StatMech.Ising StatMech.Sharpness

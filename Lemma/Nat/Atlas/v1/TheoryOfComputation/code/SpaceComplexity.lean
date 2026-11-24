@@ -1,10 +1,13 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.TheoryOfComputation.code.SpaceComplexity.Part7
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.TheoryOfComputation.code.SpaceComplexity.Part7
 open Computability TuringMachine SpaceComplexity
 open TuringMachine
 open NPCompleteness
 
+
+public section
 
 namespace SpaceComplexity
 

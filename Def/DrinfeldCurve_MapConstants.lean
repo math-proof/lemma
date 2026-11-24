@@ -1,8 +1,11 @@
-import Def.DrinfeldCurve_FunctionField
-import Def.AlgebraicCurve_Correspondence
-import Instance.DrinfeldCurve_MapConstants
-
+module
+public import Def.DrinfeldCurve_FunctionField
+public import Def.AlgebraicCurve_Correspondence
+public import Instance.DrinfeldCurve_MapConstants
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

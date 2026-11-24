@@ -1,5 +1,213 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/HighDimensionalStatistics.lean -/
+module
+public import Def.v1.Atlas.HighDimensionalStatistics.code.BuildVerification
+public import Abbrev.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Aliases
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Ch1_Bernstein_Section
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_10
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_12
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_15
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_4
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_5
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Prop_1_1
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Prop_1_1_full
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_13
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_9
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Cor_2_8
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Cor_2_9
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Lemma_2_7
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_11
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_14
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_15
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_18
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_2
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_6
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Prop_3_12
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_6
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.TrigOrtho
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Prop_5_6
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Cor_1_7
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Cor_1_7
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_17
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_2
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_18
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_8
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Problem_1_2
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Problem_1_4
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Problem_1_5
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Problem_1_7
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_14
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_16
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_19
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_6
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter16.Props
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Def_2_12
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.EpsilonNetBridge
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Lemma_2_17
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Problem_2_4
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Prop_2_1
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Prop_2_16
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_14_Bridge
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_14_SubspaceBound
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_4
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Cor_3_16
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Cor_3_7
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Def_3_10
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Ex_3_8
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Ex_3_9
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Lemma_3_13
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Lemma_3_14
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Problem_3_4
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Remark_3_1
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_11
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_15
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_3
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_4
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_5
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Background_Holder_Schatten
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Background_Weyl
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Cor_4_9
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Def_4_7
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.EuclideanBridge
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.ExpCauchySchwarz
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Lemma_4_2
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Problem_4_1
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Problem_4_3
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Remark_4_5
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_10
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_10_Bridges
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_3
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_4
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_6
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_8
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.ChernoffAnalyticHelpers
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Cor_5_13
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Cor_5_15
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Cor_5_16
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.DefProp_5_4_Helpers
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Def_5_5
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.InfoTheory
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Lemma_5_12
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Lemma_5_14
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Lemma_5_3_5_4_5_8
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Problem_5_1
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Problem_5_3
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Remark_5_17
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.SparseBallCard
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Thm_5_10
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Thm_5_11
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Thm_5_9
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_11
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_17
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_2
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_18
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_8
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Problem_1_1
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Problem_1_2
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Problem_1_3
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Problem_1_4
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Problem_1_5
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Problem_1_6
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Problem_1_7
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Problem_1_8
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_14
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_16
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_19
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_6
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter10.Schwartz_Repr.Part2
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter11.AdvancedResults.Part3
+public import Abbrev.v1.Atlas.HighDimensionalStatistics.code.Chapter11.Defs_and_Props.Part3
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter12.MicrolocalAnalysis.Part3
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter16.Props
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Def_2_10
+public import Abbrev.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Def_2_12
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.EpsilonNetBridge
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Lemma_2_17
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Problem_2_1
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Problem_2_2
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Problem_2_3
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Problem_2_4
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Problem_2_5
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Problem_2_6
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Problem_2_7
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Prop_2_1
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Prop_2_16.Part2
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.SubGSubspaceTailVerification
+public import Abbrev.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Thm_2_14_Bridge
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Thm_2_14_SubspaceBound
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Thm_2_4
+public import Structure.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Assumption_ORT
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Cor_3_16
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Cor_3_7
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Def_3_10
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Def_3_2
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Ex_3_8
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Ex_3_9
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Lemma_3_13
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Lemma_3_14
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Problem_3_1
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Problem_3_2
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Problem_3_3
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Problem_3_4
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Problem_3_5
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Remark_3_1
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Setup
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_11
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_15.Part2
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_3
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_3_SubGaussian
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_4
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_5
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter3.VerifyStageBSeparatedForm
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Background_Hoffman_Wielandt
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Background_Holder_Schatten
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Background_Weyl
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Cor_4_9
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Def_4_1.Part3
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Def_4_7
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter4.EuclideanBridge
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter4.ExpCauchySchwarz
+public import Notation.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Lemma_4_2
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Problem_4_1
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Problem_4_2
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Problem_4_3
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Remark_4_5
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_10
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_10_Bridges
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_3
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_4
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_6
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_8
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter5.ChernoffAnalyticHelpers
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.ChernoffHelpers
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Cor_5_13.Part3
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Cor_5_15
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Cor_5_16.Part5
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter5.DefProp_5_4
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter5.DefProp_5_4_Helpers
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Def_5_1_5_2.Part3
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Def_5_5
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Ex_5_7
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter5.FanoConditionalEntropyBoundVerify
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.InfoTheory.Part3
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Lemma_5_12
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Lemma_5_14.Part5
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Lemma_5_3_5_4_5_8
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Problem_5_1
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Problem_5_2
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Problem_5_3
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Problem_5_4
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Problem_5_5
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Remark_5_17
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.SparseBallCard
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Thm_5_10
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Thm_5_11.Part2
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Thm_5_9
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/HighDimensionalStatistics.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,210 +215,4 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.HighDimensionalStatistics.code.BuildVerification
-import Abbrev.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Aliases
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Ch1_Bernstein_Section
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_10
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_12
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_15
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_4
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_5
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Prop_1_1
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Prop_1_1_full
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_13
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_9
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Cor_2_8
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Cor_2_9
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Lemma_2_7
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_11
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_14
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_15
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_18
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_2
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_6
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Prop_3_12
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_6
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.TrigOrtho
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Prop_5_6
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Cor_1_7
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Cor_1_7
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_17
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_2
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_18
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Lemma_1_8
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Problem_1_2
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Problem_1_4
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Problem_1_5
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Problem_1_7
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_14
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_16
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_19
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_6
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter16.Props
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Def_2_12
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.EpsilonNetBridge
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Lemma_2_17
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Problem_2_4
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Prop_2_1
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Prop_2_16
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_14_Bridge
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_14_SubspaceBound
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_4
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Cor_3_16
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Cor_3_7
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Def_3_10
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Ex_3_8
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Ex_3_9
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Lemma_3_13
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Lemma_3_14
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Problem_3_4
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Remark_3_1
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_11
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_15
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_3
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_4
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_5
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Background_Holder_Schatten
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Background_Weyl
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Cor_4_9
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Def_4_7
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.EuclideanBridge
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.ExpCauchySchwarz
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Lemma_4_2
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Problem_4_1
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Problem_4_3
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Remark_4_5
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_10
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_10_Bridges
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_3
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_4
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_6
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_8
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.ChernoffAnalyticHelpers
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Cor_5_13
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Cor_5_15
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Cor_5_16
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.DefProp_5_4_Helpers
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Def_5_5
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.InfoTheory
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Lemma_5_12
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Lemma_5_14
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Lemma_5_3_5_4_5_8
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Problem_5_1
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Problem_5_3
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Remark_5_17
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.SparseBallCard
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Thm_5_10
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Thm_5_11
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Thm_5_9
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_11
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_17
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_2
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_18
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_3
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_8
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Problem_1_1
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Problem_1_2
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Problem_1_3
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Problem_1_4
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Problem_1_5
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Problem_1_6
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Problem_1_7
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Problem_1_8
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_14
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_16
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_19
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_6
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter10.Schwartz_Repr.Part2
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter11.AdvancedResults.Part3
-import Abbrev.v1.Atlas.HighDimensionalStatistics.code.Chapter11.Defs_and_Props.Part3
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter12.MicrolocalAnalysis.Part3
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter16.Props
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Def_2_10
-import Abbrev.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Def_2_12
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.EpsilonNetBridge
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Lemma_2_17
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Problem_2_1
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Problem_2_2
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Problem_2_3
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Problem_2_4
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Problem_2_5
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Problem_2_6
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Problem_2_7
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Prop_2_1
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Prop_2_16.Part2
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.SubGSubspaceTailVerification
-import Abbrev.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Thm_2_14_Bridge
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Thm_2_14_SubspaceBound
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Thm_2_4
-import Structure.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Assumption_ORT
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Cor_3_16
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Cor_3_7
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Def_3_10
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Def_3_2
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Ex_3_8
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Ex_3_9
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Lemma_3_13
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Lemma_3_14
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Problem_3_1
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Problem_3_2
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Problem_3_3
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Problem_3_4
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Problem_3_5
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Remark_3_1
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Setup
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_11
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_15.Part2
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_3
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_3_SubGaussian
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_4
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter3.Thm_3_5
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter3.VerifyStageBSeparatedForm
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Background_Hoffman_Wielandt
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Background_Holder_Schatten
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Background_Weyl
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Cor_4_9
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Def_4_1.Part3
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Def_4_7
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter4.EuclideanBridge
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter4.ExpCauchySchwarz
-import Notation.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Lemma_4_2
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Problem_4_1
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Problem_4_2
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Problem_4_3
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Remark_4_5
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_10
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_10_Bridges
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_3
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_4
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_6
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_8
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter5.ChernoffAnalyticHelpers
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.ChernoffHelpers
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Cor_5_13.Part3
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Cor_5_15
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Cor_5_16.Part5
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter5.DefProp_5_4
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter5.DefProp_5_4_Helpers
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Def_5_1_5_2.Part3
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Def_5_5
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Ex_5_7
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter5.FanoConditionalEntropyBoundVerify
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.InfoTheory.Part3
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Lemma_5_12
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Lemma_5_14.Part5
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Lemma_5_3_5_4_5_8
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Problem_5_1
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Problem_5_2
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Problem_5_3
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Problem_5_4
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Problem_5_5
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Remark_5_17
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.SparseBallCard
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Thm_5_10
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Thm_5_11.Part2
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Thm_5_9
-
 

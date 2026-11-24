@@ -1,11 +1,13 @@
-import Def.FLTPrelim_Ramification
-import Lemma.WeierstrassCurve.FreyPackageGaloisRep
-import Mathlib.RingTheory.Valuation.RamificationGroup
-import Mathlib.RingTheory.Valuation.LocalSubring
-
+module
+public import Def.FLTPrelim_Ramification
+public import Theorem.WeierstrassCurve.FreyPackageGaloisRep
+public import Mathlib.RingTheory.Valuation.RamificationGroup
+public import Mathlib.RingTheory.Valuation.LocalSubring
 set_option autoImplicit false
-
 open IsLocalRing
+
+
+public section
 
 namespace ValuationSubring
 

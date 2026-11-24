@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicSquareWiredPortGeometry.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredOneVisitInsertedPhase
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredTangentCode
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveClosure
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardRectilinearPolygonBridge.Part2
+public import Abbrev.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredPortGeometry.Part3
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicSquareWiredPortGeometry.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredOneVisitInsertedPhase
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredTangentCode
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveClosure
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardRectilinearPolygonBridge.Part2
-import Abbrev.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredPortGeometry.Part3
-
-
 namespace StatMech.Universality
 
 open StatMech StatMech.FK StatMech.Lattice StatMech.FrontierD

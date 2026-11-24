@@ -1,5 +1,10 @@
-import Mathlib
-import Theorem.Analysis.Section_7_3
+module
+public import Mathlib
+public import Theorem.Analysis.Section_7_3
+
+
+public section
+
 /-!
 # Analysis I, Section 7.4: Rearrangement of series
 
@@ -9,8 +14,6 @@ Main constructions and results of this section:
 
 - Rearrangement of non-negative or absolutely convergent series.
 -/
-
-
 namespace Chapter7
 
 theorem Series.sum_eq_sum (b:ℕ → ℝ) {N:ℤ} (hN: N ≥ 0) : ∑ n ∈ .Icc 0 N, (if 0 ≤ n then b n.toNat else 0) = ∑ n ∈ .Iic N.toNat, b n := by

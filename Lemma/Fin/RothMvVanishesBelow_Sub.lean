@@ -1,13 +1,16 @@
-import Mathlib
-import Lemma.Fin.RothMvVanishesBelowNeg
-import Lemma.Fin.RothMvVanishesBelow.of.Le
-import Lemma.Fin.RothMvVanishesBelow_Sum.of.All_RothMvVanishesBelow
-import Lemma.Fin.RothMvVanishesBelow.of.All_RothMvVanishesBelow
-import Lemma.Fin.RothMvVanishesBelow_Sub.of.RothMvIndex
-import Lemma.Fin.RothMvWeightAdd.eq.AddRothSMvWeight.of.RothMvIndex
+module
+public import Mathlib
+public import Lemma.Fin.RothMvVanishesBelowNeg
+public import Lemma.Fin.RothMvVanishesBelow.of.Le
+public import Lemma.Fin.RothMvVanishesBelow_Sum.of.All_RothMvVanishesBelow
+public import Lemma.Fin.RothMvVanishesBelow.of.All_RothMvVanishesBelow
+public import Lemma.Fin.RothMvVanishesBelow_Sub.of.RothMvIndex
+public import Lemma.Fin.RothMvWeightAdd.eq.AddRothSMvWeight.of.RothMvIndex
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [rothHasseDet_vanishesBelow](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

@@ -1,7 +1,10 @@
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Def.WeierstrassCurve_RatPointMap_probe
-
+module
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Def.WeierstrassCurve_RatPointMap_probe
 set_option autoImplicit false
+
+
+public section
 
 namespace WeierstrassCurve
 

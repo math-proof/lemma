@@ -1,9 +1,10 @@
+module
+public import Theorem.Analysis.NormedSpace.LocalReflexivity.Part6
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/FunctionalAnalysis/LocalReflexivity.lean -/
-
-
-import Theorem.Analysis.NormedSpace.LocalReflexivity.Part6
-
-
 namespace MathlibExtTest.Analysis.FunctionalAnalysis.LocalReflexivity
 
 open MathlibExt.Analysis.FunctionalAnalysis.LocalReflexivityWanted

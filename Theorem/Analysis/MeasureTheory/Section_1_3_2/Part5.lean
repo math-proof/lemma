@@ -1,8 +1,11 @@
-import Theorem.Analysis.MeasureTheory.Section_1_3_1.Part11
-import Mathlib.Algebra.Order.Floor.Semifield
-import Def.Analysis.MeasureTheory.Section_1_3_2.Part5
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_3_1.Part11
+public import Mathlib.Algebra.Order.Floor.Semifield
+public import Def.Analysis.MeasureTheory.Section_1_3_2.Part5
 set_option doc.verso.suggestions false
 
+
+public section
 
 /-- Binary digits are in \{0, 1\}. -/
 lemma binaryDigit_le_one (x : ℝ) (j : ℕ) : binaryDigit x j ≤ 1 := by

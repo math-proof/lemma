@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/FreeEnergy.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.Pressure.Part2
+public import Theorem.StatisticalMechanics.Code.Onsager.Torus
+public import Theorem.StatisticalMechanics.Code.Onsager.CriticalPoint
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/FreeEnergy.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.Pressure.Part2
-import Theorem.StatisticalMechanics.Code.Onsager.Torus
-import Theorem.StatisticalMechanics.Code.Onsager.CriticalPoint
-
-
 namespace StatMech.Onsager
 
 open StatMech.Ising

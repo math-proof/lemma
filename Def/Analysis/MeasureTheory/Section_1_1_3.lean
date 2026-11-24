@@ -1,6 +1,10 @@
-import Abbrev.Analysis.MeasureTheory.Section_1_1_2.Part4
-import Structure.Analysis.MeasureTheory.Section_1_1_3
+module
+public import Abbrev.Analysis.MeasureTheory.Section_1_1_2.Part4
+public import Structure.Analysis.MeasureTheory.Section_1_1_3
 open BoundedInterval
+
+
+public section
 
 /-!
 # Introduction to Measure Theory, Section 1.1.3: Connections with the Riemann integral
@@ -8,8 +12,6 @@ open BoundedInterval
 A companion to Section 1.1.3 of the book "An introduction to Measure Theory".
 
 -/
-
-
 -- The width of the i-th subinterval in a tagged partition.
 def TaggedPartition.delta {I: BoundedInterval} {n:ℕ} (P: TaggedPartition I n) (i:Fin n): ℝ :=
  P.x i.succ - P.x i.castSucc

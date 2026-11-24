@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicPhysicalCompactPlacement.lean -/
+module
+public import Def.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalCompactPlacement.Part4
+set_option linter.style.longLine false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicPhysicalCompactPlacement.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,9 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalCompactPlacement.Part4
-set_option linter.style.longLine false
 
 #print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.diagonalSegment_mapsTo_cthickening
 #print axioms StatMech.Universality.FKIsingSquareBoundaryLayerCoordinateOneForm.diagonalSegment_mapsTo_of_cthickening

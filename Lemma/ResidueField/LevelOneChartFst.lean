@@ -2,7 +2,7 @@ import Mathlib
 import Def.ModularCurve_LevelOneProlongationPair
 import Lemma.ValuationSubring.SemistableCharts
 import Lemma.Finsupp.SpecializeModuli
-import Lemma.WeierstrassCurve.SupersingularModuli
+import Theorem.WeierstrassCurve.SupersingularModuli
 import Lemma.Finset.SupersingularNodePlaces
 import Structure.ModularCurve_LevelOneChartFst
 

@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingGaussianTorusScalingHandoff.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianTorusLaw.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianNewmanBridge.Part2
+public import Def.StatisticalMechanics.Code.FrontierA.IsingGaussianTorusScalingHandoff
+open Filter MeasureTheory Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingGaussianTorusScalingHandoff.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianTorusLaw.Part3
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianNewmanBridge.Part2
-import Def.StatisticalMechanics.Code.FrontierA.IsingGaussianTorusScalingHandoff
-open Filter MeasureTheory Topology
-
-
 namespace StatMech.FrontierA
 
 open ProbabilityTheory

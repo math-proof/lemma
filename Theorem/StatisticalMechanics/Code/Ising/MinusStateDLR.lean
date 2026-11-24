@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/MinusStateDLR.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Ising.IsingMinusTIFromPlacement
+open MeasureTheory ProbabilityTheory MeasurableSpace Set Filter Topology
+open scoped BigOperators ENNReal BoundedContinuousFunction
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/MinusStateDLR.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Ising.IsingMinusTIFromPlacement
-open MeasureTheory ProbabilityTheory MeasurableSpace Set Filter Topology
-open scoped BigOperators ENNReal BoundedContinuousFunction
-
-
 namespace StatMech.Ising
 
 open StatMech.Lattice

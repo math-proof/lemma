@@ -1,8 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Misc.UnitsSystem.Part23
-import Mathlib.Algebra.Group.MinimalAxioms
-import Theorem.Analysis.Misc.SI
+module
+public import Mathlib
+public import Theorem.Analysis.Misc.UnitsSystem.Part23
+public import Mathlib.Algebra.Group.MinimalAxioms
+public import Theorem.Analysis.Misc.SI
 
+
+public section
 
 /-- {given -show (type := "SI_dimensions")}`d₁, d₂`The addition structure here is simple enough that
   one gets a lot of definitional equalities, e.g., between {lean}`d₁+d₂` and {lean}`d₂+d₁` for

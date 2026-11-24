@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.v1.Atlas.NumberTheoryI.code.AdicCompletionAlgebra.Part3
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.v1.Atlas.NumberTheoryI.code.AdicCompletionAlgebra.Part3
 open IsDedekindDomain UniformSpace AdicCompletionAlgebra
 
+
+public section
 
 /--
 [algebraMap_withVal_continuous_general](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/AdicCompletionAlgebra.lean)

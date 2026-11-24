@@ -1,7 +1,10 @@
+module
+public import Theorem.NumberTheory.NumberField.RayClass.InfiniteSign.Part4
+public import Theorem.Nat.NumberField.RayClass.InfiniteSign
+
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/RayClass/InfiniteSign.lean -/
 
-import Theorem.NumberTheory.NumberField.RayClass.InfiniteSign.Part4
-import Lemma.Nat.NumberField.RayClass.InfiniteSign
 @[expose] public noncomputable section
 
 open NumberField

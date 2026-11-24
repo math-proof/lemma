@@ -1,12 +1,15 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Abbrev.Analysis.Section_3_3_fn
-import Lemma.Nat.Eq_F333a.is.Eq_Add_1
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Abbrev.Analysis.Section_3_3_fn
+public import Lemma.Nat.Eq_F333a.is.Eq_Add_1
 open Chapter3 hiding Nat Set
 open Chapter3.SetTheory
 open Chapter3.SetTheory.Set
 open Nat
 
+
+public section
 
 /--
 [SetTheory.Set.f_3_3_3a_eval'](https://github.com/teorth/analysis/blob/main/Analysis/Section_3_3.lean)

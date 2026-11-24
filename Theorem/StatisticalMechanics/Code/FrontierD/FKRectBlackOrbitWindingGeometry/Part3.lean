@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectBlackOrbitWindingGeometry.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnEssential
+public import Theorem.StatisticalMechanics.Code.Onsager.RectangularAxisSubdivision.Part8
+public import Def.StatisticalMechanics.Code.FrontierD.FKRectBlackOrbitWindingGeometry.Part3
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectBlackOrbitWindingGeometry.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnEssential
-import Theorem.StatisticalMechanics.Code.Onsager.RectangularAxisSubdivision.Part8
-import Def.StatisticalMechanics.Code.FrontierD.FKRectBlackOrbitWindingGeometry.Part3
-
-
 namespace StatMech.FrontierD
 
 open StatMech.Onsager

@@ -1,11 +1,13 @@
-import Mathlib
-import Class.Deformations_ProartinianCat
-import Def.CategoryTheory_Subfunctor_OfIsTerminal
-import Def.Deformations_LiftFunctor
-
+module
+public import Mathlib
+public import Class.Deformations_ProartinianCat
+public import Def.CategoryTheory_Subfunctor_OfIsTerminal
+public import Def.Deformations_LiftFunctor
 set_option autoImplicit false
-
 open CategoryTheory IsLocalRing
+
+
+public section
 
 namespace Deformation
 

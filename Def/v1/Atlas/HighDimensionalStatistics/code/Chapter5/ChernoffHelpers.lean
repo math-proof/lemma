@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter5/ChernoffHelpers.lean -/
+module
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.SparseBallCard
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.SparseBallCard
+open Finset Real
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter5/ChernoffHelpers.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.SparseBallCard
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.SparseBallCard
-open Finset Real
-
-
 noncomputable section
 
 namespace SparseVarshamovGilbert

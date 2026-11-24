@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/LeftCornerW.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.EdgeUnique
+public import Theorem.StatisticalMechanics.Code.Onsager.WalkCellBridge
+public import Theorem.StatisticalMechanics.Code.Onsager.Orientation.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/LeftCornerW.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.EdgeUnique
-import Theorem.StatisticalMechanics.Code.Onsager.WalkCellBridge
-import Theorem.StatisticalMechanics.Code.Onsager.Orientation.Part2
-
-
 namespace StatMech.Onsager.LeftCornerW
 
 open Finset StatMech.Onsager.BaseCase StatMech.Onsager.NoDoubleWind StatMech.Onsager.WalkCrossing

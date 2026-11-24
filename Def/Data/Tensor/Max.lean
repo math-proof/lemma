@@ -1,7 +1,10 @@
-import Instance.Data.Tensor.Tensor.Part2
-import Def.Data.Tensor.Aminmax
+module
+public import Instance.Data.Tensor.Tensor.Part2
+public import Def.Data.Tensor.Aminmax
 open Tensor
 
+
+public section
 
 /--
 Reduces the tensor along `dim` by taking the maximum value.

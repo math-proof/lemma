@@ -1,8 +1,13 @@
-import Mathlib
-import Mathlib.Data.Real.Sign
-import Abbrev.Analysis.Section_9_3.Part2
-import Theorem.Analysis.Section_9_4.Part2
-import Abbrev.Analysis.Section_9_6
+module
+public import Mathlib
+public import Mathlib.Data.Real.Sign
+public import Abbrev.Analysis.Section_9_3.Part2
+public import Theorem.Analysis.Section_9_4.Part2
+public import Abbrev.Analysis.Section_9_6
+
+
+public section
+
 /-!
 # Analysis I, Section 9.6: The maximum principle
 
@@ -16,8 +21,6 @@ Main constructions and results of this section:
 - Continuous functions on closed and bounded intervals are bounded.
 - Continuous functions on closed and bounded intervals attain their maximum and minimum.
 -/
-
-
 namespace Chapter9
 
 theorem BddOn.of_bounded {f :ℝ → ℝ} {X: Set ℝ} {M:ℝ} (h: ∀ x ∈ X, |f x| ≤ M) : BddOn f X := by use M

@@ -1,9 +1,12 @@
-import Lemma.Scheme.OrderedAffineCoverCech
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Mathlib.AlgebraicGeometry.Morphisms.Affine
-import Abbrev.AlgebraicGeometry_TwoAffineOpenCover
-
+module
+public import Lemma.Scheme.OrderedAffineCoverCech
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
+public import Abbrev.AlgebraicGeometry_TwoAffineOpenCover
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

@@ -1,6 +1,6 @@
 import Mathlib
 import Def.FLTPrelim_Ramification
-import Lemma.WeierstrassCurve.FrobeniusTrace
+import Theorem.WeierstrassCurve.FrobeniusTrace
 import Lemma.ResidueField.GluedPic0
 import Lemma.Scheme.Correspondence
 import Def.AlgebraicCurve_WeilDatum

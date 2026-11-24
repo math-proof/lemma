@@ -1,10 +1,11 @@
+module
+public import Theorem.GameTheory.ShapleyValue.Part3
+public import Theorem.Set.ShapleyValue
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/GameTheory/ShapleyValue.lean -/
-
-
-import Theorem.GameTheory.ShapleyValue.Part3
-import Lemma.Set.ShapleyValue
-
-
 namespace MathlibExt.GameTheory.ShapleyValue
 
 open scoped BigOperators

@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/HilbertProductFormula.lean -/
+module
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.HilbertBilinear
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertBilinear
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertFormulaOdd
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertSymbol2Adic
+public import Def.v1.Atlas.ArithmeticGeometry.code.HilbertFormulaOdd
+public import Def.v1.Atlas.ArithmeticGeometry.code.HilbertSymbol2Adic
+public import Mathlib.NumberTheory.LegendreSymbol.QuadraticReciprocity
+open HilbertSymbol
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/HilbertProductFormula.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.ArithmeticGeometry.code.HilbertBilinear
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertBilinear
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertFormulaOdd
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertSymbol2Adic
-import Def.v1.Atlas.ArithmeticGeometry.code.HilbertFormulaOdd
-import Def.v1.Atlas.ArithmeticGeometry.code.HilbertSymbol2Adic
-import Mathlib.NumberTheory.LegendreSymbol.QuadraticReciprocity
-open HilbertSymbol
-
-
 noncomputable section
 
 /-- Inclusion of rational units into real units: $\mathbb{Q}^\times \to \mathbb{R}^\times$. -/

@@ -7,7 +7,7 @@ public section
 
 
 @[path]
-public theorem main
+private theorem main
   {S : Type*} [Fintype S]
 -- given
   (c : ℝ) (x : S → ℝ) :

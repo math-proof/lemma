@@ -1,10 +1,12 @@
-import Mathlib
-import Def.Submodule_ContinuousH2
-import Lemma.Rep.ContinuousH1
-
+module
+public import Mathlib
+public import Def.Submodule_ContinuousH2
+public import Theorem.Rep.ContinuousH1
 set_option autoImplicit false
 open CategoryTheory
 
+
+public section
 
 noncomputable section
 

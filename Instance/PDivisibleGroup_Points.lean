@@ -1,11 +1,15 @@
--- Carved from Lemma/Definitions/Def_PDivisibleGroup_Points.lean: instance decls only.
-import Mathlib
-import Instance.PDivisibleGroup_Basic
-import Instance.EllipticCurve_TateModule
-import Theorem.AlgHom.Points
-import Def.AlgHom_Points
-
+module
+public import Mathlib
+public import Instance.PDivisibleGroup_Basic
+public import Instance.EllipticCurve_TateModule
+public import Theorem.AlgHom.Points
+public import Def.AlgHom_Points
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_PDivisibleGroup_Points.lean: instance decls only.
 
 noncomputable section
 

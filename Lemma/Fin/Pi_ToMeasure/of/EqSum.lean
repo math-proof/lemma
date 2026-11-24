@@ -1,15 +1,18 @@
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
-import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Data.Fin.Tuple.Basic
-import Mathlib.Data.Nat.Choose.Multinomial
-import Mathlib.MeasureTheory.Constructions.Pi
-import Mathlib.Probability.ProbabilityMassFunction.Basic
-import Initialize.Tactic.Attr.Basic
+module
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
+public import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+public import Mathlib.Data.Fin.Tuple.Basic
+public import Mathlib.Data.Nat.Choose.Multinomial
+public import Mathlib.MeasureTheory.Constructions.Pi
+public import Mathlib.Probability.ProbabilityMassFunction.Basic
+public import Initialize.Tactic.Attr.Basic
 open Finset MeasureTheory
 open scoped ENNReal Nat
 
+
+public section
 
 /-- Number of coordinates of `ω` equal to `a`. -/
 def countVec {α : Type*} [DecidableEq α] {n : ℕ} (ω : Fin n → α) (a : α) : ℕ :=

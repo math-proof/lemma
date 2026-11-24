@@ -1,12 +1,14 @@
-import Mathlib
-import Abbrev.ModularCurve_DRModelPackage
-import Def.ModularCurve_X0MqResolvedTable
-import Def.AlgebraicCurve_RelCartier
-import Instance.AlgebraicGeometry_RelativePicardFunctor
-
+module
+public import Mathlib
+public import Abbrev.ModularCurve_DRModelPackage
+public import Def.ModularCurve_X0MqResolvedTable
+public import Def.AlgebraicCurve_RelCartier
+public import Instance.AlgebraicGeometry_RelativePicardFunctor
 set_option autoImplicit false
-
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
+
+
+public section
 
 noncomputable section
 

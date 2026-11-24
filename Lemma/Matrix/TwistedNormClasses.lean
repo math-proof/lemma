@@ -1,19 +1,22 @@
-import Lemma.Matrix.SigmaConjugacy
-import Mathlib.Tactic.Group
-import Mathlib.Logic.Function.Iterate
-import Mathlib.Algebra.BigOperators.Group.List.Basic
-import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
-import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
-import Mathlib.Algebra.Polynomial.Lifts
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.RingTheory.Norm.Transitivity
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.Algebra.Group.Conj
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Ring
-import Mathlib.LinearAlgebra.Matrix.Trace
-
+module
+public import Lemma.Matrix.SigmaConjugacy
+public import Mathlib.Tactic.Group
+public import Mathlib.Logic.Function.Iterate
+public import Mathlib.Algebra.BigOperators.Group.List.Basic
+public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+public import Mathlib.LinearAlgebra.Matrix.Charpoly.Basic
+public import Mathlib.Algebra.Polynomial.Lifts
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.RingTheory.Norm.Transitivity
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Mathlib.Algebra.Group.Conj
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.Ring
+public import Mathlib.LinearAlgebra.Matrix.Trace
 set_option autoImplicit false
+
+
+public section
 
 namespace LT.TwistedNorm
 

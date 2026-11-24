@@ -1,9 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.AlgebraicGeometryI.code.PrincipalDivisorDegree.Part2
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.AlgebraicGeometryI.code.PrincipalDivisorDegree.Part2
 open Polynomial PrincipalDivisorDegZero
 open Module
 
+
+public section
 
 /--
 [fiber_dimension_eq_rank](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/PrincipalDivisorDegree.lean)

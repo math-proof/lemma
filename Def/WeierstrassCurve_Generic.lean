@@ -1,8 +1,11 @@
-import Mathlib
-import Instance.WeierstrassCurve_Generic
-import Abbrev.WeierstrassCurve_Generic
-
+module
+public import Mathlib
+public import Instance.WeierstrassCurve_Generic
+public import Abbrev.WeierstrassCurve_Generic
 set_option autoImplicit false
+
+
+public section
 
 universe u v
 

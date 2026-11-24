@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/Conics.lean -/
+module
+public import Def.v1.Atlas.ArithmeticGeometry.code.HasseMinkowski
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HasseMinkowski
+public import Mathlib
+public import Def.v1.Atlas.ArithmeticGeometry.code.Conics.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/Conics.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,11 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.ArithmeticGeometry.code.HasseMinkowski
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.HasseMinkowski
-import Mathlib
-import Def.v1.Atlas.ArithmeticGeometry.code.Conics.Part2
 variable [Invertible (2 : K)]
 
 

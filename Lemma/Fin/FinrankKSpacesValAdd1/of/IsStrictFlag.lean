@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.RefinementDimJumps
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.RefinementDimJumps
 open GLnBuilding
 
+
+public section
 
 /--
 [CompleteFlag.IsStrictFlag.finrank_succ](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/SphericalBuilding/RefinementDimJumps.lean)

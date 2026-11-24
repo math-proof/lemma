@@ -1,14 +1,17 @@
-import Mathlib
-import Def.AlgebraicGeometry_RelativePicardFunctor
-import Lemma.Scheme.RepresentsRelSubPic
-import Def.AlgebraicGeometry_RelPicardAlgEquivZeroCut
-import Lemma.Scheme.RelSubPicGroup
-import Instance.SheafOfModules_Monoidal
-import Instance.AlgebraicGeometry_ModulesPullbackMonoidal
-import Theorems.Thm_AlgebraicGeometry_Scheme_Modules_IsInvertible_tensor
-import Theorems.Thm_AlgebraicGeometry_Scheme_Modules_IsInvertible_exists_tensor_inverse
-
+module
+public import Mathlib
+public import Def.AlgebraicGeometry_RelativePicardFunctor
+public import Lemma.Scheme.RepresentsRelSubPic
+public import Def.AlgebraicGeometry_RelPicardAlgEquivZeroCut
+public import Lemma.Scheme.RelSubPicGroup
+public import Instance.SheafOfModules_Monoidal
+public import Instance.AlgebraicGeometry_ModulesPullbackMonoidal
+public import Theorems.Thm_AlgebraicGeometry_Scheme_Modules_IsInvertible_tensor
+public import Theorems.Thm_AlgebraicGeometry_Scheme_Modules_IsInvertible_exists_tensor_inverse
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

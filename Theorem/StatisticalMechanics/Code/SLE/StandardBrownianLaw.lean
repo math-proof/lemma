@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/SLE/StandardBrownianLaw.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.SLE.Defs.Part9
+public import Theorem.StatisticalMechanics.Code.SLE.BrownianFiniteDimensional.Part4
+public import Mathlib.Probability.Distributions.Gaussian.CharFun
+public import Mathlib.Probability.Process.FiniteDimensionalLaws
+public import Mathlib.MeasureTheory.SpecificCodomains.WithLp
+open MeasureTheory ProbabilityTheory
+open scoped ENNReal NNReal RealInnerProductSpace
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/SLE/StandardBrownianLaw.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.SLE.Defs.Part9
-import Theorem.StatisticalMechanics.Code.SLE.BrownianFiniteDimensional.Part4
-import Mathlib.Probability.Distributions.Gaussian.CharFun
-import Mathlib.Probability.Process.FiniteDimensionalLaws
-import Mathlib.MeasureTheory.SpecificCodomains.WithLp
-open MeasureTheory ProbabilityTheory
-open scoped ENNReal NNReal RealInnerProductSpace
-
-
 namespace StatMech.SLE
 
 variable {Omega : Type*} [MeasurableSpace Omega]

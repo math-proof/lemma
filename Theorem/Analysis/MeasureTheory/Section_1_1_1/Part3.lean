@@ -1,8 +1,11 @@
-import Def.Analysis.MeasureTheory.Notation.Part2
-import Theorem.Analysis.Section_9_1.Part3
-import Def.Analysis.MeasureTheory.Section_1_1_1.Part2
+module
+public import Def.Analysis.MeasureTheory.Notation.Part2
+public import Theorem.Analysis.Section_9_1.Part3
+public import Def.Analysis.MeasureTheory.Section_1_1_1.Part2
 open BoundedInterval
 
+
+public section
 
 /- If x < sSup X and X is not empty, then there exists z ∈ X with x < z -/
 /- We don't need to assume that X is BddAbove

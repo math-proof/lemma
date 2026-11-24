@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/Lemma32_4.lean -/
+module
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section32.Part2
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section32
+public import Mathlib.Analysis.Convex.Contractible
+open Set Function
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/Lemma32_4.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section32.Part2
-import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section32
-import Mathlib.Analysis.Convex.Contractible
-open Set Function
-
-
 namespace OrientationTheorem
 
 /-- If `A i` is a decreasing sequence of closed sets and `K` is a compact set disjoint

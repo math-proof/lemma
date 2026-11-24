@@ -1,7 +1,10 @@
-import Lemma.Definitions.Def_AlgebraicCurve_DivisorClassGroup
-import Mathlib.RingTheory.Kaehler.Basic
-import Def.AlgebraicCurve_Differentials
+module
+public import Lemma.Definitions.Def_AlgebraicCurve_DivisorClassGroup
+public import Mathlib.RingTheory.Kaehler.Basic
+public import Def.AlgebraicCurve_Differentials
 
+
+public section
 
 noncomputable section
 

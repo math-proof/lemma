@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/SLE/BrownianCompactCylinderIntersection.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.SLE.BrownianProjectiveContent
+public import Mathlib.Topology.Bornology.Constructions
+public import Mathlib.Topology.MetricSpace.Bounded
+open MeasureTheory Set
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/SLE/BrownianCompactCylinderIntersection.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.SLE.BrownianProjectiveContent
-import Mathlib.Topology.Bornology.Constructions
-import Mathlib.Topology.MetricSpace.Bounded
-open MeasureTheory Set
-
-
 namespace StatMech.SLE
 
 theorem nonempty_iInter_cylinder_of_compact

@@ -1,9 +1,12 @@
-import Mathlib
-import Def.GoodReductionJacobian_RelativeGroupLawKernel
-import Def.AlgebraicGeometry_RelativeGroupLawEndDegree
-import Instance.GoodReductionJacobian_RelativeGroupLawAlgPointsV2
-
+module
+public import Mathlib
+public import Def.GoodReductionJacobian_RelativeGroupLawKernel
+public import Def.AlgebraicGeometry_RelativeGroupLawEndDegree
+public import Instance.GoodReductionJacobian_RelativeGroupLawAlgPointsV2
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

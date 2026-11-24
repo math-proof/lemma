@@ -1,4 +1,4 @@
-import Lemma.Scheme.JZeroSemistableSpecialization
+import Theorem.Scheme.JZeroSemistableSpecialization
 import Structure.ModularCurve_PlaceSpecialization
 import Def.ModularCurve_GlueData
 

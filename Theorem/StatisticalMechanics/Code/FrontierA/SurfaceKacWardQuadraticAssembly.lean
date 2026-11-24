@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/SurfaceKacWardQuadraticAssembly.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardArbitraryValenceReduction
+public import Theorem.StatisticalMechanics.Code.FrontierA.SurfaceKacWardTwist.Part7
+public import Def.StatisticalMechanics.Code.FrontierA.SurfaceKacWardQuadraticAssembly
+open scoped BigOperators
+open Finset SimpleGraph
+set_option linter.unusedDecidableInType false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/SurfaceKacWardQuadraticAssembly.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardArbitraryValenceReduction
-import Theorem.StatisticalMechanics.Code.FrontierA.SurfaceKacWardTwist.Part7
-import Def.StatisticalMechanics.Code.FrontierA.SurfaceKacWardQuadraticAssembly
-open scoped BigOperators
-open Finset SimpleGraph
-
-set_option linter.unusedDecidableInType false
-
-
 namespace StatMech.FrontierA
 
 open StatMech.Ising StatMech.Onsager Polynomial

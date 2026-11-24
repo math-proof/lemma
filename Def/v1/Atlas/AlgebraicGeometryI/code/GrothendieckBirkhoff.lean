@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/GrothendieckBirkhoff.lean -/
+module
+public import Mathlib.Algebra.Module.PID
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology.Part2
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec10SheavesP1
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec10SheavesP1.Part3
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.GrothendieckBirkhoff
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/GrothendieckBirkhoff.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib.Algebra.Module.PID
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology.Part2
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec10SheavesP1
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec10SheavesP1.Part3
-import Instance.v1.Atlas.AlgebraicGeometryI.code.GrothendieckBirkhoff
-
-
 namespace GrothendieckBirkhoff
 
 /-- Euler characteristic of `O(n)` on `P^1`: `χ(O(n)) = dim H^0 - dim H^1`. -/

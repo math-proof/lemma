@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/FiniteVolumeSum.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Ising.FiniteVolumeRelabel
+public import Theorem.StatisticalMechanics.Code.FK.SuperMultiplicative.Part4
+public import Def.StatisticalMechanics.Code.Ising.FiniteVolumeSum
+open scoped BigOperators
+open Finset
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/FiniteVolumeSum.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Ising.FiniteVolumeRelabel
-import Theorem.StatisticalMechanics.Code.FK.SuperMultiplicative.Part4
-import Def.StatisticalMechanics.Code.Ising.FiniteVolumeSum
-open scoped BigOperators
-open Finset
-
-
 namespace StatMech
 
 namespace Ising

@@ -1,9 +1,10 @@
+module
+public import Theorem.AlgebraicGeometry.EllipticCurve.NeronOggShafarevich.Part5
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/AlgebraicGeometry/EllipticCurve/NeronOggShafarevich.lean -/
-
-
-import Theorem.AlgebraicGeometry.EllipticCurve.NeronOggShafarevich.Part5
-
-
 namespace MetaMathlibExt
 
 open scoped WeierstrassCurve.Affine

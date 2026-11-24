@@ -1,11 +1,14 @@
-import Mathlib
-import Lemma.Fin.LeNatDegreeRothLastSlice.of.RothMvIndex
-import Lemma.Fin.RothPolyL1.le.MulAdd_1RothMvL1.of.RothMvIndex
-import Lemma.Polynomial.Map_AlgebraMapRothLastSlice.eq.MulCCoeff.of.EqRothLastEquiv_MapAlgebraMap_MulC_MapAlgebraMapMapC.RothMvIndex
+module
+public import Mathlib
+public import Lemma.Fin.LeNatDegreeRothLastSlice.of.RothMvIndex
+public import Lemma.Fin.RothPolyL1.le.MulAdd_1RothMvL1.of.RothMvIndex
+public import Lemma.Polynomial.Map_AlgebraMapRothLastSlice.eq.MulCCoeff.of.EqRothLastEquiv_MapAlgebraMap_MulC_MapAlgebraMapMapC.RothMvIndex
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 open Polynomial
 
+
+public section
 
 /--
 [roth_exists_integral_factor_data](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

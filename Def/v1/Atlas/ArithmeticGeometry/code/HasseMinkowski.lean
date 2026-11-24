@@ -1,5 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/HasseMinkowski.lean -/
+module
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Mathlib.LinearAlgebra.QuadraticForm.Basic
+public import Mathlib.Data.Rat.Star
+public import Mathlib.Data.Nat.Squarefree
+public import Def.v1.Atlas.ArithmeticGeometry.code.HasseMinkowskiProof.Part3
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HasseMinkowskiProof
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.SquareClassApprox
+public import Def.v1.Atlas.ArithmeticGeometry.code.SquareClassApprox
+open scoped Classical
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/HasseMinkowski.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +20,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib.LinearAlgebra.QuadraticForm.Basic
-import Mathlib.Data.Rat.Star
-import Mathlib.Data.Nat.Squarefree
-import Def.v1.Atlas.ArithmeticGeometry.code.HasseMinkowskiProof.Part3
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.HasseMinkowskiProof
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.SquareClassApprox
-import Def.v1.Atlas.ArithmeticGeometry.code.SquareClassApprox
-open scoped Classical
-
-
 noncomputable section
 
 namespace QuadraticMap

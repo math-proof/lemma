@@ -1,11 +1,14 @@
-import Mathlib
-import Lemma.MvPolynomial.MazurPrincipleCore
-import Def.ModularCurve_DeligneRapoport
-import Lemma.LaurentSeries.HeckeOperator
-import Lemma.WeierstrassCurve.ConditionalCurrency
-import Structure.ModularCurve_ToricDescentData
-
+module
+public import Mathlib
+public import Lemma.MvPolynomial.MazurPrincipleCore
+public import Def.ModularCurve_DeligneRapoport
+public import Lemma.LaurentSeries.HeckeOperator
+public import Lemma.WeierstrassCurve.ConditionalCurrency
+public import Structure.ModularCurve_ToricDescentData
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

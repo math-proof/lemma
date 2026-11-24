@@ -1,9 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/ResidueSign.lean -/
+module
+public import Theorem.NumberTheory.NumberField.RayClass.WeakApproximation
+public import Theorem.Nat.NumberField.RayClass.WeakApproximation
+public import Theorem.Nat.NumberField.RayClass.InfiniteSign
+public import Theorem.NumberTheory.NumberField.RayClass.InfiniteSign.Part4
 
-import Theorem.NumberTheory.NumberField.RayClass.WeakApproximation
-import Lemma.Nat.NumberField.RayClass.WeakApproximation
-import Lemma.Nat.NumberField.RayClass.InfiniteSign
-import Theorem.NumberTheory.NumberField.RayClass.InfiniteSign.Part4
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/ResidueSign.lean -/
 @[expose] noncomputable section
 
 open scoped nonZeroDivisors

@@ -1,11 +1,14 @@
-import Def.AlgebraicCurve_SemistableCharts
-import Def.ModularCurve_FullLevelJacobian
-import Def.ModularCurve_QAdicPlace
-import Lemma.Scheme.JZeroSemistableSpecialization
-import Def.AlgebraicCurve_SemistableChartsComap
-import Structure.ModularCurve_FullLevelSemistableCovering
-
+module
+public import Def.AlgebraicCurve_SemistableCharts
+public import Def.ModularCurve_FullLevelJacobian
+public import Def.ModularCurve_QAdicPlace
+public import Theorem.Scheme.JZeroSemistableSpecialization
+public import Def.AlgebraicCurve_SemistableChartsComap
+public import Structure.ModularCurve_FullLevelSemistableCovering
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

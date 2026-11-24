@@ -3,7 +3,7 @@
 module
 
 public import Def.CPythonListsort.Code.Assembly.MergeAtSafety.Part4
-public import Lemma.List.Atlas.CPythonListsort.Code.Policy.MergeForceCollapsePreservation
+public import Theorem.List.Atlas.CPythonListsort.Code.Policy.MergeForceCollapsePreservation
 public import Def.CPythonListsort.Code.Assembly.MergeForceCollapseSafety
 /-!
 # `merge_force_collapse` safety

@@ -1,11 +1,15 @@
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.Normed.Lp.MeasurableSpace
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Def.Dynamics.MarkovRewardProcess.Part4
-import Abbrev.Analysis.InnerProductSpace.EuclideanVec
-import Structure.Dynamics.LinearTD
+module
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.Normed.Lp.MeasurableSpace
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Def.Dynamics.MarkovRewardProcess.Part4
+public import Abbrev.Analysis.InnerProductSpace.EuclideanVec
+public import Structure.Dynamics.LinearTD
 open Finset
 open scoped Matrix
+
+
+public section
 
 universe u
 

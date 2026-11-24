@@ -1,10 +1,14 @@
--- Carved from Lemma/Definitions/Def_GoodReductionJacobian_RelativeGroupLawAlgPointsV2.lean: instance decls only.
-import Mathlib
-import Instance.AlgebraicGeometry_RelativeGroupLawEndDegree
-import Theorem.Scheme.RelativeGroupLawAlgPointsV2
-import Def.GoodReductionJacobian_RelativeGroupLawAlgPointsV2
-
+module
+public import Mathlib
+public import Instance.AlgebraicGeometry_RelativeGroupLawEndDegree
+public import Theorem.Scheme.RelativeGroupLawAlgPointsV2
+public import Def.GoodReductionJacobian_RelativeGroupLawAlgPointsV2
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_GoodReductionJacobian_RelativeGroupLawAlgPointsV2.lean: instance decls only.
 
 noncomputable section
 

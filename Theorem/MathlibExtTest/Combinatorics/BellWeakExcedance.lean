@@ -1,11 +1,13 @@
+module
+public import Def.Combinatorics.BellWeakExcedance.Part11
+public import Theorem.Finset.BellWeakExcedance
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/BellWeakExcedance.lean -/
-
-
-import Def.Combinatorics.BellWeakExcedance.Part11
-import Lemma.Finset.BellWeakExcedance
-
-
 -- The weak-excedance count for n = 3 is 5.
+
 example :
     Fintype.card { σ : Equiv.Perm (Fin 3) //
       ∀ i j : Fin 3, i < j → i ≤ σ i → j ≤ σ j → σ i < σ j } = 5 := by

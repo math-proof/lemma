@@ -1,15 +1,18 @@
--- Carved from Lemma/Definitions/Def_AlgebraicGeometry_OModulePresheafConstructions.lean: instance decls only.
-import Mathlib
-
-import Def.AlgebraicGeometry_OModulePresheafHom
-import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
-import Mathlib.AlgebraicGeometry.IdealSheaf.Subscheme
-import Mathlib.AlgebraicGeometry.Noetherian
-import Mathlib.AlgebraicGeometry.Properties
-import Theorem.LinearMap.OModulePresheafConstructions
-import Def.AlgebraicGeometry_OModulePresheafConstructions
-
+module
+public import Mathlib
+public import Def.AlgebraicGeometry_OModulePresheafHom
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Subscheme
+public import Mathlib.AlgebraicGeometry.Noetherian
+public import Mathlib.AlgebraicGeometry.Properties
+public import Theorem.LinearMap.OModulePresheafConstructions
+public import Def.AlgebraicGeometry_OModulePresheafConstructions
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicGeometry_OModulePresheafConstructions.lean: instance decls only.
 
 noncomputable section
 

@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.AlgebraicGeometry.EllipticCurve.VariableChangePoint.Part3
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.AlgebraicGeometry.EllipticCurve.VariableChangePoint.Part3
 open WeierstrassCurve.VariableChange
 
+
+public section
 
 namespace WeierstrassCurve.VariableChange
 

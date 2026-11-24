@@ -3,7 +3,7 @@ import Initialize.Tactic.Attr.Basic
 import Def.GaloisRep_Flat
 import Def.GaloisRep_Residual
 import Lemma.WeierstrassCurve.GaloisRep
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 open scoped NNReal
 open scoped WeierstrassCurve.Affine
 open WeierstrassCurve WeierstrassCurve.Affine WeierstrassCurve.Affine.Point

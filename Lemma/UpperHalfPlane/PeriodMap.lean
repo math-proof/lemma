@@ -1,5 +1,9 @@
-import Mathlib.Analysis.Complex.UpperHalfPlane.MoebiusAction
-import Mathlib.Algebra.Module.Hom
+module
+public import Mathlib.Analysis.Complex.UpperHalfPlane.MoebiusAction
+public import Mathlib.Algebra.Module.Hom
+
+
+public section
 
 namespace ModularCurve.Period
 

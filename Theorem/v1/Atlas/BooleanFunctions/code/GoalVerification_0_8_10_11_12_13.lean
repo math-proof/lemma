@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/GoalVerification_0_8_10_11_12_13.lean -/
+module
+public import Def.v1.Atlas.BooleanFunctions.code.UncoveredTargets
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.UncoveredTargets
+open Finset BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/GoalVerification_0_8_10_11_12_13.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.BooleanFunctions.code.UncoveredTargets
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.UncoveredTargets
-open Finset BigOperators
-
-
 namespace BooleanFourier
 
 example {n : ℕ} (f : (Fin n → Bool) → ℝ) :

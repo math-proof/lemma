@@ -1,16 +1,19 @@
-import Mathlib.MeasureTheory.Function.Floor
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
-import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
-import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Topology.Constructions
-import Mathlib.Topology.MetricSpace.Basic
-import Mathlib.Topology.MetricSpace.Polish
-import Initialize.Tactic.Attr.Basic
+module
+public import Mathlib.MeasureTheory.Function.Floor
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
+public import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+public import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Topology.Constructions
+public import Mathlib.Topology.MetricSpace.Basic
+public import Mathlib.Topology.MetricSpace.Polish
+public import Initialize.Tactic.Attr.Basic
 open Classical Filter Finset MeasureTheory Metric Set Topology
 open scoped ENNReal
 
+
+public section
 
 /--
 A weak neighborhood fixed by finitely many nonnegative bounded continuous test functions contains

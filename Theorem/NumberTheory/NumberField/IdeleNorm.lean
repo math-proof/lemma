@@ -1,16 +1,19 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/IdeleNorm.lean -/
+module
+public import Abbrev.NumberTheory.NumberField.Idele.Part2
+public import Theorem.Nat.NumberField.Idele
+public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Push
+public import Mathlib.Tactic.Ring
+public import Mathlib.NumberTheory.NumberField.ProductFormula
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/IdeleNorm.lean -/
 /-
 Author: @toskua, Avocado
 -/
-
-import Abbrev.NumberTheory.NumberField.Idele.Part2
-import Lemma.Nat.NumberField.Idele
-import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Push
-import Mathlib.Tactic.Ring
-import Mathlib.NumberTheory.NumberField.ProductFormula
 /-!
 # Norm-one ideles
 
@@ -21,8 +24,6 @@ principal ideles lie in it by the number-field product formula.
 ATLAS NumberTheoryI N544 / Definition 26.7. This is distinct from the
 relative extension norm between idele groups.
 -/
-
-
 noncomputable section
 
 namespace NumberField.TopologicalIdeleGroup

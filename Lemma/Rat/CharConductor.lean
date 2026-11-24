@@ -1,4 +1,4 @@
-import Lemma.Matrix.LocalHeckeInstance
+import Theorem.Matrix.LocalHeckeInstance
 import Def.LocalNewvector_CharConductor
 
 set_option autoImplicit false

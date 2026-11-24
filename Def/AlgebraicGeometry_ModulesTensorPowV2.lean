@@ -1,7 +1,10 @@
-import Mathlib
-import Abbrev.SheafOfModules_MonoidalV2
-
+module
+public import Mathlib
+public import Abbrev.SheafOfModules_MonoidalV2
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

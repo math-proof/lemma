@@ -1,9 +1,13 @@
--- Carved from Lemma/Definitions/Def_AlgebraicCurve_SemistableModel.lean: instance decls only.
-import Mathlib
-import Theorem.ValuationSubring.SemistableCharts
-import Abbrev.AlgebraicCurve_SemistableModel
-
+module
+public import Mathlib
+public import Theorem.ValuationSubring.SemistableCharts
+public import Abbrev.AlgebraicCurve_SemistableModel
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicCurve_SemistableModel.lean: instance decls only.
 
 noncomputable section
 

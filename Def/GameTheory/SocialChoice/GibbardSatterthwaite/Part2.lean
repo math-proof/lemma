@@ -1,17 +1,19 @@
+module
+public import Mathlib.Data.Fintype.Basic
+public import Instance.Order.StrictTotalOrder
+public import Theorem.Set.StrictTotalOrder
+public import Theorem.Set.SocialChoice.Arrow
+public import Mathlib.Data.Finset.Max
+public import Mathlib.Data.Finset.Powerset
+public import Mathlib.Data.Fintype.EquivFin
+public import Mathlib.Tactic.Push
+public import Def.GameTheory.SocialChoice.Arrow.Part3
+public import Theorem.GameTheory.SocialChoice.GibbardSatterthwaite
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GameTheory/SocialChoice/GibbardSatterthwaite.lean -/
-
-import Mathlib.Data.Fintype.Basic
-import Instance.Order.StrictTotalOrder
-import Theorem.Set.StrictTotalOrder
-import Lemma.Set.SocialChoice.Arrow
-import Mathlib.Data.Finset.Max
-import Mathlib.Data.Finset.Powerset
-import Mathlib.Data.Fintype.EquivFin
-import Mathlib.Tactic.Push
-import Def.GameTheory.SocialChoice.Arrow.Part3
-import Theorem.GameTheory.SocialChoice.GibbardSatterthwaite
-
-
 section
 
 namespace MathlibExt.GameTheory.SocialChoice.GibbardSatterthwaiteWanted

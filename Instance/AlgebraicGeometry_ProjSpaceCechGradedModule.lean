@@ -1,10 +1,14 @@
--- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ProjSpaceCechGradedModule.lean: instance decls only.
-import Mathlib
-import Instance.AlgebraicGeometry_ProjSpaceCechTwist
-import Theorem.LinearMap.ProjSpaceCechGradedModule
-import Def.AlgebraicGeometry_ProjSpaceCechGradedModule
-
+module
+public import Mathlib
+public import Instance.AlgebraicGeometry_ProjSpaceCechTwist
+public import Theorem.LinearMap.ProjSpaceCechGradedModule
+public import Def.AlgebraicGeometry_ProjSpaceCechGradedModule
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ProjSpaceCechGradedModule.lean: instance decls only.
 
 noncomputable section
 

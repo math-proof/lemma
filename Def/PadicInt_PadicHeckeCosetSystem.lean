@@ -1,12 +1,14 @@
-import Mathlib
-import Def.Matrix_HeckeCosetLocal
-import Structure.LocalLanglands_HeckeCosetSystem
-import Instance.LocalLanglands_PadicHeckeCosetSystem
-
+module
+public import Mathlib
+public import Def.Matrix_HeckeCosetLocal
+public import Structure.LocalLanglands_HeckeCosetSystem
+public import Instance.LocalLanglands_PadicHeckeCosetSystem
 set_option autoImplicit false
-
 open scoped Pointwise ENNReal
 open MulAction MeasureTheory
+
+
+public section
 
 namespace HeckeIntegralSeam
 

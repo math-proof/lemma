@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/PlusAxisMixing.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierB.FreeCurrentFamilyMixing
+public import Theorem.StatisticalMechanics.Code.Ising.IsingCrossBoxCap.Part2
+open Filter MeasureTheory Set Topology
+open scoped BigOperators symmDiff
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/PlusAxisMixing.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierB.FreeCurrentFamilyMixing
-import Theorem.StatisticalMechanics.Code.Ising.IsingCrossBoxCap.Part2
-open Filter MeasureTheory Set Topology
-open scoped BigOperators symmDiff
-
-
 namespace StatMech.FrontierB
 
 open ConfigSpace FK Ising Lattice Sharpness

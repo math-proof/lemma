@@ -1,5 +1,21 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/WeilPairing.lean -/
+module
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.RingTheory.RootsOfUnity.Basic
+public import Mathlib.Data.Finsupp.Defs
+public import Mathlib.Data.Finsupp.Order
+public import Mathlib.Data.Finsupp.SMulWithZero
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.Data.Fintype.Units
+public import Mathlib.Algebra.Ring.GeomSum
+public import Def.v1.Atlas.EllipticCurves.code.Divisors.Part5
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Divisors
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.TorsionEndomorphism
+public import Def.v1.Atlas.EllipticCurves.code.TorsionEndomorphism.Part3
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/WeilPairing.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,21 +23,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.RingTheory.RootsOfUnity.Basic
-import Mathlib.Data.Finsupp.Defs
-import Mathlib.Data.Finsupp.Order
-import Mathlib.Data.Finsupp.SMulWithZero
-import Mathlib.GroupTheory.OrderOfElement
-import Mathlib.Data.Fintype.Units
-import Mathlib.Algebra.Ring.GeomSum
-import Def.v1.Atlas.EllipticCurves.code.Divisors.Part5
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.Divisors
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.TorsionEndomorphism
-import Def.v1.Atlas.EllipticCurves.code.TorsionEndomorphism.Part3
-
-
 noncomputable section
 
 open WeierstrassCurve.Affine

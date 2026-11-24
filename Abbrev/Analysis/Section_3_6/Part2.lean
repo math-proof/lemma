@@ -1,7 +1,12 @@
-import Mathlib
-import Abbrev.Analysis.Section_3_3_api
-import Abbrev.Analysis.Section_3_5.Part9
-import Instance.Analysis.Section_3_6
+module
+public import Mathlib
+public import Abbrev.Analysis.Section_3_3_api
+public import Abbrev.Analysis.Section_3_5.Part9
+public import Instance.Analysis.Section_3_6
+
+
+public section
+
 /-!
 # Analysis I, Section 3.6: Cardinality of sets
 
@@ -26,8 +31,6 @@ Users of the companion who have completed the exercises in this section are welc
 - (Add tip here)
 
 -/
-
-
 namespace Chapter3
 
 export SetTheory (Set Object nat)

@@ -1,9 +1,12 @@
-import Mathlib.MeasureTheory.Group.Measure
-import Def.MeasureTheory_ContractionDecay
-
+module
+public import Mathlib.MeasureTheory.Group.Measure
+public import Def.MeasureTheory_ContractionDecay
 open MeasureTheory Set Measure
 open MeasureTheory.ContractionDecay
 open scoped ENNReal
+
+
+public section
 
 namespace Measure.ContractionDecay
 

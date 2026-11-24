@@ -1,8 +1,11 @@
-import Def.Analysis.MeasureTheory.Notation.Part2
-import Theorem.Analysis.Section_9_1.Part3
-import Def.Analysis.MeasureTheory.Section_1_1_1.Part4
+module
+public import Def.Analysis.MeasureTheory.Notation.Part2
+public import Theorem.Analysis.Section_9_1.Part3
+public import Def.Analysis.MeasureTheory.Section_1_1_1.Part4
 open BoundedInterval
 
+
+public section
 
 @[simp]
 theorem BoundedInterval.mk'_a (a b : ℝ) (lclosed uclosed : Bool) :

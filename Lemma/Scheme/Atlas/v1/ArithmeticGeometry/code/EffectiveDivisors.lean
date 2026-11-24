@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.ArithmeticGeometry.code.EffectiveDivisors
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.ArithmeticGeometry.code.EffectiveDivisors
 open CurveDivisor
 
+
+public section
 
 namespace CurveDivisor
 

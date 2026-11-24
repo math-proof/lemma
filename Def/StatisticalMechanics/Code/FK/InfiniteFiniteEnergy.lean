@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/InfiniteFiniteEnergy.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.FinitePatternEnergy.Part3
+public import Theorem.StatisticalMechanics.Code.FK.FKGeneralQConsumer.Part5
+public import Theorem.StatisticalMechanics.Code.FK.DensityFiniteToInfinite.Part2
+public import Theorem.StatisticalMechanics.Code.FK.FKMixingClose
+public import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeaneMerge.Part4
+public import Theorem.StatisticalMechanics.Code.FK.InfiniteFiniteEnergy
+open MeasureTheory Set Filter Topology SimpleGraph
+open scoped BigOperators symmDiff
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/InfiniteFiniteEnergy.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FK.FinitePatternEnergy.Part3
-import Theorem.StatisticalMechanics.Code.FK.FKGeneralQConsumer.Part5
-import Theorem.StatisticalMechanics.Code.FK.DensityFiniteToInfinite.Part2
-import Theorem.StatisticalMechanics.Code.FK.FKMixingClose
-import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeaneMerge.Part4
-import Theorem.StatisticalMechanics.Code.FK.InfiniteFiniteEnergy
-open MeasureTheory Set Filter Topology SimpleGraph
-open scoped BigOperators symmDiff
-
-
 namespace StatMech
 
 namespace FK

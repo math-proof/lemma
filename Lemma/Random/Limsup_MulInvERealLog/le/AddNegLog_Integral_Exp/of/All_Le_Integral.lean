@@ -1,21 +1,24 @@
-import Lemma.Random.GetPiFunSetOfGeSum_Mul.le.OfRealMulExpMulNegPowIntegral_Exp.of.BoundedContinuousFunction
-import Lemma.Random.IsProbabilityMeasure.of.Gt_0
-import Lemma.Random.Measurable.of.Gt_0
-import Mathlib.Analysis.SpecialFunctions.Exp
-import Mathlib.Analysis.SpecialFunctions.Log.ENNRealLog
-import Mathlib.Data.EReal.Operations
-import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
-import Mathlib.MeasureTheory.Constructions.BorelSpace.Real
-import Mathlib.MeasureTheory.Constructions.Pi
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.MeasureTheory.Measure.GiryMonad
-import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
-import Mathlib.Order.LiminfLimsup
-import Mathlib.Topology.ContinuousMap.Bounded.Basic
-import Initialize.Tactic.Attr.Basic
+module
+public import Lemma.Random.GetPiFunSetOfGeSum_Mul.le.OfRealMulExpMulNegPowIntegral_Exp.of.BoundedContinuousFunction
+public import Lemma.Random.IsProbabilityMeasure.of.Gt_0
+public import Lemma.Random.Measurable.of.Gt_0
+public import Mathlib.Analysis.SpecialFunctions.Exp
+public import Mathlib.Analysis.SpecialFunctions.Log.ENNRealLog
+public import Mathlib.Data.EReal.Operations
+public import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
+public import Mathlib.MeasureTheory.Constructions.BorelSpace.Real
+public import Mathlib.MeasureTheory.Constructions.Pi
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.MeasureTheory.Measure.GiryMonad
+public import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+public import Mathlib.Order.LiminfLimsup
+public import Mathlib.Topology.ContinuousMap.Bounded.Basic
+public import Initialize.Tactic.Attr.Basic
 open ENNReal Filter MeasureTheory Random Real
 open scoped ENNReal
 
+
+public section
 
 private lemma integral_emp [MeasurableSpace α] [TopologicalSpace α] [BorelSpace α] {n : ℕ} (ω : Fin n → α) (f : BoundedContinuousFunction α ℝ) : ∫ x, f x ∂((n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i)) = (∑ i, f (ω i)) / n := by
   have hf : StronglyMeasurable (⇑f) := f.continuous.stronglyMeasurable

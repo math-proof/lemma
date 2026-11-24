@@ -1,11 +1,13 @@
-import Lemma.Matrix.LocalOrbitalBase
-import Def.AutomorphicForm_ConstantTerm
-import Def.LanglandsTunnell_CubicInduction_TorusValues
-
+module
+public import Lemma.Matrix.LocalOrbitalBase
+public import Def.AutomorphicForm_ConstantTerm
+public import Def.LanglandsTunnell_CubicInduction_TorusValues
 set_option autoImplicit false
-
 open MeasureTheory
 open LanglandsTunnell.CubicInduction (diagUnits2)
+
+
+public section
 
 noncomputable section
 

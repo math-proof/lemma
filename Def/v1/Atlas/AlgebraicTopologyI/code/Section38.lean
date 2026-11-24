@@ -1,5 +1,31 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/Section38.lean -/
+module
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section17.Part6
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section17
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section34
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section37
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section26.Part8
+public import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section34.Part3
+public import Instance.v1.Atlas.AlgebraicTopologyI.code.Section37.Part3
+public import Mathlib.Topology.ContinuousMap.Basic
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.LinearAlgebra.PerfectPairing.Basic
+public import Mathlib.RingTheory.PrincipalIdealDomain
+public import Mathlib.Topology.Category.TopCat.Sphere
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.Normed.Group.BallSphere
+public import Mathlib.Analysis.Normed.Module.RCLike.Basic
+public import Mathlib.Analysis.Normed.Module.Connected
+public import Mathlib.Topology.Order.IntermediateValue
+public import Mathlib.Geometry.Manifold.IsManifold.Basic
+public import Mathlib.Geometry.Manifold.Instances.Real
+public import Mathlib.Topology.Algebra.Module.Basic
+public import Mathlib.LinearAlgebra.Quotient.Bilinear
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/Section38.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,31 +33,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section17.Part6
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section17
-import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
-import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section34
-import Lemma.Set.Atlas.v1.AlgebraicTopologyI.code.Section37
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section26.Part8
-import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section34.Part3
-import Instance.v1.Atlas.AlgebraicTopologyI.code.Section37.Part3
-import Mathlib.Topology.ContinuousMap.Basic
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.LinearAlgebra.PerfectPairing.Basic
-import Mathlib.RingTheory.PrincipalIdealDomain
-import Mathlib.Topology.Category.TopCat.Sphere
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.Normed.Group.BallSphere
-import Mathlib.Analysis.Normed.Module.RCLike.Basic
-import Mathlib.Analysis.Normed.Module.Connected
-import Mathlib.Topology.Order.IntermediateValue
-import Mathlib.Geometry.Manifold.IsManifold.Basic
-import Mathlib.Geometry.Manifold.Instances.Real
-import Mathlib.Topology.Algebra.Module.Basic
-import Mathlib.LinearAlgebra.Quotient.Bilinear
-
-
 noncomputable section
 
 open Metric Set

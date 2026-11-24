@@ -1,6 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Section_5_5.Part5
-import Instance.Analysis.Section_5_6
+module
+public import Mathlib
+public import Theorem.Analysis.Section_5_5.Part5
+public import Instance.Analysis.Section_5_6
+
+
+public section
+
 /-!
 # Analysis I, Section 5.6: Real exponentiation, part I
 
@@ -23,8 +28,6 @@ Users of the companion who have completed the exercises in this section are welc
 - (Add tip here)
 
 -/
-
-
 namespace Chapter5
 
 theorem Rat.eq_quot (q:ℚ) : ∃ a:ℤ, ∃ b:ℕ, b > 0 ∧ q = a / b := by

@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/UnitSemisimplicity/TensorExactness.lean -/
+module
+public import Theorem.v1.Atlas.TensorCategories.code.UnitSemisimplicity.MonoidalBiexact.Part4
+public import Theorem.Category.Atlas.v1.TensorCategories.code.UnitSemisimplicity.MonoidalBiexact
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FittingLemmaInstance
+public import Instance.v1.Atlas.TensorCategories.code.FittingLemmaInstance
+public import Mathlib.Algebra.Group.Pi.Units
+open CategoryTheory MonoidalCategory Category CategoryTheory.Limits
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/UnitSemisimplicity/TensorExactness.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.TensorCategories.code.UnitSemisimplicity.MonoidalBiexact.Part4
-import Lemma.Category.Atlas.v1.TensorCategories.code.UnitSemisimplicity.MonoidalBiexact
-import Theorem.Category.Atlas.v1.TensorCategories.code.FittingLemmaInstance
-import Instance.v1.Atlas.TensorCategories.code.FittingLemmaInstance
-import Mathlib.Algebra.Group.Pi.Units
-open CategoryTheory MonoidalCategory Category CategoryTheory.Limits
-
 universe v u w
 
 

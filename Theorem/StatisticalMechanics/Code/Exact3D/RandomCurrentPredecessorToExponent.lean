@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Exact3D/RandomCurrentPredecessorToExponent.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Exact3D.FiniteCurrentToExponent.Part16
+public import Theorem.StatisticalMechanics.Code.Exact3D.RandomCurrentPredecessorComparison.Part184
+public import Def.StatisticalMechanics.Code.Exact3D.RandomCurrentPredecessorToExponent
+set_option linter.style.longLine false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Exact3D/RandomCurrentPredecessorToExponent.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.Exact3D.FiniteCurrentToExponent.Part16
-import Theorem.StatisticalMechanics.Code.Exact3D.RandomCurrentPredecessorComparison.Part184
-import Def.StatisticalMechanics.Code.Exact3D.RandomCurrentPredecessorToExponent
-set_option linter.style.longLine false
-
-
 namespace StatMech
 
 namespace Exact3D

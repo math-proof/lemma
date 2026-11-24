@@ -1,6 +1,6 @@
 import Mathlib
 import Lemma.CuspForm.XHDifferentialsModL
-import Lemma.UpperHalfPlane.XHOperators
+import Theorem.UpperHalfPlane.XHOperators
 import Abbrev.ModularCurve_IgusaScheme
 import Lemma.Scheme.TwoChartIntegralModel
 import Lemma.Scheme.CurveModel

@@ -1,10 +1,11 @@
+module
+public import Theorem.Analysis.Asymptotics.CatalanAsymptoticExpansion.Part8
+public import Theorem.Real.Asymptotics.CatalanAsymptoticExpansion
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Asymptotics/CatalanAsymptoticExpansion.lean -/
-
-
-import Theorem.Analysis.Asymptotics.CatalanAsymptoticExpansion.Part8
-import Lemma.Real.Asymptotics.CatalanAsymptoticExpansion
-
-
 namespace MathlibExtTest.Analysis.Asymptotics.CatalanAsymptoticExpansion
 
 open MetaMathlibExt

@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/BeffaraDC/ActiveRussoHamming.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.FK.ActiveEdgeRussoP
+public import Theorem.StatisticalMechanics.Code.BeffaraDC.RussoHamming.Part2
+open scoped BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/BeffaraDC/ActiveRussoHamming.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.FK.ActiveEdgeRussoP
-import Theorem.StatisticalMechanics.Code.BeffaraDC.RussoHamming.Part2
-open scoped BigOperators
-
-
 namespace StatMech.BeffaraDC
 
 open Finset

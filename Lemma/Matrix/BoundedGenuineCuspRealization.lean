@@ -1,5 +1,5 @@
 import Lemma.ClassGroup.ProductionPinsGeneral
-import Lemma.Measure.WhittakerCoefficient
+import Theorem.Measure.WhittakerCoefficient
 import Lemma.Filter.AdelicTraceFin
 import Def.AutomorphicForm_BoundedGenuineCuspRealization
 

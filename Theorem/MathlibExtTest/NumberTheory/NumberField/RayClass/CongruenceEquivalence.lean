@@ -1,11 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/RayClass/CongruenceEquivalence.lean -/
-
-import Def.NumberTheory.NumberField.RayClass.CongruenceEquivalence
-import Lemma.Nat.NumberField.RayClass.CongruenceEquivalence
+module
+public import Def.NumberTheory.NumberField.RayClass.CongruenceEquivalence
+public import Theorem.Nat.NumberField.RayClass.CongruenceEquivalence
 open scoped nonZeroDivisors
 open NumberField
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/RayClass/CongruenceEquivalence.lean -/
 noncomputable section
 
 variable {K : Type*} [Field K] [NumberField K]

@@ -1,9 +1,13 @@
-import Theorem.Analysis.MeasureTheory.Section_1_1_3.Part7
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Data.Set.Countable
-import Mathlib.Topology.Instances.Irrational
-import Def.Analysis.MeasureTheory.Section_1_2_0
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_1_3.Part7
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Data.Set.Countable
+public import Mathlib.Topology.Instances.Irrational
+public import Def.Analysis.MeasureTheory.Section_1_2_0
 open BoundedInterval
+
+
+public section
 
 /-!
 # Introduction to Measure Theory, Section 1.2: Lebesgue measure
@@ -11,8 +15,6 @@ open BoundedInterval
 A companion to (the introduction to) Section 1.2 of the book "An introduction to Measure Theory".
 
 -/
-
-
 /-- When d > 0, the Lebesgue outer measure can be computed using ℕ-indexed box sequences,
     which is equivalent to the definition using countable families. This is because we can
     pad any countable family with zero-volume boxes (which exist when d > 0). -/

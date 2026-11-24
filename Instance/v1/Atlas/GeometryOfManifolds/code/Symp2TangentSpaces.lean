@@ -1,5 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/code/Symp2TangentSpaces.lean -/
+module
+public import Class.v1.Atlas.GeometryOfManifolds.code.TangentBundleDFS
+public import Def.v1.Atlas.GeometryOfManifolds.code.TwoDimDFS.Part3
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.TwoDimDFS
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.AlmostComplexManifolds
+public import Structure.v1.Atlas.GeometryOfManifolds.code.AlmostComplexManifolds.Part4
+public import Theorem.v1.Atlas.GeometryOfManifolds.code.Symp2TangentSpaces
+set_option autoImplicit false
+set_option maxHeartbeats 1600000
+open DifferentialFormSpace SymplecticLinearAlgebra
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/code/Symp2TangentSpaces.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +20,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Class.v1.Atlas.GeometryOfManifolds.code.TangentBundleDFS
-import Def.v1.Atlas.GeometryOfManifolds.code.TwoDimDFS.Part3
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.TwoDimDFS
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.AlmostComplexManifolds
-import Structure.v1.Atlas.GeometryOfManifolds.code.AlmostComplexManifolds.Part4
-import Theorem.v1.Atlas.GeometryOfManifolds.code.Symp2TangentSpaces
-set_option autoImplicit false
-set_option maxHeartbeats 1600000
-
-open DifferentialFormSpace SymplecticLinearAlgebra
-
-
 noncomputable section
 
 /-- The $2$-dimensional symplectic model carries a `HasTangentSpaces` instance: the model

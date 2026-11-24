@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Scheme.JZeroSemistableSpecialization
+import Theorem.Scheme.JZeroSemistableSpecialization
 import Lemma.HahnSeries.ModularUnit
 import Instance.ModularCurve_LevelOneComp
 import Def.ModularCurve_LevelOneComp

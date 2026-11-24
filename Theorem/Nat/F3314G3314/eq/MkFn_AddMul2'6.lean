@@ -18,7 +18,7 @@ open Set
 [SetTheory.Set.f_circ_g_3_3_14](https://github.com/teorth/analysis/blob/main/Analysis/Section_3_3.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   [SetTheory]
   :
 -- imply

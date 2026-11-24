@@ -1,12 +1,15 @@
-import Mathlib
-import Lemma.MvPowerSeries.NegV2
-import Structure.CerednikDrinfeld_SpecialFormalModule
-import Def.MvFormalGroup_BasicV2
-import Instance.MvFormalGroup_EndRingV2
-import Instance.MvFormalGroup_NegV2
-import Abbrev.CerednikDrinfeld_SpecialFormalModule
-
+module
+public import Mathlib
+public import Lemma.MvPowerSeries.NegV2
+public import Structure.CerednikDrinfeld_SpecialFormalModule
+public import Def.MvFormalGroup_BasicV2
+public import Instance.MvFormalGroup_EndRingV2
+public import Instance.MvFormalGroup_NegV2
+public import Abbrev.CerednikDrinfeld_SpecialFormalModule
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

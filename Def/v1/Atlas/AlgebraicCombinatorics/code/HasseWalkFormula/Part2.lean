@@ -1,5 +1,25 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicCombinatorics/code/HasseWalkFormula.lean -/
+module
+public import Def.v1.Atlas.AlgebraicCombinatorics.code.NormalOrderCoeff.Part2
+public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.NormalOrderCoeff
+public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.HasseWalks
+public import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.WalkCountOps
+public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.WalkCountBridge
+public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.WalkOperatorLemmas
+public import Theorem.v1.Atlas.AlgebraicCombinatorics.code.HasseWalks
+public import Def.v1.Atlas.AlgebraicCombinatorics.code.WalkCountOps
+public import Theorem.v1.Atlas.AlgebraicCombinatorics.code.WalkCountBridge.Part2
+public import Theorem.v1.Atlas.AlgebraicCombinatorics.code.WalkOperatorLemmas
+public import Mathlib.Data.Nat.Factorial.DoubleFactorial
+public import Mathlib.Data.Nat.Choose.Cast
+public import Mathlib.Combinatorics.Young.YoungDiagram
+public import Instance.v1.Atlas.AlgebraicCombinatorics.code.HasseWalkFormula
+set_option autoImplicit false
+open scoped Nat
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicCombinatorics/code/HasseWalkFormula.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,26 +27,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.AlgebraicCombinatorics.code.NormalOrderCoeff.Part2
-import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.NormalOrderCoeff
-import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.HasseWalks
-import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.WalkCountOps
-import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.WalkCountBridge
-import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.WalkOperatorLemmas
-import Theorem.v1.Atlas.AlgebraicCombinatorics.code.HasseWalks
-import Def.v1.Atlas.AlgebraicCombinatorics.code.WalkCountOps
-import Theorem.v1.Atlas.AlgebraicCombinatorics.code.WalkCountBridge.Part2
-import Theorem.v1.Atlas.AlgebraicCombinatorics.code.WalkOperatorLemmas
-import Mathlib.Data.Nat.Factorial.DoubleFactorial
-import Mathlib.Data.Nat.Choose.Cast
-import Mathlib.Combinatorics.Young.YoungDiagram
-import Instance.v1.Atlas.AlgebraicCombinatorics.code.HasseWalkFormula
-set_option autoImplicit false
-
-open scoped Nat
-
-
 def HasseWalkFormula.UpWalkType (n : ℕ) (lam : YoungDiagram) :=
   { walk : Fin (n + 1) → YoungDiagram //
     walk ⟨0, Nat.zero_lt_succ _⟩ = ⊥ ∧

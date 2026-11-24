@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Ch22Conductor.lean -/
+module
+public import Mathlib
+public import Def.v1.Atlas.NumberTheoryI.code.LocalFields.Part9
+public import Lemma.Nat.Atlas.v1.NumberTheoryI.code.LocalFields
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.RayClassFields
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GlobalCFT
+public import Def.v1.Atlas.NumberTheoryI.code.RayClassFields.Part28
+public import Structure.v1.Atlas.NumberTheoryI.code.GlobalCFT.Part3
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Ch22Conductor.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib
-import Def.v1.Atlas.NumberTheoryI.code.LocalFields.Part9
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.LocalFields
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.RayClassFields
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GlobalCFT
-import Def.v1.Atlas.NumberTheoryI.code.RayClassFields.Part28
-import Structure.v1.Atlas.NumberTheoryI.code.GlobalCFT.Part3
-
-
 noncomputable section
 
 open scoped NumberField

@@ -1,16 +1,19 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/AdeleLocallyCompact.lean -/
+module
+public import Mathlib.NumberTheory.NumberField.AdeleRing
+public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+public import Mathlib.Topology.Algebra.Valued.LocallyCompact
+public import Def.RingTheory.DedekindDomain.AdicCompletionResidueField.Part2
+public import Theorem.Int.DedekindDomain.AdicCompletionResidueField
+public import Mathlib.Topology.Algebra.Module.Compact
+public import Theorem.NumberTheory.NumberField.AdeleLocallyCompact.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/AdeleLocallyCompact.lean -/
 /-
 Author: @toskua, Avocado
 -/
-
-import Mathlib.NumberTheory.NumberField.AdeleRing
-import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
-import Mathlib.Topology.Algebra.Valued.LocallyCompact
-import Def.RingTheory.DedekindDomain.AdicCompletionResidueField.Part2
-import Lemma.Int.DedekindDomain.AdicCompletionResidueField
-import Mathlib.Topology.Algebra.Module.Compact
-import Theorem.NumberTheory.NumberField.AdeleLocallyCompact.Part2
 /-!
 # Local compactness of number-field adeles
 
@@ -42,8 +45,6 @@ in every `S n` says precisely that this point is congruent to `f n` modulo
 `(maximalIdeal)^n`. This is `IsAdicComplete.prec'`; no separate metric
 normalization or unstated completeness assumption is used.
 -/
-
-
 noncomputable section
 
 open IsDedekindDomain NumberField Valued.integer

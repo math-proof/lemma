@@ -1,9 +1,13 @@
--- Carved from Lemma/Definitions/Def_IsLocalRing_SmallExtensionTangent.lean: instance decls only.
-import Mathlib
-import Theorem.Ideal.SmallExtensionTangent
-import Def.Ideal_SmallExtensionTangent
-
+module
+public import Mathlib
+public import Theorem.Ideal.SmallExtensionTangent
+public import Def.Ideal_SmallExtensionTangent
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_IsLocalRing_SmallExtensionTangent.lean: instance decls only.
 
 noncomputable section
 

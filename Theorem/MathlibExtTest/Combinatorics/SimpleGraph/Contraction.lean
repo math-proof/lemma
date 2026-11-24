@@ -1,11 +1,12 @@
+module
+public import Theorem.Combinatorics.SimpleGraph.Contraction.Part3
+public import Theorem.SimpleGraph.Contraction
+public import Def.MathlibExtTest.Combinatorics.SimpleGraph.Contraction
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/Contraction.lean -/
-
-
-import Theorem.Combinatorics.SimpleGraph.Contraction.Part3
-import Theorem.SimpleGraph.Contraction
-import Def.MathlibExtTest.Combinatorics.SimpleGraph.Contraction
-
-
 namespace MathlibExtTest.Combinatorics.SimpleGraph.Contraction
 
 example : SimpleGraph.collapseOutside retained 1 = some one := by

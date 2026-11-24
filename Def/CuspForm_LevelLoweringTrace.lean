@@ -1,11 +1,14 @@
-import Mathlib
-import Def.ModularForm_HeckeOperator
-import Lemma.ModularForm.AtkinLehnerDatum
-import Theorems.Thm_ModularForm_add_heckeU_alSlash_slash_eq_self_of_mem_Gamma0
-import Theorems.Thm_ModularForm_mdifferentiable_add_heckeU_alSlash
-import Theorems.Thm_ModularForm_isZeroAt_add_heckeU_alSlash
-
+module
+public import Mathlib
+public import Def.ModularForm_HeckeOperator
+public import Lemma.ModularForm.AtkinLehnerDatum
+public import Theorems.Thm_ModularForm_add_heckeU_alSlash_slash_eq_self_of_mem_Gamma0
+public import Theorems.Thm_ModularForm_mdifferentiable_add_heckeU_alSlash
+public import Theorems.Thm_ModularForm_isZeroAt_add_heckeU_alSlash
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

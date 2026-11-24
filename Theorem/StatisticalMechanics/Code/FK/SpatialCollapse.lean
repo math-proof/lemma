@@ -1,5 +1,19 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/SpatialCollapse.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.FK.AvgDensityCollapse
+public import Theorem.StatisticalMechanics.Code.FK.FKUniqPrimitives
+public import Theorem.StatisticalMechanics.Code.FK.BoundaryInfluenceDecay.Part2
+open MeasureTheory Set Filter Topology Real
+open scoped BigOperators Classical
+set_option linter.unusedSectionVars false
+set_option linter.unusedFintypeInType false
+set_option linter.unusedDecidableInType false
+set_option maxHeartbeats 1000000
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/SpatialCollapse.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,21 +21,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.FK.AvgDensityCollapse
-import Theorem.StatisticalMechanics.Code.FK.FKUniqPrimitives
-import Theorem.StatisticalMechanics.Code.FK.BoundaryInfluenceDecay.Part2
-open MeasureTheory Set Filter Topology Real
-open scoped BigOperators Classical
-
-set_option linter.unusedSectionVars false
-set_option linter.unusedFintypeInType false
-set_option linter.unusedDecidableInType false
-set_option maxHeartbeats 1000000
-
-
 namespace StatMech
 
 namespace FK

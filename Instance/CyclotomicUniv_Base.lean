@@ -1,9 +1,13 @@
--- Carved from Lemma/Definitions/Def_CyclotomicUniv_Base.lean: instance decls only.
-import Mathlib
-import Theorem.Finset.Base
-import Def.Finset_Base
-
+module
+public import Mathlib
+public import Theorem.Finset.Base
+public import Def.Finset_Base
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_CyclotomicUniv_Base.lean: instance decls only.
 
 noncomputable section
 

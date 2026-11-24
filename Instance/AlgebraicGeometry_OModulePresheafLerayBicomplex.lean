@@ -1,11 +1,15 @@
--- Carved from Lemma/Definitions/Def_AlgebraicGeometry_OModulePresheafLerayBicomplex.lean: instance decls only.
-import Mathlib
-import Instance.AlgebraicGeometry_OrderedAffineCoverCech
-import Instance.AlgebraicGeometry_OrderedAffineCoverOf
-import Theorem.Scheme.OModulePresheafLerayBicomplex
-import Def.AlgebraicGeometry_OModulePresheafLerayBicomplex
-
+module
+public import Mathlib
+public import Instance.AlgebraicGeometry_OrderedAffineCoverCech
+public import Instance.AlgebraicGeometry_OrderedAffineCoverOf
+public import Theorem.Scheme.OModulePresheafLerayBicomplex
+public import Def.AlgebraicGeometry_OModulePresheafLerayBicomplex
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicGeometry_OModulePresheafLerayBicomplex.lean: instance decls only.
 
 noncomputable section
 

@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/CombinatorialOptimization/code/Flow/BottleneckEdge.lean -/
+module
+public import Def.v1.Atlas.CombinatorialOptimization.code.Flow.ShortestAugPath
+public import Theorem.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.ShortestAugPath
+public import Structure.v1.Atlas.CombinatorialOptimization.code.Flow.BottleneckEdge
+open Finset BigOperators Classical
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/CombinatorialOptimization/code/Flow/BottleneckEdge.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.CombinatorialOptimization.code.Flow.ShortestAugPath
-import Theorem.Finset.Atlas.v1.CombinatorialOptimization.code.Flow.ShortestAugPath
-import Structure.v1.Atlas.CombinatorialOptimization.code.Flow.BottleneckEdge
-open Finset BigOperators Classical
-
-
 namespace NetworkFlow
 
 variable {V : Type*} [Fintype V] [DecidableEq V]

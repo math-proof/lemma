@@ -1,15 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DiscreteValuationRing/TameDifferent.lean -/
+module
+public import Mathlib.RingTheory.DedekindDomain.Different
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Theorem.RingTheory.DiscreteValuationRing.MaximalIdealPowQuotientTrace
+public import Theorem.Int.DiscreteValuationRing.MaximalIdealPowQuotientTrace
+open IsLocalRing
+open scoped nonZeroDivisors
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DiscreteValuationRing/TameDifferent.lean -/
 /-
 Author: Muse Code powered by Meta Muse Spark (Muse Spark 1.3)
 -/
-
-import Mathlib.RingTheory.DedekindDomain.Different
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Theorem.RingTheory.DiscreteValuationRing.MaximalIdealPowQuotientTrace
-import Lemma.Int.DiscreteValuationRing.MaximalIdealPowQuotientTrace
-open IsLocalRing
-open scoped nonZeroDivisors
 
 attribute [local instance] FractionRing.liftAlgebra
   FractionRing.isScalarTower_liftAlgebra

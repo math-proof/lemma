@@ -1,9 +1,12 @@
-import Mathlib
-import Lemma.LaurentSeries.CharLFrobeniusGeomLevel
-
+module
+public import Mathlib
+public import Lemma.LaurentSeries.CharLFrobeniusGeomLevel
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 400000
 set_option maxHeartbeats 800000
+
+
+public section
 
 noncomputable section
 

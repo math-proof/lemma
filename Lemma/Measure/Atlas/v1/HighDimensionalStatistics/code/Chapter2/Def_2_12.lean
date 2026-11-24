@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Abbrev.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Def_2_12
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Abbrev.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Def_2_12
 open Finset Matrix BigOperators Rigollet
 
+
+public section
 
 namespace Rigollet
 

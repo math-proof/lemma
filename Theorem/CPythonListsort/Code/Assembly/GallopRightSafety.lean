@@ -4,7 +4,7 @@ module
 
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
-public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopSafety
+public import Theorem.List.Atlas.CPythonListsort.Code.Assembly.GallopSafety
 public import Def.CPythonListsort.Code.Assembly.GallopSafety
 
 public section

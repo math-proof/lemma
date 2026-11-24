@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectRefinedDualEdgeInteraction.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedDualEdgeCarrier
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedIntersection.Part7
+public import Instance.StatisticalMechanics.Code.FrontierD.FKRectRefinedDualEdgeInteraction
+open scoped BigOperators
+open Finset
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectRefinedDualEdgeInteraction.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedDualEdgeCarrier
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedIntersection.Part7
-import Instance.StatisticalMechanics.Code.FrontierD.FKRectRefinedDualEdgeInteraction
-open scoped BigOperators
-open Finset
-
-
 namespace StatMech.FrontierD
 
 open StatMech.Onsager IntegralSquareTorusCycle

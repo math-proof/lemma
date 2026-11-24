@@ -1,5 +1,20 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/CanonicalSheafCurves.lean -/
+module
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CoherentSheavesCurves.Part2
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSheavesCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleProjective
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleGeneral
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleProjective.Part4
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleGeneral
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochCurves
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves
+set_option maxHeartbeats 800000
+open RiemannRochCurves
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/CanonicalSheafCurves.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,21 +22,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.AlgebraicGeometryI.code.CoherentSheavesCurves.Part2
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSheavesCurves
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleProjective
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleGeneral
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
-import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleProjective.Part4
-import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleGeneral
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochCurves
-import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves
-set_option maxHeartbeats 800000
-
-open RiemannRochCurves
-
-
 noncomputable section
 
 namespace CanonicalSheafCurves

@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/BackbonePartialEdgeCopySwitching.lean -/
+module
+public import Def.StatisticalMechanics.Code.Sharpness.BackboneExplorationRealization.Part12
+public import Theorem.StatisticalMechanics.Code.Sharpness.FluxEdgeCopyBridge.Part3
+public import Theorem.StatisticalMechanics.Code.Sharpness.BackbonePartialEdgeCopySwitching.Part4
+open SimpleGraph Finset BigOperators
+open scoped symmDiff
+set_option linter.unusedSectionVars false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/BackbonePartialEdgeCopySwitching.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Def.StatisticalMechanics.Code.Sharpness.BackboneExplorationRealization.Part12
-import Theorem.StatisticalMechanics.Code.Sharpness.FluxEdgeCopyBridge.Part3
-import Theorem.StatisticalMechanics.Code.Sharpness.BackbonePartialEdgeCopySwitching.Part4
-open SimpleGraph Finset BigOperators
-open scoped symmDiff
-
-set_option linter.unusedSectionVars false
-
-
 namespace StatMech.Sharpness
 
 noncomputable section

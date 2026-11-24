@@ -1,15 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/FunctionalAnalysis/BanachLimit.lean -/
+module
+public import Theorem.Analysis.FunctionalAnalysis.BanachLimit.Part5
+public import Theorem.Filter.Any_And_Eq_1AndAll_EqAndAll_Eq
+public import Mathlib.Topology.Algebra.Module.ContinuousLinearMap.Basic
+public import Def.MathlibExtTest.Analysis.FunctionalAnalysis.BanachLimit
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/FunctionalAnalysis/BanachLimit.lean -/
 /-
 Author: @toskua, Avocado
 -/
-
-import Theorem.Analysis.FunctionalAnalysis.BanachLimit.Part5
-import Theorem.Filter.Any_And_Eq_1AndAll_EqAndAll_Eq
-import Mathlib.Topology.Algebra.Module.ContinuousLinearMap.Basic
-import Def.MathlibExtTest.Analysis.FunctionalAnalysis.BanachLimit
-
-
 namespace MathlibExt.Analysis.FunctionalAnalysis.BanachLimitTest
 
 open Filter

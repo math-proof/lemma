@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/DecorationEmbedding.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Onsager.DecorationEdgeComponent
+public import Instance.StatisticalMechanics.Code.Onsager.DecorationEmbedding
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/DecorationEmbedding.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,11 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.Onsager.DecorationEdgeComponent
-import Instance.StatisticalMechanics.Code.Onsager.DecorationEmbedding
-
-
 namespace StatMech.Onsager
 
 def ons_decEdgeRoute (L : ℕ) [Fact (2 < L)] (d e : ons_Dart L)

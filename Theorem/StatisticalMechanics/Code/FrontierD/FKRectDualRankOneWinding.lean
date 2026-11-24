@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectDualRankOneWinding.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectMedialDualWinding
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDualBarrierForceTopology
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectSourceSeamWindingUpper.Part3
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectDualRankOneWinding.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectMedialDualWinding
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDualBarrierForceTopology
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectSourceSeamWindingUpper.Part3
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

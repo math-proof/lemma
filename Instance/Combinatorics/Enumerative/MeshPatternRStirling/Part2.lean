@@ -1,19 +1,21 @@
+module
+public import Mathlib.Data.Fintype.Perm
+public import Def.Combinatorics.Enumerative.RStirlingFirstAlternatingExpansion
+public import Theorem.Finset.Enumerative.RStirlingFirstAlternatingExpansion
+public import Theorem.Finset.Enumerative.MeshPatternStirlingRecursion
+public import Theorem.Combinatorics.Enumerative.MeshPatternStirlingRecursion.Part3
+public import Theorem.Finset.Enumerative.MeshPatternGeneratingFunction
+public import Mathlib.Algebra.Polynomial.Coeff
+public import Mathlib.Algebra.Polynomial.Eval.Coeff
+public import Mathlib.Combinatorics.Enumerative.Stirling
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Ring
+public import Def.Combinatorics.Enumerative.MeshPatternRStirling.Part2
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/MeshPatternRStirling.lean -/
-
-import Mathlib.Data.Fintype.Perm
-import Def.Combinatorics.Enumerative.RStirlingFirstAlternatingExpansion
-import Theorem.Finset.Enumerative.RStirlingFirstAlternatingExpansion
-import Lemma.Finset.Enumerative.MeshPatternStirlingRecursion
-import Theorem.Combinatorics.Enumerative.MeshPatternStirlingRecursion.Part3
-import Theorem.Finset.Enumerative.MeshPatternGeneratingFunction
-import Mathlib.Algebra.Polynomial.Coeff
-import Mathlib.Algebra.Polynomial.Eval.Coeff
-import Mathlib.Combinatorics.Enumerative.Stirling
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring
-import Def.Combinatorics.Enumerative.MeshPatternRStirling.Part2
-
-
 section
 
 namespace MetaMathlibExt

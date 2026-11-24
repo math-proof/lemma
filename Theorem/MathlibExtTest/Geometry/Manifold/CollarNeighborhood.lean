@@ -1,15 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Geometry/Manifold/CollarNeighborhood.lean -/
-
-
-import Theorem.Geometry.Manifold.CollarNeighborhood.Part45
-import Lemma.Set.Manifold.CollarNeighborhood
+module
+public import Theorem.Geometry.Manifold.CollarNeighborhood.Part45
+public import Theorem.Set.Manifold.CollarNeighborhood
 open Manifold Set
 open scoped Manifold
-
 open MathlibExt.Geometry.Manifold.CollarNeighborhoodWanted
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Geometry/Manifold/CollarNeighborhood.lean -/
 -- The collar image is an open neighborhood of the manifold boundary.
+
 example {n : ℕ} [NeZero n]
     {M : Type*} [TopologicalSpace M] [ChartedSpace (EuclideanHalfSpace n) M]
     [IsManifold (𝓡∂ n) (⊤ : ℕ∞) M] [T2Space M] [SecondCountableTopology M] :

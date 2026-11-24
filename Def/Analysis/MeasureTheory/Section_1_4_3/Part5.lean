@@ -1,7 +1,10 @@
-import Def.Analysis.MeasureTheory.Section_1_4_2.Part8
-import Instance.Analysis.MeasureTheory.Section_1_4_3.Part2
+module
+public import Def.Analysis.MeasureTheory.Section_1_4_2.Part8
+public import Instance.Analysis.MeasureTheory.Section_1_4_3.Part2
 open MeasureTheory
 
+
+public section
 
 noncomputable def FinitelyAdditiveMeasure.isCountablyAdditive.toMeasure {X:Type*} {B: ConcreteBooleanAlgebra X} {μ: FinitelyAdditiveMeasure B} (h: μ.isCountablyAdditive) :
   @Measure X h.1.toSigmaAlgebra.measurableSpace := h.toCountablyAdditive.toMeasure

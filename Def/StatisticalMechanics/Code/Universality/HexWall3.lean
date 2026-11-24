@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexWall3.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Universality.HexConnClosed
+public import Theorem.StatisticalMechanics.Code.Universality.HexBridgeFull.Part4
+public import Theorem.StatisticalMechanics.Code.Universality.HexBridgeWeight.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.HexBridgeRecon.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.HexSurgerySeams.Part5
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexWall3.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Universality.HexConnClosed
-import Theorem.StatisticalMechanics.Code.Universality.HexBridgeFull.Part4
-import Theorem.StatisticalMechanics.Code.Universality.HexBridgeWeight.Part3
-import Theorem.StatisticalMechanics.Code.Universality.HexBridgeRecon.Part3
-import Theorem.StatisticalMechanics.Code.Universality.HexSurgerySeams.Part5
-
-
 namespace StatMech.Universality
 
 open HexWalk List Filter Topology

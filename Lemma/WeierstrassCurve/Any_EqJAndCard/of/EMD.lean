@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.ModularCurve_EMD
 import Lemma.ZMod.GenusNumerics
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 
 /--

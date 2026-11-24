@@ -1,12 +1,14 @@
-import Def.Matrix_Main
-import Def.Matrix_IharaAmalgamMap
-import Def.Matrix_Gamma0AwayUnitsChar
-import Mathlib.GroupTheory.Subgroup.Simple
-import Instance.IharaMennickeCarrier
-
+module
+public import Def.Matrix_Main
+public import Def.Matrix_IharaAmalgamMap
+public import Def.Matrix_Gamma0AwayUnitsChar
+public import Mathlib.GroupTheory.Subgroup.Simple
+public import Instance.IharaMennickeCarrier
 open Matrix
-
 open scoped MatrixGroups
+
+
+public section
 
 namespace Ihara
 

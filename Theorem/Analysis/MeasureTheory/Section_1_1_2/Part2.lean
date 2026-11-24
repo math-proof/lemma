@@ -1,8 +1,11 @@
-import Theorem.Analysis.MeasureTheory.Section_1_1_1.Part16
-import Mathlib.LinearAlgebra.AffineSpace.Simplex.Basic
-import Abbrev.Analysis.MeasureTheory.Section_1_1_2.Part3
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_1_1.Part16
+public import Mathlib.LinearAlgebra.AffineSpace.Simplex.Basic
+public import Abbrev.Analysis.MeasureTheory.Section_1_1_2.Part3
 open Pointwise
 
+
+public section
 
 /-- The Cartesian product of bounded sets is bounded. -/
 lemma EuclideanSpace'.norm_prod_equiv_symm {d₁ d₂:ℕ}

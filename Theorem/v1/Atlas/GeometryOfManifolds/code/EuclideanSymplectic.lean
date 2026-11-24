@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/code/EuclideanSymplectic.lean -/
+module
+public import Def.v1.Atlas.GeometryOfManifolds.code.EuclideanDFS.Part3
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.EuclideanDFS
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
+public import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/code/EuclideanSymplectic.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.GeometryOfManifolds.code.EuclideanDFS.Part3
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.EuclideanDFS
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
-import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
-
-
 noncomputable section
 
 open EuclideanΩ

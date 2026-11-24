@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/MeanfieldIsingFull.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Sharpness.MeanfieldIsing
+public import Def.StatisticalMechanics.Code.Sharpness.TildeBc.Part9
+public import Theorem.StatisticalMechanics.Code.Sharpness.MeanfieldIsingFinite.Part10
+public import Def.StatisticalMechanics.Code.Sharpness.MeanfieldIsingFull
+open MeasureTheory Real Set Filter Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/MeanfieldIsingFull.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Sharpness.MeanfieldIsing
-import Def.StatisticalMechanics.Code.Sharpness.TildeBc.Part9
-import Theorem.StatisticalMechanics.Code.Sharpness.MeanfieldIsingFinite.Part10
-import Def.StatisticalMechanics.Code.Sharpness.MeanfieldIsingFull
-open MeasureTheory Real Set Filter Topology
-
-
 namespace StatMech
 
 namespace Sharpness

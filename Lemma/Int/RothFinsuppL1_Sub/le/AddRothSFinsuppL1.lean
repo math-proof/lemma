@@ -1,11 +1,14 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.NumberTheory.RothAuxiliary
-import Lemma.Int.RothFinsuppL1Add.le.AddRothSFinsuppL1
-import Lemma.Int.RothFinsuppL1Neg.eq.RothFinsuppL1
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.NumberTheory.RothAuxiliary
+public import Lemma.Int.RothFinsuppL1Add.le.AddRothSFinsuppL1
+public import Lemma.Int.RothFinsuppL1Neg.eq.RothFinsuppL1
 open MathlibExt.NumberTheory.RothAuxiliary
 open Int
 
+
+public section
 
 /--
 [rothFinsuppL1_sub](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

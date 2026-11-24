@@ -1,9 +1,11 @@
+module
+public import Def.Combinatorics.AP.Basic.Part2
+public import Theorem.Set.APBasic
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Additive/CommonDifferenceProgressions.lean -/
-
-import Def.Combinatorics.AP.Basic.Part2
-import Lemma.Set.APBasic
-
-
 namespace MetaMathlibExt
 
 /-- Common-difference progressions: holds exactly when there is one shared

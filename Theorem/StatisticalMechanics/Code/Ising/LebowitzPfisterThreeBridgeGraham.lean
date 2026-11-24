@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/LebowitzPfisterThreeBridgeGraham.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.GrahamAgreementVBGInhomogeneous
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterThreeBridgeObstruction
+open Finset SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/LebowitzPfisterThreeBridgeGraham.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.GrahamAgreementVBGInhomogeneous
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterThreeBridgeObstruction
-open Finset SimpleGraph
-
-
 namespace StatMech.Ising
 
 open StatMech.FrontierA StatMech.Sharpness

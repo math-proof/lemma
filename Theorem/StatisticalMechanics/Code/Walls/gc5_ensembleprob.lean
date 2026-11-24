@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/gc5_ensembleprob.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Ising.TwoCurrentProbBound
+public import Theorem.StatisticalMechanics.Code.Ising.CrossClassHdom
+public import Theorem.StatisticalMechanics.Code.Ising.EnsembleGHS
+open Finset BigOperators SimpleGraph Set
+open scoped symmDiff
+set_option linter.unusedSectionVars false
+set_option linter.style.longLine false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/gc5_ensembleprob.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Ising.TwoCurrentProbBound
-import Theorem.StatisticalMechanics.Code.Ising.CrossClassHdom
-import Theorem.StatisticalMechanics.Code.Ising.EnsembleGHS
-open Finset BigOperators SimpleGraph Set
-open scoped symmDiff
-
-set_option linter.unusedSectionVars false
-set_option linter.style.longLine false
-
-
 namespace StatMech.Walls
 
 open StatMech.Sharpness StatMech.Ising

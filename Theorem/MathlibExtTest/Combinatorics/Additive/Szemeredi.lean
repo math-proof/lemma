@@ -1,11 +1,12 @@
+module
+public import Def.Combinatorics.Additive.Szemeredi
+public import Theorem.Finset.Additive.Szemeredi
+public import Mathlib.Tactic
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Additive/Szemeredi.lean -/
-
-
-import Def.Combinatorics.Additive.Szemeredi
-import Lemma.Finset.Additive.Szemeredi
-import Mathlib.Tactic
-
-
 namespace MathlibExtTest.Combinatorics.Additive.Szemeredi
 
 -- Every Boolean coloring has arbitrarily long monochromatic arithmetic progressions.

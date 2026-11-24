@@ -1,13 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/CStarAlgebra/KadisonSinger/MSS.lean -/
-
-import Def.Analysis.CStarAlgebra.KadisonSinger.MSS
-import Lemma.Real.CStarAlgebra.KadisonSinger.MSS
-import Theorem.MathlibExtTest.Analysis.CStarAlgebra.KadisonSinger.MSS
+module
+public import Def.Analysis.CStarAlgebra.KadisonSinger.MSS
+public import Theorem.Real.CStarAlgebra.KadisonSinger.MSS
+public import Theorem.MathlibExtTest.Analysis.CStarAlgebra.KadisonSinger.MSS
 open scoped BigOperators Matrix.Norms.L2Operator
-
 open MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/CStarAlgebra/KadisonSinger/MSS.lean -/
 namespace MathlibExtTest.Analysis.CStarAlgebra.KadisonSinger.MSS
 
 noncomputable section

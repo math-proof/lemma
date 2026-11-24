@@ -1,12 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Idele.lean -/
+module
+public import Mathlib.NumberTheory.NumberField.AdeleRing
+public import Mathlib.Topology.Algebra.Group.Units
+public import Instance.NumberTheory.NumberField.Idele.Part3
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Idele.lean -/
 /-
 Author: @toskua, Avocado
 -/
-
-import Mathlib.NumberTheory.NumberField.AdeleRing
-import Mathlib.Topology.Algebra.Group.Units
-import Instance.NumberTheory.NumberField.Idele.Part3
 /-!
 # Ideles of a number field
 
@@ -30,8 +33,6 @@ specializations such as `R = ℤ` and `K = ℚ`. They do not model global functi
 * arXiv:2608.23886v1, *Fourier Spectral Reciprocity and Canonical Hecke L-Functions*,
   lines 201--202
 -/
-
-
 noncomputable section
 
 open scoped RestrictedProduct NumberField.AdeleRing

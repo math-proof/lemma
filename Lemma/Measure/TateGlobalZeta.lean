@@ -1,12 +1,14 @@
-import Def.NumberField_AdelicFourier
-import Def.NumberField_AdelicVolume
-import Def.NumberField_TateGlobalZeta
-
+module
+public import Def.NumberField_AdelicFourier
+public import Def.NumberField_AdelicVolume
+public import Def.NumberField_TateGlobalZeta
 set_option autoImplicit false
-
 open MeasureTheory NumberField NumberField.AdelicFourier Matrix.AdelicLevel NumberField.AdelicVolume Matrix
 open AutomorphicForm IsDedekindDomain
 open scoped NNReal
+
+
+public section
 
 noncomputable section
 

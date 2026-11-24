@@ -1,25 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/gc88brereroutehall.lean -/
-
-/-
-Copyright (c) Meta Platforms, Inc. and affiliates.
-All rights reserved.
-
-This source code is licensed under the license found in the
-LICENSE file in the root directory of this source tree.
--/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Sharpness.MultiReplica.Part2
-import Theorem.StatisticalMechanics.Code.Sharpness.FluxEdgeCopyBridge.Part3
-import Theorem.StatisticalMechanics.Code.Walls.gc85bthreereplicaswitch.Part3
-import Theorem.StatisticalMechanics.Code.Walls.gc86brerouteinjection.Part4
-import Theorem.StatisticalMechanics.Code.Walls.gc87brerouteinjection.Part3
-import Theorem.StatisticalMechanics.Code.Walls.gc88brereroutehall.Part3
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Sharpness.MultiReplica.Part2
+public import Theorem.StatisticalMechanics.Code.Sharpness.FluxEdgeCopyBridge.Part3
+public import Theorem.StatisticalMechanics.Code.Walls.gc85bthreereplicaswitch.Part3
+public import Theorem.StatisticalMechanics.Code.Walls.gc86brerouteinjection.Part4
+public import Theorem.StatisticalMechanics.Code.Walls.gc87brerouteinjection.Part3
+public import Theorem.StatisticalMechanics.Code.Walls.gc88brereroutehall.Part3
 open Finset BigOperators SimpleGraph
 open scoped symmDiff
 open Classical
-
 set_option linter.unusedSectionVars false
 set_option linter.unusedVariables false
 set_option linter.style.longLine false
@@ -30,6 +19,16 @@ set_option linter.unusedFintypeInType false
 set_option maxHeartbeats 1600000
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/gc88brereroutehall.lean -/
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
 namespace StatMech.Walls
 
 open StatMech StatMech.Ising StatMech.Sharpness

@@ -1,11 +1,14 @@
-import Mathlib.LinearAlgebra.Dual.Defs
-import Mathlib.Data.ZMod.QuotientRing
-import Mathlib.Algebra.Exact
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Def.ModularCurve_ComponentGroup
-import Abbrev.ModularCurve_ComponentGroup
-
+module
+public import Mathlib.LinearAlgebra.Dual.Defs
+public import Mathlib.Data.ZMod.QuotientRing
+public import Mathlib.Algebra.Exact
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Def.ModularCurve_ComponentGroup
+public import Abbrev.ModularCurve_ComponentGroup
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

@@ -1,9 +1,12 @@
-import Mathlib
-import Lemma.Fin.RothKroneckerBounded_Sum.of.All_RothKroneckerBounded
-import Lemma.Fin.RothKronecker.ne.Zero.of.Ne_0.Gt_1
+module
+public import Mathlib
+public import Lemma.Fin.RothKroneckerBounded_Sum.of.All_RothKroneckerBounded
+public import Lemma.Fin.RothKronecker.ne.Zero.of.Ne_0.Gt_1
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [rothKronecker_linearIndependent](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

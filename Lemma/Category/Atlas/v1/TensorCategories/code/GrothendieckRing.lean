@@ -1,9 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
 open Finset FusionRing FusionRing.GrRingOf repZ2
 open FusionRing
 
+
+public section
 
 namespace FusionRing
 

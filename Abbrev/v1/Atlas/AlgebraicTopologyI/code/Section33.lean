@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/Section33.lean -/
+module
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section26.Part8
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
+public import Mathlib.LinearAlgebra.Dual.Defs
+public import Mathlib.Topology.Category.TopCat.Limits.Products
+public import Mathlib.LinearAlgebra.TensorProduct.Basic
+public import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
+open CategoryTheory AlgebraicTopology Limits
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/Section33.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section26.Part8
-import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
-import Mathlib.LinearAlgebra.Dual.Defs
-import Mathlib.Topology.Category.TopCat.Limits.Products
-import Mathlib.LinearAlgebra.TensorProduct.Basic
-import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
-open CategoryTheory AlgebraicTopology Limits
-
-
 noncomputable section
 
 namespace SingularCohomology

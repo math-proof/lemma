@@ -1,9 +1,13 @@
--- Carved from Lemma/Definitions/Def_AlgebraicGeometry_IdealSheafHom.lean: instance decls only.
-import Mathlib.AlgebraicGeometry.IdealSheaf.Basic
-import Theorem.Scheme.IdealSheafHom
-import Def.AlgebraicGeometry_IdealSheafHom
-
+module
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Basic
+public import Theorem.Scheme.IdealSheafHom
+public import Def.AlgebraicGeometry_IdealSheafHom
 open CategoryTheory TopologicalSpace Opposite
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicGeometry_IdealSheafHom.lean: instance decls only.
 
 universe u
 

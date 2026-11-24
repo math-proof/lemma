@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectDevelopedWideQuadratic.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDevelopedWideDual.Part5
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectCrossingAlgebra
+open Set
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectDevelopedWideQuadratic.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectDevelopedWideDual.Part5
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectCrossingAlgebra
-open Set
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/KacWardRectilinearDeletion.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardRectilinearGraphCancellation
+public import Theorem.StatisticalMechanics.Code.Onsager.StateWeightedDeletion
+open scoped BigOperators
+open Finset SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/KacWardRectilinearDeletion.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardRectilinearGraphCancellation
-import Theorem.StatisticalMechanics.Code.Onsager.StateWeightedDeletion
-open scoped BigOperators
-open Finset SimpleGraph
-
-
 namespace StatMech.FrontierA
 
 theorem kw_rectilinearGraph_loopRev_weight

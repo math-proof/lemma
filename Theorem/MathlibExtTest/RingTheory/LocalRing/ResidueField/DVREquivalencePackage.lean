@@ -1,7 +1,10 @@
+module
+public import Theorem.Int.LocalRing.ResidueField.DVREquivalencePackage
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/LocalRing/ResidueField/DVREquivalencePackage.lean -/
-
-
-import Lemma.Int.LocalRing.ResidueField.DVREquivalencePackage
 universe u v
 
 open DVRResidue

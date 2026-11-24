@@ -1,5 +1,23 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/CramerTheorem.lean -/
+module
+public import Mathlib.MeasureTheory.Measure.LevyProkhorovMetric
+public import Mathlib.Topology.Sequences
+public import Theorem.v1.Atlas.Probability.code.CramerTheorem
+public import Theorem.v1.Atlas.Probability.code.CramerRateIDCore
+public import Theorem.v1.Atlas.Probability.code.LDPContraction
+public import Theorem.Random.SatisfiesLDP
+public import Theorem.Random.IsProbabilityMeasure.of.Gt_0
+public import Mathlib.InformationTheory.KullbackLeibler.Basic
+public import Mathlib.Analysis.Normed.Lp.MeasurableSpace
+public import Mathlib.Probability.Moments.Basic
+public import Mathlib.MeasureTheory.Integral.Pi
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
+open ENNReal Filter InformationTheory MeasureTheory ProbabilityMeasure ProbabilityTheory Random
+open scoped Topology ENNReal InnerProductSpace
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/CramerTheorem.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,22 +25,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib.MeasureTheory.Measure.LevyProkhorovMetric
-import Mathlib.Topology.Sequences
-import Theorem.v1.Atlas.Probability.code.CramerTheorem
-import Theorem.v1.Atlas.Probability.code.CramerRateIDCore
-import Theorem.v1.Atlas.Probability.code.LDPContraction
-import Lemma.Random.SatisfiesLDP
-import Theorem.Random.IsProbabilityMeasure.of.Gt_0
-import Mathlib.InformationTheory.KullbackLeibler.Basic
-import Mathlib.Analysis.Normed.Lp.MeasurableSpace
-import Mathlib.Probability.Moments.Basic
-import Mathlib.MeasureTheory.Integral.Pi
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
-open ENNReal Filter InformationTheory MeasureTheory ProbabilityMeasure ProbabilityTheory Random
-open scoped Topology ENNReal InnerProductSpace
-
 /-!
 # Barycenter continuity under uniform exponential moments
 
@@ -36,7 +38,6 @@ subtype. On a sequential (e.g. metrizable) subtype, `SeqContinuous` upgrades to 
 * Giry vs weak topology: use `satisfiesLDP_map_of_continuous_of_measurable` with a separate
   Giry-measurability proof; do not rely on `Continuous.measurable` on `ProbabilityMeasure`.
 -/
-
 /-- Probability measures with a uniform `exp((2c)‖·‖)` moment bound and integrable identity. -/
 def UniformExpMoment (d : ℕ) (c M : ℝ) : Type _ :=
   { ν : ProbabilityMeasure (EuclideanSpace ℝ (Fin d)) //

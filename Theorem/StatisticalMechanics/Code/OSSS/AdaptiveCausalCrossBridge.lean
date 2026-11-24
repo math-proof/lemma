@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/AdaptiveCausalCrossBridge.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.OSSS.AdaptivePredictableOrder
+public import Theorem.StatisticalMechanics.Code.OSSS.CrossMonotone
+public import Theorem.StatisticalMechanics.Code.OSSS.CrossVFKG.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/AdaptiveCausalCrossBridge.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.OSSS.AdaptivePredictableOrder
-import Theorem.StatisticalMechanics.Code.OSSS.CrossMonotone
-import Theorem.StatisticalMechanics.Code.OSSS.CrossVFKG.Part2
-
-
 namespace StatMech
 
 namespace OSSS

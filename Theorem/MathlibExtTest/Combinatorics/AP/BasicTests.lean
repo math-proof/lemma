@@ -1,10 +1,12 @@
+module
+public import Def.Combinatorics.AP.Basic.Part2
+public import Theorem.Set.APBasic
+public import Mathlib.Tactic.IntervalCases
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/AP/BasicTests.lean -/
-
-
-import Def.Combinatorics.AP.Basic.Part2
-import Lemma.Set.APBasic
-import Mathlib.Tactic.IntervalCases
-
 
 example : ([1, 2, 3] : List ℕ).IsAPOfLengthWith 3 1 1 :=
   Or.inl rfl

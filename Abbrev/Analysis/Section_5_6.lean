@@ -1,6 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Section_5_5.Part5
-import Theorem.Analysis.Section_5_6
+module
+public import Mathlib
+public import Theorem.Analysis.Section_5_5.Part5
+public import Theorem.Analysis.Section_5_6
+
+
+public section
+
 /-!
 # Analysis I, Section 5.6: Real exponentiation, part I
 
@@ -23,8 +28,6 @@ Users of the companion who have completed the exercises in this section are welc
 - (Add tip here)
 
 -/
-
-
 namespace Chapter5
 
 /-- Definition 5.6.2. We permit "junk values" when {lean}`x` is negative or {lean}`n` vanishes. -/

@@ -1,10 +1,13 @@
-import Lemma.HahnSeries.X0
-import Lemma.LaurentSeries.LaurentCoeff
-import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Abbrev.ModularCurve_ArithmeticGalois
-
+module
+public import Lemma.HahnSeries.X0
+public import Lemma.LaurentSeries.LaurentCoeff
+public import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Abbrev.ModularCurve_ArithmeticGalois
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

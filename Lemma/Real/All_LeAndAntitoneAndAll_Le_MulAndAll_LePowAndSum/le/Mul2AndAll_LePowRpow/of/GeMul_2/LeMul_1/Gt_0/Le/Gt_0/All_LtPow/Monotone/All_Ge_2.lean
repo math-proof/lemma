@@ -1,7 +1,10 @@
-import Initialize.Tactic.Attr.Basic
-import Def.NumberTheory.RothAuxiliary
+module
+public import Initialize.Tactic.Attr.Basic
+public import Def.NumberTheory.RothAuxiliary
 open MathlibExt.NumberTheory.RothAuxiliary
 
+
+public section
 
 /--
 [roth_exists_balanced_degrees](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

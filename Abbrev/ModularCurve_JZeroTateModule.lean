@@ -1,11 +1,14 @@
-import Instance.ModularCurve_ArithmeticGalois
-import Structure.HeckeGalois_EichlerShimura
-import Instance.EllipticCurve_TateModule
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.Algebra.Algebra.Subalgebra.Lattice
-import Mathlib.LinearAlgebra.Basis.Defs
-
+module
+public import Instance.ModularCurve_ArithmeticGalois
+public import Structure.HeckeGalois_EichlerShimura
+public import Instance.EllipticCurve_TateModule
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.Algebra.Algebra.Subalgebra.Lattice
+public import Mathlib.LinearAlgebra.Basis.Defs
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

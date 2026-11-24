@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/CheckIsingSurfaceTensionNOneMomentNormalization.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionNOneMomentNormalization.Part2
+open StatMech.FrontierA.NOneSymmetricMeanCertificate
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/CheckIsingSurfaceTensionNOneMomentNormalization.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,9 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingSurfaceTensionNOneMomentNormalization.Part2
-open StatMech.FrontierA.NOneSymmetricMeanCertificate
 
 #print axioms BiPoly.eval_sumCodes_eq_fin_sum
 #print axioms layerLateralInt_halfShift

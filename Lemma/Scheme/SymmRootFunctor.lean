@@ -1,6 +1,6 @@
 import Mathlib
 import Def.AlgebraicGeometry_RelativePicardFunctor
-import Lemma.Scheme.PolarisationRosati
+import Theorem.Scheme.PolarisationRosati
 import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
 import Instance.AlgebraicGeometry_SymmRootFunctor
 import Structure.AlgebraicGeometry_SymmRootFunctor

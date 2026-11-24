@@ -1,7 +1,10 @@
-import Mathlib
-import Instance.AlgebraicGeometry_SymmRootFunctor
-
+module
+public import Mathlib
+public import Instance.AlgebraicGeometry_SymmRootFunctor
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

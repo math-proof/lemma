@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Prop255.lean -/
+module
+public import Mathlib
+public import Def.v1.Atlas.NumberTheoryI.code.DirectLimits.Part2
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DirectLimits
+public import Def.v1.Atlas.NumberTheoryI.code.Prop255.Part3
+open scoped RestrictedProduct
+open Filter Set Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Prop255.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib
-import Def.v1.Atlas.NumberTheoryI.code.DirectLimits.Part2
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.DirectLimits
-import Def.v1.Atlas.NumberTheoryI.code.Prop255.Part3
-open scoped RestrictedProduct
-open Filter Set Topology
-
-
 noncomputable section
 
 set_option linter.unusedSectionVars false

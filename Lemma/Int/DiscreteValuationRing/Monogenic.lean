@@ -1,9 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.RingTheory.DiscreteValuationRing.Monogenic
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.RingTheory.DiscreteValuationRing.Monogenic
 open IsLocalRing
 open IsDiscreteValuationRing
 
+
+public section
 
 namespace IsDiscreteValuationRing
 

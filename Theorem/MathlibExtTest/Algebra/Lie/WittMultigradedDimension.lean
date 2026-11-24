@@ -1,11 +1,12 @@
+module
+public import Theorem.Algebra.Lie.WittMultigradedDimension.Part11
+public import Theorem.Int.Lie.WittMultigradedDimension
+public import Mathlib.Data.Fin.VecNotation
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/Lie/WittMultigradedDimension.lean -/
-
-
-import Theorem.Algebra.Lie.WittMultigradedDimension.Part11
-import Lemma.Int.Lie.WittMultigradedDimension
-import Mathlib.Data.Fin.VecNotation
-
-
 namespace MathlibExtTest.Algebra.Lie.WittMultigradedDimension
 
 open scoped BigOperators

@@ -14,7 +14,6 @@ namespace BooleanFourier
 /--
 [Bool.false_true_of_le_ne](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Monotone.lean)
 -/
-@[path]
 public theorem Bool.false_true_of_le_ne
   {a b : Bool}
 -- given
@@ -32,7 +31,6 @@ namespace BooleanFourier
 /--
 [chi_singleton](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Monotone.lean)
 -/
-@[path]
 public theorem chi_singleton
   {n : ℕ}
   {i : Fin n}
@@ -49,7 +47,6 @@ namespace BooleanFourier
 /--
 [flipCoord_flipCoord](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Monotone.lean)
 -/
-@[path]
 public theorem flipCoord_flipCoord
   {n : ℕ}
   {x : Fin n → Bool}
@@ -68,7 +65,6 @@ namespace BooleanFourier
 /--
 [flipCoord_ne_self'](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Monotone.lean)
 -/
-@[path]
 public theorem flipCoord_ne_self'
   {n : ℕ}
   {x : Fin n → Bool}
@@ -85,7 +81,6 @@ namespace BooleanFourier
 /--
 [le_flipCoord_of_false](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Monotone.lean)
 -/
-@[path]
 public theorem le_flipCoord_of_false
   {n : ℕ}
   {x : Fin n → Bool}
@@ -107,7 +102,6 @@ namespace BooleanFourier
 /--
 [flipCoord_le_of_true](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Monotone.lean)
 -/
-@[path]
 public theorem flipCoord_le_of_true
   {n : ℕ}
   {x : Fin n → Bool}
@@ -129,7 +123,6 @@ namespace BooleanFourier
 /--
 [monotone_fourierCoeff_singleton_eq_influence](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Monotone.lean)
 -/
-@[path]
 public theorem monotone_fourierCoeff_singleton_eq_influence
   {n : ℕ}
   {f : (Fin n → Bool) → Bool}

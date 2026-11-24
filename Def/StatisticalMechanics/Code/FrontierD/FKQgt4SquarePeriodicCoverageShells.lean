@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKQgt4SquarePeriodicCoverageShells.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarCoverageShells
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareAnchoredShell.Part4
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquarePeriodicBridge.Part3
+public import Theorem.StatisticalMechanics.Code.Walls.kc_latticeconnected.Part2
+open Filter Finset Set SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKQgt4SquarePeriodicCoverageShells.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarCoverageShells
-import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareAnchoredShell.Part4
-import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquarePeriodicBridge.Part3
-import Theorem.StatisticalMechanics.Code.Walls.kc_latticeconnected.Part2
-open Filter Finset Set SimpleGraph
-
-
 namespace StatMech.FrontierD
 
 open StatMech.FK StatMech.FK.PeriodicPlanar StatMech.Lattice

@@ -1,9 +1,12 @@
-import Instance.NumberField_AdelicHaar
-import Lemma.Measure.AdelicHaar
-import Def.AutomorphicForm_AdelicLsXi
-import Structure.AutomorphicForm_CarrierPins
-
+module
+public import Instance.NumberField_AdelicHaar
+public import Lemma.Measure.AdelicHaar
+public import Def.AutomorphicForm_AdelicLsXi
+public import Structure.AutomorphicForm_CarrierPins
 open IsDedekindDomain NumberField Measure.AdelicHaar MeasureTheory Measure
+
+
+public section
 
 noncomputable section
 

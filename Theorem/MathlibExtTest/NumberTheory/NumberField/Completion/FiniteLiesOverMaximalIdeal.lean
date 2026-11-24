@@ -1,10 +1,11 @@
+module
+public import Theorem.NumberTheory.NumberField.Completion.FiniteLiesOverMaximalIdeal
+public import Theorem.Nat.NumberField.Completion.FiniteLiesOverMaximalIdeal
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/Completion/FiniteLiesOverMaximalIdeal.lean -/
-
-
-import Theorem.NumberTheory.NumberField.Completion.FiniteLiesOverMaximalIdeal
-import Theorem.Nat.NumberField.Completion.FiniteLiesOverMaximalIdeal
-
-
 namespace IsDedekindDomain.HeightOneSpectrum
 
 open scoped NumberField

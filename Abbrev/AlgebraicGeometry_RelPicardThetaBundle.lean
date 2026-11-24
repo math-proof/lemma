@@ -1,10 +1,13 @@
-import Mathlib
-import Instance.AlgebraicGeometry_RelativePicardFunctor
-import Instance.SheafOfModules_Monoidal
-import Abbrev.AlgebraicGeometry_IdealSheafModule
-import Abbrev.AlgebraicGeometry_ModulesDet
-
+module
+public import Mathlib
+public import Instance.AlgebraicGeometry_RelativePicardFunctor
+public import Instance.SheafOfModules_Monoidal
+public import Abbrev.AlgebraicGeometry_IdealSheafModule
+public import Abbrev.AlgebraicGeometry_ModulesDet
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

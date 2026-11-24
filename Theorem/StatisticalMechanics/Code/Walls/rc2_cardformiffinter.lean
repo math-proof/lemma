@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/rc2_cardformiffinter.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Walls.rmr_topkey.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.rmr_reflectinvolution.Part2
+public import Def.StatisticalMechanics.Code.Walls.rc2_cardformiffinter
+open Finset
+open scoped StatMech FinsetFamily
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/rc2_cardformiffinter.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Walls.rmr_topkey.Part2
-import Theorem.StatisticalMechanics.Code.Walls.rmr_reflectinvolution.Part2
-import Def.StatisticalMechanics.Code.Walls.rc2_cardformiffinter
-open Finset
-open scoped StatMech FinsetFamily
-
-
 namespace StatMech.Walls
 
 open StatMech StatMech.ConfigSpace

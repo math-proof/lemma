@@ -1,12 +1,16 @@
--- Carved from Lemma/Definitions/Def_CuspForm_HeckeAlgebra.lean: instance decls only.
-import Lemma.ModularForm.HeckeOperatorForms
-import Theorems.Thm_CuspForm_heckeTLin_comm
-import Theorems.Thm_CuspForm_heckeTLin_heckeULin_comm
-import Theorems.Thm_CuspForm_heckeULin_comm
-import Theorem.CuspForm.HeckeAlgebra
-import Def.CuspForm_HeckeAlgebra
-
+module
+public import Theorem.ModularForm.HeckeOperatorForms
+public import Theorems.Thm_CuspForm_heckeTLin_comm
+public import Theorems.Thm_CuspForm_heckeTLin_heckeULin_comm
+public import Theorems.Thm_CuspForm_heckeULin_comm
+public import Theorem.CuspForm.HeckeAlgebra
+public import Def.CuspForm_HeckeAlgebra
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_CuspForm_HeckeAlgebra.lean: instance decls only.
 
 noncomputable section
 

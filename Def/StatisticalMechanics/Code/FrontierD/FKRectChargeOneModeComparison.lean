@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectChargeOneModeComparison.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.BoolModeForcedSum
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusWindingCountBridge.Part5
+public import Instance.StatisticalMechanics.Code.FrontierD.FKRectChargeOneModeComparison
+open Finset
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectChargeOneModeComparison.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.BoolModeForcedSum
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusWindingCountBridge.Part5
-import Instance.StatisticalMechanics.Code.FrontierD.FKRectChargeOneModeComparison
-open Finset
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

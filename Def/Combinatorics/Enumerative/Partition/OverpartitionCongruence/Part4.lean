@@ -1,45 +1,46 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/Partition/OverpartitionCongruence.lean -/
+module
+public import Mathlib.Data.Finset.Basic
+public import Mathlib.Data.Int.ModEq
+public import Mathlib.Data.Multiset.Basic
+public import Mathlib.SetTheory.Cardinal.Finite
+public import Def.Combinatorics.Enumerative.Partition.Overpartition
+public import Theorem.Nat.Enumerative.Partition.Overpartition
+public import Theorem.Nat.QuadraticForms.ThreeSquares
+public import Lemma.Real.SpecialFunctions.JacobiTripleProduct
+public import Def.NumberTheory.QuadraticForms.ThreeSquares
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Combinatorics.Enumerative.Partition.Basic
+public import Mathlib.Combinatorics.Enumerative.Partition.GenFun
+public import Mathlib.Combinatorics.Enumerative.Pentagonal.PowerSeries
+public import Mathlib.Data.Finset.Powerset
+public import Mathlib.Data.Int.Cast.Lemmas
+public import Mathlib.Data.Int.Interval
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.RingTheory.PowerSeries.Basic
+public import Mathlib.RingTheory.PowerSeries.Expand
+public import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.NormNum.Prime
+public import Mathlib.Combinatorics.Enumerative.Pentagonal.EulerFunction
+public import Mathlib.Analysis.Normed.Ring.InfiniteSum
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.NatInt
+public import Mathlib.Analysis.Analytic.OfScalars
+public import Mathlib.Analysis.Analytic.Basic
+public import Mathlib.Analysis.Analytic.Uniqueness
+public import Mathlib.Analysis.Analytic.ConvergenceRadius
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Summable
+public import Def.Analysis.SpecialFunctions.JacobiTripleProduct
+public import Theorem.Combinatorics.Enumerative.Partition.OverpartitionCongruence.Part3
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/Partition/OverpartitionCongruence.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
-
-import Mathlib.Data.Finset.Basic
-import Mathlib.Data.Int.ModEq
-import Mathlib.Data.Multiset.Basic
-import Mathlib.SetTheory.Cardinal.Finite
-import Def.Combinatorics.Enumerative.Partition.Overpartition
-import Theorem.Nat.Enumerative.Partition.Overpartition
-import Theorem.Nat.QuadraticForms.ThreeSquares
-import Lemma.Real.SpecialFunctions.JacobiTripleProduct
-import Def.NumberTheory.QuadraticForms.ThreeSquares
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Combinatorics.Enumerative.Partition.Basic
-import Mathlib.Combinatorics.Enumerative.Partition.GenFun
-import Mathlib.Combinatorics.Enumerative.Pentagonal.PowerSeries
-import Mathlib.Data.Finset.Powerset
-import Mathlib.Data.Int.Cast.Lemmas
-import Mathlib.Data.Int.Interval
-import Mathlib.Data.ZMod.Basic
-import Mathlib.RingTheory.PowerSeries.Basic
-import Mathlib.RingTheory.PowerSeries.Expand
-import Mathlib.RingTheory.PowerSeries.NoZeroDivisors
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.NormNum.Prime
-import Mathlib.Combinatorics.Enumerative.Pentagonal.EulerFunction
-import Mathlib.Analysis.Normed.Ring.InfiniteSum
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.NatInt
-import Mathlib.Analysis.Analytic.OfScalars
-import Mathlib.Analysis.Analytic.Basic
-import Mathlib.Analysis.Analytic.Uniqueness
-import Mathlib.Analysis.Analytic.ConvergenceRadius
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Summable
-import Def.Analysis.SpecialFunctions.JacobiTripleProduct
-import Theorem.Combinatorics.Enumerative.Partition.OverpartitionCongruence.Part3
-
-
 section
 
 namespace MetaMathlibExt

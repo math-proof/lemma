@@ -1,11 +1,12 @@
+module
+public import Mathlib.Tactic
+public import Theorem.NumberTheory.Recurrences.GolombLikeSequence.Part8
+public import Theorem.Nat.Recurrences.GolombLikeSequence
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Recurrences/GolombLikeSequence.lean -/
-
-
-import Mathlib.Tactic
-import Theorem.NumberTheory.Recurrences.GolombLikeSequence.Part8
-import Lemma.Nat.Recurrences.GolombLikeSequence
-
-
 namespace MetaMathlibExt
 
 -- The case `f (f n) = 2n + 1` has the asserted unique increasing solution.

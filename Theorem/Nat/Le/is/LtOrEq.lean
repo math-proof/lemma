@@ -18,7 +18,7 @@ open Nat
 [Nat.le_iff_lt_or_eq](https://github.com/teorth/analysis/blob/main/Analysis/Section_2_2.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   {n m:Chapter2.Nat} :
 -- imply
   n ≤ m ↔ n < m ∨ n = m :=

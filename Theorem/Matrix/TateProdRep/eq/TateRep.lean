@@ -19,7 +19,7 @@ variable (q : ℕ) [Fact q.Prime] (k : Type) [Field k] [Algebra (GaloisField q 2
 
 
 @[path]
-public theorem main
+private theorem main
 -- given
   (h : hSubgroup q)
   (S : Type)

@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.Scheme.RegularProlongation
 import Lemma.Submodule.Repartitions
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open AlgebraicCurve IsLocalRing Scheme Submodule
 

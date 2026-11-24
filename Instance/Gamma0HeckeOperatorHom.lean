@@ -1,12 +1,17 @@
+module
+public import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
+public import Mathlib.GroupTheory.Index
+public import Mathlib.GroupTheory.GroupAction.Quotient
+public import Mathlib.Tactic.Group
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.FinCases
+public import Theorem.Matrix.Gamma0HeckeOperatorHom
+public import Def.Matrix_Gamma0HeckeOperatorHom
+
+
+public section
+
 -- Carved from Lemma/Definitions/Def_Gamma0HeckeOperatorHom.lean: instance decls only.
-import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
-import Mathlib.GroupTheory.Index
-import Mathlib.GroupTheory.GroupAction.Quotient
-import Mathlib.Tactic.Group
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.FinCases
-import Theorem.Matrix.Gamma0HeckeOperatorHom
-import Def.Matrix_Gamma0HeckeOperatorHom
 
 namespace HeckeEis
 

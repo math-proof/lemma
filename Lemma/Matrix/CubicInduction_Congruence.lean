@@ -1,9 +1,11 @@
-import Lemma.Matrix.CubicInduction_Carrier
-import Def.LanglandsTunnell_CubicInduction_Congruence
-
+module
+public import Lemma.Matrix.CubicInduction_Carrier
+public import Def.LanglandsTunnell_CubicInduction_Congruence
 set_option autoImplicit false
-
 open IsDedekindDomain NumberField Matrix
+
+
+public section
 
 noncomputable section
 

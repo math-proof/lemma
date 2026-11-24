@@ -1,7 +1,11 @@
 <template>
-	<a v-if="mode == 'a'" v-focus v-clipboard tabindex=2 :data-clipboard-text=module :href=href @keydown=keydown_a :target="data.target?? '_blank'">
-        {{data.replacement ?? data.text?? module}}
-    </a>
+	<template v-if="mode == 'a'">
+		<a v-focus v-clipboard tabindex=2 class="result-title" :data-clipboard-text=module :href=href @keydown=keydown_a :target="data.target?? '_blank'">
+			{{data.replacement ?? data.text?? module}}
+		</a>
+		<div v-if="data.latex" class="formula" v-katex="data.latex"></div>
+		<div v-if="data.match" class="meta">{{data.match}} match</div>
+	</template>
 	<span v-else-if="mode == 'span'">
        	{{module}}
     </span>
@@ -13,6 +17,29 @@
 import Vue from "../js/vue.js";
 
 console.log('import searchLink.vue');
+
+// KaTeX is a deferred classic script; retry briefly until it is available.
+function renderLatex(el, latex, attempt = 0) {
+	if (!latex) {
+		el.textContent = '';
+		return;
+	}
+	if (typeof window.katex === 'undefined') {
+		if (attempt < 100)
+			setTimeout(() => renderLatex(el, latex, attempt + 1), 50);
+		return;
+	}
+	try {
+		window.katex.render(String(latex), el, {
+			displayMode: false,
+			throwOnError: false,
+			trust: true,
+			strict: false,
+		});
+	} catch {
+		el.textContent = String(latex);
+	}
+}
 
 // script setup re-runs per instance; keep one gate so only the first <a> auto-focuses.
 const focusGate = Vue.searchLinkFocus ??= { already: false };
@@ -160,6 +187,15 @@ const self = new Vue({
 	},
 
 	directives: {
+		katex: {
+			mounted(el, binding) {
+				renderLatex(el, binding.value);
+			},
+			updated(el, binding) {
+				renderLatex(el, binding.value);
+			},
+		},
+
 		focus: {
 			mounted(el) {
 				if (!focusGate.already || el.tagName.toLowerCase() == 'input') {
@@ -182,4 +218,34 @@ const { mode, module, href, keydown_a, blur, keydown } = self.globals;
 </script>
 
 <style scoped>
+.result-title {
+	display: inline-block;
+	font: 20px/1.3 Arial, sans-serif;
+	color: #1a0dab;
+	text-decoration: none;
+}
+
+.result-title:hover {
+	text-decoration: underline;
+}
+
+.formula {
+	margin-top: 6px;
+	font-size: 16px;
+	line-height: 1.6;
+	color: #202124;
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+
+.formula :deep(.lean-hit) {
+	background: #fff3b0;
+	border-radius: 3px;
+}
+
+.meta {
+	margin-top: 4px;
+	font: 12px Arial, sans-serif;
+	color: #70757a;
+}
 </style>

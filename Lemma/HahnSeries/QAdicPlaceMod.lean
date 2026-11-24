@@ -1,6 +1,10 @@
-import Mathlib
-import Lemma.HahnSeries.QAdicPlace
-import Lemma.HahnSeries.JqCoeff
+module
+public import Mathlib
+public import Lemma.HahnSeries.QAdicPlace
+public import Lemma.HahnSeries.JqCoeff
+
+
+public section
 
 namespace ModularCurve
 theorem coeff_jqModC_neg_one (K : Type*) [CommRing K] : (jqModC K).coeff (-1 : Int) = 1 := by

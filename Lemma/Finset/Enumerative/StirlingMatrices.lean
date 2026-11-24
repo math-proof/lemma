@@ -1,9 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.Combinatorics.Enumerative.StirlingMatrices
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.Combinatorics.Enumerative.StirlingMatrices
 open BigOperators
 open MetaMathlibExt
 
+
+public section
 
 namespace MetaMathlibExt
 

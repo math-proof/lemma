@@ -1,7 +1,7 @@
 import Class.CerednikDrinfeld_MumfordPeriod
 import Def.CerednikDrinfeld_JPrimeTorsionDatum
 import Instance.ValuationSubring_CompletionDecompositionAction
-import Lemma.WeierstrassCurve.FrobeniusTrace
+import Theorem.WeierstrassCurve.FrobeniusTrace
 import Def.FLTPrelim_Ramification
 import Lemma.Ideal.Mathlib430
 import Def.CerednikDrinfeld_MumfordUniformization

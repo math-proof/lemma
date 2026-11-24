@@ -1,6 +1,9 @@
-import Abbrev.Analysis.Section_3_3.Part2
-import Lemma.Set.OneToOne.is.All_Eq
+module
+public import Abbrev.Analysis.Section_3_3.Part2
+public import Theorem.Set.OneToOne.is.All_Eq
 
+
+public section
 
 namespace Chapter3
 

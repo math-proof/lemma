@@ -1,21 +1,23 @@
+module
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
+public import Mathlib.Algebra.Field.ZMod
+public import Mathlib.Algebra.GCDMonoid.Nat
+public import Mathlib.Algebra.EuclideanDomain.Int
+public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.RingTheory.Int.Basic
+public import Mathlib.Tactic.ModCases
+public import Structure.FLTPrelim_FreyPackage
+set_option autoImplicit false
+
+
+public section
+
 /-
 Copyright (c) 2024 Kevin Buzzard, Ruben Van de Velde, Pietro Monticone. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Ported from the Imperial College London FLT formalization
 (https://github.com/ImperialCollegeLondon/FLT, blueprint §2.5–2.6).
 -/
-import Mathlib.AlgebraicGeometry.EllipticCurve.Weierstrass
-import Mathlib.Algebra.Field.ZMod
-import Mathlib.Algebra.GCDMonoid.Nat
-import Mathlib.Algebra.EuclideanDomain.Int
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.RingTheory.Int.Basic
-import Mathlib.Tactic.ModCases
-import Structure.FLTPrelim_FreyPackage
-
-set_option autoImplicit false
-
-
 namespace FreyPackage
 
 lemma hppos (P : FreyPackage) : 0 < P.p := lt_of_lt_of_le (by omega) P.hp5

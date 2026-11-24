@@ -1,16 +1,17 @@
+module
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Hasse
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Tactic.FinCases
+public import Def.Combinatorics.SimpleGraph.EdgeGraceful
+public import Theorem.SimpleGraph.EdgeGraceful
+public import Def.MathlibExtTest.Combinatorics.SimpleGraph.EdgeGraceful.Part2
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/EdgeGraceful.lean -/
-
-
-import Mathlib.Combinatorics.SimpleGraph.Basic
-import Mathlib.Combinatorics.SimpleGraph.Hasse
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Tactic.FinCases
-import Def.Combinatorics.SimpleGraph.EdgeGraceful
-import Theorem.SimpleGraph.EdgeGraceful
-import Def.MathlibExtTest.Combinatorics.SimpleGraph.EdgeGraceful.Part2
-
-
 namespace EdgeGracefulTest
 
 theorem hto01 : pathToFun e01 = 0 := by simp [pathToFun, he01]

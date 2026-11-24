@@ -1,5 +1,10 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicSquareWiredExhaustive.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredExhaustive.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicSquareWiredExhaustive.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,10 +12,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredExhaustive.Part2
-
-
 namespace StatMech.Universality
 
 #print axioms fkIsingSquareWired_closed_west_south_phase

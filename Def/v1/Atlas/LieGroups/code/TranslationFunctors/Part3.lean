@@ -1,5 +1,21 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/TranslationFunctors.lean -/
+module
+public import Def.v1.Atlas.LieGroups.code.CategoryOII.Part3
+public import Theorem.Int.WeightLE.of.BruhatLE
+public import Theorem.Int.FGUeaIotaRange
+public import Theorem.Int.All_Eq_0.of.EqCompositionLengthO_0.IsCategoryO
+public import Theorem.Int.IsCategoryOA.of.IsCategoryOB
+public import Def.v1.Atlas.LieGroups.code.DufloJoseph.Part8
+public import Def.v1.Atlas.LieGroups.code.BGGReciprocity.Part3
+public import Structure.v1.Atlas.LieGroups.code.TensorO
+public import Mathlib.RingTheory.SimpleRing.Basic
+public import Mathlib.Algebra.Lie.TensorProduct
+public import Mathlib.Algebra.Lie.Semisimple.Basic
+public import Theorem.v1.Atlas.LieGroups.code.TranslationFunctors.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/TranslationFunctors.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,21 +23,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.LieGroups.code.CategoryOII.Part3
-import Theorem.Int.WeightLE.of.BruhatLE
-import Theorem.Int.FGUeaIotaRange
-import Theorem.Int.All_Eq_0.of.EqCompositionLengthO_0.IsCategoryO
-import Theorem.Int.IsCategoryOA.of.IsCategoryOB
-import Def.v1.Atlas.LieGroups.code.DufloJoseph.Part8
-import Def.v1.Atlas.LieGroups.code.BGGReciprocity.Part3
-import Structure.v1.Atlas.LieGroups.code.TensorO
-import Mathlib.RingTheory.SimpleRing.Basic
-import Mathlib.Algebra.Lie.TensorProduct
-import Mathlib.Algebra.Lie.Semisimple.Basic
-import Theorem.v1.Atlas.LieGroups.code.TranslationFunctors.Part2
-
-
 noncomputable section
 
 open scoped TensorProduct

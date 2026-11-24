@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Valuation/DVRInstances.lean -/
+module
+public import Class.v1.Atlas.Buildings.code.Valuation.LatticesValuations
+public import Theorem.Nat.IsInO
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Mathlib.Topology.MetricSpace.Ultra.Basic
+public import Mathlib.Analysis.Normed.Group.Ultra
+public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
+public import Def.v1.Atlas.Buildings.code.Valuation.DVRInstances
+open DVRContext
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Valuation/DVRInstances.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Class.v1.Atlas.Buildings.code.Valuation.LatticesValuations
-import Theorem.Nat.IsInO
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib.Topology.MetricSpace.Ultra.Basic
-import Mathlib.Analysis.Normed.Group.Ultra
-import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
-import Def.v1.Atlas.Buildings.code.Valuation.DVRInstances
-open DVRContext
-
 variable (p : ℕ) [Fact (Nat.Prime p)]
 
 

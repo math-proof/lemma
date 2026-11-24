@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/SignedLoopPlusDualContour.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopLowTempPlus.Part3
+public import Theorem.StatisticalMechanics.Code.Lattice.PeierlsContourClose2.Part7
+public import Theorem.StatisticalMechanics.Code.Ising.KWGeometricDual.Part22
+public import Def.StatisticalMechanics.Code.Onsager.SignedLoopPlusDualContour
+open Finset SimpleGraph Set
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/SignedLoopPlusDualContour.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Onsager.SignedLoopLowTempPlus.Part3
-import Theorem.StatisticalMechanics.Code.Lattice.PeierlsContourClose2.Part7
-import Theorem.StatisticalMechanics.Code.Ising.KWGeometricDual.Part22
-import Def.StatisticalMechanics.Code.Onsager.SignedLoopPlusDualContour
-open Finset SimpleGraph Set
-
-
 namespace StatMech.Onsager
 
 open StatMech.Ising StatMech.Lattice

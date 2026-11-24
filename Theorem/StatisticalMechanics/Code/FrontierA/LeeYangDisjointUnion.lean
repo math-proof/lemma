@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/LeeYangDisjointUnion.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierB.LeeYangPolynomial
+public import Theorem.StatisticalMechanics.Code.FrontierC.LeeYangSymmetry.Part2
+public import Theorem.StatisticalMechanics.Code.Ising.FiniteVolumeSum
+open scoped BigOperators
+open Finset Polynomial
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/LeeYangDisjointUnion.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierB.LeeYangPolynomial
-import Theorem.StatisticalMechanics.Code.FrontierC.LeeYangSymmetry.Part2
-import Theorem.StatisticalMechanics.Code.Ising.FiniteVolumeSum
-open scoped BigOperators
-open Finset Polynomial
-
-
 namespace StatMech.FrontierA
 
 open StatMech.Ising StatMech.FrontierB

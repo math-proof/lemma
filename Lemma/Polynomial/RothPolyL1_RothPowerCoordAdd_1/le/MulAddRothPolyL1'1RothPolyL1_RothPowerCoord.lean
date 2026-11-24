@@ -1,16 +1,19 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.NumberTheory.RothAuxiliary
-import Def.NumberTheory.RothAuxiliary.Part2
-import Def.NumberTheory.RothAuxiliary.Part3
-import Lemma.Polynomial.RothPolyL1_Sub.le.AddRothSPolyL1
-import Lemma.Polynomial.RothPolyL1Mul.le.MulRothSPolyL1
-import Lemma.Polynomial.RothPolyL1X.eq.One
-import Lemma.Polynomial.RothPolyL1_C.eq.NatAbs
-import Lemma.Polynomial.NatAbsCoeff.le.RothPolyL1
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.NumberTheory.RothAuxiliary
+public import Def.NumberTheory.RothAuxiliary.Part2
+public import Def.NumberTheory.RothAuxiliary.Part3
+public import Lemma.Polynomial.RothPolyL1_Sub.le.AddRothSPolyL1
+public import Lemma.Polynomial.RothPolyL1Mul.le.MulRothSPolyL1
+public import Lemma.Polynomial.RothPolyL1X.eq.One
+public import Lemma.Polynomial.RothPolyL1_C.eq.NatAbs
+public import Lemma.Polynomial.NatAbsCoeff.le.RothPolyL1
 open MathlibExt.NumberTheory.RothAuxiliary
 open Polynomial
 
+
+public section
 
 /--
 [rothPolyL1_powerCoord_succ_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

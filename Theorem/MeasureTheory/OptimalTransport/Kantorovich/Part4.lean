@@ -1,30 +1,31 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/OptimalTransport/Kantorovich.lean -/
+module
+public import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+public import Mathlib.Algebra.Order.Module.PositiveLinearMap
+public import Mathlib.Algebra.Order.Star.Real
+public import Mathlib.Analysis.Convex.Basic
+public import Mathlib.Analysis.LocallyConvex.Separation
+public import Mathlib.LinearAlgebra.Prod
+public import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
+public import Mathlib.MeasureTheory.Integral.RieszMarkovKakutani.Real
+public import Mathlib.MeasureTheory.Measure.FiniteMeasureProd
+public import Mathlib.MeasureTheory.Measure.Regular
+public import Mathlib.MeasureTheory.Measure.RegularityCompacts
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+public import Mathlib.Topology.Algebra.MulAction
+public import Mathlib.Topology.ContinuousMap.Bounded.Basic
+public import Mathlib.Topology.ContinuousMap.Bounded.Normed
+public import Mathlib.Topology.ContinuousMap.CompactlySupported
+public import Mathlib.Topology.Order.Compact
+public import Def.MeasureTheory.OptimalTransport.Kantorovich.Part4
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/MeasureTheory/OptimalTransport/Kantorovich.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
-
-import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
-import Mathlib.Algebra.Order.Module.PositiveLinearMap
-import Mathlib.Algebra.Order.Star.Real
-import Mathlib.Analysis.Convex.Basic
-import Mathlib.Analysis.LocallyConvex.Separation
-import Mathlib.LinearAlgebra.Prod
-import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
-import Mathlib.MeasureTheory.Integral.RieszMarkovKakutani.Real
-import Mathlib.MeasureTheory.Measure.FiniteMeasureProd
-import Mathlib.MeasureTheory.Measure.Regular
-import Mathlib.MeasureTheory.Measure.RegularityCompacts
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Mathlib.Topology.Algebra.MulAction
-import Mathlib.Topology.ContinuousMap.Bounded.Basic
-import Mathlib.Topology.ContinuousMap.Bounded.Normed
-import Mathlib.Topology.ContinuousMap.CompactlySupported
-import Mathlib.Topology.Order.Compact
-import Def.MeasureTheory.OptimalTransport.Kantorovich.Part4
-
-
 section
 
 open MeasureTheory

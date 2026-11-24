@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingGaussianTorusCumulants.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianTorusScalingHandoff
+public import Def.StatisticalMechanics.Code.FrontierA.IsingGaussianHadamardExtraction.Part19
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianHadamardCumulants.Part3
+open Filter MeasureTheory Topology
+open scoped BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingGaussianTorusCumulants.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianTorusScalingHandoff
-import Def.StatisticalMechanics.Code.FrontierA.IsingGaussianHadamardExtraction.Part19
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianHadamardCumulants.Part3
-open Filter MeasureTheory Topology
-open scoped BigOperators
-
-
 namespace StatMech.FrontierA
 
 open ProbabilityTheory StatMech Ising StatMech.FrontierB

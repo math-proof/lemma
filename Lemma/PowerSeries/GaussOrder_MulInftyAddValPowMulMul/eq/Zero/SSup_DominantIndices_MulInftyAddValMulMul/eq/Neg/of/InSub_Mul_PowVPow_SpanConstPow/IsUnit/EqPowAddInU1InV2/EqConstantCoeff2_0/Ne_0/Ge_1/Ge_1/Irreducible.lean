@@ -3,7 +3,7 @@ import Initialize.Tactic.Attr.Basic
 import Lemma.MvPowerSeries.UVCrossingModel
 import Lemma.PowerSeries.UVCrossingGaussOrder
 import Def.ModularCurve_UVCrossingDominantIndices
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open ModularCurve MvPowerSeries.UVCrossingModel IsLocalRing PowerSeries MvPowerSeries
 

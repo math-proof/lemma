@@ -1,13 +1,15 @@
-import Mathlib
-import Def.LinearMap_DatumAndHonda
-import Def.RingHom_WittVectorHom
-import Instance.Dieudonne_WittGroupHopf
-import Notation.Dieudonne_WittGroupHopf
-
+module
+public import Mathlib
+public import Def.LinearMap_DatumAndHonda
+public import Def.RingHom_WittVectorHom
+public import Instance.Dieudonne_WittGroupHopf
+public import Notation.Dieudonne_WittGroupHopf
 set_option autoImplicit false
-
 open Function
 open scoped TensorProduct
+
+
+public section
 
 universe u v w
 

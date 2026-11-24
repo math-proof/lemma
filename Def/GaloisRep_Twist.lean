@@ -1,6 +1,9 @@
-import Def.GaloisRep_StrictOrdinary
-
+module
+public import Def.GaloisRep_StrictOrdinary
 set_option autoImplicit false
+
+
+public section
 
 def GaloisCharIsAdicContinuous (A : Type) [CommRing A] [IsLocalRing A]
     (χ : (AlgebraicClosure ℚ ≃ₐ[ℚ] AlgebraicClosure ℚ) →* Aˣ) : Prop :=

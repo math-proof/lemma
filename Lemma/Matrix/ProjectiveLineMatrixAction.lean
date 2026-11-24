@@ -1,7 +1,11 @@
-import Mathlib
-import Lemma.SpecialLinearGroup.ProjectiveLine
-import Instance.ProjectiveLineMatrixAction
-import Abbrev.ProjectiveLineMatrixAction
+module
+public import Mathlib
+public import Lemma.SpecialLinearGroup.ProjectiveLine
+public import Instance.ProjectiveLineMatrixAction
+public import Abbrev.ProjectiveLineMatrixAction
+
+
+public section
 
 namespace SpecialLinearGroup.ProjectiveLine
 

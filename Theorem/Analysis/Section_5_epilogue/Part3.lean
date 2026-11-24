@@ -1,6 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Section_5_6.Part2
-import Abbrev.Analysis.Section_5_epilogue.Part2
+module
+public import Mathlib
+public import Theorem.Analysis.Section_5_6.Part2
+public import Abbrev.Analysis.Section_5_epilogue.Part2
+
+
+public section
+
 /-!
 # Analysis I, Chapter 5 epilogue: Isomorphism with the Mathlib real numbers
 
@@ -23,8 +28,6 @@ Users of the companion who have completed the exercises in this section are welc
 - (Add tip here)
 
 -/
-
-
 namespace Chapter5
 
 lemma DedekindCut.toR_isLUB (c: DedekindCut) : IsLUB c.toSet_R c.toR :=

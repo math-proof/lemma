@@ -1,11 +1,15 @@
--- Carved from Lemma/Definitions/Def_ModularCurve_PDPairing.lean: instance decls only.
-import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
-import Mathlib.GroupTheory.Transfer
-import Mathlib.GroupTheory.FreeGroup.NielsenSchreier
-import Theorem.Matrix.PDPairing
-import Def.Matrix_PDPairing
-
+module
+public import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
+public import Mathlib.GroupTheory.Transfer
+public import Mathlib.GroupTheory.FreeGroup.NielsenSchreier
+public import Theorem.Matrix.PDPairing
+public import Def.Matrix_PDPairing
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_ModularCurve_PDPairing.lean: instance decls only.
 
 namespace ModularCurve.PDPairing
 

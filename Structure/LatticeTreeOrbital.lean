@@ -9,7 +9,7 @@ public import Mathlib.LinearAlgebra.Projectivization.Cardinality
 public import Mathlib.RingTheory.Ideal.Quotient.Defs
 public import Mathlib.Basic.Complex.Basic
 
-public section
+@[expose] public section
 
 set_option autoImplicit false
 
@@ -158,8 +158,8 @@ theorem IsFullLattice.map {L : Submodule R (Fin 2 → K)} (h : IsFullLattice L)
       f ((g⁻¹ : Matrix.GeneralLinearGroup (Fin 2) K) *ᵥ v)
           = (g : Matrix (Fin 2) (Fin 2) K) *ᵥ
               ((g⁻¹ : Matrix.GeneralLinearGroup (Fin 2) K) *ᵥ v) := rfl
-      _ = ((g : Matrix (Fin 2) (Fin 2) K) *
-            (g⁻¹ : Matrix.GeneralLinearGroup (Fin 2) K)) *ᵥ v := by
+      _ = ((↑g : Matrix (Fin 2) (Fin 2) K) *
+            (↑g⁻¹ : Matrix (Fin 2) (Fin 2) K)) *ᵥ v := by
           rw [Matrix.mulVec_mulVec]
       _ = (1 : Matrix (Fin 2) (Fin 2) K) *ᵥ v := by
           rw [← Units.val_mul, mul_inv_cancel, Units.val_one]
@@ -177,10 +177,6 @@ def homothetySetoid : Setoid (FullLattice R K) where
 variable (R K) in
 
 def Vertex : Type _ := Quotient (homothetySetoid R K)
-
-
-variable {R K} in
-
 
 def Vertex.act (g : Matrix.GeneralLinearGroup (Fin 2) K) : Vertex R K → Vertex R K :=
   Quotient.map (fun L => ⟨latticeMap g L.1, L.2.map g⟩)
@@ -262,8 +258,16 @@ def symm (σ : IntegralAut R K) : IntegralAut R K where
   commutes := by
     intro r
     have h := σ.commutes (σ.toBase.symm r)
-    rw [RingEquiv.apply_symm_apply] at h
-    exact (RingEquiv.eq_symm_apply σ.toField).2 h.symm
+    have hb : σ.toBase (σ.toBase.symm r) = r := by simp
+    have h'' : algebraMap R K (σ.toBase (σ.toBase.symm r)) = algebraMap R K r := by rw [hb]
+    have h' : σ.toField (algebraMap R K (σ.toBase.symm r)) = algebraMap R K r := by
+      rw [h, h'']
+    have h2 : σ.toField.symm (σ.toField (algebraMap R K (σ.toBase.symm r))) =
+              σ.toField.symm (algebraMap R K r) := congr_arg _ h'
+    have h4 : σ.toField.symm (σ.toField (algebraMap R K (σ.toBase.symm r))) =
+              algebraMap R K (σ.toBase.symm r) := by simp
+    rw [h4] at h2
+    exact h2.symm
 
 theorem symm_toField (σ : IntegralAut R K) : σ.symm.toField = σ.toField.symm := rfl
 

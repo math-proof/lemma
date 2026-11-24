@@ -1,11 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/CatalanConstantProducts.lean -/
-
-
-import Theorem.Analysis.SpecialFunctions.CatalanConstantProducts.Part7
+module
+public import Theorem.Analysis.SpecialFunctions.CatalanConstantProducts.Part7
 open scoped BigOperators
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/CatalanConstantProducts.lean -/
 -- The first conjunct gives the even-product limit for the supplied Catalan series.
+
 example (G : ℝ)
     (hG : HasSum (fun n : ℕ => (-1 : ℝ) ^ n / ((2 * (n : ℝ) + 1) ^ 2)) G) :
     Filter.Tendsto (fun m : ℕ => ∏ n ∈ Finset.Icc 1 (2 * m),

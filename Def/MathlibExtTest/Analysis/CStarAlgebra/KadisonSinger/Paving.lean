@@ -1,13 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/CStarAlgebra/KadisonSinger/Paving.lean -/
-
-import Def.Analysis.CStarAlgebra.KadisonSinger.Paving
-import Lemma.Complex.CStarAlgebra.KadisonSinger.Paving
-import Theorem.MathlibExtTest.Analysis.CStarAlgebra.KadisonSinger.Paving
+module
+public import Def.Analysis.CStarAlgebra.KadisonSinger.Paving
+public import Theorem.Complex.CStarAlgebra.KadisonSinger.Paving
+public import Theorem.MathlibExtTest.Analysis.CStarAlgebra.KadisonSinger.Paving
 open scoped BigOperators ComplexOrder Matrix.Norms.L2Operator
-
 open MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/CStarAlgebra/KadisonSinger/Paving.lean -/
 namespace MathlibExtTest.Analysis.CStarAlgebra.KadisonSinger.Paving
 
 noncomputable section

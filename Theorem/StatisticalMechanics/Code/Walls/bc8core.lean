@@ -1,5 +1,19 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/bc8core.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Walls.bc8distinctcutclusters.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.bc8nocrossing.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.bc8cutleavesinfinite
+public import Theorem.StatisticalMechanics.Code.Percolation.CanonicalTrifCount.Part4
+public import Theorem.StatisticalMechanics.Code.Percolation.HrouteDisjointPaths.Part4
+open Set SimpleGraph
+open StatMech.Lattice StatMech.ConfigSpace
+open StatMech.Percolation StatMech.Percolation.DisjointPaths
+open MeasureTheory
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/bc8core.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,20 +21,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Walls.bc8distinctcutclusters.Part2
-import Theorem.StatisticalMechanics.Code.Walls.bc8nocrossing.Part2
-import Theorem.StatisticalMechanics.Code.Walls.bc8cutleavesinfinite
-import Theorem.StatisticalMechanics.Code.Percolation.CanonicalTrifCount.Part4
-import Theorem.StatisticalMechanics.Code.Percolation.HrouteDisjointPaths.Part4
-open Set SimpleGraph
-open StatMech.Lattice StatMech.ConfigSpace
-open StatMech.Percolation StatMech.Percolation.DisjointPaths
-open MeasureTheory
-
-
 namespace StatMech
 
 namespace Walls

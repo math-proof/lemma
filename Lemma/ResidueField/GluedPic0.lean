@@ -1,7 +1,10 @@
-import Lemma.Valuation.DivisorClassGroup
-import Abbrev.AlgebraicCurve_GluedPic0
-
+module
+public import Lemma.Valuation.DivisorClassGroup
+public import Abbrev.AlgebraicCurve_GluedPic0
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

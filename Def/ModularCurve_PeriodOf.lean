@@ -1,10 +1,13 @@
-import Mathlib
-import Def.ModularCurve_PeriodLattice
-import Def.ModularCurve_PeriodMap
-import Lemma.UpperHalfPlane.PeriodMapBundled
-import Theorem.CuspForm.Petersson
-
+module
+public import Mathlib
+public import Def.ModularCurve_PeriodLattice
+public import Def.ModularCurve_PeriodMap
+public import Theorem.UpperHalfPlane.PeriodMapBundled
+public import Theorem.CuspForm.Petersson
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

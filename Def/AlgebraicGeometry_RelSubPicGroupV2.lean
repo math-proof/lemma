@@ -1,13 +1,17 @@
-import Mathlib
-import Def.AlgebraicGeometry_RelativePicardFunctor
-import Def.AlgebraicGeometry_RepresentsRelSubPic
-import Def.AlgebraicGeometry_RelSubPicPresheaf
-import Lemma.Scheme.RelativeGroupLawGrpObj
-import Structure.JacJ1Iface
-import Abbrev.SheafOfModules_MonoidalV2
-import Def.AlgebraicGeometry_RelSubPicGroup
-import Instance.AlgebraicGeometry_RelSubPicGroupV2
-import Structure.AlgebraicGeometry_RelSubPicGroupV2
+module
+public import Mathlib
+public import Def.AlgebraicGeometry_RelativePicardFunctor
+public import Def.AlgebraicGeometry_RepresentsRelSubPic
+public import Def.AlgebraicGeometry_RelSubPicPresheaf
+public import Theorem.Scheme.RelativeGroupLawGrpObj
+public import Structure.JacJ1Iface
+public import Abbrev.SheafOfModules_MonoidalV2
+public import Def.AlgebraicGeometry_RelSubPicGroup
+public import Instance.AlgebraicGeometry_RelSubPicGroupV2
+public import Structure.AlgebraicGeometry_RelSubPicGroupV2
+
+
+public section
 
 section InlinedTheorems
 

@@ -1,14 +1,19 @@
+module
+public import Mathlib
+public import Instance.AlgebraicGeometry_RelativePicardFunctor
+public import Theorem.Scheme.RepresentsRelSubPic
+public import Def.AlgebraicGeometry_RelSubPicPresheaf
+public import Theorem.Scheme.RelativeGroupLawGrpObj
+public import Structure.JacJ1Iface
+public import Abbrev.SheafOfModules_MonoidalV2
+public import Theorem.Scheme.RelSubPicGroup
+public import Theorem.Scheme.RelSubPicGroupV2
+public import Def.AlgebraicGeometry_RelSubPicGroupV2
+
+
+public section
+
 -- Carved from Lemma/Definitions/Def_AlgebraicGeometry_RelSubPicGroupV2.lean: instance decls only.
-import Mathlib
-import Instance.AlgebraicGeometry_RelativePicardFunctor
-import Theorem.Scheme.RepresentsRelSubPic
-import Def.AlgebraicGeometry_RelSubPicPresheaf
-import Lemma.Scheme.RelativeGroupLawGrpObj
-import Structure.JacJ1Iface
-import Abbrev.SheafOfModules_MonoidalV2
-import Theorem.Scheme.RelSubPicGroup
-import Theorem.Scheme.RelSubPicGroupV2
-import Def.AlgebraicGeometry_RelSubPicGroupV2
 
 section InlinedTheorems
 

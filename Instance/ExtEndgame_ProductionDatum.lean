@@ -1,10 +1,13 @@
--- Carved from Lemma/Definitions/Def_ExtEndgame_ProductionDatum.lean: instance decls only.
-import Mathlib
-import Def.ExtEndgame_ProductionDatum
-
+module
+public import Mathlib
+public import Def.ExtEndgame_ProductionDatum
 set_option autoImplicit false
-
 open CategoryTheory Module groupCohomology
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_ExtEndgame_ProductionDatum.lean: instance decls only.
 
 namespace ExtCitation
 

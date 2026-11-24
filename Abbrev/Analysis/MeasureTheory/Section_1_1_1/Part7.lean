@@ -1,10 +1,12 @@
-import Def.Analysis.MeasureTheory.Notation.Part2
-import Theorem.Analysis.Section_9_1.Part3
-import Theorem.Analysis.MeasureTheory.Section_1_1_1.Part15
+module
+public import Def.Analysis.MeasureTheory.Notation.Part2
+public import Theorem.Analysis.Section_9_1.Part3
+public import Theorem.Analysis.MeasureTheory.Section_1_1_1.Part15
 open BoundedInterval
-
 open Pointwise
 
+
+public section
 
 /-- The d-dimensional unit cube (0,1\]^d. -/
 abbrev Box.unit_cube (d:ℕ) : Box d := { side := fun _ ↦ BoundedInterval.Ioc 0 1}

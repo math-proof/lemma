@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.CerednikDrinfeld_DescentIntertwiningBase
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 set_option maxHeartbeats 999999
 open scoped TensorProduct Quaternion NumberField MatrixGroups
 open IsDedekindDomain QuaternionAlgebra CerednikDrinfeld CerednikDrinfeld.Mumford CerednikDrinfeld.Omega AlgebraicCurve Int

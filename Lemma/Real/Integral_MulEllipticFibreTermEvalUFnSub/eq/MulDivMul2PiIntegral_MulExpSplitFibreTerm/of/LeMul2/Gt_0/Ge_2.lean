@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.AutomorphicForm_GL2TwistedMonomialFibres
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open AutomorphicForm.GL2Twisted Polynomial
 

@@ -1,6 +1,9 @@
-import Def.Analysis.MeasureTheory.Section_1_4_2.Part8
-import Instance.Analysis.MeasureTheory.Section_1_4_3
+module
+public import Def.Analysis.MeasureTheory.Section_1_4_2.Part8
+public import Instance.Analysis.MeasureTheory.Section_1_4_3
 
+
+public section
 
 /-- Example 1.4.25 (Restriction of a measure) -/
 def FinitelyAdditiveMeasure.restrict {X:Type*} {B: ConcreteBooleanAlgebra X} (μ: FinitelyAdditiveMeasure B) (A:Set X) (hA:B.measurable A) : FinitelyAdditiveMeasure (B.restrict A) :=

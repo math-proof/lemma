@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Instance.v1.Atlas.TensorCategories.code.FittingLemmaInstance
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Instance.v1.Atlas.TensorCategories.code.FittingLemmaInstance
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Idempotents
 
+
+public section
 
 /--
 [idem_trivial_of_indecomposable](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/FittingLemmaInstance.lean)

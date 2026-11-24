@@ -1,10 +1,13 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.ArithmeticGeometry.code.RiemannRoch.Part6
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.ArithmeticGeometry.code.RiemannRoch.Part6
 open FunctionFieldAdeleRing RiemannRochSpace WeilDifferential
 open scoped RestrictedProduct
 open CurveWithOrd CurveDivisor
 
+
+public section
 
 namespace FunctionFieldAdeleRing
 

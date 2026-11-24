@@ -1,6 +1,6 @@
 import Mathlib
 import Lemma.Ideal.NormClass
-import Lemma.Ideal.RayCharacterData
+import Theorem.Ideal.RayCharacterData
 import Instance.NumberField_NormResidueCharacter
 import Abbrev.NumberField_NormResidueCharacter
 

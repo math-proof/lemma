@@ -1,10 +1,13 @@
-import Mathlib
-import Lemma.Fin.InvolutiveRothFlip
-import Lemma.Fin.RothCentered_RothFlip.eq.NegRothCentered.of.RothBox.All_Gt_0
-import Lemma.Fin.RothCentered_RothFlip.eq.RothCentered.of.RothBox.Ne
+module
+public import Mathlib
+public import Lemma.Fin.InvolutiveRothFlip
+public import Lemma.Fin.RothCentered_RothFlip.eq.NegRothCentered.of.RothBox.All_Gt_0
+public import Lemma.Fin.RothCentered_RothFlip.eq.RothCentered.of.RothBox.Ne
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [rothCentered_cross_sum](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

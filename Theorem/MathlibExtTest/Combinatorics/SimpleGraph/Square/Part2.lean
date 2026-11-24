@@ -1,12 +1,13 @@
+module
+public import Mathlib.Combinatorics.SimpleGraph.Hasse
+public import Theorem.Combinatorics.SimpleGraph.Square
+public import Theorem.SimpleGraph.Square
+public import Instance.MathlibExtTest.Combinatorics.SimpleGraph.Square
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/Square.lean -/
-
-
-import Mathlib.Combinatorics.SimpleGraph.Hasse
-import Theorem.Combinatorics.SimpleGraph.Square
-import Lemma.SimpleGraph.Square
-import Instance.MathlibExtTest.Combinatorics.SimpleGraph.Square
-
-
 namespace MathlibExtTest.Combinatorics.SimpleGraph.Square
 
 example : 4 ≤ (⊤ : SimpleGraph (Fin 5)).square.degree 0 :=

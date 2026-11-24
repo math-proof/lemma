@@ -1,8 +1,11 @@
-import Lemma.Scheme.Dual_ObjPullbackL
-import Def.AlgebraicGeometry_RelPicardThetaBundle
-import Instance.AlgebraicGeometry_RelEffCartierDivOfPoint
-
+module
+public import Lemma.Scheme.Dual_ObjPullbackL
+public import Def.AlgebraicGeometry_RelPicardThetaBundle
+public import Instance.AlgebraicGeometry_RelEffCartierDivOfPoint
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

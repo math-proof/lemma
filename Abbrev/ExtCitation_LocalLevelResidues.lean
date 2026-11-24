@@ -1,12 +1,14 @@
-import Mathlib
-import Instance.ExtEndgame_ProductionDatum
-import Instance.EllipticCurve_FrobeniusTrace
-import Theorem.Ideal.Frobenius
-
+module
+public import Mathlib
+public import Instance.ExtEndgame_ProductionDatum
+public import Instance.EllipticCurve_FrobeniusTrace
+public import Theorem.Ideal.Frobenius
 set_option autoImplicit false
-
 open ExtCitation
 open scoped NNReal
+
+
+public section
 
 namespace ExtCitation.LocalLevel
 

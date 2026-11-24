@@ -1,5 +1,21 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicCombinatorics/code/WalkTypeCount.lean -/
+module
+public import Theorem.v1.Atlas.AlgebraicCombinatorics.code.HasseWalks
+public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.HasseWalks
+public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.HasseWalkFormula
+public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.WalkOperatorLemmas
+public import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.WalkCountOps
+public import Instance.v1.Atlas.AlgebraicCombinatorics.code.HasseWalkFormula.Part2
+public import Theorem.v1.Atlas.AlgebraicCombinatorics.code.WalkOperatorLemmas
+public import Def.v1.Atlas.AlgebraicCombinatorics.code.WalkCountOps
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+set_option autoImplicit false
+open scoped Nat
+open HasseWalks
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicCombinatorics/code/WalkTypeCount.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,22 +23,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.AlgebraicCombinatorics.code.HasseWalks
-import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.HasseWalks
-import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.HasseWalkFormula
-import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.WalkOperatorLemmas
-import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.WalkCountOps
-import Instance.v1.Atlas.AlgebraicCombinatorics.code.HasseWalkFormula.Part2
-import Theorem.v1.Atlas.AlgebraicCombinatorics.code.WalkOperatorLemmas
-import Def.v1.Atlas.AlgebraicCombinatorics.code.WalkCountOps
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-set_option autoImplicit false
-
-open scoped Nat
-open HasseWalks
-
-
 noncomputable section
 
 namespace WalkTypeCount

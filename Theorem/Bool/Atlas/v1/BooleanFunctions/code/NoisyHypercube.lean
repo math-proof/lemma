@@ -14,7 +14,6 @@ namespace BooleanFourier
 /--
 [correlatedProb_factor_nonneg](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/NoisyHypercube.lean)
 -/
-@[path]
 public theorem correlatedProb_factor_nonneg
   {n : ℕ}
   {ρ : ℝ}
@@ -36,7 +35,6 @@ namespace BooleanFourier
 /--
 [correlatedProb_factor_sum](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/NoisyHypercube.lean)
 -/
-@[path]
 public theorem correlatedProb_factor_sum
   {n : ℕ}
   {ρ : ℝ}

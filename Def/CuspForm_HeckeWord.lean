@@ -1,8 +1,11 @@
-import Mathlib.Algebra.FreeAlgebra
-import Instance.CuspForm_HeckeAlgebra
-import Instance.Gamma0HeckeOperatorHom
-
+module
+public import Mathlib.Algebra.FreeAlgebra
+public import Instance.CuspForm_HeckeAlgebra
+public import Instance.Gamma0HeckeOperatorHom
 open CongruenceSubgroup
+
+
+public section
 
 namespace CuspForm
 

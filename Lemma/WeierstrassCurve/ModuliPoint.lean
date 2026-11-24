@@ -1,7 +1,11 @@
-import Mathlib
-import Def.WeierstrassCurve_VariableChangePointEquiv
-import Lemma.WeierstrassCurve.RatPointHom
-import Structure.ModularCurve_ModuliPoint
+module
+public import Mathlib
+public import Def.WeierstrassCurve_VariableChangePointEquiv
+public import Lemma.WeierstrassCurve.RatPointHom
+public import Structure.ModularCurve_ModuliPoint
+
+
+public section
 
 noncomputable section
 

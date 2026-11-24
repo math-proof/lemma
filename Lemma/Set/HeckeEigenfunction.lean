@@ -1,15 +1,17 @@
-import Lemma.Measure.CarrierPins
-import Def.AutomorphicForm_HeckeEigensystem
-import Lemma.Matrix.AdelicLevel
-import Instance.AbstractHeckeOperator
-import Def.AbstractHeckeOperator_Main
-import Theorem.AbstractHeckeOperator_Main
-import Abbrev.AutomorphicForm_HeckeEigenfunction
-
+module
+public import Lemma.Measure.CarrierPins
+public import Def.AutomorphicForm_HeckeEigensystem
+public import Lemma.Matrix.AdelicLevel
+public import Instance.AbstractHeckeOperator
+public import Def.AbstractHeckeOperator_Main
+public import Theorem.AbstractHeckeOperator_Main
+public import Abbrev.AutomorphicForm_HeckeEigenfunction
 set_option autoImplicit false
-
 open IsDedekindDomain NumberField MulAction Matrix.AdelicLevel Matrix
 open scoped Pointwise
+
+
+public section
 
 noncomputable section
 

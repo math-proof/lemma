@@ -1,11 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/ScanRemainder.lean -/
+module
+public import Def.CPythonListsort.Code.Correctness.PendingRunCorrectness
+public import Def.CPythonListsort.Code.Correctness.SortSliceRange
+public import Def.CPythonListsort.Code.Assembly.ListSortInputMode
+public import Theorem.CPythonListsort.Code.Transcription.ListSortImpl
+public import Mathlib
+public import Def.CPythonListsort.Code.Correctness.ScanRemainder
 
-import Def.CPythonListsort.Code.Correctness.PendingRunCorrectness
-import Def.CPythonListsort.Code.Correctness.SortSliceRange
-import Def.CPythonListsort.Code.Assembly.ListSortInputMode
-import Theorem.CPythonListsort.Code.Transcription.ListSortImpl
-import Mathlib
-import Def.CPythonListsort.Code.Correctness.ScanRemainder
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/ScanRemainder.lean -/
 /-!
 # Unscanned-snapshot correctness
 
@@ -15,8 +19,6 @@ that the still-unscanned keys are the untouched, absolutely tagged suffix of
 the original snapshot.  Keeping that fact here avoids strengthening the
 already-reviewed pending-run invariant.
 -/
-
-
 namespace CPythonListsort
 
 universe u v

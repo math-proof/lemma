@@ -15,7 +15,7 @@ open Fin
 [roth_low_equation_twice_card_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   {m d : ℕ}
   {r : Fin m → ℕ}
   {γ : ℝ}

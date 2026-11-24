@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.Buildings.code.CoxeterGroup.ReflectionIdentificationGenuine
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.Buildings.code.CoxeterGroup.ReflectionIdentificationGenuine
 open CoxeterReflectionId
 
+
+public section
 
 namespace Definitions
 end Definitions

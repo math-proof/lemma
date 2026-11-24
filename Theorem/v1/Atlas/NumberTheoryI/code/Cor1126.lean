@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Cor1126.lean -/
+module
+public import Abbrev.v1.Atlas.NumberTheoryI.code.GlobalFields
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GlobalFields
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.CompleteFields
+public import Theorem.v1.Atlas.NumberTheoryI.code.CompleteFields.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Cor1126.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Abbrev.v1.Atlas.NumberTheoryI.code.GlobalFields
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.GlobalFields
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.CompleteFields
-import Theorem.v1.Atlas.NumberTheoryI.code.CompleteFields.Part2
-
-
 noncomputable section
 
 open NumberField NumberField.InfinitePlace Module Fintype IsDedekindDomain

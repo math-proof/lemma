@@ -5,7 +5,7 @@ public import Initialize.Tactic.Attr.Basic
 public import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
 public import Structure.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
 public import Theorem.CPythonListsort.Code.Transcription.TempStorageInvariant
-public import Lemma.List.Atlas.CPythonListsort.Code.Transcription.MergeMemory
+public import Theorem.List.Atlas.CPythonListsort.Code.Transcription.MergeMemory
 
 public section
 

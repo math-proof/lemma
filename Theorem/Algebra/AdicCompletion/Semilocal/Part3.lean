@@ -1,6 +1,11 @@
-import Mathlib.RingTheory.Noetherian.Nilpotent
-import Theorem.Algebra.AdicCompletion.RingFunctoriality.Part7
-import Def.Algebra.AdicCompletion.Semilocal.Part2
+module
+public import Mathlib.RingTheory.Noetherian.Nilpotent
+public import Theorem.Algebra.AdicCompletion.RingFunctoriality.Part7
+public import Def.Algebra.AdicCompletion.Semilocal.Part2
+
+
+public section
+
 universe u₁ u₂
 
 

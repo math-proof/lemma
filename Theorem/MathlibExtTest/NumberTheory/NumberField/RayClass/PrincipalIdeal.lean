@@ -1,7 +1,10 @@
+module
+public import Theorem.NumberTheory.NumberField.RayClass.PrincipalIdeal
+public import Theorem.Nat.NumberField.RayClass.PrincipalIdeal
+
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/RayClass/PrincipalIdeal.lean -/
 
-import Theorem.NumberTheory.NumberField.RayClass.PrincipalIdeal
-import Lemma.Nat.NumberField.RayClass.PrincipalIdeal
 @[expose] public noncomputable section
 
 open scoped nonZeroDivisors

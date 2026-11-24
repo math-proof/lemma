@@ -16,7 +16,7 @@ open Nat
 [Nat.add_le_add_left](https://github.com/teorth/analysis/blob/main/Analysis/Section_2_2.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   {a b c:Chapter2.Nat} :
 -- imply
   a ≤ b ↔ c + a ≤ c + b :=

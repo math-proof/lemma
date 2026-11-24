@@ -1,11 +1,16 @@
-import Mathlib
-import Mathlib.Algebra.Field.Power
-import Mathlib.NumberTheory.LSeries.RiemannZeta
-import Mathlib.NumberTheory.LSeries.HurwitzZetaValues
-import Abbrev.Analysis.Section_6_1.Part17
-import Theorem.Analysis.Section_6_epilogue.Part2
-import Abbrev.Analysis.Section_7_2.Part5
-import Abbrev.Analysis.Section_7_3
+module
+public import Mathlib
+public import Mathlib.Algebra.Field.Power
+public import Mathlib.NumberTheory.LSeries.RiemannZeta
+public import Mathlib.NumberTheory.LSeries.HurwitzZetaValues
+public import Abbrev.Analysis.Section_6_1.Part17
+public import Theorem.Analysis.Section_6_epilogue.Part2
+public import Abbrev.Analysis.Section_7_2.Part5
+public import Abbrev.Analysis.Section_7_3
+
+
+public section
+
 /-!
 # Analysis I, Section 7.3: Sums of non-negative numbers
 
@@ -17,8 +22,6 @@ Main constructions and results of this section:
 - Cauchy condensation test.
 
 -/
-
-
 namespace Chapter7
 
 open Real

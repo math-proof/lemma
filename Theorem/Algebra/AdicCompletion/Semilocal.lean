@@ -1,5 +1,10 @@
-import Mathlib.RingTheory.Noetherian.Nilpotent
-import Theorem.Algebra.AdicCompletion.RingFunctoriality.Part7
+module
+public import Mathlib.RingTheory.Noetherian.Nilpotent
+public import Theorem.Algebra.AdicCompletion.RingFunctoriality.Part7
+
+
+public section
+
 universe u₁ u₂
 
 

@@ -1,9 +1,12 @@
-import Mathlib
-import Instance.AlgebraicGeometry_OrderedAffineCoverCech
-import Abbrev.AlgebraicGeometry_OrderedAffineCoverComap
-import Instance.AlgebraicGeometry_RelativePicardFunctor
-
+module
+public import Mathlib
+public import Instance.AlgebraicGeometry_OrderedAffineCoverCech
+public import Abbrev.AlgebraicGeometry_OrderedAffineCoverComap
+public import Instance.AlgebraicGeometry_RelativePicardFunctor
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

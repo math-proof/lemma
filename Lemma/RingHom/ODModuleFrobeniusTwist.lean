@@ -3,7 +3,7 @@ import Lemma.MvPowerSeries.NegV2
 import Lemma.MvPowerSeries.CartierModule
 import Lemma.PowerSeries.CartierModuleHomothety
 import Lemma.MvPowerSeries.SpecialFormalModule
-import Lemma.FormalGroup.CartierGradedPiece
+import Theorem.FormalGroup.CartierGradedPiece
 import Def.CerednikDrinfeld_ODModuleFrobeniusTwist
 
 set_option autoImplicit false

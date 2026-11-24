@@ -13,7 +13,7 @@ open ChamberComplex AffineBuilding
 [buildingDist_nonneg](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/AffineCurvature.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   [DecidableEq V]
   {b : Building V}
   {md : ApartmentMetricData b}

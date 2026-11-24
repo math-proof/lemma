@@ -1,14 +1,17 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.NumberTheory.RothAuxiliary
-import Def.NumberTheory.RothAuxiliary.Part2
-import Lemma.Polynomial.DvdPowSubXC.of.All_EqEvalHasseDeriv_0
-import Lemma.Polynomial.DvdPowSubMulCDenXCNum
-import Lemma.Polynomial.LeDiv.of.LeNatAbsLeadingCoeffRpow_DenMul.Gt_0.GeDen_2.Ne_0
-import Lemma.Polynomial.NatAbsCoeff.le.RothPolyL1
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.NumberTheory.RothAuxiliary
+public import Def.NumberTheory.RothAuxiliary.Part2
+public import Lemma.Polynomial.DvdPowSubXC.of.All_EqEvalHasseDeriv_0
+public import Lemma.Polynomial.DvdPowSubMulCDenXCNum
+public import Lemma.Polynomial.LeDiv.of.LeNatAbsLeadingCoeffRpow_DenMul.Gt_0.GeDen_2.Ne_0
+public import Lemma.Polynomial.NatAbsCoeff.le.RothPolyL1
 open MathlibExt.NumberTheory.RothAuxiliary
 open Polynomial
 
+
+public section
 
 /--
 [roth_univariate_small_hasse](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

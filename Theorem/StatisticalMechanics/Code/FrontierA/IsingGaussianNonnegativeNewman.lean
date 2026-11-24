@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingGaussianNonnegativeNewman.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingCriticalTorusLocalObservables.Part4
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianTorusCumulants.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianPhysicalPolarization.Part4
+open Filter Finset Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingGaussianNonnegativeNewman.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingCriticalTorusLocalObservables.Part4
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianTorusCumulants.Part2
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianPhysicalPolarization.Part4
-open Filter Finset Topology
-
-
 namespace StatMech.FrontierA
 
 open StatMech Ising Lattice Sharpness

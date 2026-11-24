@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Exact3D/FKPositiveSubcriticalQ2AnalyticBridgeExample.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Exact3D.ExponentTheorem
+public import Theorem.StatisticalMechanics.Code.Exact3D.FKFinitePlusTailBridge
+public import Def.StatisticalMechanics.Code.Exact3D.FKPositiveSubcriticalQ2AnalyticBridge
+public import Theorem.StatisticalMechanics.Code.Exact3D.FKTableClosedBallBridge
+public import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailContractionExample.Part58
+public import Theorem.StatisticalMechanics.Code.Exact3D.FiniteWitnessPackageExample.Part6
+open Filter
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Exact3D/FKPositiveSubcriticalQ2AnalyticBridgeExample.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.Exact3D.ExponentTheorem
-import Theorem.StatisticalMechanics.Code.Exact3D.FKFinitePlusTailBridge
-import Def.StatisticalMechanics.Code.Exact3D.FKPositiveSubcriticalQ2AnalyticBridge
-import Theorem.StatisticalMechanics.Code.Exact3D.FKTableClosedBallBridge
-import Theorem.StatisticalMechanics.Code.Exact3D.FinitePlusTailContractionExample.Part58
-import Theorem.StatisticalMechanics.Code.Exact3D.FiniteWitnessPackageExample.Part6
-open Filter
-
-
 namespace StatMech
 
 namespace Exact3D

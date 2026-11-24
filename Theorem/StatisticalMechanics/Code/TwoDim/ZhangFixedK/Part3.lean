@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/TwoDim/ZhangFixedK.lean -/
+module
+public import Def.StatisticalMechanics.Code.TwoDim.ZhangBKData.Part6
+public import Theorem.StatisticalMechanics.Code.Universality.FrameChangeIso.Part8
+public import Theorem.StatisticalMechanics.Code.Universality.CrossingReflection.Part4
+public import Theorem.StatisticalMechanics.Code.Universality.RSWLowestCrossing.Part101
+public import Theorem.StatisticalMechanics.Code.Universality.KestenBXPWire
+public import Def.StatisticalMechanics.Code.TwoDim.ZhangFixedK.Part3
+open MeasureTheory Set Filter Topology
+open scoped ENNReal NNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/TwoDim/ZhangFixedK.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Def.StatisticalMechanics.Code.TwoDim.ZhangBKData.Part6
-import Theorem.StatisticalMechanics.Code.Universality.FrameChangeIso.Part8
-import Theorem.StatisticalMechanics.Code.Universality.CrossingReflection.Part4
-import Theorem.StatisticalMechanics.Code.Universality.RSWLowestCrossing.Part101
-import Theorem.StatisticalMechanics.Code.Universality.KestenBXPWire
-import Def.StatisticalMechanics.Code.TwoDim.ZhangFixedK.Part3
-open MeasureTheory Set Filter Topology
-open scoped ENNReal NNReal
-
-
 namespace StatMech.TwoDim
 
 open StatMech.Lattice StatMech.Universality StatMech.Percolation

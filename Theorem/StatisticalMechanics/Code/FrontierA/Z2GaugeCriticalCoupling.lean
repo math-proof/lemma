@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/Z2GaugeCriticalCoupling.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.Z2GaugeDualCoupling
+public import Mathlib.Analysis.SpecialFunctions.Artanh
+public import Def.StatisticalMechanics.Code.FrontierA.Z2GaugeCriticalCoupling
+open Set
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/Z2GaugeCriticalCoupling.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.Z2GaugeDualCoupling
-import Mathlib.Analysis.SpecialFunctions.Artanh
-import Def.StatisticalMechanics.Code.FrontierA.Z2GaugeCriticalCoupling
-open Set
-
-
 namespace StatMech.FrontierA
 
 theorem exp_neg_two_mem_Ioo_zero_one

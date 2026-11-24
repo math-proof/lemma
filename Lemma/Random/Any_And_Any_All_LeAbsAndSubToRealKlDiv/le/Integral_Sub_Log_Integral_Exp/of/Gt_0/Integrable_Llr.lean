@@ -1,10 +1,13 @@
-import Mathlib.InformationTheory.KullbackLeibler.Basic
-import Mathlib.MeasureTheory.Constructions.BorelSpace.Order
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
-import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
-import Initialize.Tactic.Attr.Basic
+module
+public import Mathlib.InformationTheory.KullbackLeibler.Basic
+public import Mathlib.MeasureTheory.Constructions.BorelSpace.Order
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
+public import Mathlib.MeasureTheory.Measure.Decomposition.RadonNikodym
+public import Initialize.Tactic.Attr.Basic
 open Classical ENNReal Filter InformationTheory MeasureTheory Real Set Topology
 
+
+public section
 
 private lemma close [MeasurableSpace α] {μ ν : Measure α} [IsProbabilityMeasure μ] [IsProbabilityMeasure ν] (hνμ : ν ≪ μ) (hint : Integrable (llr ν μ) ν) {ε : ℝ} (hε : 0 < ε) :
   ∃ f : α → ℝ, Measurable f ∧ (∃ C, ∀ x, |f x| ≤ C) ∧ (klDiv ν μ).toReal - ε ≤ ∫ x, f x ∂ν - log (∫ x, exp (f x) ∂μ) := by

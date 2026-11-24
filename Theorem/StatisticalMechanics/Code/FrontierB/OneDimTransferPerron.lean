@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/OneDimTransferPerron.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierC.IsingTransfer.Part5
+public import Def.StatisticalMechanics.Code.FrontierB.OneDimTransferPerron
+open Matrix Polynomial
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/OneDimTransferPerron.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierC.IsingTransfer.Part5
-import Def.StatisticalMechanics.Code.FrontierB.OneDimTransferPerron
-open Matrix Polynomial
-
-
 namespace StatMech.FrontierB
 
 open StatMech.FrontierC

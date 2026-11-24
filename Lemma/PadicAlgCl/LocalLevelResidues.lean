@@ -1,7 +1,7 @@
 import Mathlib
 import Lemma.PadicAlgCl.CompletionBridge
 import Abbrev.GaloisRep_CompletionBridge
-import Lemma.WeierstrassCurve.FrobeniusTrace
+import Theorem.WeierstrassCurve.FrobeniusTrace
 import Instance.Deformations_ContinuousSMulDiscrete
 
 set_option autoImplicit false

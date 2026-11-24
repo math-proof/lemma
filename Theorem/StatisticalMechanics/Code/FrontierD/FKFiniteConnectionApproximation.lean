@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKFiniteConnectionApproximation.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4DiagonalRate.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusRandomCluster.Part5
+public import Theorem.StatisticalMechanics.Code.FK.FKGeneralQConsumer.Part5
+public import Theorem.StatisticalMechanics.Code.FK.FKGeneralQConnectionFKG
+open Filter MeasureTheory Set Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKFiniteConnectionApproximation.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4DiagonalRate.Part3
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusRandomCluster.Part5
-import Theorem.StatisticalMechanics.Code.FK.FKGeneralQConsumer.Part5
-import Theorem.StatisticalMechanics.Code.FK.FKGeneralQConnectionFKG
-open Filter MeasureTheory Set Topology
-
-
 namespace StatMech.FrontierD
 
 open StatMech.Lattice StatMech.Percolation StatMech.TwoDim

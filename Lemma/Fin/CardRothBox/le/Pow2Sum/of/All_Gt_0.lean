@@ -1,8 +1,11 @@
-import Mathlib
-import Lemma.Fin.CardRothBox.eq.Prod_Add_1
+module
+public import Mathlib
+public import Lemma.Fin.CardRothBox.eq.Prod_Add_1
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [roth_box_card_le_two_pow_sum](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

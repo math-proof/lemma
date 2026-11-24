@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/wotsorbitsurj.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Lattice.InterfaceConnected.Part8
+public import Theorem.StatisticalMechanics.Code.Lattice.InterfaceConnectedGlobal.Part2
+public import Theorem.StatisticalMechanics.Code.Lattice.KingFacts
+public import Theorem.StatisticalMechanics.Code.Lattice.DartOrbit.Part6
+public import Theorem.StatisticalMechanics.Code.Walls.wifinterfaceconn
+open SimpleGraph Function
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/wotsorbitsurj.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Lattice.InterfaceConnected.Part8
-import Theorem.StatisticalMechanics.Code.Lattice.InterfaceConnectedGlobal.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.KingFacts
-import Theorem.StatisticalMechanics.Code.Lattice.DartOrbit.Part6
-import Theorem.StatisticalMechanics.Code.Walls.wifinterfaceconn
-open SimpleGraph Function
-
-
 namespace StatMech
 
 namespace Wots

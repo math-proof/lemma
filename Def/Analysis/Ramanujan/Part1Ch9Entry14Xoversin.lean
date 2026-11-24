@@ -1,19 +1,20 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch9Entry14Xoversin.lean -/
+module
+public import Def.Analysis.Ramanujan.Part1Ch9Entry13Bernoulligen
+public import Theorem.Real.Part1Ch9Entry13Bernoulligen
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch9Entry14Xoversin.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @akiezun, Avocado, Codex
 -/
-
-import Def.Analysis.Ramanujan.Part1Ch9Entry13Bernoulligen
-import Lemma.Real.Part1Ch9Entry13Bernoulligen
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 9
 
 Statements of entries from B. C. Berndt, *Ramanujan's Notebooks, Part I*
 (Springer, 1985), with proofs.
 -/
-
-
 section
 
 namespace MathlibExt.Analysis.Ramanujan.Part1Ch9

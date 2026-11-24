@@ -1,9 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_18
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Lemma_1_18
 open MeasureTheory Metric Set Finset
 open scoped ENNReal NNReal
 
+
+public section
 
 /--
 [separated_finite_of_compact](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter1/Lemma_1_18.lean)

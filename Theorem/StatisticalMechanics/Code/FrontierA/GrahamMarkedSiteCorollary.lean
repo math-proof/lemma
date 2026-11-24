@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/GrahamMarkedSiteCorollary.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzFourPoint
+public import Theorem.StatisticalMechanics.Code.FrontierA.GrahamHeadlineAdapter
+public import Theorem.StatisticalMechanics.Code.FrontierA.GrahamGraphAdapter
+open scoped BigOperators
+open Finset Filter Set
+set_option linter.unusedSectionVars false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/GrahamMarkedSiteCorollary.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzFourPoint
-import Theorem.StatisticalMechanics.Code.FrontierA.GrahamHeadlineAdapter
-import Theorem.StatisticalMechanics.Code.FrontierA.GrahamGraphAdapter
-open scoped BigOperators
-open Finset Filter Set
-
-set_option linter.unusedSectionVars false
-
-
 namespace StatMech.FrontierA
 
 open StatMech.Ising StatMech.Sharpness

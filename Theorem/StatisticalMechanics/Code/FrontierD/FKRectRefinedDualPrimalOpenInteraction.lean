@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectRefinedDualPrimalOpenInteraction.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedDualEdgeInteraction
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedDualPrimalInteractionAlgebra.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedEdgeCenterClass
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedSupportInteraction.Part2
+public import Def.StatisticalMechanics.Code.FrontierD.FKRectMedialDualShift.Part3
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectRefinedDualPrimalOpenInteraction.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedDualEdgeInteraction
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedDualPrimalInteractionAlgebra.Part2
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedEdgeCenterClass
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRefinedSupportInteraction.Part2
-import Def.StatisticalMechanics.Code.FrontierD.FKRectMedialDualShift.Part3
-
-
 namespace StatMech.FrontierD
 
 open StatMech.Onsager

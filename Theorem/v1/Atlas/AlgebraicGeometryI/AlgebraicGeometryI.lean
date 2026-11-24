@@ -1,5 +1,624 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/AlgebraicGeometryI.lean -/
+module
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.AbelJacobi
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.AdjointEquivalence
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BlowupProperties
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CardRootsLeDeg
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CotangentSpaceDimLemma30
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DimensionTheoryLight
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.FilteredColimitSheaf
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.FiniteMapStrictChains
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.FiniteMorphismDimension
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GAGA
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GenusPlaneAdjunctionBridge
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Hauptidealsatz
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.IrreducibleSpaceDef
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec12CoherentSubsheaf
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec13AffineMorphisms
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec19Prop32SmoothCompletion
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec3ClosedImmersion
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec4NoetherianDecomp
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec5DimensionResults
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec7ProperClosedImage
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lemma34DegreeAdditivity
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.LocallyClosedSeparated
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.MaximalExtension
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.MinpolyDegreeBound
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NoetherianCoverFinite
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ProductsSeparatedness
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ProjSeparated
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ProjectiveComplete
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Prop19PushforwardEmbedding
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Prop27FiniteMap
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Prop39Constructible
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohModules
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohTildeFunctor
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Separatedness
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreAffineCriterion
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityGeneral
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SmoothSubvarietyChar
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.AdjunctionSheaf
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.AdjunctionSheaf
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.AdjustedResolutions
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.AffineVarietyCharacterization
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.AffineVarietyDef
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.AffineVarietySpec
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.AlgebraicEquivalence
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ArithmeticGeometricGenus
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BertiniDegree
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BertiniDimensionCount
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BertiniVeronese
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutIntersection
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutMultiplicitySum
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutTheorem
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BlowupAtPoint
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BlowupChart
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BlowupDefinition
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BlowupReesConnection
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Blowups
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CalabiYauHypersurface
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleGeneral
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleProjective
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalDivisorCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalDivisorDecomposition
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafDef
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CartierDivisorGroup
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CartierDivisorScheme
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CechCohomologyIdentification
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CechDerivedInstantiate
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CechDerivedStrengthened
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CechSheafDataP1
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ChevalleyFiberDimension
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ChevalleyImage
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ChowHelperBlowupProjective
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ChowLemmaAssembly
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ChowsLemma
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSheaves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSheavesCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSpecFinitelyGenerated
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyAxiomsElimination
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyConnection
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyP1
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CompleteVarietyDef
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ConicRational
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ConservativeFunctor
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoordinateRingRecovery
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Cor21Genus1Group
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CotangentExactSequence
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CurveCoveringBridge
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CurveGenusGeometric
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CurvesNormalization
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DedekindCurve
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DegreeAdditivity
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DegreeFormula
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DerivedFunctorsConsolidation
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DerivedFunctorsDefs
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DimensionCotangentRegularity
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DimensionDef
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DimensionProduct
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DimensionTheory
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DirectLimitSections
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DivisorsPicard
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.EffaceableUniversal
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.EllipticCurveSmooth
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.FiberCardLeDegreeAssembly
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.FiberDegreeBound
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.FilteredColimitFiniteLimits
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.FunctionFields
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GBSplittingExistence
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GBSplittingUniqueness
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GenusConstruction
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GradedPolynomial
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GradedRingProjDef38
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GradedRingQuotient
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GraphMorphism
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GraphMorphismDef
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrassmannianProjective
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrassmannianTangent
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrassmannianTangentProp37
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckBirkhoff
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckBirkhoffGeometric
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckGroup
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckRiemannRoch
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.H0GlobalSections
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.HilbertFunctionGrowth
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.HomSheafCoherent
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.HypersurfaceDim
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.IntersectionDimension
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.IrreducibleComponentDef
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.IsFiniteTypeOfCoversTop
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.JacobianCriterion
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.KahlerDifferentials
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.KrullDimensionAffineSpace
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec10CoherentSheaf
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec10SheafModules
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec10SheavesP1
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec12CoherentFiberSemicont
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec14DivisorsPicard
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec14QCohProjective
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec15PicardDivisorClass
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec18KahlerSmoothness
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec19CanonicalBundle
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec19GradedQuotient
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec19JacobianCriterion
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec1ZariskiNullstellensatz
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec20ConormalSequence
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec20EulerSequence
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec20GrassmannianCotangent
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec20GrassmannianTangent
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec20NormalCodim2
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec20SmoothClosedSubvariety
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec20TangentCone
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec21Chevalley
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec21NormalExtension
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec22GenericSmoothness
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec23AdaptedResolution
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec23DeltaFunctorDefs
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec23DerivedFunctors
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec24RiemannRochSerre
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec2AffineVarieties
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec2AffineVarietySpec
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec2OpenSubvariety
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec2ProjectiveSpace
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec3Isomorphism
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec3Morphisms
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec3OpenImmersion
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec3ProjectiveNoether
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec3Thm1
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec4AffineMorphism
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec4Dimension
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec4FiniteMorphisms
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec4Grassmannian
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec5BezoutPascal
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec5DimensionTheory
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec5DimensionWrappers
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec6FunctionFields
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec7ClosedProductSubvariety
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec7CompleteVariety
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec7GraphMorphism
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec7Products
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec7ProductsSeparatedness
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec7SeparatedCriterion
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec8Blowup
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec8CompleteVarieties
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec8IntersectionCodim
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec9Blowups
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.LinearChangeVariables
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.LinearEquivDivisors
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.LocalIntersectionMultiplicity
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.LocallyFactorialDivisors
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.LongExactCohomology
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.LongExactSequence
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.MorphismDefinitions
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.MorphismReconstruction
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.MultiplicityDef
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NakayamaApplications
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NoetherNormalization
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NoetherNullstellensatzChain
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NoetherianTopological
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NormalExtension
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NormalizationVariety
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.OpenSubvariety
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PascalCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PascalTheorem
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PicardGroup
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PicardProjective
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PluckerGr24
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PowerSeriesUFD
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PrincipalDivisorDegree
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ProjectiveDefinitions
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ProjectiveIntersection
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ProjectiveIntersectionBound
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ProjectiveIntersectionNonempty
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ProjectiveSpaceDef
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Prop22PicCaCl
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Prop24DegreePicard
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Prop30SmoothLocusDense
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Prop34BlowupProperties
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Proposition40DegreeMap
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PullbackCanonical
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PullbackPresheafDef
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PushforwardExactAffine
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PushforwardExactness
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PushforwardPreservesKernel
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PushforwardQCoh
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohAffineEquivalence
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohDefinition
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohEquivalenceProof
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohLocalization
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohProjective
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohSpecEquiv
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.QuasiprojectiveSeparated
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RRApplicationsAudit
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RadicalIdealCorrespondence
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RamificationClosedProp7
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RamificationYoneda
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ReflexiveSheaves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RegularLocalRing
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ResidueMap
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ResidueSum
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ResidueSumZero
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannFormRR
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitz
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzApplications
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzAssembly
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzDegree
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzFormula
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzSheaf
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzSheafIso
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRoch
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochApplications
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochDedekind
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochEulerCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochGeneral
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochGeometric
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochRiemannForm
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RightDerivedDelta
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SegreEmbedding
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SeparatedMorphismUniqueness
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SeparatednessCriterion
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SeparatednessDefinition
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreCoherentSheavesProjVar
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityAnnihilator
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityDedekind
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityLinear
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityStatement
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityTate
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityUnconditional
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerrePairingNondegenerate
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohDerived
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafDef
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafDefinitions
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafTensorExact
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafificationProperties
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SingularLocus
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SmoothCurveDivisors
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SmoothPointVariety
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SmoothSubvarietyCriterion
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SmoothnessJacobianCriterion
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SmoothnessOmega
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SnakeLemma
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.StructureSheafColimit
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TangentConeExceptionalLocus
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TangentSpaceDim
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TateCechInfra
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TateResidueOrthogonality
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TensorReduced
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TildeQuasicoherent
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TorsionFreeDVR
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TorsionSheaves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TwistSheaf
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TwistingSheaves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.WeilDivisor
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ZariskiClosedDef
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ZariskiCotangentSpace
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ZariskiSheafCohomology
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ZariskiTopologyAffine
+public import Def.v1.Atlas.AlgebraicGeometryI.code.AdjustedResolutions.Part2
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.AffineMorphismEquiv
+public import Def.v1.Atlas.AlgebraicGeometryI.code.AffinePushforwardCohomology.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.AffinePushforwardHigher.Part2
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.AffineVarietyCharacterization
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.AffineVarietyDef
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.AffineVarietySpec
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.AlgGeoStructuralAudit
+public import Def.v1.Atlas.AlgebraicGeometryI.code.AlgebraicEquivalence.Part4
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.AlgebraicVarietyDef
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ArithmeticGeometricGenus
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.AuditSweep
+public import Def.v1.Atlas.AlgebraicGeometryI.code.BertiniDegree
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.BertiniDimensionCount.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.BertiniGeometric
+public import Def.v1.Atlas.AlgebraicGeometryI.code.BertiniVeronese.Part3
+public import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutGenus
+public import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutIntersection
+public import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutLight
+public import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutMultiplicitySum.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutTheorem
+public import Def.v1.Atlas.AlgebraicGeometryI.code.BlowupAtPoint.Part3
+public import Def.v1.Atlas.AlgebraicGeometryI.code.BlowupChart
+public import Def.v1.Atlas.AlgebraicGeometryI.code.BlowupDefinition.Part3
+public import Def.v1.Atlas.AlgebraicGeometryI.code.BlowupReesConnection
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Blowups
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.BuildAuditReport
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CalabiYauHypersurface.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleGeneral
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleProjective.Part4
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalDivisorCurves
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalDivisorDecomposition.Part4
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves.Part2
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafDef.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CartierDivisorGroup.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CartierDivisorScheme.Part3
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CatenaryVarieties
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.CechCohomologyCurves.Part2
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.CechCohomologyIdentification
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CechDerivedInstantiate.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CechDerivedStrengthened.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CechSheafDataP1.Part3
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ChevalleyFiberDimension.Part2
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.ChevalleyImage
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ChowHelperBlowupProjective
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ChowLemmaAssembly
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.ChowLemmaHelper
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ChowsLemma.Part2
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.CoherentLineBundlesProj
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.CoherentSheaves
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CoherentSheavesCurves.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CoherentSpecFinitelyGenerated
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CohomologyAxiomsElimination
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.CohomologyConnection
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.CohomologyP1.Part2
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.CohomologyPicard
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.ColimitSheafNoetherian
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CompleteVarietyDef
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ConicRational.Part3
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ConservativeFunctor
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CoordinateRingRecovery
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Cor21Genus1Group.Part2
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.CotangentExactSequence
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.CotangentSpaceDef.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CurveCoveringBridge
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CurveGenusGeometric
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CurvesNormalization
+public import Def.v1.Atlas.AlgebraicGeometryI.code.DedekindCurve
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.DegreeAdditivity
+public import Def.v1.Atlas.AlgebraicGeometryI.code.DegreeFormula
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.DerivedFunctorsConsolidation
+public import Def.v1.Atlas.AlgebraicGeometryI.code.DerivedFunctorsDefs
+public import Def.v1.Atlas.AlgebraicGeometryI.code.DimensionCotangentRegularity
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.DimensionDef
+public import Def.v1.Atlas.AlgebraicGeometryI.code.DimensionProduct
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.DimensionTheory
+public import Def.v1.Atlas.AlgebraicGeometryI.code.DirectLimitSections
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.DivisorsPicard.Part3
+public import Def.v1.Atlas.AlgebraicGeometryI.code.EffaceableUniversal
+public import Def.v1.Atlas.AlgebraicGeometryI.code.EllipticCurveSmooth.Part2
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.EllipticGroupStructure
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ExtClassifiesExtensions
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.FiberCardLeDegreeAssembly
+public import Def.v1.Atlas.AlgebraicGeometryI.code.FiberDegreeBound
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.FilteredColimitFiniteLimits.Part2
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.FilteredColimitSheafAssembly
+public import Def.v1.Atlas.AlgebraicGeometryI.code.FunctionFields
+public import Def.v1.Atlas.AlgebraicGeometryI.code.GBSplittingExistence.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.GBSplittingUniqueness
+public import Def.v1.Atlas.AlgebraicGeometryI.code.GenusConstruction.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.GradedPolynomial
+public import Def.v1.Atlas.AlgebraicGeometryI.code.GradedRingProjDef38.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.GradedRingQuotient.Part2
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.GraphMorphism.Part2
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.GraphMorphismDef
+public import Def.v1.Atlas.AlgebraicGeometryI.code.GrassmannianProjective.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.GrassmannianTangent.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.GrassmannianTangentProp37
+public import Def.v1.Atlas.AlgebraicGeometryI.code.GrothendieckBirkhoff
+public import Def.v1.Atlas.AlgebraicGeometryI.code.GrothendieckBirkhoffGeometric.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.GrothendieckGroup.Part3
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.GrothendieckRiemannRoch
+public import Def.v1.Atlas.AlgebraicGeometryI.code.H0GlobalSections
+public import Def.v1.Atlas.AlgebraicGeometryI.code.HilbertFunctionGrowth
+public import Def.v1.Atlas.AlgebraicGeometryI.code.HomSheafCoherent
+public import Def.v1.Atlas.AlgebraicGeometryI.code.HypercohomologyDef
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.HypersurfaceDim
+public import Def.v1.Atlas.AlgebraicGeometryI.code.HypersurfaceMultiplicity
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.IntersectionDimension
+public import Def.v1.Atlas.AlgebraicGeometryI.code.IntersectionMultSingular
+public import Def.v1.Atlas.AlgebraicGeometryI.code.IntersectionMultSingularPoint
+public import Def.v1.Atlas.AlgebraicGeometryI.code.IrreducibleComponentDef
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.IsFiniteTypeOfCoversTop
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.JacobianCriterion
+public import Def.v1.Atlas.AlgebraicGeometryI.code.K0GeneratorsOverlay.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.KahlerDifferentials
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.KrullDimensionAffineSpace
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec10CoherentSheaf
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec10Quasicoherent
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec10SheafModules
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec10SheavesP1.Part3
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec11HigherDirectImages
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec12CoherentFiberSemicont
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec13AffineQcohAlgebra
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec13VectorBundle
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec14DivisorsPicard.Part2
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec14QCohProjective
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec15PicardDivisorClass.Part3
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.Lec17AbelJacobi
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec17JacobianNormalization
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec18KahlerDifferentials
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec18KahlerSmoothness.Part3
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec19CanonicalBundle
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec19GradedQuotient
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec19JacobianCriterion
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec1ZariskiClosed
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.Lec1ZariskiNullstellensatz.Part2
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec20ConormalSequence
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec20EulerSequence.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec20GrassmannianCotangent
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec20GrassmannianTangent.Part3
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec20NormalCodim2
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec20SmoothClosedSubvariety
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec20TangentCone.Part9
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec21Chevalley
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec21NormalExtension
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec22BertiniProper
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec22GenericSmoothness.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec23AdaptedResolution
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec23AffinePushforwardCohom
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec23DeltaFunctorDefs.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec23DerivedFunctors.Part3
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec23DerivedFunctorsThms
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec24GrothendieckBirkhoff
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec24RiemannRochSerre.Part5
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec2AffineVarieties.Part3
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec2AffineVarietySpec
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.Lec2AlgebraicVariety
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.Lec2OpenSubvariety
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec2ProjectiveSpace.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec3Isomorphism
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec3Morphisms
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec3OpenImmersion
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec3ProjectiveNoether
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec3Thm1
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec4AffineMorphism
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec4Dimension
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec4FiniteMorphisms
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec4Grassmannian
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec5BezoutPascal.Part5
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec5DimensionTheory.Part2
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec5DimensionWrappers
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec6FunctionFields
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec6RamificationDegree
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.Lec7ClosedProductSubvariety
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.Lec7CompleteVariety
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec7GraphMorphism
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec7Products
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec7ProductsSeparatedness
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec7SeparatedCriterion
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec8Blowup.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec8CompleteVarieties
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec8IntersectionCodim
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lec9Blowups.Part3
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Lemma29Completeness
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.LinearChangeVariables
+public import Def.v1.Atlas.AlgebraicGeometryI.code.LinearEquivDivisors.Part3
+public import Def.v1.Atlas.AlgebraicGeometryI.code.LocalIntersectionMultiplicity
+public import Def.v1.Atlas.AlgebraicGeometryI.code.LocallyFactorialDivisors.Part7
+public import Def.v1.Atlas.AlgebraicGeometryI.code.LongExactCohomology
+public import Def.v1.Atlas.AlgebraicGeometryI.code.LongExactSequence
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.MorphismDefinitions
+public import Def.v1.Atlas.AlgebraicGeometryI.code.MorphismReconstruction
+public import Def.v1.Atlas.AlgebraicGeometryI.code.MultiplicityDef
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.NakayamaApplications
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.NoetherNormalization
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.NoetherNullstellensatzChain
+public import Def.v1.Atlas.AlgebraicGeometryI.code.NoetherianColimit
+public import Def.v1.Atlas.AlgebraicGeometryI.code.NoetherianColimitSections
+public import Def.v1.Atlas.AlgebraicGeometryI.code.NoetherianTopological
+public import Def.v1.Atlas.AlgebraicGeometryI.code.NormalExtension
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.NormalizationVariety
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.OXModuleDef
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.OpenSubvariety
+public import Def.v1.Atlas.AlgebraicGeometryI.code.PascalCurves.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.PascalTheorem.Part2
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.PicardGroup
+public import Def.v1.Atlas.AlgebraicGeometryI.code.PicardProjective.Part7
+public import Def.v1.Atlas.AlgebraicGeometryI.code.PluckerGr24
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.PowerSeriesUFD
+public import Def.v1.Atlas.AlgebraicGeometryI.code.PrincipalDivisorDegree.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ProjectiveDefinitions
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ProjectiveIntersection
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.ProjectiveIntersectionBound
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.ProjectiveIntersectionNonempty
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ProjectiveQCohProperties.Part2
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.ProjectiveSpaceDef
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ProjectiveVarietyDef
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Prop22PicCaCl
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.Prop23WeilCartier
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Prop24DegreePicard
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Prop30SmoothLocusDense
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Prop31SmoothLocalGenerators.Part3
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Prop34BlowupProperties.Part4
+public import Def.v1.Atlas.AlgebraicGeometryI.code.Proposition40DegreeMap.Part3
+public import Def.v1.Atlas.AlgebraicGeometryI.code.PullbackCanonical
+public import Def.v1.Atlas.AlgebraicGeometryI.code.PullbackPresheafDef
+public import Def.v1.Atlas.AlgebraicGeometryI.code.PushforwardDirectLimit
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.PushforwardExactAffine
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.PushforwardExactness.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.PushforwardPreservesKernel
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.PushforwardQCoh
+public import Def.v1.Atlas.AlgebraicGeometryI.code.QCohAffineEquivalence.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.QCohDefinition
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.QCohEquivalenceProof
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.QCohLocalization
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.QCohMathlib.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.QCohProjective.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.QCohSheaves.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.QCohSpecEquiv.Part2
+public import Class.v1.Atlas.AlgebraicGeometryI.code.QuasiprojectiveSeparated
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.QuasiprojectiveVarietyDef
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RRApplicationsAudit
+public import Def.v1.Atlas.AlgebraicGeometryI.code.RadicalIdealCorrespondence
+public import Def.v1.Atlas.AlgebraicGeometryI.code.RamificationClosedProp7
+public import Def.v1.Atlas.AlgebraicGeometryI.code.RamificationDivisor
+public import Def.v1.Atlas.AlgebraicGeometryI.code.RamificationYoneda.Part2
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.ReflexiveSheaves.Part2
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RegularLocalRing
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ResidueMap
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ResidueSum
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.ResidueSumZero
+public import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannFormRR
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitz
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzApplications
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzAssembly
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzDegree
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzFormula
+public import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzSheaf
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzSheafIso
+public import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRoch
+public import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochApplications
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochCurves
+public import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochDedekind
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochEulerCurves
+public import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochGeneral
+public import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochGeometric
+public import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochRiemannForm
+public import Def.v1.Atlas.AlgebraicGeometryI.code.RightDerivedDelta
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SegreEmbedding
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SeparatedHausdorff
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SeparatedHausdorffClassical
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.SeparatedMorphismUniqueness
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SeparatednessCriterion
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SeparatednessDefinition
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.SerreCoherentSheavesProjVar
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.SerreDualityAnnihilator
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityCurves.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityDedekind
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityLinear.Part4
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.SerreDualityStatement
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityTate.Part3
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.SerreDualityUnconditional
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SerrePairingNondegenerate.Part2
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohDerived
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SheafDef
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SheafDefinitions.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SheafTensorExact
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SheafificationProperties
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SingularLocus
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SmoothCurveDivisors.Part2
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.SmoothLocalStructure
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.SmoothLocallyFree
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SmoothPointVariety
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SmoothSubvarietyCriterion
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SmoothnessJacobianCriterion.Part3
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SmoothnessOmega
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SnakeLemma
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.StructureSheafColimit
+public import Def.v1.Atlas.AlgebraicGeometryI.code.TangentConeExceptionalLocus.Part2
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.TangentSpaceDim
+public import Def.v1.Atlas.AlgebraicGeometryI.code.TateCechInfra.Part2
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.TateResidueOrthogonality
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.TensorReduced
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.TildeQuasicoherent
+public import Def.v1.Atlas.AlgebraicGeometryI.code.TorsionFreeDVR
+public import Def.v1.Atlas.AlgebraicGeometryI.code.TorsionSheaves
+public import Def.v1.Atlas.AlgebraicGeometryI.code.TwistSheaf.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.TwistingSheaves
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.WeilDivisor
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ZariskiClosedDef
+public import Instance.v1.Atlas.AlgebraicGeometryI.code.ZariskiCotangentSpace.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ZariskiSheafCohomology.Part4
+public import Def.v1.Atlas.AlgebraicGeometryI.code.ZariskiTopologyAffine
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/AlgebraicGeometryI.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,621 +626,4 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.AbelJacobi
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.AdjointEquivalence
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.BlowupProperties
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CardRootsLeDeg
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CotangentSpaceDimLemma30
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DimensionTheoryLight
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.FilteredColimitSheaf
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.FiniteMapStrictChains
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.FiniteMorphismDimension
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.GAGA
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.GenusPlaneAdjunctionBridge
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Hauptidealsatz
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.IrreducibleSpaceDef
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec12CoherentSubsheaf
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec13AffineMorphisms
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec19Prop32SmoothCompletion
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec3ClosedImmersion
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec4NoetherianDecomp
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec5DimensionResults
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec7ProperClosedImage
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lemma34DegreeAdditivity
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.LocallyClosedSeparated
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.MaximalExtension
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.MinpolyDegreeBound
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NoetherianCoverFinite
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ProductsSeparatedness
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ProjSeparated
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ProjectiveComplete
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Prop19PushforwardEmbedding
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Prop27FiniteMap
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Prop39Constructible
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohModules
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohTildeFunctor
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Separatedness
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreAffineCriterion
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityGeneral
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SmoothSubvarietyChar
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.AdjunctionSheaf
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.AdjunctionSheaf
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.AdjustedResolutions
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.AffineVarietyCharacterization
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.AffineVarietyDef
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.AffineVarietySpec
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.AlgebraicEquivalence
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.ArithmeticGeometricGenus
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BertiniDegree
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BertiniDimensionCount
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BertiniVeronese
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutIntersection
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutMultiplicitySum
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutTheorem
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.BlowupAtPoint
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BlowupChart
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.BlowupDefinition
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BlowupReesConnection
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Blowups
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CalabiYauHypersurface
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleGeneral
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleProjective
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalDivisorCurves
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalDivisorDecomposition
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafDef
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CartierDivisorGroup
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CartierDivisorScheme
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CechCohomologyIdentification
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CechDerivedInstantiate
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CechDerivedStrengthened
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CechSheafDataP1
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ChevalleyFiberDimension
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ChevalleyImage
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ChowHelperBlowupProjective
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ChowLemmaAssembly
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ChowsLemma
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSheaves
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSheavesCurves
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoherentSpecFinitelyGenerated
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyAxiomsElimination
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyConnection
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyP1
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CompleteVarietyDef
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.ConicRational
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ConservativeFunctor
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CoordinateRingRecovery
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Cor21Genus1Group
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CotangentExactSequence
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CurveCoveringBridge
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CurveGenusGeometric
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CurvesNormalization
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DedekindCurve
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DegreeAdditivity
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DegreeFormula
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DerivedFunctorsConsolidation
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DerivedFunctorsDefs
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DimensionCotangentRegularity
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DimensionDef
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DimensionProduct
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.DimensionTheory
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.DirectLimitSections
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.DivisorsPicard
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.EffaceableUniversal
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.EllipticCurveSmooth
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.FiberCardLeDegreeAssembly
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.FiberDegreeBound
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.FilteredColimitFiniteLimits
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.FunctionFields
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GBSplittingExistence
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.GBSplittingUniqueness
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.GenusConstruction
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GradedPolynomial
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GradedRingProjDef38
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.GradedRingQuotient
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.GraphMorphism
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GraphMorphismDef
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrassmannianProjective
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrassmannianTangent
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrassmannianTangentProp37
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckBirkhoff
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckBirkhoffGeometric
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckGroup
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckRiemannRoch
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.H0GlobalSections
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.HilbertFunctionGrowth
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.HomSheafCoherent
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.HypersurfaceDim
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.IntersectionDimension
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.IrreducibleComponentDef
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.IsFiniteTypeOfCoversTop
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.JacobianCriterion
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.KahlerDifferentials
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.KrullDimensionAffineSpace
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec10CoherentSheaf
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec10SheafModules
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec10SheavesP1
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec12CoherentFiberSemicont
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec14DivisorsPicard
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec14QCohProjective
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec15PicardDivisorClass
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec18KahlerSmoothness
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec19CanonicalBundle
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec19GradedQuotient
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec19JacobianCriterion
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec1ZariskiNullstellensatz
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec20ConormalSequence
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec20EulerSequence
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec20GrassmannianCotangent
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec20GrassmannianTangent
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec20NormalCodim2
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec20SmoothClosedSubvariety
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec20TangentCone
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec21Chevalley
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec21NormalExtension
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec22GenericSmoothness
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec23AdaptedResolution
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec23DeltaFunctorDefs
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec23DerivedFunctors
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec24RiemannRochSerre
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec2AffineVarieties
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec2AffineVarietySpec
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec2OpenSubvariety
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec2ProjectiveSpace
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec3Isomorphism
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec3Morphisms
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec3OpenImmersion
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec3ProjectiveNoether
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec3Thm1
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec4AffineMorphism
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec4Dimension
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec4FiniteMorphisms
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec4Grassmannian
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec5BezoutPascal
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec5DimensionTheory
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec5DimensionWrappers
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec6FunctionFields
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec7ClosedProductSubvariety
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec7CompleteVariety
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec7GraphMorphism
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec7Products
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec7ProductsSeparatedness
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec7SeparatedCriterion
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec8Blowup
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec8CompleteVarieties
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec8IntersectionCodim
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Lec9Blowups
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.LinearChangeVariables
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.LinearEquivDivisors
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.LocalIntersectionMultiplicity
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.LocallyFactorialDivisors
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.LongExactCohomology
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.LongExactSequence
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.MorphismDefinitions
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.MorphismReconstruction
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.MultiplicityDef
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NakayamaApplications
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NoetherNormalization
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.NoetherNullstellensatzChain
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NoetherianTopological
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NormalExtension
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.NormalizationVariety
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.OpenSubvariety
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PascalCurves
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PascalTheorem
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PicardGroup
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.PicardProjective
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.PluckerGr24
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PowerSeriesUFD
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PrincipalDivisorDegree
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ProjectiveDefinitions
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.ProjectiveIntersection
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.ProjectiveIntersectionBound
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.ProjectiveIntersectionNonempty
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ProjectiveSpaceDef
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Prop22PicCaCl
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Prop24DegreePicard
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.Prop30SmoothLocusDense
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Prop34BlowupProperties
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.Proposition40DegreeMap
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PullbackCanonical
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PullbackPresheafDef
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PushforwardExactAffine
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PushforwardExactness
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PushforwardPreservesKernel
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PushforwardQCoh
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohAffineEquivalence
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohDefinition
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohEquivalenceProof
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohLocalization
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohProjective
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohSpecEquiv
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.QuasiprojectiveSeparated
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.RRApplicationsAudit
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RadicalIdealCorrespondence
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RamificationClosedProp7
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RamificationYoneda
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ReflexiveSheaves
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RegularLocalRing
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ResidueMap
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ResidueSum
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ResidueSumZero
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannFormRR
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitz
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzApplications
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzAssembly
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzDegree
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzFormula
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzSheaf
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannHurwitzSheafIso
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRoch
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochApplications
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochDedekind
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochEulerCurves
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochGeneral
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochGeometric
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochRiemannForm
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RightDerivedDelta
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SegreEmbedding
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SeparatedMorphismUniqueness
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SeparatednessCriterion
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SeparatednessDefinition
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreCoherentSheavesProjVar
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityAnnihilator
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityCurves
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityDedekind
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityLinear
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityStatement
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityTate
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityUnconditional
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerrePairingNondegenerate
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohDerived
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafDef
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafDefinitions
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafTensorExact
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafificationProperties
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SingularLocus
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SmoothCurveDivisors
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SmoothPointVariety
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SmoothSubvarietyCriterion
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SmoothnessJacobianCriterion
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SmoothnessOmega
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SnakeLemma
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.StructureSheafColimit
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TangentConeExceptionalLocus
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TangentSpaceDim
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TateCechInfra
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TateResidueOrthogonality
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TensorReduced
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TildeQuasicoherent
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TorsionFreeDVR
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TorsionSheaves
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TwistSheaf
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TwistingSheaves
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.WeilDivisor
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ZariskiClosedDef
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ZariskiCotangentSpace
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.ZariskiSheafCohomology
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.ZariskiTopologyAffine
-import Def.v1.Atlas.AlgebraicGeometryI.code.AdjustedResolutions.Part2
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.AffineMorphismEquiv
-import Def.v1.Atlas.AlgebraicGeometryI.code.AffinePushforwardCohomology.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.AffinePushforwardHigher.Part2
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.AffineVarietyCharacterization
-import Instance.v1.Atlas.AlgebraicGeometryI.code.AffineVarietyDef
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.AffineVarietySpec
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.AlgGeoStructuralAudit
-import Def.v1.Atlas.AlgebraicGeometryI.code.AlgebraicEquivalence.Part4
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.AlgebraicVarietyDef
-import Def.v1.Atlas.AlgebraicGeometryI.code.ArithmeticGeometricGenus
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.AuditSweep
-import Def.v1.Atlas.AlgebraicGeometryI.code.BertiniDegree
-import Structure.v1.Atlas.AlgebraicGeometryI.code.BertiniDimensionCount.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.BertiniGeometric
-import Def.v1.Atlas.AlgebraicGeometryI.code.BertiniVeronese.Part3
-import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutGenus
-import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutIntersection
-import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutLight
-import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutMultiplicitySum.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.BezoutTheorem
-import Def.v1.Atlas.AlgebraicGeometryI.code.BlowupAtPoint.Part3
-import Def.v1.Atlas.AlgebraicGeometryI.code.BlowupChart
-import Def.v1.Atlas.AlgebraicGeometryI.code.BlowupDefinition.Part3
-import Def.v1.Atlas.AlgebraicGeometryI.code.BlowupReesConnection
-import Def.v1.Atlas.AlgebraicGeometryI.code.Blowups
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.BuildAuditReport
-import Def.v1.Atlas.AlgebraicGeometryI.code.CalabiYauHypersurface.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleGeneral
-import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleProjective.Part4
-import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalDivisorCurves
-import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalDivisorDecomposition.Part4
-import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves.Part2
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafDef.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.CartierDivisorGroup.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.CartierDivisorScheme.Part3
-import Def.v1.Atlas.AlgebraicGeometryI.code.CatenaryVarieties
-import Structure.v1.Atlas.AlgebraicGeometryI.code.CechCohomologyCurves.Part2
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.CechCohomologyIdentification
-import Def.v1.Atlas.AlgebraicGeometryI.code.CechDerivedInstantiate.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.CechDerivedStrengthened.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.CechSheafDataP1.Part3
-import Def.v1.Atlas.AlgebraicGeometryI.code.ChevalleyFiberDimension.Part2
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.ChevalleyImage
-import Def.v1.Atlas.AlgebraicGeometryI.code.ChowHelperBlowupProjective
-import Def.v1.Atlas.AlgebraicGeometryI.code.ChowLemmaAssembly
-import Instance.v1.Atlas.AlgebraicGeometryI.code.ChowLemmaHelper
-import Def.v1.Atlas.AlgebraicGeometryI.code.ChowsLemma.Part2
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.CoherentLineBundlesProj
-import Instance.v1.Atlas.AlgebraicGeometryI.code.CoherentSheaves
-import Def.v1.Atlas.AlgebraicGeometryI.code.CoherentSheavesCurves.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.CoherentSpecFinitelyGenerated
-import Def.v1.Atlas.AlgebraicGeometryI.code.CohomologyAxiomsElimination
-import Structure.v1.Atlas.AlgebraicGeometryI.code.CohomologyConnection
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.CohomologyP1.Part2
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.CohomologyPicard
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.ColimitSheafNoetherian
-import Def.v1.Atlas.AlgebraicGeometryI.code.CompleteVarietyDef
-import Def.v1.Atlas.AlgebraicGeometryI.code.ConicRational.Part3
-import Def.v1.Atlas.AlgebraicGeometryI.code.ConservativeFunctor
-import Def.v1.Atlas.AlgebraicGeometryI.code.CoordinateRingRecovery
-import Def.v1.Atlas.AlgebraicGeometryI.code.Cor21Genus1Group.Part2
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.CotangentExactSequence
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.CotangentSpaceDef.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.CurveCoveringBridge
-import Def.v1.Atlas.AlgebraicGeometryI.code.CurveGenusGeometric
-import Def.v1.Atlas.AlgebraicGeometryI.code.CurvesNormalization
-import Def.v1.Atlas.AlgebraicGeometryI.code.DedekindCurve
-import Structure.v1.Atlas.AlgebraicGeometryI.code.DegreeAdditivity
-import Def.v1.Atlas.AlgebraicGeometryI.code.DegreeFormula
-import Structure.v1.Atlas.AlgebraicGeometryI.code.DerivedFunctorsConsolidation
-import Def.v1.Atlas.AlgebraicGeometryI.code.DerivedFunctorsDefs
-import Def.v1.Atlas.AlgebraicGeometryI.code.DimensionCotangentRegularity
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.DimensionDef
-import Def.v1.Atlas.AlgebraicGeometryI.code.DimensionProduct
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.DimensionTheory
-import Def.v1.Atlas.AlgebraicGeometryI.code.DirectLimitSections
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.DivisorsPicard.Part3
-import Def.v1.Atlas.AlgebraicGeometryI.code.EffaceableUniversal
-import Def.v1.Atlas.AlgebraicGeometryI.code.EllipticCurveSmooth.Part2
-import Instance.v1.Atlas.AlgebraicGeometryI.code.EllipticGroupStructure
-import Def.v1.Atlas.AlgebraicGeometryI.code.ExtClassifiesExtensions
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.FiberCardLeDegreeAssembly
-import Def.v1.Atlas.AlgebraicGeometryI.code.FiberDegreeBound
-import Instance.v1.Atlas.AlgebraicGeometryI.code.FilteredColimitFiniteLimits.Part2
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.FilteredColimitSheafAssembly
-import Def.v1.Atlas.AlgebraicGeometryI.code.FunctionFields
-import Def.v1.Atlas.AlgebraicGeometryI.code.GBSplittingExistence.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.GBSplittingUniqueness
-import Def.v1.Atlas.AlgebraicGeometryI.code.GenusConstruction.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.GradedPolynomial
-import Def.v1.Atlas.AlgebraicGeometryI.code.GradedRingProjDef38.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.GradedRingQuotient.Part2
-import Instance.v1.Atlas.AlgebraicGeometryI.code.GraphMorphism.Part2
-import Instance.v1.Atlas.AlgebraicGeometryI.code.GraphMorphismDef
-import Def.v1.Atlas.AlgebraicGeometryI.code.GrassmannianProjective.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.GrassmannianTangent.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.GrassmannianTangentProp37
-import Def.v1.Atlas.AlgebraicGeometryI.code.GrothendieckBirkhoff
-import Def.v1.Atlas.AlgebraicGeometryI.code.GrothendieckBirkhoffGeometric.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.GrothendieckGroup.Part3
-import Structure.v1.Atlas.AlgebraicGeometryI.code.GrothendieckRiemannRoch
-import Def.v1.Atlas.AlgebraicGeometryI.code.H0GlobalSections
-import Def.v1.Atlas.AlgebraicGeometryI.code.HilbertFunctionGrowth
-import Def.v1.Atlas.AlgebraicGeometryI.code.HomSheafCoherent
-import Def.v1.Atlas.AlgebraicGeometryI.code.HypercohomologyDef
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.HypersurfaceDim
-import Def.v1.Atlas.AlgebraicGeometryI.code.HypersurfaceMultiplicity
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.IntersectionDimension
-import Def.v1.Atlas.AlgebraicGeometryI.code.IntersectionMultSingular
-import Def.v1.Atlas.AlgebraicGeometryI.code.IntersectionMultSingularPoint
-import Def.v1.Atlas.AlgebraicGeometryI.code.IrreducibleComponentDef
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.IsFiniteTypeOfCoversTop
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.JacobianCriterion
-import Def.v1.Atlas.AlgebraicGeometryI.code.K0GeneratorsOverlay.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.KahlerDifferentials
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.KrullDimensionAffineSpace
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec10CoherentSheaf
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec10Quasicoherent
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec10SheafModules
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec10SheavesP1.Part3
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec11HigherDirectImages
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec12CoherentFiberSemicont
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec13AffineQcohAlgebra
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec13VectorBundle
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec14DivisorsPicard.Part2
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec14QCohProjective
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec15PicardDivisorClass.Part3
-import Instance.v1.Atlas.AlgebraicGeometryI.code.Lec17AbelJacobi
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec17JacobianNormalization
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec18KahlerDifferentials
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec18KahlerSmoothness.Part3
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec19CanonicalBundle
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec19GradedQuotient
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec19JacobianCriterion
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec1ZariskiClosed
-import Instance.v1.Atlas.AlgebraicGeometryI.code.Lec1ZariskiNullstellensatz.Part2
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec20ConormalSequence
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec20EulerSequence.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec20GrassmannianCotangent
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec20GrassmannianTangent.Part3
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec20NormalCodim2
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec20SmoothClosedSubvariety
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec20TangentCone.Part9
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec21Chevalley
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec21NormalExtension
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec22BertiniProper
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec22GenericSmoothness.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec23AdaptedResolution
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec23AffinePushforwardCohom
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec23DeltaFunctorDefs.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec23DerivedFunctors.Part3
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec23DerivedFunctorsThms
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec24GrothendieckBirkhoff
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec24RiemannRochSerre.Part5
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec2AffineVarieties.Part3
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec2AffineVarietySpec
-import Instance.v1.Atlas.AlgebraicGeometryI.code.Lec2AlgebraicVariety
-import Instance.v1.Atlas.AlgebraicGeometryI.code.Lec2OpenSubvariety
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec2ProjectiveSpace.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec3Isomorphism
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec3Morphisms
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec3OpenImmersion
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec3ProjectiveNoether
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec3Thm1
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec4AffineMorphism
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec4Dimension
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.Lec4FiniteMorphisms
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec4Grassmannian
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec5BezoutPascal.Part5
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec5DimensionTheory.Part2
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec5DimensionWrappers
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec6FunctionFields
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec6RamificationDegree
-import Instance.v1.Atlas.AlgebraicGeometryI.code.Lec7ClosedProductSubvariety
-import Instance.v1.Atlas.AlgebraicGeometryI.code.Lec7CompleteVariety
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec7GraphMorphism
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec7Products
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.Lec7ProductsSeparatedness
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec7SeparatedCriterion
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec8Blowup.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec8CompleteVarieties
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec8IntersectionCodim
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lec9Blowups.Part3
-import Def.v1.Atlas.AlgebraicGeometryI.code.Lemma29Completeness
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.LinearChangeVariables
-import Def.v1.Atlas.AlgebraicGeometryI.code.LinearEquivDivisors.Part3
-import Def.v1.Atlas.AlgebraicGeometryI.code.LocalIntersectionMultiplicity
-import Def.v1.Atlas.AlgebraicGeometryI.code.LocallyFactorialDivisors.Part7
-import Def.v1.Atlas.AlgebraicGeometryI.code.LongExactCohomology
-import Def.v1.Atlas.AlgebraicGeometryI.code.LongExactSequence
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.MorphismDefinitions
-import Def.v1.Atlas.AlgebraicGeometryI.code.MorphismReconstruction
-import Def.v1.Atlas.AlgebraicGeometryI.code.MultiplicityDef
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.NakayamaApplications
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.NoetherNormalization
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.NoetherNullstellensatzChain
-import Def.v1.Atlas.AlgebraicGeometryI.code.NoetherianColimit
-import Def.v1.Atlas.AlgebraicGeometryI.code.NoetherianColimitSections
-import Def.v1.Atlas.AlgebraicGeometryI.code.NoetherianTopological
-import Def.v1.Atlas.AlgebraicGeometryI.code.NormalExtension
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.NormalizationVariety
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.OXModuleDef
-import Instance.v1.Atlas.AlgebraicGeometryI.code.OpenSubvariety
-import Def.v1.Atlas.AlgebraicGeometryI.code.PascalCurves.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.PascalTheorem.Part2
-import Instance.v1.Atlas.AlgebraicGeometryI.code.PicardGroup
-import Def.v1.Atlas.AlgebraicGeometryI.code.PicardProjective.Part7
-import Def.v1.Atlas.AlgebraicGeometryI.code.PluckerGr24
-import Instance.v1.Atlas.AlgebraicGeometryI.code.PowerSeriesUFD
-import Def.v1.Atlas.AlgebraicGeometryI.code.PrincipalDivisorDegree.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.ProjectiveDefinitions
-import Def.v1.Atlas.AlgebraicGeometryI.code.ProjectiveIntersection
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.ProjectiveIntersectionBound
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.ProjectiveIntersectionNonempty
-import Def.v1.Atlas.AlgebraicGeometryI.code.ProjectiveQCohProperties.Part2
-import Instance.v1.Atlas.AlgebraicGeometryI.code.ProjectiveSpaceDef
-import Def.v1.Atlas.AlgebraicGeometryI.code.ProjectiveVarietyDef
-import Def.v1.Atlas.AlgebraicGeometryI.code.Prop22PicCaCl
-import Instance.v1.Atlas.AlgebraicGeometryI.code.Prop23WeilCartier
-import Def.v1.Atlas.AlgebraicGeometryI.code.Prop24DegreePicard
-import Def.v1.Atlas.AlgebraicGeometryI.code.Prop30SmoothLocusDense
-import Def.v1.Atlas.AlgebraicGeometryI.code.Prop31SmoothLocalGenerators.Part3
-import Def.v1.Atlas.AlgebraicGeometryI.code.Prop34BlowupProperties.Part4
-import Def.v1.Atlas.AlgebraicGeometryI.code.Proposition40DegreeMap.Part3
-import Def.v1.Atlas.AlgebraicGeometryI.code.PullbackCanonical
-import Def.v1.Atlas.AlgebraicGeometryI.code.PullbackPresheafDef
-import Def.v1.Atlas.AlgebraicGeometryI.code.PushforwardDirectLimit
-import Instance.v1.Atlas.AlgebraicGeometryI.code.PushforwardExactAffine
-import Instance.v1.Atlas.AlgebraicGeometryI.code.PushforwardExactness.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.PushforwardPreservesKernel
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.PushforwardQCoh
-import Def.v1.Atlas.AlgebraicGeometryI.code.QCohAffineEquivalence.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.QCohDefinition
-import Instance.v1.Atlas.AlgebraicGeometryI.code.QCohEquivalenceProof
-import Instance.v1.Atlas.AlgebraicGeometryI.code.QCohLocalization
-import Instance.v1.Atlas.AlgebraicGeometryI.code.QCohMathlib.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.QCohProjective.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.QCohSheaves.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.QCohSpecEquiv.Part2
-import Class.v1.Atlas.AlgebraicGeometryI.code.QuasiprojectiveSeparated
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.QuasiprojectiveVarietyDef
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.RRApplicationsAudit
-import Def.v1.Atlas.AlgebraicGeometryI.code.RadicalIdealCorrespondence
-import Def.v1.Atlas.AlgebraicGeometryI.code.RamificationClosedProp7
-import Def.v1.Atlas.AlgebraicGeometryI.code.RamificationDivisor
-import Def.v1.Atlas.AlgebraicGeometryI.code.RamificationYoneda.Part2
-import Instance.v1.Atlas.AlgebraicGeometryI.code.ReflexiveSheaves.Part2
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.RegularLocalRing
-import Def.v1.Atlas.AlgebraicGeometryI.code.ResidueMap
-import Def.v1.Atlas.AlgebraicGeometryI.code.ResidueSum
-import Instance.v1.Atlas.AlgebraicGeometryI.code.ResidueSumZero
-import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannFormRR
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitz
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzApplications
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzAssembly
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzDegree
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzFormula
-import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzSheaf
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannHurwitzSheafIso
-import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRoch
-import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochApplications
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochCurves
-import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochDedekind
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochEulerCurves
-import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochGeneral
-import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochGeometric
-import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRochRiemannForm
-import Def.v1.Atlas.AlgebraicGeometryI.code.RightDerivedDelta
-import Def.v1.Atlas.AlgebraicGeometryI.code.SegreEmbedding
-import Def.v1.Atlas.AlgebraicGeometryI.code.SeparatedHausdorff
-import Def.v1.Atlas.AlgebraicGeometryI.code.SeparatedHausdorffClassical
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.SeparatedMorphismUniqueness
-import Def.v1.Atlas.AlgebraicGeometryI.code.SeparatednessCriterion
-import Def.v1.Atlas.AlgebraicGeometryI.code.SeparatednessDefinition
-import Instance.v1.Atlas.AlgebraicGeometryI.code.SerreCoherentSheavesProjVar
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.SerreDualityAnnihilator
-import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityCurves.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityDedekind
-import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityLinear.Part4
-import Structure.v1.Atlas.AlgebraicGeometryI.code.SerreDualityStatement
-import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityTate.Part3
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.SerreDualityUnconditional
-import Def.v1.Atlas.AlgebraicGeometryI.code.SerrePairingNondegenerate.Part2
-import Instance.v1.Atlas.AlgebraicGeometryI.code.SheafCohCurvesFiniteness
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohDerived
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.SheafDef
-import Def.v1.Atlas.AlgebraicGeometryI.code.SheafDefinitions.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.SheafTensorExact
-import Def.v1.Atlas.AlgebraicGeometryI.code.SheafificationProperties
-import Def.v1.Atlas.AlgebraicGeometryI.code.SingularLocus
-import Def.v1.Atlas.AlgebraicGeometryI.code.SmoothCurveDivisors.Part2
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.SmoothLocalStructure
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.SmoothLocallyFree
-import Def.v1.Atlas.AlgebraicGeometryI.code.SmoothPointVariety
-import Def.v1.Atlas.AlgebraicGeometryI.code.SmoothSubvarietyCriterion
-import Def.v1.Atlas.AlgebraicGeometryI.code.SmoothnessJacobianCriterion.Part3
-import Def.v1.Atlas.AlgebraicGeometryI.code.SmoothnessOmega
-import Def.v1.Atlas.AlgebraicGeometryI.code.SnakeLemma
-import Instance.v1.Atlas.AlgebraicGeometryI.code.StructureSheafColimit
-import Def.v1.Atlas.AlgebraicGeometryI.code.TangentConeExceptionalLocus.Part2
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.TangentSpaceDim
-import Def.v1.Atlas.AlgebraicGeometryI.code.TateCechInfra.Part2
-import Structure.v1.Atlas.AlgebraicGeometryI.code.TateResidueOrthogonality
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.TensorReduced
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.TildeQuasicoherent
-import Def.v1.Atlas.AlgebraicGeometryI.code.TorsionFreeDVR
-import Def.v1.Atlas.AlgebraicGeometryI.code.TorsionSheaves
-import Def.v1.Atlas.AlgebraicGeometryI.code.TwistSheaf.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.TwistingSheaves
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.WeilDivisor
-import Def.v1.Atlas.AlgebraicGeometryI.code.ZariskiClosedDef
-import Instance.v1.Atlas.AlgebraicGeometryI.code.ZariskiCotangentSpace.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.ZariskiSheafCohomology.Part4
-import Def.v1.Atlas.AlgebraicGeometryI.code.ZariskiTopologyAffine
-
 

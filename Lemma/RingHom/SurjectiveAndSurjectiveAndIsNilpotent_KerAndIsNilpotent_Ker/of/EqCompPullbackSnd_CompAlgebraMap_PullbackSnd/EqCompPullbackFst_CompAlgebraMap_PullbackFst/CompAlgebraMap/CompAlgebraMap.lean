@@ -3,7 +3,7 @@ import Initialize.Tactic.Attr.Basic
 import Lemma.MvPowerSeries.SpecialFormalModule
 import Def.CerednikDrinfeld_ModuliPackageDescent
 import Def.CerednikDrinfeld_ModuliPackageDeformation
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open CerednikDrinfeld CerednikDrinfeld.SpecialFormal CerednikDrinfeld.SpecialFormal.ModuliPackage MvPowerSeries
 

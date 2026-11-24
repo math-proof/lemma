@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.AlgebraicGeometryI.code.QCohProjective.Part2
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.AlgebraicGeometryI.code.QCohProjective.Part2
 open MvPolynomial QCohProjective
 
+
+public section
 
 namespace QCohProjective
 

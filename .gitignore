@@ -3,6 +3,10 @@ node_modules
 test.*
 *.log
 *.sql
+# Schema DDL is source, not scratch: keep /sql versioned
+!/sql/**/*.sql
+# generated per-section test dumps stay local
+/sql/test*
 __pycache__
 *.echo.lean
 .vscode/PythonImportHelper-v2-Completion.json

@@ -1,13 +1,16 @@
-import Mathlib
-import Def.FormalGroup_CartierModule
-import Def.PowerSeries_CartierModuleHomothety
-import Def.FormalGroup_CartierModuleWittAction
-import Def.FormalGroup_CartierModuleIntVerschiebung
-import Def.CerednikDrinfeld_SpecialFormalModule
-import Lemma.FormalGroup.CartierGradedPiece
-import Def.CerednikDrinfeld_GradedCartierModuleData
-
+module
+public import Mathlib
+public import Def.FormalGroup_CartierModule
+public import Def.PowerSeries_CartierModuleHomothety
+public import Def.FormalGroup_CartierModuleWittAction
+public import Def.FormalGroup_CartierModuleIntVerschiebung
+public import Def.CerednikDrinfeld_SpecialFormalModule
+public import Theorem.FormalGroup.CartierGradedPiece
+public import Def.CerednikDrinfeld_GradedCartierModuleData
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

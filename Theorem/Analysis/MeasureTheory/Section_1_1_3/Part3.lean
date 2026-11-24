@@ -1,6 +1,10 @@
-import Abbrev.Analysis.MeasureTheory.Section_1_1_2.Part4
-import Def.Analysis.MeasureTheory.Section_1_1_3.Part3
+module
+public import Abbrev.Analysis.MeasureTheory.Section_1_1_2.Part4
+public import Def.Analysis.MeasureTheory.Section_1_1_3.Part3
 open BoundedInterval
+
+
+public section
 
 /-!
 # Introduction to Measure Theory, Section 1.1.3: Connections with the Riemann integral
@@ -8,8 +12,6 @@ open BoundedInterval
 A companion to Section 1.1.3 of the book "An introduction to Measure Theory".
 
 -/
-
-
 /-- The Riemann sum difference when changing one tag -/
 lemma TaggedPartition.RiemannSum_changeTag_sub {I: BoundedInterval} {n:ℕ} (P: TaggedPartition I n)
     (f: ℝ → ℝ) (k: Fin n) (t: ℝ) (ht: P.x k.castSucc ≤ t ∧ t ≤ P.x k.succ) :

@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicFiniteCutoff.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicFiniteCaccioppoli
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalCheckerboard.Part4
+public import Mathlib.Combinatorics.SimpleGraph.DegreeSum
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicFiniteCutoff.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicFiniteCaccioppoli
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalCheckerboard.Part4
-import Mathlib.Combinatorics.SimpleGraph.DegreeSum
-
-
 namespace StatMech.Universality
 
 open Finset SimpleGraph

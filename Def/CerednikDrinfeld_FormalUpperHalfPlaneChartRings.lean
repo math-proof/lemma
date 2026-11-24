@@ -1,9 +1,12 @@
-import Mathlib
-import Def.CerednikDrinfeld_FormalUpperHalfPlaneCharts
-import Instance.CerednikDrinfeld_FormalUpperHalfPlaneChartRings
-import Abbrev.CerednikDrinfeld_FormalUpperHalfPlaneChartRings
-
+module
+public import Mathlib
+public import Def.CerednikDrinfeld_FormalUpperHalfPlaneCharts
+public import Instance.CerednikDrinfeld_FormalUpperHalfPlaneChartRings
+public import Abbrev.CerednikDrinfeld_FormalUpperHalfPlaneChartRings
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

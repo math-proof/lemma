@@ -1,5 +1,33 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/jc_core.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Walls.jc_steplocal
+public import Theorem.StatisticalMechanics.Code.Walls.jc_turnpreserveengine
+public import Theorem.StatisticalMechanics.Code.Walls.jc_orbitinvariant.Part3
+public import Theorem.StatisticalMechanics.Code.Walls.jc_footprintreduction
+public import Theorem.StatisticalMechanics.Code.Walls.jc_earanchor.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.jc_toprowrun.Part4
+public import Theorem.StatisticalMechanics.Code.Walls.jc_runnoup
+public import Theorem.StatisticalMechanics.Code.Walls.jc_leafremoval.Part2
+public import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
+public import Theorem.StatisticalMechanics.Code.Lattice.PlanarDual.Part10
+public import Theorem.StatisticalMechanics.Code.Lattice.DartDef.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.DartNext.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.DartOrbit.Part6
+public import Theorem.StatisticalMechanics.Code.Lattice.TurningNumber.Part6
+public import Theorem.StatisticalMechanics.Code.Lattice.CornerBalance.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.EarRemoval.Part5
+public import Theorem.StatisticalMechanics.Code.Lattice.EarExistence.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.EarContraction.Part9
+public import Theorem.StatisticalMechanics.Code.Lattice.BalanceContraction.Part2
+public import Theorem.StatisticalMechanics.Code.Lattice.GaussBonnetEar
+public import Theorem.StatisticalMechanics.Code.Lattice.BalancePreservingContraction.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.NoDiagTouchClose.Part4
+open SimpleGraph Function Set
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/jc_core.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,34 +35,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Walls.jc_steplocal
-import Theorem.StatisticalMechanics.Code.Walls.jc_turnpreserveengine
-import Theorem.StatisticalMechanics.Code.Walls.jc_orbitinvariant.Part3
-import Theorem.StatisticalMechanics.Code.Walls.jc_footprintreduction
-import Theorem.StatisticalMechanics.Code.Walls.jc_earanchor.Part2
-import Theorem.StatisticalMechanics.Code.Walls.jc_toprowrun.Part4
-import Theorem.StatisticalMechanics.Code.Walls.jc_runnoup
-import Theorem.StatisticalMechanics.Code.Walls.jc_leafremoval.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
-import Theorem.StatisticalMechanics.Code.Lattice.PlanarDual.Part10
-import Theorem.StatisticalMechanics.Code.Lattice.DartDef.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.DartNext.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.DartOrbit.Part6
-import Theorem.StatisticalMechanics.Code.Lattice.TurningNumber.Part6
-import Theorem.StatisticalMechanics.Code.Lattice.CornerBalance.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.EarRemoval.Part5
-import Theorem.StatisticalMechanics.Code.Lattice.EarExistence.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.EarContraction.Part9
-import Theorem.StatisticalMechanics.Code.Lattice.BalanceContraction.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.GaussBonnetEar
-import Theorem.StatisticalMechanics.Code.Lattice.BalancePreservingContraction.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.NoDiagTouchClose.Part4
-open SimpleGraph Function Set
-
-
 namespace StatMech
 
 namespace Walls

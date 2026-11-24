@@ -1,5 +1,5 @@
 import Instance.FLTPrelim_GaloisRep
-import Lemma.WeierstrassCurve.FrobeniusTrace
+import Theorem.WeierstrassCurve.FrobeniusTrace
 import Def.EllipticCurve_FrobeniusEndo
 import Abbrev.EllipticCurve_FrobeniusEndo
 

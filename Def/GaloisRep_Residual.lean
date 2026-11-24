@@ -1,15 +1,18 @@
-import Lemma.WeierstrassCurve.FrobeniusTrace
-import Def.FLTPrelim_Modularity
-import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
-import Mathlib.LinearAlgebra.Charpoly.Basic
-import Mathlib.LinearAlgebra.Determinant
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.FieldTheory.Finiteness
-import Structure.GaloisRep_Residual
-import Abbrev.GaloisRep_Residual
-
+module
+public import Theorem.WeierstrassCurve.FrobeniusTrace
+public import Def.FLTPrelim_Modularity
+public import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
+public import Mathlib.LinearAlgebra.Charpoly.Basic
+public import Mathlib.LinearAlgebra.Determinant
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.FieldTheory.Finiteness
+public import Structure.GaloisRep_Residual
+public import Abbrev.GaloisRep_Residual
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Lemma.Polynomial.Normed.Field.ContinuityOfRoots
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Lemma.Polynomial.Normed.Field.ContinuityOfRoots
 open IntermediateField
 
+
+public section
 
 namespace Polynomial
 

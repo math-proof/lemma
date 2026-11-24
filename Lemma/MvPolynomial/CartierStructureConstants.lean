@@ -1,14 +1,17 @@
-import Mathlib
-import Lemma.MvPowerSeries.NegV2
-import Lemma.MvPowerSeries.CartierModule
-import Lemma.PowerSeries.CartierModuleHomothety
-import Lemma.MvPowerSeries.CartierModuleWittAction
-import Lemma.MvPolynomial.CartierModuleIntVerschiebung
-import Lemma.MvPowerSeries.CartierModuleBaseChange
-import Lemma.MvPowerSeries.SpecialFormalModule
-import Lemma.FormalGroup.CartierGradedPiece
-
+module
+public import Mathlib
+public import Lemma.MvPowerSeries.NegV2
+public import Lemma.MvPowerSeries.CartierModule
+public import Lemma.PowerSeries.CartierModuleHomothety
+public import Lemma.MvPowerSeries.CartierModuleWittAction
+public import Lemma.MvPolynomial.CartierModuleIntVerschiebung
+public import Lemma.MvPowerSeries.CartierModuleBaseChange
+public import Lemma.MvPowerSeries.SpecialFormalModule
+public import Theorem.FormalGroup.CartierGradedPiece
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

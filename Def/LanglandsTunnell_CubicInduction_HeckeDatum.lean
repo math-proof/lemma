@@ -1,12 +1,14 @@
-import Lemma.Finset.ConverseData
-import Lemma.Polynomial.RankinSelbergEuler
-import Structure.LocalLanglands_HeckeCosetSystem
-import Abbrev.LanglandsTunnell_CubicInduction_HeckeDatum
-
+module
+public import Theorem.Finset.ConverseData
+public import Theorem.Polynomial.RankinSelbergEuler
+public import Structure.LocalLanglands_HeckeCosetSystem
+public import Abbrev.LanglandsTunnell_CubicInduction_HeckeDatum
 set_option autoImplicit false
-
 open Matrix IsDedekindDomain NumberField NumberField.AdelicLevel NumberField.TateGlobal
 open LanglandsTunnell.TateLocal LanglandsTunnell.RankinSelberg
+
+
+public section
 
 noncomputable section
 

@@ -1,8 +1,11 @@
-import Mathlib
-import Abbrev.Analysis.Misc.SI.Part2
+module
+public import Mathlib
+public import Abbrev.Analysis.Misc.SI.Part2
+
+
+public section
+
 /- This is needed to keep dimensions such as `Length` and `Speed * Time` defeq to each other -/
-
-
 namespace SI
 
 open UnitsSystem

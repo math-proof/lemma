@@ -1,26 +1,28 @@
-/-
-Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
--/
-
-import Mathlib.Analysis.VonNeumannAlgebra.Basic
-import Mathlib.Topology.Algebra.Module.Spaces.PointwiseConvergenceCLM
-import Mathlib.Analysis.LocallyConvex.PointwiseConvergence
-import Mathlib.Analysis.LocallyConvex.Separation
-import Mathlib.Analysis.LocallyConvex.WithSeminorms
-import Mathlib.Analysis.Normed.Module.HahnBanach
-import Mathlib.Analysis.InnerProductSpace.Dual
-import Mathlib.Analysis.InnerProductSpace.Adjoint
-import Mathlib.Analysis.InnerProductSpace.ProdL2
-import Mathlib.Analysis.CStarAlgebra.ContinuousLinearMap
-import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Basic
-import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Instances
-import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Isometric
-import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Range
-import Theorem.Analysis.CStarAlgebra.KaplanskyDensity.Part9
+module
+public import Mathlib.Analysis.VonNeumannAlgebra.Basic
+public import Mathlib.Topology.Algebra.Module.Spaces.PointwiseConvergenceCLM
+public import Mathlib.Analysis.LocallyConvex.PointwiseConvergence
+public import Mathlib.Analysis.LocallyConvex.Separation
+public import Mathlib.Analysis.LocallyConvex.WithSeminorms
+public import Mathlib.Analysis.Normed.Module.HahnBanach
+public import Mathlib.Analysis.InnerProductSpace.Dual
+public import Mathlib.Analysis.InnerProductSpace.Adjoint
+public import Mathlib.Analysis.InnerProductSpace.ProdL2
+public import Mathlib.Analysis.CStarAlgebra.ContinuousLinearMap
+public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Basic
+public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Instances
+public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Isometric
+public import Mathlib.Analysis.CStarAlgebra.ContinuousFunctionalCalculus.Range
+public import Theorem.Analysis.CStarAlgebra.KaplanskyDensity.Part9
 open scoped PointwiseConvergenceCLM
 open Topology
 
 
+public section
+
+/-
+Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado
+-/
 namespace Analysis.CStarAlgebra.KaplanskyDensityWanted
 
 universe u

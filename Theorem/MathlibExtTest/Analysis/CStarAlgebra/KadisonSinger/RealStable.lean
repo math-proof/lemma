@@ -1,14 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/CStarAlgebra/KadisonSinger/RealStable.lean -/
-
-import Def.Analysis.CStarAlgebra.KadisonSinger.RealStable
-import Lemma.Real.CStarAlgebra.KadisonSinger.RealStable
+module
+public import Def.Analysis.CStarAlgebra.KadisonSinger.RealStable
+public import Theorem.Real.CStarAlgebra.KadisonSinger.RealStable
 open scoped ComplexOrder
-
 open MvPolynomial
-
 open MathlibExt.Analysis.CStarAlgebra.KadisonSinger
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/CStarAlgebra/KadisonSinger/RealStable.lean -/
 namespace MathlibExtTest.Analysis.CStarAlgebra.KadisonSinger.RealStable
 
 -- The determinant polynomial of a positive one-dimensional matrix is stable.

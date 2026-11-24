@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/jc2_runframe.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Walls.jc_earanchor.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.jc_toprowrun.Part4
+public import Theorem.StatisticalMechanics.Code.Walls.jc_runnoup
+public import Theorem.StatisticalMechanics.Code.Lattice.EarExistence.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.EarContraction.Part9
+public import Structure.StatisticalMechanics.Code.Walls.jc2_runframe
+open SimpleGraph Function
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/jc2_runframe.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Walls.jc_earanchor.Part2
-import Theorem.StatisticalMechanics.Code.Walls.jc_toprowrun.Part4
-import Theorem.StatisticalMechanics.Code.Walls.jc_runnoup
-import Theorem.StatisticalMechanics.Code.Lattice.EarExistence.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.EarContraction.Part9
-import Structure.StatisticalMechanics.Code.Walls.jc2_runframe
-open SimpleGraph Function
-
-
 namespace StatMech
 
 namespace Walls

@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexW3Link.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.HexInfraReach.Part4
+public import Theorem.StatisticalMechanics.Code.Universality.HexWall3.Part4
+public import Def.StatisticalMechanics.Code.Universality.HexW3Link.Part3
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexW3Link.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.HexInfraReach.Part4
-import Theorem.StatisticalMechanics.Code.Universality.HexWall3.Part4
-import Def.StatisticalMechanics.Code.Universality.HexW3Link.Part3
-
-
 namespace StatMech.Universality
 
 open HexWalk List Filter Topology

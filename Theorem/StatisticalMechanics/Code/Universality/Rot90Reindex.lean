@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/Rot90Reindex.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.CrossingReflection.Part4
+public import Theorem.StatisticalMechanics.Code.Universality.DualEventSetEquality.Part4
+public import Theorem.StatisticalMechanics.Code.Universality.G3PercDualityFull.Part2
+open Set MeasureTheory ProbabilityTheory SimpleGraph
+open scoped ENNReal NNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/Rot90Reindex.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.CrossingReflection.Part4
-import Theorem.StatisticalMechanics.Code.Universality.DualEventSetEquality.Part4
-import Theorem.StatisticalMechanics.Code.Universality.G3PercDualityFull.Part2
-open Set MeasureTheory ProbabilityTheory SimpleGraph
-open scoped ENNReal NNReal
-
-
 namespace StatMech
 
 namespace Universality

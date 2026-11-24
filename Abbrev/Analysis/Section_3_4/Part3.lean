@@ -1,6 +1,11 @@
-import Mathlib
-import Abbrev.Analysis.Section_3_1_api
-import Theorem.Analysis.Section_3_4.Part2
+module
+public import Mathlib
+public import Abbrev.Analysis.Section_3_1_api
+public import Theorem.Analysis.Section_3_4.Part2
+
+
+public section
+
 /-!
 # Analysis I, Section 3.4: Images and inverse images
 
@@ -23,8 +28,6 @@ Users of the companion who have completed the exercises in this section are welc
 - (Add tip here)
 
 -/
-
-
 namespace Chapter3
 
 export SetTheory (Set Object nat)

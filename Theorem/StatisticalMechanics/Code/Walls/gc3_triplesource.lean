@@ -1,5 +1,19 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/gc3_triplesource.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Sharpness.RandomCurrent.Part10
+public import Theorem.StatisticalMechanics.Code.Sharpness.ClaimIsing.Part2
+public import Theorem.StatisticalMechanics.Code.Sharpness.FluxEdgeCopyBridge.Part3
+public import Theorem.StatisticalMechanics.Code.Walls.gc2_boundarylinear
+open Finset BigOperators
+open scoped symmDiff
+open Classical
+set_option linter.unusedSectionVars false
+set_option maxHeartbeats 800000
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/gc3_triplesource.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,21 +21,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Sharpness.RandomCurrent.Part10
-import Theorem.StatisticalMechanics.Code.Sharpness.ClaimIsing.Part2
-import Theorem.StatisticalMechanics.Code.Sharpness.FluxEdgeCopyBridge.Part3
-import Theorem.StatisticalMechanics.Code.Walls.gc2_boundarylinear
-open Finset BigOperators
-open scoped symmDiff
-open Classical
-
-set_option linter.unusedSectionVars false
-set_option maxHeartbeats 800000
-
-
 namespace StatMech.Walls
 
 open StatMech.Sharpness

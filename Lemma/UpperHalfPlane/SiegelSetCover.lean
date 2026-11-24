@@ -1,9 +1,11 @@
-import Mathlib
-
+module
+public import Mathlib
 set_option autoImplicit false
-
 open Matrix Matrix.SpecialLinearGroup UpperHalfPlane ModularGroup CongruenceSubgroup
 open scoped Modular MatrixGroups Pointwise
+
+
+public section
 
 namespace FLT.SiegelSetCover
 

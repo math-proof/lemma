@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/CanonicalBundleProjective.lean -/
+module
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleGeneral
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleGeneral
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafDef
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TwistSheaf
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafDef.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.TwistSheaf.Part2
+public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleProjective
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/CanonicalBundleProjective.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleGeneral
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalBundleGeneral
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafDef
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TwistSheaf
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafDef.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.TwistSheaf.Part2
-import Abbrev.v1.Atlas.AlgebraicGeometryI.code.CanonicalBundleProjective
-
-
 noncomputable section
 
 open KaehlerDifferential Module CanonicalSheafDef

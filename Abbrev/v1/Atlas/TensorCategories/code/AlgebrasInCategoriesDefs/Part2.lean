@@ -1,5 +1,20 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/AlgebrasInCategoriesDefs.lean -/
+module
+public import Def.v1.Atlas.TensorCategories.code.AlgebrasInCategories.Part4
+public import Theorem.Category.Atlas.v1.TensorCategories.code.AlgebrasInCategories
+public import Theorem.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
+public import Theorem.Category.Atlas.v1.TensorCategories.code.InternalHom
+public import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
+public import Def.v1.Atlas.TensorCategories.code.InternalHom.Part4
+public import Mathlib.CategoryTheory.Monoidal.Bimod
+public import Mathlib.CategoryTheory.Monoidal.Mod_
+public import Mathlib.CategoryTheory.Limits.Shapes.Equalizers
+public import Def.v1.Atlas.TensorCategories.code.AlgebrasInCategoriesDefs
+set_option maxHeartbeats 400000
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/AlgebrasInCategoriesDefs.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +22,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.TensorCategories.code.AlgebrasInCategories.Part4
-import Theorem.Category.Atlas.v1.TensorCategories.code.AlgebrasInCategories
-import Theorem.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
-import Theorem.Category.Atlas.v1.TensorCategories.code.InternalHom
-import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
-import Def.v1.Atlas.TensorCategories.code.InternalHom.Part4
-import Mathlib.CategoryTheory.Monoidal.Bimod
-import Mathlib.CategoryTheory.Monoidal.Mod_
-import Mathlib.CategoryTheory.Limits.Shapes.Equalizers
-import Def.v1.Atlas.TensorCategories.code.AlgebrasInCategoriesDefs
-set_option maxHeartbeats 400000
-
 universe v u
 
 

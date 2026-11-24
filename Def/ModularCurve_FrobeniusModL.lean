@@ -1,10 +1,13 @@
-import Mathlib
-import Lemma.HahnSeries.X0ModL
-import Def.AlgebraicCurve_Correspondence
-import Theorems.Thm_ModularCurve_pow_char_eq_qExpand_of_coeff_fixed
-import Theorems.Thm_ModularCurve_qExpand_jqModC_eq_pow_unconditional
-
+module
+public import Mathlib
+public import Theorem.HahnSeries.X0ModL
+public import Def.AlgebraicCurve_Correspondence
+public import Theorems.Thm_ModularCurve_pow_char_eq_qExpand_of_coeff_fixed
+public import Theorems.Thm_ModularCurve_qExpand_jqModC_eq_pow_unconditional
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

@@ -1,9 +1,12 @@
-import Initialize.Tactic.Attr.Basic
-import Def.NumberTheory.RothAuxiliary
-import Lemma.Real.RpowDivMul.le.PowRpow.of.Le_Pow.Ge_0.Gt_0.Gt_0.Gt_0
+module
+public import Initialize.Tactic.Attr.Basic
+public import Def.NumberTheory.RothAuxiliary
+public import Lemma.Real.RpowDivMul.le.PowRpow.of.Le_Pow.Ge_0.Gt_0.Gt_0.Gt_0
 open MathlibExt.NumberTheory.RothAuxiliary
 open Real Fin
 
+
+public section
 
 private lemma roth_ridout_weighted_sum_eq
   {m : ℕ}

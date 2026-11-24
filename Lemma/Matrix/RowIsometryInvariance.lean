@@ -1,6 +1,9 @@
-import Lemma.Matrix.WindowedSiegelSet
-
+module
+public import Lemma.Matrix.WindowedSiegelSet
 open IsDedekindDomain NumberField Matrix
+
+
+public section
 
 noncomputable section
 

@@ -1,6 +1,9 @@
-import Def.Analysis.MeasureTheory.Section_1_4_2.Part8
-import Theorem.Analysis.MeasureTheory.Section_1_4_3.Part4
+module
+public import Def.Analysis.MeasureTheory.Section_1_4_2.Part8
+public import Theorem.Analysis.MeasureTheory.Section_1_4_3.Part4
 
+
+public section
 
 def CountablyAdditiveMeasure.restrict_alg {X:Type*} {B B': ConcreteSigmaAlgebra X} (μ: CountablyAdditiveMeasure B) (hBB' : B' ≤ B) : CountablyAdditiveMeasure B' :=
   {

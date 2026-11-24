@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/RevealmentBoundAssembly.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.OSSS.MonotoneOSSSAssembly
+public import Theorem.StatisticalMechanics.Code.OSSS.LindebergTree.Part6
+open scoped BigOperators
+open MeasureTheory
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/RevealmentBoundAssembly.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.OSSS.MonotoneOSSSAssembly
-import Theorem.StatisticalMechanics.Code.OSSS.LindebergTree.Part6
-open scoped BigOperators
-open MeasureTheory
-
-
 namespace StatMech
 
 namespace OSSS

@@ -1,19 +1,21 @@
-import Syntax.Logic.Quantifier.Part4
+import Theorem.Data.Set.Sets
 import Initialize.Tactic.Attr.Basic
+import Lemma.Bool.Any.of.Any.limits.swap.given
 
 
 @[path]
 private lemma main
-  {p : α → β → Prop}
-  {r : α → Prop}
-  {s : β → Prop}
+  {A : Set α}
+  {f : β → Prop}
+  {g : α → β → Prop}
 -- given
-  (h : ∃ x | r x, ∃ y | s y, p x y) :
+  (h : ∃ y, f y ∧ ∃ x ∈ A, g x y) :
 -- imply
-  ∃ y | s y, ∃ x | r x, p x y := by
+  ∃ x ∈ A, ∃ y, f y ∧ g x y := by
 -- proof
-  obtain ⟨x, hr, y, hs, hp⟩ := h
-  exact ⟨y, hs, x, hr, hp⟩
+  obtain ⟨y, hy, x, hx, hg⟩ := h
+  exact ⟨x, hx, y, hy, hg⟩
 
 
 -- created on 2022-01-08
+-- updated on 2026-11-24

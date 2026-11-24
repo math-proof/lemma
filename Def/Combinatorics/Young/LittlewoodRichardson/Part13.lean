@@ -1,13 +1,17 @@
+module
+public import Mathlib
+public import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
+public import Def.Combinatorics.Young.MonomialSymmetric.Part6
+public import Instance.Combinatorics.Young.LittlewoodRichardson.Part6
+open Finset Function BigOperators Polynomial MvPolynomial
+
+
+public section
+
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
-import Def.Combinatorics.Young.MonomialSymmetric.Part6
-import Instance.Combinatorics.Young.LittlewoodRichardson.Part6
-open Finset Function BigOperators Polynomial MvPolynomial
-
 /-!
 # The Littlewood-Richardson Rule
 
@@ -59,8 +63,6 @@ for explicit equivalences.
 
 Littlewood-Richardson rule, Schur polynomial, Yamanouchi tableau, symmetric polynomial
 -/
-
-
 namespace AlgebraicCombinatorics
 
 variable {R : Type*} [CommRing R]

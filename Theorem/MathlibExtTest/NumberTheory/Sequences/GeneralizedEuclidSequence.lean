@@ -1,12 +1,13 @@
+module
+public import Theorem.NumberTheory.Sequences.GeneralizedEuclidSequence.Part8
+public import Theorem.Nat.Sequences.GeneralizedEuclidSequence
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.NormNum.Prime
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Sequences/GeneralizedEuclidSequence.lean -/
-
-
-import Theorem.NumberTheory.Sequences.GeneralizedEuclidSequence.Part8
-import Lemma.Nat.Sequences.GeneralizedEuclidSequence
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.NormNum.Prime
-
-
 namespace MathlibExtTest.NumberTheory.Sequences.GeneralizedEuclidSequence
 
 -- Starting from `2, 3`, the sequence reaches `7` after the seed and supplies its Euclid witness.

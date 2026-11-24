@@ -1,11 +1,12 @@
+module
+public import Theorem.NumberTheory.HilbertWaring.Part12
+public import Theorem.Nat.HilbertWaring
+public import Mathlib.Tactic
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/HilbertWaring.lean -/
-
-
-import Theorem.NumberTheory.HilbertWaring.Part12
-import Lemma.Nat.HilbertWaring
-import Mathlib.Tactic
-
-
 namespace MathlibExtTest.NumberTheory.HilbertWaring
 
 open Finset

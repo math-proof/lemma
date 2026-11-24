@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexFourByFourGradeCount.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexFourByFourGradeCountSectorZero
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexFourByFourGradeCountSectorOne
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexFourByFourGradeCountSectorTwo
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexFourByFourGradeCountSectorThree
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexFourByFourGradeCountSectorFour
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexFourByFourGradeCount.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexFourByFourGradeCountSectorZero
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexFourByFourGradeCountSectorOne
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexFourByFourGradeCountSectorTwo
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexFourByFourGradeCountSectorThree
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexFourByFourGradeCountSectorFour
-
-
 namespace StatMech.FrontierD
 
 theorem sixVertexFourByFourDynamicGradeCount_certificate

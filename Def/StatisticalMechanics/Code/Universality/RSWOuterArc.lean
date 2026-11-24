@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/RSWOuterArc.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.RSWArcSupport
+public import Theorem.StatisticalMechanics.Code.Universality.RSWGapSymmetry.Part4
+open Function MeasureTheory Set
+open scoped ENNReal NNReal BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/RSWOuterArc.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.Universality.RSWArcSupport
-import Theorem.StatisticalMechanics.Code.Universality.RSWGapSymmetry.Part4
-open Function MeasureTheory Set
-open scoped ENNReal NNReal BigOperators
-
-
 namespace StatMech
 
 namespace Universality

@@ -1,6 +1,9 @@
-import Lemma.Scheme.CharLSpecialFibrePic0CommutingFamilyBridge
-
+module
+public import Theorem.Scheme.CharLSpecialFibrePic0CommutingFamilyBridge
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

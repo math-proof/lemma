@@ -1,12 +1,15 @@
-import Mathlib
-import Def.FLTPrelim_Ramification
-import Instance.EllipticCurve_FrobeniusTrace
-import Instance.EllipticCurve_TateModule
-import Theorem.MvPolynomial.X1HeckeModule
-import Def.ModularCurve_X1PrimitiveSpecialization
-import Theorem.LaurentSeries.QExpFrobeniusModL
-
+module
+public import Mathlib
+public import Def.FLTPrelim_Ramification
+public import Instance.EllipticCurve_FrobeniusTrace
+public import Instance.EllipticCurve_TateModule
+public import Theorem.MvPolynomial.X1HeckeModule
+public import Def.ModularCurve_X1PrimitiveSpecialization
+public import Theorem.LaurentSeries.QExpFrobeniusModL
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

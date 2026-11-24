@@ -1,9 +1,12 @@
-import Def.WeierstrassCurve_ReductionMap
-import Def.AlgebraicCurve_ConstantReduction
-import Def.AlgebraicCurve_PlaceEvaluation
-import Structure.ModularCurve_FinitePlaceLift
-
+module
+public import Def.WeierstrassCurve_ReductionMap
+public import Def.AlgebraicCurve_ConstantReduction
+public import Def.AlgebraicCurve_PlaceEvaluation
+public import Structure.ModularCurve_FinitePlaceLift
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

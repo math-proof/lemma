@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectBoundaryMergePrimitiveContradiction.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryToggleMergeWinding
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBlackOrbitRibbonPrimitive
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnDevelopedAnchor.Part11
+public import Def.StatisticalMechanics.Code.FrontierD.FKRectBoundaryMergePrimitiveContradiction
+open SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectBoundaryMergePrimitiveContradiction.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryToggleMergeWinding
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBlackOrbitRibbonPrimitive
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectZeroTurnDevelopedAnchor.Part11
-import Def.StatisticalMechanics.Code.FrontierD.FKRectBoundaryMergePrimitiveContradiction
-open SimpleGraph
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

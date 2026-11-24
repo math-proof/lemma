@@ -1,19 +1,22 @@
+module
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.Algebra.GroupWithZero.Action.Basic
+public import Mathlib.Algebra.Module.ZMod
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Instance.FLTPrelim_GaloisRep
+public import Def.FLTPrelim_GaloisRep
+set_option autoImplicit false
+
+
+public section
+
 /-
 Copyright (c) 2024 Imperial College London FLT project contributors.
 Released under Apache 2.0 license.
 Adapted from the Imperial College London FLT formalization
 (https://github.com/ImperialCollegeLondon/FLT).
 -/
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.Algebra.GroupWithZero.Action.Basic
-import Mathlib.Algebra.Module.ZMod
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Instance.FLTPrelim_GaloisRep
-import Def.FLTPrelim_GaloisRep
-
-set_option autoImplicit false
-
 universe r s v
 
 namespace WeierstrassCurve.Affine.Point

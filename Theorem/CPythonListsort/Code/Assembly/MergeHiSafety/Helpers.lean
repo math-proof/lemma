@@ -6,7 +6,7 @@ public import Structure.CPythonListsort.Code.Assembly.MergeTracePrimitives.Part5
 public import Structure.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
 public import Theorem.CPythonListsort.Code.Assembly.MergeGetmemRequestBound
 public import Theorem.CPythonListsort.Code.Assembly.MergeGetmemStorageValid
-public import Lemma.List.Atlas.CPythonListsort.Code.Transcription.MergeAt
+public import Theorem.List.Atlas.CPythonListsort.Code.Transcription.MergeAt
 public import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
 public import Def.CPythonListsort.Code.Assembly.MergeHiSafety
 public import Def.CPythonListsort.Code.Assembly.MergeHiSafety.Part2
@@ -16,12 +16,12 @@ public import Structure.CPythonListsort.Code.Assembly.MergeHiSafety.Part2
 public import Structure.CPythonListsort.Code.Assembly.MergeHiSafety.Part3
 public import Structure.CPythonListsort.Code.Assembly.MergeHiSafety.Part4
 public import Structure.CPythonListsort.Code.Assembly.MergeHiSafety.Part5
-public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.AccessTrace
-public import Lemma.List.Atlas.CPythonListsort.Code.Transcription.MergeMemory
-public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.SortSliceSafety
-public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.MergeTracePrimitives
-public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopSafety
-public import Lemma.List.Atlas.CPythonListsort.Code.Transcription.MergeHi
+public import Theorem.List.Atlas.CPythonListsort.Code.Assembly.AccessTrace
+public import Theorem.List.Atlas.CPythonListsort.Code.Transcription.MergeMemory
+public import Theorem.List.Atlas.CPythonListsort.Code.Assembly.SortSliceSafety
+public import Theorem.List.Atlas.CPythonListsort.Code.Assembly.MergeTracePrimitives
+public import Theorem.List.Atlas.CPythonListsort.Code.Assembly.GallopSafety
+public import Theorem.List.Atlas.CPythonListsort.Code.Transcription.MergeHi
 public import Theorem.CPythonListsort.Code.Assembly.AccessTrace.Part2
 /-!
 # `merge_hi` traced execution and safety

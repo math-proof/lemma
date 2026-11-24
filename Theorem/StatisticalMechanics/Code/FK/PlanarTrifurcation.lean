@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/PlanarTrifurcation.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.InfiniteFiniteEnergy.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.binsclosure.Part3
+public import Theorem.StatisticalMechanics.Code.Percolation.CanonTrifProb
+public import Theorem.StatisticalMechanics.Code.Percolation.CanonBurtonKeane
+public import Theorem.StatisticalMechanics.Code.FK.FKLimitsErgodicUncond
+open Set SimpleGraph Finset MeasureTheory
+open scoped ENNReal BigOperators
+open StatMech.Lattice StatMech.ConfigSpace
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/PlanarTrifurcation.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FK.InfiniteFiniteEnergy.Part2
-import Theorem.StatisticalMechanics.Code.Walls.binsclosure.Part3
-import Theorem.StatisticalMechanics.Code.Percolation.CanonTrifProb
-import Theorem.StatisticalMechanics.Code.Percolation.CanonBurtonKeane
-import Theorem.StatisticalMechanics.Code.FK.FKLimitsErgodicUncond
-open Set SimpleGraph Finset MeasureTheory
-open scoped ENNReal BigOperators
-open StatMech.Lattice StatMech.ConfigSpace
-
-
 namespace StatMech
 
 open Percolation

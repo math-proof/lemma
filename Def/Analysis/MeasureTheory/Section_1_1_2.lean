@@ -1,8 +1,11 @@
-import Theorem.Analysis.MeasureTheory.Section_1_1_1.Part16
-import Mathlib.LinearAlgebra.AffineSpace.Simplex.Basic
-import Abbrev.Analysis.MeasureTheory.Section_1_1_2.Part2
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_1_1.Part16
+public import Mathlib.LinearAlgebra.AffineSpace.Simplex.Basic
+public import Abbrev.Analysis.MeasureTheory.Section_1_1_2.Part2
 open Pointwise
 
+
+public section
 
 /-- An invertible matrix defines a linear equivalence on Euclidean space. -/
 noncomputable def Matrix.linear_equiv {d:ℕ} (A: Matrix (Fin d) (Fin d) ℝ) [Invertible A] :

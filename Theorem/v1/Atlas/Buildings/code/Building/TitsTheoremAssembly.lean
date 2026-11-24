@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/TitsTheoremAssembly.lean -/
+module
+public import Theorem.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.CoxeterProperties.Part2
+public import Theorem.Finset.SeparatedByWall.of.AdjacentToSimplicialComplex.HasSufficientReversibleFoldings
+open AptIsCoxeterProof ChamberComplex
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/TitsTheoremAssembly.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,11 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.CoxeterProperties.Part2
-import Lemma.Finset.SeparatedByWall.of.AdjacentToSimplicialComplex.HasSufficientReversibleFoldings
-open AptIsCoxeterProof ChamberComplex
-
 variable {V : Type*} [DecidableEq V]
 
 

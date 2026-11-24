@@ -1,9 +1,12 @@
-import Mathlib.RingTheory.MvPolynomial.Basic
-import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
-import Mathlib.FieldTheory.Finite.GaloisField
-import Instance.DrinfeldCurve_CoordRing
-
+module
+public import Mathlib.RingTheory.MvPolynomial.Basic
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+public import Mathlib.FieldTheory.Finite.GaloisField
+public import Instance.DrinfeldCurve_CoordRing
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

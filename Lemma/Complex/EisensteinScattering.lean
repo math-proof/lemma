@@ -1,8 +1,11 @@
-import Mathlib
-import Def.AutomorphicForm_EisensteinScattering
-
+module
+public import Mathlib
+public import Def.AutomorphicForm_EisensteinScattering
 open Filter Topology Complex
 open scoped Real ComplexConjugate
+
+
+public section
 
 noncomputable section
 

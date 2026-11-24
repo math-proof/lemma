@@ -1,5 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/FKTwoBoxDecoupling.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.FKMixingUpperClose.Part5
+public import Theorem.StatisticalMechanics.Code.FK.CylinderDecayClose.Part6
+public import Theorem.StatisticalMechanics.Code.FK.MonotoneVolumeLimit
+public import Theorem.StatisticalMechanics.Code.FK.MonotoneWeakLimit.Part2
+public import Def.StatisticalMechanics.Code.FK.FKTwoBoxDecoupling
+open MeasureTheory Filter Topology Set
+open StatMech.ConfigSpace StatMech.Lattice
+open scoped BigOperators
+set_option linter.unusedSectionVars false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/FKTwoBoxDecoupling.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,20 +20,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FK.FKMixingUpperClose.Part5
-import Theorem.StatisticalMechanics.Code.FK.CylinderDecayClose.Part6
-import Theorem.StatisticalMechanics.Code.FK.MonotoneVolumeLimit
-import Theorem.StatisticalMechanics.Code.FK.MonotoneWeakLimit.Part2
-import Def.StatisticalMechanics.Code.FK.FKTwoBoxDecoupling
-open MeasureTheory Filter Topology Set
-open StatMech.ConfigSpace StatMech.Lattice
-open scoped BigOperators
-
-set_option linter.unusedSectionVars false
-
-
 namespace StatMech
 
 namespace FK

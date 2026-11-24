@@ -1,4 +1,4 @@
-import Lemma.Scheme.CharLSpecialFibrePic0CommutingFamilyBridge
+import Theorem.Scheme.CharLSpecialFibrePic0CommutingFamilyBridge
 
 set_option autoImplicit false
 

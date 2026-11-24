@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexBetheEvenOffsetNodalLimit.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetBoundaryEstimate
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetDiscreteStability
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetRowContraction
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetTestQuadrature
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheEvenRootOffsetBound
+public import Def.StatisticalMechanics.Code.FrontierD.SixVertexBetheEvenOffsetNodalLimit
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexBetheEvenOffsetNodalLimit.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetBoundaryEstimate
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetDiscreteStability
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetRowContraction
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetTestQuadrature
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheEvenRootOffsetBound
-import Def.StatisticalMechanics.Code.FrontierD.SixVertexBetheEvenOffsetNodalLimit
-
-
 namespace StatMech.FrontierD
 
 open Finset

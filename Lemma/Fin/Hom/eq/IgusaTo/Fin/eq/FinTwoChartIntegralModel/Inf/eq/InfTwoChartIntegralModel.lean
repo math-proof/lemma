@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.Scheme.IgusaScheme
 import Lemma.Scheme.TwoChartIntegralModel
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry ModularCurve Scheme.IgusaScheme Scheme
 

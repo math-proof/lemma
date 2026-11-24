@@ -1,11 +1,13 @@
-import Mathlib
-import Instance.Deformations_ContinuousSMulDiscrete
-import Instance.RepTheory_SmoothVectors
-import Lemma.Set.RightTranslationFn
-
+module
+public import Mathlib
+public import Instance.Deformations_ContinuousSMulDiscrete
+public import Instance.RepTheory_SmoothVectors
+public import Lemma.Set.RightTranslationFn
 set_option autoImplicit false
-
 open scoped Topology
+
+
+public section
 
 namespace FLT.SmoothVectors
 

@@ -1,10 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/WeakApproximation.lean -/
+module
+public import Theorem.NumberTheory.NumberField.RayClass.FiniteCongruence.Part4
+public import Theorem.Nat.NumberField.RayClass.FiniteCongruence
+public import Mathlib.Analysis.AbsoluteValue.Equivalence
+public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/WeakApproximation.lean -/
 -- Author: @toskua, Avocado
-import Theorem.NumberTheory.NumberField.RayClass.FiniteCongruence.Part4
-import Lemma.Nat.NumberField.RayClass.FiniteCongruence
-import Mathlib.Analysis.AbsoluteValue.Equivalence
-import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 @[expose] noncomputable section
 
 open scoped nonZeroDivisors

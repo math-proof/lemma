@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/bkm_dcccorridorconn.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Percolation.HrouteDisjointPaths.Part4
+open StatMech.Lattice StatMech.ConfigSpace
+open StatMech.Percolation StatMech.Percolation.DisjointPaths
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/bkm_dcccorridorconn.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Percolation.HrouteDisjointPaths.Part4
-open StatMech.Lattice StatMech.ConfigSpace
-open StatMech.Percolation StatMech.Percolation.DisjointPaths
-
-
 namespace StatMech
 
 namespace Walls

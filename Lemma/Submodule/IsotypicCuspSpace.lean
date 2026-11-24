@@ -1,12 +1,14 @@
-import Lemma.ClassGroup.ProductionPinsGeneral
-import Lemma.Matrix.RightConvolution
-import Lemma.Matrix.SigmaAdelicAction
-import Lemma.Matrix.ArchWeightChar
-import Structure.AutomorphicForm_IsotypicCuspSpace
-
+module
+public import Lemma.ClassGroup.ProductionPinsGeneral
+public import Lemma.Matrix.RightConvolution
+public import Lemma.Matrix.SigmaAdelicAction
+public import Lemma.Matrix.ArchWeightChar
+public import Structure.AutomorphicForm_IsotypicCuspSpace
 set_option autoImplicit false
-
 open IsDedekindDomain NumberField
+
+
+public section
 
 noncomputable section
 

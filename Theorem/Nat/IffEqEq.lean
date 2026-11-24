@@ -15,7 +15,7 @@ open Chapter3.SetTheory
 [SetTheory.Set.nat_equiv_symm_inj](https://github.com/teorth/analysis/blob/main/Analysis/Section_3_1.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   [SetTheory]
   {n m:Chapter3.Nat} :
 -- imply

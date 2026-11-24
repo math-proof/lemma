@@ -1,7 +1,10 @@
-import Mathlib
-import Instance.WeierstrassCurve_ConductorLevel
-
+module
+public import Mathlib
+public import Instance.WeierstrassCurve_ConductorLevel
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

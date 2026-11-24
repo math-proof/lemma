@@ -1,9 +1,10 @@
+module
+public import Theorem.Nat.PrimeInterval.RamanujanTwoPrimes
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PrimeInterval/RamanujanTwoPrimes.lean -/
-
-
-import Lemma.Nat.PrimeInterval.RamanujanTwoPrimes
-
-
 namespace MathlibExtTest.NumberTheory.PrimeInterval.RamanujanTwoPrimes
 
 example : ∃ p q : ℕ, p.Prime ∧ q.Prime ∧ 6 < p ∧ p < q ∧ q < 2 * 6 :=

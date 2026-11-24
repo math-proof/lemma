@@ -1,7 +1,11 @@
-import Def.ModularCurve_FinitePlaceLift
-import Def.AlgebraicCurve_RatFuncPlaces
-import Theorem.Valuation.RatFuncPlaceInfty
-import Def.AlgebraicCurve_SemistableCharts
+module
+public import Def.ModularCurve_FinitePlaceLift
+public import Def.AlgebraicCurve_RatFuncPlaces
+public import Theorem.Valuation.RatFuncPlaceInfty
+public import Def.AlgebraicCurve_SemistableCharts
+
+
+public section
 
 namespace AlgebraicCurve.GaussReduction
 

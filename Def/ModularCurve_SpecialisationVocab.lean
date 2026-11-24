@@ -1,9 +1,11 @@
-import Def.ModularCurve_EMD
-import Def.ModularCurve_TatePoint
-
+module
+public import Def.ModularCurve_EMD
+public import Def.ModularCurve_TatePoint
 set_option autoImplicit false
-
 open scoped Classical
+
+
+public section
 
 noncomputable section
 

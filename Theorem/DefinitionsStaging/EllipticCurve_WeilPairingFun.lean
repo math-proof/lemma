@@ -1,6 +1,9 @@
-import Lemma.Definitions.Def_EllipticCurve_FunctionFieldPullback
-import Def.EllipticCurve_WeilPairingFun
+module
+public import Lemma.Definitions.Def_EllipticCurve_FunctionFieldPullback
+public import Def.EllipticCurve_WeilPairingFun
 
+
+public section
 
 namespace WeierstrassCurve.Affine
 

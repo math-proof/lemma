@@ -1,6 +1,6 @@
 import Lemma.Scheme.Dual_ObjPullbackL
 import Def.AlgebraicGeometry_RelPicardThetaBundle
-import Lemma.Scheme.RelEffCartierDivOfPoint
+import Theorem.Scheme.RelEffCartierDivOfPoint
 import Def.AlgebraicGeometry_RelEffCartierDivTwist2
 
 set_option autoImplicit false

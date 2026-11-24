@@ -1,9 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.AnAlgorithmistsToolkit.code.LovaszSimonovits
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.AnAlgorithmistsToolkit.code.LovaszSimonovits
 open LovaszSimonovits
 open Finset
 
+
+public section
 
 namespace LovaszSimonovits
 

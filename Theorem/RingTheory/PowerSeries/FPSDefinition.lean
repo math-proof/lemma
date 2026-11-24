@@ -1,14 +1,18 @@
+module
+public import Mathlib
+public import Def.RingTheory.PowerSeries.InfiniteProducts2.Part6
+public import Theorem.PowerSeries.InfiniteProducts2
+public import Def.RingTheory.PowerSeries.FPSDefinition
+open scoped Polynomial
+open PowerSeries Finset Finset.HasAntidiagonal Finset.Nat
+
+
+public section
+
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.RingTheory.PowerSeries.InfiniteProducts2.Part6
-import Theorem.PowerSeries.InfiniteProducts2
-import Def.RingTheory.PowerSeries.FPSDefinition
-open scoped Polynomial
-open PowerSeries Finset Finset.HasAntidiagonal Finset.Nat
-
 /-!
 # Formal Power Series: Definition and Basic Properties
 
@@ -55,8 +59,6 @@ For summable families of FPS, we use Mathlib's topological structure on power se
 (`PowerSeries.WithPiTopology`), where a family is summable when for each coefficient index,
 all but finitely many terms have that coefficient equal to zero.
 -/
-
-
 namespace AlgebraicCombinatorics
 
 namespace FPS

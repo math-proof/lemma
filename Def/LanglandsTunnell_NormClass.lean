@@ -1,7 +1,10 @@
-import Def.Ideal_Main
-
+module
+public import Def.Ideal_Main
 set_option autoImplicit false
 set_option maxHeartbeats 800000
+
+
+public section
 
 noncomputable section
 

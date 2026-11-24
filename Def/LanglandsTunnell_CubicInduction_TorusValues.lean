@@ -1,10 +1,12 @@
-import Def.LanglandsTunnell_CubicInduction_HeckeDatum
-import Instance.LanglandsTunnell_CubicInduction_IotaTorus
-
+module
+public import Def.LanglandsTunnell_CubicInduction_HeckeDatum
+public import Instance.LanglandsTunnell_CubicInduction_IotaTorus
 set_option autoImplicit false
-
 open IsDedekindDomain NumberField Matrix
 open LanglandsTunnell.RankinSelberg
+
+
+public section
 
 noncomputable section
 

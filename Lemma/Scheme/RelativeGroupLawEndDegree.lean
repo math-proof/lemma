@@ -1,11 +1,14 @@
-import Mathlib
-import Lemma.Scheme.RelativeGroupLaw
-import Lemma.Scheme.RelativeGroupLawKernel
-import Lemma.Scheme.NeronModelEndomorphismExtension
-import Instance.AlgebraicGeometry_RelativeGroupLawEndDegree
-import Abbrev.AlgebraicGeometry_RelativeGroupLawEndDegree
-
+module
+public import Mathlib
+public import Lemma.Scheme.RelativeGroupLaw
+public import Lemma.Scheme.RelativeGroupLawKernel
+public import Lemma.Scheme.NeronModelEndomorphismExtension
+public import Instance.AlgebraicGeometry_RelativeGroupLawEndDegree
+public import Abbrev.AlgebraicGeometry_RelativeGroupLawEndDegree
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

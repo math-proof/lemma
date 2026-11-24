@@ -1,7 +1,10 @@
-import Instance.NumberField_AdelicHaar
-import Def.AutomorphicForm_RightConvolution
-
+module
+public import Instance.NumberField_AdelicHaar
+public import Def.AutomorphicForm_RightConvolution
 open NumberField
+
+
+public section
 
 namespace AutomorphicForm
 

@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/GrahamEq22DisconnectedAuxiliaryClosure.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.GrahamDisconnectedAuxiliaryClosure
+public import Theorem.StatisticalMechanics.Code.FrontierA.GrahamExpectationAssociationClosure
+open Finset SimpleGraph
+open scoped BigOperators
+open Classical
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/GrahamEq22DisconnectedAuxiliaryClosure.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.GrahamDisconnectedAuxiliaryClosure
-import Theorem.StatisticalMechanics.Code.FrontierA.GrahamExpectationAssociationClosure
-open Finset SimpleGraph
-open scoped BigOperators
-open Classical
-
-
 namespace StatMech.FrontierA
 
 open StatMech.Sharpness

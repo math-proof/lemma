@@ -1,7 +1,8 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.Combinatorics.Young.MonomialSymmetric.Part6
-import Lemma.Partition.NPartition
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.Combinatorics.Young.MonomialSymmetric.Part6
+public import Lemma.Partition.NPartition
 open MvPolynomial hiding R
 open Finset
 open Equiv
@@ -9,6 +10,8 @@ open AlgebraicCombinatorics.SymmetricFunctions hiding NPartition
 open AlgebraicCombinatorics.SymmetricFunctions.NPartition
 open scoped Polynomial BigOperators
 
+
+public section
 
 section
 -- ac-theorems

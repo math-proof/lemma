@@ -1,6 +1,6 @@
 import Mathlib
 import Def.ExtEndgame_ProductionDatum
-import Lemma.Rep.ContinuousH1
+import Theorem.Rep.ContinuousH1
 import Def.GroupCohomology_PoitouTate
 
 set_option autoImplicit false

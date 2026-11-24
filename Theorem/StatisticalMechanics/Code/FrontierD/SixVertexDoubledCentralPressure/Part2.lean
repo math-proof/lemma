@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexDoubledCentralPressure.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBalancedShareVerticalRate
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheCanonicalPerronClosed
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4ParameterBridge
+public import Def.StatisticalMechanics.Code.FrontierD.SixVertexDoubledCentralPressure
+open Filter Matrix Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexDoubledCentralPressure.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBalancedShareVerticalRate
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheCanonicalPerronClosed
-import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4ParameterBridge
-import Def.StatisticalMechanics.Code.FrontierD.SixVertexDoubledCentralPressure
-open Filter Matrix Topology
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

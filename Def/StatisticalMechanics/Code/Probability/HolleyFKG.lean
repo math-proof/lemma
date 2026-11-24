@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Probability/HolleyFKG.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Probability.StrassenFinite.Part2
+public import Mathlib.Combinatorics.SetFamily.FourFunctions
+open Finset
+open scoped NNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Probability/HolleyFKG.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Probability.StrassenFinite.Part2
-import Mathlib.Combinatorics.SetFamily.FourFunctions
-open Finset
-open scoped NNReal
-
-
 namespace StatMech
 
 namespace Probability

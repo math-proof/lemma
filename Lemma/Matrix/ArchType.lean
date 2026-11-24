@@ -1,9 +1,11 @@
-import Lemma.Matrix.RowIsometryInvariance
-import Abbrev.AutomorphicForm_ArchType
-
+module
+public import Lemma.Matrix.RowIsometryInvariance
+public import Abbrev.AutomorphicForm_ArchType
 open AutomorphicForm AutomorphicForm.WindowedSiegel NumberField AdelicLevel IsDedekindDomain Matrix
-
 open scoped Classical
+
+
+public section
 
 namespace AutomorphicForm
 

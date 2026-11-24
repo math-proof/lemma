@@ -1,6 +1,9 @@
+module
+public import Theorem.Nat.NumberField.RayClass.ExactSequence
+
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/RayClass/ExactSequence.lean -/
 
-import Lemma.Nat.NumberField.RayClass.ExactSequence
 @[expose] public noncomputable section
 
 open scoped nonZeroDivisors

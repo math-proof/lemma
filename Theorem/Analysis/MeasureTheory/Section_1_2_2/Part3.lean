@@ -1,6 +1,10 @@
-import Theorem.Analysis.MeasureTheory.Section_1_2_1.Part15
-import Abbrev.Analysis.MeasureTheory.Section_1_2_2.Part2
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_2_1.Part15
+public import Abbrev.Analysis.MeasureTheory.Section_1_2_2.Part2
   IsOpen.measurable isOpen_empty
+
+
+public section
 
   intro ε hε
   use ∅

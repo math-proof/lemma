@@ -1,7 +1,10 @@
-import Lemma.WeierstrassCurve.ModuliPoint
-import Def.ModularCurve_MazurStepThreeInputs
-
+module
+public import Lemma.WeierstrassCurve.ModuliPoint
+public import Def.ModularCurve_MazurStepThreeInputs
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

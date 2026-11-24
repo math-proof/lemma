@@ -1,8 +1,11 @@
-import Mathlib
-import Instance.AlgebraicGeometry_LocalRepresentabilityULift
-import Abbrev.AlgebraicGeometry_LocalRepresentabilityULift
-
+module
+public import Mathlib
+public import Instance.AlgebraicGeometry_LocalRepresentabilityULift
+public import Abbrev.AlgebraicGeometry_LocalRepresentabilityULift
 set_option autoImplicit false
+
+
+public section
 
 universe w v u
 

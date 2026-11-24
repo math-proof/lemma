@@ -1,17 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Padics/HilbertSymbol/Real.lean -/
-
-
-import Def.NumberTheory.Padics.HilbertSymbol.Real
-import Theorem.Nat.Padics.HilbertSymbol.Real
+module
+public import Def.NumberTheory.Padics.HilbertSymbol.Real
+public import Theorem.Nat.Padics.HilbertSymbol.Real
 set_option autoImplicit false
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Padics/HilbertSymbol/Real.lean -/
 /-!
 # Tests for the real Hilbert symbol
 -/
-
-
 /-- `realHilbertSymbol` unfolds to the generic symbol over `ℝ`. -/
+
 example (a b : ℝˣ) : realHilbertSymbol a b = hilbertSymbol ℝ a b :=
   rfl
 

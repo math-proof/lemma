@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingCriticalAxisGreenComparison.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingLatticeGreen.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingCriticalTwoPointShell.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityFreeLeftContinuous
+public import Def.StatisticalMechanics.Code.FrontierA.IsingCriticalAxisGreenComparison
+open Filter Set Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingCriticalAxisGreenComparison.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingLatticeGreen.Part3
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingCriticalTwoPointShell.Part3
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityFreeLeftContinuous
-import Def.StatisticalMechanics.Code.FrontierA.IsingCriticalAxisGreenComparison
-open Filter Set Topology
-
-
 namespace StatMech.FrontierA
 
 open StatMech Ising Lattice Sharpness StatMech.FrontierB

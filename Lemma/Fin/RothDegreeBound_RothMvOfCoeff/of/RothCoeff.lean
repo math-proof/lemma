@@ -1,8 +1,11 @@
-import Mathlib
-import Lemma.Fin.EqRothBoxIndex.of.RothBox
+module
+public import Mathlib
+public import Lemma.Fin.EqRothBoxIndex.of.RothBox
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [rothMvOfCoeff_degreeBound](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

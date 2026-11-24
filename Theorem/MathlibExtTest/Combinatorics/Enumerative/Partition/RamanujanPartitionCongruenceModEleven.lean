@@ -1,12 +1,13 @@
+module
+public import Def.Combinatorics.Enumerative.Partition.RamanujanPartitionCongruenceModEleven.Part2
+public import Theorem.Finset.Enumerative.Partition.RamanujanPartitionCongruenceModEleven
+public import Theorem.Finset.Enumerative.Partition.RamanujanPartitionCongruence
+public import Def.Combinatorics.Enumerative.Partition.RamanujanPartitionCongruence
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/Partition/RamanujanPartitionCongruenceModEleven.lean -/
-
-
-import Def.Combinatorics.Enumerative.Partition.RamanujanPartitionCongruenceModEleven.Part2
-import Theorem.Finset.Enumerative.Partition.RamanujanPartitionCongruenceModEleven
-import Theorem.Finset.Enumerative.Partition.RamanujanPartitionCongruence
-import Def.Combinatorics.Enumerative.Partition.RamanujanPartitionCongruence
-
-
 namespace MathlibExtTest.Combinatorics.Enumerative.Partition.RamanujanPartitionCongruenceModEleven
 
 -- The modulo-11 theorem gives the first nontrivial congruence at `m = 1`.

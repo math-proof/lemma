@@ -1,9 +1,11 @@
-import Def.AutomorphicForm_ConstantTerm
-import Def.AutomorphicForm_TruncationOperator
-
+module
+public import Def.AutomorphicForm_ConstantTerm
+public import Def.AutomorphicForm_TruncationOperator
 set_option autoImplicit false
-
 open MeasureTheory
+
+
+public section
 
 namespace AutomorphicForm
 

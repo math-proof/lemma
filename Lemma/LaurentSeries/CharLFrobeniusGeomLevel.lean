@@ -1,12 +1,16 @@
-import Mathlib
-import Lemma.Scheme.IsCurveOver
-import Lemma.Matrix.DivisorPushPull
-import Lemma.Ideal.RatFuncPlaces
-import Lemma.Polynomial.FrobeniusEndo
-import Lemma.ValuationSubring.FrobeniusEndoPic0
-import Lemma.HahnSeries.JqCoeff
-import Lemma.Polynomial.FibrePoly
-import Def.HeckeGalois_EichlerShimura
+module
+public import Mathlib
+public import Lemma.Scheme.IsCurveOver
+public import Lemma.Matrix.DivisorPushPull
+public import Lemma.Ideal.RatFuncPlaces
+public import Lemma.Polynomial.FrobeniusEndo
+public import Lemma.ValuationSubring.FrobeniusEndoPic0
+public import Lemma.HahnSeries.JqCoeff
+public import Lemma.Polynomial.FibrePoly
+public import Def.HeckeGalois_EichlerShimura
+
+
+public section
 
 namespace ModularCurve
 theorem frobenius_identity_geom_unconditional (K : Type*) [Field K] {ℓ : Nat} [Fact ℓ.Prime] :

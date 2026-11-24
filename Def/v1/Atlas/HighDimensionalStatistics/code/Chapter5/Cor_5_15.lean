@@ -1,5 +1,20 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter5/Cor_5_15.lean -/
+module
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Def_5_1_5_2.Part3
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Thm_5_11.Part2
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Thm_5_11
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Lemma_5_14
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.InfoTheory
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Thm_5_9
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Lemma_5_14.Part5
+public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.InfoTheory.Part3
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Thm_5_9
+open Real MeasureTheory
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/HighDimensionalStatistics/code/Chapter5/Cor_5_15.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,20 +22,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Def_5_1_5_2.Part3
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Thm_5_11.Part2
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Thm_5_11
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Lemma_5_14
-import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.InfoTheory
-import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Thm_5_9
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Lemma_5_14.Part5
-import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter5.InfoTheory.Part3
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter5.Thm_5_9
-open Real MeasureTheory
-
-
 noncomputable section
 
 namespace Cor_5_15

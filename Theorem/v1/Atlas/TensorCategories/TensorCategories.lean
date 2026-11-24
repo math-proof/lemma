@@ -1,5 +1,300 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/TensorCategories.lean -/
+module
+public import Abbrev.v1.Atlas.TensorCategories.code.AlgebraInCategory
+public import Def.v1.Atlas.TensorCategories.code.AlgebrasInCategories.Part4
+public import Theorem.Category.Atlas.v1.TensorCategories.code.AlgebrasInCategories
+public import Theorem.Category.Atlas.v1.TensorCategories.code.BasicMonoidalDefs
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Bimodule
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Ch1Theorems
+public import Theorem.Category.Atlas.v1.TensorCategories.code.ChevalleyProperty
+public import Theorem.Category.Atlas.v1.TensorCategories.code.CoalgebraBialgebra
+public import Theorem.Category.Atlas.v1.TensorCategories.code.ComoduleDuals
+public import Theorem.Category.Atlas.v1.TensorCategories.code.CoradicalFiltration
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Corollary_1_13_7
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Corollary_1_15_2
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Corollary_1_15_9
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Corollary_1_22_6
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Corollary_1_48_3
+public import Theorem.Category.Atlas.v1.TensorCategories.code.DeligneTensorProduct
+public import Theorem.Category.Atlas.v1.TensorCategories.code.DualCategory
+public import Theorem.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Ext1UnitVanishing
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FPdimProps
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FiberFunctor
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FiberFunctorEnd
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FittingAlgebraLocalRing
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FittingLemmaInstance
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FittingLemmaLocalEnd
+public import Theorem.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
+public import Theorem.Category.Atlas.v1.TensorCategories.code.GradedVec
+public import Theorem.Category.Atlas.v1.TensorCategories.code.GrothendieckFusionRingInstance
+public import Theorem.Category.Atlas.v1.TensorCategories.code.GrothendieckModuleIrreducible
+public import Theorem.Category.Atlas.v1.TensorCategories.code.GrothendieckRing
+public import Theorem.Category.Atlas.v1.TensorCategories.code.GrothendieckRingCategorical
+public import Theorem.Category.Atlas.v1.TensorCategories.code.GroupoidMultitensor
+public import Theorem.Category.Atlas.v1.TensorCategories.code.HigherDerivation
+public import Theorem.Category.Atlas.v1.TensorCategories.code.HopfAlgebra
+public import Theorem.Category.Atlas.v1.TensorCategories.code.HopfAlgebraAntiHom
+public import Theorem.Category.Atlas.v1.TensorCategories.code.InternalHom
+public import Theorem.Category.Atlas.v1.TensorCategories.code.InvertibleObjects
+public import Theorem.Category.Atlas.v1.TensorCategories.code.K0Bimodule
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Lemma285
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Lemma_1_30_2
+public import Theorem.Category.Atlas.v1.TensorCategories.code.MacLaneCoherence
+public import Theorem.Category.Atlas.v1.TensorCategories.code.MacLaneStrictness
+public import Theorem.Category.Atlas.v1.TensorCategories.code.ModuleFunctorDefs
+public import Theorem.Category.Atlas.v1.TensorCategories.code.ModuleRigidityCompat
+public import Theorem.Category.Atlas.v1.TensorCategories.code.MonoidalFunctorProps
+public import Theorem.Category.Atlas.v1.TensorCategories.code.MonoidalFunctorsCohomology
+public import Theorem.Category.Atlas.v1.TensorCategories.code.MonoidalStructuresGraded
+public import Theorem.Category.Atlas.v1.TensorCategories.code.PerronFrobeniusProof
+public import Theorem.Category.Atlas.v1.TensorCategories.code.PivotalSpherical
+public import Theorem.Category.Atlas.v1.TensorCategories.code.ProjectiveCoverInfra
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Proposition_1_27_1
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Proposition_1_2_4
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Proposition_1_45_2
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Proposition_1_45_5
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Proposition_1_6_4
+public import Theorem.Category.Atlas.v1.TensorCategories.code.QBinomial
+public import Theorem.Category.Atlas.v1.TensorCategories.code.QuantumGroupGeneral
+public import Theorem.Category.Atlas.v1.TensorCategories.code.QuantumSl2
+public import Theorem.Category.Atlas.v1.TensorCategories.code.QuantumSl2Concrete
+public import Theorem.Category.Atlas.v1.TensorCategories.code.QuantumSl2Instance
+public import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
+public import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctorProjective
+public import Theorem.Category.Atlas.v1.TensorCategories.code.ReductiveGroup
+public import Theorem.Category.Atlas.v1.TensorCategories.code.RegularElement
+public import Theorem.Category.Atlas.v1.TensorCategories.code.RegularObject
+public import Theorem.Category.Atlas.v1.TensorCategories.code.RigidMonoidalDuality
+public import Theorem.Category.Atlas.v1.TensorCategories.code.SemisimpleMultitensor
+public import Theorem.Category.Atlas.v1.TensorCategories.code.SurjectiveTensorFunctor
+public import Theorem.Category.Atlas.v1.TensorCategories.code.SweedlerHopfInstance
+public import Theorem.Category.Atlas.v1.TensorCategories.code.TensorCategoryDef
+public import Theorem.Category.Atlas.v1.TensorCategories.code.TensorExact
+public import Theorem.Category.Atlas.v1.TensorCategories.code.TensorNondegen.DualZero
+public import Theorem.Category.Atlas.v1.TensorCategories.code.TensorNondegen.EvalCoevalArg
+public import Theorem.Category.Atlas.v1.TensorCategories.code.TensorNondegen.ZeroTensorZero
+public import Theorem.Category.Atlas.v1.TensorCategories.code.TraceNonzero
+public import Theorem.Category.Atlas.v1.TensorCategories.code.UnitProjectiveSemisimple
+public import Theorem.Category.Atlas.v1.TensorCategories.code.UnitSemisimplicity.EvalCoeval
+public import Theorem.Category.Atlas.v1.TensorCategories.code.UnitSemisimplicity.MonoidalBiexact
+public import Theorem.Category.Atlas.v1.TensorCategories.code.UnitSemisimplicity.TensorExactness
+public import Theorem.Category.Atlas.v1.TensorCategories.code.UnitSemisimplicity.UnitSimple
+public import Theorem.Category.Atlas.v1.TensorCategories.code.VecCategoricalFusionData
+public import Theorem.Category.Atlas.v1.TensorCategories.code.VecDualMapBridge
+public import Theorem.Category.Atlas.v1.TensorCategories.code.VecInstances
+public import Theorem.Category.Atlas.v1.TensorCategories.code.VecPivotal.SphericalInstance
+public import Theorem.Category.Atlas.v1.TensorCategories.code.VecPivotalConcrete
+public import Theorem.Category.Atlas.v1.TensorCategories.code.VecSemisimple
+public import Theorem.Category.Atlas.v1.TensorCategories.code.VecSphericalConcrete
+public import Theorem.Category.Atlas.v1.TensorCategories.code.ZPlusModules
+public import Def.v1.Atlas.TensorCategories.code.AlgebrasInCategoriesDefs.Part3
+public import Abbrev.v1.Atlas.TensorCategories.code.BasicMonoidalDefs.Part5
+public import Theorem.v1.Atlas.TensorCategories.code.BialgebraReconstruction
+public import Abbrev.v1.Atlas.TensorCategories.code.Bimodule
+public import Theorem.v1.Atlas.TensorCategories.code.BuildStubAudit
+public import Theorem.v1.Atlas.TensorCategories.code.BuildVerified
+public import Theorem.v1.Atlas.TensorCategories.code.CategoricalDimension
+public import Def.v1.Atlas.TensorCategories.code.Ch1Theorems
+public import Structure.v1.Atlas.TensorCategories.code.ChevalleyProperty.Part2
+public import Abbrev.v1.Atlas.TensorCategories.code.CoalgebraBialgebra.Part4
+public import Def.v1.Atlas.TensorCategories.code.ComoduleDuals
+public import Theorem.v1.Atlas.TensorCategories.code.ConcreteInstancesModule
+public import Def.v1.Atlas.TensorCategories.code.CoradicalFiltration.Part8
+public import Def.v1.Atlas.TensorCategories.code.Corollary_1_13_4
+public import Class.v1.Atlas.TensorCategories.code.Corollary_1_13_7
+public import Theorem.v1.Atlas.TensorCategories.code.Corollary_1_15_2
+public import Theorem.v1.Atlas.TensorCategories.code.Corollary_1_15_9
+public import Instance.v1.Atlas.TensorCategories.code.Corollary_1_22_6
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Corollary_1_29_5
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Corollary_1_45_11
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Corollary_1_45_16
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Corollary_2_7_2
+public import Theorem.Category.Atlas.v1.TensorCategories.code.ExactModuleProjectives
+public import Theorem.Category.Atlas.v1.TensorCategories.code.GrothendieckRingHom
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Lemma_2_13_2
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Lemma_2_13_3
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Lemma_2_8_5
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Prop_1_45_10
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Proposition_1_34_7
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Proposition_1_45_15
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Proposition_1_48_2
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Proposition_2_14_14
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Proposition_2_7_7
+public import Theorem.Category.Atlas.v1.TensorCategories.code.RegularObjectAbsorption
+public import Theorem.Category.Atlas.v1.TensorCategories.code.TensorProjective.Proposition_1_13_6
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Theorem_1_15_8
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Theorem_1_25_2
+public import Theorem.Category.Atlas.v1.TensorCategories.code.Theorem_2_14_11
+public import Theorem.v1.Atlas.TensorCategories.code.Corollary_1_31_5
+public import Def.v1.Atlas.TensorCategories.code.Corollary_1_48_3
+public import Instance.v1.Atlas.TensorCategories.code.Definition_1_15_4
+public import Def.v1.Atlas.TensorCategories.code.Definition_1_18_1
+public import Abbrev.v1.Atlas.TensorCategories.code.Definition_1_18_2
+public import Abbrev.v1.Atlas.TensorCategories.code.Definition_1_34_1
+public import Abbrev.v1.Atlas.TensorCategories.code.Definition_1_45_7
+public import Abbrev.v1.Atlas.TensorCategories.code.Definition_1_46_1
+public import Def.v1.Atlas.TensorCategories.code.Definition_2_1_6
+public import Abbrev.v1.Atlas.TensorCategories.code.Definition_2_3_1
+public import Theorem.v1.Atlas.TensorCategories.code.Definition_2_9_1
+public import Def.v1.Atlas.TensorCategories.code.Definition_2_9_18_ExactAlgebra
+public import Def.v1.Atlas.TensorCategories.code.DeligneTensorProduct.Part3
+public import Structure.v1.Atlas.TensorCategories.code.DeligneTensorProductDef
+public import Theorem.v1.Atlas.TensorCategories.code.DeligneTensorProductMonoidal
+public import Def.v1.Atlas.TensorCategories.code.DirectSumModuleCategory.Part2
+public import Structure.v1.Atlas.TensorCategories.code.DirectSumModuleCategoryDef
+public import Instance.v1.Atlas.TensorCategories.code.DualCategory.Part6
+public import Theorem.v1.Atlas.TensorCategories.code.DualCoherenceBridge
+public import Abbrev.v1.Atlas.TensorCategories.code.DualDefinitions
+public import Instance.v1.Atlas.TensorCategories.code.EndTensorProduct
+public import Def.v1.Atlas.TensorCategories.code.ExactModuleCatEquiv.Part3
+public import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
+public import Abbrev.v1.Atlas.TensorCategories.code.ExactModuleCriteria.Part2
+public import Class.v1.Atlas.TensorCategories.code.Ext1UnitVanishing.Part2
+public import Def.v1.Atlas.TensorCategories.code.FPdimCategory
+public import Theorem.v1.Atlas.TensorCategories.code.FPdimCosine
+public import Theorem.v1.Atlas.TensorCategories.code.FPdimFunctor
+public import Def.v1.Atlas.TensorCategories.code.FPdimProps.Part3
+public import Def.v1.Atlas.TensorCategories.code.FiberFunctor
+public import Def.v1.Atlas.TensorCategories.code.FiberFunctorEnd
+public import Abbrev.v1.Atlas.TensorCategories.code.FiniteAbelianCategoryDef
+public import Theorem.v1.Atlas.TensorCategories.code.FiniteCategoryDef
+public import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
+public import Theorem.v1.Atlas.TensorCategories.code.FittingAlgebraLocalRing
+public import Instance.v1.Atlas.TensorCategories.code.FittingLemmaInstance
+public import Class.v1.Atlas.TensorCategories.code.FittingLemmaLocalEnd
+public import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
+public import Theorem.v1.Atlas.TensorCategories.code.GradedVec.Part6
+public import Instance.v1.Atlas.TensorCategories.code.GrothendieckFusionRingInstance.Part2
+public import Def.v1.Atlas.TensorCategories.code.GrothendieckModuleIrreducible
+public import Theorem.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
+public import Def.v1.Atlas.TensorCategories.code.GrothendieckRingCategorical.Part4
+public import Def.v1.Atlas.TensorCategories.code.GroupoidMultitensor.Part5
+public import Instance.v1.Atlas.TensorCategories.code.HigherDerivation
+public import Def.v1.Atlas.TensorCategories.code.HomExactImpliesExact.Part2
+public import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part3
+public import Def.v1.Atlas.TensorCategories.code.HopfAlgebraAntiHom
+public import Def.v1.Atlas.TensorCategories.code.HopfAlgebraExamples.Part2
+public import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebraRep.Part2
+public import Abbrev.v1.Atlas.TensorCategories.code.IndecomposableModuleCat
+public import Instance.v1.Atlas.TensorCategories.code.Instances.VecFiniteTensorCategory
+public import Def.v1.Atlas.TensorCategories.code.IntegralCategories
+public import Def.v1.Atlas.TensorCategories.code.IntegralsClean
+public import Def.v1.Atlas.TensorCategories.code.InternalHom.Part4
+public import Instance.v1.Atlas.TensorCategories.code.InvertibleObjects
+public import Instance.v1.Atlas.TensorCategories.code.K0Bimodule.Part5
+public import Def.v1.Atlas.TensorCategories.code.Lemma285
+public import Def.v1.Atlas.TensorCategories.code.Lemma_1_30_2
+public import Class.v1.Atlas.TensorCategories.code.Lemma_1_51_1.Part2
+public import Structure.v1.Atlas.TensorCategories.code.Lemma_2_14_7
+public import Def.v1.Atlas.TensorCategories.code.LocalEndRingsInstance
+public import Abbrev.v1.Atlas.TensorCategories.code.LocallyFiniteDefs
+public import Theorem.v1.Atlas.TensorCategories.code.MacLaneCoherence
+public import Instance.v1.Atlas.TensorCategories.code.MacLaneStrictness.Part2
+public import Structure.v1.Atlas.TensorCategories.code.ModuleCategory.Theorem2112
+public import Class.v1.Atlas.TensorCategories.code.ModuleCategory.Theorem2116
+public import Abbrev.v1.Atlas.TensorCategories.code.ModuleCategory.Part5
+public import Def.v1.Atlas.TensorCategories.code.ModuleCategoryDecomp
+public import Structure.v1.Atlas.TensorCategories.code.ModuleCategoryEquiv
+public import Theorem.v1.Atlas.TensorCategories.code.ModuleCategoryMultitensor
+public import Structure.v1.Atlas.TensorCategories.code.ModuleFunctor
+public import Class.v1.Atlas.TensorCategories.code.ModuleFunctorAbelianDefs
+public import Theorem.v1.Atlas.TensorCategories.code.ModuleFunctorCategory
+public import Def.v1.Atlas.TensorCategories.code.ModuleFunctorCategoryAbelianInstance
+public import Class.v1.Atlas.TensorCategories.code.ModuleFunctorDefs
+public import Theorem.v1.Atlas.TensorCategories.code.ModuleFunctorFinite
+public import Abbrev.v1.Atlas.TensorCategories.code.ModuleOverAlgebra.Part2
+public import Instance.v1.Atlas.TensorCategories.code.ModuleRigidityCompat
+public import Abbrev.v1.Atlas.TensorCategories.code.MonoidalFunctorDef
+public import Instance.v1.Atlas.TensorCategories.code.MonoidalFunctorProps.Part2
+public import Def.v1.Atlas.TensorCategories.code.MonoidalFunctorsCohomology.Part5
+public import Def.v1.Atlas.TensorCategories.code.MonoidalStructuresGraded
+public import Def.v1.Atlas.TensorCategories.code.MoritaEquivalence
+public import Theorem.v1.Atlas.TensorCategories.code.PerronFrobenius.Assembly
+public import Theorem.v1.Atlas.TensorCategories.code.PerronFrobenius.PositiveMatrix
+public import Def.v1.Atlas.TensorCategories.code.PerronFrobenius.SimplexFixedPoint
+public import Theorem.v1.Atlas.TensorCategories.code.PerronFrobeniusFin1
+public import Def.v1.Atlas.TensorCategories.code.PerronFrobeniusProof.Part2
+public import Structure.v1.Atlas.TensorCategories.code.PivotalSpherical.Part3
+public import Theorem.v1.Atlas.TensorCategories.code.PointedCoalgebras
+public import Abbrev.v1.Atlas.TensorCategories.code.PointedTensorCategory
+public import Def.v1.Atlas.TensorCategories.code.ProjectiveCoverInfra.Part4
+public import Def.v1.Atlas.TensorCategories.code.Proposition_1_15_5
+public import Instance.v1.Atlas.TensorCategories.code.Proposition_1_27_1.Part2
+public import Def.v1.Atlas.TensorCategories.code.Proposition_1_2_4
+public import Theorem.v1.Atlas.TensorCategories.code.Proposition_1_32_3
+public import Def.v1.Atlas.TensorCategories.code.Proposition_1_45_2
+public import Abbrev.v1.Atlas.TensorCategories.code.Proposition_1_45_5
+public import Theorem.v1.Atlas.TensorCategories.code.Proposition_1_46_2
+public import Abbrev.v1.Atlas.TensorCategories.code.Proposition_1_6_4
+public import Def.v1.Atlas.TensorCategories.code.Proposition_2_10_7
+public import Instance.v1.Atlas.TensorCategories.code.Proposition_2_12_2
+public import Def.v1.Atlas.TensorCategories.code.Proposition_2_1_3
+public import Theorem.v1.Atlas.TensorCategories.code.Proposition_2_8_7
+public import Theorem.v1.Atlas.TensorCategories.code.QBinomial.Part2
+public import Class.v1.Atlas.TensorCategories.code.QuantumGroupGeneral
+public import Def.v1.Atlas.TensorCategories.code.QuantumSl2.Part2
+public import Instance.v1.Atlas.TensorCategories.code.QuantumSl2Concrete.Part5
+public import Instance.v1.Atlas.TensorCategories.code.QuantumSl2Instance
+public import Theorem.v1.Atlas.TensorCategories.code.QuantumTrace
+public import Abbrev.v1.Atlas.TensorCategories.code.QuasiTensorFunctor.Part5
+public import Class.v1.Atlas.TensorCategories.code.QuasiTensorFunctorProjective.Part3
+public import Structure.v1.Atlas.TensorCategories.code.ReductiveGroup
+public import Structure.v1.Atlas.TensorCategories.code.RegularElement
+public import Abbrev.v1.Atlas.TensorCategories.code.RegularObject.Part2
+public import Def.v1.Atlas.TensorCategories.code.RigidAbelianDecomp.Part2
+public import Def.v1.Atlas.TensorCategories.code.RigidMonoidalDuality.Part2
+public import Theorem.v1.Atlas.TensorCategories.code.SchurLemma
+public import Theorem.v1.Atlas.TensorCategories.code.SemisimpleDuals
+public import Def.v1.Atlas.TensorCategories.code.SemisimpleMultitensor.Part6
+public import Theorem.v1.Atlas.TensorCategories.code.SimpleObjectHelpers
+public import Abbrev.v1.Atlas.TensorCategories.code.SkewPrimitive
+public import Def.v1.Atlas.TensorCategories.code.SocleFiltration
+public import Def.v1.Atlas.TensorCategories.code.SubquotientRelation
+public import Class.v1.Atlas.TensorCategories.code.SurjectiveFunctor
+public import Class.v1.Atlas.TensorCategories.code.SurjectiveTensorFunctor
+public import Instance.v1.Atlas.TensorCategories.code.SweedlerHopfInstance.Part4
+public import Theorem.v1.Atlas.TensorCategories.code.TaftWilsonComponentGrouplike
+public import Abbrev.v1.Atlas.TensorCategories.code.TensorCategoryDef.Part3
+public import Def.v1.Atlas.TensorCategories.code.TensorDualAdj
+public import Def.v1.Atlas.TensorCategories.code.TensorExact.Part3
+public import Theorem.v1.Atlas.TensorCategories.code.TensorHomEquivHelper
+public import Theorem.v1.Atlas.TensorCategories.code.TensorHomEquivNaturality
+public import Theorem.v1.Atlas.TensorCategories.code.TensorNondegen.DualZero
+public import Theorem.v1.Atlas.TensorCategories.code.TensorNondegen.EvalCoevalArg
+public import Def.v1.Atlas.TensorCategories.code.TensorNondegen.ZeroTensorZero
+public import Instance.v1.Atlas.TensorCategories.code.TensorNondegenInstance
+public import Theorem.v1.Atlas.TensorCategories.code.TensorOverAlgebra
+public import Theorem.v1.Atlas.TensorCategories.code.TensorProjective.DirectSummand
+public import Def.v1.Atlas.TensorCategories.code.TensorProjective.TensorSummand
+public import Def.v1.Atlas.TensorCategories.code.TraceNonzero
+public import Theorem.v1.Atlas.TensorCategories.code.TypeclassInstanceAudit
+public import Class.v1.Atlas.TensorCategories.code.UnitProjectiveSemisimple
+public import Theorem.v1.Atlas.TensorCategories.code.UnitSemisimplicity.EndUnitField
+public import Theorem.v1.Atlas.TensorCategories.code.UnitSemisimplicity.EvalCoeval
+public import Theorem.v1.Atlas.TensorCategories.code.UnitSemisimplicity.MonoidalBiexact.Part4
+public import Instance.v1.Atlas.TensorCategories.code.UnitSemisimplicity.TensorExactness
+public import Structure.v1.Atlas.TensorCategories.code.UnitSemisimplicity.UnitSimple
+public import Theorem.v1.Atlas.TensorCategories.code.UnitSemisimplicity
+public import Instance.v1.Atlas.TensorCategories.code.VecCategoricalFusionData
+public import Theorem.v1.Atlas.TensorCategories.code.VecDualMapBridge
+public import Abbrev.v1.Atlas.TensorCategories.code.VecInstances.Part2
+public import Def.v1.Atlas.TensorCategories.code.VecPivotal.DoubleDualIso
+public import Def.v1.Atlas.TensorCategories.code.VecPivotal.MonoidalCoherence
+public import Theorem.v1.Atlas.TensorCategories.code.VecPivotal.PivotalInstance
+public import Theorem.v1.Atlas.TensorCategories.code.VecPivotal.SphericalInstance
+public import Instance.v1.Atlas.TensorCategories.code.VecPivotal
+public import Def.v1.Atlas.TensorCategories.code.VecPivotalConcrete.Part2
+public import Theorem.v1.Atlas.TensorCategories.code.VecPivotalNaturality
+public import Instance.v1.Atlas.TensorCategories.code.VecSemisimple.Part2
+public import Theorem.v1.Atlas.TensorCategories.code.VecSphericalConcrete
+public import Def.v1.Atlas.TensorCategories.code.VecTensorDualCoherence
+public import Structure.v1.Atlas.TensorCategories.code.ZPlusModules.Part6
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/TensorCategories.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,298 +302,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Abbrev.v1.Atlas.TensorCategories.code.AlgebraInCategory
-import Def.v1.Atlas.TensorCategories.code.AlgebrasInCategories.Part4
-import Theorem.Category.Atlas.v1.TensorCategories.code.AlgebrasInCategories
-import Theorem.Category.Atlas.v1.TensorCategories.code.BasicMonoidalDefs
-import Theorem.Category.Atlas.v1.TensorCategories.code.Bimodule
-import Lemma.Category.Atlas.v1.TensorCategories.code.Ch1Theorems
-import Theorem.Category.Atlas.v1.TensorCategories.code.ChevalleyProperty
-import Theorem.Category.Atlas.v1.TensorCategories.code.CoalgebraBialgebra
-import Theorem.Category.Atlas.v1.TensorCategories.code.ComoduleDuals
-import Theorem.Category.Atlas.v1.TensorCategories.code.CoradicalFiltration
-import Theorem.Category.Atlas.v1.TensorCategories.code.Corollary_1_13_7
-import Theorem.Category.Atlas.v1.TensorCategories.code.Corollary_1_15_2
-import Theorem.Category.Atlas.v1.TensorCategories.code.Corollary_1_15_9
-import Theorem.Category.Atlas.v1.TensorCategories.code.Corollary_1_22_6
-import Theorem.Category.Atlas.v1.TensorCategories.code.Corollary_1_48_3
-import Theorem.Category.Atlas.v1.TensorCategories.code.DeligneTensorProduct
-import Lemma.Category.Atlas.v1.TensorCategories.code.DualCategory
-import Theorem.Category.Atlas.v1.TensorCategories.code.ExactModuleCategory
-import Theorem.Category.Atlas.v1.TensorCategories.code.Ext1UnitVanishing
-import Theorem.Category.Atlas.v1.TensorCategories.code.FPdimProps
-import Theorem.Category.Atlas.v1.TensorCategories.code.FiberFunctor
-import Theorem.Category.Atlas.v1.TensorCategories.code.FiberFunctorEnd
-import Theorem.Category.Atlas.v1.TensorCategories.code.FiniteTensorCategory
-import Theorem.Category.Atlas.v1.TensorCategories.code.FittingAlgebraLocalRing
-import Theorem.Category.Atlas.v1.TensorCategories.code.FittingLemmaInstance
-import Theorem.Category.Atlas.v1.TensorCategories.code.FittingLemmaLocalEnd
-import Theorem.Category.Atlas.v1.TensorCategories.code.FrobeniusPerron
-import Theorem.Category.Atlas.v1.TensorCategories.code.GradedVec
-import Lemma.Category.Atlas.v1.TensorCategories.code.GrothendieckFusionRingInstance
-import Theorem.Category.Atlas.v1.TensorCategories.code.GrothendieckModuleIrreducible
-import Theorem.Category.Atlas.v1.TensorCategories.code.GrothendieckRing
-import Theorem.Category.Atlas.v1.TensorCategories.code.GrothendieckRingCategorical
-import Theorem.Category.Atlas.v1.TensorCategories.code.GroupoidMultitensor
-import Theorem.Category.Atlas.v1.TensorCategories.code.HigherDerivation
-import Theorem.Category.Atlas.v1.TensorCategories.code.HopfAlgebra
-import Theorem.Category.Atlas.v1.TensorCategories.code.HopfAlgebraAntiHom
-import Theorem.Category.Atlas.v1.TensorCategories.code.InternalHom
-import Theorem.Category.Atlas.v1.TensorCategories.code.InvertibleObjects
-import Lemma.Category.Atlas.v1.TensorCategories.code.K0Bimodule
-import Theorem.Category.Atlas.v1.TensorCategories.code.Lemma285
-import Theorem.Category.Atlas.v1.TensorCategories.code.Lemma_1_30_2
-import Theorem.Category.Atlas.v1.TensorCategories.code.MacLaneCoherence
-import Theorem.Category.Atlas.v1.TensorCategories.code.MacLaneStrictness
-import Theorem.Category.Atlas.v1.TensorCategories.code.ModuleFunctorDefs
-import Theorem.Category.Atlas.v1.TensorCategories.code.ModuleRigidityCompat
-import Lemma.Category.Atlas.v1.TensorCategories.code.MonoidalFunctorProps
-import Theorem.Category.Atlas.v1.TensorCategories.code.MonoidalFunctorsCohomology
-import Lemma.Category.Atlas.v1.TensorCategories.code.MonoidalStructuresGraded
-import Theorem.Category.Atlas.v1.TensorCategories.code.PerronFrobeniusProof
-import Theorem.Category.Atlas.v1.TensorCategories.code.PivotalSpherical
-import Lemma.Category.Atlas.v1.TensorCategories.code.ProjectiveCoverInfra
-import Lemma.Category.Atlas.v1.TensorCategories.code.Proposition_1_27_1
-import Theorem.Category.Atlas.v1.TensorCategories.code.Proposition_1_2_4
-import Theorem.Category.Atlas.v1.TensorCategories.code.Proposition_1_45_2
-import Theorem.Category.Atlas.v1.TensorCategories.code.Proposition_1_45_5
-import Theorem.Category.Atlas.v1.TensorCategories.code.Proposition_1_6_4
-import Theorem.Category.Atlas.v1.TensorCategories.code.QBinomial
-import Theorem.Category.Atlas.v1.TensorCategories.code.QuantumGroupGeneral
-import Theorem.Category.Atlas.v1.TensorCategories.code.QuantumSl2
-import Theorem.Category.Atlas.v1.TensorCategories.code.QuantumSl2Concrete
-import Theorem.Category.Atlas.v1.TensorCategories.code.QuantumSl2Instance
-import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
-import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctorProjective
-import Theorem.Category.Atlas.v1.TensorCategories.code.ReductiveGroup
-import Theorem.Category.Atlas.v1.TensorCategories.code.RegularElement
-import Theorem.Category.Atlas.v1.TensorCategories.code.RegularObject
-import Lemma.Category.Atlas.v1.TensorCategories.code.RigidMonoidalDuality
-import Theorem.Category.Atlas.v1.TensorCategories.code.SemisimpleMultitensor
-import Theorem.Category.Atlas.v1.TensorCategories.code.SurjectiveTensorFunctor
-import Lemma.Category.Atlas.v1.TensorCategories.code.SweedlerHopfInstance
-import Theorem.Category.Atlas.v1.TensorCategories.code.TensorCategoryDef
-import Theorem.Category.Atlas.v1.TensorCategories.code.TensorExact
-import Theorem.Category.Atlas.v1.TensorCategories.code.TensorNondegen.DualZero
-import Lemma.Category.Atlas.v1.TensorCategories.code.TensorNondegen.EvalCoevalArg
-import Theorem.Category.Atlas.v1.TensorCategories.code.TensorNondegen.ZeroTensorZero
-import Theorem.Category.Atlas.v1.TensorCategories.code.TraceNonzero
-import Theorem.Category.Atlas.v1.TensorCategories.code.UnitProjectiveSemisimple
-import Lemma.Category.Atlas.v1.TensorCategories.code.UnitSemisimplicity.EvalCoeval
-import Lemma.Category.Atlas.v1.TensorCategories.code.UnitSemisimplicity.MonoidalBiexact
-import Theorem.Category.Atlas.v1.TensorCategories.code.UnitSemisimplicity.TensorExactness
-import Theorem.Category.Atlas.v1.TensorCategories.code.UnitSemisimplicity.UnitSimple
-import Lemma.Category.Atlas.v1.TensorCategories.code.VecCategoricalFusionData
-import Theorem.Category.Atlas.v1.TensorCategories.code.VecDualMapBridge
-import Theorem.Category.Atlas.v1.TensorCategories.code.VecInstances
-import Lemma.Category.Atlas.v1.TensorCategories.code.VecPivotal.SphericalInstance
-import Lemma.Category.Atlas.v1.TensorCategories.code.VecPivotalConcrete
-import Lemma.Category.Atlas.v1.TensorCategories.code.VecSemisimple
-import Lemma.Category.Atlas.v1.TensorCategories.code.VecSphericalConcrete
-import Theorem.Category.Atlas.v1.TensorCategories.code.ZPlusModules
-import Def.v1.Atlas.TensorCategories.code.AlgebrasInCategoriesDefs.Part3
-import Abbrev.v1.Atlas.TensorCategories.code.BasicMonoidalDefs.Part5
-import Theorem.v1.Atlas.TensorCategories.code.BialgebraReconstruction
-import Abbrev.v1.Atlas.TensorCategories.code.Bimodule
-import Theorem.v1.Atlas.TensorCategories.code.BuildStubAudit
-import Theorem.v1.Atlas.TensorCategories.code.BuildVerified
-import Theorem.v1.Atlas.TensorCategories.code.CategoricalDimension
-import Def.v1.Atlas.TensorCategories.code.Ch1Theorems
-import Structure.v1.Atlas.TensorCategories.code.ChevalleyProperty.Part2
-import Abbrev.v1.Atlas.TensorCategories.code.CoalgebraBialgebra.Part4
-import Def.v1.Atlas.TensorCategories.code.ComoduleDuals
-import Theorem.v1.Atlas.TensorCategories.code.ConcreteInstancesModule
-import Def.v1.Atlas.TensorCategories.code.CoradicalFiltration.Part8
-import Def.v1.Atlas.TensorCategories.code.Corollary_1_13_4
-import Class.v1.Atlas.TensorCategories.code.Corollary_1_13_7
-import Theorem.v1.Atlas.TensorCategories.code.Corollary_1_15_2
-import Theorem.v1.Atlas.TensorCategories.code.Corollary_1_15_9
-import Instance.v1.Atlas.TensorCategories.code.Corollary_1_22_6
-import Theorem.Category.Atlas.v1.TensorCategories.code.Corollary_1_29_5
-import Theorem.Category.Atlas.v1.TensorCategories.code.Corollary_1_45_11
-import Theorem.Category.Atlas.v1.TensorCategories.code.Corollary_1_45_16
-import Theorem.Category.Atlas.v1.TensorCategories.code.Corollary_2_7_2
-import Theorem.Category.Atlas.v1.TensorCategories.code.ExactModuleProjectives
-import Theorem.Category.Atlas.v1.TensorCategories.code.GrothendieckRingHom
-import Theorem.Category.Atlas.v1.TensorCategories.code.Lemma_2_13_2
-import Theorem.Category.Atlas.v1.TensorCategories.code.Lemma_2_13_3
-import Theorem.Category.Atlas.v1.TensorCategories.code.Lemma_2_8_5
-import Theorem.Category.Atlas.v1.TensorCategories.code.Prop_1_45_10
-import Theorem.Category.Atlas.v1.TensorCategories.code.Proposition_1_34_7
-import Theorem.Category.Atlas.v1.TensorCategories.code.Proposition_1_45_15
-import Theorem.Category.Atlas.v1.TensorCategories.code.Proposition_1_48_2
-import Lemma.Category.Atlas.v1.TensorCategories.code.Proposition_2_14_14
-import Theorem.Category.Atlas.v1.TensorCategories.code.Proposition_2_7_7
-import Theorem.Category.Atlas.v1.TensorCategories.code.RegularObjectAbsorption
-import Theorem.Category.Atlas.v1.TensorCategories.code.TensorProjective.Proposition_1_13_6
-import Theorem.Category.Atlas.v1.TensorCategories.code.Theorem_1_15_8
-import Theorem.Category.Atlas.v1.TensorCategories.code.Theorem_1_25_2
-import Lemma.Category.Atlas.v1.TensorCategories.code.Theorem_2_14_11
-import Theorem.v1.Atlas.TensorCategories.code.Corollary_1_31_5
-import Def.v1.Atlas.TensorCategories.code.Corollary_1_48_3
-import Instance.v1.Atlas.TensorCategories.code.Definition_1_15_4
-import Def.v1.Atlas.TensorCategories.code.Definition_1_18_1
-import Abbrev.v1.Atlas.TensorCategories.code.Definition_1_18_2
-import Abbrev.v1.Atlas.TensorCategories.code.Definition_1_34_1
-import Abbrev.v1.Atlas.TensorCategories.code.Definition_1_45_7
-import Abbrev.v1.Atlas.TensorCategories.code.Definition_1_46_1
-import Def.v1.Atlas.TensorCategories.code.Definition_2_1_6
-import Abbrev.v1.Atlas.TensorCategories.code.Definition_2_3_1
-import Theorem.v1.Atlas.TensorCategories.code.Definition_2_9_1
-import Def.v1.Atlas.TensorCategories.code.Definition_2_9_18_ExactAlgebra
-import Def.v1.Atlas.TensorCategories.code.DeligneTensorProduct.Part3
-import Structure.v1.Atlas.TensorCategories.code.DeligneTensorProductDef
-import Theorem.v1.Atlas.TensorCategories.code.DeligneTensorProductMonoidal
-import Def.v1.Atlas.TensorCategories.code.DirectSumModuleCategory.Part2
-import Structure.v1.Atlas.TensorCategories.code.DirectSumModuleCategoryDef
-import Instance.v1.Atlas.TensorCategories.code.DualCategory.Part6
-import Theorem.v1.Atlas.TensorCategories.code.DualCoherenceBridge
-import Abbrev.v1.Atlas.TensorCategories.code.DualDefinitions
-import Instance.v1.Atlas.TensorCategories.code.EndTensorProduct
-import Def.v1.Atlas.TensorCategories.code.ExactModuleCatEquiv.Part3
-import Def.v1.Atlas.TensorCategories.code.ExactModuleCategory.Part4
-import Abbrev.v1.Atlas.TensorCategories.code.ExactModuleCriteria.Part2
-import Class.v1.Atlas.TensorCategories.code.Ext1UnitVanishing.Part2
-import Def.v1.Atlas.TensorCategories.code.FPdimCategory
-import Theorem.v1.Atlas.TensorCategories.code.FPdimCosine
-import Theorem.v1.Atlas.TensorCategories.code.FPdimFunctor
-import Def.v1.Atlas.TensorCategories.code.FPdimProps.Part3
-import Def.v1.Atlas.TensorCategories.code.FiberFunctor
-import Def.v1.Atlas.TensorCategories.code.FiberFunctorEnd
-import Abbrev.v1.Atlas.TensorCategories.code.FiniteAbelianCategoryDef
-import Theorem.v1.Atlas.TensorCategories.code.FiniteCategoryDef
-import Instance.v1.Atlas.TensorCategories.code.FiniteTensorCategory.Part8
-import Theorem.v1.Atlas.TensorCategories.code.FittingAlgebraLocalRing
-import Instance.v1.Atlas.TensorCategories.code.FittingLemmaInstance
-import Class.v1.Atlas.TensorCategories.code.FittingLemmaLocalEnd
-import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
-import Theorem.v1.Atlas.TensorCategories.code.GradedVec.Part6
-import Instance.v1.Atlas.TensorCategories.code.GrothendieckFusionRingInstance.Part2
-import Def.v1.Atlas.TensorCategories.code.GrothendieckModuleIrreducible
-import Theorem.v1.Atlas.TensorCategories.code.GrothendieckRing.Part2
-import Def.v1.Atlas.TensorCategories.code.GrothendieckRingCategorical.Part4
-import Def.v1.Atlas.TensorCategories.code.GroupoidMultitensor.Part5
-import Instance.v1.Atlas.TensorCategories.code.HigherDerivation
-import Def.v1.Atlas.TensorCategories.code.HomExactImpliesExact.Part2
-import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part3
-import Def.v1.Atlas.TensorCategories.code.HopfAlgebraAntiHom
-import Def.v1.Atlas.TensorCategories.code.HopfAlgebraExamples.Part2
-import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebraRep.Part2
-import Abbrev.v1.Atlas.TensorCategories.code.IndecomposableModuleCat
-import Instance.v1.Atlas.TensorCategories.code.Instances.VecFiniteTensorCategory
-import Def.v1.Atlas.TensorCategories.code.IntegralCategories
-import Def.v1.Atlas.TensorCategories.code.IntegralsClean
-import Def.v1.Atlas.TensorCategories.code.InternalHom.Part4
-import Instance.v1.Atlas.TensorCategories.code.InvertibleObjects
-import Instance.v1.Atlas.TensorCategories.code.K0Bimodule.Part5
-import Def.v1.Atlas.TensorCategories.code.Lemma285
-import Def.v1.Atlas.TensorCategories.code.Lemma_1_30_2
-import Class.v1.Atlas.TensorCategories.code.Lemma_1_51_1.Part2
-import Structure.v1.Atlas.TensorCategories.code.Lemma_2_14_7
-import Def.v1.Atlas.TensorCategories.code.LocalEndRingsInstance
-import Abbrev.v1.Atlas.TensorCategories.code.LocallyFiniteDefs
-import Theorem.v1.Atlas.TensorCategories.code.MacLaneCoherence
-import Instance.v1.Atlas.TensorCategories.code.MacLaneStrictness.Part2
-import Structure.v1.Atlas.TensorCategories.code.ModuleCategory.Theorem2112
-import Class.v1.Atlas.TensorCategories.code.ModuleCategory.Theorem2116
-import Abbrev.v1.Atlas.TensorCategories.code.ModuleCategory.Part5
-import Def.v1.Atlas.TensorCategories.code.ModuleCategoryDecomp
-import Structure.v1.Atlas.TensorCategories.code.ModuleCategoryEquiv
-import Theorem.v1.Atlas.TensorCategories.code.ModuleCategoryMultitensor
-import Structure.v1.Atlas.TensorCategories.code.ModuleFunctor
-import Class.v1.Atlas.TensorCategories.code.ModuleFunctorAbelianDefs
-import Theorem.v1.Atlas.TensorCategories.code.ModuleFunctorCategory
-import Def.v1.Atlas.TensorCategories.code.ModuleFunctorCategoryAbelianInstance
-import Class.v1.Atlas.TensorCategories.code.ModuleFunctorDefs
-import Theorem.v1.Atlas.TensorCategories.code.ModuleFunctorFinite
-import Abbrev.v1.Atlas.TensorCategories.code.ModuleOverAlgebra.Part2
-import Instance.v1.Atlas.TensorCategories.code.ModuleRigidityCompat
-import Abbrev.v1.Atlas.TensorCategories.code.MonoidalFunctorDef
-import Instance.v1.Atlas.TensorCategories.code.MonoidalFunctorProps.Part2
-import Def.v1.Atlas.TensorCategories.code.MonoidalFunctorsCohomology.Part5
-import Def.v1.Atlas.TensorCategories.code.MonoidalStructuresGraded
-import Def.v1.Atlas.TensorCategories.code.MoritaEquivalence
-import Theorem.v1.Atlas.TensorCategories.code.PerronFrobenius.Assembly
-import Theorem.v1.Atlas.TensorCategories.code.PerronFrobenius.PositiveMatrix
-import Def.v1.Atlas.TensorCategories.code.PerronFrobenius.SimplexFixedPoint
-import Theorem.v1.Atlas.TensorCategories.code.PerronFrobeniusFin1
-import Def.v1.Atlas.TensorCategories.code.PerronFrobeniusProof.Part2
-import Structure.v1.Atlas.TensorCategories.code.PivotalSpherical.Part3
-import Theorem.v1.Atlas.TensorCategories.code.PointedCoalgebras
-import Abbrev.v1.Atlas.TensorCategories.code.PointedTensorCategory
-import Def.v1.Atlas.TensorCategories.code.ProjectiveCoverInfra.Part4
-import Def.v1.Atlas.TensorCategories.code.Proposition_1_15_5
-import Instance.v1.Atlas.TensorCategories.code.Proposition_1_27_1.Part2
-import Def.v1.Atlas.TensorCategories.code.Proposition_1_2_4
-import Theorem.v1.Atlas.TensorCategories.code.Proposition_1_32_3
-import Def.v1.Atlas.TensorCategories.code.Proposition_1_45_2
-import Abbrev.v1.Atlas.TensorCategories.code.Proposition_1_45_5
-import Theorem.v1.Atlas.TensorCategories.code.Proposition_1_46_2
-import Abbrev.v1.Atlas.TensorCategories.code.Proposition_1_6_4
-import Def.v1.Atlas.TensorCategories.code.Proposition_2_10_7
-import Instance.v1.Atlas.TensorCategories.code.Proposition_2_12_2
-import Def.v1.Atlas.TensorCategories.code.Proposition_2_1_3
-import Theorem.v1.Atlas.TensorCategories.code.Proposition_2_8_7
-import Theorem.v1.Atlas.TensorCategories.code.QBinomial.Part2
-import Class.v1.Atlas.TensorCategories.code.QuantumGroupGeneral
-import Def.v1.Atlas.TensorCategories.code.QuantumSl2.Part2
-import Instance.v1.Atlas.TensorCategories.code.QuantumSl2Concrete.Part5
-import Instance.v1.Atlas.TensorCategories.code.QuantumSl2Instance
-import Theorem.v1.Atlas.TensorCategories.code.QuantumTrace
-import Abbrev.v1.Atlas.TensorCategories.code.QuasiTensorFunctor.Part5
-import Class.v1.Atlas.TensorCategories.code.QuasiTensorFunctorProjective.Part3
-import Structure.v1.Atlas.TensorCategories.code.ReductiveGroup
-import Structure.v1.Atlas.TensorCategories.code.RegularElement
-import Abbrev.v1.Atlas.TensorCategories.code.RegularObject.Part2
-import Def.v1.Atlas.TensorCategories.code.RigidAbelianDecomp.Part2
-import Def.v1.Atlas.TensorCategories.code.RigidMonoidalDuality.Part2
-import Theorem.v1.Atlas.TensorCategories.code.SchurLemma
-import Theorem.v1.Atlas.TensorCategories.code.SemisimpleDuals
-import Def.v1.Atlas.TensorCategories.code.SemisimpleMultitensor.Part6
-import Theorem.v1.Atlas.TensorCategories.code.SimpleObjectHelpers
-import Abbrev.v1.Atlas.TensorCategories.code.SkewPrimitive
-import Def.v1.Atlas.TensorCategories.code.SocleFiltration
-import Def.v1.Atlas.TensorCategories.code.SubquotientRelation
-import Class.v1.Atlas.TensorCategories.code.SurjectiveFunctor
-import Class.v1.Atlas.TensorCategories.code.SurjectiveTensorFunctor
-import Instance.v1.Atlas.TensorCategories.code.SweedlerHopfInstance.Part4
-import Theorem.v1.Atlas.TensorCategories.code.TaftWilsonComponentGrouplike
-import Abbrev.v1.Atlas.TensorCategories.code.TensorCategoryDef.Part3
-import Def.v1.Atlas.TensorCategories.code.TensorDualAdj
-import Def.v1.Atlas.TensorCategories.code.TensorExact.Part3
-import Theorem.v1.Atlas.TensorCategories.code.TensorHomEquivHelper
-import Theorem.v1.Atlas.TensorCategories.code.TensorHomEquivNaturality
-import Theorem.v1.Atlas.TensorCategories.code.TensorNondegen.DualZero
-import Theorem.v1.Atlas.TensorCategories.code.TensorNondegen.EvalCoevalArg
-import Def.v1.Atlas.TensorCategories.code.TensorNondegen.ZeroTensorZero
-import Instance.v1.Atlas.TensorCategories.code.TensorNondegenInstance
-import Theorem.v1.Atlas.TensorCategories.code.TensorOverAlgebra
-import Theorem.v1.Atlas.TensorCategories.code.TensorProjective.DirectSummand
-import Def.v1.Atlas.TensorCategories.code.TensorProjective.TensorSummand
-import Def.v1.Atlas.TensorCategories.code.TraceNonzero
-import Theorem.v1.Atlas.TensorCategories.code.TypeclassInstanceAudit
-import Class.v1.Atlas.TensorCategories.code.UnitProjectiveSemisimple
-import Theorem.v1.Atlas.TensorCategories.code.UnitSemisimplicity.EndUnitField
-import Theorem.v1.Atlas.TensorCategories.code.UnitSemisimplicity.EvalCoeval
-import Theorem.v1.Atlas.TensorCategories.code.UnitSemisimplicity.MonoidalBiexact.Part4
-import Instance.v1.Atlas.TensorCategories.code.UnitSemisimplicity.TensorExactness
-import Structure.v1.Atlas.TensorCategories.code.UnitSemisimplicity.UnitSimple
-import Theorem.v1.Atlas.TensorCategories.code.UnitSemisimplicity
-import Instance.v1.Atlas.TensorCategories.code.VecCategoricalFusionData
-import Theorem.v1.Atlas.TensorCategories.code.VecDualMapBridge
-import Abbrev.v1.Atlas.TensorCategories.code.VecInstances.Part2
-import Def.v1.Atlas.TensorCategories.code.VecPivotal.DoubleDualIso
-import Def.v1.Atlas.TensorCategories.code.VecPivotal.MonoidalCoherence
-import Theorem.v1.Atlas.TensorCategories.code.VecPivotal.PivotalInstance
-import Theorem.v1.Atlas.TensorCategories.code.VecPivotal.SphericalInstance
-import Instance.v1.Atlas.TensorCategories.code.VecPivotal
-import Def.v1.Atlas.TensorCategories.code.VecPivotalConcrete.Part2
-import Theorem.v1.Atlas.TensorCategories.code.VecPivotalNaturality
-import Instance.v1.Atlas.TensorCategories.code.VecSemisimple.Part2
-import Theorem.v1.Atlas.TensorCategories.code.VecSphericalConcrete
-import Def.v1.Atlas.TensorCategories.code.VecTensorDualCoherence
-import Structure.v1.Atlas.TensorCategories.code.ZPlusModules.Part6
 -- import Formalization.AlgebrasInCategoriesDefsBatch  -- commented out: conflicts with other imports
 -- import Formalization.AntipodeBijective.Assembly  -- commented out: conflicts with other imports
 -- import Formalization.AntipodeBijective.Injective  -- commented out: conflicts with other imports
@@ -384,5 +387,4 @@ import Structure.v1.Atlas.TensorCategories.code.ZPlusModules.Part6
 -- import Formalization.TwistEquivMonoidal  -- commented out: conflicts with other imports
 -- import Formalization.Twists  -- commented out: conflicts with other imports
 -- import Formalization.UnitProjective  -- commented out: conflicts with other imports
-
 

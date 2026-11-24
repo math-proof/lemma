@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicPhysicalBond.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalIncidence
+public import Def.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalBond
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicPhysicalBond.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalIncidence
-import Def.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalBond
-
-
 namespace StatMech.Universality
 
 open SimpleGraph

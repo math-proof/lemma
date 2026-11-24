@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.UpperHalfPlane.Gamma0FundamentalSet
+import Theorem.UpperHalfPlane.Gamma0FundamentalSet
 import Lemma.Measure.L2AutomorphicCarrier
 import Lemma.UpperHalfPlane.TruncatedDomainPartition
 import Abbrev.AutomorphicForm_L2ProductionInstance

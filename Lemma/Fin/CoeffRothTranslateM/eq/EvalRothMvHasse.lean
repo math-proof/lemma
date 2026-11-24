@@ -1,10 +1,13 @@
-import Mathlib
-import Lemma.Fin.CoeffRothMvHasse.eq.MulProd_ChooseExtAddCoeffAdd.of.RothMvIndex
-import Lemma.Fin.EqRothMvHasse0
-import Lemma.Fin.RothMvHasse0.eq.Zero.of.RothMvIndex
+module
+public import Mathlib
+public import Lemma.Fin.CoeffRothMvHasse.eq.MulProd_ChooseExtAddCoeffAdd.of.RothMvIndex
+public import Lemma.Fin.EqRothMvHasse0
+public import Lemma.Fin.RothMvHasse0.eq.Zero.of.RothMvIndex
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [rothTranslate_coeff_eq_eval_hasse](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

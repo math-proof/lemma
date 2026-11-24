@@ -1,4 +1,5 @@
 import Initialize.Tactic.Attr.Basic
+import Lemma.Bool.Eq.of.Eq.reverse.given
 
 
 @[path]
@@ -11,17 +12,6 @@ private lemma main
   (x : β) = (y : β) := by
 -- proof
   rw [h]
-
-
-@[path]
-private lemma reverse.given
-  {a b : α}
--- given
-  (h : b = a) :
--- imply
-  a = b :=
--- proof
-  h.symm
 
 
 @[path]

@@ -1,9 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.EllipticCurves.code.TorsionEndomorphism.Part3
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.EllipticCurves.code.TorsionEndomorphism.Part3
 open WeierstrassCurve WeierstrassCurve.Affine in
 open WeierstrassCurve.Affine
 
+
+public section
 
 namespace WeierstrassCurve.Affine
 

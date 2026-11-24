@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicPrimitiveValueBridge.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPrimitiveValueBridge
+open StatMech.Universality
+open FKIsingSquareBoundaryLayerCoordinateOneForm
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicPrimitiveValueBridge.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,10 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPrimitiveValueBridge
-open StatMech.Universality
-open FKIsingSquareBoundaryLayerCoordinateOneForm
 
 #print axioms PhysicalSplitRobinConsistencyInputs.primitive_tendsto_at_of_incidenceEmbedding
 #print axioms isingFermionicEntireSquarePrimitive_tendsto_at

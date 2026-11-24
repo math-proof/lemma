@@ -2,7 +2,7 @@ import Mathlib
 import Lemma.MvPolynomial.HeckeModule
 import Lemma.Set.SpecializationWitness
 import Lemma.HahnSeries.JqCoeff
-import Lemma.WeierstrassCurve.FrobeniusTrace
+import Theorem.WeierstrassCurve.FrobeniusTrace
 import Structure.ModularCurve_JZeroGoodReductionV2
 import Structure.ModularCurve_JZeroGoodReductionV3
 import Notation.ModularCurve_JZeroGoodReductionV3

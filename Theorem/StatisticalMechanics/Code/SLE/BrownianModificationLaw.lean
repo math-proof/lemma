@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/SLE/BrownianModificationLaw.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.SLE.BrownianContinuousModification.Part3
+public import Theorem.StatisticalMechanics.Code.SLE.Defs.Part9
+public import Mathlib.MeasureTheory.Function.ConvergenceInMeasure
+open Filter MeasureTheory ProbabilityTheory Set
+open scoped ENNReal NNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/SLE/BrownianModificationLaw.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.SLE.BrownianContinuousModification.Part3
-import Theorem.StatisticalMechanics.Code.SLE.Defs.Part9
-import Mathlib.MeasureTheory.Function.ConvergenceInMeasure
-open Filter MeasureTheory ProbabilityTheory Set
-open scoped ENNReal NNReal
-
-
 namespace StatMech.SLE
 
 theorem brownianCoordinateProcess_tendstoInMeasure

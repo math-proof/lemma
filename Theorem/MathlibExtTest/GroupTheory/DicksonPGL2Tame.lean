@@ -1,10 +1,11 @@
+module
+public import Theorem.GroupTheory.DicksonPGL2Tame.Part4
+public import Theorem.Nat.Card_Stabilizer
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/GroupTheory/DicksonPGL2Tame.lean -/
-
-
-import Theorem.GroupTheory.DicksonPGL2Tame.Part4
-import Lemma.Nat.Card_Stabilizer
-
-
 namespace MathlibExtTest.GroupTheory.DicksonPGL2Tame
 
 open MetaMathlibExt

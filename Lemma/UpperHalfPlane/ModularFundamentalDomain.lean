@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.UpperHalfPlane.Gamma0ExactVolume
+import Theorem.UpperHalfPlane.Gamma0ExactVolume
 import Instance.AutomorphicForm_L2ProductionInstance
 import Def.AutomorphicForm_ModularFundamentalDomain
 

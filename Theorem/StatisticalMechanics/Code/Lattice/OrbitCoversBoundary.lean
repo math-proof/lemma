@@ -1,5 +1,26 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Lattice/OrbitCoversBoundary.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
+public import Theorem.StatisticalMechanics.Code.Lattice.DartDef.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.DartNext.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.DartOrbit.Part6
+public import Theorem.StatisticalMechanics.Code.Lattice.ContourLinksExits.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.InterfaceOrbit.Part2
+public import Theorem.StatisticalMechanics.Code.Lattice.NoPinchDual.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.NoDiagTouchClose.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.StarHullWinding.Part2
+public import Theorem.StatisticalMechanics.Code.Lattice.WindingEarInduction.Part3
+public import Theorem.StatisticalMechanics.Code.Lattice.LexMinOrientation.Part3
+public import Theorem.StatisticalMechanics.Code.Lattice.MinimalPeriodLoop.Part2
+public import Theorem.StatisticalMechanics.Code.Lattice.StarHullPeriod
+public import Theorem.StatisticalMechanics.Code.Lattice.StarHullFinite
+public import Theorem.StatisticalMechanics.Code.Lattice.StarHullTurning
+open Set SimpleGraph Function
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Lattice/OrbitCoversBoundary.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,27 +28,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Lattice.HypercubicLattice.Part5
-import Theorem.StatisticalMechanics.Code.Lattice.DartDef.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.DartNext.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.DartOrbit.Part6
-import Theorem.StatisticalMechanics.Code.Lattice.ContourLinksExits.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.InterfaceOrbit.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.NoPinchDual.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.NoDiagTouchClose.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.StarHullWinding.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.WindingEarInduction.Part3
-import Theorem.StatisticalMechanics.Code.Lattice.LexMinOrientation.Part3
-import Theorem.StatisticalMechanics.Code.Lattice.MinimalPeriodLoop.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.StarHullPeriod
-import Theorem.StatisticalMechanics.Code.Lattice.StarHullFinite
-import Theorem.StatisticalMechanics.Code.Lattice.StarHullTurning
-open Set SimpleGraph Function
-
-
 namespace StatMech
 
 namespace Lattice

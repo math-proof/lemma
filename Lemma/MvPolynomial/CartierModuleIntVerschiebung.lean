@@ -1,10 +1,13 @@
-import Mathlib
-import Lemma.MvPowerSeries.NegV2
-import Lemma.MvPowerSeries.CartierModule
-import Lemma.PowerSeries.CartierModuleHomothety
-import Lemma.MvPowerSeries.CartierModuleWittAction
-
+module
+public import Mathlib
+public import Lemma.MvPowerSeries.NegV2
+public import Lemma.MvPowerSeries.CartierModule
+public import Lemma.PowerSeries.CartierModuleHomothety
+public import Lemma.MvPowerSeries.CartierModuleWittAction
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.Ideal.PlacesOverDVR
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 
 namespace Definitions

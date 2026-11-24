@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Probability/PBiasedHCLib.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Probability.PBiasedConvexity.Part2
+public import Def.StatisticalMechanics.Code.Probability.PBiasedHCLib
+open Real Set
+set_option linter.style.longLine false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Probability/PBiasedHCLib.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Probability.PBiasedConvexity.Part2
-import Def.StatisticalMechanics.Code.Probability.PBiasedHCLib
-open Real Set
-
-set_option linter.style.longLine false
-
-
 namespace StatMech.Probability
 
 theorem hclib_bracket {q t : ℝ} (hq2 : 2 ≤ q) (hq4 : q ≤ 4) (ht : |t| ≤ 1) :

@@ -1,12 +1,14 @@
-import Def.AutomorphicForm_ProductionPinsGeneral
-import Theorem.Matrix.RightConvolution
-import Theorem.Matrix.SigmaAdelicAction
-import Def.AutomorphicForm_ArchWeightChar
-import Structure.AutomorphicForm_IsotypicCuspSpace
-
+module
+public import Def.AutomorphicForm_ProductionPinsGeneral
+public import Theorem.Matrix.RightConvolution
+public import Theorem.Matrix.SigmaAdelicAction
+public import Def.AutomorphicForm_ArchWeightChar
+public import Structure.AutomorphicForm_IsotypicCuspSpace
 set_option autoImplicit false
-
 open IsDedekindDomain NumberField
+
+
+public section
 
 noncomputable section
 

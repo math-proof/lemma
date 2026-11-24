@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/PadicNumbers.lean -/
+module
+public import Mathlib.Order.DirectedInverseSystem
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.NumberTheory.Padics.RingHoms
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Mathlib
+public import Instance.v1.Atlas.ArithmeticGeometry.code.PadicNumbers.Part5
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/PadicNumbers.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib.Order.DirectedInverseSystem
-import Mathlib.Data.ZMod.Basic
-import Mathlib.NumberTheory.Padics.RingHoms
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib
-import Instance.v1.Atlas.ArithmeticGeometry.code.PadicNumbers.Part5
-
-
 namespace PadicInt
 
 open Finset PadicInt

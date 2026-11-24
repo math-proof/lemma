@@ -1,7 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/ReverseModeAlgebra.lean -/
+module
+public import Def.CPythonListsort.Code.Correctness.OriginRelabelEquivariance.Part6
+public import Theorem.CPythonListsort.Code.Correctness.ReverseModeAlgebra.Part2
 
-import Def.CPythonListsort.Code.Correctness.OriginRelabelEquivariance.Part6
-import Theorem.CPythonListsort.Code.Correctness.ReverseModeAlgebra.Part2
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/ReverseModeAlgebra.lean -/
 /-!
 # Order and stability algebra for reverse mode
 
@@ -10,8 +14,6 @@ effect of CPython's reverse-before / stable-forward-sort / reverse-after
 pattern once evaluator equivariance has supplied the mirrored pre-finish
 result.
 -/
-
-
 namespace CPythonListsort
 
 universe u

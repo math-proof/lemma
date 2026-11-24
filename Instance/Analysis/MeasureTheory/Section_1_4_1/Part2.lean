@@ -1,7 +1,10 @@
-import Mathlib.Order.BooleanAlgebra.Defs
-import Def.Analysis.MeasureTheory.Section_1_3_5.Part3
-import Def.Analysis.MeasureTheory.Section_1_4_1
+module
+public import Mathlib.Order.BooleanAlgebra.Defs
+public import Def.Analysis.MeasureTheory.Section_1_3_5.Part3
+public import Def.Analysis.MeasureTheory.Section_1_4_1
 
+
+public section
 
 /-- Example 1.4.3 (the largest algebra) -/
 instance ConcreteBooleanAlgebra.instOrderTop {X:Type*} : OrderTop (ConcreteBooleanAlgebra X) :=

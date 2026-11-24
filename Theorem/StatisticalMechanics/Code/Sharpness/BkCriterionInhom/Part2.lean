@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/BkCriterionInhom.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Sharpness.BkCriterionFull.Part2
+public import Theorem.StatisticalMechanics.Code.Inequalities.ReimerEndpointProve.Part3
+public import Def.StatisticalMechanics.Code.Sharpness.BkCriterionInhom
+open scoped BigOperators
+open Finset
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/BkCriterionInhom.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Sharpness.BkCriterionFull.Part2
-import Theorem.StatisticalMechanics.Code.Inequalities.ReimerEndpointProve.Part3
-import Def.StatisticalMechanics.Code.Sharpness.BkCriterionInhom
-open scoped BigOperators
-open Finset
-
-
 namespace StatMech
 
 namespace Sharpness

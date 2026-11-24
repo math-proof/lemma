@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicPhysicalCaccioppoli.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicFiniteCutoff
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalCheckerboard.Part4
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalPrimitiveBounds
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicPhysicalCaccioppoli.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicFiniteCutoff
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalCheckerboard.Part4
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicPhysicalPrimitiveBounds
-
-
 namespace StatMech.Universality
 
 open Finset SimpleGraph

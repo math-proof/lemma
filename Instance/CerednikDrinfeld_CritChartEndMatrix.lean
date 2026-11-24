@@ -1,14 +1,18 @@
--- Carved from Lemma/Definitions/Def_CerednikDrinfeld_CritChartEndMatrix.lean: instance decls only.
-import Mathlib
-import Instance.MvFormalGroup_NegV2
-import Instance.MvFormalGroup_CartierModule
-import Instance.MvFormalGroup_CartierModuleWittAction
-import Instance.MvFormalGroup_CartierModuleBaseChange
-import Theorem.MvPowerSeries.SpecialFormalModule
-import Theorem.FormalGroup.CritChartEndMatrix
-import Def.FormalGroup_CritChartEndMatrix
-
+module
+public import Mathlib
+public import Instance.MvFormalGroup_NegV2
+public import Instance.MvFormalGroup_CartierModule
+public import Instance.MvFormalGroup_CartierModuleWittAction
+public import Instance.MvFormalGroup_CartierModuleBaseChange
+public import Theorem.MvPowerSeries.SpecialFormalModule
+public import Theorem.FormalGroup.CritChartEndMatrix
+public import Def.FormalGroup_CritChartEndMatrix
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_CerednikDrinfeld_CritChartEndMatrix.lean: instance decls only.
 
 noncomputable section
 

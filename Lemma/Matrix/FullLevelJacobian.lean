@@ -1,10 +1,13 @@
-import Lemma.UpperHalfPlane.XHOperators
-import Lemma.Matrix.IsCuspidalOfType
-import Def.HeckeGalois_EichlerShimura
-import Instance.ModularCurve_FullLevelJacobian
-import Notation.ModularCurve_FullLevelJacobian
-
+module
+public import Theorem.UpperHalfPlane.XHOperators
+public import Lemma.Matrix.IsCuspidalOfType
+public import Def.HeckeGalois_EichlerShimura
+public import Instance.ModularCurve_FullLevelJacobian
+public import Notation.ModularCurve_FullLevelJacobian
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

@@ -1,12 +1,14 @@
+module
+public import Theorem.AlgebraicGeometry.EllipticCurve.ManinTwist.Part15
+public import Theorem.Scheme.EllipticCurve.ManinTwist
+public import Mathlib.Algebra.Field.ZMod
+public import Mathlib.Tactic.NormNum
+public import Theorem.MathlibExtTest.AlgebraicGeometry.EllipticCurve.ManinTwist
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/AlgebraicGeometry/EllipticCurve/ManinTwist.lean -/
-
-import Theorem.AlgebraicGeometry.EllipticCurve.ManinTwist.Part15
-import Lemma.Scheme.EllipticCurve.ManinTwist
-import Mathlib.Algebra.Field.ZMod
-import Mathlib.Tactic.NormNum
-import Theorem.MathlibExtTest.AlgebraicGeometry.EllipticCurve.ManinTwist
-
-
 namespace MathlibExtTest.AlgebraicGeometry.EllipticCurve.ManinTwist
 
 open WeierstrassCurve

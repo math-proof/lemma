@@ -1,9 +1,12 @@
-import Mathlib.AlgebraicGeometry.EllipticCurve.DivisionPolynomial.Basic
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Formula
-import Def.WeierstrassCurve_Velu
-import Structure.WeierstrassCurve_Velu
-
+module
+public import Mathlib.AlgebraicGeometry.EllipticCurve.DivisionPolynomial.Basic
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Formula
+public import Def.WeierstrassCurve_Velu
+public import Structure.WeierstrassCurve_Velu
 open Polynomial
+
+
+public section
 
 namespace WeierstrassCurve
 

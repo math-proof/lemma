@@ -1,11 +1,14 @@
-import Lemma.Fin.Pi_ToMeasure.of.EqSum
-import Mathlib.MeasureTheory.Measure.Dirac.Def
-import Mathlib.MeasureTheory.Measure.Map
-import Mathlib.MeasureTheory.Measure.Module
-import Initialize.Tactic.Attr.Basic
+module
+public import Lemma.Fin.Pi_ToMeasure.of.EqSum
+public import Mathlib.MeasureTheory.Measure.Dirac.Def
+public import Mathlib.MeasureTheory.Measure.Map
+public import Mathlib.MeasureTheory.Measure.Module
+public import Initialize.Tactic.Attr.Basic
 open Classical Fin Finset MeasureTheory
 open scoped ENNReal
 
+
+public section
 
 /--
 The cell masses of the empirical measure of finitely many sample points are the empirical

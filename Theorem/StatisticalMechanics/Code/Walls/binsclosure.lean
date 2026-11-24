@@ -1,15 +1,5 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/binsclosure.lean -/
-
-/-
-Copyright (c) Meta Platforms, Inc. and affiliates.
-All rights reserved.
-
-This source code is licensed under the license found in the
-LICENSE file in the root directory of this source tree.
--/
-
-
-import Theorem.StatisticalMechanics.Code.Walls.binsinsertion.Part7
+module
+public import Theorem.StatisticalMechanics.Code.Walls.binsinsertion.Part7
 open Set SimpleGraph Finset MeasureTheory Filter Topology
 open scoped BigOperators ENNReal NNReal
 open StatMech StatMech.Lattice StatMech.ConfigSpace
@@ -17,6 +7,16 @@ open StatMech.Percolation
 open StatMech.Ising StatMech.IsingFK
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/binsclosure.lean -/
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
 namespace StatMech.Walls
 
 set_option linter.style.longLine false

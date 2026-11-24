@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.EllipticCurve_PointReduction
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 open Int
 open WeierstrassCurve IsDiscreteValuationRing IsLocalRing IsDedekindDomain.HeightOneSpectrum
 

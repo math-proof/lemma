@@ -1,10 +1,11 @@
+module
+public import Def.Combinatorics.DixonSummation.Part5
+public import Theorem.Finset.DixonSummation
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/DixonSummation.lean -/
-
-
-import Def.Combinatorics.DixonSummation.Part5
-import Lemma.Finset.DixonSummation
-
-
 namespace MetaMathlibExt
 
 -- Dixon's formula evaluates three representative positive terminating sums.

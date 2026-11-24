@@ -1,12 +1,15 @@
-import Lemma.Random.Any_And_Any_All_LeAbsAndSubToRealKlDiv.le.Integral_Sub_Log_Integral_Exp.of.Gt_0.Integrable_Llr
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.MeasureTheory.Function.ContinuousMapDense
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.Topology.MetricSpace.Polish
-import Mathlib.Topology.Metrizable.CompletelyMetrizable
-import Initialize.Tactic.Attr.Basic
+module
+public import Lemma.Random.Any_And_Any_All_LeAbsAndSubToRealKlDiv.le.Integral_Sub_Log_Integral_Exp.of.Gt_0.Integrable_Llr
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+public import Mathlib.MeasureTheory.Function.ContinuousMapDense
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.Topology.MetricSpace.Polish
+public import Mathlib.Topology.Metrizable.CompletelyMetrizable
+public import Initialize.Tactic.Attr.Basic
 open BoundedContinuousFunction ENNReal Filter InformationTheory Interval MeasureTheory Random Set Topology Real
 
+
+public section
 
 private lemma continuous_close [TopologicalSpace α] [PolishSpace α] [MeasurableSpace α] [BorelSpace α] {μ ν : Measure α} [IsProbabilityMeasure μ] [IsProbabilityMeasure ν] (hνμ : ν ≪ μ) (hint : Integrable (llr ν μ) ν) {ε : ℝ} (hε : 0 < ε) :
   ∃ f : α → ℝ, Continuous f ∧ (∃ C, ∀ x, |f x| ≤ C) ∧ (klDiv ν μ).toReal - ε ≤ ∫ x, f x ∂ν - log (∫ x, exp (f x) ∂μ) := by

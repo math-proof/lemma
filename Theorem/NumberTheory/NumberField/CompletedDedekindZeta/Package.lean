@@ -1,3 +1,10 @@
+module
+public import Mathlib
+public import Theorem.Int.P2MUtil
+
+
+public section
+
 /- Completed Dedekind zeta package (Gapsw scaffolding).
    Sourced from fermats-last-theorem
    P2M/Sol/S_NumberField_exists_completedDedekindZeta_package.lean
@@ -15,11 +22,6 @@
    - gapsw80_t36_D1app_closed
    - gapsw80_t43_SL_closed
 -/
-
-import Mathlib
-import Lemma.Int.P2MUtil
-
-
 namespace P2MW.S_NumberField_exists_completedDedekindZeta_package
 
 set_option autoImplicit false

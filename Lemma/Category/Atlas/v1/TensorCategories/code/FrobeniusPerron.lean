@@ -1,10 +1,13 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.TensorCategories.code.FrobeniusPerron.Part6
 open FusionRing in FusionRing.FPdimData PerronFrobeniusGeneral PerronFrobeniusFin2
 open Real FusionRing
 open scoped Matrix
 
+
+public section
 
 namespace FusionRing
 

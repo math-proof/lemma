@@ -1,11 +1,12 @@
+module
+public import Def.Analysis.Ramanujan.Part1Ch6Entry14LambertSeries
+public import Theorem.Real.Ramanujan.Part1Ch6Entry14LambertSeries
+public import Mathlib.Tactic
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Ramanujan/Part1Ch6Entry14LambertSeries.lean -/
-
-
-import Def.Analysis.Ramanujan.Part1Ch6Entry14LambertSeries
-import Lemma.Real.Ramanujan.Part1Ch6Entry14LambertSeries
-import Mathlib.Tactic
-
-
 namespace MathlibExtTest.Analysis.Ramanujan.Part1Ch6Entry14LambertSeries
 
 open scoped Nat Real BigOperators

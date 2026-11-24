@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/ShermanAssembly1.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.KWLemma5
+public import Theorem.StatisticalMechanics.Code.Onsager.ShermanLemma5.Part7
+public import Theorem.StatisticalMechanics.Code.Onsager.ShermanLoop
+public import Theorem.StatisticalMechanics.Code.Onsager.KWMatrix
+public import Theorem.StatisticalMechanics.Code.Onsager.DetWalkExp
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/ShermanAssembly1.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.KWLemma5
-import Theorem.StatisticalMechanics.Code.Onsager.ShermanLemma5.Part7
-import Theorem.StatisticalMechanics.Code.Onsager.ShermanLoop
-import Theorem.StatisticalMechanics.Code.Onsager.KWMatrix
-import Theorem.StatisticalMechanics.Code.Onsager.DetWalkExp
-
-
 namespace StatMech.Onsager
 
 open Matrix BigOperators Finset

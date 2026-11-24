@@ -1,7 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/Group.lean -/
+module
+public import Theorem.NumberTheory.NumberField.RayClass.RayGroup.Part3
+public import Theorem.Nat.NumberField.RayClass.RayGroup
 
-import Theorem.NumberTheory.NumberField.RayClass.RayGroup.Part3
-import Lemma.Nat.NumberField.RayClass.RayGroup
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/Group.lean -/
 @[expose] noncomputable section
 
 open scoped nonZeroDivisors

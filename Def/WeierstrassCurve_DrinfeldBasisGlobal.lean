@@ -1,10 +1,13 @@
-import Mathlib
-import Lemma.WeierstrassCurve.ProjModel
-import Abbrev.AlgebraicGeometry_RelEffCartierDivSum
-import Def.ModularCurve_WeierstrassLevelComponents
-import Structure.WeierstrassCurve_DrinfeldBasisGlobal
-
+module
+public import Mathlib
+public import Lemma.WeierstrassCurve.ProjModel
+public import Abbrev.AlgebraicGeometry_RelEffCartierDivSum
+public import Def.ModularCurve_WeierstrassLevelComponents
+public import Structure.WeierstrassCurve_DrinfeldBasisGlobal
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

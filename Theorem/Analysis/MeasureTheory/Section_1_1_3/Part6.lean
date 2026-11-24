@@ -1,6 +1,10 @@
-import Abbrev.Analysis.MeasureTheory.Section_1_1_2.Part4
-import Def.Analysis.MeasureTheory.Section_1_1_3.Part6
+module
+public import Abbrev.Analysis.MeasureTheory.Section_1_1_2.Part4
+public import Def.Analysis.MeasureTheory.Section_1_1_3.Part6
 open BoundedInterval
+
+
+public section
 
 @[ext]
 /-!

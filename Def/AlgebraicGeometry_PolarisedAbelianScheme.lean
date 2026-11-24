@@ -1,11 +1,14 @@
-import Mathlib.Topology.KrullDimension
-import Structure.JacJ1Iface
-import Theorem.Scheme.RelativeGroupLawKernel
-import Def.AlgebraicGeometry_RelativePicardFunctor
-import Def.AlgebraicGeometry_ModulesProjPresentation
-import Structure.AlgebraicGeometry_PolarisedAbelianScheme
-
+module
+public import Mathlib.Topology.KrullDimension
+public import Structure.JacJ1Iface
+public import Theorem.Scheme.RelativeGroupLawKernel
+public import Def.AlgebraicGeometry_RelativePicardFunctor
+public import Def.AlgebraicGeometry_ModulesProjPresentation
+public import Structure.AlgebraicGeometry_PolarisedAbelianScheme
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

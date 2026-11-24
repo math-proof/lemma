@@ -1,15 +1,18 @@
-import Mathlib
-import Def.ModularCurve_JZeroNeronDataPrime
-import Def.ModularCurve_EisensteinIdeal
-import Structure.ModularCurve_FppfKummerInterface
-import Def.ModularCurve_MazurStepThreeInputs
-import Instance.AlgebraicGeometry_FppfSiteCohomology
-import Instance.AlgebraicGeometry_FppfCohomologyLES
-import Instance.AlgebraicGeometry_FppfKummerProp17
-import Def.ModularCurve_JZeroToricTorsion
-import Structure.ModularCurve_JZeroNeronPrimaryTorsionSheaf
-
+module
+public import Mathlib
+public import Def.ModularCurve_JZeroNeronDataPrime
+public import Def.ModularCurve_EisensteinIdeal
+public import Structure.ModularCurve_FppfKummerInterface
+public import Def.ModularCurve_MazurStepThreeInputs
+public import Instance.AlgebraicGeometry_FppfSiteCohomology
+public import Instance.AlgebraicGeometry_FppfCohomologyLES
+public import Instance.AlgebraicGeometry_FppfKummerProp17
+public import Def.ModularCurve_JZeroToricTorsion
+public import Structure.ModularCurve_JZeroNeronPrimaryTorsionSheaf
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

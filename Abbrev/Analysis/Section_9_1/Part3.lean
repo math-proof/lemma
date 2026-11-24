@@ -1,7 +1,12 @@
-import Mathlib
-import Mathlib.Analysis.SpecificLimits.Basic
-import Abbrev.Analysis.Section_6_4.Part3
-import Theorem.Analysis.Section_9_1.Part2
+module
+public import Mathlib
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Abbrev.Analysis.Section_6_4.Part3
+public import Theorem.Analysis.Section_9_1.Part2
+
+
+public section
+
 variable (I : Type*)
 /-!
 # Analysis I, Section 9.1: Subsets of the real line

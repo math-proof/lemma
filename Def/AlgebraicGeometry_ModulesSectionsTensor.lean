@@ -1,9 +1,12 @@
-import Mathlib
-import Lemma.LinearMap.InternalHom
-import Instance.SheafOfModules_Monoidal
-
+module
+public import Mathlib
+public import Lemma.LinearMap.InternalHom
+public import Instance.SheafOfModules_Monoidal
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
+
+
+public section
 
 universe u
 

@@ -1,10 +1,13 @@
-import Mathlib
-import Lemma.MvPowerSeries.NegV2
-import Structure.MvFormalGroup_CartierModule
-import Def.MvFormalGroup_BasicV2
-import Instance.MvFormalGroup_EndRingV2
-
+module
+public import Mathlib
+public import Lemma.MvPowerSeries.NegV2
+public import Structure.MvFormalGroup_CartierModule
+public import Def.MvFormalGroup_BasicV2
+public import Instance.MvFormalGroup_EndRingV2
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

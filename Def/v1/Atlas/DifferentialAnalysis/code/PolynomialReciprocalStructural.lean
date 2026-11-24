@@ -1,5 +1,19 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/DifferentialAnalysis/code/PolynomialReciprocalStructural.lean -/
+module
+public import Mathlib.Algebra.MvPolynomial.PDeriv
+public import Mathlib.Algebra.MvPolynomial.Degrees
+public import Mathlib.Analysis.Calculus.FDeriv.Basic
+public import Mathlib.Analysis.Calculus.FDeriv.Congr
+public import Mathlib.Analysis.InnerProductSpace.EuclideanDist
+public import Def.v1.Atlas.DifferentialAnalysis.code.SmoothingOperators
+public import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SmoothingOperators
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.QuotientFDerivStep
+public import Def.v1.Atlas.DifferentialAnalysis.code.QuotientFDerivStep
+open MvPolynomial Finsupp
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/DifferentialAnalysis/code/PolynomialReciprocalStructural.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +21,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib.Algebra.MvPolynomial.PDeriv
-import Mathlib.Algebra.MvPolynomial.Degrees
-import Mathlib.Analysis.Calculus.FDeriv.Basic
-import Mathlib.Analysis.Calculus.FDeriv.Congr
-import Mathlib.Analysis.InnerProductSpace.EuclideanDist
-import Def.v1.Atlas.DifferentialAnalysis.code.SmoothingOperators
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SmoothingOperators
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.QuotientFDerivStep
-import Def.v1.Atlas.DifferentialAnalysis.code.QuotientFDerivStep
-open MvPolynomial Finsupp
-
-
 noncomputable section
 
 namespace DifferentialOperators

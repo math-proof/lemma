@@ -1,5 +1,21 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/oc_boxobjects.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.RussoDerivative.Part5
+public import Theorem.StatisticalMechanics.Code.FK.FKQ2Sharp
+public import Theorem.StatisticalMechanics.Code.FK.Comparison
+public import Theorem.StatisticalMechanics.Code.Inequalities.IncreasingEvent.Part2
+public import Structure.StatisticalMechanics.Code.Walls.oc_boxobjects
+open scoped BigOperators
+open Finset Set
+open scoped Classical
+set_option linter.style.longLine false
+set_option linter.unusedSectionVars false
+set_option linter.unusedFintypeInType false
+set_option linter.unusedDecidableInType false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/oc_boxobjects.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,23 +23,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FK.RussoDerivative.Part5
-import Theorem.StatisticalMechanics.Code.FK.FKQ2Sharp
-import Theorem.StatisticalMechanics.Code.FK.Comparison
-import Theorem.StatisticalMechanics.Code.Inequalities.IncreasingEvent.Part2
-import Structure.StatisticalMechanics.Code.Walls.oc_boxobjects
-open scoped BigOperators
-open Finset Set
-open scoped Classical
-
-set_option linter.style.longLine false
-set_option linter.unusedSectionVars false
-set_option linter.unusedFintypeInType false
-set_option linter.unusedDecidableInType false
-
-
 namespace StatMech
 
 namespace Walls

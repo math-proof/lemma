@@ -1,13 +1,14 @@
+module
+public import Theorem.NumberTheory.NumberField.Completion.FiniteLiesOverResidueField
+public import Theorem.Nat.NumberField.Completion.FiniteLiesOverResidueField
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/Completion/FiniteLiesOverResidueField.lean -/
-
-
-import Theorem.NumberTheory.NumberField.Completion.FiniteLiesOverResidueField
-import Theorem.Nat.NumberField.Completion.FiniteLiesOverResidueField
 /-!
 # Checks for adic integer map naturality
 -/
-
-
 namespace IsDedekindDomain.HeightOneSpectrum
 
 open scoped NumberField

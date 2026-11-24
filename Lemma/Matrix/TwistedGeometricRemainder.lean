@@ -2,7 +2,7 @@ import Lemma.Measure.TwistedOrbital
 import Def.AutomorphicForm_FormalBaseChange
 import Lemma.Matrix.PrincipalLevel
 import Lemma.Measure.TateGlobalZeta
-import Lemma.Finset.ConverseData
+import Theorem.Finset.ConverseData
 import Lemma.Matrix.HeckeCosetLocal
 import Lemma.ContinuousMap.GenuineDescent
 import Lemma.Matrix.TwistedNormClasses

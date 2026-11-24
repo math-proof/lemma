@@ -1,9 +1,11 @@
-import Mathlib
-import Instance.PresheafOfModules_ExteriorPower
-
+module
+public import Mathlib
+public import Instance.PresheafOfModules_ExteriorPower
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 
+
+public section
 
 universe u
 

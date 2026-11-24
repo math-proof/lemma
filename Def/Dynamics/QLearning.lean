@@ -1,10 +1,14 @@
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Analysis.Normed.Lp.MeasurableSpace
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Def.Dynamics.MarkovDecisionProcess.Part5
-import Abbrev.Analysis.InnerProductSpace.EuclideanVec
-import Structure.Dynamics.QLearning
+module
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Analysis.Normed.Lp.MeasurableSpace
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Def.Dynamics.MarkovDecisionProcess.Part5
+public import Abbrev.Analysis.InnerProductSpace.EuclideanVec
+public import Structure.Dynamics.QLearning
 open Finset
+
+
+public section
 
 universe u v
 

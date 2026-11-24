@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/LebowitzPfisterFourBridgeObstruction.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterThreeBridgeClosure
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterStrongMarkedSite
+public import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterFourBridgeObstruction
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/LebowitzPfisterFourBridgeObstruction.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterThreeBridgeClosure
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterStrongMarkedSite
-import Theorem.StatisticalMechanics.Code.Ising.LebowitzPfisterFourBridgeObstruction
-
-
 namespace StatMech.Ising
 
 noncomputable section

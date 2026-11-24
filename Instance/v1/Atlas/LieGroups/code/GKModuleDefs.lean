@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/GKModuleDefs.lean -/
+module
+public import Def.v1.Atlas.LieGroups.code.GKModule.Part2
+public import Def.v1.Atlas.LieGroups.code.Admissible.Part3
+public import Theorem.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
+public import Mathlib.Algebra.Lie.Semisimple.Defs
+public import Structure.v1.Atlas.LieGroups.code.GKModuleDefs.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/GKModuleDefs.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.LieGroups.code.GKModule.Part2
-import Def.v1.Atlas.LieGroups.code.Admissible.Part3
-import Theorem.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
-import Mathlib.Algebra.Lie.Semisimple.Defs
-import Structure.v1.Atlas.LieGroups.code.GKModuleDefs.Part2
-
-
 noncomputable section
 
 open scoped ComplexOrder

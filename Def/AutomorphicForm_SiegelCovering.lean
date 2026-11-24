@@ -1,8 +1,11 @@
-import Def.AutomorphicForm_CentreCutSiegelSet
-import Lemma.Matrix.SiegelReduction
-
+module
+public import Def.AutomorphicForm_CentreCutSiegelSet
+public import Theorem.Matrix.SiegelReduction
 open Matrix NumberField UpperHalfPlane
 open scoped MatrixGroups Modular
+
+
+public section
 
 noncomputable section
 

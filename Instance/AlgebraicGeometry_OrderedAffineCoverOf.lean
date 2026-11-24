@@ -1,10 +1,13 @@
--- Carved from Lemma/Definitions/Def_AlgebraicGeometry_OrderedAffineCoverOf.lean: instance decls only.
-import Mathlib
-
-import Def.AlgebraicGeometry_OModulePresheafHom
-import Def.AlgebraicGeometry_OrderedAffineCoverOf
-
+module
+public import Mathlib
+public import Def.AlgebraicGeometry_OModulePresheafHom
+public import Def.AlgebraicGeometry_OrderedAffineCoverOf
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicGeometry_OrderedAffineCoverOf.lean: instance decls only.
 
 noncomputable section
 

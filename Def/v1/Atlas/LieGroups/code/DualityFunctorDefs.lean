@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/DualityFunctorDefs.lean -/
+module
+public import Def.v1.Atlas.LieGroups.code.CompositionSeries
+public import Theorem.Int.StandardFiltrationMultiplicity.eq.DimHomProjectiveContragredientVerma
+public import Structure.v1.Atlas.LieGroups.code.DualityFunctorDefs
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/DualityFunctorDefs.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.LieGroups.code.CompositionSeries
-import Theorem.Int.StandardFiltrationMultiplicity.eq.DimHomProjectiveContragredientVerma
-import Structure.v1.Atlas.LieGroups.code.DualityFunctorDefs
-
-
 noncomputable section
 
 universe uCatO

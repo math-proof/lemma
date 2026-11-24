@@ -1,5 +1,19 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KTypeDecomposition.lean -/
+module
+public import Def.v1.Atlas.LieGroups.code.GKModule.Part2
+public import Theorem.v1.Atlas.LieGroups.code.SL2Basics.Part4
+public import Theorem.Nat.basisHC.eq.SMul
+public import Mathlib.LinearAlgebra.Eigenspace.Basic
+public import Mathlib.LinearAlgebra.Eigenspace.Semisimple
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.Algebra.Lie.OfAssociative
+public import Theorem.v1.Atlas.LieGroups.code.KTypeDecomposition.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KTypeDecomposition.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -8,16 +22,6 @@ This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
 
-import Def.v1.Atlas.LieGroups.code.GKModule.Part2
-import Theorem.v1.Atlas.LieGroups.code.SL2Basics.Part4
-import Theorem.Nat.basisHC.eq.SMul
-import Mathlib.LinearAlgebra.Eigenspace.Basic
-import Mathlib.LinearAlgebra.Eigenspace.Semisimple
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.Algebra.Lie.OfAssociative
-import Theorem.v1.Atlas.LieGroups.code.KTypeDecomposition.Part2
 attribute [local instance 100] LieRing.ofAssociativeRing
 
 open Module

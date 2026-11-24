@@ -17,7 +17,7 @@ open Nat
 [Nat.add_pos_right](https://github.com/teorth/analysis/blob/main/Analysis/Section_2_2.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   {a b : Chapter2.Nat}
 -- given
   (ha: a.IsPos) :

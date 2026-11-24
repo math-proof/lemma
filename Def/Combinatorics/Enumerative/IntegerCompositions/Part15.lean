@@ -1,3 +1,12 @@
+module
+public import Mathlib
+public import Theorem.Combinatorics.Enumerative.IntegerCompositions.Part9
+open Finset Nat BigOperators
+set_option allowUnsafeReducibility true
+
+
+public section
+
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -6,10 +15,7 @@ All rights reserved.
 Copyright (c) 2024 AlgebraicCombinatorics Contributors. All rights reserved.
 Authors: AlgebraicCombinatorics Contributors
 -/
-import Mathlib
-import Theorem.Combinatorics.Enumerative.IntegerCompositions.Part9
-open Finset Nat BigOperators
-set_option allowUnsafeReducibility true
+
 attribute [local reducible] PNat
 
 /-!

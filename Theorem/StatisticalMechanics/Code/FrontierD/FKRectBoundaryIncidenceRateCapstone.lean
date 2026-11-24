@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectBoundaryIncidenceRateCapstone.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4PIMSTwoByOnePhaseAssembly
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4PhaseFinalAssembly
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectHorizontalCylinderTransverseRate
+open Filter MeasureTheory Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectBoundaryIncidenceRateCapstone.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4PIMSTwoByOnePhaseAssembly
-import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4PhaseFinalAssembly
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectHorizontalCylinderTransverseRate
-open Filter MeasureTheory Topology
-
-
 namespace StatMech.FrontierD
 
 open StatMech.FK StatMech.Lattice

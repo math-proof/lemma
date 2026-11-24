@@ -1,5 +1,22 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/bc86finiteNcount.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Walls.bc85bootstrap
+public import Theorem.StatisticalMechanics.Code.Walls.bc84leafboundary
+public import Theorem.StatisticalMechanics.Code.Walls.bc81gncutae
+public import Theorem.StatisticalMechanics.Code.Walls.bc80gntrifcount.Part3
+public import Theorem.StatisticalMechanics.Code.Walls.bc64coarseembed.Part5
+open Set SimpleGraph Finset MeasureTheory Filter Topology
+open scoped BigOperators ENNReal NNReal
+open StatMech StatMech.Lattice StatMech.ConfigSpace
+set_option linter.style.longLine false
+set_option linter.unusedDecidableInType false
+set_option linter.unusedVariables false
+set_option maxRecDepth 4000
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/bc86finiteNcount.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,24 +24,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Walls.bc85bootstrap
-import Theorem.StatisticalMechanics.Code.Walls.bc84leafboundary
-import Theorem.StatisticalMechanics.Code.Walls.bc81gncutae
-import Theorem.StatisticalMechanics.Code.Walls.bc80gntrifcount.Part3
-import Theorem.StatisticalMechanics.Code.Walls.bc64coarseembed.Part5
-open Set SimpleGraph Finset MeasureTheory Filter Topology
-open scoped BigOperators ENNReal NNReal
-open StatMech StatMech.Lattice StatMech.ConfigSpace
-
-set_option linter.style.longLine false
-set_option linter.unusedDecidableInType false
-set_option linter.unusedVariables false
-set_option maxRecDepth 4000
-
-
 namespace StatMech.Walls
 
 open StatMech.Percolation

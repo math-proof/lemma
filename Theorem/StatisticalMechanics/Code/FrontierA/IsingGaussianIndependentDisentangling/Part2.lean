@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingGaussianIndependentDisentangling.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianClusterConfinement.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianIntersectionUnionBound.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierA.GrahamWeightedEq22Refinement
+public import Def.StatisticalMechanics.Code.FrontierA.IsingGaussianIndependentDisentangling.Part2
+open Finset SimpleGraph
+open scoped BigOperators
+open Classical
+set_option linter.unusedSectionVars false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingGaussianIndependentDisentangling.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianClusterConfinement.Part3
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianIntersectionUnionBound.Part2
-import Theorem.StatisticalMechanics.Code.FrontierA.GrahamWeightedEq22Refinement
-import Def.StatisticalMechanics.Code.FrontierA.IsingGaussianIndependentDisentangling.Part2
-open Finset SimpleGraph
-open scoped BigOperators
-open Classical
-
-set_option linter.unusedSectionVars false
-
-
 namespace StatMech.FrontierA
 
 open StatMech.Sharpness

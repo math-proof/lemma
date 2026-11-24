@@ -1,7 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/RayClass/CongruenceSubgroup.lean -/
+module
+public import Def.NumberTheory.NumberField.RayClass.CongruenceSubgroup
+public import Theorem.Nat.NumberField.RayClass.CongruenceSubgroup
 
-import Def.NumberTheory.NumberField.RayClass.CongruenceSubgroup
-import Theorem.Nat.NumberField.RayClass.CongruenceSubgroup
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/RayClass/CongruenceSubgroup.lean -/
 variable {K : Type*} [Field K] [NumberField K]
 variable {m : NumberField.Modulus K}
 

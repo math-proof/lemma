@@ -1,4 +1,8 @@
-import Def.GaloisRep_LocalConditions
+module
+public import Def.GaloisRep_LocalConditions
+
+
+public section
 
 namespace GaloisRepAdic
 

@@ -1,8 +1,11 @@
-import Theorem.Analysis.MeasureTheory.Section_1_3_1.Part11
-import Mathlib.Algebra.Order.Floor.Semifield
-import Theorem.Analysis.MeasureTheory.Section_1_3_2.Part8
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_3_1.Part11
+public import Mathlib.Algebra.Order.Floor.Semifield
+public import Theorem.Analysis.MeasureTheory.Section_1_3_2.Part8
 set_option doc.verso.suggestions false
 
+
+public section
 
 /-- Remark 1.3.10: The inverse image of a Lebesgue measurable set by a measurable function
     need not be Lebesgue measurable.

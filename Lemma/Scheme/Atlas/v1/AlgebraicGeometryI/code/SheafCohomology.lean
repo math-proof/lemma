@@ -1,9 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology.Part2
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology.Part2
 open SheafCohomology
 open CohomologyP1
 
+
+public section
 
 namespace SheafCohomology
 

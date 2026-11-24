@@ -1,7 +1,11 @@
-import Mathlib
-import Def.ModularCurve_ProjectiveLine
-import Instance.ProjectiveLineMatrixAction
-import Abbrev.ProjectiveLineMatrixAction
+module
+public import Mathlib
+public import Def.ModularCurve_ProjectiveLine
+public import Instance.ProjectiveLineMatrixAction
+public import Abbrev.ProjectiveLineMatrixAction
+
+
+public section
 
 namespace SpecialLinearGroup.ProjectiveLine
 

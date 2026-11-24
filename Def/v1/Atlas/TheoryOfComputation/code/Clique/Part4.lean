@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/Clique.lean -/
+module
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Data.Fintype.Basic
+public import Mathlib.Data.Finset.Basic
+public import Def.v1.Atlas.TheoryOfComputation.code.Complexity.Part2
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.NPCompleteness
+public import Def.v1.Atlas.TheoryOfComputation.code.NPCompleteness.Part8
+public import Abbrev.v1.Atlas.TheoryOfComputation.code.Clique
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfComputation/code/Clique.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.Data.Fintype.Basic
-import Mathlib.Data.Finset.Basic
-import Def.v1.Atlas.TheoryOfComputation.code.Complexity.Part2
-import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.Complexity
-import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.NPCompleteness
-import Def.v1.Atlas.TheoryOfComputation.code.NPCompleteness.Part8
-import Abbrev.v1.Atlas.TheoryOfComputation.code.Clique
-
-
 namespace ThreeSATToClique
 
 /-- Project the `j`-th literal (for `j : Fin 3`) out of a 3-clause. -/

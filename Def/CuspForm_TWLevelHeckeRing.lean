@@ -1,7 +1,10 @@
-import Instance.CuspForm_TWLevelHeckeModule
-import Instance.CuspForm_TWLevelHeckeRing
-
+module
+public import Instance.CuspForm_TWLevelHeckeModule
+public import Instance.CuspForm_TWLevelHeckeRing
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

@@ -1,7 +1,10 @@
-import Def.SheafOfModules_Monoidal
+module
+public import Def.SheafOfModules_Monoidal
 open CategoryTheory MonoidalCategory
 set_option autoImplicit false
 
+
+public section
 
 universe u
 

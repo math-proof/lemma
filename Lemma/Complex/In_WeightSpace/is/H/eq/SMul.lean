@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.LieGroups.code.KTypeDecomposition.Part3
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.LieGroups.code.KTypeDecomposition.Part3
 open Module SL2GKModule
 
+
+public section
 
 /--
 [mem_weightSpace_iff](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/KTypeDecomposition.lean)

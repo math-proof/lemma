@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Theorem.RingTheory.PowerSeries.Derivatives
-import Lemma.PowerSeries.FPSDefinition
+import Theorem.PowerSeries.FPSDefinition
 open PowerSeries Polynomial
 open scoped PowerSeries
 open AlgebraicCombinatorics.FPS

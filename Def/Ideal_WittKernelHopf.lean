@@ -1,16 +1,18 @@
-import Mathlib
-import Def.LinearMap_DatumAndHonda
-import Def.RingHom_WittVectorHom
-import Def.Int_WittHomColimit
-import Def.AlgHom_WittGroupHopf
-import Class.HopfAlgebra_HopfIdealQuotient
-import Instance.Dieudonne_WittKernelHopf
-import Notation.Dieudonne_WittKernelHopf
-
+module
+public import Mathlib
+public import Def.LinearMap_DatumAndHonda
+public import Def.RingHom_WittVectorHom
+public import Def.Int_WittHomColimit
+public import Def.AlgHom_WittGroupHopf
+public import Class.HopfAlgebra_HopfIdealQuotient
+public import Instance.Dieudonne_WittKernelHopf
+public import Notation.Dieudonne_WittKernelHopf
 set_option autoImplicit false
-
 open Function
 open scoped TensorProduct
+
+
+public section
 
 universe u v w
 

@@ -1,7 +1,11 @@
-import Mathlib
-import Instance.MvFormalGroup_NegV2
-import Structure.CerednikDrinfeld_SpecialFormalModule
-import Instance.CerednikDrinfeld_LubinTateModule
+module
+public import Mathlib
+public import Instance.MvFormalGroup_NegV2
+public import Structure.CerednikDrinfeld_SpecialFormalModule
+public import Instance.CerednikDrinfeld_LubinTateModule
+
+
+public section
 
 section BoxBasisLemmaAppendix
 

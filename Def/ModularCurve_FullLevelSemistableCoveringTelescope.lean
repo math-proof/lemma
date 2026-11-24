@@ -1,8 +1,11 @@
-import Def.ModularCurve_FullLevelSemistableCovering
-import Instance.ModularCurve_FullLevelSemistableCoveringTelescope
-import Abbrev.ModularCurve_FullLevelSemistableCoveringTelescope
-
+module
+public import Def.ModularCurve_FullLevelSemistableCovering
+public import Instance.ModularCurve_FullLevelSemistableCoveringTelescope
+public import Abbrev.ModularCurve_FullLevelSemistableCoveringTelescope
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

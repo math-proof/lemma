@@ -1,12 +1,13 @@
+module
+public import Structure.Combinatorics.FractalSequence
+public import Theorem.Finset.FractalSequence
+public import Mathlib.Tactic
+public import Theorem.MathlibExtTest.Combinatorics.FractalSequenceTest.Part3
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/FractalSequenceTest.lean -/
-
-
-import Structure.Combinatorics.FractalSequence
-import Theorem.Finset.FractalSequence
-import Mathlib.Tactic
-import Theorem.MathlibExtTest.Combinatorics.FractalSequenceTest.Part3
-
-
 namespace MetaMathlibExt
 
 def diagUnpair : ℕ → ℕ × ℕ

@@ -1,20 +1,9 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/fkc_rqvanhove.lean -/
-
-/-
-Copyright (c) Meta Platforms, Inc. and affiliates.
-All rights reserved.
-
-This source code is licensed under the license found in the
-LICENSE file in the root directory of this source tree.
--/
-
-
-import Theorem.StatisticalMechanics.Code.Walls.fkc_rqbdd.Part2
-import Theorem.StatisticalMechanics.Code.Walls.fkc_rqbulkfraction
-import Def.StatisticalMechanics.Code.Walls.fkc_rqvanhove.Part2
+module
+public import Theorem.StatisticalMechanics.Code.Walls.fkc_rqbdd.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.fkc_rqbulkfraction
+public import Def.StatisticalMechanics.Code.Walls.fkc_rqvanhove.Part2
 open scoped BigOperators
 open SimpleGraph Filter Topology Set
-
 set_option linter.unusedSectionVars false
 set_option linter.unusedVariables false
 set_option linter.style.longLine false
@@ -22,6 +11,16 @@ set_option linter.style.setOption false
 set_option maxHeartbeats 2000000
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/fkc_rqvanhove.lean -/
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-/
 namespace StatMech.Walls
 
 open StatMech StatMech.FK StatMech.Lattice

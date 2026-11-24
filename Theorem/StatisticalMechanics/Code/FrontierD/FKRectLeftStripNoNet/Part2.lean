@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectLeftStripNoNet.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectAugmentedBarrierWindingMass.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusNetMonotonicity
+public import Def.StatisticalMechanics.Code.FrontierD.FKRectLeftStripNoNet
+open SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectLeftStripNoNet.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectAugmentedBarrierWindingMass.Part2
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusNetMonotonicity
-import Def.StatisticalMechanics.Code.FrontierD.FKRectLeftStripNoNet
-open SimpleGraph
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

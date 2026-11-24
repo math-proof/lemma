@@ -1,10 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.NumberTheoryI.code.LocalFields.Part9
-
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.NumberTheoryI.code.LocalFields.Part9
 open scoped Valued
 open NumberField NumberField.InfinitePlace.Completion IsDedekindDomain
 
+
+public section
 
 /--
 [isLocalField_iff_closedBalls_compact](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/LocalFields.lean)

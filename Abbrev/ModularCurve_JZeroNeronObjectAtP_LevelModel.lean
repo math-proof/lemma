@@ -1,20 +1,22 @@
-import Mathlib
-import Structure.ModularCurve_JZeroNeronObjectAtP
-import Abbrev.ModularCurve_IgusaScheme
-import Structure.AlgebraicCurve_CurveModel
-import Instance.AlgebraicGeometry_RelativePicardFunctor
-import Structure.AlgebraicGeometry_RepresentsRelSubPic
-import Def.AlgebraicGeometry_RelPicardAlgEquivZeroCut
-import Def.AlgebraicGeometry_RelPicardAlgEquivZeroGroupCut
-import Abbrev.AlgebraicGeometry_IdealSheafModule
-import Structure.AlgebraicGeometry_RelEffCartierDiv
-import Instance.AlgebraicGeometry_RelEffCartierDivOfPoint
-import Structure.ModularCurve_JZeroNeronObjectAtP_LevelModel
-
+module
+public import Mathlib
+public import Structure.ModularCurve_JZeroNeronObjectAtP
+public import Abbrev.ModularCurve_IgusaScheme
+public import Structure.AlgebraicCurve_CurveModel
+public import Instance.AlgebraicGeometry_RelativePicardFunctor
+public import Structure.AlgebraicGeometry_RepresentsRelSubPic
+public import Def.AlgebraicGeometry_RelPicardAlgEquivZeroCut
+public import Def.AlgebraicGeometry_RelPicardAlgEquivZeroGroupCut
+public import Abbrev.AlgebraicGeometry_IdealSheafModule
+public import Structure.AlgebraicGeometry_RelEffCartierDiv
+public import Instance.AlgebraicGeometry_RelEffCartierDivOfPoint
+public import Structure.ModularCurve_JZeroNeronObjectAtP_LevelModel
 set_option autoImplicit false
-
 open CategoryTheory CategoryTheory.Limits MonoidalCategory AlgebraicGeometry NeronModelInfra GoodReductionJacobian
   AlgebraicCurve IsLocalRing AlgebraicGeometry.RelPicard
+
+
+public section
 
 noncomputable section
 

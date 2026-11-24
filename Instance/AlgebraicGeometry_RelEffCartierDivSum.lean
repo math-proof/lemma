@@ -1,12 +1,15 @@
--- Carved from Lemma/Definitions/Def_AlgebraicGeometry_RelEffCartierDivSum.lean: instance decls only.
-import Mathlib.AlgebraicGeometry.Limits
-import Instance.AlgebraicGeometry_RelEffCartierDivOfPoint
-import Theorem.Scheme.SymmetricPower
-import Abbrev.AlgebraicGeometry_RelEffCartierDivSum
-
+module
+public import Mathlib.AlgebraicGeometry.Limits
+public import Instance.AlgebraicGeometry_RelEffCartierDivOfPoint
+public import Theorem.Scheme.SymmetricPower
+public import Abbrev.AlgebraicGeometry_RelEffCartierDivSum
 set_option autoImplicit false
-
 open CategoryTheory CategoryTheory.Limits
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicGeometry_RelEffCartierDivSum.lean: instance decls only.
 
 universe u
 

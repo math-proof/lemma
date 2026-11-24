@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.Matrix.CuspSpace
 import Lemma.ZMod.GenusNumerics
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open Matrix Matrix.SpecialLinearGroup OnePoint CongruenceSubgroup
 open scoped MatrixGroups

@@ -1,8 +1,11 @@
-import Def.Analysis.MeasureTheory.Notation.Part2
-import Theorem.Analysis.Section_9_1.Part3
-import Instance.Analysis.MeasureTheory.Section_1_1_1.Part6
+module
+public import Def.Analysis.MeasureTheory.Notation.Part2
+public import Theorem.Analysis.Section_9_1.Part3
+public import Instance.Analysis.MeasureTheory.Section_1_1_1.Part6
 open BoundedInterval
 
+
+public section
 
 /-- Lifts a 1-dimensional interval to a 1-dimensional box. -/
 @[coe]

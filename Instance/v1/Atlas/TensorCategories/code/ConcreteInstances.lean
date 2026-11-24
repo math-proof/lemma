@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/ConcreteInstances.lean -/
+module
+public import Theorem.v1.Atlas.TensorCategories.code.NicholsZoeller
+public import Theorem.Category.Atlas.v1.TensorCategories.code.NicholsZoeller
+public import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctorProjective
+public import Class.v1.Atlas.TensorCategories.code.QuasiTensorFunctorProjective.Part3
+public import Def.v1.Atlas.TensorCategories.code.ConcreteInstances
+set_option maxHeartbeats 400000
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/ConcreteInstances.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.TensorCategories.code.NicholsZoeller
-import Lemma.Category.Atlas.v1.TensorCategories.code.NicholsZoeller
-import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctorProjective
-import Class.v1.Atlas.TensorCategories.code.QuasiTensorFunctorProjective.Part3
-import Def.v1.Atlas.TensorCategories.code.ConcreteInstances
-set_option maxHeartbeats 400000
-
-
 noncomputable section
 
 universe u v v₁ w

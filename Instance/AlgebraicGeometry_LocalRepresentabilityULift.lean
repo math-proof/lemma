@@ -1,9 +1,13 @@
--- Carved from Lemma/Definitions/Def_AlgebraicGeometry_LocalRepresentabilityULift.lean: instance decls only.
-import Mathlib
-import Theorem.Scheme.LocalRepresentabilityULift
-import Def.AlgebraicGeometry_LocalRepresentabilityULift
-
+module
+public import Mathlib
+public import Theorem.Scheme.LocalRepresentabilityULift
+public import Def.AlgebraicGeometry_LocalRepresentabilityULift
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicGeometry_LocalRepresentabilityULift.lean: instance decls only.
 
 universe w v u
 

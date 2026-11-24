@@ -1,8 +1,11 @@
-import Mathlib
-import Lemma.UpperHalfPlane.X1
-import Lemma.LaurentSeries.FrobeniusModL
-
+module
+public import Mathlib
+public import Lemma.UpperHalfPlane.X1
+public import Lemma.LaurentSeries.FrobeniusModL
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

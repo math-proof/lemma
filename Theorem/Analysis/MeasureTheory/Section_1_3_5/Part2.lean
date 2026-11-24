@@ -1,10 +1,12 @@
-import Theorem.Analysis.MeasureTheory.Section_1_3_4.Part7
-import Mathlib.Topology.UrysohnsLemma
-import Def.Analysis.MeasureTheory.Section_1_3_5
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_3_4.Part7
+public import Mathlib.Topology.UrysohnsLemma
+public import Def.Analysis.MeasureTheory.Section_1_3_5
 
+
+public section
 
 /-- Theorem 1.3.20(ii) Approximation of $L^1$ functions by step functions -/
-
 -- Helper: indicator of an elementary set gives a step function
 private lemma elementary_indicator_is_step {d:ℕ} {E : Set (EuclideanSpace' d)}
     (hE : IsElementary E) : RealStepFunction E.indicator' := by

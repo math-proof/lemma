@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/bfc2indep.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.FK.Ergodicity
+public import Theorem.StatisticalMechanics.Code.Inequalities.ReimerCompression.Part5
+open Set MeasureTheory ProbabilityTheory MeasurableSpace
+open scoped ENNReal NNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/bfc2indep.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.FK.Ergodicity
-import Theorem.StatisticalMechanics.Code.Inequalities.ReimerCompression.Part5
-open Set MeasureTheory ProbabilityTheory MeasurableSpace
-open scoped ENNReal NNReal
-
-
 namespace StatMech.Walls
 
 set_option linter.style.longLine false

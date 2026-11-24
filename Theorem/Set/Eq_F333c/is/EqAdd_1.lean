@@ -17,7 +17,7 @@ open Set
 [SetTheory.Set.f_3_3_3c_eval](https://github.com/teorth/analysis/blob/main/Analysis/Section_3_3.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   [SetTheory]
   {x: (Chapter3.Nat \ {(0:Object)}: Chapter3.Set)}
   {y: Chapter3.Nat} :

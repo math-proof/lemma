@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/SchurOrthogonality.lean -/
+module
+public import Def.v1.Atlas.LieGroups.code.SchurLemma
+public import Theorem.Fin.Any_Eq_SMul.of.All_ToMonoidHom.IsIrreducible
+public import Def.v1.Atlas.LieGroups.code.IsotypicPeterWeyl.Part3
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.Analysis.InnerProductSpace.Adjoint
+public import Mathlib.LinearAlgebra.Trace
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/SchurOrthogonality.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.LieGroups.code.SchurLemma
-import Theorem.Fin.Any_Eq_SMul.of.All_ToMonoidHom.IsIrreducible
-import Def.v1.Atlas.LieGroups.code.IsotypicPeterWeyl.Part3
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.Analysis.InnerProductSpace.Adjoint
-import Mathlib.LinearAlgebra.Trace
-
-
 noncomputable section
 
 open MeasureTheory ContinuousRep

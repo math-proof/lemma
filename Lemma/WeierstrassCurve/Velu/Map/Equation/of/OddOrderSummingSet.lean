@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.WeierstrassCurve.VeluPointMap
 import Lemma.WeierstrassCurve.OddOrderSummingSet
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 open WeierstrassCurve Int
 set_option warn.sorry false
 set_option maxHeartbeats 800000

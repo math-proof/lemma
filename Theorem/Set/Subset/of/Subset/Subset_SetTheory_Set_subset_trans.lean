@@ -17,7 +17,7 @@ open Set
 [SetTheory.Set.subset_trans](https://github.com/teorth/analysis/blob/main/Analysis/Section_3_1.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   [SetTheory]
   {A B C:Chapter3.Set}
 -- given

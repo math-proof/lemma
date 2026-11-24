@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.Scheme.IsCurveOver
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 
 namespace Definitions

@@ -1,10 +1,12 @@
-import Mathlib
-import Class.ModularCurve_CanonicalDivisor
-import Structure.AlgebraicCurve_LocalResidue
-
+module
+public import Mathlib
+public import Class.ModularCurve_CanonicalDivisor
+public import Structure.AlgebraicCurve_LocalResidue
 set_option autoImplicit false
-
 open KaehlerDifferential
+
+
+public section
 
 noncomputable section
 

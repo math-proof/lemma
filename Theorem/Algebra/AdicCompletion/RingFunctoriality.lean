@@ -1,6 +1,9 @@
-import Theorem.Algebra.AdicCompletion.PolynomialCompletion.Part8
+module
+public import Theorem.Algebra.AdicCompletion.PolynomialCompletion.Part8
 set_option autoImplicit false
 
+
+public section
 
 namespace AdicCompletion
 

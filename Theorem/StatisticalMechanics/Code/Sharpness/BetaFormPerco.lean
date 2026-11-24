@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/BetaFormPerco.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Sharpness.SharpnessBeta.Part2
+public import Theorem.StatisticalMechanics.Code.Sharpness.PercoItems
+open MeasureTheory Set Filter Topology Real
+open scoped NNReal ENNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/BetaFormPerco.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Sharpness.SharpnessBeta.Part2
-import Theorem.StatisticalMechanics.Code.Sharpness.PercoItems
-open MeasureTheory Set Filter Topology Real
-open scoped NNReal ENNReal
-
-
 namespace StatMech
 
 namespace Sharpness

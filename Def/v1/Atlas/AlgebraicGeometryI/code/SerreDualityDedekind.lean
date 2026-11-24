@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/SerreDualityDedekind.lean -/
+module
+public import Def.v1.Atlas.AlgebraicGeometryI.code.DedekindCurve
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DedekindCurve
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology.Part2
+open scoped TensorProduct
+open nonZeroDivisors
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/SerreDualityDedekind.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.AlgebraicGeometryI.code.DedekindCurve
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DedekindCurve
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology.Part2
-open scoped TensorProduct
-open nonZeroDivisors
-
-
 noncomputable section
 
 namespace SerreDualityDedekind

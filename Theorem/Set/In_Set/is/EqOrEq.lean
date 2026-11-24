@@ -19,7 +19,7 @@ open Set
 [SetTheory.Set.mem_pair](https://github.com/teorth/analysis/blob/main/Analysis/Section_3_1.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   [SetTheory]
   {x a b:Object} :
 -- imply

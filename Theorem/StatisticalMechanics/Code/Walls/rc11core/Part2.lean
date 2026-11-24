@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/rc11core.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Walls.rc11bkriffincinc
+public import Theorem.StatisticalMechanics.Code.Walls.rc11boxsuppupper
+public import Theorem.StatisticalMechanics.Code.Walls.rc11reflinterstructure
+public import Theorem.StatisticalMechanics.Code.Walls.rc11doublecoverrepresentation
+public import Theorem.StatisticalMechanics.Code.Walls.rc11compressionengine
+public import Def.StatisticalMechanics.Code.Walls.rc11core
+open Finset
+open scoped FinsetFamily StatMech NNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/rc11core.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Walls.rc11bkriffincinc
-import Theorem.StatisticalMechanics.Code.Walls.rc11boxsuppupper
-import Theorem.StatisticalMechanics.Code.Walls.rc11reflinterstructure
-import Theorem.StatisticalMechanics.Code.Walls.rc11doublecoverrepresentation
-import Theorem.StatisticalMechanics.Code.Walls.rc11compressionengine
-import Def.StatisticalMechanics.Code.Walls.rc11core
-open Finset
-open scoped FinsetFamily StatMech NNReal
-
-
 namespace StatMech.Walls
 
 open StatMech ConfigSpace

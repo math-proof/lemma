@@ -1,10 +1,13 @@
-import Instance.ModularCurve_MultCoveringCharts
-import Structure.ModularCurve_MultCoveringFamily
-
+module
+public import Instance.ModularCurve_MultCoveringCharts
+public import Structure.ModularCurve_MultCoveringFamily
 set_option maxHeartbeats 200000
 set_option synthInstance.maxHeartbeats 20000
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 400000
+
+
+public section
 
 noncomputable section
 

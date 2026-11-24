@@ -1,10 +1,12 @@
-import Mathlib
-import Def.ModularCurve_DRResolvedModelPackageV4
-import Instance.MvPolynomial_CrossingResolutionScheme
-
+module
+public import Mathlib
+public import Def.ModularCurve_DRResolvedModelPackageV4
+public import Instance.MvPolynomial_CrossingResolutionScheme
 set_option autoImplicit false
-
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry MvPolynomial MvPolynomial.CrossingQuotient
+
+
+public section
 
 noncomputable section
 

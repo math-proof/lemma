@@ -1,14 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/Toeplitz.lean -/
-
-
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Order
-import Def.LinearAlgebra.Matrix.Toeplitz
-import Theorem.Matrix.Toeplitz
-import Def.MathlibExtTest.LinearAlgebra.Matrix.Toeplitz
+module
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Order
+public import Def.LinearAlgebra.Matrix.Toeplitz
+public import Theorem.Matrix.Toeplitz
+public import Def.MathlibExtTest.LinearAlgebra.Matrix.Toeplitz
 open MetaMathlibExt
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/Toeplitz.lean -/
 
 example : ¬ IsToeplitzMatrix nontoep3 := by
   rintro ⟨c, hc⟩

@@ -1,7 +1,12 @@
-import Mathlib
-import Theorem.Analysis.Section_5_epilogue.Part5
-import Theorem.Analysis.Section_6_6
-import Theorem.Analysis.Section_6_7
+module
+public import Mathlib
+public import Theorem.Analysis.Section_5_epilogue.Part5
+public import Theorem.Analysis.Section_6_6
+public import Theorem.Analysis.Section_6_7
+
+
+public section
+
 /-!
 # Analysis I, Section 6.7: Real exponentiation, part II
 
@@ -21,8 +26,6 @@ somewhat awkward compromise, in that we will initially accept the Mathlib expone
 (with all its API) when the exponent is a rational, and use this to define a notion of real
 exponentiation which in the epilogue to this chapter we will show is identical to the Mathlib operation.
 -/
-
-
 namespace Chapter6
 
 open Sequence Real

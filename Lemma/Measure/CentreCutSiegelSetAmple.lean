@@ -1,4 +1,4 @@
-import Lemma.Matrix.CentreCutSiegelSet
+import Theorem.Matrix.CentreCutSiegelSet
 import Lemma.Matrix.SiegelVolume
 import Def.AutomorphicForm_CentreCutSiegelSetAmple
 

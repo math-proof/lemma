@@ -1,6 +1,11 @@
+module
+public import Mathlib
+public import Theorem.WeierstrassCurve.VeluQuotientJInvariant
+
+
+public section
+
 -- Carved from Lemma/Definitions/Def_WeierstrassCurve_VeluQuotientJInvariant.lean: instance decls only.
-import Mathlib
-import Lemma.WeierstrassCurve.VeluQuotientJInvariant
 
 namespace WeierstrassCurve
 

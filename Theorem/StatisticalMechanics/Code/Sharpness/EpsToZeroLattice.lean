@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/EpsToZeroLattice.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Sharpness.CToOneLattice.Part4
+public import Theorem.StatisticalMechanics.Code.Sharpness.EpsToZero
+public import Theorem.StatisticalMechanics.Code.Ising.GHSInhomogeneous.Part11
+public import Theorem.StatisticalMechanics.Code.Lattice.PathVisitsRow.Part2
+public import Theorem.StatisticalMechanics.Code.Lattice.PlanarTopology.Part4
+public import Def.StatisticalMechanics.Code.Sharpness.EpsToZeroLattice
+open scoped BigOperators
+open Filter Topology Finset SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/EpsToZeroLattice.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Sharpness.CToOneLattice.Part4
-import Theorem.StatisticalMechanics.Code.Sharpness.EpsToZero
-import Theorem.StatisticalMechanics.Code.Ising.GHSInhomogeneous.Part11
-import Theorem.StatisticalMechanics.Code.Lattice.PathVisitsRow.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.PlanarTopology.Part4
-import Def.StatisticalMechanics.Code.Sharpness.EpsToZeroLattice
-open scoped BigOperators
-open Filter Topology Finset SimpleGraph
-
-
 namespace StatMech
 
 namespace Sharpness

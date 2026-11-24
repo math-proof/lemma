@@ -1,12 +1,14 @@
-import Mathlib
-import Abbrev.ModularCurve_XHDRModelAtP
-import Abbrev.ModularCurve_DRModelPackageCrossingFrame
-import Abbrev.ModularCurve_XHDRModelAtPCrossingFrame
-
+module
+public import Mathlib
+public import Abbrev.ModularCurve_XHDRModelAtP
+public import Abbrev.ModularCurve_DRModelPackageCrossingFrame
+public import Abbrev.ModularCurve_XHDRModelAtPCrossingFrame
 set_option autoImplicit false
-
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry ModularCurve
 open scoped MatrixGroups
+
+
+public section
 
 noncomputable section
 

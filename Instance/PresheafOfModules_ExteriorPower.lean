@@ -1,10 +1,14 @@
--- Carved from Lemma/Definitions/Def_PresheafOfModules_ExteriorPower.lean: instance decls only.
-import Mathlib
-import Theorem.LinearMap.ExteriorPower
-import Def.AlgebraicGeometry_ExteriorPower
-
+module
+public import Mathlib
+public import Theorem.LinearMap.ExteriorPower
+public import Def.AlgebraicGeometry_ExteriorPower
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_PresheafOfModules_ExteriorPower.lean: instance decls only.
 
 universe u
 

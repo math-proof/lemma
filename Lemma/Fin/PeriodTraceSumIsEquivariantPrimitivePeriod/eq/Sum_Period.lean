@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.UpperHalfPlane.PeriodMap
 import Lemma.Matrix.PeriodTransfer
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open scoped MatrixGroups
 open ModularCurve.Period

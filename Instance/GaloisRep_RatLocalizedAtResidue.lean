@@ -1,7 +1,12 @@
+module
+public import Mathlib
+public import Def.GaloisRep_Flat
+public import Theorems.Thm_GaloisRep_isLocalization_ratLocalizedAt
+
+
+public section
+
 -- Carved from Lemma/Definitions/Def_GaloisRep_RatLocalizedAtResidue.lean: instance decls only.
-import Mathlib
-import Def.GaloisRep_Flat
-import Theorems.Thm_GaloisRep_isLocalization_ratLocalizedAt
 
 namespace GaloisRep
 

@@ -1,9 +1,12 @@
-import Mathlib
-import Def.AlgHom_Basic
-import Def.WeierstrassCurve_TateModule
-import Instance.PDivisibleGroup_Points
-
+module
+public import Mathlib
+public import Def.AlgHom_Basic
+public import Def.WeierstrassCurve_TateModule
+public import Instance.PDivisibleGroup_Points
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

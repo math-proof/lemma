@@ -1,5 +1,9 @@
-import Mathlib
-import Instance.AlgebraicGeometry_HomogeneousIdealQuotientGradingInfra
+module
+public import Mathlib
+public import Instance.AlgebraicGeometry_HomogeneousIdealQuotientGradingInfra
+
+
+public section
 
 namespace HomogeneousIdealQuotientGrading
 

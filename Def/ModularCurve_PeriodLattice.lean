@@ -1,8 +1,11 @@
-import Mathlib
-import Def.CuspForm_HeckeAlgebra
-import Def.HeckeGalois_EichlerShimura
-
+module
+public import Mathlib
+public import Def.CuspForm_HeckeAlgebra
+public import Def.HeckeGalois_EichlerShimura
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

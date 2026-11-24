@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/FKGeneralQConnectionFKG.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.FKGeneralQInfiniteFKG
+public import Def.StatisticalMechanics.Code.TwoDim.ZhangBKData.Part6
+public import Theorem.StatisticalMechanics.Code.FrontierB.BoxGraphPath.Part2
+open MeasureTheory Set Filter Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/FKGeneralQConnectionFKG.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FK.FKGeneralQInfiniteFKG
-import Def.StatisticalMechanics.Code.TwoDim.ZhangBKData.Part6
-import Theorem.StatisticalMechanics.Code.FrontierB.BoxGraphPath.Part2
-open MeasureTheory Set Filter Topology
-
-
 namespace StatMech.FK
 
 open StatMech.Lattice StatMech.TwoDim

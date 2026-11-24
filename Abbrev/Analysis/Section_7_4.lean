@@ -1,6 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Section_7_3
-import Theorem.Analysis.Section_7_4
+module
+public import Mathlib
+public import Theorem.Analysis.Section_7_3
+public import Theorem.Analysis.Section_7_4
+
+
+public section
+
 /-!
 # Analysis I, Section 7.4: Rearrangement of series
 
@@ -10,8 +15,6 @@ Main constructions and results of this section:
 
 - Rearrangement of non-negative or absolutely convergent series.
 -/
-
-
 namespace Chapter7
 
 /-- Example 7.4.4 -/

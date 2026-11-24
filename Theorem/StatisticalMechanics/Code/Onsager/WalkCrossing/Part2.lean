@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/WalkCrossing.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.BaseCase
+public import Theorem.StatisticalMechanics.Code.Onsager.NoDoubleWind
+public import Def.StatisticalMechanics.Code.Onsager.WalkCrossing.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/WalkCrossing.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.BaseCase
-import Theorem.StatisticalMechanics.Code.Onsager.NoDoubleWind
-import Def.StatisticalMechanics.Code.Onsager.WalkCrossing.Part2
-
-
 namespace StatMech.Onsager.WalkCrossing
 
 open Finset

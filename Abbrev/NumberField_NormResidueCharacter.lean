@@ -1,9 +1,12 @@
-import Mathlib
-import Theorem.Ideal.NormClass
-import Def.NumberField_RayCharacterData
-
+module
+public import Mathlib
+public import Theorem.Ideal.NormClass
+public import Def.NumberField_RayCharacterData
 set_option autoImplicit false
 set_option linter.unusedSectionVars false
+
+
+public section
 
 noncomputable section
 

@@ -1,12 +1,15 @@
-import Mathlib
-import Lemma.Fin.CoeffRothLastSlice.eq.CoeffRothLastIndex.of.RothMvIndex
-import Lemma.Fin.LeNatDegreeRothLastSlice.of.RothMvIndex
-import Lemma.Fin.NatAbsCoeff.le.RothMvL1.of.RothMvIndex
-import Lemma.Polynomial.RothPolyL1.le.MulAddNatDegree1.of.All_LeNatAbsCoeff
+module
+public import Mathlib
+public import Lemma.Fin.CoeffRothLastSlice.eq.CoeffRothLastIndex.of.RothMvIndex
+public import Lemma.Fin.LeNatDegreeRothLastSlice.of.RothMvIndex
+public import Lemma.Fin.NatAbsCoeff.le.RothMvL1.of.RothMvIndex
+public import Lemma.Polynomial.RothPolyL1.le.MulAddNatDegree1.of.All_LeNatAbsCoeff
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 open Polynomial
 
+
+public section
 
 /--
 [rothPolyL1_lastSlice_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

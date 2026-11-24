@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.LieGroups.code.DixmierLemma
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.LieGroups.code.DixmierLemma
 open Polynomial Finset Classical Finsupp Cardinal
 
+
+public section
 
 /--
 [algebraic_in_range_of_algClosed](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/DixmierLemma.lean)

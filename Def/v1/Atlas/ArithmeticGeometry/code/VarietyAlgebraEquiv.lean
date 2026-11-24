@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/VarietyAlgebraEquiv.lean -/
+module
+public import Def.v1.Atlas.ArithmeticGeometry.code.AffineVarieties.Part5
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.AffineVarieties
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Varieties
+public import Def.v1.Atlas.ArithmeticGeometry.code.Varieties.Part9
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/VarietyAlgebraEquiv.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.ArithmeticGeometry.code.AffineVarieties.Part5
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.AffineVarieties
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Varieties
-import Def.v1.Atlas.ArithmeticGeometry.code.Varieties.Part9
-
-
 noncomputable section
 
 variable (k : Type*) [Field k]

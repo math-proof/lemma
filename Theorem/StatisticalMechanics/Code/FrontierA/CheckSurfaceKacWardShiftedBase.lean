@@ -1,5 +1,10 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/CheckSurfaceKacWardShiftedBase.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.SurfaceKacWardShiftedBase
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/CheckSurfaceKacWardShiftedBase.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,10 +12,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.FrontierA.SurfaceKacWardShiftedBase
-
-
 namespace StatMech.FrontierA
 
 #print axioms surfaceQuadraticParity_add_spin

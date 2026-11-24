@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/LeeYangThermodynamicPrereq.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangBoxPressure.Part3
+open scoped BigOperators
+open Filter Set Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/LeeYangThermodynamicPrereq.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangBoxPressure.Part3
-open scoped BigOperators
-open Filter Set Topology
-
-
 namespace StatMech.FrontierA
 
 open StatMech.Ising StatMech.FK StatMech.FrontierB StatMech.FrontierC

@@ -1,7 +1,10 @@
-import Lemma.Matrix.SiegelReduction
-import Def.NumberField_AdelicHeight
+module
+public import Theorem.Matrix.SiegelReduction
+public import Def.NumberField_AdelicHeight
 open NumberField IsDedekindDomain Matrix
 
+
+public section
 
 noncomputable section
 

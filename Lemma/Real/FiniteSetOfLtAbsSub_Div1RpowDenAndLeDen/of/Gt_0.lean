@@ -1,9 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Lemma.Set.FiniteSetOfLeAbsQAndLeDen
-import Lemma.Real.Abs.le.AddAbs1.of.LtAbsSub_Div1RpowDen.Gt_0
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Lemma.Set.FiniteSetOfLeAbsQAndLeDen
+public import Lemma.Real.Abs.le.AddAbs1.of.LtAbsSub_Div1RpowDen.Gt_0
 open Set Real
 
+
+public section
 
 /--
 [roth_finite_approximants_of_den_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

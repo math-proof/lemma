@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Sheppard.lean -/
+module
+public import Def.v1.Atlas.BooleanFunctions.code.Claim21Lec10
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Claim21Lec10
+public import Def.v1.Atlas.BooleanFunctions.code.GaussianStability.Part2
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Sheppard.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.BooleanFunctions.code.Claim21Lec10
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Claim21Lec10
-import Def.v1.Atlas.BooleanFunctions.code.GaussianStability.Part2
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
-
-
 noncomputable section
 
 open MeasureTheory ProbabilityTheory Real

@@ -1,10 +1,13 @@
-import Mathlib
-import Lemma.Definitions.Def_AlgebraicCurve_AdelicIndex
-import Lemma.Definitions.Def_AlgebraicCurve_CanonicalDivisor
-import Theorem.Scheme.IsCurveOver
-import Def.AlgebraicCurve_RiemannRochRows
+module
+public import Mathlib
+public import Lemma.Definitions.Def_AlgebraicCurve_AdelicIndex
+public import Lemma.Definitions.Def_AlgebraicCurve_CanonicalDivisor
+public import Theorem.Scheme.IsCurveOver
+public import Def.AlgebraicCurve_RiemannRochRows
 set_option autoImplicit false
 
+
+public section
 
 noncomputable section
 

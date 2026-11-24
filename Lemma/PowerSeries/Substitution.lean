@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.RingTheory.PowerSeries.Substitution
-import Lemma.PowerSeries.FPSDefinition
+import Theorem.PowerSeries.FPSDefinition
 open PowerSeries
 open scoped BigOperators
 open AlgebraicCombinatorics

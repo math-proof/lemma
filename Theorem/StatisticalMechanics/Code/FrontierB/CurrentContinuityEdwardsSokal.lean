@@ -1,5 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/CurrentContinuityEdwardsSokal.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityFKBridge
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityAdjacentInfluence
+public import Theorem.StatisticalMechanics.Code.FrontierB.FreeMultipointEdwardsSokal.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierB.FreeBoxEvenLimit.Part6
+public import Theorem.StatisticalMechanics.Code.IsingFK.HisingBoxClose.Part3
+public import Theorem.StatisticalMechanics.Code.FK.DensityFiniteToInfinite.Part2
+public import Theorem.StatisticalMechanics.Code.FK.FKUniqPerEdge.Part3
+open Filter MeasureTheory Set
+open scoped BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/CurrentContinuityEdwardsSokal.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +20,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityFKBridge
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityAdjacentInfluence
-import Theorem.StatisticalMechanics.Code.FrontierB.FreeMultipointEdwardsSokal.Part2
-import Theorem.StatisticalMechanics.Code.FrontierB.FreeBoxEvenLimit.Part6
-import Theorem.StatisticalMechanics.Code.IsingFK.HisingBoxClose.Part3
-import Theorem.StatisticalMechanics.Code.FK.DensityFiniteToInfinite.Part2
-import Theorem.StatisticalMechanics.Code.FK.FKUniqPerEdge.Part3
-open Filter MeasureTheory Set
-open scoped BigOperators
-
-
 namespace StatMech.FrontierB
 
 open ConfigSpace FK Ising Lattice Sharpness

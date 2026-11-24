@@ -19,7 +19,7 @@ open Nat
 [SetTheory.Object.natCast_inj](https://github.com/teorth/analysis/blob/main/Analysis/Section_3_1.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   [SetTheory]
   {n m:ℕ} :
 -- imply

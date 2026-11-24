@@ -1,20 +1,19 @@
 import Initialize.Tactic.Attr.Basic
+import Lemma.Bool.All.of.All.limits.swap
 
 
 @[path]
 private lemma main
-  {p : α → β → Prop}
   {A : Set α}
   {B : Set β}
-  {y : β}
+  {f : α → β → Prop}
 -- given
-  (h : ∀ x ∈ A, ∀ y ∈ B, p x y)
-  (hy : y ∈ B) :
+  (h : ∀ y, ∀ x ∈ A, f x y) :
 -- imply
-  ∀ x ∈ A, p x y := by
+  ∀ y ∈ B, ∀ x ∈ A, f x y :=
 -- proof
-  intro x hx
-  apply h x hx y hy
+  fun y _ => h y
 
 
 -- created on 2018-12-06
+-- updated on 2026-11-24

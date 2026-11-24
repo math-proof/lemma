@@ -1,6 +1,10 @@
-import Abbrev.Analysis.MeasureTheory.Section_1_1_2.Part4
-import Def.Analysis.MeasureTheory.Section_1_1_3
+module
+public import Abbrev.Analysis.MeasureTheory.Section_1_1_2.Part4
+public import Def.Analysis.MeasureTheory.Section_1_1_3
 open BoundedInterval
+
+
+public section
 
 /-!
 # Introduction to Measure Theory, Section 1.1.3: Connections with the Riemann integral
@@ -8,8 +12,6 @@ open BoundedInterval
 A companion to Section 1.1.3 of the book "An introduction to Measure Theory".
 
 -/
-
-
 /-- The norm of a uniform partition is (b-a)/n. -/
 lemma TaggedPartition.uniform_norm (I: BoundedInterval) (n: ℕ) (hn: n > 0) (hI: I = Icc I.a I.b) (hab: I.a < I.b) :
     (TaggedPartition.uniform I n hn hI hab).norm = (I.b - I.a) / n := by

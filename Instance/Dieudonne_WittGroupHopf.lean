@@ -1,13 +1,16 @@
--- Carved from Lemma/Definitions/Def_Dieudonne_WittGroupHopf.lean: instance decls only.
-import Mathlib
-import Instance.Dieudonne_WittVectorHom
-import Theorem.AlgHom.WittGroupHopf
-import Def.AlgHom_WittGroupHopf
-
+module
+public import Mathlib
+public import Instance.Dieudonne_WittVectorHom
+public import Theorem.AlgHom.WittGroupHopf
+public import Def.AlgHom_WittGroupHopf
 set_option autoImplicit false
-
 open Function
 open scoped TensorProduct
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_Dieudonne_WittGroupHopf.lean: instance decls only.
 
 universe u v w
 

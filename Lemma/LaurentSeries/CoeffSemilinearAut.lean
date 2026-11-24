@@ -1,9 +1,12 @@
-import Lemma.HahnSeries.JqCoeff
-import Lemma.LaurentSeries.LaurentCoeff
-import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
-import Mathlib.FieldTheory.Perfect
-
+module
+public import Lemma.HahnSeries.JqCoeff
+public import Lemma.LaurentSeries.LaurentCoeff
+public import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
+public import Mathlib.FieldTheory.Perfect
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

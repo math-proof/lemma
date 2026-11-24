@@ -1,4 +1,8 @@
-import Def.GaloisRep_Adic
+module
+public import Def.GaloisRep_Adic
+
+
+public section
 
 namespace GaloisRepAdic
 

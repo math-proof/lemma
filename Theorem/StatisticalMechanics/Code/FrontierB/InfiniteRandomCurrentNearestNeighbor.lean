@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/InfiniteRandomCurrentNearestNeighbor.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentChainClosure
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentSelectionIndependence.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierB.FreeCurrentFamilyMixing
+public import Theorem.StatisticalMechanics.Code.FrontierB.PlusCurrentFamilyMixing.Part3
+public import Structure.StatisticalMechanics.Code.FrontierB.InfiniteRandomCurrentNearestNeighbor
+open Filter MeasureTheory Set Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/InfiniteRandomCurrentNearestNeighbor.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentChainClosure
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentSelectionIndependence.Part3
-import Theorem.StatisticalMechanics.Code.FrontierB.FreeCurrentFamilyMixing
-import Theorem.StatisticalMechanics.Code.FrontierB.PlusCurrentFamilyMixing.Part3
-import Structure.StatisticalMechanics.Code.FrontierB.InfiniteRandomCurrentNearestNeighbor
-open Filter MeasureTheory Set Topology
-
-
 namespace StatMech.FrontierB
 
 open Sharpness Ising Lattice Percolation

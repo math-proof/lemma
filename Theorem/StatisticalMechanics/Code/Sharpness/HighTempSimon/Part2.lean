@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/HighTempSimon.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Sharpness.HighTempSwitching.Part4
+public import Def.StatisticalMechanics.Code.Sharpness.HighTempSimon.Part4
+open Finset SimpleGraph
+open scoped BigOperators symmDiff
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/HighTempSimon.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Sharpness.HighTempSwitching.Part4
-import Def.StatisticalMechanics.Code.Sharpness.HighTempSimon.Part4
-open Finset SimpleGraph
-open scoped BigOperators symmDiff
-
-
 namespace StatMech
 
 namespace Sharpness

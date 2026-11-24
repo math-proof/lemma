@@ -1,9 +1,12 @@
-import Mathlib
-import Def.AlgebraicGeometry_RelativePicardFunctor
-import Structure.JacJ1Iface
-import Structure.AlgebraicGeometry_RepresentsRelSubPic
-
+module
+public import Mathlib
+public import Def.AlgebraicGeometry_RelativePicardFunctor
+public import Structure.JacJ1Iface
+public import Structure.AlgebraicGeometry_RepresentsRelSubPic
 set_option autoImplicit false
+
+
+public section
 
 namespace AlgebraicGeometry.RelPicard
 

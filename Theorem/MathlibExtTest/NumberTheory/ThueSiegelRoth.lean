@@ -1,10 +1,11 @@
+module
+public import Theorem.Nat.ThueSiegelRoth
+public import Mathlib.RingTheory.Algebraic.Integral
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/ThueSiegelRoth.lean -/
-
-
-import Lemma.Nat.ThueSiegelRoth
-import Mathlib.RingTheory.Algebraic.Integral
-
-
 namespace MathlibExtTest.NumberTheory.ThueSiegelRoth
 
 open MathlibExt.NumberTheory.ThueSiegelRothWanted

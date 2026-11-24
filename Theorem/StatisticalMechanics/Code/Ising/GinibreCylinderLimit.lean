@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/GinibreCylinderLimit.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Ising.GinibreBoundary
+public import Theorem.StatisticalMechanics.Code.Ising.IsingCylinderTransfer.Part3
+public import Theorem.StatisticalMechanics.Code.Ising.CylinderWidthLimit
+open Filter Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/GinibreCylinderLimit.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Ising.GinibreBoundary
-import Theorem.StatisticalMechanics.Code.Ising.IsingCylinderTransfer.Part3
-import Theorem.StatisticalMechanics.Code.Ising.CylinderWidthLimit
-open Filter Topology
-
-
 namespace StatMech.Ising
 
 theorem ginibre_telescope_of_endpoint_tendsto

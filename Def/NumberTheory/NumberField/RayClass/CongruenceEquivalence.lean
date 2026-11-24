@@ -1,8 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/CongruenceEquivalence.lean -/
+module
+public import Def.NumberTheory.NumberField.RayClass.CongruenceSubgroup
+public import Theorem.Nat.NumberField.RayClass.CongruenceSubgroup
+public import Structure.NumberTheory.NumberField.RayClass.CongruenceEquivalence
 
-import Def.NumberTheory.NumberField.RayClass.CongruenceSubgroup
-import Theorem.Nat.NumberField.RayClass.CongruenceSubgroup
-import Structure.NumberTheory.NumberField.RayClass.CongruenceEquivalence
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/CongruenceEquivalence.lean -/
 /-!
 # Congruence subgroup pair equivalence (N420 Definition 22.3)
 
@@ -11,8 +15,6 @@ equivalence relation comparing two pairs inside the common ambient
 group of all nonzero fractional ideals. Transitivity is not claimed
 here; it needs arithmetic approximation (N421).
 -/
-
-
 noncomputable section
 
 open scoped nonZeroDivisors

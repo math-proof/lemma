@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/SL2RealizationBridge.lean -/
+module
+public import Def.v1.Atlas.LieGroups.code.SL2Representations.Part2
+public import Lemma.Complex.IsIsomorphicGK.of.IsIsomorphicGK.IsIsomorphicGK
+public import Structure.v1.Atlas.LieGroups.code.SL2RealizationBridge
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/SL2RealizationBridge.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.LieGroups.code.SL2Representations.Part2
-import Lemma.Complex.IsIsomorphicGK.of.IsIsomorphicGK.IsIsomorphicGK
-import Structure.v1.Atlas.LieGroups.code.SL2RealizationBridge
-
-
 noncomputable section
 
 open Complex

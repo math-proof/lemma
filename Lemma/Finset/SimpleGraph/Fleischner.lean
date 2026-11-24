@@ -3,7 +3,7 @@ import Initialize.Tactic.Attr.Basic
 import Theorem.Combinatorics.SimpleGraph.VertexConnectivity
 import Lemma.SimpleGraph.VertexConnectivity
 import Lemma.SimpleGraph.FleischnerStrong
-import Lemma.SimpleGraph.Square
+import Theorem.SimpleGraph.Square
 import Theorem.Combinatorics.SimpleGraph.FleischnerStrong.Part23
 import Theorem.Combinatorics.SimpleGraph.Square
 

@@ -1,10 +1,13 @@
--- Carved from Lemma/Definitions/Def_AlgebraicGeometry_RelEffCartierDivOfPoint.lean: instance decls only.
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Lemma.Scheme.RelEffCartierDivOfPoint
-
+module
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Theorem.Scheme.RelEffCartierDivOfPoint
 set_option autoImplicit false
-
 open CategoryTheory CategoryTheory.Limits
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicGeometry_RelEffCartierDivOfPoint.lean: instance decls only.
 
 universe u
 

@@ -1,15 +1,18 @@
-import Mathlib
-import Def.FormalGroup_NegV2
-import Def.FormalGroup_CartierModule
-import Def.PowerSeries_CartierModuleHomothety
-import Def.FormalGroup_CartierModuleWittAction
-import Def.FormalGroup_CartierModuleBaseChange
-import Def.CerednikDrinfeld_SpecialFormalModule
-import Lemma.FormalGroup.CartierGradedPiece
-import Def.CerednikDrinfeld_CriticalIndexChart
-import Abbrev.CerednikDrinfeld_CritChartEndMatrix
-
+module
+public import Mathlib
+public import Def.FormalGroup_NegV2
+public import Def.FormalGroup_CartierModule
+public import Def.PowerSeries_CartierModuleHomothety
+public import Def.FormalGroup_CartierModuleWittAction
+public import Def.FormalGroup_CartierModuleBaseChange
+public import Def.CerednikDrinfeld_SpecialFormalModule
+public import Theorem.FormalGroup.CartierGradedPiece
+public import Def.CerednikDrinfeld_CriticalIndexChart
+public import Abbrev.CerednikDrinfeld_CritChartEndMatrix
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

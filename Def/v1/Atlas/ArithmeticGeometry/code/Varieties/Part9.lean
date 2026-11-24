@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/Varieties.lean -/
+module
+public import Def.v1.Atlas.ArithmeticGeometry.code.AffineVarieties.Part5
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.AffineVarieties
+public import Mathlib.Topology.Basic
+public import Mathlib.Topology.Order
+public import Mathlib.Algebra.MvPolynomial.Monad
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
+public import Structure.v1.Atlas.ArithmeticGeometry.code.Varieties.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/Varieties.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.ArithmeticGeometry.code.AffineVarieties.Part5
-import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.AffineVarieties
-import Mathlib.Topology.Basic
-import Mathlib.Topology.Order
-import Mathlib.Algebra.MvPolynomial.Monad
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
-import Structure.v1.Atlas.ArithmeticGeometry.code.Varieties.Part2
 variable (k : Type*) [Field k]
 
 

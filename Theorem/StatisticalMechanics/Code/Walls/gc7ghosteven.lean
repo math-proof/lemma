@@ -1,5 +1,26 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/gc7ghosteven.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Foundations.ConfigSpace
+public import Theorem.StatisticalMechanics.Code.Ising.GKS.Part5
+public import Theorem.StatisticalMechanics.Code.Sharpness.CurrentRep.Part5
+public import Theorem.StatisticalMechanics.Code.Sharpness.RandomCurrent.Part10
+public import Theorem.StatisticalMechanics.Code.Sharpness.FieldGhostDict.Part4
+public import Theorem.StatisticalMechanics.Code.Sharpness.Switching.Part3
+public import Theorem.StatisticalMechanics.Code.Walls.gc5_ergrep
+public import Theorem.StatisticalMechanics.Code.Walls.gc6_ghostgraph
+public import Theorem.StatisticalMechanics.Code.Walls.gc6_pairingpath
+open Finset BigOperators SimpleGraph
+open scoped symmDiff
+open Classical
+set_option linter.unusedSectionVars false
+set_option linter.style.longLine false
+set_option linter.unusedSimpArgs false
+set_option maxHeartbeats 800000
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/gc7ghosteven.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,28 +28,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Foundations.ConfigSpace
-import Theorem.StatisticalMechanics.Code.Ising.GKS.Part5
-import Theorem.StatisticalMechanics.Code.Sharpness.CurrentRep.Part5
-import Theorem.StatisticalMechanics.Code.Sharpness.RandomCurrent.Part10
-import Theorem.StatisticalMechanics.Code.Sharpness.FieldGhostDict.Part4
-import Theorem.StatisticalMechanics.Code.Sharpness.Switching.Part3
-import Theorem.StatisticalMechanics.Code.Walls.gc5_ergrep
-import Theorem.StatisticalMechanics.Code.Walls.gc6_ghostgraph
-import Theorem.StatisticalMechanics.Code.Walls.gc6_pairingpath
-open Finset BigOperators SimpleGraph
-open scoped symmDiff
-open Classical
-
-set_option linter.unusedSectionVars false
-set_option linter.style.longLine false
-set_option linter.unusedSimpArgs false
-set_option maxHeartbeats 800000
-
-
 namespace StatMech.Walls
 
 open StatMech StatMech.Ising StatMech.Sharpness

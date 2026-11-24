@@ -1,11 +1,15 @@
--- Carved from Lemma/Definitions/Def_CuspForm_TWLevelHeckeModule.lean: instance decls only.
-import Mathlib
-import Instance.CuspForm_AuxLevelHeckeModule
-import Inductive.CuspForm_TWLevelHeckeModule_Gen
-import Theorem.CuspForm.TWLevelHeckeModule
-import Def.CuspForm_TWLevelHeckeModule
-
+module
+public import Mathlib
+public import Instance.CuspForm_AuxLevelHeckeModule
+public import Inductive.CuspForm_TWLevelHeckeModule_Gen
+public import Theorem.CuspForm.TWLevelHeckeModule
+public import Def.CuspForm_TWLevelHeckeModule
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_CuspForm_TWLevelHeckeModule.lean: instance decls only.
 
 noncomputable section
 

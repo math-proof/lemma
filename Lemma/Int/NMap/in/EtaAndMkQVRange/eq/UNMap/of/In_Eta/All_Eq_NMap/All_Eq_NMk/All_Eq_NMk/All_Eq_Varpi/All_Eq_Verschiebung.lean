@@ -3,7 +3,7 @@ import Initialize.Tactic.Attr.Basic
 import Lemma.MvPowerSeries.SpecialFormalModule
 import Lemma.Fin.GradedCartierModuleData
 import Lemma.Submodule.GradedCartierNModule
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 
 /--

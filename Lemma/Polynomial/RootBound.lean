@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.Algebra.Polynomial.RootBound
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.Algebra.Polynomial.RootBound
 open Polynomial
 
+
+public section
 
 namespace Polynomial
 

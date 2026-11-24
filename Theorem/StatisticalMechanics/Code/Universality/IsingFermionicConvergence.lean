@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicConvergence.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.IsingSHolo.Part7
+public import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangHalfPlaneDiagonal.Part4
+public import Mathlib.Analysis.Complex.HasPrimitives
+public import Mathlib.Analysis.Complex.OpenMapping
+public import Def.StatisticalMechanics.Code.Universality.IsingFermionicConvergence
+open Filter Set Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicConvergence.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.IsingSHolo.Part7
-import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangHalfPlaneDiagonal.Part4
-import Mathlib.Analysis.Complex.HasPrimitives
-import Mathlib.Analysis.Complex.OpenMapping
-import Def.StatisticalMechanics.Code.Universality.IsingFermionicConvergence
-open Filter Set Topology
-
-
 namespace StatMech.Universality
 
 @[simp] theorem isingFermionicEntireSquarePrimitive_zero (f : ℂ → ℂ) :

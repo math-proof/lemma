@@ -1,10 +1,13 @@
-import Mathlib
-import Def.MvPolynomial_CrossingResolutionScheme
-import Instance.MvPolynomial_CrossingResolutionFibrePoints
-import Abbrev.MvPolynomial_CrossingResolutionFibrePoints
-
+module
+public import Mathlib
+public import Def.MvPolynomial_CrossingResolutionScheme
+public import Instance.MvPolynomial_CrossingResolutionFibrePoints
+public import Abbrev.MvPolynomial_CrossingResolutionFibrePoints
 set_option maxHeartbeats 200000
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

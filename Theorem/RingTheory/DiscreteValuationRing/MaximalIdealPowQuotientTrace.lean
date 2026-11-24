@@ -1,18 +1,20 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DiscreteValuationRing/MaximalIdealPowQuotientTrace.lean -/
+module
+public import Mathlib.RingTheory.Trace.Quotient
+public import Theorem.LinearAlgebra.Trace.InvariantSubmodule
+public import Theorem.Matrix.Trace.InvariantSubmodule
+public import Theorem.Int.DiscreteValuationRing.MaximalIdealGradedPieceMul
+public import Theorem.Int.DiscreteValuationRing.MaximalIdealPowFactor
+public import Def.RingTheory.DiscreteValuationRing.MaximalIdealGradedPieceMul
+public import Def.RingTheory.DiscreteValuationRing.MaximalIdealPowFactor.Part3
+open IsLocalRing
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/DiscreteValuationRing/MaximalIdealPowQuotientTrace.lean -/
 /-
 Author: Muse Code
 -/
-
-import Mathlib.RingTheory.Trace.Quotient
-import Theorem.LinearAlgebra.Trace.InvariantSubmodule
-import Theorem.Matrix.Trace.InvariantSubmodule
-import Theorem.Int.DiscreteValuationRing.MaximalIdealGradedPieceMul
-import Lemma.Int.DiscreteValuationRing.MaximalIdealPowFactor
-import Def.RingTheory.DiscreteValuationRing.MaximalIdealGradedPieceMul
-import Def.RingTheory.DiscreteValuationRing.MaximalIdealPowFactor.Part3
-open IsLocalRing
-
 variable (A B : Type*) [CommRing A] [CommRing B] [IsDomain A] [IsDomain B]
   [IsDiscreteValuationRing A] [IsDiscreteValuationRing B] [Algebra A B]
 /-!

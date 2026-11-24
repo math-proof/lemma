@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexCorrectedStripLocal.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripWindow.Part8
+public import Theorem.StatisticalMechanics.Code.Universality.HexEndpointCyclicAtomSupport
+public import Theorem.StatisticalMechanics.Code.Universality.HexEndpointPieceRigidity
+public import Theorem.StatisticalMechanics.Code.Universality.HexEndpointTripletOrbit
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripStartReturn
+public import Def.StatisticalMechanics.Code.Universality.HexCorrectedStripLocal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexCorrectedStripLocal.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripWindow.Part8
-import Theorem.StatisticalMechanics.Code.Universality.HexEndpointCyclicAtomSupport
-import Theorem.StatisticalMechanics.Code.Universality.HexEndpointPieceRigidity
-import Theorem.StatisticalMechanics.Code.Universality.HexEndpointTripletOrbit
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripStartReturn
-import Def.StatisticalMechanics.Code.Universality.HexCorrectedStripLocal
-
-
 namespace StatMech.Universality
 
 open Complex Function HexWalk

@@ -1,19 +1,22 @@
-import Instance.AlgebraicGeometry_HomogeneousIdealQuotientGradingInfra
-import Def.AlgebraicGeometry_ProjectiveWeierstrassPolynomialPrime
-import Structure.AlgebraicGeometry_NeronModelPropertyBundleCarrier
-import Mathlib.AlgebraicGeometry.Morphisms.SchemeTheoreticallyDominant
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
-import Mathlib.RingTheory.GradedAlgebra.Homogeneous.Ideal
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.AlgebraicGeometry.EllipticCurve.Projective.Basic
-import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
-import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Basic
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Structure.WeierstrassCurve_ProjModel
-
+module
+public import Instance.AlgebraicGeometry_HomogeneousIdealQuotientGradingInfra
+public import Def.AlgebraicGeometry_ProjectiveWeierstrassPolynomialPrime
+public import Structure.AlgebraicGeometry_NeronModelPropertyBundleCarrier
+public import Mathlib.AlgebraicGeometry.Morphisms.SchemeTheoreticallyDominant
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+public import Mathlib.RingTheory.GradedAlgebra.Homogeneous.Ideal
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Projective.Basic
+public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Basic
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Structure.WeierstrassCurve_ProjModel
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

@@ -1,3 +1,15 @@
+module
+public import Mathlib
+public import Def.RingTheory.LaurentSeries.Part11
+public import Theorem.PowerSeries.InfiniteProducts2
+public import Theorem.LaurentSeries.LaurentSeries
+public import Theorem.Partition.NPartition
+open scoped LaurentPolynomial Polynomial
+open LaurentPolynomial HahnSeries
+
+
+public section
+
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -6,14 +18,6 @@ All rights reserved.
 Copyright (c) 2025 AlgebraicCombinatorics contributors. All rights reserved.
 Authors: AlgebraicCombinatorics contributors
 -/
-import Mathlib
-import Def.RingTheory.LaurentSeries.Part11
-import Theorem.PowerSeries.InfiniteProducts2
-import Theorem.LaurentSeries.LaurentSeries
-import Theorem.Partition.NPartition
-open scoped LaurentPolynomial Polynomial
-open LaurentPolynomial HahnSeries
-
 /-!
 # Laurent Power Series
 
@@ -50,11 +54,7 @@ In Mathlib:
 - Labels: `thm.fps.laure.laupol-ring`, `lem.fps.laure.xa`, `prop.fps.laure.xk`,
   `prop.fps.laure.a=sumaixi`, `thm.fps.laure.lauser-ring`
 -/
-
-
 -- `AddMonoidAlgebra` is a wrapper around `M →₀ R` (`coeff`), not the `Finsupp` itself.
-
-
 namespace AddMonoidAlgebra
 
 variable {R M : Type*} [Semiring R]

@@ -1,15 +1,18 @@
-import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
-import Mathlib.Analysis.Normed.Module.Basic
-import Mathlib.Analysis.Normed.Group.Basic
-import Mathlib.Data.Vector.Basic
-import Mathlib.Topology.UniformSpace.UniformEmbedding
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Theorem.Vector.Zero.eq.Replicate
-import Theorem.Tensor.Eq.is.EqDataS
-import Instance.Data.Tensor.Tensor.Part2
-import Def.MeasureTheory.Integral.IntervalIntegral.Integrals.Part4
+module
+public import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic
+public import Mathlib.Analysis.Normed.Module.Basic
+public import Mathlib.Analysis.Normed.Group.Basic
+public import Mathlib.Data.Vector.Basic
+public import Mathlib.Topology.UniformSpace.UniformEmbedding
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Theorem.Vector.Zero.eq.Replicate
+public import Theorem.Tensor.Eq.is.EqDataS
+public import Instance.Data.Tensor.Tensor.Part2
+public import Def.MeasureTheory.Integral.IntervalIntegral.Integrals.Part4
 open Tensor
 
+
+public section
 
 /-- `Tensor ℝ s` is finite-dimensional over `ℝ` (via `equivFinArrowL`). -/
 instance : FiniteDimensional ℝ (Tensor ℝ s) :=

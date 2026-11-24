@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/rc84targetstatus.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Walls.rc17arbitrary.Part5
+public import Theorem.StatisticalMechanics.Code.Walls.rc20reflection.Part5
+public import Theorem.StatisticalMechanics.Code.Walls.rc83downstreamaudit
+open MeasureTheory Finset
+open scoped NNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/rc84targetstatus.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Walls.rc17arbitrary.Part5
-import Theorem.StatisticalMechanics.Code.Walls.rc20reflection.Part5
-import Theorem.StatisticalMechanics.Code.Walls.rc83downstreamaudit
-open MeasureTheory Finset
-open scoped NNReal
-
-
 namespace StatMech
 
 open ConfigSpace

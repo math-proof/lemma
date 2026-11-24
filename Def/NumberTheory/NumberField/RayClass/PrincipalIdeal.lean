@@ -1,7 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/PrincipalIdeal.lean -/
+module
+public import Theorem.NumberTheory.NumberField.RayClass.ResidueSign.Part3
+public import Theorem.Nat.NumberField.RayClass.ResidueSign
 
-import Theorem.NumberTheory.NumberField.RayClass.ResidueSign.Part3
-import Lemma.Nat.NumberField.RayClass.ResidueSign
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/PrincipalIdeal.lean -/
 @[expose] noncomputable section
 
 open scoped nonZeroDivisors

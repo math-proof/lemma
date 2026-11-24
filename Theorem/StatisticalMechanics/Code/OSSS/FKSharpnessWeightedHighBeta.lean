@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/FKSharpnessWeightedHighBeta.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedThreshold.Part4
+public import Theorem.StatisticalMechanics.Code.IsingFK.PcUpperAllDimensions
+open scoped BigOperators
+open Finset Set Filter Topology
+open MeasureTheory
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/FKSharpnessWeightedHighBeta.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedThreshold.Part4
-import Theorem.StatisticalMechanics.Code.IsingFK.PcUpperAllDimensions
-open scoped BigOperators
-open Finset Set Filter Topology
-open MeasureTheory
-
-
 namespace StatMech
 
 namespace FK

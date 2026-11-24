@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexBetheOddOffsetNodalLimit.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOddOffsetBoundaryEstimate
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOddRootOffsetBound
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheEvenOffsetNodalLimit
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetNodalAbstract
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetRowContraction
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetSymmetry
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetWeightedResidual
+public import Def.StatisticalMechanics.Code.FrontierD.SixVertexBetheOddOffsetNodalLimit
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexBetheOddOffsetNodalLimit.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOddOffsetBoundaryEstimate
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOddRootOffsetBound
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheEvenOffsetNodalLimit
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetNodalAbstract
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetRowContraction
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetSymmetry
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheOffsetWeightedResidual
-import Def.StatisticalMechanics.Code.FrontierD.SixVertexBetheOddOffsetNodalLimit
-
-
 namespace StatMech.FrontierD
 
 open Finset

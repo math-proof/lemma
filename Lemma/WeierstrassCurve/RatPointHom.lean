@@ -1,6 +1,9 @@
-import Lemma.WeierstrassCurve.RatPointMap_probe
-
+module
+public import Lemma.WeierstrassCurve.RatPointMap_probe
 set_option autoImplicit false
+
+
+public section
 
 namespace WeierstrassCurve
 

@@ -14,7 +14,7 @@ open Chapter2.Nat
 [Nat.le_refl](https://github.com/teorth/analysis/blob/main/Analysis/Section_2_2.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   {a:Chapter2.Nat} :
 -- imply
   a ≤ a :=

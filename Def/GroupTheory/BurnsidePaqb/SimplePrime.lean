@@ -1,13 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/SimplePrime.lean -/
+module
+public import Theorem.Nat.Any_Eq_MulPowS.of.Prime.Prime
+public import Def.GroupTheory.BurnsidePaqb.KillingLemma
+public import Theorem.Representation.Character.eq.SumRootsCharpoly
+public import Theorem.Representation.All_All_Eq.of.EqNormCharacter_FinrankV
+public import Lemma.Representation.IsIrreducible.of.EqRepresentationG
+public import Instance.GroupTheory.BurnsidePaqb.ScalarCenter
+public import Def.GroupTheory.BurnsidePaqb.CharacterOrthogonality.Part6
+public import Theorem.GroupTheory.BurnsidePaqb.SimplePrime
 
-import Lemma.Nat.Any_Eq_MulPowS.of.Prime.Prime
-import Def.GroupTheory.BurnsidePaqb.KillingLemma
-import Lemma.Representation.Character.eq.SumRootsCharpoly
-import Lemma.Representation.All_All_Eq.of.EqNormCharacter_FinrankV
-import Lemma.Representation.IsIrreducible.of.EqRepresentationG
-import Instance.GroupTheory.BurnsidePaqb.ScalarCenter
-import Def.GroupTheory.BurnsidePaqb.CharacterOrthogonality.Part6
-import Theorem.GroupTheory.BurnsidePaqb.SimplePrime
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/GroupTheory/BurnsidePaqb/SimplePrime.lean -/
 /-!
 Simple-prime-power stage of the complete Burnside proof.
 
@@ -17,8 +21,6 @@ SHA-256: d9da7df82e467d9fa587892eeef9f51e2b83df0588175653bd1d16264b09dd00
 
 This module is mechanically ported from the audited source `extracted/Burnside/SimplePrime.lean`.
 -/
-
-
 namespace BurnsidePaqb
 
 variable {G : Type*} [Group G] [Fintype G]

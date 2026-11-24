@@ -1,23 +1,24 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/CyclicSumFormula.lean -/
-
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.List.Rotate
-import Mathlib.Topology.Algebra.InfiniteSum.Real
-import Def.NumberTheory.MultipleZeta.Series.Part3
-import Lemma.Nat.MultipleZeta.Series
-import Lemma.Nat.MultipleZeta.Convergence
-import Mathlib.Analysis.RCLike.Basic
-import Mathlib.Analysis.SpecificLimits.Basic
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
+module
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.List.Rotate
+public import Mathlib.Topology.Algebra.InfiniteSum.Real
+public import Def.NumberTheory.MultipleZeta.Series.Part3
+public import Theorem.Nat.MultipleZeta.Series
+public import Theorem.Nat.MultipleZeta.Convergence
+public import Mathlib.Analysis.RCLike.Basic
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
 open scoped ENNReal
-
 open Topology
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/MultipleZeta/CyclicSumFormula.lean -/
 section
 
 open scoped BigOperators

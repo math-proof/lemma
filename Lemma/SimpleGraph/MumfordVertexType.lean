@@ -1,10 +1,13 @@
-import Mathlib.Combinatorics.SimpleGraph.Metric
-import Mathlib.Algebra.Group.Subgroup.Defs
-import Mathlib.GroupTheory.GroupAction.Defs
-import Mathlib.Data.ZMod.Defs
-import Def.CerednikDrinfeld_MumfordVertexType
-
+module
+public import Mathlib.Combinatorics.SimpleGraph.Metric
+public import Mathlib.Algebra.Group.Subgroup.Defs
+public import Mathlib.GroupTheory.GroupAction.Defs
+public import Mathlib.Data.ZMod.Defs
+public import Def.CerednikDrinfeld_MumfordVertexType
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

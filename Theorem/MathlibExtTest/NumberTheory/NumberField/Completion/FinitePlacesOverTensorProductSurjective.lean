@@ -1,17 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/Completion/FinitePlacesOverTensorProductSurjective.lean -/
-
-/-
-Author: @toskua, Avocado
--/
-
-
-import Def.NumberTheory.NumberField.Completion.FinitePlacesOverTensorProductSurjective
-import Theorem.Nat.NumberField.Completion.FinitePlacesOverTensorProductSurjective
+module
+public import Def.NumberTheory.NumberField.Completion.FinitePlacesOverTensorProductSurjective
+public import Theorem.Nat.NumberField.Completion.FinitePlacesOverTensorProductSurjective
 open IsDedekindDomain
 open IsDedekindDomain.HeightOneSpectrum
 open scoped NumberField
 open scoped IsDedekindDomain.HeightOneSpectrum.CompletionTensorProduct
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/Completion/FinitePlacesOverTensorProductSurjective.lean -/
+/-
+Author: @toskua, Avocado
+-/
 variable {K L : Type*} [Field K] [Field L] [NumberField K] [NumberField L]
 variable [Algebra K L] (v : HeightOneSpectrum (𝓞 K))
 

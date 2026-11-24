@@ -1,54 +1,55 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch7Entry2Faulhaber.lean -/
+module
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Analysis.Complex.Trigonometric
+public import Mathlib.Analysis.Meromorphic.Basic
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Complex
+public import Mathlib.Basic.Complex.Basic
+public import Mathlib.Data.Finset.Defs
+public import Mathlib.Data.Finset.Range
+public import Mathlib.Data.Set.Defs
+public import Mathlib.Order.Filter.Basic
+public import Mathlib.Topology.Basic
+public import Def.Analysis.Ramanujan.Part1Ch7Entry10Zeta4
+public import Theorem.Real.Ramanujan.Part1Ch7Entry10Zeta4
+public import Theorem.Nat.LSeries.RiemannZeta
+public import Mathlib.Algebra.Order.Floor.Defs
+public import Mathlib.Algebra.Polynomial.Basic
+public import Mathlib.Analysis.CStarAlgebra.Classes
+public import Mathlib.Analysis.Calculus.ContDiff.Basic
+public import Mathlib.Analysis.Complex.Exponential
+public import Mathlib.Analysis.Complex.LocallyUniformLimit
+public import Mathlib.Analysis.Real.Sqrt
+public import Mathlib.Analysis.SpecialFunctions.Complex.Log
+public import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.NumberTheory.LSeries.ZMod
+public import Mathlib.Order.Interval.Set.Defs
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Analysis.Meromorphic.Complex
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.FunProp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch7Entry2Faulhaber.lean -/
 /-
 Author: @akiezun, Avocado
 -/
-
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Analysis.Complex.Trigonometric
-import Mathlib.Analysis.Meromorphic.Basic
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Complex
-import Mathlib.Basic.Complex.Basic
-import Mathlib.Data.Finset.Defs
-import Mathlib.Data.Finset.Range
-import Mathlib.Data.Set.Defs
-import Mathlib.Order.Filter.Basic
-import Mathlib.Topology.Basic
-import Def.Analysis.Ramanujan.Part1Ch7Entry10Zeta4
-import Lemma.Real.Ramanujan.Part1Ch7Entry10Zeta4
-import Theorem.Nat.LSeries.RiemannZeta
-import Mathlib.Algebra.Order.Floor.Defs
-import Mathlib.Algebra.Polynomial.Basic
-import Mathlib.Analysis.CStarAlgebra.Classes
-import Mathlib.Analysis.Calculus.ContDiff.Basic
-import Mathlib.Analysis.Complex.Exponential
-import Mathlib.Analysis.Complex.LocallyUniformLimit
-import Mathlib.Analysis.Real.Sqrt
-import Mathlib.Analysis.SpecialFunctions.Complex.Log
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.NumberTheory.Bernoulli
-import Mathlib.NumberTheory.LSeries.ZMod
-import Mathlib.Order.Interval.Set.Defs
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Analysis.Meromorphic.Complex
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.FunProp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 7
 
 Statements of entries from B. C. Berndt, *Ramanujan's Notebooks, Part I*
 (Springer, 1985), with proofs.
 -/
-
-
 section
 
 namespace MathlibExt.Analysis.Ramanujan.Part1Ch7

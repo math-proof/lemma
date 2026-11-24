@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Thm2214.lean -/
+module
+public import Def.v1.Atlas.NumberTheoryI.code.Def2213
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Def2213
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GlobalCFT
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Prop229
+public import Structure.v1.Atlas.NumberTheoryI.code.GlobalCFT.Part3
+public import Theorem.v1.Atlas.NumberTheoryI.code.Prop229
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/Thm2214.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.NumberTheoryI.code.Def2213
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Def2213
-import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GlobalCFT
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Prop229
-import Structure.v1.Atlas.NumberTheoryI.code.GlobalCFT.Part3
-import Theorem.v1.Atlas.NumberTheoryI.code.Prop229
-
-
 noncomputable section
 
 open scoped NumberField

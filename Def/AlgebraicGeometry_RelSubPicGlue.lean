@@ -1,11 +1,14 @@
-import Mathlib
-import Def.CategoryTheory_OverTotalPresheaf
-import Theorem.CategoryTheory_OverTotalPresheaf
-import Def.AlgebraicGeometry_LocalRepresentabilityULift
-import Def.AlgebraicGeometry_RelSubPicPresheaf
-import Instance.AlgebraicGeometry_RelSubPicGlue
-
+module
+public import Mathlib
+public import Def.CategoryTheory_OverTotalPresheaf
+public import Theorem.CategoryTheory_OverTotalPresheaf
+public import Def.AlgebraicGeometry_LocalRepresentabilityULift
+public import Def.AlgebraicGeometry_RelSubPicPresheaf
+public import Instance.AlgebraicGeometry_RelSubPicGlue
 set_option autoImplicit false
+
+
+public section
 
 universe w v u
 

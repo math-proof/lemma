@@ -1,5 +1,10 @@
-import Mathlib
-import Theorem.Analysis.Section_5_5.Part5
+module
+public import Mathlib
+public import Theorem.Analysis.Section_5_5.Part5
+
+
+public section
+
 /-!
 # Analysis I, Section 5.6: Real exponentiation, part I
 
@@ -22,8 +27,6 @@ Users of the companion who have completed the exercises in this section are welc
 - (Add tip here)
 
 -/
-
-
 namespace Chapter5
 
 /-- Definition 5.6.1 (Exponentiating a real by a natural number). Here we use the

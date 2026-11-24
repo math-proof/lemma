@@ -1,12 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NetoHigherOrderBernoulli.lean -/
-
-
-import Theorem.NumberTheory.NetoHigherOrderBernoulli.Part4
-import Lemma.Nat.NetoHigherOrderBernoulli
+module
+public import Theorem.NumberTheory.NetoHigherOrderBernoulli.Part4
+public import Theorem.Nat.NetoHigherOrderBernoulli
 open MetaMathlibExt
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NetoHigherOrderBernoulli.lean -/
 -- Order one recovers the first ordinary Bernoulli number.
+
 example : higherOrderBernoulliNumber 1 1 = (-1 / 2 : ℂ) := by
   rw [higherOrderBernoulliNumber_one, bernoulli_one]
   norm_num

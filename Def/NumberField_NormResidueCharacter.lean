@@ -1,11 +1,14 @@
-import Mathlib
-import Def.LanglandsTunnell_NormClass
-import Lemma.Ideal.RayCharacterData
-import Instance.NumberField_NormResidueCharacter
-import Abbrev.NumberField_NormResidueCharacter
-
+module
+public import Mathlib
+public import Def.LanglandsTunnell_NormClass
+public import Theorem.Ideal.RayCharacterData
+public import Instance.NumberField_NormResidueCharacter
+public import Abbrev.NumberField_NormResidueCharacter
 set_option autoImplicit false
 set_option linter.unusedSectionVars false
+
+
+public section
 
 noncomputable section
 

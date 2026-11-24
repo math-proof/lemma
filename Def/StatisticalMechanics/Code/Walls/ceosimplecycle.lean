@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/ceosimplecycle.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanExteriorClosure.Part8
+public import Theorem.StatisticalMechanics.Code.Lattice.WindingWitness.Part4
+public import Theorem.StatisticalMechanics.Code.Walls.kwceventtocut.Part3
+public import Theorem.StatisticalMechanics.Code.Walls.rpccrossflip.Part4
+open Set SimpleGraph
+open scoped BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/ceosimplecycle.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Lattice.JordanExteriorClosure.Part8
-import Theorem.StatisticalMechanics.Code.Lattice.WindingWitness.Part4
-import Theorem.StatisticalMechanics.Code.Walls.kwceventtocut.Part3
-import Theorem.StatisticalMechanics.Code.Walls.rpccrossflip.Part4
-open Set SimpleGraph
-open scoped BigOperators
-
-
 namespace StatMech
 
 namespace Walls

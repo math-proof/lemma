@@ -1,2 +1,7 @@
-import Def.FLTPrelim_RightTranslationFn
-import Theorem.Set.RightTranslationFn
+module
+public import Def.FLTPrelim_RightTranslationFn
+public import Theorem.Set.RightTranslationFn
+
+
+public section
+

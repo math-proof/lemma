@@ -1,5 +1,10 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/TriangularIsingCriticalMomentum.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingCriticalPolynomial.Part5
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/TriangularIsingCriticalMomentum.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,11 +12,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingCriticalPolynomial.Part5
-
-
 namespace StatMech.FrontierA
 
 theorem one_sub_cos_add_le_two_sum (p q : ℝ) :

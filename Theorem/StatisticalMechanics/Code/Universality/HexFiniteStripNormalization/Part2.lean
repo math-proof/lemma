@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexFiniteStripNormalization.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.HexFiniteStripBoundary.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.HexVertexBoundConcrete.Part4
+public import Def.StatisticalMechanics.Code.Universality.HexFiniteStripNormalization
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexFiniteStripNormalization.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.HexFiniteStripBoundary.Part2
-import Theorem.StatisticalMechanics.Code.Universality.HexVertexBoundConcrete.Part4
-import Def.StatisticalMechanics.Code.Universality.HexFiniteStripNormalization
-
-
 namespace StatMech.Universality
 
 open Complex HexWalk

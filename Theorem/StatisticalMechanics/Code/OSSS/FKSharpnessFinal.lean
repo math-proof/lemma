@@ -1,5 +1,19 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/FKSharpnessFinal.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessUncond
+public import Theorem.StatisticalMechanics.Code.Inequalities.Russo
+public import Theorem.StatisticalMechanics.Code.BeffaraDC.RussoInfluence.Part2
+public import Theorem.StatisticalMechanics.Code.BeffaraDC.RussoHamming.Part2
+open scoped BigOperators
+open Finset
+open Real Set
+open StatMech.Lattice
+set_option linter.style.longLine false
+set_option linter.unusedSectionVars false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/FKSharpnessFinal.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,21 +21,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessUncond
-import Theorem.StatisticalMechanics.Code.Inequalities.Russo
-import Theorem.StatisticalMechanics.Code.BeffaraDC.RussoInfluence.Part2
-import Theorem.StatisticalMechanics.Code.BeffaraDC.RussoHamming.Part2
-open scoped BigOperators
-open Finset
-open Real Set
-open StatMech.Lattice
-
-set_option linter.style.longLine false
-set_option linter.unusedSectionVars false
-
-
 namespace StatMech
 
 namespace OSSS

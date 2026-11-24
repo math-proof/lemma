@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/ABBoundarySquareRoot.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Sharpness.ABBoundaryLimit.Part4
+public import Theorem.StatisticalMechanics.Code.Sharpness.ABForwardCharacteristic
+public import Theorem.StatisticalMechanics.Code.Sharpness.PercoSusceptibility.Part5
+public import Theorem.StatisticalMechanics.Code.Sharpness.Item1Htc1
+public import Theorem.StatisticalMechanics.Code.Percolation.PcUpperViaFK.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.PlanarTopology.Part4
+open Filter Finset Set SimpleGraph Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/ABBoundarySquareRoot.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Sharpness.ABBoundaryLimit.Part4
-import Theorem.StatisticalMechanics.Code.Sharpness.ABForwardCharacteristic
-import Theorem.StatisticalMechanics.Code.Sharpness.PercoSusceptibility.Part5
-import Theorem.StatisticalMechanics.Code.Sharpness.Item1Htc1
-import Theorem.StatisticalMechanics.Code.Percolation.PcUpperViaFK.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.PlanarTopology.Part4
-open Filter Finset Set SimpleGraph Topology
-
-
 namespace StatMech
 
 namespace Sharpness

@@ -1,10 +1,12 @@
-import Def.Analysis.MeasureTheory.Notation.Part2
-import Theorem.Analysis.Section_9_1.Part3
-import Theorem.Analysis.MeasureTheory.Section_1_1_1.Part13
+module
+public import Def.Analysis.MeasureTheory.Notation.Part2
+public import Theorem.Analysis.Section_9_1.Part3
+public import Theorem.Analysis.MeasureTheory.Section_1_1_1.Part13
 open BoundedInterval
-
 open Pointwise
 
+
+public section
 
 /-- Lattice points in a box decompose as a product of lattice points in each interval side. -/
 def Box.sample_congr {d:ℕ} (B:Box d) (N:ℕ) :

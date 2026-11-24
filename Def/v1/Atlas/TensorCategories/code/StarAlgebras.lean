@@ -1,5 +1,19 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/StarAlgebras.lean -/
+module
+public import Theorem.v1.Atlas.TensorCategories.code.StarAlgebra
+public import Theorem.Category.Atlas.v1.TensorCategories.code.StarAlgebra
+public import Theorem.Category.Atlas.v1.TensorCategories.code.BasedRings
+public import Theorem.Category.Atlas.v1.TensorCategories.code.MfStarAlgebra
+public import Abbrev.v1.Atlas.TensorCategories.code.BasedRings
+public import Def.v1.Atlas.TensorCategories.code.MfStarAlgebra.Part3
+public import Mathlib.Data.Complex.Basic
+public import Mathlib.Algebra.Star.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/StarAlgebras.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +21,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.TensorCategories.code.StarAlgebra
-import Theorem.Category.Atlas.v1.TensorCategories.code.StarAlgebra
-import Theorem.Category.Atlas.v1.TensorCategories.code.BasedRings
-import Lemma.Category.Atlas.v1.TensorCategories.code.MfStarAlgebra
-import Abbrev.v1.Atlas.TensorCategories.code.BasedRings
-import Def.v1.Atlas.TensorCategories.code.MfStarAlgebra.Part3
-import Mathlib.Data.Complex.Basic
-import Mathlib.Algebra.Star.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-
-
 /-- The star map of a multifusion ring packaged as an `Equiv`. -/
 def starEquivC : ι ≃ ι where
   toFun := R.star

@@ -1,9 +1,12 @@
-import Mathlib
-import Lemma.Complex.EisensteinScattering
-import Lemma.UpperHalfPlane.FundamentalDomainVolume
-
+module
+public import Mathlib
+public import Lemma.Complex.EisensteinScattering
+public import Lemma.UpperHalfPlane.FundamentalDomainVolume
 open MeasureTheory Set ModularGroup UpperHalfPlane
 open scoped MatrixGroups Modular Pointwise NNReal ENNReal
+
+
+public section
 
 noncomputable section
 

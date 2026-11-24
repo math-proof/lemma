@@ -1,6 +1,10 @@
-import Abbrev.Analysis.MeasureTheory.Section_1_1_2.Part4
-import Def.Analysis.MeasureTheory.Section_1_1_3.Part2
+module
+public import Abbrev.Analysis.MeasureTheory.Section_1_1_2.Part4
+public import Def.Analysis.MeasureTheory.Section_1_1_3.Part2
 open BoundedInterval
+
+
+public section
 
 /-!
 # Introduction to Measure Theory, Section 1.1.3: Connections with the Riemann integral
@@ -8,8 +12,6 @@ open BoundedInterval
 A companion to Section 1.1.3 of the book "An introduction to Measure Theory".
 
 -/
-
-
 /-- When an interval has zero length, all Riemann sums equal zero. -/
 lemma riemann_sum_eq_zero_of_zero_length {f : ℝ → ℝ} {I : BoundedInterval} (h_len : |I|ₗ = 0)
     {n : ℕ} (P : TaggedPartition I n) : P.RiemannSum f = 0 := by

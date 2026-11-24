@@ -1,22 +1,25 @@
--- Carved from Lemma/Definitions/Def_ModularCurve_JHNeronObjectAtP.lean: instance decls only.
-import Mathlib
-import Def.ModularCurve_JZeroNeronObjectAtP
-import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
-import Theorem.Scheme.NeronSpecialFibreRestriction
-import Instance.ModularCurve_XHDifferentialsModL
-import Lemma.UpperHalfPlane.XHOperators
-import Theorem.ResidueField.GluedPic0
-import Def.GaloisRep_Flat
-import Def.FLTPrelim_Ramification
-import Def.ModularCurve_JHNeronObjectAtP
-
+module
+public import Mathlib
+public import Def.ModularCurve_JZeroNeronObjectAtP
+public import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
+public import Theorem.Scheme.NeronSpecialFibreRestriction
+public import Instance.ModularCurve_XHDifferentialsModL
+public import Theorem.UpperHalfPlane.XHOperators
+public import Theorem.ResidueField.GluedPic0
+public import Def.GaloisRep_Flat
+public import Def.FLTPrelim_Ramification
+public import Def.ModularCurve_JHNeronObjectAtP
 set_option autoImplicit false
 set_option maxHeartbeats 800000
 set_option synthInstance.maxHeartbeats 400000
-
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry NeronModelInfra GoodReductionJacobian
 open ModularCurve.JZeroNeronObjectAtP
 open scoped MatrixGroups
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_ModularCurve_JHNeronObjectAtP.lean: instance decls only.
 
 noncomputable section
 

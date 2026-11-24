@@ -1,11 +1,12 @@
-import Theorem.WeierstrassCurve.TorsionIntegral
-import Def.WeierstrassCurve_ReductionMap
-import Theorem.WeierstrassCurve.ReductionMap
-
+module
+public import Theorem.WeierstrassCurve.TorsionIntegral
+public import Def.WeierstrassCurve_ReductionMap
+public import Theorem.WeierstrassCurve.ReductionMap
 set_option autoImplicit false
-
 open IsLocalRing
 
+
+public section
 
 namespace WeierstrassCurve
 

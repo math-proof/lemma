@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectSourceSeamWindingUpper.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectSourceSeamBarrier.Part4
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRankOneWindingTail
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryVerticalFlux.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectAugmentedBarrierPatternCost
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectSourceSeamWindingUpper.Part2
+open SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectSourceSeamWindingUpper.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectSourceSeamBarrier.Part4
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectRankOneWindingTail
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryVerticalFlux.Part3
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectAugmentedBarrierPatternCost
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectSourceSeamWindingUpper.Part2
-open SimpleGraph
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

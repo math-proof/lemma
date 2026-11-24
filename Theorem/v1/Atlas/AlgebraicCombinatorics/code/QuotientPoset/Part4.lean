@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicCombinatorics/code/QuotientPoset.lean -/
+module
+public import Def.v1.Atlas.AlgebraicCombinatorics.code.SpernerProperty.Part2
+public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.SpernerProperty
+public import Mathlib.GroupTheory.GroupAction.Quotient
+public import Mathlib.Algebra.Group.Action.Pointwise.Finset
+public import Mathlib.Data.Finset.Card
+public import Instance.v1.Atlas.AlgebraicCombinatorics.code.QuotientPoset.Part2
+open Finset MulAction
+open scoped Pointwise
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicCombinatorics/code/QuotientPoset.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.AlgebraicCombinatorics.code.SpernerProperty.Part2
-import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.SpernerProperty
-import Mathlib.GroupTheory.GroupAction.Quotient
-import Mathlib.Algebra.Group.Action.Pointwise.Finset
-import Mathlib.Data.Finset.Card
-import Instance.v1.Atlas.AlgebraicCombinatorics.code.QuotientPoset.Part2
-open Finset MulAction
-open scoped Pointwise
-
-
 section RankSymmetry
 
 variable {n : ℕ} {G : Subgroup (Equiv.Perm (Fin n))}

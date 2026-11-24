@@ -1,12 +1,13 @@
+module
+public import Mathlib.Tactic
+public import Def.NumberTheory.Sequences.PolynomiallyRecursiveMCFinite
+public import Theorem.Nat.Sequences.PolynomiallyRecursiveMCFinite
+public import Def.MathlibExtTest.NumberTheory.Sequences.PolynomiallyRecursiveMCFinite
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Sequences/PolynomiallyRecursiveMCFinite.lean -/
-
-
-import Mathlib.Tactic
-import Def.NumberTheory.Sequences.PolynomiallyRecursiveMCFinite
-import Theorem.Nat.Sequences.PolynomiallyRecursiveMCFinite
-import Def.MathlibExtTest.NumberTheory.Sequences.PolynomiallyRecursiveMCFinite
-
-
 namespace MathlibExtTest.NumberTheory.Sequences.PolynomiallyRecursiveMCFinite
 
 open MetaMathlibExt MvPolynomial

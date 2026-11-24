@@ -1,7 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Policy/PushRunPreservation.lean -/
+module
+public import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
+public import Theorem.List.Atlas.CPythonListsort.Code.Policy.StackDepth
 
-import Def.CPythonListsort.Code.Assembly.AccessTrace.Part9
-import Lemma.List.Atlas.CPythonListsort.Code.Policy.StackDepth
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Policy/PushRunPreservation.lean -/
 /-!
 # Policy preservation across the pending-run push
 
@@ -15,8 +19,6 @@ The operation itself is total on every modeled state.  `ReadyToPush` appears
 only on the preservation and capacity theorem; it is not consulted by either
 the ordinary or traced implementation.
 -/
-
-
 namespace CPythonListsort
 
 universe u v

@@ -9,7 +9,7 @@ import Mathlib.AlgebraicGeometry.Limits
 import Mathlib.FieldTheory.RatFunc.AsPolynomial
 import Lemma.Scheme.CurveModel
 import Instance.JacJ1_ChartAlgebra
-import Lemma.Set.CurveModelSmooth
+import Theorem.Set.CurveModelSmooth
 import Instance.AlgebraicCurve_CurveModelConstruction
 import Abbrev.AlgebraicCurve_CurveModelConstruction
 

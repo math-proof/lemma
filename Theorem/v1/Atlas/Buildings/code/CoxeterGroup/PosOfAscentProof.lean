@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/PosOfAscentProof.lean -/
+module
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.LengthDecreaseNeg
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.DihedralPositivity.Part2
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.DihedralPositivityFinite
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.ParabolicPositivity
+set_option maxHeartbeats 800000
+open CoxeterGroup
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/PosOfAscentProof.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.LengthDecreaseNeg
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.DihedralPositivity.Part2
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.DihedralPositivityFinite
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.ParabolicPositivity
-set_option maxHeartbeats 800000
-
-open CoxeterGroup
-
-
 namespace CoxeterGroup
 
 variable {B : Type*} [DecidableEq B] [Fintype B]

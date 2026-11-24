@@ -1,5 +1,21 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/SphericalBuilding/AdaptedBasisProof.lean -/
+module
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.BasisExtensionChain
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.AdaptedBasisSingle
+public import Theorem.Fin.EqLinesFrameOfBasis
+public import Theorem.Fin.All_Eq_Val.of.Eq.Eq_0.StrictMono
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.BasisFromFlagProof
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.LinearAlgebra.Basis.Flag
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.Order.CompleteLattice.Finset
+public import Structure.v1.Atlas.Buildings.code.SphericalBuilding.AdaptedBasisProof
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/SphericalBuilding/AdaptedBasisProof.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,21 +23,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.BasisExtensionChain
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.AdaptedBasisSingle
-import Theorem.Fin.EqLinesFrameOfBasis
-import Theorem.Fin.All_Eq_Val.of.Eq.Eq_0.StrictMono
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.BasisFromFlagProof
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.LinearAlgebra.Basis.Flag
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.Order.CompleteLattice.Finset
-import Structure.v1.Atlas.Buildings.code.SphericalBuilding.AdaptedBasisProof
-
-
 namespace GLnBuilding
 
 open Submodule Module

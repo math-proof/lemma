@@ -1,12 +1,14 @@
--- Carved from Lemma/Definitions/Def_HopfAlgebra_CharacterClosure.lean: instance decls only.
-import Mathlib
-import Instance.HopfAlgebra_CartierDual
-import Instance.FiniteFlat_SchematicClosure
-
+module
+public import Mathlib
+public import Instance.HopfAlgebra_CartierDual
+public import Instance.FiniteFlat_SchematicClosure
 set_option autoImplicit false
-
 open scoped TensorProduct
 
+
+public section
+
+-- Carved from Lemma/Definitions/Def_HopfAlgebra_CharacterClosure.lean: instance decls only.
 
 namespace CartierDual
 

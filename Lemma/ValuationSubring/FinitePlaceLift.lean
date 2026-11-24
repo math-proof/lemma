@@ -1,9 +1,12 @@
-import Lemma.WeierstrassCurve.ReductionMap
-import Lemma.ResidueField.ConstantReduction
-import Def.AlgebraicCurve_PlaceEvaluation
-import Structure.ModularCurve_FinitePlaceLift
-
+module
+public import Lemma.WeierstrassCurve.ReductionMap
+public import Lemma.ResidueField.ConstantReduction
+public import Def.AlgebraicCurve_PlaceEvaluation
+public import Structure.ModularCurve_FinitePlaceLift
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

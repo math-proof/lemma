@@ -1,13 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/DiscreteValuationRing/MaximalIdealPowFactor.lean -/
+module
+public import Def.RingTheory.DiscreteValuationRing.MaximalIdealPowFactor.Part3
+public import Theorem.Int.DiscreteValuationRing.MaximalIdealPowFactor
+open IsLocalRing
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/DiscreteValuationRing/MaximalIdealPowFactor.lean -/
 /-
 Author: Muse Code
 -/
-
-import Def.RingTheory.DiscreteValuationRing.MaximalIdealPowFactor.Part3
-import Lemma.Int.DiscreteValuationRing.MaximalIdealPowFactor
-open IsLocalRing
-
 variable (A B : Type*) [CommRing A] [CommRing B] [IsDomain A] [IsDomain B]
   [IsDiscreteValuationRing A] [IsDiscreteValuationRing B] [Algebra A B]
 

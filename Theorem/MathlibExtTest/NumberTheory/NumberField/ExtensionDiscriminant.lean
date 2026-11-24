@@ -1,10 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/ExtensionDiscriminant.lean -/
-
-
-import Def.NumberTheory.NumberField.ExtensionDiscriminant.Part2
-import Lemma.Nat.NumberField.ExtensionDiscriminant
+module
+public import Def.NumberTheory.NumberField.ExtensionDiscriminant.Part2
+public import Theorem.Nat.NumberField.ExtensionDiscriminant
 set_option autoImplicit false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/ExtensionDiscriminant.lean -/
 universe u
 
 

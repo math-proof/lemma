@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ProbabilisticMethodsInCombinatorics/code/Chapter10/TriangleIntersecting.lean -/
+module
+public import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.ShearerCombinatorial
+public import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter10.ShearerCombinatorial
+public import Mathlib.Combinatorics.SimpleGraph.Clique
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Tactic
+open Finset
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ProbabilisticMethodsInCombinatorics/code/Chapter10/TriangleIntersecting.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter10.ShearerCombinatorial
-import Lemma.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter10.ShearerCombinatorial
-import Mathlib.Combinatorics.SimpleGraph.Clique
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Data.Fintype.Card
-import Mathlib.Tactic
-open Finset
-
-
 namespace TriangleIntersecting
 
 /-- A family $F$ of graphs on a common vertex set is triangle-intersecting if every pair of

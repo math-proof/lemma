@@ -3,21 +3,21 @@ import Initialize.Tactic.Attr.Basic
 
 @[path]
 private lemma main
-  {p : α → β → Prop}
   {A : Set α}
   {B : Set β}
+  {f : α → β → Prop}
 -- given
-  (h : ∀ x ∈ A, ∀ y ∈ B, p x y) :
+  (h : ∀ y ∈ B, ∀ x ∈ A, f x y) :
 -- imply
-  ∀ y ∈ B, ∀ x, p x y ∨ x ∉ A := by
+  ∀ y, ∀ x ∈ A, f x y ∨ y ∉ B := by
 -- proof
-  intro y hy x
-  if hx : x ∈ A then
-    left
-    apply h x hx y hy
-  else
-    right
-    apply hx
+  intro y x hx
+  by_cases hy : y ∈ B
+  ·
+    exact Or.inl (h y hy x hx)
+  ·
+    exact Or.inr hy
 
 
 -- created on 2018-12-17
+-- updated on 2026-11-24

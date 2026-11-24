@@ -1,10 +1,15 @@
+module
+public import Mathlib
+public import Def.RingTheory.PowerSeries.FPSDefinition.Part3
+public import Theorem.PowerSeries.FPSDefinition
+
+
+public section
+
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.RingTheory.PowerSeries.FPSDefinition.Part3
-import Lemma.PowerSeries.FPSDefinition
 /-!
 # Substitution and Evaluation of Power Series
 
@@ -53,8 +58,6 @@ to `PowerSeries.subst g f` in Mathlib.
 * Proposition 7.3.4 (prop.fps.subs.rules)
 * Lemma 7.3.5 (lem.fps.fg-coeffs-0)
 -/
-
-
 namespace AlgebraicCombinatorics
 
 open PowerSeries

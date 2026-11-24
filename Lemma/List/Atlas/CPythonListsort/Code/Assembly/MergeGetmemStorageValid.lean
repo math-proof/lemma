@@ -3,7 +3,7 @@ import Initialize.Tactic.Attr.Basic
 import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
 import Structure.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
 import Lemma.List.Atlas.CPythonListsort.Code.Transcription.TempStorageInvariant
-import Lemma.List.Atlas.CPythonListsort.Code.Transcription.MergeMemory
+import Theorem.List.Atlas.CPythonListsort.Code.Transcription.MergeMemory
 open CPythonListsort CPythonListsort.MergeGetmemStoragePost
 
 

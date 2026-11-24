@@ -1,3 +1,12 @@
+module
+public import Mathlib
+public import Def.Combinatorics.Enumerative.Partition.Basics.Part8
+public import Def.Combinatorics.Enumerative.Partition.PentagonalJacobi.Part8
+open scoped Nat PowerSeries
+
+
+public section
+
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -6,11 +15,6 @@ All rights reserved.
 Copyright (c) 2025 AlgebraicCombinatorics Project Contributors
 Authors: AlgebraicCombinatorics Project Contributors
 -/
-import Mathlib
-import Def.Combinatorics.Enumerative.Partition.Basics.Part8
-import Def.Combinatorics.Enumerative.Partition.PentagonalJacobi.Part8
-open scoped Nat PowerSeries
-
 /-!
 # Euler's Pentagonal Number Theorem and Jacobi's Triple Product Identity
 
@@ -44,8 +48,6 @@ following the treatment in the AlgebraicCombinatorics textbook.
 
 pentagonal number, Euler, Jacobi triple product, partitions, formal power series
 -/
-
-
 namespace AlgebraicCombinatorics
 
 section Jacobi

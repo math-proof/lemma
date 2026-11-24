@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Talagrand.lean -/
+module
+public import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
+public import Def.v1.Atlas.BooleanFunctions.code.Definitions
+public import Theorem.v1.Atlas.BooleanFunctions.code.UncoveredBatch2
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Linarith
+open Finset BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Talagrand.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
-import Def.v1.Atlas.BooleanFunctions.code.Definitions
-import Theorem.v1.Atlas.BooleanFunctions.code.UncoveredBatch2
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Linarith
-open Finset BigOperators
-
-
 namespace BooleanFourier
 
 noncomputable def expect {n : ℕ} (f : BoolFn n) : ℝ :=

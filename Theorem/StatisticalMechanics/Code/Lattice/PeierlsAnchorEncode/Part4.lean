@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Lattice/PeierlsAnchorEncode.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Lattice.ContourSubsetCount
+public import Def.StatisticalMechanics.Code.Lattice.PeierlsAnchorEncode.Part4
+open Finset Set SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Lattice/PeierlsAnchorEncode.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Lattice.ContourSubsetCount
-import Def.StatisticalMechanics.Code.Lattice.PeierlsAnchorEncode.Part4
-open Finset Set SimpleGraph
-
-
 namespace StatMech
 
 namespace Lattice

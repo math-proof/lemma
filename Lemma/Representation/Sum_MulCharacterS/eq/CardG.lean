@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.GroupTheory.BurnsidePaqb.KillingLemma
-import Lemma.Representation.Character.eq.SumRootsCharpoly
+import Theorem.Representation.Character.eq.SumRootsCharpoly
 
 
 namespace BurnsidePaqb

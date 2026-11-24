@@ -1,10 +1,11 @@
+module
+public import Theorem.NumberTheory.MultipleZeta.WordAlgebra.Part2
+public import Theorem.Nat.MultipleZeta.WordAlgebra
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/MultipleZeta/WordAlgebra.lean -/
-
-
-import Theorem.NumberTheory.MultipleZeta.WordAlgebra.Part2
-import Theorem.Nat.MultipleZeta.WordAlgebra
-
-
 namespace MetaMathlibExt.MultipleZeta
 
 /-- Empty `zWord` is the scalar word. -/

@@ -1,8 +1,11 @@
-import Mathlib
-import Instance.AlgebraicGeometry_OrderedAffineCoverCech
-import Instance.AlgebraicGeometry_OrderedAffineCoverOf
-
+module
+public import Mathlib
+public import Instance.AlgebraicGeometry_OrderedAffineCoverCech
+public import Instance.AlgebraicGeometry_OrderedAffineCoverOf
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

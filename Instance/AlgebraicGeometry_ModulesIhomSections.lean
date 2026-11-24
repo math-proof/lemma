@@ -1,12 +1,16 @@
--- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ModulesIhomSections.lean: instance decls only.
-import Mathlib
-import Instance.PresheafOfModules_InternalHom
-import Instance.SheafOfModules_Monoidal
-import Theorem.Scheme.ModulesIhomSections
-import Def.AlgebraicGeometry_ModulesIhomSections
-
+module
+public import Mathlib
+public import Instance.PresheafOfModules_InternalHom
+public import Instance.SheafOfModules_Monoidal
+public import Theorem.Scheme.ModulesIhomSections
+public import Def.AlgebraicGeometry_ModulesIhomSections
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ModulesIhomSections.lean: instance decls only.
 
 universe u v' u'
 

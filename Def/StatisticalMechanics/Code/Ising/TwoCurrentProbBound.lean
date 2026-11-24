@@ -1,5 +1,19 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/TwoCurrentProbBound.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Sharpness.RandomCurrent.Part10
+public import Theorem.StatisticalMechanics.Code.Ising.TwoReplica.Part7
+public import Theorem.StatisticalMechanics.Code.Ising.TwoReplicaWeighted.Part2
+public import Theorem.StatisticalMechanics.Code.Ising.AizenmanSignDominance.Part2
+public import Theorem.StatisticalMechanics.Code.Ising.HdomNativeWeight.Part3
+open Finset Classical
+open scoped symmDiff BigOperators
+set_option linter.unusedSectionVars false
+set_option maxHeartbeats 800000
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/TwoCurrentProbBound.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,21 +21,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Sharpness.RandomCurrent.Part10
-import Theorem.StatisticalMechanics.Code.Ising.TwoReplica.Part7
-import Theorem.StatisticalMechanics.Code.Ising.TwoReplicaWeighted.Part2
-import Theorem.StatisticalMechanics.Code.Ising.AizenmanSignDominance.Part2
-import Theorem.StatisticalMechanics.Code.Ising.HdomNativeWeight.Part3
-open Finset Classical
-open scoped symmDiff BigOperators
-
-set_option linter.unusedSectionVars false
-set_option maxHeartbeats 800000
-
-
 namespace StatMech
 
 namespace Ising

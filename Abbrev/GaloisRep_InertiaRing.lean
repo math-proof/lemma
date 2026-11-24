@@ -1,8 +1,11 @@
-import Mathlib
-import Def.GaloisRep_Flat
-import Def.FLTPrelim_Ramification
-
+module
+public import Mathlib
+public import Def.GaloisRep_Flat
+public import Def.FLTPrelim_Ramification
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

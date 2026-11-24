@@ -95,7 +95,8 @@ export async function probeLemma(input, { pool, lean } = {}) {
   let stored;
   try {
     const [rows] = await db.execute(
-      "SELECT JSON_EXTRACT(meta, '$.fingerprint') AS fingerprint FROM lemma WHERE module = ?",
+      "SELECT f.fingerprint FROM lemma l JOIN fingerprint f ON f.id = l.id " +
+        "WHERE l.module = ? AND f.section = 'imply' AND f.latex_id = 0",
       [module],
     );
     if (rows.length !== 1) throw new Error('Expected exactly one MySQL lemma row for ' + module);
@@ -121,7 +122,8 @@ export async function probeLemma(input, { pool, lean } = {}) {
     if (echo.struct == null) {
       throw Object.assign(new Error('Echo returned LaTeX only. The structural payload is missing.'), { probe: true });
     }
-    const sourceJson = conclusionSearchJson(abs);
+    const location = {};
+    const sourceJson = conclusionSearchJson(abs, undefined, { location });
     const structJson = structToFingerprint(echo.struct);
     const storedKey = fingerprintSignature(stored);
     return {
@@ -129,6 +131,7 @@ export async function probeLemma(input, { pool, lean } = {}) {
       path: abs,
       echo,
       stored,
+      location,
       sourceLean: conclusionSource(raw),
       sourceJson,
       structJson,

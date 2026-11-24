@@ -1,15 +1,19 @@
+module
+public import Mathlib
+public import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
+public import Theorem.LaurentSeries.LaurentSeries
+public import Theorem.Partition.NPartition
+public import Def.Combinatorics.Young.MonomialSymmetric
+open scoped Polynomial
+open MvPolynomial Finset Equiv
+
+
+public section
+
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
-import Theorem.LaurentSeries.LaurentSeries
-import Theorem.Partition.NPartition
-import Def.Combinatorics.Young.MonomialSymmetric
-open scoped Polynomial
-open MvPolynomial Finset Equiv
-
 /-!
 # N-partitions and Monomial Symmetric Polynomials
 
@@ -72,13 +76,9 @@ Mathlib already has `MvPolynomial.msymm` for monomial symmetric polynomials inde
 `Nat.Partition`. Our `NPartition` provides an alternative indexing that is more natural
 for the N-variable setting and corresponds directly to the textbook presentation.
 -/
-
-
 /-! Compatibility with the pre-2026 `MvPolynomial.coeff m p` argument order.
 `MvPolynomial.coeff` is now the coefficient `Finsupp`, so `p.coeff m` is the new spelling.
 These declarations restore `coeff m p` and the lemmas the proofs rewrite with. -/
-
-
 namespace AlgebraicCombinatorics
 
 namespace SymmetricFunctions

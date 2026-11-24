@@ -1,9 +1,12 @@
-import Mathlib
-import Lemma.WeierstrassCurve.FrobeniusTrace
-import Def.Matrix_MatrixRepresentationG_eq_MulVecLinValG
-import Notation.ArtinL_EulerFactor
-
+module
+public import Mathlib
+public import Theorem.WeierstrassCurve.FrobeniusTrace
+public import Def.Matrix_MatrixRepresentationG_eq_MulVecLinValG
+public import Notation.ArtinL_EulerFactor
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

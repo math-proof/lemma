@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/BackboneBondwiseOrderedExploration.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Sharpness.BackboneExplorationSelector.Part4
+public import Theorem.StatisticalMechanics.Code.Sharpness.BackboneOrderedDeterminedCut.Part4
+public import Theorem.StatisticalMechanics.Code.Sharpness.BackboneActualSelectorSwitching.Part3
+open Finset
+open scoped symmDiff
+set_option linter.unusedSectionVars false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/BackboneBondwiseOrderedExploration.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Sharpness.BackboneExplorationSelector.Part4
-import Theorem.StatisticalMechanics.Code.Sharpness.BackboneOrderedDeterminedCut.Part4
-import Theorem.StatisticalMechanics.Code.Sharpness.BackboneActualSelectorSwitching.Part3
-open Finset
-open scoped symmDiff
-
-set_option linter.unusedSectionVars false
-
-
 namespace StatMech.Sharpness
 
 def shb_bondwiseOrderedTests {B : Type*} [DecidableEq B]

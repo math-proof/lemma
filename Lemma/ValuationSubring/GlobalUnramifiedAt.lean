@@ -1,7 +1,10 @@
-import Def.FLTPrelim_Ramification
-import Def.GaloisRep_GlobalUnramifiedAt
-
+module
+public import Def.FLTPrelim_Ramification
+public import Def.GaloisRep_GlobalUnramifiedAt
 set_option autoImplicit false
+
+
+public section
 
 namespace GlobalGaloisRep
 

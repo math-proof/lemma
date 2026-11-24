@@ -1,14 +1,16 @@
-import Instance.Gamma0HeckeOperatorHom
-import Lemma.UpperHalfPlane.PeriodMap
-import Mathlib.RingTheory.Finiteness.Subalgebra
-import Mathlib.GroupTheory.Schreier
-import Mathlib.LinearAlgebra.Matrix.FixedDetMatrices
-import Mathlib.GroupTheory.Finiteness
-
+module
+public import Instance.Gamma0HeckeOperatorHom
+public import Lemma.UpperHalfPlane.PeriodMap
+public import Mathlib.RingTheory.Finiteness.Subalgebra
+public import Mathlib.GroupTheory.Schreier
+public import Mathlib.LinearAlgebra.Matrix.FixedDetMatrices
+public import Mathlib.GroupTheory.Finiteness
 set_option autoImplicit false
-
 open CongruenceSubgroup
 open scoped MatrixGroups
+
+
+public section
 
 namespace ModularCurve.Period
 

@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/DecorationFormalEval.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Onsager.DecorationTransitionWalk.Part4
+public import Theorem.StatisticalMechanics.Code.Onsager.DecorationFormalEvalAlgebra.Part3
+public import Def.StatisticalMechanics.Code.Onsager.DecorationFormalEval
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/DecorationFormalEval.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.Onsager.DecorationTransitionWalk.Part4
-import Theorem.StatisticalMechanics.Code.Onsager.DecorationFormalEvalAlgebra.Part3
-import Def.StatisticalMechanics.Code.Onsager.DecorationFormalEval
-
-
 namespace StatMech.Onsager
 
 open BigOperators Finset

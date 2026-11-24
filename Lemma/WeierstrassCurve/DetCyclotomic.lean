@@ -1,4 +1,4 @@
-import Lemma.WeierstrassCurve.FreyPackageGaloisRep
+import Theorem.WeierstrassCurve.FreyPackageGaloisRep
 import Def.FLTPrelim_Ramification
 import Mathlib.NumberTheory.Cyclotomic.CyclotomicCharacter
 import Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed

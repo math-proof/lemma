@@ -1,5 +1,27 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/IvPropertiesFull.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.FK.FKG
+public import Theorem.StatisticalMechanics.Code.FK.MonoBC.Part4
+public import Theorem.StatisticalMechanics.Code.FK.FreeWeakLimit.Part8
+public import Theorem.StatisticalMechanics.Code.FK.MonotoneWeakLimit.Part2
+public import Theorem.StatisticalMechanics.Code.FK.WiredDomChain.Part4
+public import Theorem.StatisticalMechanics.Code.FK.Limits
+public import Theorem.StatisticalMechanics.Code.FK.InfiniteVolume.Part7
+public import Theorem.StatisticalMechanics.Code.Lattice.BoundaryConditions.Part10
+public import Theorem.StatisticalMechanics.Code.Inequalities.FKG
+public import Theorem.StatisticalMechanics.Code.Foundations.StochasticDomination
+open MeasureTheory Filter Topology SimpleGraph
+open scoped BigOperators
+open StatMech.Lattice StatMech.IsingFK
+set_option linter.unusedSectionVars false
+set_option linter.unusedFintypeInType false
+set_option linter.unusedDecidableInType false
+set_option linter.unusedVariables false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/IvPropertiesFull.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,29 +29,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.FK.FKG
-import Theorem.StatisticalMechanics.Code.FK.MonoBC.Part4
-import Theorem.StatisticalMechanics.Code.FK.FreeWeakLimit.Part8
-import Theorem.StatisticalMechanics.Code.FK.MonotoneWeakLimit.Part2
-import Theorem.StatisticalMechanics.Code.FK.WiredDomChain.Part4
-import Theorem.StatisticalMechanics.Code.FK.Limits
-import Theorem.StatisticalMechanics.Code.FK.InfiniteVolume.Part7
-import Theorem.StatisticalMechanics.Code.Lattice.BoundaryConditions.Part10
-import Theorem.StatisticalMechanics.Code.Inequalities.FKG
-import Theorem.StatisticalMechanics.Code.Foundations.StochasticDomination
-open MeasureTheory Filter Topology SimpleGraph
-open scoped BigOperators
-open StatMech.Lattice StatMech.IsingFK
-
-set_option linter.unusedSectionVars false
-set_option linter.unusedFintypeInType false
-set_option linter.unusedDecidableInType false
-set_option linter.unusedVariables false
-
-
 namespace StatMech
 
 namespace FK

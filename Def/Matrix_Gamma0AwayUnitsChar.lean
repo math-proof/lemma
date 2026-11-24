@@ -1,7 +1,11 @@
-import Def.Matrix_Main
-import Theorem.ZMod.Gamma0UnitsChar
-import Def.Matrix_IharaAmalgamMap
-import Mathlib.Data.ZMod.Basic
+module
+public import Def.Matrix_Main
+public import Theorem.ZMod.Gamma0UnitsChar
+public import Def.Matrix_IharaAmalgamMap
+public import Mathlib.Data.ZMod.Basic
+
+
+public section
 
 namespace Ihara
 

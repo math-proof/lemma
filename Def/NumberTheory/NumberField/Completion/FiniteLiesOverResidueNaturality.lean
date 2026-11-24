@@ -1,9 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOverResidueNaturality.lean -/
+module
+public import Theorem.NumberTheory.NumberField.Completion.FiniteLiesOverResidueField
+public import Theorem.Nat.NumberField.Completion.FiniteLiesOverResidueField
+public import Theorem.Int.DedekindDomain.AdicCompletionResidueField
+public import Def.RingTheory.DedekindDomain.AdicCompletionResidueField.Part2
 
-import Theorem.NumberTheory.NumberField.Completion.FiniteLiesOverResidueField
-import Lemma.Nat.NumberField.Completion.FiniteLiesOverResidueField
-import Lemma.Int.DedekindDomain.AdicCompletionResidueField
-import Def.RingTheory.DedekindDomain.AdicCompletionResidueField.Part2
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOverResidueNaturality.lean -/
 /-!
 # Explicit residue-field naturality square
 
@@ -51,8 +55,6 @@ the residue-degree ingredient for the finite-place part of
 N265, Theorem 13.5. The finrank equality and tensor-product decomposition are
 outside this module's scope.
 -/
-
-
 namespace IsDedekindDomain.HeightOneSpectrum
 
 open scoped NumberField

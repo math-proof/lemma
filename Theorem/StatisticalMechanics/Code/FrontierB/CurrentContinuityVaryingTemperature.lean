@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/CurrentContinuityVaryingTemperature.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityMagnetizationFK
+public import Theorem.StatisticalMechanics.Code.Ising.FreeStateDLR
+public import Mathlib.Topology.UniformSpace.CompactConvergence
+open Filter MeasureTheory ProbabilityTheory MeasurableSpace Set Topology
+open scoped BigOperators ENNReal NNReal BoundedContinuousFunction UniformConvergence
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/CurrentContinuityVaryingTemperature.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityMagnetizationFK
-import Theorem.StatisticalMechanics.Code.Ising.FreeStateDLR
-import Mathlib.Topology.UniformSpace.CompactConvergence
-open Filter MeasureTheory ProbabilityTheory MeasurableSpace Set Topology
-open scoped BigOperators ENNReal NNReal BoundedContinuousFunction UniformConvergence
-
-
 namespace StatMech.FrontierB
 
 open ConfigSpace Ising Lattice

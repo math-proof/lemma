@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicPhysicalRobinCompatibility.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicProjectedFullMedialInterpolation.Part5
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareCaratheodory.Part5
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicBoundaryLayerConsistency.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicCalibratedRobinConsistency
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicPhysicalRobinCompatibility.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicProjectedFullMedialInterpolation.Part5
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicSquareCaratheodory.Part5
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicBoundaryLayerConsistency.Part3
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicCalibratedRobinConsistency
-
-
 namespace StatMech.Universality
 
 open Filter Metric Set Topology

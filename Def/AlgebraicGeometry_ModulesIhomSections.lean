@@ -1,12 +1,15 @@
-import Mathlib
-import Def.AlgebraicGeometry_InternalHom
-import Instance.SheafOfModules_Monoidal
-import Def.AlgebraicGeometry_ModulesSectionsTensor
-import Instance.AlgebraicGeometry_ModulesIhomSections
-import Abbrev.AlgebraicGeometry_ModulesIhomSections
-
+module
+public import Mathlib
+public import Def.AlgebraicGeometry_InternalHom
+public import Instance.SheafOfModules_Monoidal
+public import Def.AlgebraicGeometry_ModulesSectionsTensor
+public import Instance.AlgebraicGeometry_ModulesIhomSections
+public import Abbrev.AlgebraicGeometry_ModulesIhomSections
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
+
+
+public section
 
 universe u v' u'
 

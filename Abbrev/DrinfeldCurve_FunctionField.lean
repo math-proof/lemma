@@ -1,7 +1,10 @@
-import Instance.DrinfeldCurve_CoordRing
-import Mathlib.RingTheory.Localization.FractionRing
-
+module
+public import Instance.DrinfeldCurve_CoordRing
+public import Mathlib.RingTheory.Localization.FractionRing
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

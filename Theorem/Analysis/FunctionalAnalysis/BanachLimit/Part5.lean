@@ -1,12 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/FunctionalAnalysis/BanachLimit.lean -/
+module
+public import Mathlib.Topology.ContinuousMap.Bounded.Basic
+public import Mathlib.Topology.ContinuousMap.Bounded.Normed
+public import Mathlib.Analysis.Convex.Cone.Extension
+public import Mathlib.Topology.Algebra.Order.LiminfLimsup
+public import Mathlib.Analysis.Asymptotics.SpecificAsymptotics
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Def.Analysis.FunctionalAnalysis.BanachLimit.Part5
 
-import Mathlib.Topology.ContinuousMap.Bounded.Basic
-import Mathlib.Topology.ContinuousMap.Bounded.Normed
-import Mathlib.Analysis.Convex.Cone.Extension
-import Mathlib.Topology.Algebra.Order.LiminfLimsup
-import Mathlib.Analysis.Asymptotics.SpecificAsymptotics
-import Mathlib.Analysis.SpecificLimits.Basic
-import Def.Analysis.FunctionalAnalysis.BanachLimit.Part5
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/FunctionalAnalysis/BanachLimit.lean -/
 /-!
 # Banach limits on bounded real sequences
 
@@ -22,8 +26,6 @@ Source: S. Banach, *Théorie des opérations linéaires* (1932); G. G. Lorentz,
 "A contribution to the theory of divergent sequences", *Acta Mathematica* 80
 (1948), 167–190, DOI `10.1007/BF02393648`.
 -/
-
-
 namespace MathlibExt.Analysis.FunctionalAnalysis.BanachLimit
 
 open scoped BoundedContinuousFunction

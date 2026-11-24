@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Lemma.Nat.EqEquivMapDomain_EquivMapDomainSymm
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Lemma.Nat.EqEquivMapDomain_EquivMapDomainSymm
 open Nat
 
+
+public section
 
 /--
 [rothLastIndex_add](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

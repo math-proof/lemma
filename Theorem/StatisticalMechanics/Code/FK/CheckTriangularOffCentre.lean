@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/CheckTriangularOffCentre.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.TriangularOffCentre.Part5
+open StatMech.FK
+open StatMech.FK.PeriodicPlanar
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/CheckTriangularOffCentre.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,10 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.FK.TriangularOffCentre.Part5
-open StatMech.FK
-open StatMech.FK.PeriodicPlanar
 
 #print axioms ocd_comapInducedWiring_le
 #print axioms triangularTransBox_subset_double

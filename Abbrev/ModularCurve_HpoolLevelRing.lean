@@ -1,9 +1,12 @@
-import Mathlib
-import Structure.ModularCurve_X0
-import Abbrev.ModularCurve_IgusaScheme
-import Instance.AlgebraicCurve_TwoChartIntegralModel
-
+module
+public import Mathlib
+public import Structure.ModularCurve_X0
+public import Abbrev.ModularCurve_IgusaScheme
+public import Instance.AlgebraicCurve_TwoChartIntegralModel
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

@@ -1,9 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.RingTheory.PowerSeries.InfiniteProducts2.Part6
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.RingTheory.PowerSeries.InfiniteProducts2.Part6
 open PowerSeries
 open scoped PowerSeries PowerSeries.WithPiTopology
 
+
+public section
 
 section
 -- ac-theorems

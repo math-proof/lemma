@@ -1,11 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/Polynomial/Interlacing.lean -/
-
-import Def.Algebra.Polynomial.Interlacing
-import Theorem.Polynomial.Interlacing
-import Def.MathlibExtTest.Algebra.Polynomial.Interlacing
+module
+public import Def.Algebra.Polynomial.Interlacing
+public import Theorem.Polynomial.Interlacing
+public import Def.MathlibExtTest.Algebra.Polynomial.Interlacing
 open scoped BigOperators ComplexOrder
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/Polynomial/Interlacing.lean -/
 namespace MathlibExtTest.Algebra.Polynomial.Interlacing
 
 noncomputable section

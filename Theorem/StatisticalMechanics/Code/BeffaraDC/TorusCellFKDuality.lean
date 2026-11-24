@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/BeffaraDC/TorusCellFKDuality.lean -/
+module
+public import Def.StatisticalMechanics.Code.BeffaraDC.TorusCellDual.Part6
+public import Def.StatisticalMechanics.Code.BeffaraDC.TorusCellFKDuality
+open SimpleGraph Set
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/BeffaraDC/TorusCellFKDuality.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Def.StatisticalMechanics.Code.BeffaraDC.TorusCellDual.Part6
-import Def.StatisticalMechanics.Code.BeffaraDC.TorusCellFKDuality
-open SimpleGraph Set
-
-
 namespace StatMech.BeffaraDC
 
 open StatMech.Onsager

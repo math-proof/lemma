@@ -1,13 +1,17 @@
+module
+public import Mathlib
+public import Def.Combinatorics.Young.Definitions.Part8
+public import Theorem.PowerSeries.InfiniteProducts2
+public import Theorem.MvPolynomial.SymmetricDefinitions
+open MvPolynomial Finset BigOperators AlgebraicCombinatorics.SymmetricPolynomials
+
+
+public section
+
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.Combinatorics.Young.Definitions.Part8
-import Theorem.PowerSeries.InfiniteProducts2
-import Lemma.MvPolynomial.SymmetricDefinitions
-open MvPolynomial Finset BigOperators AlgebraicCombinatorics.SymmetricPolynomials
-
 /-!
 # The ω-involution on symmetric functions
 
@@ -58,8 +62,6 @@ The ω-involution is essential for proving the second Jacobi-Trudi formula
 
 This file provides the infrastructure for steps 2 and 3.
 -/
-
-
 namespace SymmetricFunctions
 
 /-!

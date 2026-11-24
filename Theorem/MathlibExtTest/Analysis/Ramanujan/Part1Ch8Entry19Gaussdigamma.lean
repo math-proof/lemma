@@ -1,10 +1,11 @@
+module
+public import Def.Analysis.Ramanujan.Part1Ch8Entry19Gaussdigamma
+public import Theorem.Real.Ramanujan.Part1Ch8Entry19Gaussdigamma
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Ramanujan/Part1Ch8Entry19Gaussdigamma.lean -/
-
-
-import Def.Analysis.Ramanujan.Part1Ch8Entry19Gaussdigamma
-import Lemma.Real.Ramanujan.Part1Ch8Entry19Gaussdigamma
-
-
 namespace MathlibExtTest.Analysis.Ramanujan.Part1Ch8Entry19Gaussdigamma
 
 open Filter Topology

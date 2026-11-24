@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Percolation/PcUpper.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Percolation.Theta
+public import Theorem.StatisticalMechanics.Code.Percolation.PcNontrivial.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.PlanarTopology.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanZ2.Part3
+public import Def.StatisticalMechanics.Code.Percolation.PcUpper
+open MeasureTheory Filter Topology Finset SimpleGraph
+open scoped NNReal ENNReal BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Percolation/PcUpper.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Percolation.Theta
-import Theorem.StatisticalMechanics.Code.Percolation.PcNontrivial.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.PlanarTopology.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.JordanZ2.Part3
-import Def.StatisticalMechanics.Code.Percolation.PcUpper
-open MeasureTheory Filter Topology Finset SimpleGraph
-open scoped NNReal ENNReal BigOperators
-
-
 namespace StatMech
 
 namespace Percolation

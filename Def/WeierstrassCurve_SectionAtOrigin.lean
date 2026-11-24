@@ -1,9 +1,12 @@
-import Mathlib
-import Lemma.WeierstrassCurve.ProjModel
-import Def.WeierstrassCurve_DrinfeldBasisGlobal
-import Abbrev.WeierstrassCurve_SectionAtOrigin
-
+module
+public import Mathlib
+public import Lemma.WeierstrassCurve.ProjModel
+public import Def.WeierstrassCurve_DrinfeldBasisGlobal
+public import Abbrev.WeierstrassCurve_SectionAtOrigin
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

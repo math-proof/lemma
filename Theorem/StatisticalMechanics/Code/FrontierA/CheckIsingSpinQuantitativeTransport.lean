@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/CheckIsingSpinQuantitativeTransport.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingSpinQuantitativeTransport
+open StatMech.FrontierA
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/CheckIsingSpinQuantitativeTransport.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,9 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingSpinQuantitativeTransport
-open StatMech.FrontierA
 
 #print axioms SpinConformalTransportEstimate.tendsto_discreteDerivative
 #print axioms SpinConformalTransportEstimate.tendsto_spinDerivativeFactor

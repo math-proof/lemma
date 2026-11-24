@@ -1,8 +1,11 @@
+module
+public import Theorem.NumberTheory.NumberField.RayClass.Modulus.Part5
+public import Theorem.Nat.NumberField.RayClass.Modulus
+public import Def.MathlibExtTest.NumberTheory.NumberField.RayClass.Modulus
+
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/RayClass/Modulus.lean -/
 
-import Theorem.NumberTheory.NumberField.RayClass.Modulus.Part5
-import Lemma.Nat.NumberField.RayClass.Modulus
-import Def.MathlibExtTest.NumberTheory.NumberField.RayClass.Modulus
 @[expose] public noncomputable section
 
 open scoped Classical nonZeroDivisors

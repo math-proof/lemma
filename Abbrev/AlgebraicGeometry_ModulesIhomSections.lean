@@ -1,10 +1,13 @@
-import Mathlib
-import Instance.PresheafOfModules_InternalHom
-import Instance.SheafOfModules_Monoidal
-import Theorem.Scheme.ModulesSectionsTensor
-
+module
+public import Mathlib
+public import Instance.PresheafOfModules_InternalHom
+public import Instance.SheafOfModules_Monoidal
+public import Theorem.Scheme.ModulesSectionsTensor
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
+
+
+public section
 
 universe u v' u'
 

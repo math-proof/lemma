@@ -1,8 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/MergeAtCorrectnessSupport.lean -/
+module
+public import Def.CPythonListsort.Code.Correctness.EntrySnapshotPermutation
+public import Def.CPythonListsort.Code.Correctness.StableMerge
+public import Theorem.List.Atlas.CPythonListsort.Code.Policy.MergeAtPreservation
 
-import Def.CPythonListsort.Code.Correctness.EntrySnapshotPermutation
-import Def.CPythonListsort.Code.Correctness.StableMerge
-import Lemma.List.Atlas.CPythonListsort.Code.Policy.MergeAtPreservation
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/MergeAtCorrectnessSupport.lean -/
 /-!
 # Correctness support for `merge_at`
 
@@ -11,8 +15,6 @@ two adjacent pending runs to the global pending-run and input-snapshot
 invariants.  Evaluator control flow remains in the eventual `merge_at`
 correctness theorem.
 -/
-
-
 namespace CPythonListsort
 
 universe u v

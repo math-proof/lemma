@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicTensorTentMorera.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicTensorTentMorera.Part17
+open Filter Set Topology
+open StatMech.Universality
+open StatMech.Universality.FKIsingCaratheodoryApproximation
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckIsingFermionicTensorTentMorera.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,11 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.Universality.IsingFermionicTensorTentMorera.Part17
-open Filter Set Topology
-open StatMech.Universality
-open StatMech.Universality.FKIsingCaratheodoryApproximation
 
 #print axioms StatMech.Universality.complex_wedgeIntegral_tendsto_of_locallyUniform
 #print axioms StatMech.Universality.VanishingRectangleContourError.contour_tendsto_zero

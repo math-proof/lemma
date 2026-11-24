@@ -1,11 +1,14 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.Analysis.SpecialFunctions.JacobiTripleProduct
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.Analysis.SpecialFunctions.JacobiTripleProduct
 open MathlibExt
 open BigOperators
 open scoped BigOperators
 open MetaMathlibExt.Analysis.SpecialFunctions.JacobiTripleProduct
 
+
+public section
 
 namespace MetaMathlibExt.Analysis.SpecialFunctions.JacobiTripleProduct
 

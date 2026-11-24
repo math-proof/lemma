@@ -1,7 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/PowerSortCostRegression.lean -/
+module
+public import Theorem.CPythonListsort.Code.Assembly.ListSortMergePolicy
+public import Structure.CPythonListsort.Code.Assembly.PowerSortPolicyCost.Part2
 
-import Theorem.CPythonListsort.Code.Assembly.ListSortMergePolicy
-import Structure.CPythonListsort.Code.Assembly.PowerSortPolicyCost.Part2
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/PowerSortCostRegression.lean -/
 /-!
 # Executable regression for the PowerSort cost bridge
 
@@ -14,8 +18,6 @@ cost, rather than identified with Algorithm 2's canonical tree.
 The witness is never consumed by another Lean declaration.  Its compiler-side
 evaluation trust boundary is listed in the project-wide ledger.
 -/
-
-
 namespace CPythonListsort
 
 def costRegressionBlock (length : Nat) :

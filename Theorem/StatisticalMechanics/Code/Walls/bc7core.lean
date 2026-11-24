@@ -1,5 +1,22 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/bc7core.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Walls.bc6core.Part3
+public import Theorem.StatisticalMechanics.Code.Walls.bc7offboxedgeagree
+public import Theorem.StatisticalMechanics.Code.Walls.bc7crossaxisunique
+public import Theorem.StatisticalMechanics.Code.Walls.bc7rayPtoffboxneighbor
+public import Theorem.StatisticalMechanics.Code.Walls.bc7nocrossing
+public import Theorem.StatisticalMechanics.Code.Walls.bc7offboxsubsetcluster
+public import Theorem.StatisticalMechanics.Code.Walls.bc7offboxclusterbasics.Part2
+public import Theorem.StatisticalMechanics.Code.Walls.bc7distinctwitnessclusters.Part2
+public import Def.StatisticalMechanics.Code.Walls.bc7core
+open Set
+open StatMech.Lattice StatMech.ConfigSpace
+open StatMech.Percolation StatMech.Percolation.DisjointPaths
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/bc7core.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,23 +24,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Walls.bc6core.Part3
-import Theorem.StatisticalMechanics.Code.Walls.bc7offboxedgeagree
-import Theorem.StatisticalMechanics.Code.Walls.bc7crossaxisunique
-import Theorem.StatisticalMechanics.Code.Walls.bc7rayPtoffboxneighbor
-import Theorem.StatisticalMechanics.Code.Walls.bc7nocrossing
-import Theorem.StatisticalMechanics.Code.Walls.bc7offboxsubsetcluster
-import Theorem.StatisticalMechanics.Code.Walls.bc7offboxclusterbasics.Part2
-import Theorem.StatisticalMechanics.Code.Walls.bc7distinctwitnessclusters.Part2
-import Def.StatisticalMechanics.Code.Walls.bc7core
-open Set
-open StatMech.Lattice StatMech.ConfigSpace
-open StatMech.Percolation StatMech.Percolation.DisjointPaths
-
-
 namespace StatMech
 
 namespace Walls

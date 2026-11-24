@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/InfinitesimalEquivalenceCore.lean -/
+module
+public import Def.v1.Atlas.LieGroups.code.GKModule.Part2
+public import Def.v1.Atlas.LieGroups.code.GKModuleDefs.Part2
+public import Structure.v1.Atlas.LieGroups.code.HarishChandraFunctor
+public import Theorem.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
+public import Def.v1.Atlas.LieGroups.code.Admissible.Part3
+public import Mathlib.Analysis.InnerProductSpace.Completion
+public import Mathlib.Analysis.Normed.Module.Completion
+public import Structure.v1.Atlas.LieGroups.code.InfinitesimalEquivalenceCore
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/InfinitesimalEquivalenceCore.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.LieGroups.code.GKModule.Part2
-import Def.v1.Atlas.LieGroups.code.GKModuleDefs.Part2
-import Structure.v1.Atlas.LieGroups.code.HarishChandraFunctor
-import Theorem.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
-import Def.v1.Atlas.LieGroups.code.Admissible.Part3
-import Mathlib.Analysis.InnerProductSpace.Completion
-import Mathlib.Analysis.Normed.Module.Completion
-import Structure.v1.Atlas.LieGroups.code.InfinitesimalEquivalenceCore
-
-
 noncomputable section
 
 def InfinitesimallyEquivalent

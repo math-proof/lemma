@@ -1,11 +1,12 @@
+module
+public import Theorem.Combinatorics.Enumerative.Nontrivial1234_3412Classes.Part21
+public import Theorem.Finset.Enumerative.Nontrivial1234_3412Classes
+public import Mathlib.Tactic.NormNum
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/Nontrivial1234_3412Classes.lean -/
-
-
-import Theorem.Combinatorics.Enumerative.Nontrivial1234_3412Classes.Part21
-import Lemma.Finset.Enumerative.Nontrivial1234_3412Classes
-import Mathlib.Tactic.NormNum
-
-
 namespace MetaMathlibExt
 
 -- The closed formula gives 51 nontrivial classes in `S₇`.

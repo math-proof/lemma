@@ -1,6 +1,6 @@
 import Mathlib
 import Instance.ExtEndgame_ProductionDatum
-import Lemma.WeierstrassCurve.FrobeniusTrace
+import Theorem.WeierstrassCurve.FrobeniusTrace
 import Abbrev.ExtCitation_InertiaKummerCharacter
 
 set_option autoImplicit false

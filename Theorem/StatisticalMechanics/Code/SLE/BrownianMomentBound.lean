@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/SLE/BrownianMomentBound.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.SLE.BrownianFiniteDimensional.Part4
+public import Mathlib.Probability.Moments.MGFAnalytic
+public import Mathlib.Probability.Process.Kolmogorov
+open MeasureTheory ProbabilityTheory
+open scoped NNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/SLE/BrownianMomentBound.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.SLE.BrownianFiniteDimensional.Part4
-import Mathlib.Probability.Moments.MGFAnalytic
-import Mathlib.Probability.Process.Kolmogorov
-open MeasureTheory ProbabilityTheory
-open scoped NNReal
-
-
 namespace StatMech.SLE
 
 theorem integral_pow_four_gaussianReal (v : NNReal) :

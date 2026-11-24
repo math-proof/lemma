@@ -1,11 +1,12 @@
+module
+public import Mathlib.Combinatorics.SimpleGraph.Hasse
+public import Theorem.Combinatorics.SimpleGraph.Square
+public import Theorem.SimpleGraph.Square
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/Square.lean -/
-
-
-import Mathlib.Combinatorics.SimpleGraph.Hasse
-import Theorem.Combinatorics.SimpleGraph.Square
-import Lemma.SimpleGraph.Square
-
-
 namespace MathlibExtTest.Combinatorics.SimpleGraph.Square
 
 example : (SimpleGraph.pathGraph 3).square.Adj 0 2 :=

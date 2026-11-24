@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.NumberField_AdelicFourier
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open NumberField NumberField.mixedEmbedding
 open scoped SchwartzMap Classical

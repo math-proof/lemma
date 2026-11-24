@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/BNPair/Parabolics.lean -/
+module
+public import Def.v1.Atlas.Buildings.code.BNPair.BruhatPropertiesInstance
+set_option linter.unusedSectionVars false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/BNPair/Parabolics.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,10 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.Buildings.code.BNPair.BruhatPropertiesInstance
-set_option linter.unusedSectionVars false
-
 variable {G : Type*} [Group G] {B_idx : Type*} [DecidableEq B_idx] [Fintype B_idx]
   {M : CoxeterMatrix B_idx}
 

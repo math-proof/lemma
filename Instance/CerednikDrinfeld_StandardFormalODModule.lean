@@ -1,11 +1,16 @@
+module
+public import Mathlib
+public import Instance.MvFormalGroup_NegV2
+public import Theorem.MvPowerSeries.SpecialFormalModule
+public import Instance.CerednikDrinfeld_LubinTateModule
+public import Theorem.MvPowerSeries.StandardFormalODModule
+public import Notation.CerednikDrinfeld_StandardFormalODModule
+public import Def.CerednikDrinfeld_StandardFormalODModule
+
+
+public section
+
 -- Carved from Lemma/Definitions/Def_CerednikDrinfeld_StandardFormalODModule.lean: instance decls only.
-import Mathlib
-import Instance.MvFormalGroup_NegV2
-import Theorem.MvPowerSeries.SpecialFormalModule
-import Instance.CerednikDrinfeld_LubinTateModule
-import Theorem.MvPowerSeries.StandardFormalODModule
-import Notation.CerednikDrinfeld_StandardFormalODModule
-import Def.CerednikDrinfeld_StandardFormalODModule
 
 section BoxBasisLemmaAppendix
 

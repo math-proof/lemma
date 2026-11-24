@@ -1,8 +1,11 @@
-import Mathlib
-import Def.AlgebraicGeometry_RiemannForm
-import Instance.AlgebraicGeometry_ThetaGroup
-
+module
+public import Mathlib
+public import Def.AlgebraicGeometry_RiemannForm
+public import Instance.AlgebraicGeometry_ThetaGroup
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

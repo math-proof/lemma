@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/PlusBoundarySourceSpin.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierB.BoundarySourceSpin
+public import Theorem.StatisticalMechanics.Code.FrontierB.PlusPairSourceBoxCurrent.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierB.PlusBoxCurrentParity.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierB.FreeBoxEvenLimit.Part6
+public import Theorem.StatisticalMechanics.Code.FrontierB.PairSourceCurrentLimit.Part4
+open MeasureTheory Filter
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/PlusBoundarySourceSpin.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierB.BoundarySourceSpin
-import Theorem.StatisticalMechanics.Code.FrontierB.PlusPairSourceBoxCurrent.Part2
-import Theorem.StatisticalMechanics.Code.FrontierB.PlusBoxCurrentParity.Part3
-import Theorem.StatisticalMechanics.Code.FrontierB.FreeBoxEvenLimit.Part6
-import Theorem.StatisticalMechanics.Code.FrontierB.PairSourceCurrentLimit.Part4
-open MeasureTheory Filter
-
-
 namespace StatMech.FrontierB
 
 open Sharpness Ising Lattice

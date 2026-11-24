@@ -1,8 +1,11 @@
-import Mathlib
-import Lemma.Fin.RothMvL1_Sum.le.Sum_RothMvL1
+module
+public import Mathlib
+public import Lemma.Fin.RothMvL1_Sum.le.Sum_RothMvL1
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [rothMvL1_hasse_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

@@ -1,9 +1,12 @@
-import Mathlib
-import Theorem.Scheme.NeronModelPropertyBundleCarrier
-import Instance.AlgebraicGeometry_RelativePicardFunctor
-import Lemma.Scheme.RelPicardPullback
-
+module
+public import Mathlib
+public import Theorem.Scheme.NeronModelPropertyBundleCarrier
+public import Instance.AlgebraicGeometry_RelativePicardFunctor
+public import Lemma.Scheme.RelPicardPullback
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

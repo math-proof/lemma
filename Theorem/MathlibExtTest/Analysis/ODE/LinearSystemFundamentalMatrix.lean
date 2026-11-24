@@ -1,19 +1,20 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/ODE/LinearSystemFundamentalMatrix.lean -/
-
-
-import Mathlib.Analysis.Calculus.Deriv.Pow
-import Mathlib.Analysis.Calculus.Deriv.Prod
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
-import Mathlib.LinearAlgebra.Matrix.Nondegenerate
-import Def.Analysis.ODE.LinearSystemFundamentalMatrix.Part3
-import Lemma.Real.ODE.LinearSystemFundamentalMatrix
+module
+public import Mathlib.Analysis.Calculus.Deriv.Pow
+public import Mathlib.Analysis.Calculus.Deriv.Prod
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+public import Mathlib.LinearAlgebra.Matrix.Nondegenerate
+public import Def.Analysis.ODE.LinearSystemFundamentalMatrix.Part3
+public import Theorem.Real.ODE.LinearSystemFundamentalMatrix
 open MeasureTheory
-
 open MathlibExt.Analysis.ODE.LinearSystemFundamentalMatrixWanted
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/ODE/LinearSystemFundamentalMatrix.lean -/
 -- The global scalar solver identifies exp(t²/2) as the unique solution of x' = t x.
+
 example (x : ℝ → ℝ) (hx0 : x 0 = 1)
     (hx : ∀ t, HasDerivAt x (t * x t) t) :
     x = fun t ↦ Real.exp (t ^ 2 / 2) := by

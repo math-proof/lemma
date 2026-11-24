@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Probability/PBiasedIntegralHC.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Probability.PBiasedTwoPoint.Part3
+public import Def.StatisticalMechanics.Code.Probability.PBiasedIntegralHC.Part2
+open Real Set
+set_option linter.style.longLine false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Probability/PBiasedIntegralHC.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Probability.PBiasedTwoPoint.Part3
-import Def.StatisticalMechanics.Code.Probability.PBiasedIntegralHC.Part2
-open Real Set
-
-set_option linter.style.longLine false
-
-
 namespace StatMech.Probability
 
 theorem pih_bernoulli {p q z : ℝ} (hp0 : 0 < p) (hp1 : p < 1) (hq1 : 1 ≤ q) (hq2 : q ≤ 2)

@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.UpperHalfPlane.CosetGraphAtPrime
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open scoped TensorProduct Quaternion
 open IsDedekindDomain NumberField QuaternionAlgebra CerednikDrinfeld UpperHalfPlane

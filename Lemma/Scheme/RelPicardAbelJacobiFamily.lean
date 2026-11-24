@@ -2,7 +2,7 @@ import Mathlib
 import Def.AlgebraicGeometry_RelativePicardFunctor
 import Def.AlgebraicGeometry_RelPicardAlgEquivZeroCut
 import Abbrev.AlgebraicGeometry_IdealSheafModule
-import Lemma.Scheme.RelEffCartierDivOfPoint
+import Theorem.Scheme.RelEffCartierDivOfPoint
 import Def.AlgebraicCurve_RelCartier
 import Instance.SheafOfModules_Monoidal
 import Instance.AlgebraicGeometry_ModulesPullbackMonoidal

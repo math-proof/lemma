@@ -1,11 +1,12 @@
+module
+public import Def.Combinatorics.Enumerative.RHorseNumberFubini.Part4
+public import Theorem.Finset.Enumerative.RHorseNumberFubini
+public import Mathlib.Tactic.NormNum
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/RHorseNumberFubini.lean -/
-
-
-import Def.Combinatorics.Enumerative.RHorseNumberFubini.Part4
-import Lemma.Finset.Enumerative.RHorseNumberFubini
-import Mathlib.Tactic.NormNum
-
-
 namespace MetaMathlibExt
 
 -- For two points, strict increase leaves only the identity surjection onto `Fin 2`.

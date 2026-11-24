@@ -1,6 +1,9 @@
-import Mathlib
-import Abbrev.Analysis.Section_6_3
+module
+public import Mathlib
+public import Abbrev.Analysis.Section_6_3
 
+
+public section
 
 /-!
 # Analysis I, Section 6.4: Limsup, liminf, and limit points
@@ -19,7 +22,6 @@ Main constructions and results of this section:
 - Completeness of the reals
 
 -/
-
 abbrev Real.Adherent (ε:ℝ) (a:Chapter6.Sequence) (x:ℝ) := ∃ n ≥ a.m, ε.Close (a n) x
 
 abbrev Real.ContinuallyAdherent (ε:ℝ) (a:Chapter6.Sequence) (x:ℝ) :=

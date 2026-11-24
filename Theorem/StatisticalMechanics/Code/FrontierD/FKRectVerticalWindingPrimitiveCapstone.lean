@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectVerticalWindingPrimitiveCapstone.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBlackOrbitRibbonPrimitive
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryIncidenceConnected.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectVerticalWindingUnitInjection.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectVerticalWindingPrimitiveCapstone.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBlackOrbitRibbonPrimitive
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryIncidenceConnected.Part2
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectVerticalWindingUnitInjection.Part2
-
-
 namespace StatMech.FrontierD
 
 theorem rankOnePositiveBoundaryCutFiberBound_of_card_nonzero_le_two_unconditional

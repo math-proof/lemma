@@ -1,12 +1,15 @@
-import Lemma.Random.Any_And.of.In.IsOpen
-import Lemma.Random.Any_And_Any_And_InToRealMapMeasureAndAll_LtToNNRealIntegral_ENNReal.of.Gt_0
-import Lemma.Random.IsProbabilityMeasure.of.Gt_0
-import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
-import Mathlib.Topology.MetricSpace.Polish
-import Initialize.Tactic.Attr.Basic
+module
+public import Lemma.Random.Any_And.of.In.IsOpen
+public import Lemma.Random.Any_And_Any_And_InToRealMapMeasureAndAll_LtToNNRealIntegral_ENNReal.of.Gt_0
+public import Lemma.Random.IsProbabilityMeasure.of.Gt_0
+public import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+public import Mathlib.Topology.MetricSpace.Polish
+public import Initialize.Tactic.Attr.Basic
 open Classical MeasureTheory Random
 open scoped ENNReal
 
+
+public section
 
 universe u
 

@@ -1,12 +1,13 @@
+module
+public import Mathlib.Tactic
+public import Def.Combinatorics.InfiniteWord.PureMorphicWord
+public import Theorem.Finset.InfiniteWord.PureMorphicWord
+public import Def.MathlibExtTest.Combinatorics.InfiniteWord.PureMorphicWord.Part2
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/InfiniteWord/PureMorphicWord.lean -/
-
-
-import Mathlib.Tactic
-import Def.Combinatorics.InfiniteWord.PureMorphicWord
-import Theorem.Finset.InfiniteWord.PureMorphicWord
-import Def.MathlibExtTest.Combinatorics.InfiniteWord.PureMorphicWord.Part2
-
-
 namespace MetaMathlibExt
 
 /-- Concrete witness exercising both prolongability and omega-limit clauses. -/

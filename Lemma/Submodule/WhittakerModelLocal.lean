@@ -1,4 +1,4 @@
-import Lemma.Measure.WhittakerCoefficient
+import Theorem.Measure.WhittakerCoefficient
 import Lemma.Matrix.SiegelVolume
 import Def.AutomorphicForm_WhittakerModelLocal
 

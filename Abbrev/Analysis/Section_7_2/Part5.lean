@@ -1,6 +1,11 @@
-import Mathlib
-import Mathlib.Algebra.Field.Power
-import Theorem.Analysis.Section_7_2.Part7
+module
+public import Mathlib
+public import Mathlib.Algebra.Field.Power
+public import Theorem.Analysis.Section_7_2.Part7
+
+
+public section
+
 /-!
 # Analysis I, Section 7.2: Infinite series
 
@@ -16,8 +21,6 @@ Main constructions and results of this section:
 - Absolute convergence; basic series laws.
 
 -/
-
-
 namespace Chapter7
 
 open BigOperators

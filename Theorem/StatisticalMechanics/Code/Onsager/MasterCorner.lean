@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/MasterCorner.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.LeftCornerN
+public import Theorem.StatisticalMechanics.Code.Onsager.LeftCornerE
+public import Theorem.StatisticalMechanics.Code.Onsager.LeftCornerW
+public import Theorem.StatisticalMechanics.Code.Onsager.LeftCornerS
+public import Theorem.StatisticalMechanics.Code.Onsager.StraightCorner
+public import Theorem.StatisticalMechanics.Code.Onsager.WalkCornerSum
+public import Theorem.StatisticalMechanics.Code.Onsager.CellGaussBonnetGlobal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/MasterCorner.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.LeftCornerN
-import Theorem.StatisticalMechanics.Code.Onsager.LeftCornerE
-import Theorem.StatisticalMechanics.Code.Onsager.LeftCornerW
-import Theorem.StatisticalMechanics.Code.Onsager.LeftCornerS
-import Theorem.StatisticalMechanics.Code.Onsager.StraightCorner
-import Theorem.StatisticalMechanics.Code.Onsager.WalkCornerSum
-import Theorem.StatisticalMechanics.Code.Onsager.CellGaussBonnetGlobal
-
-
 namespace StatMech.Onsager.MasterCorner
 
 open Finset StatMech.Onsager.BaseCase StatMech.Onsager.NoDoubleWind StatMech.Onsager.WalkCrossing

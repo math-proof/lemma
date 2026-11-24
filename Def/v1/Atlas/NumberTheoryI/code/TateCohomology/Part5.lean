@@ -1,5 +1,19 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/TateCohomology.lean -/
+module
+public import Mathlib.RepresentationTheory.Homological.GroupCohomology.LongExactSequence
+public import Mathlib.RepresentationTheory.Homological.GroupCohomology.Shapiro
+public import Mathlib.RepresentationTheory.Invariants
+public import Mathlib.Data.ZMod.QuotientRing
+public import Mathlib.LinearAlgebra.Quotient.Pi
+public import Mathlib.Algebra.Category.ModuleCat.Basic
+public import Mathlib.LinearAlgebra.DirectSum.Finsupp
+public import Def.v1.Atlas.NumberTheoryI.code.Cor2328
+public import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Cor2328
+public import Theorem.v1.Atlas.NumberTheoryI.code.TateCohomology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/TateCohomology.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +21,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib.RepresentationTheory.Homological.GroupCohomology.LongExactSequence
-import Mathlib.RepresentationTheory.Homological.GroupCohomology.Shapiro
-import Mathlib.RepresentationTheory.Invariants
-import Mathlib.Data.ZMod.QuotientRing
-import Mathlib.LinearAlgebra.Quotient.Pi
-import Mathlib.Algebra.Category.ModuleCat.Basic
-import Mathlib.LinearAlgebra.DirectSum.Finsupp
-import Def.v1.Atlas.NumberTheoryI.code.Cor2328
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Cor2328
-import Theorem.v1.Atlas.NumberTheoryI.code.TateCohomology
-
-
 noncomputable section
 
 universe u

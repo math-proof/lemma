@@ -1,11 +1,15 @@
--- Carved from Lemma/Definitions/Def_GaloisRep_InertiaRing.lean: instance decls only.
-import Mathlib
-import Def.GaloisRep_Flat
-import Def.FLTPrelim_Ramification
-import Theorem.AlgHom.InertiaRing
-import Def.AlgHom_InertiaRing
-
+module
+public import Mathlib
+public import Def.GaloisRep_Flat
+public import Def.FLTPrelim_Ramification
+public import Theorem.AlgHom.InertiaRing
+public import Def.AlgHom_InertiaRing
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_GaloisRep_InertiaRing.lean: instance decls only.
 
 noncomputable section
 

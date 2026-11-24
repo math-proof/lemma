@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKQgt4NearFourParameterAsymptotic.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4CorrelationReduction
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDualGapAsymptotic.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexGapEtaModular
+public import Mathlib.Analysis.Calculus.Taylor
+open Filter Topology Asymptotics
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKQgt4NearFourParameterAsymptotic.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4CorrelationReduction
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexDualGapAsymptotic.Part2
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexGapEtaModular
-import Mathlib.Analysis.Calculus.Taylor
-open Filter Topology Asymptotics
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

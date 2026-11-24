@@ -1,7 +1,10 @@
-import Def.AlgebraicGeometry_PolarisedAbelianScheme
-import Abbrev.SheafOfModules_MonoidalV2
-
+module
+public import Def.AlgebraicGeometry_PolarisedAbelianScheme
+public import Abbrev.SheafOfModules_MonoidalV2
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

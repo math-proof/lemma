@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Inequalities/Harris.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Foundations.ProductMeasure.Part2
+public import Theorem.StatisticalMechanics.Code.Inequalities.FKG
+open scoped NNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Inequalities/Harris.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Foundations.ProductMeasure.Part2
-import Theorem.StatisticalMechanics.Code.Inequalities.FKG
-open scoped NNReal
-
-
 namespace StatMech
 
 open bernoulliProductMeasure

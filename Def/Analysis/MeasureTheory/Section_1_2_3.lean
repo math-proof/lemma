@@ -1,5 +1,9 @@
-import Abbrev.Analysis.MeasureTheory.Section_1_2_2.Part3
+module
+public import Abbrev.Analysis.MeasureTheory.Section_1_2_2.Part3
 open scoped Pointwise
+
+
+public section
 
 /-!
 # Introduction to Measure Theory, Section 1.2.3: Non-measurable sets
@@ -7,15 +11,12 @@ open scoped Pointwise
 A companion to (the introduction to) Section 1.2.3 of the book "An introduction to Measure Theory".
 
 -/
-
-
 /-! ## Vitali Set Construction
 
 We construct a Vitali set by choosing representatives from each coset of ℝ/ℚ
 that intersects \[0,1\]. The key is that ℚ acts on ℝ by translation, and this
 partitions ℝ into countably many disjoint translates of any transversal.
 -/
-
 /-- The additive subgroup of ℚ in ℝ -/
 def Rat.addSubgroup : AddSubgroup ℝ where
   carrier := Set.range ((↑) : ℚ → ℝ)

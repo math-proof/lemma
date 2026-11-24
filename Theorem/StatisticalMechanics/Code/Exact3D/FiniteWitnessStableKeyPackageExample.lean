@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Exact3D/FiniteWitnessStableKeyPackageExample.lean -/
+module
+public import Def.StatisticalMechanics.Code.Exact3D.FiniteWitnessStableKeyPackage
+public import Theorem.StatisticalMechanics.Code.Exact3D.FiniteWitnessPackageExample.Part6
+public import Def.StatisticalMechanics.Code.Exact3D.StableKeyTailBridgeExample.Part3
+public import Def.StatisticalMechanics.Code.Exact3D.FiniteWitnessStableKeyPackageExample
+open scoped BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Exact3D/FiniteWitnessStableKeyPackageExample.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.StatisticalMechanics.Code.Exact3D.FiniteWitnessStableKeyPackage
-import Theorem.StatisticalMechanics.Code.Exact3D.FiniteWitnessPackageExample.Part6
-import Def.StatisticalMechanics.Code.Exact3D.StableKeyTailBridgeExample.Part3
-import Def.StatisticalMechanics.Code.Exact3D.FiniteWitnessStableKeyPackageExample
-open scoped BigOperators
-
-
 namespace StatMech
 
 namespace Exact3D

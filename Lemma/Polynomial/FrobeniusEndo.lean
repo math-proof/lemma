@@ -1,8 +1,11 @@
-import Lemma.Scheme.Correspondence
-import Mathlib.Algebra.CharP.Reduced
-import Structure.AlgebraicCurve_FrobeniusEndo
-
+module
+public import Lemma.Scheme.Correspondence
+public import Mathlib.Algebra.CharP.Reduced
+public import Structure.AlgebraicCurve_FrobeniusEndo
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

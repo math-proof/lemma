@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.MvPowerSeries.TateSlots
 import Lemma.LaurentSeries.KatzLevelPCusps
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open HahnSeries
 open ModularCurve LaurentSeries MvPowerSeries

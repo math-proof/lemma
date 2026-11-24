@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/LeeYangPressureIdentification.lean -/
+module
+public import Mathlib.Analysis.Calculus.UniformLimitsDeriv
+public import Mathlib.Analysis.Complex.RealDeriv
+public import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangPressurePrimitive.Part2
+open Complex Filter Set Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/LeeYangPressureIdentification.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib.Analysis.Calculus.UniformLimitsDeriv
-import Mathlib.Analysis.Complex.RealDeriv
-import Theorem.StatisticalMechanics.Code.FrontierA.LeeYangPressurePrimitive.Part2
-open Complex Filter Set Topology
-
-
 namespace StatMech.FrontierA
 
 open StatMech.FK

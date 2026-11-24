@@ -1,9 +1,12 @@
-import Mathlib
-import Def.AlgebraicCurve_RegularDifferentials
-import Lemma.Scheme.CanonicalDivisorUniformizer
-import Lemma.ResidueField.GluedPic0
-
+module
+public import Mathlib
+public import Def.AlgebraicCurve_RegularDifferentials
+public import Lemma.Scheme.CanonicalDivisorUniformizer
+public import Lemma.ResidueField.GluedPic0
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

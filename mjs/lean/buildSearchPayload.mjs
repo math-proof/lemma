@@ -2,13 +2,15 @@
  * Port of php/search.php: MySQL (type / like / regex) + filesystem full-text under Lemma/.
  * `?lean=<expression>` (or the search box's Lean checkbox) is an exact
  * subtree-match over lemma conclusions: shortlist via axiom.inverted, then
- * match stored axiom.lemma.meta.fingerprint trees (mjs/leanInvertedIndex.mjs).
+ * match stored axiom.fingerprint trees (mjs/leanInvertedIndex.mjs).
  * When the exact query has no hit, expanded queries (`∑`/`∏` binder forms,
  * `x²` <-> `x ^ 2`, …) are tried and returned separately as `similar`.
  */
 import { getMysqlPool } from './fetchLemmaMysql.mjs';
 import { searchLemmaFullText } from './lemmaFullTextSearch.mjs';
 import { moduleToLeanPath, fileExists } from './modulePath.mjs';
+import { conclusionNodeOf } from '../lemmaPath.mjs';
+import { matchAt } from '../leanSubtreeMatch.mjs';
 
 /** `lean` values that mean "the checkbox is on"; the expression is in `q`. */
 const LEAN_OPTION_FLAGS = new Set(['on', 'true', '1', '']);
@@ -22,6 +24,123 @@ function moduleFileExists(module) {
 /** @param {unknown} o @param {string} k */
 function hasKey(o, k) {
   return o != null && typeof o === 'object' && Object.prototype.hasOwnProperty.call(o, k);
+}
+
+/** Search-JSON for one AST node, numbered from a fresh context. */
+function nodeSearchJson(node) {
+  try {
+    return node.toJSON({ leaves: new Map(), binders: [] });
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Remove every `\colorbox{color}{…}` background while keeping its content and
+ * any foreground color. The parser marks given variables this way for the lemma
+ * page; the search result should only show the hit highlight as background.
+ */
+function stripColorbox(latex) {
+  const markers = ["\\colorbox{"];
+  let out = "";
+  let i = 0;
+  while (i < latex.length) {
+    let start = -1;
+    let marker = "";
+    for (const candidate of markers) {
+      const at = latex.indexOf(candidate, i);
+      if (at >= 0 && (start < 0 || at < start)) {
+        start = at;
+        marker = candidate;
+      }
+    }
+    if (start < 0) {
+      out += latex.slice(i);
+      break;
+    }
+    out += latex.slice(i, start);
+    let k = start + marker.length;
+    let depth = 1;
+    while (k < latex.length && depth > 0) {
+      if (latex[k] === "{") depth++;
+      else if (latex[k] === "}") depth--;
+      k++;
+    }
+    let brace = k;
+    while (brace < latex.length && /\s/.test(latex[brace])) brace++;
+    if (latex[brace] !== "{") {
+      out += latex.slice(start, k);
+      i = k;
+      continue;
+    }
+    const contentStart = brace + 1;
+    depth = 1;
+    k = contentStart;
+    while (k < latex.length && depth > 0) {
+      if (latex[k] === "{") depth++;
+      else if (latex[k] === "}") depth--;
+      k++;
+    }
+    out += stripColorbox(latex.slice(contentStart, k - 1));
+    i = k;
+  }
+  return out;
+}
+
+/** LaTeX of one node with the given-variable background and text-mode `$` removed. */
+function nodeLatex(node) {
+  try {
+    // `$…$` marks Lean text mode, which KaTeX rejects inside math mode.
+    return stripColorbox(String(node.toLatex({}) ?? "")).replace(/\$/g, "");
+  } catch {
+    return "";
+  }
+}
+
+/**
+ * Root-most AST node whose search-JSON matches the query AND whose own LaTeX is
+ * a literal substring of `whole`. Wrapper nodes such as `LeanParenthesis` can
+ * match structurally but render with extra delimiters, so they are skipped.
+ * @returns {{ sub: string } | null}
+ */
+function findMatchedLatex(node, queryJson, whole) {
+  if (node == null || typeof node !== 'object' || queryJson == null) return null;
+  const json = nodeSearchJson(node);
+  if (json != null && matchAt(queryJson, json)) {
+    const sub = nodeLatex(node);
+    if (sub && whole.includes(sub)) return { sub };
+  }
+  for (const child of node.args ?? []) {
+    const matched = findMatchedLatex(child, queryJson, whole);
+    if (matched) return matched;
+  }
+  return null;
+}
+
+/**
+ * Conclusion LaTeX for one hit, with the matched sub-structure wrapped in
+ * `\htmlClass{lean-hit}{…}` when the query matches a proper child. Returns
+ * `{ latex: null }` when the module has no readable source.
+ */
+function latexForModule(module, queryJson) {
+  const abs = moduleToLeanPath(module);
+  if (abs == null || !fileExists(abs)) return { latex: null };
+  try {
+    const node = conclusionNodeOf(abs);
+    const whole = nodeLatex(node);
+    if (!whole) return { latex: null };
+    const matched = findMatchedLatex(node, queryJson, whole);
+    if (matched != null) {
+      const { sub } = matched;
+      return {
+        latex: whole.replace(sub, () => `\\htmlClass{lean-hit}{${sub}}`),
+        highlighted: true,
+      };
+    }
+    return { latex: whole, highlighted: false };
+  } catch {
+    return { latex: null };
+  }
 }
 
 /**
@@ -140,6 +259,13 @@ export async function buildSearchPayload(rawDict, projectUser) {
   const qForVue =
     dict.q !== undefined && dict.q !== null && String(dict.q) !== '' ? String(dict.q) : null;
 
+  const SECTION_NAMES = new Set(['given', 'imply', 'proof']);
+  const requestedSections = String(dict.section ?? '')
+    .split(',')
+    .map((name) => name.trim())
+    .filter((name) => SECTION_NAMES.has(name));
+  const sections = requestedSections.length ? requestedSections : ['imply'];
+
   const caseSensitive = hasKey(dict, 'caseSensitive');
   const wholeWord = hasKey(dict, 'wholeWord');
   const regularExpression = hasKey(dict, 'regularExpression');
@@ -167,9 +293,11 @@ export async function buildSearchPayload(rawDict, projectUser) {
     try {
       const { searchLeanSimilar } = await import('../leanInvertedIndex.mjs');
       const pool = getMysqlPool();
-      const result = await searchLeanSimilar(lean, { limit, pool });
-      exact = result.exact.map((hit) => ({ ...hit, match: 'exact' }));
-      similar = result.similar;
+      const result = await searchLeanSimilar(lean, { limit, pool, sections });
+      const queryJson = result.query?.json ?? null;
+      const enrich = (hit) => ({ ...hit, ...latexForModule(hit.module, queryJson) });
+      exact = result.exact.map((hit) => enrich({ ...hit, match: 'exact' }));
+      similar = result.similar.map((hit) => enrich({ ...hit, match: 'similar' }));
       data = exact.length > 0 ? exact : similar;
     } catch (e) {
       console.warn('[lean-search]', e.message);
@@ -243,6 +371,7 @@ export async function buildSearchPayload(rawDict, projectUser) {
     caseSensitive,
     fullText: !!fullText,
     lean,
+    section: sections.join(','),
     replacement,
     limit,
     exact,

@@ -1,13 +1,15 @@
-import Mathlib
-import Instance.HopfAlgebra_CartierDual
-import Structure.HopfAlgebra_CartierDual
-
+module
+public import Mathlib
+public import Instance.HopfAlgebra_CartierDual
+public import Structure.HopfAlgebra_CartierDual
 set_option autoImplicit false
 set_option maxHeartbeats 1600000
 set_option synthInstance.maxHeartbeats 400000
-
 open Coalgebra
 open scoped TensorProduct
+
+
+public section
 
 universe u v
 

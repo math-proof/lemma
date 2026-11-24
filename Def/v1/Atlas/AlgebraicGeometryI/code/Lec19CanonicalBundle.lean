@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/Lec19CanonicalBundle.lean -/
+module
+public import Mathlib.RingTheory.Kaehler.Polynomial
+public import Mathlib.LinearAlgebra.ExteriorPower.Basis
+public import Def.v1.Atlas.AlgebraicGeometryI.code.PicardProjective.Part7
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PicardProjective
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/Lec19CanonicalBundle.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib.RingTheory.Kaehler.Polynomial
-import Mathlib.LinearAlgebra.ExteriorPower.Basis
-import Def.v1.Atlas.AlgebraicGeometryI.code.PicardProjective.Part7
-import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.PicardProjective
-
-
 noncomputable section
 
 open KaehlerDifferential Module PicardProjective

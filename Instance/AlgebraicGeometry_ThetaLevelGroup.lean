@@ -1,9 +1,13 @@
--- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ThetaLevelGroup.lean: instance decls only.
-import Mathlib
-import Theorem.Matrix.ThetaLevelGroup
-import Def.AlgebraicGeometry_ThetaLevelGroup
-
+module
+public import Mathlib
+public import Theorem.Matrix.ThetaLevelGroup
+public import Def.AlgebraicGeometry_ThetaLevelGroup
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ThetaLevelGroup.lean: instance decls only.
 
 noncomputable section
 

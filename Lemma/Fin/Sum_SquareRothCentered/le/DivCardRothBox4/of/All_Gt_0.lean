@@ -1,8 +1,11 @@
-import Mathlib
-import Lemma.Fin.SquareRothCentered.le.Div1'4.of.RothBox.All_Gt_0
+module
+public import Mathlib
+public import Lemma.Fin.SquareRothCentered.le.Div1'4.of.RothBox.All_Gt_0
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [rothCentered_sq_sum_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

@@ -1,6 +1,10 @@
-import Mathlib
-import Instance.PresheafOfModules_InternalHom
-import Instance.SheafOfModules_Monoidal
+module
+public import Mathlib
+public import Instance.PresheafOfModules_InternalHom
+public import Instance.SheafOfModules_Monoidal
+
+
+public section
 
 section InlinedTheorems
 

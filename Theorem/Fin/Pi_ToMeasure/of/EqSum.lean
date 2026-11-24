@@ -410,7 +410,7 @@ with the multinomial probability. This is the finite-alphabet input to Sanov's t
 the law of the empirical measure on a single type is `n! / ∏ (c a)! · ∏ μ(a)^{c a}`.
 -/
 @[path]
-public theorem main
+private theorem main
   [Fintype α] [DecidableEq α]
   [MeasurableSpace α] [MeasurableSingletonClass α]
   {n : ℕ} {c : α → ℕ}

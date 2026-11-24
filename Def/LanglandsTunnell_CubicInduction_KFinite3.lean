@@ -1,5 +1,9 @@
-import Lemma.Matrix.CubicInduction_Structure
-import Instance.LanglandsTunnell_CubicInduction_EnvelopingAction3
+module
+public import Lemma.Matrix.CubicInduction_Structure
+public import Instance.LanglandsTunnell_CubicInduction_EnvelopingAction3
+
+
+public section
 
 noncomputable section
 

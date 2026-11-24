@@ -1,20 +1,19 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/DedekindDomain/FactorizationEquiv.lean -/
-
-
-import Def.RingTheory.DedekindDomain.FactorizationEquiv.Part4
-import Lemma.Int.DedekindDomain.FactorizationEquiv
+module
+public import Def.RingTheory.DedekindDomain.FactorizationEquiv.Part4
+public import Theorem.Int.DedekindDomain.FactorizationEquiv
 open scoped nonZeroDivisors
-
 open IsDedekindDomain FractionalIdeal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/DedekindDomain/FactorizationEquiv.lean -/
 /-!
 # Tests for the prime-exponent equivalence of fractional ideals
 
 Examples exercising `FractionalIdeal.factorizationMulEquiv`: identity,
 single-prime basis and reconstruction, and multiplication/addition of valuations.
 -/
-
-
 namespace MathlibExtTest.RingTheory.DedekindDomain.FactorizationEquiv
 
 variable {R : Type*} [CommRing R] [IsDedekindDomain R]

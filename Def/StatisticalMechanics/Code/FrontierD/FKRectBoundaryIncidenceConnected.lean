@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectBoundaryIncidenceConnected.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryCycleDuality.Part5
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectPrimalDualClusterLoopCount
+public import Theorem.StatisticalMechanics.Code.FrontierD.FiniteBipartiteFlowSparse
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryIncidenceConnected
+open Equiv Finset SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectBoundaryIncidenceConnected.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryCycleDuality.Part5
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectPrimalDualClusterLoopCount
-import Theorem.StatisticalMechanics.Code.FrontierD.FiniteBipartiteFlowSparse
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectBoundaryIncidenceConnected
-open Equiv Finset SimpleGraph
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

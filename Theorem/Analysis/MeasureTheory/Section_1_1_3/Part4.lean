@@ -1,6 +1,10 @@
-import Abbrev.Analysis.MeasureTheory.Section_1_1_2.Part4
-import Def.Analysis.MeasureTheory.Section_1_1_3.Part4
+module
+public import Abbrev.Analysis.MeasureTheory.Section_1_1_2.Part4
+public import Def.Analysis.MeasureTheory.Section_1_1_3.Part4
 open BoundedInterval
+
+
+public section
 
 /-!
 # Introduction to Measure Theory, Section 1.1.3: Connections with the Riemann integral
@@ -8,8 +12,6 @@ open BoundedInterval
 A companion to Section 1.1.3 of the book "An introduction to Measure Theory".
 
 -/
-
-
 /-- The found index correctly brackets x -/
 lemma findSubintervalIndex_spec (lo hi : ℝ) (n : ℕ) (hn : n > 0) (hlohi : lo < hi) (x : ℝ) (hx : lo ≤ x ∧ x ≤ hi) :
     let k := findSubintervalIndex lo hi n hn x hx

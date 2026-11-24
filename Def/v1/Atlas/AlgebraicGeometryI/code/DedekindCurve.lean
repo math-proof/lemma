@@ -1,5 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/DedekindCurve.lean -/
+module
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves.Part2
+public import Structure.v1.Atlas.AlgebraicGeometryI.code.DedekindCurve
+set_option maxHeartbeats 1600000
+open scoped TensorProduct
+open nonZeroDivisors
+open RiemannRochCurves CanonicalSheafCurves
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/DedekindCurve.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +20,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochCurves
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
-import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves.Part2
-import Structure.v1.Atlas.AlgebraicGeometryI.code.DedekindCurve
-set_option maxHeartbeats 1600000
-
-open scoped TensorProduct
-open nonZeroDivisors
-open RiemannRochCurves CanonicalSheafCurves
-
-
 noncomputable section
 
 attribute [instance] DedekindCurve.instCR DedekindCurve.instID DedekindCurve.instDD

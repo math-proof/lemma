@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/IsingTranslatedBoxClose.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Ising.IsingPlusTIClose.Part5
+public import Theorem.StatisticalMechanics.Code.Ising.IsingCrossBoxCap.Part2
+open MeasureTheory ProbabilityTheory MeasurableSpace Set Filter Topology BoundedContinuousFunction
+open scoped BigOperators ENNReal StatMech
+set_option linter.style.longLine false
+set_option linter.unusedSectionVars false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/IsingTranslatedBoxClose.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Ising.IsingPlusTIClose.Part5
-import Theorem.StatisticalMechanics.Code.Ising.IsingCrossBoxCap.Part2
-open MeasureTheory ProbabilityTheory MeasurableSpace Set Filter Topology BoundedContinuousFunction
-open scoped BigOperators ENNReal StatMech
-
-set_option linter.style.longLine false
-set_option linter.unusedSectionVars false
-
-
 namespace StatMech
 
 namespace Ising

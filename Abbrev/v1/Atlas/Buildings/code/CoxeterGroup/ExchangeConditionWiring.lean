@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/ExchangeConditionWiring.lean -/
+module
+public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.PosOfAscentProof
+public import Structure.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionGenuine
+open CoxeterGroup CoxeterExchangeGenuine
+set_option maxHeartbeats 800000
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/CoxeterGroup/ExchangeConditionWiring.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.PosOfAscentProof
-import Structure.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeConditionGenuine
-open CoxeterGroup CoxeterExchangeGenuine
-
-set_option maxHeartbeats 800000
-
-
 namespace CoxeterExchange
 
 variable {B : Type*} [DecidableEq B] [Fintype B]

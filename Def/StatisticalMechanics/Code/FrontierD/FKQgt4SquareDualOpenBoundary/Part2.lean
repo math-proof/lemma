@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKQgt4SquareDualOpenBoundary.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareDualCoverageGeometry
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareBoxClusterUnion
+public import Def.StatisticalMechanics.Code.FK.PeriodicPlanarGraph.Part18
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareDualOpenBoundary
+open Set SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKQgt4SquareDualOpenBoundary.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareDualCoverageGeometry
-import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareBoxClusterUnion
-import Def.StatisticalMechanics.Code.FK.PeriodicPlanarGraph.Part18
-import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareDualOpenBoundary
-open Set SimpleGraph
-
-
 namespace StatMech.FrontierD
 
 open StatMech.Lattice StatMech.Percolation StatMech.Universality

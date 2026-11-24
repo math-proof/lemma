@@ -1,8 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOverInertiaDegree.lean -/
+module
+public import Def.NumberTheory.NumberField.Completion.FiniteLiesOverResidueNaturality
+public import Theorem.Nat.NumberField.Completion.FiniteLiesOverResidueNaturality
+public import Mathlib.RingTheory.RamificationInertia.Inertia
 
-import Def.NumberTheory.NumberField.Completion.FiniteLiesOverResidueNaturality
-import Lemma.Nat.NumberField.Completion.FiniteLiesOverResidueNaturality
-import Mathlib.RingTheory.RamificationInertia.Inertia
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOverInertiaDegree.lean -/
 /-!
 # Inertia degree under finite-place completion
 
@@ -38,8 +42,6 @@ Scope: this module proves only preservation of inertia degree under the
 finite-place completion map, a dimension input toward N265; it does not construct
 or prove the full tensor-product-to-product equivalence of Theorem 13.5.
 -/
-
-
 namespace NumberField.LiesOver
 
 open IsDedekindDomain.HeightOneSpectrum

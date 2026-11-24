@@ -1,15 +1,18 @@
-import Mathlib
-import Theorem.WeierstrassCurve.FreyPackage
-import Def.FreyPackage_LevelRaising
-import Lemma.WeierstrassCurve.FreyPackageGaloisRep
-import Lemma.ValuationSubring.GlobalUnramifiedAt
-import Theorem.MvPolynomial.HeckeModule
-import Def.ModularCurve_HeckeInputsAll
-import Theorem.MvPolynomial.MazurPrincipleCore
-import Structure.FreyPackage_MazurAttachmentApparatus
-import Abbrev.FreyPackage_MazurAttachmentApparatus
-
+module
+public import Mathlib
+public import Theorem.WeierstrassCurve.FreyPackage
+public import Def.FreyPackage_LevelRaising
+public import Theorem.WeierstrassCurve.FreyPackageGaloisRep
+public import Lemma.ValuationSubring.GlobalUnramifiedAt
+public import Theorem.MvPolynomial.HeckeModule
+public import Def.ModularCurve_HeckeInputsAll
+public import Theorem.MvPolynomial.MazurPrincipleCore
+public import Structure.FreyPackage_MazurAttachmentApparatus
+public import Abbrev.FreyPackage_MazurAttachmentApparatus
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

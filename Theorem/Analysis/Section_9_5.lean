@@ -1,8 +1,13 @@
-import Mathlib
-import Mathlib.Data.Real.Sign
-import Abbrev.Analysis.Section_9_3.Part2
-import Theorem.Analysis.Section_9_4.Part2
-import Abbrev.Analysis.Section_9_5
+module
+public import Mathlib
+public import Mathlib.Data.Real.Sign
+public import Abbrev.Analysis.Section_9_3.Part2
+public import Theorem.Analysis.Section_9_4.Part2
+public import Abbrev.Analysis.Section_9_5
+
+
+public section
+
 /-!
 # Analysis I, Section 9.5: Left and right limits
 
@@ -15,8 +20,6 @@ doing so.
 Main constructions and results of this section:
 - Left and right limits.
 -/
-
-
 namespace Chapter9
 
 theorem right_limit.eq {X: Set ℝ} {f: ℝ → ℝ} {x₀:ℝ} {L:ℝ} (had: AdherentPt x₀ (X ∩ .Ioi x₀))

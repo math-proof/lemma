@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/TriangularIsingCriticalParameter.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingCriticalMomentum
+public import Def.StatisticalMechanics.Code.FrontierA.TriangularIsingCriticalParameter
+open Filter Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/TriangularIsingCriticalParameter.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingCriticalMomentum
-import Def.StatisticalMechanics.Code.FrontierA.TriangularIsingCriticalParameter
-open Filter Topology
-
-
 namespace StatMech.FrontierA
 
 noncomputable section

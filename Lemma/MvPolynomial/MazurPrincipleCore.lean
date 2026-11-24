@@ -1,10 +1,12 @@
-import Def.HeckeGalois_EichlerShimura
-import Def.ModularCurve_MazurPrincipleCore
-import Structure.ModularCurve_MazurPrincipleCore
-
+module
+public import Def.HeckeGalois_EichlerShimura
+public import Def.ModularCurve_MazurPrincipleCore
+public import Structure.ModularCurve_MazurPrincipleCore
 set_option autoImplicit false
-
 open MvPolynomial
+
+
+public section
 
 namespace ModularCurve
 

@@ -1,5 +1,19 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Percolation/BurtonKeaneClose.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Foundations.ProductMeasure.Part2
+public import Theorem.StatisticalMechanics.Code.FK.Ergodicity
+public import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeaneMergeGeom
+public import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeaneMerge.Part4
+public import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeaneUniqueness.Part3
+public import Theorem.StatisticalMechanics.Code.Lattice.BoxSurfaceVolume.Part5
+open MeasureTheory Measure Set MeasurableSpace ProbabilityTheory Filter Finset
+open scoped ENNReal NNReal Topology BigOperators
+open StatMech.Lattice StatMech.ConfigSpace
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Percolation/BurtonKeaneClose.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,20 +21,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Foundations.ProductMeasure.Part2
-import Theorem.StatisticalMechanics.Code.FK.Ergodicity
-import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeaneMergeGeom
-import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeaneMerge.Part4
-import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeaneUniqueness.Part3
-import Theorem.StatisticalMechanics.Code.Lattice.BoxSurfaceVolume.Part5
-open MeasureTheory Measure Set MeasurableSpace ProbabilityTheory Filter Finset
-open scoped ENNReal NNReal Topology BigOperators
-open StatMech.Lattice StatMech.ConfigSpace
-
-
 namespace StatMech
 
 namespace Percolation

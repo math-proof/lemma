@@ -1,10 +1,11 @@
+module
+public import Theorem.Combinatorics.Enumerative.Partition.MexPartitionCongruenceLift.Part5
+public import Theorem.Finset.Enumerative.Partition.MexPartitionCongruenceLift
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/Partition/MexPartitionCongruenceLift.lean -/
-
-
-import Theorem.Combinatorics.Enumerative.Partition.MexPartitionCongruenceLift.Part5
-import Lemma.Finset.Enumerative.Partition.MexPartitionCongruenceLift
-
-
 namespace MetaMathlibExt
 
 -- The first mex congruence specializes to `5n + 4` at `t = 1`.

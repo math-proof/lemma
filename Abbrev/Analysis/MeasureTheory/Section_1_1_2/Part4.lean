@@ -1,8 +1,11 @@
-import Theorem.Analysis.MeasureTheory.Section_1_1_1.Part16
-import Mathlib.LinearAlgebra.AffineSpace.Simplex.Basic
-import Theorem.Analysis.MeasureTheory.Section_1_1_2.Part2
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_1_1.Part16
+public import Mathlib.LinearAlgebra.AffineSpace.Simplex.Basic
+public import Theorem.Analysis.MeasureTheory.Section_1_1_2.Part2
 open Pointwise
 
+
+public section
 
 /-- Two sets are isometric if one is an orthogonal transformation plus translation of the other. -/
 abbrev Isometric {d:ℕ} (E F: Set (EuclideanSpace' d)) : Prop :=

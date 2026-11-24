@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/PeriodicPlanarCanonicalFKG.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffield.Part23
+public import Theorem.StatisticalMechanics.Code.FK.IvPropertiesFull
+public import Theorem.StatisticalMechanics.Code.FK.FreeDLRExtreme
+public import Theorem.StatisticalMechanics.Code.Probability.InfiniteHarris.Part3
+public import Theorem.StatisticalMechanics.Code.Probability.MeasurableFKGClosure.Part3
+open Filter MeasureTheory Set SimpleGraph Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/PeriodicPlanarCanonicalFKG.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarSheffield.Part23
-import Theorem.StatisticalMechanics.Code.FK.IvPropertiesFull
-import Theorem.StatisticalMechanics.Code.FK.FreeDLRExtreme
-import Theorem.StatisticalMechanics.Code.Probability.InfiniteHarris.Part3
-import Theorem.StatisticalMechanics.Code.Probability.MeasurableFKGClosure.Part3
-open Filter MeasureTheory Set SimpleGraph Topology
-
-
 namespace StatMech.FK.PeriodicPlanar
 
 variable {V : Type*} [DecidableEq V] [Countable V]

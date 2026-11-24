@@ -1,13 +1,16 @@
-import Instance.Data.Tensor.Tensor.Part2
-import Instance.Data.Vector.Functions
-import Theorem.Nat.Lt_Sub.of.LtAdd
-import Theorem.List.ProdTake_1.eq.Get_0.of.GtLength_0
-import Lemma.List.ProdTake.ne.Zero.of.NeProd_0
-import Lemma.List.ProdTail.ne.Zero.of.NeProd_0
-import Theorem.List.EraseIdx.eq.Cons_EraseIdxTail.of.GtLengthTail
-import Theorem.List.EqEraseIdx.of.LeLength
+module
+public import Instance.Data.Tensor.Tensor.Part2
+public import Instance.Data.Vector.Functions
+public import Theorem.Nat.Lt_Sub.of.LtAdd
+public import Theorem.List.ProdTake_1.eq.Get_0.of.GtLength_0
+public import Theorem.List.ProdTake.ne.Zero.of.NeProd_0
+public import Theorem.List.ProdTail.ne.Zero.of.NeProd_0
+public import Theorem.List.EraseIdx.eq.Cons_EraseIdxTail.of.GtLengthTail
+public import Theorem.List.EqEraseIdx.of.LeLength
 open List Tensor Nat
 
+
+public section
 
 /--
 Reduces the tensor along `dim` by taking the minimum/maximum value.

@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingInfraredCovariance.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingInfraredReduction
+public import Theorem.StatisticalMechanics.Code.Ising.GKS.Part5
+public import Def.StatisticalMechanics.Code.FrontierA.IsingInfraredCovariance
+open Finset
+open scoped BigOperators ComplexConjugate
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingInfraredCovariance.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingInfraredReduction
-import Theorem.StatisticalMechanics.Code.Ising.GKS.Part5
-import Def.StatisticalMechanics.Code.FrontierA.IsingInfraredCovariance
-open Finset
-open scoped BigOperators ComplexConjugate
-
-
 namespace StatMech.FrontierA
 
 variable {Gamma Omega : Type*}

@@ -1,11 +1,14 @@
-import Mathlib
-import Structure.TateCurve_XMultAlignment
-import Theorems.Thm_TateCurve_pointY_inv
-import Theorems.Thm_TateCurve_pointY_zpow_mul
-import Theorems.Thm_TateCurve_pointX_qExpansion
-
+module
+public import Mathlib
+public import Structure.TateCurve_XMultAlignment
+public import Theorems.Thm_TateCurve_pointY_inv
+public import Theorems.Thm_TateCurve_pointY_zpow_mul
+public import Theorems.Thm_TateCurve_pointX_qExpansion
 set_option autoImplicit false
 set_option linter.unusedSectionVars false
+
+
+public section
 
 namespace WeierstrassCurve
 

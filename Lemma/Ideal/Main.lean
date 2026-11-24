@@ -1,14 +1,17 @@
-import Mathlib.NumberTheory.NumberField.InfinitePlace.Embeddings
-import Mathlib.NumberTheory.NumberField.ClassNumber
-import Mathlib.RingTheory.DedekindDomain.Factorization
-import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
-import Mathlib.RingTheory.ClassGroup
-import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
-import Mathlib.GroupTheory.QuotientGroup.Finite
-import Mathlib.Data.Fintype.Units
-import Instance.NarrowRayClassGroup
-
+module
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.Embeddings
+public import Mathlib.NumberTheory.NumberField.ClassNumber
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+public import Mathlib.RingTheory.ClassGroup
+public import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
+public import Mathlib.GroupTheory.QuotientGroup.Finite
+public import Mathlib.Data.Fintype.Units
+public import Instance.NarrowRayClassGroup
 open NumberField nonZeroDivisors IsDedekindDomain
+
+
+public section
 
 noncomputable section
 

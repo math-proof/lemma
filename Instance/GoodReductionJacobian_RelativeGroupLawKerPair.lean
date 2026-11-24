@@ -1,10 +1,14 @@
--- Carved from Lemma/Definitions/Def_GoodReductionJacobian_RelativeGroupLawKerPair.lean: instance decls only.
-import Mathlib
-import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
-import Theorem.Scheme.RelativeGroupLawKerPair
-import Def.GoodReductionJacobian_RelativeGroupLawKerPair
-
+module
+public import Mathlib
+public import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
+public import Theorem.Scheme.RelativeGroupLawKerPair
+public import Def.GoodReductionJacobian_RelativeGroupLawKerPair
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_GoodReductionJacobian_RelativeGroupLawKerPair.lean: instance decls only.
 
 noncomputable section
 

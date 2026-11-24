@@ -1,38 +1,41 @@
-import Abbrev.Analysis.Section_3_3_fn
-import Abbrev.Analysis.Section_3_3_inv
-import Theorem.Set.EqToFn
-import Theorem.Set.EqIffP
-import Theorem.Set.EqGetMkFn
-import Theorem.Nat.P333a.Unique
-import Theorem.Nat.Eq_F333a.is.Eq_Add_1
-import Theorem.Nat.F333aNat.eq.Add_1
-import Lemma.Nat.F333a4.eq.Five
-import Theorem.Nat.F333a_AddMul2'3.eq.AddMul2'4
-import Lemma.Nat.NotP333b.Unique
-import Theorem.Set.P333c.Unique
-import Theorem.Set.Eq_F333c.is.EqAdd_1
-import Theorem.Nat.EqF333c_CoeNonzeroAdd_1
-import Lemma.Nat.F333c_CoeNonzero4.eq.Three
-import Theorem.Nat.F333c_CoeNonzeroAddMul2'3.eq.AddMul2'2
-import Theorem.Nat.P335.Unique
-import Lemma.Nat.F335.eq.Seven
-import Theorem.Set.Eq.is.All_Eq
-import Lemma.Nat.F3310a.eq.F3310b
-import Lemma.Set.Eq
-import Lemma.Set.ToFn.eq.ToFnToFn
-import Theorem.Nat.G3314F3314.eq.MkFn_AddMul2'3
-import Theorem.Nat.F3314G3314.eq.MkFn_AddMul2'6
-import Lemma.Set.Eq_SetTheory_Set_comp_assoc
-import Lemma.Set.OneToOne.is.All_Eq
-import Lemma.Set.OneToOne.is.InjectiveToFn
-import Lemma.Nat.OneToOneMkFn_Square
-import Lemma.Set.Any_And_Eq.of.NotOneToOne
-import Lemma.Set.Onto.is.SurjectiveToFn
-import Lemma.Set.Bijective.is.BijectiveToFn
-import Lemma.Set.Any_Any_And_NotBijective
-import Lemma.Set.Eq_GetInverse.is.Eq.of.Bijective
-import Lemma.Set.ToFnInverse.eq.InvFunToFn.of.Bijective
+module
+public import Abbrev.Analysis.Section_3_3_fn
+public import Abbrev.Analysis.Section_3_3_inv
+public import Theorem.Set.EqToFn
+public import Theorem.Set.EqIffP
+public import Theorem.Set.EqGetMkFn
+public import Theorem.Nat.P333a.Unique
+public import Theorem.Nat.Eq_F333a.is.Eq_Add_1
+public import Theorem.Nat.F333aNat.eq.Add_1
+public import Theorem.Nat.F333a4.eq.Five
+public import Theorem.Nat.F333a_AddMul2'3.eq.AddMul2'4
+public import Theorem.Nat.NotP333b.Unique
+public import Theorem.Set.P333c.Unique
+public import Theorem.Set.Eq_F333c.is.EqAdd_1
+public import Theorem.Nat.EqF333c_CoeNonzeroAdd_1
+public import Theorem.Nat.F333c_CoeNonzero4.eq.Three
+public import Theorem.Nat.F333c_CoeNonzeroAddMul2'3.eq.AddMul2'2
+public import Theorem.Nat.P335.Unique
+public import Theorem.Nat.F335.eq.Seven
+public import Theorem.Set.Eq.is.All_Eq
+public import Theorem.Nat.F3310a.eq.F3310b
+public import Theorem.Set.Eq
+public import Theorem.Set.ToFn.eq.ToFnToFn
+public import Theorem.Nat.G3314F3314.eq.MkFn_AddMul2'3
+public import Theorem.Nat.F3314G3314.eq.MkFn_AddMul2'6
+public import Theorem.Set.Eq_SetTheory_Set_comp_assoc
+public import Theorem.Set.OneToOne.is.All_Eq
+public import Theorem.Set.OneToOne.is.InjectiveToFn
+public import Theorem.Nat.OneToOneMkFn_Square
+public import Theorem.Set.Any_And_Eq.of.NotOneToOne
+public import Theorem.Set.Onto.is.SurjectiveToFn
+public import Theorem.Set.Bijective.is.BijectiveToFn
+public import Theorem.Set.Any_Any_And_NotBijective
+public import Theorem.Set.Eq_GetInverse.is.Eq.of.Bijective
+public import Theorem.Set.ToFnInverse.eq.InvFunToFn.of.Bijective
 
+
+public section
 
 namespace Chapter3
 

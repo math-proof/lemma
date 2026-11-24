@@ -1,7 +1,11 @@
-import Def.Analysis.MeasureTheory.Section_1_2_0.Part2
-import Theorem.Analysis.Misc.RealERealENNReal
-import Theorem.Analysis.Misc.Combinatorics
+module
+public import Def.Analysis.MeasureTheory.Section_1_2_0.Part2
+public import Theorem.Analysis.Misc.RealERealENNReal
+public import Theorem.Analysis.Misc.Combinatorics
 open BoundedInterval
+
+
+public section
 
 /-!
 # Introduction to Measure Theory, Section 1.2.1: Properties of Lebesgue outer measure
@@ -9,8 +13,6 @@ open BoundedInterval
 A companion to (the introduction to) Section 1.2.1 of the book "An introduction to Measure Theory".
 
 -/
-
-
 /-- Express {name}`Box.toSet` as a preimage of a pi set under the {name}`PiLp` homeomorphism. -/
 lemma Box.toSet_eq_ofLp_preimage {d : ℕ} (B : Box d) :
     B.toSet = (PiLp.homeomorph 2 (fun _ : Fin d => ℝ)) ⁻¹' Set.univ.pi (fun i => (B.side i).toSet) := by

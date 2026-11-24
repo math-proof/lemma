@@ -1,13 +1,15 @@
-import Lemma.Measure.ProductionPinsCompact
-import Lemma.Ideal.ArithCuspRealization
-import Lemma.UpperHalfPlane.SiegelCovering
-
+module
+public import Theorem.Measure.ProductionPinsCompact
+public import Lemma.Ideal.ArithCuspRealization
+public import Theorem.UpperHalfPlane.SiegelCovering
 set_option autoImplicit false
-
 open IsDedekindDomain NumberField MeasureTheory Matrix Measure
 open Measure.AdelicHaar Matrix.AdelicLevel NumberField.AdelicBox
 open AutomorphicForm AutomorphicForm.WindowedSiegel UpperHalfPlane.SiegelCovering Ideal Measure UpperHalfPlane
 open Matrix.SiegelVolume
+
+
+public section
 
 noncomputable section
 

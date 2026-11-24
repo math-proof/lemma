@@ -1,10 +1,12 @@
-import Mathlib
-import Def.AutomorphicForm_HeckeEigensystem
-import Theorems.Thm_AutomorphicForm_satakePow_add_pow
-
+module
+public import Mathlib
+public import Def.AutomorphicForm_HeckeEigensystem
+public import Theorems.Thm_AutomorphicForm_satakePow_add_pow
 set_option autoImplicit false
-
 open IsDedekindDomain NumberField Polynomial
+
+
+public section
 
 noncomputable section
 

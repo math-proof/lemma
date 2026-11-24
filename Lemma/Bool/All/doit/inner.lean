@@ -3,20 +3,24 @@ import Initialize.Tactic.Attr.Basic
 
 @[path]
 private lemma main
-  {m n : ℕ}
+  {a m : ℕ}
   {p : ℕ → ℕ → Prop} :
 -- imply
-  (∀ j ∈ Finset.range n, ∀ i ∈ Finset.range m, p i j) ↔
-    ∀ i ∈ Finset.range m, ∀ j ∈ Finset.range n, p i j := by
+  (∀ i < m, ∀ j ∈ Finset.Ico a (a + 2), p i j) ↔ ∀ i < m, p i a ∧ p i (a + 1) := by
 -- proof
   constructor
   ·
-    intro h i hi j hj
-    apply h j hj i hi
+    intro h i hi
+    exact ⟨h i hi a (by simp), h i hi (a + 1) (by simp)⟩
   ·
-    intro h j hj i hi
-    apply h i hi j hj
+    intro h i hi j hj
+    simp only [Finset.mem_Ico] at hj
+    rcases (show j = a ∨ j = a + 1 by omega) with rfl | rfl
+    ·
+      exact (h i hi).1
+    ·
+      exact (h i hi).2
 
 
 -- created on 2018-12-05
--- updated on 2026-10-26
+-- updated on 2026-11-24

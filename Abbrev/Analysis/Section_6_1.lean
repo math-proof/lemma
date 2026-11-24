@@ -1,8 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Section_5_1.Part9
-import Theorem.Analysis.Section_5_3.Part12
-import Theorem.Analysis.Section_5_epilogue.Part5
+module
+public import Mathlib
+public import Theorem.Analysis.Section_5_1.Part9
+public import Theorem.Analysis.Section_5_3.Part12
+public import Theorem.Analysis.Section_5_epilogue.Part5
 
+
+public section
 
 /-!
 # Analysis I, Section 6.1: Convergence and limit laws

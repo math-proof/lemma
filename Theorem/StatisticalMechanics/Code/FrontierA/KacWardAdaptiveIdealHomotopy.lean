@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/KacWardAdaptiveIdealHomotopy.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveIdealSimple.Part2
+public import Def.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveIdealHomotopy
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/KacWardAdaptiveIdealHomotopy.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveIdealSimple.Part2
-import Def.StatisticalMechanics.Code.FrontierA.KacWardAdaptiveIdealHomotopy
-
-
 namespace StatMech.FrontierA
 
 open Set

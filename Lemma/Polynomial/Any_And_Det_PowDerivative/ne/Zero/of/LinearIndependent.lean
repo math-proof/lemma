@@ -1,13 +1,16 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.NumberTheory.RothAuxiliary
-import Lemma.Polynomial.RothPolyJetRows.sub.RothPolyJetRows.of.Le
-import Lemma.Polynomial.RothPolyRowDerivative_RothPolyDerivativeRow.eq.RothPolyDerivativeRowAdd_1
-import Lemma.Polynomial.RothPolyWronskianDerivativeRow0.eq.Zero
-import Lemma.Polynomial.LinearIndependent_J.of.LinearIndependent
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.NumberTheory.RothAuxiliary
+public import Lemma.Polynomial.RothPolyJetRows.sub.RothPolyJetRows.of.Le
+public import Lemma.Polynomial.RothPolyRowDerivative_RothPolyDerivativeRow.eq.RothPolyDerivativeRowAdd_1
+public import Lemma.Polynomial.RothPolyWronskianDerivativeRow0.eq.Zero
+public import Lemma.Polynomial.LinearIndependent_J.of.LinearIndependent
 open MathlibExt.NumberTheory.RothAuxiliary
 open Polynomial
 
+
+public section
 
 private lemma exists_row_det_ne_zero_of_mem_span
   {k : ℕ} [CommRing K]

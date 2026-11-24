@@ -1,6 +1,9 @@
-import Lemma.HahnSeries.X0
-
+module
+public import Lemma.HahnSeries.X0
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

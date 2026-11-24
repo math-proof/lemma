@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/FKSharpnessWeightedInfiniteVolume.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedPeriodicRepair.Part2
+public import Theorem.StatisticalMechanics.Code.FK.TwoPointPositiveFull
+public import Theorem.StatisticalMechanics.Code.Foundations.Prokhorov
+public import Def.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedInfiniteVolume.Part3
+open MeasureTheory
+open scoped BigOperators Classical
+open Set Filter Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/OSSS/FKSharpnessWeightedInfiniteVolume.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedPeriodicRepair.Part2
-import Theorem.StatisticalMechanics.Code.FK.TwoPointPositiveFull
-import Theorem.StatisticalMechanics.Code.Foundations.Prokhorov
-import Def.StatisticalMechanics.Code.OSSS.FKSharpnessWeightedInfiniteVolume.Part3
-open MeasureTheory
-open scoped BigOperators Classical
-open Set Filter Topology
-
-
 namespace StatMech
 
 namespace OSSS

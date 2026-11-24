@@ -1,4 +1,5 @@
 import Lemma.Bool.Or_Not
+import Lemma.Bool.Cond.of.Imp.ImpNot.domain_defined.given
 open Bool
 
 
@@ -12,19 +13,6 @@ private lemma main
   q := by
 -- proof
   grind
-
-
-@[path]
-private lemma domain_defined.given
-  {f : α → ℝ}
-  {x : α}
--- given
-  (h₀ : f x ≠ 0)
-  (h₁ : f x ≠ 0 → 1 / f x > 0) :
--- imply
-  1 / f x > 0 :=
--- proof
-  h₁ h₀
 
 
 -- created on 2018-05-07

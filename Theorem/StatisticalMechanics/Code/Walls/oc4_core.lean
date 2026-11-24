@@ -1,5 +1,20 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/oc4_core.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.OSSS.FKRevealmentClose
+public import Theorem.StatisticalMechanics.Code.OSSS.FKSharpDiffIneq
+public import Theorem.StatisticalMechanics.Code.OSSS.MonotoneOSSSAssembly
+public import Theorem.StatisticalMechanics.Code.Walls.oc4_revealeqreach
+public import Theorem.StatisticalMechanics.Code.Walls.oc4_scalesum
+open scoped BigOperators
+open MeasureTheory Finset Real Filter Topology Set
+set_option linter.style.longLine false
+set_option linter.unusedSectionVars false
+set_option linter.unusedVariables false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/oc4_core.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,22 +22,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.OSSS.FKRevealmentClose
-import Theorem.StatisticalMechanics.Code.OSSS.FKSharpDiffIneq
-import Theorem.StatisticalMechanics.Code.OSSS.MonotoneOSSSAssembly
-import Theorem.StatisticalMechanics.Code.Walls.oc4_revealeqreach
-import Theorem.StatisticalMechanics.Code.Walls.oc4_scalesum
-open scoped BigOperators
-open MeasureTheory Finset Real Filter Topology Set
-
-set_option linter.style.longLine false
-set_option linter.unusedSectionVars false
-set_option linter.unusedVariables false
-
-
 namespace StatMech
 
 namespace Walls

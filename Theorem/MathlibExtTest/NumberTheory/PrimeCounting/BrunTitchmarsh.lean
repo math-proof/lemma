@@ -1,11 +1,12 @@
+module
+public import Def.NumberTheory.PrimeCounting.BrunTitchmarsh
+public import Theorem.Nat.PrimeCounting.BrunTitchmarsh
+public import Mathlib.Tactic.NormNum
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/PrimeCounting/BrunTitchmarsh.lean -/
-
-
-import Def.NumberTheory.PrimeCounting.BrunTitchmarsh
-import Lemma.Nat.PrimeCounting.BrunTitchmarsh
-import Mathlib.Tactic.NormNum
-
-
 namespace MathlibExtTest.NumberTheory.PrimeCounting.BrunTitchmarsh
 
 open MathlibExt.NumberTheory.PrimeCounting.BrunTitchmarshWanted

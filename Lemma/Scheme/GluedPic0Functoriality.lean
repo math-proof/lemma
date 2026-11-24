@@ -1,5 +1,9 @@
-import Lemma.ResidueField.GluedPic0
-import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
+module
+public import Lemma.ResidueField.GluedPic0
+public import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
+
+
+public section
 
 noncomputable section
 

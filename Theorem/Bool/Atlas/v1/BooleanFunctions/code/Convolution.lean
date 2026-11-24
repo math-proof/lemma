@@ -14,7 +14,6 @@ namespace BooleanFourier
 /--
 [boolToReal_xnor](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Convolution.lean)
 -/
-@[path]
 public theorem boolToReal_xnor
   {a b : Bool} :
 -- imply
@@ -29,7 +28,6 @@ namespace BooleanFourier
 /--
 [chi_boolMul](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Convolution.lean)
 -/
-@[path]
 public theorem chi_boolMul
   {n : ℕ}
   {S : Finset (Fin n)}
@@ -50,7 +48,6 @@ namespace BooleanFourier
 /--
 [boolMul_comm](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Convolution.lean)
 -/
-@[path]
 public theorem boolMul_comm
   {n : ℕ}
   {x y : Fin n → Bool} :
@@ -67,7 +64,6 @@ namespace BooleanFourier
 /--
 [fourierCoeff_conv](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Convolution.lean)
 -/
-@[path]
 public theorem fourierCoeff_conv
   {n : ℕ}
   {f g : (Fin n → Bool) → ℝ}

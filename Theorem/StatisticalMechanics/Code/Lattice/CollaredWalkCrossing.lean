@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Lattice/CollaredWalkCrossing.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanExteriorClosure.Part8
+public import Theorem.StatisticalMechanics.Code.Lattice.TwoPathsCrossWinding.Part2
+public import Theorem.StatisticalMechanics.Code.Lattice.StraightWalk.Part4
+public import Def.StatisticalMechanics.Code.Lattice.CollaredWalkCrossing
+open SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Lattice/CollaredWalkCrossing.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.Lattice.JordanExteriorClosure.Part8
-import Theorem.StatisticalMechanics.Code.Lattice.TwoPathsCrossWinding.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.StraightWalk.Part4
-import Def.StatisticalMechanics.Code.Lattice.CollaredWalkCrossing
-open SimpleGraph
-
-
 namespace StatMech.Lattice
 
 open StatMech.RSW.Box

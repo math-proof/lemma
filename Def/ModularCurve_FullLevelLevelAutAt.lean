@@ -1,6 +1,9 @@
-import Instance.ModularCurve_FullLevelJacobian
-
+module
+public import Instance.ModularCurve_FullLevelJacobian
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

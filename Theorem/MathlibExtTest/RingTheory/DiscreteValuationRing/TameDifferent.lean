@@ -1,13 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/DiscreteValuationRing/TameDifferent.lean -/
+module
+public import Theorem.RingTheory.DiscreteValuationRing.TameDifferent
+public import Theorem.Int.DiscreteValuationRing.TameDifferent
+open IsLocalRing
+open scoped nonZeroDivisors
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/DiscreteValuationRing/TameDifferent.lean -/
 /-
 Author: Muse Code powered by Meta Muse Spark (Muse Spark 1.3)
 -/
-
-import Theorem.RingTheory.DiscreteValuationRing.TameDifferent
-import Lemma.Int.DiscreteValuationRing.TameDifferent
-open IsLocalRing
-open scoped nonZeroDivisors
 
 attribute [local instance] FractionRing.liftAlgebra
   FractionRing.isScalarTower_liftAlgebra

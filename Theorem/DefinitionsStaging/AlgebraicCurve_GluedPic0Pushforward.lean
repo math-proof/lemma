@@ -1,7 +1,10 @@
-import Lemma.Definitions.Def_AlgebraicCurve_GluedPic0
-import Lemma.Definitions.Def_AlgebraicCurve_Correspondence
-import Def.AlgebraicCurve_GluedPic0Pushforward
+module
+public import Lemma.Definitions.Def_AlgebraicCurve_GluedPic0
+public import Lemma.Definitions.Def_AlgebraicCurve_Correspondence
+public import Def.AlgebraicCurve_GluedPic0Pushforward
 
+
+public section
 
 noncomputable section
 

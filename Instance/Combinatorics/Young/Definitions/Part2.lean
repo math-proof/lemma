@@ -1,14 +1,18 @@
+module
+public import Mathlib
+public import Instance.GroupTheory.Perm.Basics.Part2
+public import Theorem.PowerSeries.CommutativeRings
+public import Theorem.Combinatorics.Young.Definitions.Part2
+open scoped Polynomial
+open MvPolynomial Finset
+
+
+public section
+
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Instance.GroupTheory.Perm.Basics.Part2
-import Lemma.PowerSeries.CommutativeRings
-import Theorem.Combinatorics.Young.Definitions.Part2
-open scoped Polynomial
-open MvPolynomial Finset
-
 /-!
 # Definitions and Examples of Symmetric Polynomials
 
@@ -46,11 +50,7 @@ and provides additional lemmas following the source material.
 The symmetric group action on polynomials is given by `MvPolynomial.rename` in Mathlib.
 For a permutation σ : Equiv.Perm (Fin N), the action σ · f is `MvPolynomial.rename σ f`.
 -/
-
-
 /-! Compatibility with the pre-2026 `MvPolynomial.coeff m p` argument order. -/
-
-
 namespace AlgebraicCombinatorics
 
 namespace SymmetricPolynomials

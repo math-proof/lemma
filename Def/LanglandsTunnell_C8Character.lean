@@ -1,7 +1,10 @@
-import Def.LanglandsTunnell_LiftTraceSeed
-import Def.Matrix_Lift48
-
+module
+public import Def.LanglandsTunnell_LiftTraceSeed
+public import Def.Matrix_Lift48
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

@@ -1,7 +1,10 @@
+module
+public import Theorem.NumberTheory.NumberField.RayClass.ResidueSign.Part3
+public import Theorem.Nat.NumberField.RayClass.ResidueSign
+
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/RayClass/ResidueSign.lean -/
 
-import Theorem.NumberTheory.NumberField.RayClass.ResidueSign.Part3
-import Lemma.Nat.NumberField.RayClass.ResidueSign
 @[expose] public noncomputable section
 
 open NumberField

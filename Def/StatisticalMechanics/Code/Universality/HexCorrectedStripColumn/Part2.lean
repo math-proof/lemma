@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexCorrectedStripColumn.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedColumnLength
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripFamilyMass.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripIdentity.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripColumn
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexCorrectedStripColumn.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedColumnLength
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripFamilyMass.Part2
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripIdentity.Part2
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripColumn
-
-
 namespace StatMech.Universality
 
 open HexWalk

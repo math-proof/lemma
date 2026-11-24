@@ -1,8 +1,11 @@
-import Mathlib
-import Lemma.Definitions.Def_Mathlib_RingTheory_Valuation_LowerRamificationGroup
-import Def.Mathlib_RingTheory_Valuation_UpperRamificationGroup
+module
+public import Mathlib
+public import Lemma.Definitions.Def_Mathlib_RingTheory_Valuation_LowerRamificationGroup
+public import Def.Mathlib_RingTheory_Valuation_UpperRamificationGroup
 set_option autoImplicit false
 
+
+public section
 
 namespace IsLocalRing
 

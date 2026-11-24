@@ -1,9 +1,12 @@
-import Mathlib
-import Lemma.Fin.RothMvL1Det.le.MulFactorialPow.of.All_LeRothMvL1
-import Lemma.Fin.RothMvL1_RothMvHasse.le.MulPow2SumRothMvL1.of.RothMvIndex
+module
+public import Mathlib
+public import Lemma.Fin.RothMvL1Det.le.MulFactorialPow.of.All_LeRothMvL1
+public import Lemma.Fin.RothMvL1_RothMvHasse.le.MulPow2SumRothMvL1.of.RothMvIndex
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [rothHasseDet_l1_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

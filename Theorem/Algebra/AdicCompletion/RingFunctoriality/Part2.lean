@@ -1,7 +1,10 @@
-import Theorem.Algebra.AdicCompletion.PolynomialCompletion.Part8
-import Def.Algebra.AdicCompletion.RingFunctoriality
+module
+public import Theorem.Algebra.AdicCompletion.PolynomialCompletion.Part8
+public import Def.Algebra.AdicCompletion.RingFunctoriality
 set_option autoImplicit false
 
+
+public section
 
 namespace AdicCompletion
 

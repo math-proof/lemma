@@ -1,5 +1,32 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/CMTorsor.lean -/
+module
+public import Mathlib.NumberTheory.Zsqrtd.Basic
+public import Mathlib.RingTheory.Norm.Defs
+public import Mathlib.RingTheory.Trace.Defs
+public import Mathlib.RingTheory.FractionalIdeal.Operations
+public import Mathlib.RingTheory.FractionalIdeal.Inverse
+public import Mathlib.RingTheory.Ideal.Norm.AbsNorm
+public import Mathlib.RingTheory.FractionalIdeal.Norm
+public import Mathlib.LinearAlgebra.FreeModule.PID
+public import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
+public import Mathlib.LinearAlgebra.Quotient.Card
+public import Mathlib.LinearAlgebra.Isomorphisms
+public import Mathlib.LinearAlgebra.Quotient.Pi
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Data.ZMod.QuotientRing
+public import Mathlib.RingTheory.ClassGroup
+public import Def.v1.Atlas.EllipticCurves.code.ComplexMultiplication.Part6
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.ComplexMultiplication
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.RingTheory.Ideal.Colon
+public import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Instance.v1.Atlas.EllipticCurves.code.CMTorsor.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/CMTorsor.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,32 +34,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib.NumberTheory.Zsqrtd.Basic
-import Mathlib.RingTheory.Norm.Defs
-import Mathlib.RingTheory.Trace.Defs
-import Mathlib.RingTheory.FractionalIdeal.Operations
-import Mathlib.RingTheory.FractionalIdeal.Inverse
-import Mathlib.RingTheory.Ideal.Norm.AbsNorm
-import Mathlib.RingTheory.FractionalIdeal.Norm
-import Mathlib.LinearAlgebra.FreeModule.PID
-import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
-import Mathlib.LinearAlgebra.Quotient.Card
-import Mathlib.LinearAlgebra.Isomorphisms
-import Mathlib.LinearAlgebra.Quotient.Pi
-import Mathlib.GroupTheory.OrderOfElement
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Data.ZMod.QuotientRing
-import Mathlib.RingTheory.ClassGroup
-import Def.v1.Atlas.EllipticCurves.code.ComplexMultiplication.Part6
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.ComplexMultiplication
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.RingTheory.Ideal.Colon
-import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
-import Mathlib.NumberTheory.NumberField.Basic
-import Instance.v1.Atlas.EllipticCurves.code.CMTorsor.Part2
-
-
 namespace IdealClassGroup
 
 open nonZeroDivisors FractionalIdeal

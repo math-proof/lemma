@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingCriticalSimonMass.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Sharpness.MeanfieldIsingFull.Part2
+public import Theorem.StatisticalMechanics.Code.Sharpness.MeanfieldIsingIntegrated.Part5
+public import Theorem.StatisticalMechanics.Code.Sharpness.IsingSharpnessUnconditional
+public import Theorem.StatisticalMechanics.Code.IsingFK.PottsCriticalCorrespondence.Part2
+open Finset Filter Set Topology
+open scoped BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingCriticalSimonMass.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Sharpness.MeanfieldIsingFull.Part2
-import Theorem.StatisticalMechanics.Code.Sharpness.MeanfieldIsingIntegrated.Part5
-import Theorem.StatisticalMechanics.Code.Sharpness.IsingSharpnessUnconditional
-import Theorem.StatisticalMechanics.Code.IsingFK.PottsCriticalCorrespondence.Part2
-open Finset Filter Set Topology
-open scoped BigOperators
-
-
 namespace StatMech.FrontierA
 
 open Lattice Percolation Sharpness Ising

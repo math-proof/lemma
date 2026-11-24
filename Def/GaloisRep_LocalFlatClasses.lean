@@ -1,11 +1,13 @@
-import Mathlib
-import Lemma.LinearMap.AdZero
-import Lemma.Rep.TangentSpace
-import Instance.ExtEndgame_ProductionDatum
-
+module
+public import Mathlib
+public import Lemma.LinearMap.AdZero
+public import Lemma.Rep.TangentSpace
+public import Instance.ExtEndgame_ProductionDatum
 set_option autoImplicit false
-
 open CategoryTheory groupCohomology TrivSqZeroExt ExtCitation
+
+
+public section
 
 namespace ResidualGaloisRep
 

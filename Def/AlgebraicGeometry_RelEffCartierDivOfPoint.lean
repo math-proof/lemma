@@ -1,10 +1,12 @@
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Lemma.Scheme.RelEffCartierDiv
-import Instance.AlgebraicGeometry_RelEffCartierDivOfPoint
-
+module
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Lemma.Scheme.RelEffCartierDiv
+public import Instance.AlgebraicGeometry_RelEffCartierDivOfPoint
 set_option autoImplicit false
-
 open CategoryTheory CategoryTheory.Limits
+
+
+public section
 
 universe u
 

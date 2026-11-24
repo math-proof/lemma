@@ -1,10 +1,11 @@
+module
+public import Theorem.Combinatorics.Enumerative.EulerianPolynomialHankel.Part2
+public import Theorem.Finset.Enumerative.EulerianPolynomialHankel
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/EulerianPolynomialHankel.lean -/
-
-
-import Theorem.Combinatorics.Enumerative.EulerianPolynomialHankel.Part2
-import Lemma.Finset.Enumerative.EulerianPolynomialHankel
-
-
 section
 
 namespace MetaMathlibExt

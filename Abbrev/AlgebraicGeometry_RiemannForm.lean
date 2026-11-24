@@ -1,7 +1,10 @@
-import Instance.GoodReductionJacobian_RelativeGroupLawAlgPointsV2
-import Instance.EllipticCurve_TateModule
-
+module
+public import Instance.GoodReductionJacobian_RelativeGroupLawAlgPointsV2
+public import Instance.EllipticCurve_TateModule
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/SphericalBuilding/JordanHolderFrame.lean -/
+module
+public import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.JordanHolderPermutation.Part3
+public import Theorem.Fin.LeFinrank.of.Le.GtVal_0
+public import Theorem.Fin.GapVector.in.Spaces.of.LtVal_Val.IsStrictFlag
+public import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.RefinementCompatibility
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.JordanHolderFrame
+set_option maxHeartbeats 800000
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/SphericalBuilding/JordanHolderFrame.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.JordanHolderPermutation.Part3
-import Lemma.Fin.LeFinrank.of.Le.GtVal_0
-import Lemma.Fin.GapVector.in.Spaces.of.LtVal_Val.IsStrictFlag
-import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.RefinementCompatibility
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.JordanHolderFrame
-set_option maxHeartbeats 800000
-
-
 namespace GLnBuilding
 
 variable {k : Type*} [Field k] {n : ℕ}

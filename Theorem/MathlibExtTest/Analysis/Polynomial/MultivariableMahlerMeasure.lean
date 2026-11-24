@@ -1,11 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Polynomial/MultivariableMahlerMeasure.lean -/
-
-
-import Theorem.Analysis.Polynomial.MultivariableMahlerMeasure.Part5
+module
+public import Theorem.Analysis.Polynomial.MultivariableMahlerMeasure.Part5
 open Complex MeasureTheory
 open scoped Real
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Polynomial/MultivariableMahlerMeasure.lean -/
 namespace LogarithmicMahlerMeasure
 
 -- The zero-dimensional torus evaluates a constant correctly.

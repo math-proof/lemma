@@ -1,12 +1,15 @@
-import Mathlib.Algebra.Module.LocalizedModule.Basic
-import Mathlib.Algebra.MvPolynomial.CommRing
-import Mathlib.RingTheory.Ideal.Maps
-import Mathlib.Algebra.Algebra.Subalgebra.Lattice
-import Instance.CohCarrier_HeckeData
-import Structure.CohCarrier_HeckeData
-import Abbrev.CohCarrier_HeckeData
-
+module
+public import Mathlib.Algebra.Module.LocalizedModule.Basic
+public import Mathlib.Algebra.MvPolynomial.CommRing
+public import Mathlib.RingTheory.Ideal.Maps
+public import Mathlib.Algebra.Algebra.Subalgebra.Lattice
+public import Instance.CohCarrier_HeckeData
+public import Structure.CohCarrier_HeckeData
+public import Abbrev.CohCarrier_HeckeData
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

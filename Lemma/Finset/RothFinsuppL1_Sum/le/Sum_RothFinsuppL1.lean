@@ -1,7 +1,10 @@
-import Mathlib
-import Lemma.Finset.RothFinsuppL1.eq.Sum_NatAbs.of.SubsetSupport
+module
+public import Mathlib
+public import Lemma.Finset.RothFinsuppL1.eq.Sum_NatAbs.of.SubsetSupport
 open MathlibExt.NumberTheory.RothAuxiliary Finset
 
+
+public section
 
 private lemma rothFinsuppL1_add
 -- given

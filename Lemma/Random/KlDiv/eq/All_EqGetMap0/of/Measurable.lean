@@ -1,9 +1,12 @@
-import Lemma.ENNReal.KlDiv.eq.All_Eq_0
-import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
-import Mathlib.Probability.ProbabilityMassFunction.Basic
-import Initialize.Tactic.Attr.Basic
+module
+public import Lemma.ENNReal.KlDiv.eq.All_Eq_0
+public import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+public import Mathlib.Probability.ProbabilityMassFunction.Basic
+public import Initialize.Tactic.Attr.Basic
 open ENNReal InformationTheory MeasureTheory Real
 
+
+public section
 
 private lemma kl_map [MeasurableSpace α] [Fintype β] [DecidableEq β] [MeasurableSpace β] [MeasurableSingletonClass β] {μ ν : Measure α} [IsProbabilityMeasure μ] [IsProbabilityMeasure ν] {φ : α → β} (hφ : Measurable φ) :
   klDiv (ν.map φ) (μ.map φ) = if ∀ a, (μ.map φ) {a} = 0 → (ν.map φ) {a} = 0 then ENNReal.ofReal (∑ a, ((ν.map φ) {a}).toReal * log (((ν.map φ) {a}).toReal / ((μ.map φ) {a}).toReal)) else ⊤ := by

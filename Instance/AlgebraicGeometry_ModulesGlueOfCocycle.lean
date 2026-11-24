@@ -1,9 +1,13 @@
--- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ModulesGlueOfCocycle.lean: instance decls only.
-import Mathlib
-import Theorem.Scheme.ModulesGlueOfCocycle
-import Def.AlgebraicGeometry_ModulesGlueOfCocycle
-
+module
+public import Mathlib
+public import Theorem.Scheme.ModulesGlueOfCocycle
+public import Def.AlgebraicGeometry_ModulesGlueOfCocycle
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ModulesGlueOfCocycle.lean: instance decls only.
 
 universe u
 

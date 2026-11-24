@@ -1,5 +1,19 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/AffineMetricGR.lean -/
+module
+public import Def.v1.Atlas.Buildings.code.Building.AffineMetric.Part5
+public import Theorem.Set.IsBoundedImage.of.IsBounded.IsSimilitude
+public import Theorem.Finset.ImageRetractionMap.in.Faces.of.IsMaximal.In_Faces.In_Apartments
+public import Theorem.Finset.InjOnMap.of.In_FacesToSimplicialComplexToChamberComplex
+public import Def.v1.Atlas.Buildings.code.Building.AptIsoFixesIntersection
+public import Def.v1.Atlas.Buildings.code.Building.DiscreteFibers.Part2
+public import Abbrev.v1.Atlas.Buildings.code.Building.AffineMetricGR
+set_option linter.unusedSectionVars false
+open Classical
+open ChamberComplex
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/AffineMetricGR.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +21,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.Buildings.code.Building.AffineMetric.Part5
-import Theorem.Set.IsBoundedImage.of.IsBounded.IsSimilitude
-import Theorem.Finset.ImageRetractionMap.in.Faces.of.IsMaximal.In_Faces.In_Apartments
-import Lemma.Finset.InjOnMap.of.In_FacesToSimplicialComplexToChamberComplex
-import Def.v1.Atlas.Buildings.code.Building.AptIsoFixesIntersection
-import Def.v1.Atlas.Buildings.code.Building.DiscreteFibers.Part2
-import Abbrev.v1.Atlas.Buildings.code.Building.AffineMetricGR
-set_option linter.unusedSectionVars false
-
-open Classical
-open ChamberComplex
-
 variable {V : Type} [DecidableEq V]
 
 

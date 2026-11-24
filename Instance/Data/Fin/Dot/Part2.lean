@@ -1,8 +1,11 @@
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Matrix.Mul
-import Notation.Fun
-import Def.Data.Fin.Dot
+module
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Matrix.Mul
+public import Notation.Fun
+public import Def.Data.Fin.Dot
 
+
+public section
 
 /-- `v ⬝ᵥ w` when `w` is a closed slice `f[a:b]`, whose `Fin` length need not be definitionally
 the length of `v`. -/

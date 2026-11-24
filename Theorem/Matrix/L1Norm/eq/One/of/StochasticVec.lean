@@ -8,7 +8,7 @@ public section
 open NNReal WithLp
 
 @[path]
-public theorem main
+private theorem main
   {S : Type*} [Fintype S]
   {x : S → ℝ}
 -- given

@@ -1,3 +1,12 @@
+module
+public import Mathlib
+public import Theorem.RingTheory.PowerSeries.InfiniteProducts2.Part3
+open scoped Polynomial
+open Finset PowerSeries
+
+
+public section
+
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -6,11 +15,6 @@ All rights reserved.
 Copyright (c) 2025 AlgebraicCombinatorics Contributors. All rights reserved.
 Authors:
 -/
-import Mathlib
-import Theorem.RingTheory.PowerSeries.InfiniteProducts2.Part3
-open scoped Polynomial
-open Finset PowerSeries
-
 /-!
 # Product Rules (Generalized Distributive Laws) for Infinite Products
 
@@ -57,8 +61,6 @@ constant term 0 or 1 (`PowerSeries₀` and `PowerSeries₁`) are in `FPS/ExpLog.
 
 * AlgebraicCombinatorics book, Section on Infinite Products (InfiniteProducts2.tex)
 -/
-
-
 noncomputable section
 
 variable {K : Type*} [CommRing K]

@@ -1,10 +1,12 @@
-import Mathlib
-import Def.ModularCurve_DRResolvedModelPackageV4
-import Instance.ModularCurve_DRModelPackageCrossingFrame
-
+module
+public import Mathlib
+public import Def.ModularCurve_DRResolvedModelPackageV4
+public import Instance.ModularCurve_DRModelPackageCrossingFrame
 set_option autoImplicit false
-
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry ModularCurve
+
+
+public section
 
 noncomputable section
 

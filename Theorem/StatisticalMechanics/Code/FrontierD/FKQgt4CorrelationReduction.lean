@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKQgt4CorrelationReduction.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4ParameterBridge
+public import Def.StatisticalMechanics.Code.FrontierD.FKQgt4CorrelationReduction
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKQgt4CorrelationReduction.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4ParameterBridge
-import Def.StatisticalMechanics.Code.FrontierD.FKQgt4CorrelationReduction
-
-
 namespace StatMech.FrontierD
 
 theorem eq_of_windingSectorBounds {xiInv R : ℝ}

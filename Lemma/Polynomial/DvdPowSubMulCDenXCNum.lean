@@ -1,11 +1,14 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.NumberTheory.RothAuxiliary
-import Lemma.Polynomial.IsPrimitiveSubMulCDenXCNum
-import Lemma.Polynomial.IsPrimitivePow.of.IsPrimitive
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.NumberTheory.RothAuxiliary
+public import Lemma.Polynomial.IsPrimitiveSubMulCDenXCNum
+public import Lemma.Polynomial.IsPrimitivePow.of.IsPrimitive
 open MathlibExt.NumberTheory.RothAuxiliary
 open Polynomial
 
+
+public section
 
 /--
 [roth_rat_linear_pow_dvd_of_map_dvd](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

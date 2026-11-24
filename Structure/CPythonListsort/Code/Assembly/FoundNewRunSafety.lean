@@ -3,7 +3,7 @@
 module
 
 public import Def.CPythonListsort.Code.Assembly.MergeAtSafety.Part4
-public import Lemma.List.Atlas.CPythonListsort.Code.Policy.FoundNewRunPreservation
+public import Theorem.List.Atlas.CPythonListsort.Code.Policy.FoundNewRunPreservation
 public import Def.CPythonListsort.Code.Assembly.FoundNewRunSafety
 /-!
 # `found_new_run` safety

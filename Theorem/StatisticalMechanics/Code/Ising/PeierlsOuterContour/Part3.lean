@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/PeierlsOuterContour.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Ising.PeierlsClose.Part2
+public import Theorem.StatisticalMechanics.Code.Ising.PeierlsContourCount.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.ContourAnchor.Part5
+public import Theorem.StatisticalMechanics.Code.Percolation.PcUpperUncond.Part6
+public import Def.StatisticalMechanics.Code.Ising.PeierlsOuterContour.Part2
+open MeasureTheory Filter Topology Finset SimpleGraph
+open scoped BigOperators ENNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/PeierlsOuterContour.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Ising.PeierlsClose.Part2
-import Theorem.StatisticalMechanics.Code.Ising.PeierlsContourCount.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.ContourAnchor.Part5
-import Theorem.StatisticalMechanics.Code.Percolation.PcUpperUncond.Part6
-import Def.StatisticalMechanics.Code.Ising.PeierlsOuterContour.Part2
-open MeasureTheory Filter Topology Finset SimpleGraph
-open scoped BigOperators ENNReal
-
-
 namespace StatMech
 
 namespace Ising

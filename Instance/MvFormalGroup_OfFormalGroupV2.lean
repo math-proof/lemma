@@ -1,13 +1,17 @@
--- Carved from Lemma/Definitions/Def_MvFormalGroup_OfFormalGroupV2.lean: instance decls only.
-import Class.MvFormalGroup_BasicV2
-import Theorem.FormalGroup.NSeries
-import Def.FormalGroup_PointTransport
-import Mathlib.RingTheory.FormalGroup.Basic
-import Mathlib.RingTheory.MvPowerSeries.Rename
-import Theorem.FormalGroup.OfFormalGroupV2
-import Def.FormalGroup_OfFormalGroupV2
-
+module
+public import Class.MvFormalGroup_BasicV2
+public import Theorem.FormalGroup.NSeries
+public import Def.FormalGroup_PointTransport
+public import Mathlib.RingTheory.FormalGroup.Basic
+public import Mathlib.RingTheory.MvPowerSeries.Rename
+public import Theorem.FormalGroup.OfFormalGroupV2
+public import Def.FormalGroup_OfFormalGroupV2
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_MvFormalGroup_OfFormalGroupV2.lean: instance decls only.
 
 noncomputable section
 

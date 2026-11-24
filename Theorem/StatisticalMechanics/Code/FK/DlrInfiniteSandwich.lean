@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/DlrInfiniteSandwich.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.DlrSandwich
+public import Theorem.StatisticalMechanics.Code.FK.FKGeneralQConsumer.Part5
+public import Theorem.StatisticalMechanics.Code.FK.IvProperties
+public import Def.StatisticalMechanics.Code.FK.DlrInfiniteSandwich
+open MeasureTheory Filter Set
+open scoped BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/DlrInfiniteSandwich.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FK.DlrSandwich
-import Theorem.StatisticalMechanics.Code.FK.FKGeneralQConsumer.Part5
-import Theorem.StatisticalMechanics.Code.FK.IvProperties
-import Def.StatisticalMechanics.Code.FK.DlrInfiniteSandwich
-open MeasureTheory Filter Set
-open scoped BigOperators
-
-
 namespace StatMech
 
 namespace FK

@@ -1,5 +1,25 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/BNPair/NormalizerParabolicProof.lean -/
+module
+public import Structure.v1.Atlas.Buildings.code.BNPair.Basic.Part2
+public import Def.v1.Atlas.Buildings.code.BNPair.ParabolicDefs.Part2
+public import Theorem.Nat.NonemptyBruhatCell
+public import Theorem.Nat.In_BruhatCell1.of.In_B
+public import Theorem.Nat.Simple.ne.One
+public import Theorem.Nat.In_BruhatCell.of.In_BruhatCell
+public import Theorem.Set.BruhatCell.sub.SetG.of.In_BruhatCell.In_SetG.LeB
+public import Theorem.v1.Atlas.Buildings.code.BNPair.CellCoverProof
+public import Theorem.v1.Atlas.Buildings.code.BNPair.CellDisjointProof
+public import Theorem.v1.Atlas.Buildings.code.BNPair.CellMulParabolicProof
+public import Theorem.v1.Atlas.Buildings.code.BNPair.CellInvProof
+public import Theorem.v1.Atlas.Buildings.code.BNPair.SubgroupOverBProof
+public import Theorem.Nat.Mul.in.BruhatCell.of.In_B.In_BruhatCell
+public import Mathlib.Tactic.Group
+set_option linter.unusedSectionVars false
+set_option maxHeartbeats 800000
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/BNPair/NormalizerParabolicProof.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,24 +27,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Structure.v1.Atlas.Buildings.code.BNPair.Basic.Part2
-import Def.v1.Atlas.Buildings.code.BNPair.ParabolicDefs.Part2
-import Theorem.Nat.NonemptyBruhatCell
-import Theorem.Nat.In_BruhatCell1.of.In_B
-import Lemma.Nat.Simple.ne.One
-import Theorem.Nat.In_BruhatCell.of.In_BruhatCell
-import Lemma.Set.BruhatCell.sub.SetG.of.In_BruhatCell.In_SetG.LeB
-import Theorem.v1.Atlas.Buildings.code.BNPair.CellCoverProof
-import Theorem.v1.Atlas.Buildings.code.BNPair.CellDisjointProof
-import Theorem.v1.Atlas.Buildings.code.BNPair.CellMulParabolicProof
-import Theorem.v1.Atlas.Buildings.code.BNPair.CellInvProof
-import Theorem.v1.Atlas.Buildings.code.BNPair.SubgroupOverBProof
-import Theorem.Nat.Mul.in.BruhatCell.of.In_B.In_BruhatCell
-import Mathlib.Tactic.Group
-set_option linter.unusedSectionVars false
-set_option maxHeartbeats 800000
-
 variable {G : Type*} [Group G] {B_idx : Type*} {M : CoxeterMatrix B_idx}
 
 

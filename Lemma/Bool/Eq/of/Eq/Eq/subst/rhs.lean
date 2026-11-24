@@ -1,17 +1,20 @@
-import Initialize.Tactic.Attr.Basic
+import Lemma.Bool.Imp_And.of.Imp
 
 
 @[path]
 private lemma main
-  {a b c : α}
-  {f : α → α}
+  {a b : α}
+  {l : β}
+  {r : α → β}
 -- given
   (h₀ : a = b)
-  (h₁ : c = f a) :
+  (h₁ : l = r a) :
 -- imply
-  c = f b := by
+  l = r b := by
 -- proof
-  rwa [h₀] at h₁
+  rw [← h₀]
+  exact h₁
 
 
 -- created on 2020-07-10
+-- updated on 2026-11-24

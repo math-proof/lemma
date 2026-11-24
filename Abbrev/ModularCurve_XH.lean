@@ -1,9 +1,12 @@
-import Mathlib
-import Theorem.UpperHalfPlane.X1
-import Instance.CohCarrier_Level
-import Instance.EllipticCurve_TateModule
-
+module
+public import Mathlib
+public import Theorem.UpperHalfPlane.X1
+public import Instance.CohCarrier_Level
+public import Instance.EllipticCurve_TateModule
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

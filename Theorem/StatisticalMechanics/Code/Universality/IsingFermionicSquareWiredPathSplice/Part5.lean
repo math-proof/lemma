@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicSquareWiredPathSplice.lean -/
+module
+public import Def.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredCompletion.Part19
+public import Def.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredPathSplice.Part4
+open Finset SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/IsingFermionicSquareWiredPathSplice.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Def.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredCompletion.Part19
-import Def.StatisticalMechanics.Code.Universality.IsingFermionicSquareWiredPathSplice.Part4
-open Finset SimpleGraph
-
-
 namespace StatMech.Universality
 
 open StatMech StatMech.FK StatMech.Lattice StatMech.FrontierD

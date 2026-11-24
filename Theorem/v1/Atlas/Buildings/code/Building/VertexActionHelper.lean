@@ -1,5 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/VertexActionHelper.lean -/
+module
+public import Theorem.v1.Atlas.Buildings.code.ChamberComplex.Basic
+public import Theorem.Finset.Adjacent
+public import Theorem.List.All.of.All.IsChain.Ne
+public import Theorem.Finset.SeparatedByWall.of.AdjacentToSimplicialComplex.HasSufficientReversibleFoldings
+public import Def.v1.Atlas.Buildings.code.ChamberComplex.Folding.Part3
+public import Theorem.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.CoxeterProperties.Part2
+public import Mathlib.GroupTheory.Coxeter.Basic
+open scoped Classical
+set_option maxHeartbeats 4000000
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/VertexActionHelper.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +20,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.Buildings.code.ChamberComplex.Basic
-import Theorem.Finset.Adjacent
-import Theorem.List.All.of.All.IsChain.Ne
-import Lemma.Finset.SeparatedByWall.of.AdjacentToSimplicialComplex.HasSufficientReversibleFoldings
-import Def.v1.Atlas.Buildings.code.ChamberComplex.Folding.Part3
-import Theorem.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes.CoxeterProperties.Part2
-import Mathlib.GroupTheory.Coxeter.Basic
-open scoped Classical
-
-set_option maxHeartbeats 4000000
-
 variable {V : Type*} [DecidableEq V]
 
 

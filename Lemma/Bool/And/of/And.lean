@@ -1,4 +1,5 @@
 import Initialize.Tactic.Attr.Basic
+import Lemma.Bool.And.of.And.collect.given
 
 
 @[path]
@@ -10,16 +11,6 @@ private lemma trans'
   a = b ∧ b = c :=
 -- proof
   ⟨h.1, h.1.symm.trans h.2⟩
-
-
-@[path]
-private lemma collect.given
--- given
-  (h : f ∧ (c ∨ a ∧ x)) :
--- imply
-  (a ∨ c) ∧ f ∧ (x ∨ c) := by
--- proof
-  tauto
 
 
 @[path]

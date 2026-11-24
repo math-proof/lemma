@@ -16,7 +16,7 @@ open Nat
 [Nat.zero_add](https://github.com/teorth/analysis/blob/main/Analysis/Section_2_2.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   {m: Chapter2.Nat} :
 -- imply
   0 + m = m :=

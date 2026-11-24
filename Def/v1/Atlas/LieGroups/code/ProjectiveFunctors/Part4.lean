@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/ProjectiveFunctors.lean -/
+module
+public import Def.v1.Atlas.LieGroups.code.CategoryOII.Part3
+public import Theorem.Int.WeightLE.of.BruhatLE
+public import Theorem.Int.FGUeaIotaRange
+public import Theorem.Int.IsCategoryOA.of.IsCategoryOB
+public import Def.v1.Atlas.LieGroups.code.DufloJoseph.Part8
+public import Structure.v1.Atlas.LieGroups.code.TensorO
+public import Structure.v1.Atlas.LieGroups.code.ProjectiveFunctors.Part6
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/ProjectiveFunctors.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.LieGroups.code.CategoryOII.Part3
-import Theorem.Int.WeightLE.of.BruhatLE
-import Theorem.Int.FGUeaIotaRange
-import Theorem.Int.IsCategoryOA.of.IsCategoryOB
-import Def.v1.Atlas.LieGroups.code.DufloJoseph.Part8
-import Structure.v1.Atlas.LieGroups.code.TensorO
-import Structure.v1.Atlas.LieGroups.code.ProjectiveFunctors.Part6
-
-
 noncomputable section
 
 open scoped TensorProduct

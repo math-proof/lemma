@@ -15,7 +15,7 @@ open Chapter3.SetTheory.Set
 [SetTheory.Set.P_3_3_3a_existsUnique](https://github.com/teorth/analysis/blob/main/Analysis/Section_3_3.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   [SetTheory]
   {x: Chapter3.Nat} :
 -- imply

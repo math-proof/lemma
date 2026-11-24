@@ -1,9 +1,12 @@
-import Mathlib.AlgebraicGeometry.FunctionField
-import Lemma.Definitions.Def_AlgebraicCurve_DivisorClassGroup
-import Lemma.Definitions.Def_AlgebraicCurve_CurveModel
-import Def.AlgebraicCurve_PlacesOf
+module
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Lemma.Definitions.Def_AlgebraicCurve_DivisorClassGroup
+public import Lemma.Definitions.Def_AlgebraicCurve_CurveModel
+public import Def.AlgebraicCurve_PlacesOf
 set_option autoImplicit false
 
+
+public section
 
 noncomputable section
 

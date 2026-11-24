@@ -1,10 +1,12 @@
-import Def.UnramifiedWhittaker_ZetaIntegrand
-import Theorem.AdelicDock_LocalEmbedding
-import Lemma.Set.IdeleBox
-
+module
+public import Def.UnramifiedWhittaker_ZetaIntegrand
+public import Theorem.AdelicDock_LocalEmbedding
+public import Lemma.Set.IdeleBox
 set_option autoImplicit false
-
 open IsDedekindDomain NumberField Matrix.AdelicLevel NumberField.AdeleRing Matrix
+
+
+public section
 
 noncomputable section
 

@@ -1,5 +1,20 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/GHSDuplicateVariable.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Ising.GKS.Part5
+public import Theorem.StatisticalMechanics.Code.Ising.GKS2.Part4
+public import Theorem.StatisticalMechanics.Code.Sharpness.GHSFull.Part3
+public import Theorem.StatisticalMechanics.Code.Ising.AizenmanBarsky.Part5
+public import Theorem.StatisticalMechanics.Code.Ising.GHSThreePoint
+public import Theorem.StatisticalMechanics.Code.Ising.GHSDuplicateVariable.Part2
+open scoped BigOperators symmDiff
+open Finset SimpleGraph Set
+set_option linter.unusedSectionVars false
+set_option maxHeartbeats 1600000
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/GHSDuplicateVariable.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,22 +22,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Ising.GKS.Part5
-import Theorem.StatisticalMechanics.Code.Ising.GKS2.Part4
-import Theorem.StatisticalMechanics.Code.Sharpness.GHSFull.Part3
-import Theorem.StatisticalMechanics.Code.Ising.AizenmanBarsky.Part5
-import Theorem.StatisticalMechanics.Code.Ising.GHSThreePoint
-import Theorem.StatisticalMechanics.Code.Ising.GHSDuplicateVariable.Part2
-open scoped BigOperators symmDiff
-open Finset SimpleGraph Set
-
-set_option linter.unusedSectionVars false
-set_option maxHeartbeats 1600000
-
-
 namespace StatMech
 
 namespace Ising

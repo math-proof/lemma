@@ -1,5 +1,31 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/GoalVerification.lean -/
+module
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.BonamilBeckner
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Corollary42Majority
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Corollary43Majority
+public import Def.v1.Atlas.BooleanFunctions.code.Hypercontractivity
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Hypercontractivity
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Corollary12Lec9
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Claim21Lec10
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Lemma26Lec10
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.GaussianSpace
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.UniqueGames
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.MultilinearExtension
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.NoiseSensitivity
+public import Theorem.v1.Atlas.BooleanFunctions.code.Corollary12Lec9
+public import Def.v1.Atlas.BooleanFunctions.code.Claim21Lec10
+public import Def.v1.Atlas.BooleanFunctions.code.Lemma26Lec10
+public import Def.v1.Atlas.BooleanFunctions.code.GaussianSpace
+public import Def.v1.Atlas.BooleanFunctions.code.UniqueGames.Part8
+public import Theorem.v1.Atlas.BooleanFunctions.code.NoiseSensitivityMonotone
+public import Theorem.v1.Atlas.BooleanFunctions.code.BourgainNoiseSensitivity
+public import Def.v1.Atlas.BooleanFunctions.code.MultilinearExtension
+public import Def.v1.Atlas.BooleanFunctions.code.NoiseSensitivity
+open Finset BigOperators Real MeasureTheory ProbabilityTheory
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/GoalVerification.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,31 +33,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.BonamilBeckner
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Corollary42Majority
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Corollary43Majority
-import Def.v1.Atlas.BooleanFunctions.code.Hypercontractivity
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Hypercontractivity
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Corollary12Lec9
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Claim21Lec10
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Lemma26Lec10
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.GaussianSpace
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.UniqueGames
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.MultilinearExtension
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.NoiseSensitivity
-import Theorem.v1.Atlas.BooleanFunctions.code.Corollary12Lec9
-import Def.v1.Atlas.BooleanFunctions.code.Claim21Lec10
-import Def.v1.Atlas.BooleanFunctions.code.Lemma26Lec10
-import Def.v1.Atlas.BooleanFunctions.code.GaussianSpace
-import Def.v1.Atlas.BooleanFunctions.code.UniqueGames.Part8
-import Theorem.v1.Atlas.BooleanFunctions.code.NoiseSensitivityMonotone
-import Theorem.v1.Atlas.BooleanFunctions.code.BourgainNoiseSensitivity
-import Def.v1.Atlas.BooleanFunctions.code.MultilinearExtension
-import Def.v1.Atlas.BooleanFunctions.code.NoiseSensitivity
-open Finset BigOperators Real MeasureTheory ProbabilityTheory
-
-
 namespace BooleanFourier
 
 example {n : ℕ} (ρ : ℝ) (f : BoolFn n) (S : Finset (Fin n)) :

@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/TorusLoopCharacter.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.SpinCharacter.Part2
+public import Theorem.StatisticalMechanics.Code.Onsager.TorusContractibleLoop
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/TorusLoopCharacter.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.SpinCharacter.Part2
-import Theorem.StatisticalMechanics.Code.Onsager.TorusContractibleLoop
-
-
 namespace StatMech.Onsager
 
 open Matrix BigOperators

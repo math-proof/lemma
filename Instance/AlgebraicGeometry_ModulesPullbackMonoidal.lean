@@ -1,10 +1,14 @@
--- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ModulesPullbackMonoidal.lean: instance decls only.
-import Mathlib
-import Theorems.Thm_PresheafOfModules_isMonoidal_inverseImage_W_toPresheaf
-import Instance.SheafOfModules_Monoidal
-
+module
+public import Mathlib
+public import Theorems.Thm_PresheafOfModules_isMonoidal_inverseImage_W_toPresheaf
+public import Instance.SheafOfModules_Monoidal
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicGeometry_ModulesPullbackMonoidal.lean: instance decls only.
 
 universe u
 

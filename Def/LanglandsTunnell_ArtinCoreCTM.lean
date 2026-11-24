@@ -1,9 +1,12 @@
-import Instance.LanglandsTunnell_ArtinFrobenius
-import Def.M4aHerbrand_IdeleClassVocab
-import Instance.LanglandsTunnell_ArtinCoreCTM
-import Structure.LanglandsTunnell_ArtinCoreCTM
-
+module
+public import Instance.LanglandsTunnell_ArtinFrobenius
+public import Def.M4aHerbrand_IdeleClassVocab
+public import Instance.LanglandsTunnell_ArtinCoreCTM
+public import Structure.LanglandsTunnell_ArtinCoreCTM
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

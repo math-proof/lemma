@@ -1,11 +1,13 @@
+module
+public import Mathlib.Data.Fintype.Perm
+public import Mathlib.Data.Nat.Fib.Basic
+public import Mathlib.Tactic.Push
+public import Theorem.Combinatorics.Enumerative.FibonacciPAPAvoidance.Part3
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Enumerative/FibonacciPAPAvoidance.lean -/
-
-import Mathlib.Data.Fintype.Perm
-import Mathlib.Data.Nat.Fib.Basic
-import Mathlib.Tactic.Push
-import Theorem.Combinatorics.Enumerative.FibonacciPAPAvoidance.Part3
-
-
 namespace MetaMathlibExt
 
 def frontFixed {N : ℕ} (b : Fin (N + 1)) (π : Equiv.Perm (Fin (N + 1)))

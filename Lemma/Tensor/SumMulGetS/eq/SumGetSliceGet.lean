@@ -5,7 +5,7 @@ import Lemma.Int.InSub.is.In_Ico_AddS
 import Lemma.Int.In_Ico.is.In_IcoToNatS
 import Lemma.Int.ToNatSubCoeS.eq.Sub
 import Lemma.Nat.CoeIte.eq.Ite_CoeS
-import Lemma.Nat.EqMul_0'0
+import Theorem.Nat.EqMul_0'0
 import Lemma.Nat.EqMul_1
 import Lemma.Tensor.BandPart.eq.Stack_BoolIn_Icc
 import Lemma.Tensor.Get.of.Eq

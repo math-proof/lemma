@@ -1,9 +1,14 @@
-import Mathlib
-import Abbrev.Analysis.Section_7_2.Part5
-import Theorem.Analysis.Section_7_3
-import Abbrev.Analysis.Section_7_4
-import Theorem.Analysis.Section_8_1.Part4
-import Theorem.Analysis.Section_8_2.Part3
+module
+public import Mathlib
+public import Abbrev.Analysis.Section_7_2.Part5
+public import Theorem.Analysis.Section_7_3
+public import Abbrev.Analysis.Section_7_4
+public import Theorem.Analysis.Section_8_1.Part4
+public import Theorem.Analysis.Section_8_2.Part3
+
+
+public section
+
 /-!
 # Analysis I, Section 8.2: Summation on infinite sets
 
@@ -25,8 +30,6 @@ notions with existing summation notions.
 After this section, the summation notation developed here will be deprecated in favor of Mathlib's API for {name}`Summable` and {name}`tsum`.
 
 -/
-
-
 namespace Chapter8
 
 open Chapter7 Chapter7.Series Finset Function Filter

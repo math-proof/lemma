@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/GoalVerification87_88_101_102_106.lean -/
+module
+public import Def.v1.Atlas.BooleanFunctions.code.UncoveredBatch3
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.UncoveredBatch3
+public import Def.v1.Atlas.BooleanFunctions.code.MajorityStablest
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Corollary12Lec11
+open Finset BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/GoalVerification87_88_101_102_106.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.BooleanFunctions.code.UncoveredBatch3
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.UncoveredBatch3
-import Def.v1.Atlas.BooleanFunctions.code.MajorityStablest
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Corollary12Lec11
-open Finset BigOperators
-
 
 example (ρ : ℝ) (hρ₀ : 0 ≤ ρ) (hρ₁ : ρ < 1) (ε : ℝ) (hε : 0 < ε) :
     ∃ δ > 0, ∀ (n : ℕ) (f : (Fin n → Bool) → ℝ),

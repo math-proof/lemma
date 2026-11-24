@@ -1,6 +1,6 @@
 import Lemma.Matrix.Any_And_DoeblinMinorizationPow.is.Nonempty.Aperiodic
 import Lemma.Matrix.Any_And_ContractingWith.of.DoeblinMinorization
-import Lemma.Matrix.Any_And_Stationary.of.RowStochastic
+import Theorem.Matrix.Any_And_Stationary.of.RowStochastic
 import Lemma.Matrix.Stationary_Pow.of.Stationary
 import Lemma.Matrix.GetIterateSmatAsOperator.eq.ToLp1VecMulOfLp_Pow.of.Simplex
 import Lemma.Matrix.Norm.eq.Sum_AbsOfLp

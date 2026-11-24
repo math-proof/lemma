@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckRSWStrictAxisSourcePartition.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.RSWStrictAxisSourcePartition
+set_option linter.style.longLine false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/CheckRSWStrictAxisSourcePartition.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,9 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.Universality.RSWStrictAxisSourcePartition
-set_option linter.style.longLine false
 
 #print axioms StatMech.Universality.RlcStrictAxisRightFullCrossing.axis_nonnegative_mem_strictTopSet
 #print axioms StatMech.Universality.RlcStrictAxisLeftFullCrossing.axis_nonpositive_mem_strictBottomSet

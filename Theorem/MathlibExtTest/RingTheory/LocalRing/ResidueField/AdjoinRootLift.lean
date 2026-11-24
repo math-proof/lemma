@@ -1,10 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/LocalRing/ResidueField/AdjoinRootLift.lean -/
-
-
-import Def.RingTheory.LocalRing.ResidueField.AdjoinRootLift.Part3
-import Lemma.Int.LocalRing.ResidueField.AdjoinRootLift
+module
+public import Def.RingTheory.LocalRing.ResidueField.AdjoinRootLift.Part3
+public import Theorem.Int.LocalRing.ResidueField.AdjoinRootLift
 open Polynomial
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/RingTheory/LocalRing/ResidueField/AdjoinRootLift.lean -/
 variable {A : Type*} [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
 
 

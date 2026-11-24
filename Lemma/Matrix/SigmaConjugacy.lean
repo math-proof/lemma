@@ -1,7 +1,10 @@
-import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
-import Def.AutomorphicForm_SigmaConjugacy
-
+module
+public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+public import Def.AutomorphicForm_SigmaConjugacy
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

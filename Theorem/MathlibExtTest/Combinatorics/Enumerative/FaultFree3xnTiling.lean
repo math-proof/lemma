@@ -1,11 +1,12 @@
+module
+public import Def.Combinatorics.Enumerative.FaultFree3xnTiling.Part21
+public import Theorem.Finset.Enumerative.FaultFree3xnTiling
+public import Mathlib.Tactic.NormNum
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/FaultFree3xnTiling.lean -/
-
-
-import Def.Combinatorics.Enumerative.FaultFree3xnTiling.Part21
-import Lemma.Finset.Enumerative.FaultFree3xnTiling
-import Mathlib.Tactic.NormNum
-
-
 namespace MathlibExtTest.Combinatorics.Enumerative.FaultFree3xnTiling
 
 -- The classification recognizes a concrete horizontal domino.

@@ -1,11 +1,13 @@
--- Carved from Lemma/Definitions/Def_ModularCurve_CuspSpace.lean: instance decls only.
-import Mathlib
-import Theorem.Matrix.CuspSpace
-import Def.ModularCurve_CuspSpace
-
+module
+public import Mathlib
+public import Def.ModularCurve_CuspSpace
 open Matrix Matrix.SpecialLinearGroup OnePoint CongruenceSubgroup
-
 open scoped MatrixGroups
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_ModularCurve_CuspSpace.lean: instance decls only.
 
 namespace ModularCurve
 
@@ -20,7 +22,13 @@ variable {N}
 variable (N)
 
 instance instFinite [NeZero N] : Finite (CuspSpace N) :=
-  Finite.of_surjective _ (fromCoset_surjective N)
+  Finite.of_surjective (fromCoset N) (by
+    rintro ⟨x⟩
+    obtain ⟨g, hg⟩ := OnePoint.exists_mem_SL2 ℤ x
+    exact ⟨(g⁻¹ : SL(2, ℤ)), by
+      change mk N (mapGL ℚ ((g⁻¹ : SL(2, ℤ))⁻¹) • ∞) = ⟦x⟧
+      rw [inv_inv, hg]
+      rfl⟩)
 
 instance instNonempty : Nonempty (CuspSpace N) := ⟨mk N ∞⟩
 
@@ -36,7 +44,7 @@ instance instSubsingletonOfOne : Subsingleton (CuspSpace 1) := by
   symm
   rw [show (mapGL ℚ h • (∞ : OnePoint ℚ)) = mapGL ℚ (h * g⁻¹) • (mapGL ℚ g • (∞ : OnePoint ℚ))
     by rw [← mul_smul, ← map_mul, inv_mul_cancel_right]]
-  exact mk_smul (hmem _) _
+  exact Quotient.sound ⟨⟨mapGL ℚ (h * g⁻¹), h * g⁻¹, hmem _, rfl⟩, rfl⟩
 
 variable {N}
 

@@ -1,5 +1,9 @@
-import Instance.CuspForm_HeckeLocal
-import Instance.ModularCurve_SpecializationWitness
+module
+public import Instance.CuspForm_HeckeLocal
+public import Instance.ModularCurve_SpecializationWitness
+
+
+public section
 
 noncomputable section
 

@@ -16,7 +16,7 @@ open Set
 [Function.eq_iff](https://github.com/teorth/analysis/blob/main/Analysis/Section_3_3.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   [SetTheory]
   {X Y: Chapter3.Set}
   {f g: Function X Y} :

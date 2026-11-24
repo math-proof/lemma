@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/CurrentContinuityAdjacentInfluence.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityBoxInfluence
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentChainClosure
+public import Theorem.StatisticalMechanics.Code.FrontierB.InfiniteCurrentPairCylinders.Part2
+open Filter MeasureTheory Set Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/CurrentContinuityAdjacentInfluence.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityBoxInfluence
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentChainClosure
-import Theorem.StatisticalMechanics.Code.FrontierB.InfiniteCurrentPairCylinders.Part2
-open Filter MeasureTheory Set Topology
-
-
 namespace StatMech.FrontierB
 
 open ConfigSpace Ising Lattice Percolation Sharpness

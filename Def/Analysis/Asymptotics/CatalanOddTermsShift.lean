@@ -1,30 +1,31 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanOddTermsShift.lean -/
+module
+public import Mathlib.Topology.Basic
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Data.Nat.Choose.Basic
+public import Theorem.Analysis.Asymptotics.CatalanAsymptoticExpansion.Part8
+public import Theorem.Real.Asymptotics.CatalanAsymptoticExpansion
+public import Mathlib.Analysis.Analytic.Composition
+public import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
+public import Mathlib.Analysis.SpecialFunctions.ExpDeriv
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Asymptotics/CatalanOddTermsShift.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, Codex
 -/
-
-import Mathlib.Topology.Basic
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Data.Nat.Choose.Basic
-import Theorem.Analysis.Asymptotics.CatalanAsymptoticExpansion.Part8
-import Lemma.Real.Asymptotics.CatalanAsymptoticExpansion
-import Mathlib.Analysis.Analytic.Composition
-import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
-import Mathlib.Analysis.SpecialFunctions.ExpDeriv
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring
 /-!
 # The unique even-power shift for Catalan asymptotics
 
 This file proves that `3/4` is the unique shift for which the normalized
 Catalan numbers have an all-orders expansion containing only even powers.
 -/
-
-
 namespace MetaMathlibExt
 
 open scoped BigOperators

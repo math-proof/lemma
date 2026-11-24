@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/QuantumIsingSectorProductComparison.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingFiniteSpectralBridge.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingPeriodicProduct.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingReducedParameterBounds
+public import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingAntiperiodicReduction
+public import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingArfSandwich
+public import Def.StatisticalMechanics.Code.FrontierA.QuantumIsingSectorProductComparison
+open scoped BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/QuantumIsingSectorProductComparison.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingFiniteSpectralBridge.Part2
-import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingPeriodicProduct.Part2
-import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingReducedParameterBounds
-import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingAntiperiodicReduction
-import Theorem.StatisticalMechanics.Code.FrontierA.QuantumIsingArfSandwich
-import Def.StatisticalMechanics.Code.FrontierA.QuantumIsingSectorProductComparison
-open scoped BigOperators
-
-
 namespace StatMech.FrontierA
 
 open StatMech.Onsager

@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/CurrentTraceInsertion.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierB.BoxCurrentLaws.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentSelectionIndependence.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentMixingErgodicity.Part2
+public import Theorem.StatisticalMechanics.Code.FK.InfiniteFiniteEnergy.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentTraceInsertion
+open MeasureTheory
+open scoped ENNReal BigOperators symmDiff
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/CurrentTraceInsertion.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierB.BoxCurrentLaws.Part3
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentSelectionIndependence.Part3
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentMixingErgodicity.Part2
-import Theorem.StatisticalMechanics.Code.FK.InfiniteFiniteEnergy.Part2
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentTraceInsertion
-open MeasureTheory
-open scoped ENNReal BigOperators symmDiff
-
-
 namespace StatMech.FrontierB
 
 open Sharpness Lattice

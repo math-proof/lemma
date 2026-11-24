@@ -1,16 +1,17 @@
+module
+public import Def.Analysis.Ramanujan.Part1Ch9Entry13Bernoulligen
+public import Theorem.Real.Part1Ch9Entry13Bernoulligen
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Ramanujan/Part1Ch9Entry13Bernoulligen.lean -/
-
-
-import Def.Analysis.Ramanujan.Part1Ch9Entry13Bernoulligen
-import Lemma.Real.Part1Ch9Entry13Bernoulligen
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 9, Entry 13 API checks
 
 Branch equations for `chapter9Clausen`, the Clausen summability and norm bound,
 and the Entry 13 integrand equation.
 -/
-
-
 namespace MathlibExtTest.Analysis.Ramanujan.Part1Ch9Entry13Bernoulligen
 
 open MathlibExt.Analysis.Ramanujan.Part1Ch9.Entry13Bernoulligen

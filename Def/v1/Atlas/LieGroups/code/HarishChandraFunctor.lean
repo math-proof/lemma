@@ -1,5 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/HarishChandraFunctor.lean -/
+module
+public import Def.v1.Atlas.LieGroups.code.Admissible.Part3
+public import Mathlib.Algebra.Lie.OfAssociative
+public import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
+public import Theorem.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
+public import Theorem.Real.GetToMonoidHom.in.SmoothSubspace.of.In_SmoothSubspace
+public import Def.v1.Atlas.LieGroups.code.GKModule.Part2
+public import Def.v1.Atlas.LieGroups.code.GKModuleDefs.Part2
+public import Def.v1.Atlas.LieGroups.code.SmoothVectors
+public import Def.v1.Atlas.LieGroups.code.KFiniteProps.Part4
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/HarishChandraFunctor.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +20,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.LieGroups.code.Admissible.Part3
-import Mathlib.Algebra.Lie.OfAssociative
-import Def.v1.Atlas.LieGroups.code.ContinuousRep.Part3
-import Theorem.LinearMap.EqContinuousLinearEquivOfBijective.of.Bijective
-import Theorem.Real.GetToMonoidHom.in.SmoothSubspace.of.In_SmoothSubspace
-import Def.v1.Atlas.LieGroups.code.GKModule.Part2
-import Def.v1.Atlas.LieGroups.code.GKModuleDefs.Part2
-import Def.v1.Atlas.LieGroups.code.SmoothVectors
-import Def.v1.Atlas.LieGroups.code.KFiniteProps.Part4
-
-
 noncomputable section
 
 set_option autoImplicit false

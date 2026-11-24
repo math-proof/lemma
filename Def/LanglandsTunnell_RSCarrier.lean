@@ -1,10 +1,13 @@
-import Def.AutomorphicForm_UnipotentQuotient
-import Lemma.Matrix.SmoothAutomorphicFnAt
-import Theorem.Measure.TateGlobalZeta
-import Theorem.Matrix.WeylIntertwining
-import Abbrev.LanglandsTunnell_RSCarrier
-
+module
+public import Def.AutomorphicForm_UnipotentQuotient
+public import Theorem.Matrix.SmoothAutomorphicFnAt
+public import Theorem.Measure.TateGlobalZeta
+public import Theorem.Matrix.WeylIntertwining
+public import Abbrev.LanglandsTunnell_RSCarrier
 open MeasureTheory NumberField AutomorphicForm Matrix
+
+
+public section
 
 noncomputable section
 

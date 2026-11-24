@@ -1,8 +1,11 @@
-import Def.Matrix_Lift48
-import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
-import Mathlib.NumberTheory.NumberField.Basic
-
+module
+public import Def.Matrix_Lift48
+public import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
+public import Mathlib.NumberTheory.NumberField.Basic
 set_option autoImplicit false
+
+
+public section
 
 namespace LanglandsTunnell
 

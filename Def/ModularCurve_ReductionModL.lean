@@ -1,8 +1,11 @@
-import Mathlib
-import Lemma.LaurentSeries.ArithmeticGalois
-import Lemma.HahnSeries.X0ModL
-
+module
+public import Mathlib
+public import Lemma.LaurentSeries.ArithmeticGalois
+public import Theorem.HahnSeries.X0ModL
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

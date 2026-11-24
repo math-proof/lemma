@@ -1,20 +1,24 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch.lean -/
+module
+public import Def.NumberTheory.PrimeInterval.Breusch.Lower
+public import Lemma.Nat.PrimeInterval.Breusch.Lower
+public import Theorem.Nat.PrimeInterval.Breusch.Theta
+public import Theorem.Nat.PrimeInterval.Breusch.Upper
+public import Def.NumberTheory.PrimeInterval.Breusch.Theta
+public import Def.NumberTheory.PrimeInterval.Breusch.Upper
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.Real.Sqrt
+public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Tactic.FinCases
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.NormNum.Prime
+public import Mathlib.Tactic.Ring
 
-import Def.NumberTheory.PrimeInterval.Breusch.Lower
-import Lemma.Nat.PrimeInterval.Breusch.Lower
-import Theorem.Nat.PrimeInterval.Breusch.Theta
-import Lemma.Nat.PrimeInterval.Breusch.Upper
-import Def.NumberTheory.PrimeInterval.Breusch.Theta
-import Def.NumberTheory.PrimeInterval.Breusch.Upper
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.Real.Sqrt
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.Data.Real.Basic
-import Mathlib.Tactic.FinCases
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.NormNum.Prime
-import Mathlib.Tactic.Ring
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/PrimeInterval/Breusch.lean -/
 /-!
 # Breusch's prime-interval theorem
 
@@ -25,8 +29,6 @@ daß zwischen x und 2x stets Primzahlen liegen*, Math. Z. 34 (1932), 505–526,
 conclusion on p. 515; Göttingen scan `PPN266833020_0034`, SHA-256
 `0a95f2b4f7c9535740d4f88924fb5576dc31a409cfaaf524b802489804fc18f1`.
 -/
-
-
 namespace MathlibExt.NumberTheory.BreuschWanted
 
 namespace Internal

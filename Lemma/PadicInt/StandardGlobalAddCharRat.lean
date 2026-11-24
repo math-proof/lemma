@@ -10,7 +10,7 @@ import Mathlib.Algebra.BigOperators.Finprod
 import Mathlib.Analysis.SpecialFunctions.Complex.Log
 import Mathlib.Analysis.Normed.Group.Ultra
 import Mathlib.Analysis.Normed.Ring.Ultra
-import Lemma.Measure.WhittakerCoefficient
+import Theorem.Measure.WhittakerCoefficient
 import Instance.NumberField_StandardGlobalAddCharRat
 
 set_option autoImplicit false

@@ -1,7 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Section_6_7.Part2
-import Instance.Analysis.Section_6_epilogue
+module
+public import Mathlib
+public import Theorem.Analysis.Section_6_7.Part2
+public import Instance.Analysis.Section_6_epilogue
 open Filter
+
+
+public section
 
 /-!
 # Analysis I, Chapter 6 epilogue: Connections with Mathlib limits
@@ -12,8 +16,6 @@ that Mathlib's operations are defined in far greater generality than the setting
 sequences, in particular using the language of filters.
 
 -/
-
-
 /-- Identification with {name}`CauSeq.lim` -/
 theorem Chapter6.Sequence.lim_eq_CauSeq_lim (a:ℕ → ℝ) (ha: (a:Sequence).IsCauchy) :
     Chapter6.lim (a:Sequence) = CauSeq.lim  ⟨ a, (isCauchy_iff_isCauSeq a).mp ha⟩ := by

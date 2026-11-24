@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/MeanfieldIsingState.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Sharpness.MeanfieldIsingFull.Part2
+public import Theorem.StatisticalMechanics.Code.Ising.FVConsistencyProve.Part2
+public import Theorem.StatisticalMechanics.Code.Ising.GHSThreePoint
+public import Def.StatisticalMechanics.Code.Sharpness.MeanfieldIsingState
+open MeasureTheory Real Set Filter Topology
+open scoped BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/MeanfieldIsingState.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Sharpness.MeanfieldIsingFull.Part2
-import Theorem.StatisticalMechanics.Code.Ising.FVConsistencyProve.Part2
-import Theorem.StatisticalMechanics.Code.Ising.GHSThreePoint
-import Def.StatisticalMechanics.Code.Sharpness.MeanfieldIsingState
-open MeasureTheory Real Set Filter Topology
-open scoped BigOperators
-
-
 namespace StatMech
 
 namespace Sharpness

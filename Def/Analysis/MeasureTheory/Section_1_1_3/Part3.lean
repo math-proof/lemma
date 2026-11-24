@@ -1,6 +1,10 @@
-import Abbrev.Analysis.MeasureTheory.Section_1_1_2.Part4
-import Theorem.Analysis.MeasureTheory.Section_1_1_3.Part2
+module
+public import Abbrev.Analysis.MeasureTheory.Section_1_1_2.Part4
+public import Theorem.Analysis.MeasureTheory.Section_1_1_3.Part2
 open BoundedInterval
+
+
+public section
 
 /-!
 # Introduction to Measure Theory, Section 1.1.3: Connections with the Riemann integral
@@ -8,8 +12,6 @@ open BoundedInterval
 A companion to Section 1.1.3 of the book "An introduction to Measure Theory".
 
 -/
-
-
 /-- Helper: Modify a tagged partition by changing one tag -/
 def TaggedPartition.changeTag {I: BoundedInterval} {n:ℕ} (P: TaggedPartition I n)
     (k: Fin n) (t: ℝ) (ht: P.x k.castSucc ≤ t ∧ t ≤ P.x k.succ) : TaggedPartition I n where

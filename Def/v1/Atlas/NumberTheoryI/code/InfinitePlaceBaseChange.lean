@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/InfinitePlaceBaseChange.lean -/
+module
+public import Abbrev.v1.Atlas.NumberTheoryI.code.GlobalFields
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GlobalFields
+open NumberField
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/InfinitePlaceBaseChange.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Abbrev.v1.Atlas.NumberTheoryI.code.GlobalFields
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.GlobalFields
-open NumberField
-
-
 namespace InfinitePlaceBaseChange
 
 noncomputable def ringEquiv {K L : Type*} [Field K] [Field L]

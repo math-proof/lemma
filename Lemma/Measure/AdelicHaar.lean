@@ -1,11 +1,14 @@
-import Mathlib.NumberTheory.NumberField.AdeleRing
-import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
-import Mathlib.Topology.Algebra.Valued.LocallyCompact
-import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
-import Instance.NumberField_AdelicHaar
-
+module
+public import Mathlib.NumberTheory.NumberField.AdeleRing
+public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+public import Mathlib.Topology.Algebra.Valued.LocallyCompact
+public import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
+public import Instance.NumberField_AdelicHaar
 open IsDedekindDomain NumberField MeasureTheory Measure Matrix
 open scoped RestrictedProduct
+
+
+public section
 
 noncomputable section
 

@@ -1,6 +1,9 @@
-import Class.AlgebraicCurve_DivisorClassGroup
-
+module
+public import Class.AlgebraicCurve_DivisorClassGroup
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

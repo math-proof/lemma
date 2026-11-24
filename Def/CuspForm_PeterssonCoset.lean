@@ -1,8 +1,11 @@
-import Mathlib
-import Def.AutomorphicForm_ModularFundamentalDomain
-
+module
+public import Mathlib
+public import Def.AutomorphicForm_ModularFundamentalDomain
 set_option autoImplicit false
 set_option maxHeartbeats 800000
+
+
+public section
 
 noncomputable section
 

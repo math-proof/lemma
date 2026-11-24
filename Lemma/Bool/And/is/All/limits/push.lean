@@ -3,26 +3,27 @@ import Initialize.Tactic.Attr.Basic
 
 @[path]
 private lemma main
-  {n : ℕ}
-  {p : ℕ → Prop} :
+  {f : ℤ → Prop}
+  {a b : ℤ}
+-- given
+  (h : a ≤ b) :
 -- imply
-  ((∀ i < n, p i) ∧ p n ∧ p (n + 1)) ↔ ∀ i < n + 2, p i := by
+  (∀ i ∈ Set.Ico a b, f i) ∧ f b ↔ ∀ i ∈ Set.Ico a (b + 1), f i := by
 -- proof
   constructor
   ·
-    intro h i hi
-    obtain ⟨hall, hn, hn1⟩ := h
-    if hlt : i < n then
-      exact hall i hlt
-    else if heq : i = n then
-      simpa [heq] using hn
-    else
-      have : i = n + 1 := by omega
-      simpa [this] using hn1
+    rintro ⟨h₁, h₂⟩ i hi
+    simp only [Set.mem_Ico] at hi
+    by_cases hib : i = b
+    ·
+      subst hib
+      exact h₂
+    ·
+      exact h₁ i (by simp only [Set.mem_Ico]; omega)
   ·
-    intro h
-    exact ⟨fun i hi => h i (by omega), h n (by omega), h (n + 1) (by omega)⟩
+    intro h'
+    exact ⟨fun i hi => h' i (by simp only [Set.mem_Ico] at hi ⊢; omega), h' b (by simp only [Set.mem_Ico]; omega)⟩
 
 
 -- created on 2019-05-06
--- updated on 2026-10-26
+-- updated on 2026-11-24

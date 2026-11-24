@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/GrahamStableRawTokenCutReroute.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.GrahamMaskFiberMiddleReversal.Part24
+public import Theorem.StatisticalMechanics.Code.FrontierA.GrahamTightFamilyCutParity.Part5
+public import Def.StatisticalMechanics.Code.FrontierA.GrahamStableRawTokenCutReroute.Part11
+open Finset
+open scoped symmDiff
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/GrahamStableRawTokenCutReroute.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.GrahamMaskFiberMiddleReversal.Part24
-import Theorem.StatisticalMechanics.Code.FrontierA.GrahamTightFamilyCutParity.Part5
-import Def.StatisticalMechanics.Code.FrontierA.GrahamStableRawTokenCutReroute.Part11
-open Finset
-open scoped symmDiff
-
-
 namespace StatMech.GrahamGHS.FourColor
 
 variable {I W : Type*} [Fintype I] [DecidableEq I]

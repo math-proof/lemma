@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/BeffaraDC/ActiveInfluenceQOne.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.BeffaraDC.ActiveInfluence.Part2
+public import Theorem.StatisticalMechanics.Code.BeffaraDC.MaxInfluencePBiased.Part2
+public import Theorem.StatisticalMechanics.Code.OSSS.CovLowerBound
+public import Def.StatisticalMechanics.Code.BeffaraDC.ActiveInfluenceQOne
+open scoped BigOperators
+open Finset Set
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/BeffaraDC/ActiveInfluenceQOne.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.BeffaraDC.ActiveInfluence.Part2
-import Theorem.StatisticalMechanics.Code.BeffaraDC.MaxInfluencePBiased.Part2
-import Theorem.StatisticalMechanics.Code.OSSS.CovLowerBound
-import Def.StatisticalMechanics.Code.BeffaraDC.ActiveInfluenceQOne
-open scoped BigOperators
-open Finset Set
-
-
 namespace StatMech.BeffaraDC
 
 open StatMech.FK

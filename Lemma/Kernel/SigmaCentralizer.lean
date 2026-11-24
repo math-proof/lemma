@@ -1,8 +1,11 @@
-import Mathlib.GroupTheory.Subgroup.Centralizer
-import Mathlib.Tactic.Group
-import Def.AutomorphicForm_SigmaCentralizer
-
+module
+public import Mathlib.GroupTheory.Subgroup.Centralizer
+public import Mathlib.Tactic.Group
+public import Def.AutomorphicForm_SigmaCentralizer
 set_option autoImplicit false
+
+
+public section
 
 namespace AutomorphicForm
 

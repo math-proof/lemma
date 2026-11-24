@@ -1,5 +1,24 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/FKUniquenessSkeleton.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.FK.FKUniquenessDensity
+public import Theorem.StatisticalMechanics.Code.FK.FKUniquenessClose2
+public import Theorem.StatisticalMechanics.Code.FK.SecantClose.Part3
+public import Theorem.StatisticalMechanics.Code.FK.HolleyCoupling.Part2
+public import Theorem.StatisticalMechanics.Code.FK.TwoPointInfinite.Part5
+public import Theorem.StatisticalMechanics.Code.FK.FreeWeakLimit.Part8
+public import Theorem.StatisticalMechanics.Code.FK.MonotoneWeakLimit.Part2
+public import Theorem.StatisticalMechanics.Code.FK.Limits
+public import Theorem.StatisticalMechanics.Code.Foundations.Strassen
+open MeasureTheory Set Filter Topology
+open scoped BigOperators ENNReal
+set_option linter.unusedSectionVars false
+set_option linter.unusedFintypeInType false
+set_option linter.unusedDecidableInType false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/FKUniquenessSkeleton.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,26 +26,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.FK.FKUniquenessDensity
-import Theorem.StatisticalMechanics.Code.FK.FKUniquenessClose2
-import Theorem.StatisticalMechanics.Code.FK.SecantClose.Part3
-import Theorem.StatisticalMechanics.Code.FK.HolleyCoupling.Part2
-import Theorem.StatisticalMechanics.Code.FK.TwoPointInfinite.Part5
-import Theorem.StatisticalMechanics.Code.FK.FreeWeakLimit.Part8
-import Theorem.StatisticalMechanics.Code.FK.MonotoneWeakLimit.Part2
-import Theorem.StatisticalMechanics.Code.FK.Limits
-import Theorem.StatisticalMechanics.Code.Foundations.Strassen
-open MeasureTheory Set Filter Topology
-open scoped BigOperators ENNReal
-
-set_option linter.unusedSectionVars false
-set_option linter.unusedFintypeInType false
-set_option linter.unusedDecidableInType false
-
-
 namespace StatMech
 
 namespace FK

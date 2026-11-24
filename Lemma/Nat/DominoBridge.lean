@@ -4,7 +4,7 @@ import Def.Combinatorics.Tiling.DominoBridge.Part4
 import Def.Combinatorics.Tiling.DominoTilings.Part13
 import Def.Combinatorics.Enumerative.WeightedSets.Part26
 import Lemma.Nat.DominoTilings
-import Lemma.PowerSeries.WeightedSets
+import Theorem.PowerSeries.WeightedSets
 open DominoBridge
 
 

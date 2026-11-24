@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/IntegralSquareTorusIntersection.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Onsager.TorusIntersection.Part8
+public import Def.StatisticalMechanics.Code.FrontierD.IntegralSquareTorusIntersection.Part7
+open scoped BigOperators
+open Finset
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/IntegralSquareTorusIntersection.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Onsager.TorusIntersection.Part8
-import Def.StatisticalMechanics.Code.FrontierD.IntegralSquareTorusIntersection.Part7
-open scoped BigOperators
-open Finset
-
-
 namespace StatMech.FrontierD
 
 open StatMech.Onsager

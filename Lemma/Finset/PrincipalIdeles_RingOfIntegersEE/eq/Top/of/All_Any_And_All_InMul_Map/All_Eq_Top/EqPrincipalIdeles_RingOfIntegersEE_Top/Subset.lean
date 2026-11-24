@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.M4aHerbrand_IdeleClassVocab
 import Lemma.Set.IdeleBox
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open NumberField IsDedekindDomain IsDedekindDomain.HeightOneSpectrum Set
 

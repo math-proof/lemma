@@ -1,13 +1,5 @@
 import Initialize.Tactic.Attr.Basic
-
-
-@[path]
-private lemma principle.inclusive_exclusive
-  [Decidable p] [Decidable q] :
--- imply
-  (decide p).toNat + (decide q).toNat = (decide (p ∨ q)).toNat + (decide (p ∧ q)).toNat := by
--- proof
-  by_cases hp : p <;> by_cases hq : q <;> simp [hp, hq]
+import Lemma.Bool.Add.principle.inclusive_exclusive
 
 
 -- created on 2026-09-27

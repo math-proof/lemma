@@ -1,9 +1,12 @@
-import Mathlib
-import Lemma.WeierstrassCurve.Velu
-import Def.WeierstrassCurve_VeluQuotientMap
-import Structure.WeierstrassCurve_VeluQuotientMap
-
+module
+public import Mathlib
+public import Lemma.WeierstrassCurve.Velu
+public import Def.WeierstrassCurve_VeluQuotientMap
+public import Structure.WeierstrassCurve_VeluQuotientMap
 open Polynomial
+
+
+public section
 
 namespace WeierstrassCurve
 

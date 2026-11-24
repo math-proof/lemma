@@ -1,10 +1,12 @@
-import Def.Analysis.MeasureTheory.Notation.Part2
-import Theorem.Analysis.Section_9_1.Part3
-import Abbrev.Analysis.MeasureTheory.Section_1_1_1.Part6
+module
+public import Def.Analysis.MeasureTheory.Notation.Part2
+public import Theorem.Analysis.Section_9_1.Part3
+public import Abbrev.Analysis.MeasureTheory.Section_1_1_1.Part6
 open BoundedInterval
-
 open Pointwise
 
+
+public section
 
 /-- The measure equals the sum of volumes for any disjoint box partition of the set. -/
 theorem IsElementary.measure_eq {d:ℕ} {E: Set (EuclideanSpace' d)} (hE: IsElementary E)

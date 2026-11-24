@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingCriticalTwoPointShell.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingCriticalSimonMass
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingCriticalTwoPointReduction
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityFreeLeftContinuous
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityMagnetizationFK
+public import Def.StatisticalMechanics.Code.FrontierA.IsingCriticalTwoPointShell
+open Finset MeasureTheory Set
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingCriticalTwoPointShell.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingCriticalSimonMass
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingCriticalTwoPointReduction
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityFreeLeftContinuous
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityMagnetizationFK
-import Def.StatisticalMechanics.Code.FrontierA.IsingCriticalTwoPointShell
-open Finset MeasureTheory Set
-
-
 namespace StatMech.FrontierA
 
 open Ising Lattice Percolation Sharpness

@@ -1,14 +1,17 @@
-import Mathlib
-import Lemma.Scheme.RelativeGroupLaw
-import Instance.AlgebraicGeometry_SquareZeroDeformation
-import Def.AlgebraicGeometry_SquareZeroRelTangent
-import Def.AlgebraicGeometry_SmallExtensionPairTangent
-import Abbrev.AlgebraicGeometry_TangentCoordsOfPair
-import Def.AlgebraicGeometry_SmallExtensionTangentCoords
-import Def.AlgebraicGeometry_TangentCoordsOfPairAt
-
+module
+public import Mathlib
+public import Lemma.Scheme.RelativeGroupLaw
+public import Instance.AlgebraicGeometry_SquareZeroDeformation
+public import Def.AlgebraicGeometry_SquareZeroRelTangent
+public import Def.AlgebraicGeometry_SmallExtensionPairTangent
+public import Abbrev.AlgebraicGeometry_TangentCoordsOfPair
+public import Def.AlgebraicGeometry_SmallExtensionTangentCoords
+public import Def.AlgebraicGeometry_TangentCoordsOfPairAt
 set_option autoImplicit false
 set_option linter.unusedSectionVars false
+
+
+public section
 
 noncomputable section
 

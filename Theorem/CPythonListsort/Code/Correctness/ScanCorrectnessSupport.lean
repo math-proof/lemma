@@ -1,7 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/ScanCorrectnessSupport.lean -/
+module
+public import Def.CPythonListsort.Code.Correctness.ScanRemainder.Part3
+public import Theorem.List.Atlas.CPythonListsort.Code.Policy.MergeTopPowerPreservation
 
-import Def.CPythonListsort.Code.Correctness.ScanRemainder.Part3
-import Theorem.List.Atlas.CPythonListsort.Code.Policy.MergeTopPowerPreservation
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Correctness/ScanCorrectnessSupport.lean -/
 /-!
 # Support lemmas for forward scan correctness
 
@@ -9,8 +13,6 @@ This module collects comparator-independent range and frame lemmas, together
 with the absolute-origin stability composition used by the forward scan proof.
 It deliberately does not state the scan-step theorem itself.
 -/
-
-
 namespace CPythonListsort
 
 universe u v

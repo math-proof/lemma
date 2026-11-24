@@ -1,25 +1,28 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch9Entry22Chudnovsky.lean -/
+module
+public import Mathlib.Analysis.SpecialFunctions.Log.Basic
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Data.Nat.Choose.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.Defs
+public import Def.Analysis.Ramanujan.Part1Ch9Entry20Piseries1
+public import Theorem.Real.Part1Ch9Entry20Piseries1
+public import Lemma.Real.Ramanujan.Part1Ch9Entry21Piseries2
+public import Theorem.Real.ArcsinCentralBinomialReciprocal
+public import Theorem.Real.ArcsinTaylorSeries
+public import Def.Analysis.Ramanujan.Part1Ch9Entry21Piseries2
+public import Mathlib.Analysis.Analytic.Binomial
+public import Mathlib.Analysis.Normed.Group.Tannery
+public import Mathlib.Analysis.SpecialFunctions.Integrals.LogTrigonometric
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.InverseDeriv
+public import Def.Analysis.SpecialFunctions.ArcsinCentralBinomialReciprocal
+public import Def.Analysis.SpecialFunctions.ArcsinTaylorSeries
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Ramanujan/Part1Ch9Entry22Chudnovsky.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3, @akiezun, Avocado, Codex
 -/
-
-import Mathlib.Analysis.SpecialFunctions.Log.Basic
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Data.Nat.Choose.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.Defs
-import Def.Analysis.Ramanujan.Part1Ch9Entry20Piseries1
-import Lemma.Real.Part1Ch9Entry20Piseries1
-import Lemma.Real.Ramanujan.Part1Ch9Entry21Piseries2
-import Lemma.Real.ArcsinCentralBinomialReciprocal
-import Lemma.Real.ArcsinTaylorSeries
-import Def.Analysis.Ramanujan.Part1Ch9Entry21Piseries2
-import Mathlib.Analysis.Analytic.Binomial
-import Mathlib.Analysis.Normed.Group.Tannery
-import Mathlib.Analysis.SpecialFunctions.Integrals.LogTrigonometric
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.InverseDeriv
-import Def.Analysis.SpecialFunctions.ArcsinCentralBinomialReciprocal
-import Def.Analysis.SpecialFunctions.ArcsinTaylorSeries
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 9
 
@@ -29,8 +32,6 @@ Statements of entries from B. C. Berndt, *Ramanujan's Notebooks, Part I*
 This module proves `ramanujan_part1_ch9_entry22_chudnovsky`, Entry 22 on the
 corrected range `0 ≤ x ≤ π / 4`.
 -/
-
-
 section
 
 namespace MathlibExt.Analysis.Ramanujan.Part1Ch9

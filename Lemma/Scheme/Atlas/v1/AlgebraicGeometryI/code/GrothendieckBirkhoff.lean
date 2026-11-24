@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.AlgebraicGeometryI.code.GrothendieckBirkhoff
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.AlgebraicGeometryI.code.GrothendieckBirkhoff
 open GrothendieckBirkhoff
 
+
+public section
 
 namespace GrothendieckBirkhoff
 

@@ -1,6 +1,10 @@
-import Theorem.LinearMap.Main
-import Theorem.Algebra.AdicCompletion.TensorRing.Part4
-import Lemma.AdicCompletion.StabilizerCompletionAction
+module
+public import Theorem.LinearMap.Main
+public import Theorem.Algebra.AdicCompletion.TensorRing.Part4
+public import Lemma.AdicCompletion.StabilizerCompletionAction
+
+
+public section
 
 universe u₁ u₂ u₃
 

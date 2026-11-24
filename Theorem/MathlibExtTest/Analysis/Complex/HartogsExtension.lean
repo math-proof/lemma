@@ -1,14 +1,15 @@
+module
+public import Theorem.Analysis.Complex.HartogsExtension.Part9
+public import Mathlib.Analysis.Calculus.ContDiff.Defs
+public import Mathlib.Analysis.Calculus.BumpFunction.FiniteDimension
+public import Mathlib.Analysis.Calculus.FDeriv.Mul
+public import Mathlib.Analysis.Normed.Module.Connected
+public import Mathlib.LinearAlgebra.Complex.FiniteDimensional
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Complex/HartogsExtension.lean -/
-
-
-import Theorem.Analysis.Complex.HartogsExtension.Part9
-import Mathlib.Analysis.Calculus.ContDiff.Defs
-import Mathlib.Analysis.Calculus.BumpFunction.FiniteDimension
-import Mathlib.Analysis.Calculus.FDeriv.Mul
-import Mathlib.Analysis.Normed.Module.Connected
-import Mathlib.LinearAlgebra.Complex.FiniteDimensional
-
-
 namespace MathlibExtTest.Analysis.Complex.HartogsExtension
 
 open MathlibExt.Analysis.Complex.HartogsWanted Metric

@@ -1,21 +1,23 @@
-import Lemma.Matrix.TwistedNormClasses
-import Def.AutomorphicForm_GL2ConjugacyCells
-import Def.AutomorphicForm_TruncationOperator
-import Def.NumberField_AdelicHeight
-import Def.AutomorphicForm_AdelicLsXi
-import Def.AutomorphicForm_ConstantTerm
-import Def.AutomorphicForm_BorelSubgroup
-import Def.AutomorphicForm_SigmaAdelicAction
-import Def.NumberField_AdelicBox
-import Instance.NumberField_AdelicHaar
-import Def.M4aHerbrand_IdeleClassVocab
-
+module
+public import Lemma.Matrix.TwistedNormClasses
+public import Def.AutomorphicForm_GL2ConjugacyCells
+public import Def.AutomorphicForm_TruncationOperator
+public import Def.NumberField_AdelicHeight
+public import Def.AutomorphicForm_AdelicLsXi
+public import Def.AutomorphicForm_ConstantTerm
+public import Def.AutomorphicForm_BorelSubgroup
+public import Def.AutomorphicForm_SigmaAdelicAction
+public import Def.NumberField_AdelicBox
+public import Instance.NumberField_AdelicHaar
+public import Def.M4aHerbrand_IdeleClassVocab
 set_option autoImplicit false
-
 open MeasureTheory NumberField NumberField.AdelicBox NumberField.AdelicHaar
 open IsDedekindDomain
 open AutomorphicForm
 open scoped TensorProduct Pointwise ComplexConjugate
+
+
+public section
 
 namespace AutomorphicForm.TwistedBruhat
 

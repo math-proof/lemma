@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/SLE/CardyCLE.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.SLE.Defs.Part9
+public import Theorem.StatisticalMechanics.Code.SLE.Cardy.Part8
+public import Def.StatisticalMechanics.Code.SLE.CardyCLE.Part5
+open scoped UpperHalfPlane NNReal
+open Complex Filter Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/SLE/CardyCLE.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.SLE.Defs.Part9
-import Theorem.StatisticalMechanics.Code.SLE.Cardy.Part8
-import Def.StatisticalMechanics.Code.SLE.CardyCLE.Part5
-open scoped UpperHalfPlane NNReal
-open Complex Filter Topology
-
-
 namespace StatMech.SLE
 
 lemma idLoopLaw_invariant_under_id {Ω : Type*} [MeasurableSpace Ω]

@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingGaussianConePolarization.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianNewmanBridge.Part2
+public import Mathlib.LinearAlgebra.Lagrange
+open Filter Finset Polynomial Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingGaussianConePolarization.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingGaussianNewmanBridge.Part2
-import Mathlib.LinearAlgebra.Lagrange
-open Filter Finset Polynomial Topology
-
-
 namespace StatMech.FrontierA
 
 theorem polynomial_eval_tendsto_zero_of_nodes

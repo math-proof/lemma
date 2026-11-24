@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/TwoDim/SharpThresholdFromRusso.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Sharpness.PivotalFactor
+public import Theorem.StatisticalMechanics.Code.BeffaraDC.RussoInfluence.Part2
+public import Theorem.StatisticalMechanics.Code.Inequalities.IncreasingEvent.Part2
+open MeasureTheory Set Filter Topology
+open scoped ENNReal NNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/TwoDim/SharpThresholdFromRusso.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Sharpness.PivotalFactor
-import Theorem.StatisticalMechanics.Code.BeffaraDC.RussoInfluence.Part2
-import Theorem.StatisticalMechanics.Code.Inequalities.IncreasingEvent.Part2
-open MeasureTheory Set Filter Topology
-open scoped ENNReal NNReal
-
-
 namespace StatMech
 
 namespace TwoDim

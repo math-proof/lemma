@@ -1,12 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/IsogenyVolcano.lean -/
-
-
-import Instance.Combinatorics.IsogenyVolcano.Part2
-import Theorem.Finset.IsogenyVolcano
-import Mathlib.Tactic.FinCases
-import Def.MathlibExtTest.Combinatorics.IsogenyVolcano.Part2
+module
+public import Instance.Combinatorics.IsogenyVolcano.Part2
+public import Theorem.Finset.IsogenyVolcano
+public import Mathlib.Tactic.FinCases
+public import Def.MathlibExtTest.Combinatorics.IsogenyVolcano.Part2
 set_option autoImplicit false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/IsogenyVolcano.lean -/
 
 example : depthOneVolcano.isSurface false := rfl
 

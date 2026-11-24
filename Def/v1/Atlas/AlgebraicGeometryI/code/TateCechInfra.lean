@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/TateCechInfra.lean -/
+module
+public import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityTate.Part3
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityTate
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityAnnihilator
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.SerreDualityAnnihilator
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/TateCechInfra.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.AlgebraicGeometryI.code.SerreDualityTate.Part3
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityTate
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SerreDualityAnnihilator
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.SerreDualityAnnihilator
-
-
 section TateVectorSpaceDef
 
 variable {k : Type*} [Field k] {V : Type*} [AddCommGroup V] [Module k V]

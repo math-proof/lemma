@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.GaloisRep_LocalConditions
 import Def.GaloisRep_Residual
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open IsLocalRing
 

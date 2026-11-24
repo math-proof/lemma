@@ -1,10 +1,14 @@
--- Carved from Lemma/Definitions/Def_PDivisibleGroup_CompletedPoints.lean: instance decls only.
-import Mathlib
-import Instance.PDivisibleGroup_Points
-import Theorem.Ideal.CompletedPoints
-import Def.Ideal_CompletedPoints
-
+module
+public import Mathlib
+public import Instance.PDivisibleGroup_Points
+public import Theorem.Ideal.CompletedPoints
+public import Def.Ideal_CompletedPoints
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_PDivisibleGroup_CompletedPoints.lean: instance decls only.
 
 noncomputable section
 

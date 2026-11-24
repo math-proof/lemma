@@ -1,7 +1,11 @@
-import Mathlib
-import Mathlib.Algebra.Group.MinimalAxioms
-import Theorem.Analysis.Section_4_2.Part7
+module
+public import Mathlib
+public import Mathlib.Algebra.Group.MinimalAxioms
+public import Theorem.Analysis.Section_4_2.Part7
 set_option doc.verso.suggestions false
+
+
+public section
 
 /-!
 # Analysis I, Section 4.2
@@ -35,8 +39,6 @@ Users of the companion who have completed the exercises in this section are welc
 - (Add tip here)
 
 -/
-
-
 namespace Section_4_2
 
 /--

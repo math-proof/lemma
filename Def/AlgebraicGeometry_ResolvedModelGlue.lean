@@ -1,11 +1,13 @@
-import Mathlib
-import Instance.AlgebraicGeometry_ResolvedModelGlue
-import Structure.AlgebraicGeometry_ResolvedModelGlue
-
+module
+public import Mathlib
+public import Instance.AlgebraicGeometry_ResolvedModelGlue
+public import Structure.AlgebraicGeometry_ResolvedModelGlue
 set_option autoImplicit false
 set_option maxHeartbeats 200000
-
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
+
+
+public section
 
 noncomputable section
 

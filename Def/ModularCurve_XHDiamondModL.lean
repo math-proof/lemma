@@ -1,7 +1,10 @@
-import Mathlib
-import Abbrev.ModularCurve_XH
-
+module
+public import Mathlib
+public import Abbrev.ModularCurve_XH
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

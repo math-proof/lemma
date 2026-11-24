@@ -1,8 +1,11 @@
-import Theorem.Polynomial.CharLSpecialFibreLevelNDictionary
-import Lemma.WeierstrassCurve.SupersingularModuli
-import Theorem.Scheme.AlgebraicCurveBaseChangeGalois
-
+module
+public import Theorem.Polynomial.CharLSpecialFibreLevelNDictionary
+public import Theorem.WeierstrassCurve.SupersingularModuli
+public import Theorem.Scheme.AlgebraicCurveBaseChangeGalois
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

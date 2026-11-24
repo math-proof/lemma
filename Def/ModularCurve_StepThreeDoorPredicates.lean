@@ -1,7 +1,10 @@
-import Def.ModularCurve_MazurStepThreeInputs
-import Theorem.MvPolynomial.HeckeModule
-
+module
+public import Def.ModularCurve_MazurStepThreeInputs
+public import Theorem.MvPolynomial.HeckeModule
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

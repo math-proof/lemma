@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/RSWAspectInduction.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.RSWConstantMaintenance
+public import Def.StatisticalMechanics.Code.Universality.RSWAspectInduction
+open Set MeasureTheory SimpleGraph
+open scoped ENNReal NNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/RSWAspectInduction.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.RSWConstantMaintenance
-import Def.StatisticalMechanics.Code.Universality.RSWAspectInduction
-open Set MeasureTheory SimpleGraph
-open scoped ENNReal NNReal
-
-
 namespace StatMech
 
 namespace Universality

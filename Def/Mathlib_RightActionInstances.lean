@@ -1,5 +1,9 @@
-import Mathlib
-import Instance.Mathlib_RightActionInstances
+module
+public import Mathlib
+public import Instance.Mathlib_RightActionInstances
+
+
+public section
 
 section
 

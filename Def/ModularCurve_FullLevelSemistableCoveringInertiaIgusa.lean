@@ -1,6 +1,9 @@
-import Def.ModularCurve_FullLevelSemistableCoveringNaturality
-
+module
+public import Def.ModularCurve_FullLevelSemistableCoveringNaturality
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

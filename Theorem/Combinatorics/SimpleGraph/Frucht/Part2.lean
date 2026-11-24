@@ -1,17 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Frucht.lean -/
+module
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Maps
+public import Mathlib.GroupTheory.Perm.Basic
+public import Mathlib.Combinatorics.SimpleGraph.Finite
+public import Mathlib.Order.Interval.Finset.Fin
+public import Def.Combinatorics.SimpleGraph.Frucht.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/SimpleGraph/Frucht.lean -/
 /-
 Authors: Adam Kiezun, Muse Spark 1.3
 -/
-
-import Mathlib.Combinatorics.SimpleGraph.Basic
-import Mathlib.Combinatorics.SimpleGraph.Maps
-import Mathlib.GroupTheory.Perm.Basic
-import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Order.Interval.Finset.Fin
-import Def.Combinatorics.SimpleGraph.Frucht.Part2
-
-
 section
 
 namespace MathlibExt.Combinatorics.SimpleGraph.FruchtWanted

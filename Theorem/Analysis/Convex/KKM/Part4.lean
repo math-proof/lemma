@@ -1,12 +1,17 @@
+module
+public import Mathlib.Geometry.Convex.ConvexSpace.CompactSpaceStdSimplex
+public import Mathlib.Topology.EMetricSpace.Basic
+public import Mathlib.Topology.Sequences
+public import Mathlib.Analysis.SpecificLimits.Basic
+public import Def.Analysis.Convex.KKM.Part5
+
+
+public section
+
 -- Author: @toskua, Avocado
 -- Original KKM formalization by Adam Kiezun (`@akiezun`) in commit
 -- `d855ffa90ad200e1ae118101768bd192d0d3c59f`; `@toskua, Avocado` authored
 -- only the `Convexity.StdSimplex` representation migration.
-import Mathlib.Geometry.Convex.ConvexSpace.CompactSpaceStdSimplex
-import Mathlib.Topology.EMetricSpace.Basic
-import Mathlib.Topology.Sequences
-import Mathlib.Analysis.SpecificLimits.Basic
-import Def.Analysis.Convex.KKM.Part5
 /-!
 # Knaster-Kuratowski-Mazurkiewicz lemma
 
@@ -21,8 +26,6 @@ Primary source: B. Knaster, C. Kuratowski, S. Mazurkiewicz,
 "Ein Beweis des Fixpunktsatzes für n-dimensionale Simplexe",
 Fundamenta Mathematicae 14 (1929), 132–137, DOI 10.4064/fm-14-1-132-137.
 -/
-
-
 namespace Convex.KKM
 
 variable {n : ℕ}

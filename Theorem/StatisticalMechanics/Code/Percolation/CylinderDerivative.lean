@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Percolation/CylinderDerivative.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Foundations.CylinderDeriv.Part2
+public import Def.StatisticalMechanics.Code.Percolation.CylinderDerivative
+open MeasureTheory ProbabilityTheory Function Filter
+open scoped ENNReal NNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Percolation/CylinderDerivative.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Foundations.CylinderDeriv.Part2
-import Def.StatisticalMechanics.Code.Percolation.CylinderDerivative
-open MeasureTheory ProbabilityTheory Function Filter
-open scoped ENNReal NNReal
-
-
 namespace StatMech
 
 namespace Percolation

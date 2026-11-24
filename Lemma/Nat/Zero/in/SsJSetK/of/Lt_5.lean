@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.WeierstrassCurve.SupersingularModuli
-import Lemma.Int.P2MUtil
+import Theorem.WeierstrassCurve.SupersingularModuli
+import Theorem.Int.P2MUtil
 
 open ModularCurve WeierstrassCurve
 

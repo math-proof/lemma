@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/DecorationTransitionWalk.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Onsager.DecorationFormalSeries.Part6
+public import Def.StatisticalMechanics.Code.Onsager.DecorationTransitionWalk.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/DecorationTransitionWalk.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,11 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.Onsager.DecorationFormalSeries.Part6
-import Def.StatisticalMechanics.Code.Onsager.DecorationTransitionWalk.Part2
-
-
 namespace StatMech.Onsager
 
 open Finset SimpleGraph

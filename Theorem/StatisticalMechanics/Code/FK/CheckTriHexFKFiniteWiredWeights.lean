@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/CheckTriHexFKFiniteWiredWeights.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.TriHexFKFiniteWiredWeights.Part4
+open StatMech.FK.PeriodicPlanar
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/CheckTriHexFKFiniteWiredWeights.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,9 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.FK.TriHexFKFiniteWiredWeights.Part4
-open StatMech.FK.PeriodicPlanar
 
 #print axioms wiredActiveRatio_eq_wiredFkProb_lift
 #print axioms triHexPlanarFiniteTriangle_wiredActiveRatio_eq

@@ -1,11 +1,14 @@
-import Mathlib
-import Lemma.Scheme.CurveModel
-import Instance.AlgebraicCurve_RatFuncPlaces
-import Theorem.Scheme.NeronModelPropertyBundleCarrier
-import Instance.AlgebraicGeometry_RelativePicardFunctor
-import Lemma.Scheme.RelPicardPullback
-
+module
+public import Mathlib
+public import Lemma.Scheme.CurveModel
+public import Instance.AlgebraicCurve_RatFuncPlaces
+public import Theorem.Scheme.NeronModelPropertyBundleCarrier
+public import Instance.AlgebraicGeometry_RelativePicardFunctor
+public import Lemma.Scheme.RelPicardPullback
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

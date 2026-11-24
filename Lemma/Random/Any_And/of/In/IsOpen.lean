@@ -1,13 +1,16 @@
-import Mathlib.MeasureTheory.Measure.FiniteMeasure
-import Mathlib.MeasureTheory.Measure.HasOuterApproxClosed
-import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
-import Mathlib.Topology.Algebra.Module.Spaces.WeakBilin
-import Mathlib.Topology.Constructions
-import Mathlib.Topology.MetricSpace.Polish
-import Mathlib.Topology.Metrizable.CompletelyMetrizable
-import Initialize.Tactic.Attr.Basic
+module
+public import Mathlib.MeasureTheory.Measure.FiniteMeasure
+public import Mathlib.MeasureTheory.Measure.HasOuterApproxClosed
+public import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+public import Mathlib.Topology.Algebra.Module.Spaces.WeakBilin
+public import Mathlib.Topology.Constructions
+public import Mathlib.Topology.MetricSpace.Polish
+public import Mathlib.Topology.Metrizable.CompletelyMetrizable
+public import Initialize.Tactic.Attr.Basic
 open Classical MeasureTheory Metric Set Topology
 
+
+public section
 
 /--
 An open set in the topology of weak convergence contains a basic neighborhood of any of its

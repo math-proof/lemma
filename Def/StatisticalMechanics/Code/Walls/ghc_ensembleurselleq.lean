@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/ghc_ensembleurselleq.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Ising.EnsembleGHS
+public import Theorem.StatisticalMechanics.Code.Ising.TwoCurrentProbBound
+public import Theorem.StatisticalMechanics.Code.Ising.HdomNativeWeight.Part3
+open Finset Classical
+open scoped symmDiff BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/ghc_ensembleurselleq.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Ising.EnsembleGHS
-import Theorem.StatisticalMechanics.Code.Ising.TwoCurrentProbBound
-import Theorem.StatisticalMechanics.Code.Ising.HdomNativeWeight.Part3
-open Finset Classical
-open scoped symmDiff BigOperators
-
-
 namespace StatMech.Walls
 
 open StatMech.Ising

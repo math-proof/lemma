@@ -1,10 +1,13 @@
-import Mathlib
-import Instance.AbstractHeckeOperator
-import Structure.LocalLanglands_HeckePair
+module
+public import Mathlib
+public import Instance.AbstractHeckeOperator
+public import Structure.LocalLanglands_HeckePair
 set_option autoImplicit false
 open scoped Pointwise
 open Function MulAction
 
+
+public section
 
 namespace HeckePair
 

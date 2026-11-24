@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/CyclotomicDVRInstances.lean -/
+module
+public import Theorem.v1.Atlas.NumberTheoryI.code.LocalExtensions.Part2
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.LocalExtensions
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.RamificationTypes
+public import Def.v1.Atlas.NumberTheoryI.code.RamificationTypes.Part2
+public import Mathlib.NumberTheory.Cyclotomic.Basic
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Mathlib.NumberTheory.Padics.PadicNumbers
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/NumberTheoryI/code/CyclotomicDVRInstances.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.NumberTheoryI.code.LocalExtensions.Part2
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.LocalExtensions
-import Lemma.Nat.Atlas.v1.NumberTheoryI.code.RamificationTypes
-import Def.v1.Atlas.NumberTheoryI.code.RamificationTypes.Part2
-import Mathlib.NumberTheory.Cyclotomic.Basic
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib.NumberTheory.Padics.PadicNumbers
-
-
 noncomputable section
 
 open scoped Padic

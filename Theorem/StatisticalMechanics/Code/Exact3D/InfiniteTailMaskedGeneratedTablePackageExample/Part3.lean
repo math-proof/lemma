@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Exact3D/InfiniteTailMaskedGeneratedTablePackageExample.lean -/
+module
+public import Def.StatisticalMechanics.Code.Exact3D.InfiniteTailMaskedGeneratedTablePackage
+public import Theorem.StatisticalMechanics.Code.Exact3D.FiniteWitnessPackageExample.Part6
+public import Def.StatisticalMechanics.Code.Exact3D.GeneratedTableTailBridgeExample.Part4
+public import Def.StatisticalMechanics.Code.Exact3D.InfiniteTailMaskedGeneratedTablePackageExample.Part3
+open scoped BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Exact3D/InfiniteTailMaskedGeneratedTablePackageExample.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.StatisticalMechanics.Code.Exact3D.InfiniteTailMaskedGeneratedTablePackage
-import Theorem.StatisticalMechanics.Code.Exact3D.FiniteWitnessPackageExample.Part6
-import Def.StatisticalMechanics.Code.Exact3D.GeneratedTableTailBridgeExample.Part4
-import Def.StatisticalMechanics.Code.Exact3D.InfiniteTailMaskedGeneratedTablePackageExample.Part3
-open scoped BigOperators
-
-
 namespace StatMech
 
 namespace Exact3D

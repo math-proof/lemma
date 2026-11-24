@@ -1,7 +1,10 @@
-import Mathlib
-import Instance.AlgebraicGeometry_SquareZeroDeformation
-
+module
+public import Mathlib
+public import Instance.AlgebraicGeometry_SquareZeroDeformation
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

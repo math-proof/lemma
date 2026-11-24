@@ -8,10 +8,10 @@ public import Def.CPythonListsort.Code.Assembly.MergeGetmemStorageValid.Part2
 public import Def.CPythonListsort.Code.Assembly.MergeHiSafety.Part3
 public import Theorem.CPythonListsort.Code.Assembly.MergeHiSafety.Part2
 public import Theorem.CPythonListsort.Code.Assembly.MergeHiSafety.Helpers
-public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.AccessTrace
-public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.MergeTracePrimitives
-public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.SortSliceSafety
-public import Lemma.List.Atlas.CPythonListsort.Code.Assembly.GallopSafety
+public import Theorem.List.Atlas.CPythonListsort.Code.Assembly.AccessTrace
+public import Theorem.List.Atlas.CPythonListsort.Code.Assembly.MergeTracePrimitives
+public import Theorem.List.Atlas.CPythonListsort.Code.Assembly.SortSliceSafety
+public import Theorem.List.Atlas.CPythonListsort.Code.Assembly.GallopSafety
 /-!
 # `merge_hi` traced execution and safety
 

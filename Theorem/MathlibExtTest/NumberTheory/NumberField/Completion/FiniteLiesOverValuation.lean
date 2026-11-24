@@ -1,13 +1,14 @@
+module
+public import Def.NumberTheory.NumberField.Completion.FiniteLiesOverValuation
+public import Theorem.Nat.NumberField.Completion.FiniteLiesOverValuation
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/Completion/FiniteLiesOverValuation.lean -/
-
-
-import Def.NumberTheory.NumberField.Completion.FiniteLiesOverValuation
-import Theorem.Nat.NumberField.Completion.FiniteLiesOverValuation
 /-!
 # Checks for the completion valuation formula
 -/
-
-
 namespace IsDedekindDomain.HeightOneSpectrum
 
 open scoped NumberField

@@ -1,10 +1,13 @@
-import Mathlib
-import Def.AlgebraicGeometry_ModulesSectionsTensor
-import Instance.AlgebraicGeometry_ModulesGlueOfCocycle
-import Structure.AlgebraicGeometry_ModulesGlueOfCocycle
-import Abbrev.AlgebraicGeometry_ModulesGlueOfCocycle
-
+module
+public import Mathlib
+public import Def.AlgebraicGeometry_ModulesSectionsTensor
+public import Instance.AlgebraicGeometry_ModulesGlueOfCocycle
+public import Structure.AlgebraicGeometry_ModulesGlueOfCocycle
+public import Abbrev.AlgebraicGeometry_ModulesGlueOfCocycle
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

@@ -2,8 +2,8 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.GaloisRep_TameCharacter
 import Def.FLTPrelim_Ramification
-import Lemma.WeierstrassCurve.FrobeniusTrace
-import Lemma.Int.P2MUtil
+import Theorem.WeierstrassCurve.FrobeniusTrace
+import Theorem.Int.P2MUtil
 
 open ValuationSubring
 open scoped Pointwise

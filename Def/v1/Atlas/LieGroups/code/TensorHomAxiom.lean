@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/TensorHomAxiom.lean -/
+module
+public import Def.v1.Atlas.LieGroups.code.CategoryO.Part3
+public import Theorem.Int.IsInQPlus0
+open scoped TensorProduct
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/TensorHomAxiom.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.LieGroups.code.CategoryO.Part3
-import Theorem.Int.IsInQPlus0
-open scoped TensorProduct
-
-
 noncomputable section
 
 universe u

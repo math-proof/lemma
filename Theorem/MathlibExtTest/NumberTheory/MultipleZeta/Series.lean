@@ -1,12 +1,13 @@
+module
+public import Mathlib.Tactic.FinCases
+public import Def.NumberTheory.MultipleZeta.Series.Part3
+public import Theorem.Nat.MultipleZeta.Series
+public import Def.MathlibExtTest.NumberTheory.MultipleZeta.Series
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/MultipleZeta/Series.lean -/
-
-
-import Mathlib.Tactic.FinCases
-import Def.NumberTheory.MultipleZeta.Series.Part3
-import Theorem.Nat.MultipleZeta.Series
-import Def.MathlibExtTest.NumberTheory.MultipleZeta.Series
-
-
 namespace MetaMathlibExt.MultipleZeta
 
 example : Index.empty.entries = [] := by simp

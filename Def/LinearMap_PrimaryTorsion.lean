@@ -1,8 +1,11 @@
-import Mathlib
-import Def.WeierstrassCurve_TateModule
-import Instance.PDivisibleGroup_PrimaryTorsion
-
+module
+public import Mathlib
+public import Def.WeierstrassCurve_TateModule
+public import Instance.PDivisibleGroup_PrimaryTorsion
 set_option autoImplicit false
+
+
+public section
 
 def PrimaryTorsion (p : ℕ) (M : Type) [AddCommGroup M] : AddSubgroup M :=
   AddCommGroup.primaryComponent M p

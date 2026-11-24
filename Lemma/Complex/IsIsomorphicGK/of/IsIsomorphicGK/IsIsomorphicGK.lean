@@ -1,11 +1,14 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.LieGroups.code.SL2Representations.Part2
-import Lemma.Complex.In_WeightSpace.is.H.eq.SMul
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.LieGroups.code.SL2Representations.Part2
+public import Lemma.Complex.In_WeightSpace.is.H.eq.SMul
 open Complex Module
 open SL2IrredGKModule
 open In_WeightSpace.is.H.eq.SMul
 
+
+public section
 
 /--
 [GKModule.IsIsomorphicGK.trans](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/SL2Representations.lean)

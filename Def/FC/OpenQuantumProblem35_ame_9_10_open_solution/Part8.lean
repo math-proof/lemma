@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/FC/OpenQuantumProblem35_ame_9_10_open_solution.lean -/
+module
+public import Mathlib
+public import Theorem.FC.OpenQuantumProblem35_ame_9_10_open_solution.Part6
+open scoped BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/FC/OpenQuantumProblem35_ame_9_10_open_solution.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.FC.OpenQuantumProblem35_ame_9_10_open_solution.Part6
-open scoped BigOperators
-
-
 namespace OpenQuantumProblem35
 
 set_option maxHeartbeats 0

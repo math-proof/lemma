@@ -1,10 +1,12 @@
-import Mathlib
-import Theorem.Algebra.AdicCompletion.RingFunctoriality.Part7
-import Theorem.Algebra.AdicCompletion.GaloisAction.Part3
+module
+public import Mathlib
+public import Theorem.Algebra.AdicCompletion.RingFunctoriality.Part7
+public import Theorem.Algebra.AdicCompletion.GaloisAction.Part3
 set_option autoImplicit false
-
 open scoped Pointwise
 
+
+public section
 
 namespace AdicCompletion.GaloisAction
 

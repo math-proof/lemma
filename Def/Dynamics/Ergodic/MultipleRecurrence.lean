@@ -1,25 +1,25 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Dynamics/Ergodic/MultipleRecurrence.lean -/
-
-/-
-Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
--/
-
-import Mathlib.Dynamics.Ergodic.MeasurePreserving
-import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
-import Mathlib.MeasureTheory.Integral.Lebesgue.Add
-import Def.Combinatorics.Additive.Szemeredi
-import Lemma.Finset.Additive.Szemeredi
+module
+public import Mathlib.Dynamics.Ergodic.MeasurePreserving
+public import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
+public import Mathlib.MeasureTheory.Integral.Lebesgue.Add
+public import Def.Combinatorics.Additive.Szemeredi
+public import Theorem.Finset.Additive.Szemeredi
 open MeasureTheory
 open scoped ENNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Dynamics/Ergodic/MultipleRecurrence.lean -/
+/-
+Authors: Adam Kiezun, Muse Spark 1.3, @toskua, Avocado, Codex
+-/
 /-!
 # Furstenberg multiple recurrence
 
 This file proves Furstenberg's multiple recurrence theorem for a measure-preserving
 transformation of a probability space.
 -/
-
-
 namespace MathlibExt.Dynamics.Ergodic.MultipleRecurrenceWanted
 
 noncomputable def furstVisitCount {α : Type*} (T : α → α) (A : Set α)

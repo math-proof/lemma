@@ -1,4 +1,4 @@
-import Lemma.Matrix.ConductorDatum
+import Theorem.Matrix.ConductorDatum
 
 set_option autoImplicit false
 

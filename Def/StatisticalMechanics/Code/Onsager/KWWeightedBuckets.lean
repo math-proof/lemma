@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/KWWeightedBuckets.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Onsager.KWWeightedCancellation
+public import Theorem.StatisticalMechanics.Code.Onsager.ShermanPhaseAssembly.Part5
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/KWWeightedBuckets.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,11 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.Onsager.KWWeightedCancellation
-import Theorem.StatisticalMechanics.Code.Onsager.ShermanPhaseAssembly.Part5
-
-
 namespace StatMech.Onsager
 
 open Matrix BigOperators

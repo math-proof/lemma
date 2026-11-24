@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Ideal.ViaCompactCuspNotion
+import Theorem.Ideal.ViaCompactCuspNotion
 import Lemma.ClassGroup.ProductionPinsGeneral
 import Def.AutomorphicForm_TranslateSpanOccurrence
 

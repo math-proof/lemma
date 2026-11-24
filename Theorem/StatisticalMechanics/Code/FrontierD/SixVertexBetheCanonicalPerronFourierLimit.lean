@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexBetheCanonicalPerronFourierLimit.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheCanonicalPerronFourier.Part7
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheCanonicalPerronAbelLimit
+public import Mathlib.Analysis.Normed.Group.Tannery
+open Filter Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexBetheCanonicalPerronFourierLimit.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheCanonicalPerronFourier.Part7
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheCanonicalPerronAbelLimit
-import Mathlib.Analysis.Normed.Group.Tannery
-open Filter Topology
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

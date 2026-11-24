@@ -1,13 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/IsogenyVolcano.lean -/
-
-
-import Instance.Combinatorics.IsogenyVolcano.Part2
-import Lemma.Finset.IsogenyVolcano
-import Mathlib.Tactic.FinCases
-import Theorem.MathlibExtTest.Combinatorics.IsogenyVolcano
+module
+public import Instance.Combinatorics.IsogenyVolcano.Part2
+public import Lemma.Finset.IsogenyVolcano
+public import Mathlib.Tactic.FinCases
+public import Theorem.MathlibExtTest.Combinatorics.IsogenyVolcano
 set_option autoImplicit false
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/IsogenyVolcano.lean -/
 def depthOneGraph : Multigraph Bool where
   edgeMult
     | false, false => 2

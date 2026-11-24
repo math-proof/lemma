@@ -1,12 +1,14 @@
-import Mathlib.LinearAlgebra.Charpoly.BaseChange
-import Mathlib.LinearAlgebra.Trace
-import Mathlib.RingTheory.LocalRing.ResidueField.Basic
-import Def.GaloisRep_Residual
-import Def.GaloisRep_ResidualEquiv
-import Structure.GaloisRep_Adic
-
+module
+public import Mathlib.LinearAlgebra.Charpoly.BaseChange
+public import Mathlib.LinearAlgebra.Trace
+public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+public import Def.GaloisRep_Residual
+public import Def.GaloisRep_ResidualEquiv
+public import Structure.GaloisRep_Adic
 open scoped TensorProduct
 
+
+public section
 
 namespace GaloisRepAdic
 

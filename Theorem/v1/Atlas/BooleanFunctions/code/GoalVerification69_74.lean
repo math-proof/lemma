@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/GoalVerification69_74.lean -/
+module
+public import Def.v1.Atlas.BooleanFunctions.code.UncoveredBatch3
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.UncoveredBatch3
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Poincare
+open Finset BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/GoalVerification69_74.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.BooleanFunctions.code.UncoveredBatch3
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.UncoveredBatch3
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Poincare
-open Finset BigOperators
-
-
 namespace BooleanFourier
 
 example {n : ℕ} (f : (Fin n → Bool) → Bool) (hf : IsMonotone f) (i : Fin n) :

@@ -1,8 +1,11 @@
-import Structure.CerednikDrinfeld_QMFineModuli
-import Def.AlgebraicGeometry_PolarisedAbelianScheme
-import Def.AlgebraicGeometry_PolarisationRosati
-
+module
+public import Structure.CerednikDrinfeld_QMFineModuli
+public import Def.AlgebraicGeometry_PolarisedAbelianScheme
+public import Def.AlgebraicGeometry_PolarisationRosati
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

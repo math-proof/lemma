@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/PottsClusterSumProductErgodicity.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FK.PottsClusterSumErgodicFactor.Part2
+public import Theorem.StatisticalMechanics.Code.FK.FreePairMixingFromTail.Part3
+public import Theorem.StatisticalMechanics.Code.FK.FreeTailTriviality
+public import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeaneClose.Part2
+open Filter Function MeasureTheory MeasurableSpace Set Topology
+open scoped ENNReal symmDiff
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/PottsClusterSumProductErgodicity.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FK.PottsClusterSumErgodicFactor.Part2
-import Theorem.StatisticalMechanics.Code.FK.FreePairMixingFromTail.Part3
-import Theorem.StatisticalMechanics.Code.FK.FreeTailTriviality
-import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeaneClose.Part2
-open Filter Function MeasureTheory MeasurableSpace Set Topology
-open scoped ENNReal symmDiff
-
-
 namespace StatMech.FK
 
 def MixingAgainst {Beta : Type*} [MeasurableSpace Beta]

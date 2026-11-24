@@ -1,7 +1,11 @@
-import Mathlib
-import Theorem.Analysis.Section_5_5.Part5
-import Theorem.Analysis.Section_5_epilogue.Part5
+module
+public import Mathlib
+public import Theorem.Analysis.Section_5_5.Part5
+public import Theorem.Analysis.Section_5_epilogue.Part5
 open EReal
+
+
+public section
 
 /-!
 # Analysis I, Section 6.2: The extended real number system
@@ -18,8 +22,6 @@ Main constructions and results of this section:
   operation {name}`sSup` and infimum operation {name}`sInf`.
 
 -/
-
-
 /-- Definition 6.2.1 -/
 theorem EReal.def (x:EReal) : (∃ (y:Real), y = x) ∨ x = ⊤ ∨ x = ⊥ := by
   revert x

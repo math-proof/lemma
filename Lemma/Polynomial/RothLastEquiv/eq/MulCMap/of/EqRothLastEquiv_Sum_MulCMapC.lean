@@ -1,13 +1,16 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.NumberTheory.RothAuxiliary
-import Lemma.Nat.RothLastIndex.eq.AddRothSLastIndex.of.RothMvIndex
-import Lemma.Polynomial.RothLastEquiv.eq.Sum_MulCMap.of.RothMvIndex.Eq_Sum_MulCMapC
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.NumberTheory.RothAuxiliary
+public import Lemma.Nat.RothLastIndex.eq.AddRothSLastIndex.of.RothMvIndex
+public import Lemma.Polynomial.RothLastEquiv.eq.Sum_MulCMap.of.RothMvIndex.Eq_Sum_MulCMapC
 open MathlibExt.NumberTheory.RothAuxiliary
 open Polynomial
 open Nat
 set_option maxHeartbeats 800000
 
+
+public section
 
 private lemma lastIndex_add
   {n : ℕ}

@@ -1,6 +1,10 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.Analysis.Normed.IsClosestConjugate
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.Analysis.Normed.IsClosestConjugate
+
+
+public section
 
 /--
 [IsClosestConjugate](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Normed/Field/IsClosestConjugate.lean)

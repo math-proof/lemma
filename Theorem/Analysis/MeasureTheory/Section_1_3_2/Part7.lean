@@ -1,8 +1,11 @@
-import Theorem.Analysis.MeasureTheory.Section_1_3_1.Part11
-import Mathlib.Algebra.Order.Floor.Semifield
-import Def.Analysis.MeasureTheory.Section_1_3_2.Part7
+module
+public import Theorem.Analysis.MeasureTheory.Section_1_3_1.Part11
+public import Mathlib.Algebra.Order.Floor.Semifield
+public import Def.Analysis.MeasureTheory.Section_1_3_2.Part7
 set_option doc.verso.suggestions false
 
+
+public section
 
 namespace Remark_1_3_10
 

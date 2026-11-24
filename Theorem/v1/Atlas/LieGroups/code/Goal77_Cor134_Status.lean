@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/Goal77_Cor134_Status.lean -/
+module
+public import Def.v1.Atlas.LieGroups.code.KostantTheorem.Part5
+public import Theorem.Int.Zero.in.DominantWeights
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/Goal77_Cor134_Status.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,10 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.LieGroups.code.KostantTheorem.Part5
-import Lemma.Int.Zero.in.DominantWeights
-
 
 example {R : Type*} [CommRing R] {𝔤 : Type*} [LieRing 𝔤] [LieAlgebra R 𝔤]
     [LieAlgebra.IsSemisimple R 𝔤]

@@ -1,8 +1,12 @@
--- Carved from Lemma/Definitions/Def_AlgebraicGeometry_SquareZeroDeformation.lean: instance decls only.
-import Mathlib
-import Instance.AlgebraicGeometry_RelativePicardFunctor
-
+module
+public import Mathlib
+public import Instance.AlgebraicGeometry_RelativePicardFunctor
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicGeometry_SquareZeroDeformation.lean: instance decls only.
 
 noncomputable section
 

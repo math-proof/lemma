@@ -1,17 +1,19 @@
-import Lemma.Matrix.CubicInduction_Carrier
-import Def.LanglandsTunnell_CubicInduction_HeckeDatum
-import Lemma.Matrix.CubicInduction_Growth
-import Lemma.Matrix.CubicInduction_IotaTorus
-import Lemma.Matrix.CubicInduction_Congruence
-import Lemma.Matrix.CubicInduction_TorusValues
-import Lemma.Measure.WhittakerCoefficient
-import Lemma.Measure.TateGlobalZeta
-import Lemma.Matrix.SmoothingKernel
-import Structure.LanglandsTunnell_CubicInduction_Structure
-
+module
+public import Lemma.Matrix.CubicInduction_Carrier
+public import Def.LanglandsTunnell_CubicInduction_HeckeDatum
+public import Lemma.Matrix.CubicInduction_Growth
+public import Lemma.Matrix.CubicInduction_IotaTorus
+public import Lemma.Matrix.CubicInduction_Congruence
+public import Theorem.Matrix.CubicInduction_TorusValues
+public import Theorem.Measure.WhittakerCoefficient
+public import Lemma.Measure.TateGlobalZeta
+public import Lemma.Matrix.SmoothingKernel
+public import Structure.LanglandsTunnell_CubicInduction_Structure
 set_option autoImplicit false
-
 open Matrix IsDedekindDomain NumberField MeasureTheory Measure
+
+
+public section
 
 noncomputable section
 

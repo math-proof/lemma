@@ -1,14 +1,18 @@
-/-
-Copyright (c) Meta Platforms, Inc. and affiliates.
-All rights reserved.
--/
-import Mathlib
-import Def.RingTheory.PowerSeries.FPSDefinition.Part3
-import Lemma.PowerSeries.FPSDefinition
+module
+public import Mathlib
+public import Def.RingTheory.PowerSeries.FPSDefinition.Part3
+public import Theorem.PowerSeries.FPSDefinition
 open PowerSeries Polynomial
 open scoped PowerSeries
 open AlgebraicCombinatorics.FPS (SummableFPS summableFPSSum coeff_summableFPSSum)
 
+
+public section
+
+/-
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+-/
 namespace AlgebraicCombinatorics.FPS
 section Definition
 

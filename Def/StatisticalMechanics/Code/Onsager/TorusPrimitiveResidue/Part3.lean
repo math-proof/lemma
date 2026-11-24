@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/TorusPrimitiveResidue.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.IntegralSquareTorusResiduePotential
+public import Theorem.StatisticalMechanics.Code.Onsager.TorusPrimitiveParity
+public import Theorem.StatisticalMechanics.Code.Onsager.TorusPrimitiveResidue.Part2
+open scoped BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/TorusPrimitiveResidue.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.IntegralSquareTorusResiduePotential
-import Theorem.StatisticalMechanics.Code.Onsager.TorusPrimitiveParity
-import Theorem.StatisticalMechanics.Code.Onsager.TorusPrimitiveResidue.Part2
-open scoped BigOperators
-
-
 namespace StatMech.Onsager
 
 open StatMech.FrontierD

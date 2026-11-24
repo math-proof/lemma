@@ -1,5 +1,40 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/CramerTheorem.lean -/
+module
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Analysis.InnerProductSpace.LinearMap
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.InformationTheory.KullbackLeibler.Basic
+public import Mathlib.MeasureTheory.Constructions.BorelSpace.Metrizable
+public import Mathlib.MeasureTheory.Integral.Bochner.Basic
+public import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
+public import Mathlib.MeasureTheory.Integral.DominatedConvergence
+public import Mathlib.MeasureTheory.Measure.Dirac.Basic
+public import Mathlib.MeasureTheory.Measure.DiracProba
+public import Mathlib.MeasureTheory.Measure.LogLikelihoodRatio
+public import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
+public import Mathlib.MeasureTheory.Measure.Tilted
+public import Mathlib.MeasureTheory.SpecificCodomains.WithLp
+public import Mathlib.Probability.IdentDistrib
+public import Mathlib.Probability.Independence.Basic
+public import Mathlib.Topology.Algebra.Support
+public import Mathlib.Topology.ContinuousMap.Basic
+public import Mathlib.Topology.ContinuousMap.Bounded.Basic
+public import Mathlib.Topology.MetricSpace.Polish
+public import Def.Probability.CramerTheorem
+public import Theorem.Random.Integral_Sub_Log_Integral_Exp.le.ToRealKlDiv.of.Any_All_LeAbs.Continuous.Integrable_Llr
+public import Theorem.Random.IsProbabilityMeasure.of.Gt_0
+public import Theorem.Random.Measurable.of.Gt_0
+public import Theorem.Random.SatisfiesLDP
+public import Structure.v1.Atlas.Probability.code.LargeDeviations
+public import Theorem.v1.Atlas.Probability.code.CramerRateFunction
+public import Theorem.v1.Atlas.Probability.code.LDPContraction
+open InformationTheory MeasureTheory ProbabilityTheory ProbabilityMeasure Finset Random Filter
+open scoped InnerProductSpace ENNReal Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TheoryOfProbability/code/CramerTheorem.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,40 +42,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Analysis.InnerProductSpace.LinearMap
-import Mathlib.Analysis.InnerProductSpace.PiL2
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.InformationTheory.KullbackLeibler.Basic
-import Mathlib.MeasureTheory.Constructions.BorelSpace.Metrizable
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.MeasureTheory.Integral.Bochner.ContinuousLinearMap
-import Mathlib.MeasureTheory.Integral.DominatedConvergence
-import Mathlib.MeasureTheory.Measure.Dirac.Basic
-import Mathlib.MeasureTheory.Measure.DiracProba
-import Mathlib.MeasureTheory.Measure.LogLikelihoodRatio
-import Mathlib.MeasureTheory.Measure.ProbabilityMeasure
-import Mathlib.MeasureTheory.Measure.Tilted
-import Mathlib.MeasureTheory.SpecificCodomains.WithLp
-import Mathlib.Probability.IdentDistrib
-import Mathlib.Probability.Independence.Basic
-import Mathlib.Topology.Algebra.Support
-import Mathlib.Topology.ContinuousMap.Basic
-import Mathlib.Topology.ContinuousMap.Bounded.Basic
-import Mathlib.Topology.MetricSpace.Polish
-import Def.Probability.CramerTheorem
-import Theorem.Random.Integral_Sub_Log_Integral_Exp.le.ToRealKlDiv.of.Any_All_LeAbs.Continuous.Integrable_Llr
-import Theorem.Random.IsProbabilityMeasure.of.Gt_0
-import Theorem.Random.Measurable.of.Gt_0
-import Lemma.Random.SatisfiesLDP
-import Structure.v1.Atlas.Probability.code.LargeDeviations
-import Theorem.v1.Atlas.Probability.code.CramerRateFunction
-import Theorem.v1.Atlas.Probability.code.LDPContraction
-open InformationTheory MeasureTheory ProbabilityTheory ProbabilityMeasure Finset Random Filter
-open scoped InnerProductSpace ENNReal Topology
-
-
 /-!
 # Cramér's theorem via Sanov + contraction
 
@@ -66,7 +67,6 @@ The full `cramer_theorem` is **not** stated until the gaps below close without `
   equality at tilt means under hMGF; global equality under `TiltCover`. Remaining: prove
   `TiltCover` (finite-Λ* points are tilt barycenters) by convex analysis.
 -/
-
 /-- Barycenter of a probability measure on Euclidean space (Bochner integral). -/
 noncomputable def barycenter {d : ℕ} (ν : ProbabilityMeasure (EuclideanSpace ℝ (Fin d))) :
     EuclideanSpace ℝ (Fin d) :=

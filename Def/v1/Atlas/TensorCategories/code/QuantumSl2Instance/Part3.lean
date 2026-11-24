@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/QuantumSl2Instance.lean -/
+module
+public import Instance.v1.Atlas.TensorCategories.code.QuantumSl2Concrete.Part5
+public import Theorem.Category.Atlas.v1.TensorCategories.code.QuantumSl2Concrete
+public import Theorem.Category.Atlas.v1.TensorCategories.code.QBinomial
+public import Theorem.v1.Atlas.TensorCategories.code.QBinomial.Part2
+public import Class.v1.Atlas.TensorCategories.code.QuantumSl2Instance.Part2
+open Coalgebra HopfAlgebra
+open scoped TensorProduct
+set_option synthInstance.maxHeartbeats 800000
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/QuantumSl2Instance.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Instance.v1.Atlas.TensorCategories.code.QuantumSl2Concrete.Part5
-import Lemma.Category.Atlas.v1.TensorCategories.code.QuantumSl2Concrete
-import Theorem.Category.Atlas.v1.TensorCategories.code.QBinomial
-import Theorem.v1.Atlas.TensorCategories.code.QBinomial.Part2
-import Class.v1.Atlas.TensorCategories.code.QuantumSl2Instance.Part2
-open Coalgebra HopfAlgebra
-open scoped TensorProduct
-
-set_option synthInstance.maxHeartbeats 800000
-
-
 namespace SmallQuantumSl2Instance
 
 variable (n : ℕ) (k : Type*) [Field k] (q : k)

@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/InfinityMaps.lean -/
+module
+public import Structure.v1.Atlas.Buildings.code.Building.InfinityConstruction.Part3
+public import Theorem.Set.PointsAtInfinity.of.Vertices
+public import Theorem.Finset.LabelMap.eq.ImageLabelMap.of.EqLabelMap_Head_ImageLabelMap_Head.IsChainAdjacent.Ne.All_EqLabelMap_ImageLabelMap
+public import Def.v1.Atlas.Buildings.code.Building.Labels
+public import Mathlib.Data.NNReal.Basic
+public import Theorem.v1.Atlas.Buildings.code.Building.InfinityMaps.Part4
+set_option linter.unusedSectionVars false
+open AffineBuilding
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/InfinityMaps.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Structure.v1.Atlas.Buildings.code.Building.InfinityConstruction.Part3
-import Theorem.Set.PointsAtInfinity.of.Vertices
-import Theorem.Finset.LabelMap.eq.ImageLabelMap.of.EqLabelMap_Head_ImageLabelMap_Head.IsChainAdjacent.Ne.All_EqLabelMap_ImageLabelMap
-import Def.v1.Atlas.Buildings.code.Building.Labels
-import Mathlib.Data.NNReal.Basic
-import Theorem.v1.Atlas.Buildings.code.Building.InfinityMaps.Part4
-set_option linter.unusedSectionVars false
-
-open AffineBuilding
-
 variable {V : Type} [DecidableEq V]
 
 

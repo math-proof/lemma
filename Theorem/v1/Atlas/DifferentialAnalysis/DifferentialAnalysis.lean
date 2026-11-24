@@ -1,5 +1,198 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/DifferentialAnalysis/DifferentialAnalysis.lean -/
+module
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.BorelMeasure
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.BorelMeasure
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.CauchyKernelIntegrability
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.CkBanach
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.CkBanachFix
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.CommutatorEstimates
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ConeSupportCorollary
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ContinuousFunctions
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ConvolutionDensity
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ConvolutionDensityFix
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ConvolutionSchwartzDeriv
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ConvolutionSmooth
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ConvolutionTheorem
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ConvolutionWellDefined
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DiffOpSobolev
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperatorsFix
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DistributionSupport
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DistributionalKernels2
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.EllipticLowerBound
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.EllipticRegularityVar
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.FourierDistributions
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.FourierGaussian
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.FourierInversion
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.FourierL1BoundedC0
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.FourierTransformation
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.HadamardDecomposition
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.HadamardFTCIdentity
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.HeatEquation
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.HeatEquationProp1116
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.HilbertSpace
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.HormanderFundamental
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.Integration
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.JordanDecomposition
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.Lemma11_5
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.Lemma71
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.MicrolocalRegularity
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.OuterMeasureFromFunctional
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.Parametrix
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.PoissonUniqueness
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.PolyReciprocalFrechetBound
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.PolynomialReciprocalStructural
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.PseudoDiffComposition
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.PseudoDiffOps
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.QuotientFDerivStep
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.RieszRepresentation
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzComplete
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzCompleteness
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzContinuity
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzCutoffConvergence
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzDensity
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzMetric
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzPartition
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzRepresentation
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzSeminorms
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzSeminormsFix
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzSingularSupport
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzTranslateContinuity
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzTranslation
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SmoothPartitionOfUnity
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SmoothingOperators
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevDerivatives
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevDuality
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbedding
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbeddingFix
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbeddingTheorem
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevHilbert
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevRegularity
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SpectralTheorem
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SpectralTheoremFix
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TemperedDistributions
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TestFunctions
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontCharacterization
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontDiffOps
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontProducts
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontSet
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontSetCorollaries
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontSetExtendedConvolution
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontSetFourierSymmetry
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontSetProducts
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WeakConvergence
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WeightedDerivExpansion
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WeightedSobolevSchwartz
+public import Def.v1.Atlas.DifferentialAnalysis.code.CauchyKernelIntegrability
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.CkBanach.Part2
+public import Instance.v1.Atlas.DifferentialAnalysis.code.CkBanachFix
+public import Def.v1.Atlas.DifferentialAnalysis.code.CommutatorEstimates
+public import Def.v1.Atlas.DifferentialAnalysis.code.CompactSobolevEmbedding.Part2
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.ConeSupportCorollary
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.ConeSupportDef
+public import Def.v1.Atlas.DifferentialAnalysis.code.ContinuousFunctions.Part2
+public import Def.v1.Atlas.DifferentialAnalysis.code.ConvolutionDensity
+public import Def.v1.Atlas.DifferentialAnalysis.code.ConvolutionDensityFix
+public import Instance.v1.Atlas.DifferentialAnalysis.code.ConvolutionSchwartzDeriv
+public import Instance.v1.Atlas.DifferentialAnalysis.code.ConvolutionSmooth
+public import Def.v1.Atlas.DifferentialAnalysis.code.ConvolutionTheorem
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.ConvolutionWellDefined
+public import Def.v1.Atlas.DifferentialAnalysis.code.CutoffLocalization
+public import Def.v1.Atlas.DifferentialAnalysis.code.DiffOpSobolev.Part3
+public import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
+public import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperatorsFix
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.DistributionSupport
+public import Def.v1.Atlas.DifferentialAnalysis.code.DistributionalKernels2
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.DistributionalLaplacianBridge
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DominatedConvergence
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.LaplacianExistence
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.MeasurabilityOfFunctions
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.MonotoneConvergence
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ScatteringWavefront
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SimpleApproximationFix
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SimpleApproximationUniform
+public import Def.v1.Atlas.DifferentialAnalysis.code.EllipticLowerBound
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.EllipticParametrixProved
+public import Def.v1.Atlas.DifferentialAnalysis.code.EllipticRegularityVar
+public import Def.v1.Atlas.DifferentialAnalysis.code.FourierDistributions
+public import Def.v1.Atlas.DifferentialAnalysis.code.FourierGaussian
+public import Def.v1.Atlas.DifferentialAnalysis.code.FourierInversion.Part7
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.FourierL1BoundedC0
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.FourierTransformation
+public import Def.v1.Atlas.DifferentialAnalysis.code.HadamardDecomposition
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.HadamardFTCIdentity
+public import Def.v1.Atlas.DifferentialAnalysis.code.HeatEquation
+public import Def.v1.Atlas.DifferentialAnalysis.code.HeatEquationProp1116
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.HeatOpDconv
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.HeatOpDconvHelper
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.HeatOpDconvSolution
+public import Class.v1.Atlas.DifferentialAnalysis.code.HilbertSpace
+public import Def.v1.Atlas.DifferentialAnalysis.code.HormanderFundamental
+public import Abbrev.v1.Atlas.DifferentialAnalysis.code.Integration.Part2
+public import Def.v1.Atlas.DifferentialAnalysis.code.JordanDecomposition.Part5
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.JordanDecompositionFix
+public import Def.v1.Atlas.DifferentialAnalysis.code.Lemma11_5
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.Lemma71
+public import Def.v1.Atlas.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras.Part3
+public import Def.v1.Atlas.DifferentialAnalysis.code.MicrolocalRegularity.Part2
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.MicrolocalRegularityFix
+public import Def.v1.Atlas.DifferentialAnalysis.code.OuterMeasureFromFunctional.Part2
+public import Def.v1.Atlas.DifferentialAnalysis.code.Parametrix.Part2
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.ParametrixBridge
+public import Def.v1.Atlas.DifferentialAnalysis.code.PoissonUniqueness
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.PolyReciprocalFrechetBound
+public import Def.v1.Atlas.DifferentialAnalysis.code.PolynomialReciprocalStructural
+public import Def.v1.Atlas.DifferentialAnalysis.code.PseudoDiffComposition
+public import Structure.v1.Atlas.DifferentialAnalysis.code.PseudoDiffOps
+public import Def.v1.Atlas.DifferentialAnalysis.code.QuotientFDerivStep
+public import Def.v1.Atlas.DifferentialAnalysis.code.RieszRepresentation
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzComplete
+public import Instance.v1.Atlas.DifferentialAnalysis.code.SchwartzCompleteness
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzContinuity
+public import Def.v1.Atlas.DifferentialAnalysis.code.SchwartzCutoffConvergence
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzDensity
+public import Def.v1.Atlas.DifferentialAnalysis.code.SchwartzMetric
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzPartition
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzRepresentation
+public import Def.v1.Atlas.DifferentialAnalysis.code.SchwartzSeminorms
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzSeminormsFix
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzSingularSupport
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzTranslateContinuity
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzTranslation
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SimpleApproximation
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SmoothPartitionOfUnity
+public import Def.v1.Atlas.DifferentialAnalysis.code.SmoothingOperators
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SobolevDensity
+public import Def.v1.Atlas.DifferentialAnalysis.code.SobolevDerivatives
+public import Def.v1.Atlas.DifferentialAnalysis.code.SobolevDuality
+public import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbedding.Part5
+public import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbeddingFix
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SobolevEmbeddingProved
+public import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbeddingTheorem
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SobolevHilbert.Part8
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SobolevRegularity
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.SpectralTheorem
+public import Def.v1.Atlas.DifferentialAnalysis.code.SpectralTheoremFix
+public import Def.v1.Atlas.DifferentialAnalysis.code.TemperedDistributions
+public import Instance.v1.Atlas.DifferentialAnalysis.code.TestFunctions
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.WavefrontCharacterization
+public import Def.v1.Atlas.DifferentialAnalysis.code.WavefrontDiffOps
+public import Def.v1.Atlas.DifferentialAnalysis.code.WavefrontProducts.Part2
+public import Structure.v1.Atlas.DifferentialAnalysis.code.WavefrontSet.Part3
+public import Def.v1.Atlas.DifferentialAnalysis.code.WavefrontSetCorollaries
+public import Def.v1.Atlas.DifferentialAnalysis.code.WavefrontSetExtendedConvolution
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.WavefrontSetFourierSymmetry
+public import Def.v1.Atlas.DifferentialAnalysis.code.WavefrontSetProductInclusion
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.WavefrontSetProducts
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.WavefrontSetProperties
+public import Theorem.v1.Atlas.DifferentialAnalysis.code.WeakConvergence
+public import Def.v1.Atlas.DifferentialAnalysis.code.WeightedDerivExpansion.Part2
+public import Def.v1.Atlas.DifferentialAnalysis.code.WeightedSobolevSchwartz
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/DifferentialAnalysis/DifferentialAnalysis.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,195 +200,4 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.DifferentialAnalysis.code.BorelMeasure
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.BorelMeasure
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.CauchyKernelIntegrability
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.CkBanach
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.CkBanachFix
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.CommutatorEstimates
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ConeSupportCorollary
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ContinuousFunctions
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.ConvolutionDensity
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ConvolutionDensityFix
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ConvolutionSchwartzDeriv
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ConvolutionSmooth
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ConvolutionTheorem
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ConvolutionWellDefined
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.DiffOpSobolev
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperatorsFix
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DistributionSupport
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.DistributionalKernels2
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.EllipticLowerBound
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.EllipticRegularityVar
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.FourierDistributions
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.FourierGaussian
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.FourierInversion
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.FourierL1BoundedC0
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.FourierTransformation
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.HadamardDecomposition
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.HadamardFTCIdentity
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.HeatEquation
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.HeatEquationProp1116
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.HilbertSpace
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.HormanderFundamental
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.Integration
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.JordanDecomposition
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.Lemma11_5
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.Lemma71
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.MicrolocalRegularity
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.OuterMeasureFromFunctional
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.Parametrix
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.PoissonUniqueness
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.PolyReciprocalFrechetBound
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.PolynomialReciprocalStructural
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.PseudoDiffComposition
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.PseudoDiffOps
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.QuotientFDerivStep
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.RieszRepresentation
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzComplete
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzCompleteness
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzContinuity
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzCutoffConvergence
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzDensity
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzMetric
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzPartition
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzRepresentation
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzSeminorms
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzSeminormsFix
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzSingularSupport
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzTranslateContinuity
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SchwartzTranslation
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SmoothPartitionOfUnity
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SmoothingOperators
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevDerivatives
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SobolevDuality
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbedding
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbeddingFix
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbeddingTheorem
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SobolevHilbert
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SobolevRegularity
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SpectralTheorem
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SpectralTheoremFix
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TemperedDistributions
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.TestFunctions
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontCharacterization
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontDiffOps
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontProducts
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontSet
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontSetCorollaries
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontSetExtendedConvolution
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontSetFourierSymmetry
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WavefrontSetProducts
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.WeakConvergence
-import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.WeightedDerivExpansion
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.WeightedSobolevSchwartz
-import Def.v1.Atlas.DifferentialAnalysis.code.CauchyKernelIntegrability
-import Theorem.v1.Atlas.DifferentialAnalysis.code.CkBanach.Part2
-import Instance.v1.Atlas.DifferentialAnalysis.code.CkBanachFix
-import Def.v1.Atlas.DifferentialAnalysis.code.CommutatorEstimates
-import Def.v1.Atlas.DifferentialAnalysis.code.CompactSobolevEmbedding.Part2
-import Theorem.v1.Atlas.DifferentialAnalysis.code.ConeSupportCorollary
-import Theorem.v1.Atlas.DifferentialAnalysis.code.ConeSupportDef
-import Def.v1.Atlas.DifferentialAnalysis.code.ContinuousFunctions.Part2
-import Def.v1.Atlas.DifferentialAnalysis.code.ConvolutionDensity
-import Def.v1.Atlas.DifferentialAnalysis.code.ConvolutionDensityFix
-import Instance.v1.Atlas.DifferentialAnalysis.code.ConvolutionSchwartzDeriv
-import Instance.v1.Atlas.DifferentialAnalysis.code.ConvolutionSmooth
-import Def.v1.Atlas.DifferentialAnalysis.code.ConvolutionTheorem
-import Theorem.v1.Atlas.DifferentialAnalysis.code.ConvolutionWellDefined
-import Def.v1.Atlas.DifferentialAnalysis.code.CutoffLocalization
-import Def.v1.Atlas.DifferentialAnalysis.code.DiffOpSobolev.Part3
-import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
-import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperatorsFix
-import Theorem.v1.Atlas.DifferentialAnalysis.code.DistributionSupport
-import Def.v1.Atlas.DifferentialAnalysis.code.DistributionalKernels2
-import Theorem.v1.Atlas.DifferentialAnalysis.code.DistributionalLaplacianBridge
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DominatedConvergence
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.LaplacianExistence
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.MeasurabilityOfFunctions
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.MonotoneConvergence
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ScatteringWavefront
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SimpleApproximationFix
-import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SimpleApproximationUniform
-import Def.v1.Atlas.DifferentialAnalysis.code.EllipticLowerBound
-import Theorem.v1.Atlas.DifferentialAnalysis.code.EllipticParametrixProved
-import Def.v1.Atlas.DifferentialAnalysis.code.EllipticRegularityVar
-import Def.v1.Atlas.DifferentialAnalysis.code.FourierDistributions
-import Def.v1.Atlas.DifferentialAnalysis.code.FourierGaussian
-import Def.v1.Atlas.DifferentialAnalysis.code.FourierInversion.Part7
-import Theorem.v1.Atlas.DifferentialAnalysis.code.FourierL1BoundedC0
-import Theorem.v1.Atlas.DifferentialAnalysis.code.FourierTransformation
-import Def.v1.Atlas.DifferentialAnalysis.code.HadamardDecomposition
-import Theorem.v1.Atlas.DifferentialAnalysis.code.HadamardFTCIdentity
-import Def.v1.Atlas.DifferentialAnalysis.code.HeatEquation
-import Def.v1.Atlas.DifferentialAnalysis.code.HeatEquationProp1116
-import Theorem.v1.Atlas.DifferentialAnalysis.code.HeatOpDconv
-import Theorem.v1.Atlas.DifferentialAnalysis.code.HeatOpDconvHelper
-import Theorem.v1.Atlas.DifferentialAnalysis.code.HeatOpDconvSolution
-import Class.v1.Atlas.DifferentialAnalysis.code.HilbertSpace
-import Def.v1.Atlas.DifferentialAnalysis.code.HormanderFundamental
-import Abbrev.v1.Atlas.DifferentialAnalysis.code.Integration.Part2
-import Def.v1.Atlas.DifferentialAnalysis.code.JordanDecomposition.Part5
-import Theorem.v1.Atlas.DifferentialAnalysis.code.JordanDecompositionFix
-import Def.v1.Atlas.DifferentialAnalysis.code.Lemma11_5
-import Theorem.v1.Atlas.DifferentialAnalysis.code.Lemma71
-import Def.v1.Atlas.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras.Part3
-import Def.v1.Atlas.DifferentialAnalysis.code.MicrolocalRegularity.Part2
-import Theorem.v1.Atlas.DifferentialAnalysis.code.MicrolocalRegularityFix
-import Def.v1.Atlas.DifferentialAnalysis.code.OuterMeasureFromFunctional.Part2
-import Def.v1.Atlas.DifferentialAnalysis.code.Parametrix.Part2
-import Theorem.v1.Atlas.DifferentialAnalysis.code.ParametrixBridge
-import Def.v1.Atlas.DifferentialAnalysis.code.PoissonUniqueness
-import Theorem.v1.Atlas.DifferentialAnalysis.code.PolyReciprocalFrechetBound
-import Def.v1.Atlas.DifferentialAnalysis.code.PolynomialReciprocalStructural
-import Def.v1.Atlas.DifferentialAnalysis.code.PseudoDiffComposition
-import Structure.v1.Atlas.DifferentialAnalysis.code.PseudoDiffOps
-import Def.v1.Atlas.DifferentialAnalysis.code.QuotientFDerivStep
-import Def.v1.Atlas.DifferentialAnalysis.code.RieszRepresentation
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzComplete
-import Instance.v1.Atlas.DifferentialAnalysis.code.SchwartzCompleteness
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzContinuity
-import Def.v1.Atlas.DifferentialAnalysis.code.SchwartzCutoffConvergence
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzDensity
-import Def.v1.Atlas.DifferentialAnalysis.code.SchwartzMetric
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzPartition
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzRepresentation
-import Def.v1.Atlas.DifferentialAnalysis.code.SchwartzSeminorms
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzSeminormsFix
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzSingularSupport
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzTranslateContinuity
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SchwartzTranslation
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SimpleApproximation
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SmoothPartitionOfUnity
-import Def.v1.Atlas.DifferentialAnalysis.code.SmoothingOperators
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SobolevDensity
-import Def.v1.Atlas.DifferentialAnalysis.code.SobolevDerivatives
-import Def.v1.Atlas.DifferentialAnalysis.code.SobolevDuality
-import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbedding.Part5
-import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbeddingFix
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SobolevEmbeddingProved
-import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbeddingTheorem
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SobolevHilbert.Part8
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SobolevRegularity
-import Theorem.v1.Atlas.DifferentialAnalysis.code.SpectralTheorem
-import Def.v1.Atlas.DifferentialAnalysis.code.SpectralTheoremFix
-import Def.v1.Atlas.DifferentialAnalysis.code.TemperedDistributions
-import Instance.v1.Atlas.DifferentialAnalysis.code.TestFunctions
-import Theorem.v1.Atlas.DifferentialAnalysis.code.WavefrontCharacterization
-import Def.v1.Atlas.DifferentialAnalysis.code.WavefrontDiffOps
-import Def.v1.Atlas.DifferentialAnalysis.code.WavefrontProducts.Part2
-import Structure.v1.Atlas.DifferentialAnalysis.code.WavefrontSet.Part3
-import Def.v1.Atlas.DifferentialAnalysis.code.WavefrontSetCorollaries
-import Def.v1.Atlas.DifferentialAnalysis.code.WavefrontSetExtendedConvolution
-import Theorem.v1.Atlas.DifferentialAnalysis.code.WavefrontSetFourierSymmetry
-import Def.v1.Atlas.DifferentialAnalysis.code.WavefrontSetProductInclusion
-import Theorem.v1.Atlas.DifferentialAnalysis.code.WavefrontSetProducts
-import Theorem.v1.Atlas.DifferentialAnalysis.code.WavefrontSetProperties
-import Theorem.v1.Atlas.DifferentialAnalysis.code.WeakConvergence
-import Def.v1.Atlas.DifferentialAnalysis.code.WeightedDerivExpansion.Part2
-import Def.v1.Atlas.DifferentialAnalysis.code.WeightedSobolevSchwartz
-
 

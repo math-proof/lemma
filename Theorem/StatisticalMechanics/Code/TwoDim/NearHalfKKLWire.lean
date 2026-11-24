@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/TwoDim/NearHalfKKLWire.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Probability.NearHalfBKKKL
+public import Theorem.StatisticalMechanics.Code.Probability.EntropySubadditivity.Part2
+public import Theorem.StatisticalMechanics.Code.TwoDim.KKLWire.Part2
+open MeasureTheory Set Filter Topology
+open scoped ENNReal NNReal BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/TwoDim/NearHalfKKLWire.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Probability.NearHalfBKKKL
-import Theorem.StatisticalMechanics.Code.Probability.EntropySubadditivity.Part2
-import Theorem.StatisticalMechanics.Code.TwoDim.KKLWire.Part2
-open MeasureTheory Set Filter Topology
-open scoped ENNReal NNReal BigOperators
-
-
 namespace StatMech.TwoDim
 
 open ConfigSpace Function Finset StatMech StatMech.Sharpness StatMech.BeffaraDC

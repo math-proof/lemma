@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/KacWardRectilinearPolygonBridge.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPolygonJordanEquivalence
+public import Theorem.StatisticalMechanics.Code.Onsager.GeneralUmlaufsatz
+public import Theorem.StatisticalMechanics.Code.Onsager.KWDetLimit.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardRectilinearPolygonBridge
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/KacWardRectilinearPolygonBridge.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPolygonJordanEquivalence
-import Theorem.StatisticalMechanics.Code.Onsager.GeneralUmlaufsatz
-import Theorem.StatisticalMechanics.Code.Onsager.KWDetLimit.Part2
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardRectilinearPolygonBridge
-
-
 namespace StatMech.FrontierA
 
 open scoped BigOperators

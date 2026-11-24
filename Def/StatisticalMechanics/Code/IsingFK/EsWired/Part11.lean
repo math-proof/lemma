@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/IsingFK/EsWired.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.FK.EdwardsSokal.Part7
+public import Theorem.StatisticalMechanics.Code.FK.MonoBC.Part4
+public import Theorem.StatisticalMechanics.Code.IsingFK.Coloring.Part6
+public import Theorem.StatisticalMechanics.Code.Lattice.BoundaryConditions.Part10
+public import Theorem.StatisticalMechanics.Code.IsingFK.EsWired.Part10
+open scoped BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/IsingFK/EsWired.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.FK.EdwardsSokal.Part7
-import Theorem.StatisticalMechanics.Code.FK.MonoBC.Part4
-import Theorem.StatisticalMechanics.Code.IsingFK.Coloring.Part6
-import Theorem.StatisticalMechanics.Code.Lattice.BoundaryConditions.Part10
-import Theorem.StatisticalMechanics.Code.IsingFK.EsWired.Part10
-open scoped BigOperators
-
-
 namespace StatMech
 
 namespace IsingFK

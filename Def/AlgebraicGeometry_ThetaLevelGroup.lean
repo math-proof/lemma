@@ -1,9 +1,12 @@
-import Mathlib
-import Instance.AlgebraicGeometry_ThetaLevelGroup
-import Structure.AlgebraicGeometry_ThetaLevelGroup
-import Abbrev.AlgebraicGeometry_ThetaLevelGroup
-
+module
+public import Mathlib
+public import Instance.AlgebraicGeometry_ThetaLevelGroup
+public import Structure.AlgebraicGeometry_ThetaLevelGroup
+public import Abbrev.AlgebraicGeometry_ThetaLevelGroup
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

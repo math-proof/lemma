@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/GrahamWeightedComponent.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Walls.gh4eq22.Part2
+public import Theorem.StatisticalMechanics.Code.Sharpness.ClaimIsing.Part2
+public import Theorem.StatisticalMechanics.Code.Sharpness.ClaimIsingFull.Part4
+public import Theorem.StatisticalMechanics.Code.Sharpness.Claim1IsingFull.Part3
+public import Theorem.StatisticalMechanics.Code.Sharpness.FluxEdgeCopyBridge.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierA.GrahamWeightedComponent
+open Finset SimpleGraph
+open scoped symmDiff
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/GrahamWeightedComponent.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Walls.gh4eq22.Part2
-import Theorem.StatisticalMechanics.Code.Sharpness.ClaimIsing.Part2
-import Theorem.StatisticalMechanics.Code.Sharpness.ClaimIsingFull.Part4
-import Theorem.StatisticalMechanics.Code.Sharpness.Claim1IsingFull.Part3
-import Theorem.StatisticalMechanics.Code.Sharpness.FluxEdgeCopyBridge.Part3
-import Theorem.StatisticalMechanics.Code.FrontierA.GrahamWeightedComponent
-open Finset SimpleGraph
-open scoped symmDiff
-
-
 namespace StatMech.FrontierA
 
 open StatMech.Sharpness

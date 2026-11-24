@@ -1,13 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/Ideal/Counting.lean -/
-
-
-import Def.NumberTheory.NumberField.Ideal.Counting
-import Lemma.Ideal.NumberField.Ideal.Counting
-import Mathlib.Tactic.NormNum
+module
+public import Def.NumberTheory.NumberField.Ideal.Counting
+public import Theorem.Ideal.NumberField.Ideal.Counting
+public import Mathlib.Tactic.NormNum
 open scoped NumberField
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/Ideal/Counting.lean -/
 -- Generic signature of the integer-threshold bound.
+
 example (K : Type*) [Field K] [NumberField K] (M : ℕ) :
     Nat.card {I : Ideal (𝓞 K) // I ≠ ⊥ ∧ Ideal.absNorm I ≤ M} ≤
       (Module.finrank ℚ K * M) ^ Nat.log 2 M :=

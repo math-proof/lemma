@@ -1,5 +1,25 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/Section35.lean -/
+module
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section26.Part8
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section34
+public import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section34.Part3
+public import Mathlib.Topology.Separation.Regular
+public import Mathlib.Topology.Separation.Hausdorff
+public import Mathlib.Topology.Category.TopCat.Opens
+public import Mathlib.Algebra.Category.ModuleCat.Colimits
+public import Mathlib.Algebra.Colimit.Module
+public import Mathlib.Order.Cofinal
+public import Mathlib.Algebra.Exact
+public import Mathlib.Algebra.Homology.HomologySequence
+public import Mathlib.Algebra.Homology.HomologySequenceLemmas
+public import Mathlib.Algebra.Homology.HomologicalComplexAbelian
+public import Instance.v1.Atlas.AlgebraicTopologyI.code.Section35.Part9
+open Set
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/Section35.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,25 +27,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section26.Part8
-import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
-import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section34
-import Theorem.v1.Atlas.AlgebraicTopologyI.code.Section34.Part3
-import Mathlib.Topology.Separation.Regular
-import Mathlib.Topology.Separation.Hausdorff
-import Mathlib.Topology.Category.TopCat.Opens
-import Mathlib.Algebra.Category.ModuleCat.Colimits
-import Mathlib.Algebra.Colimit.Module
-import Mathlib.Order.Cofinal
-import Mathlib.Algebra.Exact
-import Mathlib.Algebra.Homology.HomologySequence
-import Mathlib.Algebra.Homology.HomologySequenceLemmas
-import Mathlib.Algebra.Homology.HomologicalComplexAbelian
-import Instance.v1.Atlas.AlgebraicTopologyI.code.Section35.Part9
-open Set
-
-
 /-- Bonding map for the relative cohomology directed system; re-export of
 `relCechTransitionMap`. -/
 noncomputable def CechCohomology.relBond

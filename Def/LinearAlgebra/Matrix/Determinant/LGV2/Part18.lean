@@ -1,11 +1,15 @@
+module
+public import Mathlib
+public import Theorem.LinearAlgebra.Matrix.Determinant.LGV2.Part16
+open Finset BigOperators Matrix
+
+
+public section
+
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Theorem.LinearAlgebra.Matrix.Determinant.LGV2.Part16
-open Finset BigOperators Matrix
-
 /-!
 # The Lindström-Gessel-Viennot Lemma: Weighted and Generalized Versions
 
@@ -71,8 +75,6 @@ The integer lattice definitions have equivalent adjacency relations, proven by
 This file contains the complete weighted LGV lemma proof. LGV1.lean contains the
 counting case infrastructure with lattice-specific path counting results.
 -/
-
-
 namespace LGV
 
 variable {V : Type*} [DecidableEq V] {K : Type*} [CommRing K]

@@ -1,11 +1,12 @@
+module
+public import Theorem.Combinatorics.Words.LyndonWord.Part14
+public import Theorem.Finset.Words.LyndonWord
+public import Mathlib.Data.Fin.VecNotation
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Words/LyndonWord.lean -/
-
-
-import Theorem.Combinatorics.Words.LyndonWord.Part14
-import Lemma.Finset.Words.LyndonWord
-import Mathlib.Data.Fin.VecNotation
-
-
 namespace MathlibExtTest.Combinatorics.Words.LyndonWord
 
 open scoped BigOperators

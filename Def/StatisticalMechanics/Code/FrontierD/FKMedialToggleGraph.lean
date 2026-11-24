@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKMedialToggleGraph.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectMedialToggle.Part2
+open SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKMedialToggleGraph.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectMedialToggle.Part2
-open SimpleGraph
-
-
 namespace StatMech.FrontierD
 
 def fkMedialWestDart (v : T.Vertex) : FKMedialDart T := (v, .west)

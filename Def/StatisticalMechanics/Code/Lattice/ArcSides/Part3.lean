@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Lattice/ArcSides.lean -/
+module
+public import Mathlib
+public import Def.StatisticalMechanics.Code.Lattice.Clusters.Part7
+public import Theorem.StatisticalMechanics.Code.Lattice.CrossingParity.Part2
+public import Theorem.StatisticalMechanics.Code.RSW.Defs.Part7
+public import Theorem.StatisticalMechanics.Code.Universality.HVIntersection.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.VSeparatesFixed.Part2
+public import Theorem.StatisticalMechanics.Code.Lattice.ArcSides.Part2
+open Set SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Lattice/ArcSides.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Def.StatisticalMechanics.Code.Lattice.Clusters.Part7
-import Theorem.StatisticalMechanics.Code.Lattice.CrossingParity.Part2
-import Theorem.StatisticalMechanics.Code.RSW.Defs.Part7
-import Theorem.StatisticalMechanics.Code.Universality.HVIntersection.Part2
-import Theorem.StatisticalMechanics.Code.Universality.VSeparatesFixed.Part2
-import Theorem.StatisticalMechanics.Code.Lattice.ArcSides.Part2
-open Set SimpleGraph
-
-
 namespace StatMech
 
 namespace Lattice

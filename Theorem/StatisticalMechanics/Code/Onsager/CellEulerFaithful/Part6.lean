@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/CellEulerFaithful.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.WalkCellBoundary
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanClusterBridge.Part8
+public import Def.StatisticalMechanics.Code.Onsager.CellEulerFaithful.Part6
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/CellEulerFaithful.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.WalkCellBoundary
-import Theorem.StatisticalMechanics.Code.Lattice.JordanClusterBridge.Part8
-import Def.StatisticalMechanics.Code.Onsager.CellEulerFaithful.Part6
-
-
 namespace StatMech.Onsager.CellEulerFaithful
 
 open Finset SimpleGraph Set

@@ -15,7 +15,7 @@ open Chapter3.SetTheory
 [SetTheory.Set.mem_singleton](https://github.com/teorth/analysis/blob/main/Analysis/Section_3_1.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   [SetTheory]
   {x a:Object} :
 -- imply

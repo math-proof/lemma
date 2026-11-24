@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/AptThinness.lean -/
+module
+public import Def.v1.Atlas.Buildings.code.Building.AptIsCoxeterProof
+public import Theorem.Set.ApartmentsToApartmentSystem.eq.Apartments.of.IsThick
+public import Def.v1.Atlas.Buildings.code.Building.AptThinness
+open ChamberComplex
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/AptThinness.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.Buildings.code.Building.AptIsCoxeterProof
-import Theorem.Set.ApartmentsToApartmentSystem.eq.Apartments.of.IsThick
-import Def.v1.Atlas.Buildings.code.Building.AptThinness
-open ChamberComplex
-
 variable {V : Type*} [DecidableEq V]
 
 

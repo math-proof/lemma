@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/ModularInvariants.lean -/
+module
+public import Def.v1.Atlas.EllipticCurves.code.EisensteinSeries
+public import Lemma.Complex.Atlas.v1.EllipticCurves.code.EisensteinSeries
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Uniformization
+public import Def.v1.Atlas.EllipticCurves.code.Uniformization
+open Complex
+open scoped UpperHalfPlane
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/ModularInvariants.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.EllipticCurves.code.EisensteinSeries
-import Lemma.Complex.Atlas.v1.EllipticCurves.code.EisensteinSeries
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.Uniformization
-import Def.v1.Atlas.EllipticCurves.code.Uniformization
-open Complex
-
-open scoped UpperHalfPlane
-
-
 noncomputable section
 
 namespace ModularInvariants

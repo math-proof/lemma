@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/TriangularIsingTorusFourier.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusKacWard.Part2
+public import Theorem.StatisticalMechanics.Code.Onsager.KWSpinFourier.Part3
+public import Abbrev.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusFourier
+open scoped BigOperators Matrix
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/TriangularIsingTorusFourier.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusKacWard.Part2
-import Theorem.StatisticalMechanics.Code.Onsager.KWSpinFourier.Part3
-import Abbrev.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusFourier
-open scoped BigOperators Matrix
-
-
 namespace StatMech.FrontierA
 
 open StatMech.Onsager

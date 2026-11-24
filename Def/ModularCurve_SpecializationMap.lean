@@ -1,33 +1,36 @@
-import Theorem.HahnSeries.JqCoeff
-import Theorem.LaurentSeries.LaurentCoeff
-import Def.ModularCurve_PhiGen
-import Class.AlgebraicCurve_DivisorClassGroup
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Mathlib.RingTheory.IntegralClosure.GoingDown
-import Mathlib.RingTheory.Polynomial.IsIntegral
-import Mathlib.RingTheory.Valuation.LocalSubring
-import Mathlib.RingTheory.Algebraic.Basic
-import Def.AlgebraicCurve_PlacesOverDVR
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Mathlib.Algebra.Polynomial.Lifts
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.RingTheory.Localization.AtPrime.Basic
-import Mathlib.RingTheory.Valuation.ValuationSubring
-import Mathlib.RingTheory.PrincipalIdealDomain
-import Mathlib.Algebra.CharP.Basic
-import Mathlib.Data.Int.CharZero
-import Mathlib.Data.Nat.Prime.Int
-import Mathlib.RingTheory.Ideal.IntegralClosure
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
-import Mathlib.RingTheory.Ideal.Maps
-import Mathlib.RingTheory.Ideal.Maximal
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
-import Def.ModularCurve_FibreModel
-import Def.ModularCurve_ArithmeticGalois
-import Structure.ModularCurve_PlaceSpecialization
-import Instance.ModularCurve_SpecializationMap
-
+module
+public import Theorem.HahnSeries.JqCoeff
+public import Theorem.LaurentSeries.LaurentCoeff
+public import Def.ModularCurve_PhiGen
+public import Class.AlgebraicCurve_DivisorClassGroup
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Mathlib.RingTheory.IntegralClosure.GoingDown
+public import Mathlib.RingTheory.Polynomial.IsIntegral
+public import Mathlib.RingTheory.Valuation.LocalSubring
+public import Mathlib.RingTheory.Algebraic.Basic
+public import Def.AlgebraicCurve_PlacesOverDVR
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.Algebra.Polynomial.Lifts
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.RingTheory.Localization.AtPrime.Basic
+public import Mathlib.RingTheory.Valuation.ValuationSubring
+public import Mathlib.RingTheory.PrincipalIdealDomain
+public import Mathlib.Algebra.CharP.Basic
+public import Mathlib.Data.Int.CharZero
+public import Mathlib.Data.Nat.Prime.Int
+public import Mathlib.RingTheory.Ideal.IntegralClosure
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
+public import Mathlib.RingTheory.Ideal.Maps
+public import Mathlib.RingTheory.Ideal.Maximal
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+public import Def.ModularCurve_FibreModel
+public import Def.ModularCurve_ArithmeticGalois
+public import Structure.ModularCurve_PlaceSpecialization
+public import Instance.ModularCurve_SpecializationMap
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

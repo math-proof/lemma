@@ -1,5 +1,29 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/EndomorphismAlgebra.lean -/
+module
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.LinearAlgebra.FreeModule.PID
+public import Mathlib.LinearAlgebra.Span.Defs
+public import Mathlib.Algebra.Module.Submodule.Lattice
+public import Mathlib.Algebra.Algebra.Basic
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Def.v1.Atlas.EllipticCurves.code.TorsionEndomorphism.Part3
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.TorsionEndomorphism
+public import Mathlib.Algebra.Quaternion
+public import Mathlib.Algebra.QuaternionBasis
+public import Mathlib.Data.Real.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Defs
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.NumberTheory.Zsqrtd.Basic
+public import Mathlib.GroupTheory.Archimedean
+public import Mathlib.Algebra.Group.Subgroup.ZPowers.Basic
+public import Abbrev.v1.Atlas.EllipticCurves.code.EndomorphismAlgebra
+open NumberField
+open scoped Quaternion
+open Module
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/EllipticCurves/code/EndomorphismAlgebra.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,30 +31,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib.RingTheory.Finiteness.Defs
-import Mathlib.LinearAlgebra.FreeModule.PID
-import Mathlib.LinearAlgebra.Span.Defs
-import Mathlib.Algebra.Module.Submodule.Lattice
-import Mathlib.Algebra.Algebra.Basic
-import Mathlib.NumberTheory.NumberField.Basic
-import Def.v1.Atlas.EllipticCurves.code.TorsionEndomorphism.Part3
-import Theorem.Complex.Atlas.v1.EllipticCurves.code.TorsionEndomorphism
-import Mathlib.Algebra.Quaternion
-import Mathlib.Algebra.QuaternionBasis
-import Mathlib.Data.Real.Basic
-import Mathlib.LinearAlgebra.TensorProduct.Defs
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.NumberTheory.Zsqrtd.Basic
-import Mathlib.GroupTheory.Archimedean
-import Mathlib.Algebra.Group.Subgroup.ZPowers.Basic
-import Abbrev.v1.Atlas.EllipticCurves.code.EndomorphismAlgebra
-open NumberField
-
-open scoped Quaternion
-open Module
-
-
 section QuaternionAlg
 
 variable {k : Type*} [Field k] (a b : k) (ha : a ≠ 0) (hb : b ≠ 0)

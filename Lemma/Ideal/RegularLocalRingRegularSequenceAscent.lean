@@ -1,9 +1,12 @@
-import Mathlib
-import Lemma.Ideal.RegularLocalRingQuotientNonZeroDivisorAscent
-
+module
+public import Mathlib
+public import Lemma.Ideal.RegularLocalRingQuotientNonZeroDivisorAscent
 set_option autoImplicit false
 set_option maxHeartbeats 800000
 set_option synthInstance.maxHeartbeats 400000
+
+
+public section
 
 noncomputable section
 

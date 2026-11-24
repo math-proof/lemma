@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Geometry/LatticePointCubeSandwich.lean -/
+module
+public import Theorem.Geometry.LatticePointCubeSandwich.Part3
+public import Theorem.Set.LatticePointCubeSandwich
+public import Def.MathlibExtTest.Geometry.LatticePointCubeSandwich
+open LatticePointCubeSandwich MeasureTheory
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Geometry/LatticePointCubeSandwich.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,12 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.Geometry.LatticePointCubeSandwich.Part3
-import Lemma.Set.LatticePointCubeSandwich
-import Def.MathlibExtTest.Geometry.LatticePointCubeSandwich
-open LatticePointCubeSandwich MeasureTheory
-
 /-!
 # Tests for the bounded cubical measure sandwich
 
@@ -24,9 +26,8 @@ Concrete checks for `LatticePointCubeSandwich`:
   bounded sets.
 - The `n = 0` edge case.
 -/
-
-
 /-- The origin lies in its own half-open integer unit cube. -/
+
 example : (fun _ => (0 : ℝ)) ∈
     integerUnitCube (n := 1) (fun _ => (0 : ℤ)) := by
   rw [mem_integerUnitCube_iff]

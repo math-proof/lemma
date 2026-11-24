@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexAntiferroelectricSeries.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexWidthFreeEnergy.Part4
+public import Mathlib.Analysis.SpecialFunctions.Arcosh
+public import Mathlib.Analysis.Complex.AbelLimit
+public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
+public import Def.StatisticalMechanics.Code.FrontierD.SixVertexAntiferroelectricSeries.Part2
+open Finset Filter Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexAntiferroelectricSeries.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexWidthFreeEnergy.Part4
-import Mathlib.Analysis.SpecialFunctions.Arcosh
-import Mathlib.Analysis.Complex.AbelLimit
-import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Def.StatisticalMechanics.Code.FrontierD.SixVertexAntiferroelectricSeries.Part2
-open Finset Filter Topology
-
-
 namespace StatMech.FrontierD
 
 theorem tanh_pos_of_pos {x : ℝ} (hx : 0 < x) : 0 < Real.tanh x := by

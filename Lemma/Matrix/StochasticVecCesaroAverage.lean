@@ -1,7 +1,10 @@
-import Initialize.Tactic.Attr.Basic
-import Instance.Probability.Process.StochasticProcessTypes.Part3
+module
+public import Initialize.Tactic.Attr.Basic
+public import Instance.Probability.Process.StochasticProcessTypes.Part3
 open scoped Matrix BigOperators
 
+
+public section
 
 @[path]
 private lemma main

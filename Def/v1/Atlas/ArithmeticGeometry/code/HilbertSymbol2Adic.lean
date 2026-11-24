@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/HilbertSymbol2Adic.lean -/
+module
+public import Def.v1.Atlas.ArithmeticGeometry.code.Hilbert2Adic
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Hilbert2Adic
+public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Hilbert2AdicCore
+public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertPrimitiveSolutions
+public import Def.v1.Atlas.ArithmeticGeometry.code.Hilbert2AdicCore.Part2
+public import Theorem.v1.Atlas.ArithmeticGeometry.code.HilbertPrimitiveSolutions.Part2
+open PadicInt HilbertSymbol
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/HilbertSymbol2Adic.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.ArithmeticGeometry.code.Hilbert2Adic
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Hilbert2Adic
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Hilbert2AdicCore
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertPrimitiveSolutions
-import Def.v1.Atlas.ArithmeticGeometry.code.Hilbert2AdicCore.Part2
-import Theorem.v1.Atlas.ArithmeticGeometry.code.HilbertPrimitiveSolutions.Part2
-open PadicInt HilbertSymbol
-
-
 noncomputable section
 
 /-- The function $\varepsilon(u) = (u - 1) / 2 \pmod{2}$ applied to a $2$-adic unit $u$, computed

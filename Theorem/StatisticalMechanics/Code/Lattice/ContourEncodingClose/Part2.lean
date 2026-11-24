@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Lattice/ContourEncodingClose.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Lattice.ClusterContourBijection.Part4
+public import Theorem.StatisticalMechanics.Code.Lattice.CanonicalContour.Part6
+public import Theorem.StatisticalMechanics.Code.Lattice.JordanEnclosure.Part6
+public import Def.StatisticalMechanics.Code.Lattice.ContourEncodingClose.Part2
+open Set Finset SimpleGraph
+open StatMech.Ising
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Lattice/ContourEncodingClose.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,17 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Lattice.ClusterContourBijection.Part4
-import Theorem.StatisticalMechanics.Code.Lattice.CanonicalContour.Part6
-import Theorem.StatisticalMechanics.Code.Lattice.JordanEnclosure.Part6
-import Def.StatisticalMechanics.Code.Lattice.ContourEncodingClose.Part2
-open Set Finset SimpleGraph
-open StatMech.Ising
-
-
 namespace StatMech
 
 namespace Lattice

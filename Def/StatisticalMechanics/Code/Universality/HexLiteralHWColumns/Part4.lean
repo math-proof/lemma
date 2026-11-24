@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexLiteralHWColumns.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWAugment.Part14
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripLimits.Part6
+public import Structure.StatisticalMechanics.Code.Universality.HexLiteralHWColumns
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexLiteralHWColumns.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWAugment.Part14
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripLimits.Part6
-import Structure.StatisticalMechanics.Code.Universality.HexLiteralHWColumns
-
-
 namespace StatMech.Universality
 
 open HexWalk

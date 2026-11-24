@@ -1,13 +1,16 @@
-import Lemma.Random.Any_And_Any_All_LeAbsAndLe_Integral_Sub_Log_Integral_Exp.of.EqKlDiv_Top
-import Lemma.Random.Any_ContinuousAndAny_All_LeAbsAndLeSubToRealIntegral_Sub_Log.of.Lt0
-import Lemma.Random.Integral_Sub_Log_Integral_Exp.le.ToRealKlDiv.of.Any_All_LeAbs.Continuous.Integrable_Llr
-import Mathlib.InformationTheory.KullbackLeibler.Basic
-import Mathlib.Topology.ContinuousMap.Bounded.Normed
-import Mathlib.Topology.Instances.ENNReal.Lemmas
-import Mathlib.Topology.Order.Monotone
-import Initialize.Tactic.Attr.Basic
+module
+public import Lemma.Random.Any_And_Any_All_LeAbsAndLe_Integral_Sub_Log_Integral_Exp.of.EqKlDiv_Top
+public import Lemma.Random.Any_ContinuousAndAny_All_LeAbsAndLeSubToRealIntegral_Sub_Log.of.Lt0
+public import Lemma.Random.Integral_Sub_Log_Integral_Exp.le.ToRealKlDiv.of.Any_All_LeAbs.Continuous.Integrable_Llr
+public import Mathlib.InformationTheory.KullbackLeibler.Basic
+public import Mathlib.Topology.ContinuousMap.Bounded.Normed
+public import Mathlib.Topology.Instances.ENNReal.Lemmas
+public import Mathlib.Topology.Order.Monotone
+public import Initialize.Tactic.Attr.Basic
 open BoundedContinuousFunction ENNReal InformationTheory MeasureTheory Random Set Real
 
+
+public section
 
 private lemma variational [TopologicalSpace α] [PolishSpace α] [MeasurableSpace α] [BorelSpace α] {μ ν : Measure α} [IsProbabilityMeasure μ] [IsProbabilityMeasure ν] : klDiv ν μ = ⨆ f : BoundedContinuousFunction α ℝ, ENNReal.ofReal (∫ x, f x ∂ν - log (∫ x, exp (f x) ∂μ)) := by
   let expr : (BoundedContinuousFunction α ℝ) → ℝ := fun f => ∫ x, f x ∂ν - log (∫ x, exp (f x) ∂μ)

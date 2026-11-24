@@ -1,8 +1,13 @@
-import Mathlib
-import Abbrev.Analysis.Section_6_4.Part3
-import Abbrev.Analysis.Section_7_4
-import Mathlib.Topology.Instances.EReal.Lemmas
-import Mathlib.Analysis.SpecialFunctions.Pow.Continuity
+module
+public import Mathlib
+public import Abbrev.Analysis.Section_6_4.Part3
+public import Abbrev.Analysis.Section_7_4
+public import Mathlib.Topology.Instances.EReal.Lemmas
+public import Mathlib.Analysis.SpecialFunctions.Pow.Continuity
+
+
+public section
+
 /-!
 # Analysis I, Section 7.5: The root and ratio tests
 
@@ -15,8 +20,6 @@ Main constructions and results of this section:
 A point that is only implicitly stated in the text is that for the root and ratio tests, the lim inf and lim sup should be interpreted within the extended reals.  The Lean formalizations below make this point more explicit.
 
 -/
-
-
 namespace Chapter7
 
 open Filter Real EReal

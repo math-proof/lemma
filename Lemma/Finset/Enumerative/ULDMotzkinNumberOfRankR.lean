@@ -1,9 +1,12 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.Combinatorics.Enumerative.ULDMotzkinNumberOfRankR.Part2
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.Combinatorics.Enumerative.ULDMotzkinNumberOfRankR.Part2
 open MetaMathlibExt
 open ULDMotzkin
 
+
+public section
 
 namespace MetaMathlibExt.ULDMotzkin
 

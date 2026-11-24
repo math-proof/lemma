@@ -1,10 +1,13 @@
-import Lemma.LaurentSeries.X1HeckeOperator
-import Theorem.UpperHalfPlane.X1Diamond
-import Def.ModularCurve_JZeroTateModule
-import Mathlib.Algebra.MvPolynomial.CommRing
-import Abbrev.ModularCurve_X1HeckeModule
-
+module
+public import Lemma.LaurentSeries.X1HeckeOperator
+public import Theorem.UpperHalfPlane.X1Diamond
+public import Def.ModularCurve_JZeroTateModule
+public import Mathlib.Algebra.MvPolynomial.CommRing
+public import Abbrev.ModularCurve_X1HeckeModule
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

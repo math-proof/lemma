@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/PeriodicPlanarBurtonKeanePattern.lean -/
+module
+public import Def.StatisticalMechanics.Code.FK.PeriodicPlanarBurtonKeaneTail.Part3
+public import Theorem.StatisticalMechanics.Code.Percolation.ThreePendantTree
+public import Theorem.StatisticalMechanics.Code.Percolation.TreeExteriorAmalgam
+public import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarBurtonKeanePattern
+open MeasureTheory Set SimpleGraph Finset
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FK/PeriodicPlanarBurtonKeanePattern.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Def.StatisticalMechanics.Code.FK.PeriodicPlanarBurtonKeaneTail.Part3
-import Theorem.StatisticalMechanics.Code.Percolation.ThreePendantTree
-import Theorem.StatisticalMechanics.Code.Percolation.TreeExteriorAmalgam
-import Theorem.StatisticalMechanics.Code.FK.PeriodicPlanarBurtonKeanePattern
-open MeasureTheory Set SimpleGraph Finset
-
-
 namespace StatMech.FK.PeriodicPlanar
 
 open Lattice

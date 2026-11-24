@@ -1,11 +1,15 @@
--- Carved from Lemma/Definitions/Def_AlgebraicGeometry_SymmRootFunctor.lean: instance decls only.
-import Mathlib
-import Instance.AlgebraicGeometry_RelativePicardFunctor
-import Lemma.Scheme.PolarisationRosati
-import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
-import Theorem.Scheme.SymmRootFunctor
-
+module
+public import Mathlib
+public import Instance.AlgebraicGeometry_RelativePicardFunctor
+public import Theorem.Scheme.PolarisationRosati
+public import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
+public import Theorem.Scheme.SymmRootFunctor
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_AlgebraicGeometry_SymmRootFunctor.lean: instance decls only.
 
 noncomputable section
 

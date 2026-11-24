@@ -1,13 +1,16 @@
-import Mathlib
-import Abbrev.ModularCurve_DRModelPackageLevel
-import Def.ModularCurve_X0MqResolvedTable
-import Def.AlgebraicCurve_RelCartier
-import Structure.ModularCurve_DRResolvedModelPackageLevel
-import Structure.ModularCurve_DRResolvedModelPackageLevelRam
-
+module
+public import Mathlib
+public import Abbrev.ModularCurve_DRModelPackageLevel
+public import Def.ModularCurve_X0MqResolvedTable
+public import Def.AlgebraicCurve_RelCartier
+public import Structure.ModularCurve_DRResolvedModelPackageLevel
+public import Structure.ModularCurve_DRResolvedModelPackageLevelRam
 set_option autoImplicit false
 set_option maxHeartbeats 800000
 set_option synthInstance.maxHeartbeats 400000
+
+
+public section
 
 noncomputable section
 

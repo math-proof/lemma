@@ -1,3 +1,12 @@
+module
+public import Mathlib
+public import Theorem.Combinatorics.Enumerative.QBinomialBasic.Part4
+public import Def.Combinatorics.Enumerative.QBinomialFormulas.Part2
+open Polynomial Finset BigOperators
+
+
+public section
+
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -6,11 +15,6 @@ All rights reserved.
 Copyright (c) 2025 AlgebraicCombinatorics Contributors. All rights reserved.
 Authors: AlgebraicCombinatorics Contributors
 -/
-import Mathlib
-import Theorem.Combinatorics.Enumerative.QBinomialBasic.Part4
-import Def.Combinatorics.Enumerative.QBinomialFormulas.Part2
-open Polynomial Finset BigOperators
-
 /-!
 # q-Binomial Formulas
 
@@ -50,8 +54,6 @@ To use definitions from this file:
 * Section on q-binomial formulas from Algebraic Combinatorics lecture notes
 * See also `QBinomialBasic.lean` for the canonical definition and basic properties
 -/
-
-
 /-!
 ## Sub-namespace for Recursive q-Binomial Definitions
 
@@ -66,7 +68,6 @@ To use these definitions, either:
 1. Open the namespace: `open AlgebraicCombinatorics.QBinomialRec`
 2. Use the full path: `AlgebraicCombinatorics.QBinomialRec.qBinomial`
 -/
-
 /-!
 ### Definition def.pars.qbinom.qint: q-integers and q-factorials
 
@@ -86,8 +87,6 @@ For any `n ∈ ℕ`:
 - `[n]_1 = n`
 - `[n]_1! = n!`
 -/
-
-
 namespace AlgebraicCombinatorics
 
 namespace QBinomialRec

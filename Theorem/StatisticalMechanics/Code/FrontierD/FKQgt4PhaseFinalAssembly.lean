@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKQgt4PhaseFinalAssembly.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareWiredPercolation.Part2
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4WiredGlobalOrder
+public import Theorem.StatisticalMechanics.Code.FK.PottsPhaseCoexistenceCapstone
+public import Theorem.StatisticalMechanics.Code.FK.PottsErgodicPhaseFamily.Part2
+open Filter MeasureTheory Set SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKQgt4PhaseFinalAssembly.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4SquareWiredPercolation.Part2
-import Theorem.StatisticalMechanics.Code.FrontierD.FKQgt4WiredGlobalOrder
-import Theorem.StatisticalMechanics.Code.FK.PottsPhaseCoexistenceCapstone
-import Theorem.StatisticalMechanics.Code.FK.PottsErgodicPhaseFamily.Part2
-open Filter MeasureTheory Set SimpleGraph
-
-
 namespace StatMech.FrontierD
 
 open StatMech.Lattice StatMech.Percolation StatMech.FK StatMech.BeffaraDC

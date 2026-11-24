@@ -1,10 +1,13 @@
--- Carved from Lemma/Definitions/Def_LanglandsTunnell_CubicInduction_HeckeRepresentatives.lean: instance decls only.
-import Theorem.Matrix.CubicInduction_HeckeRepresentatives
-import Def.LanglandsTunnell_CubicInduction_HeckeRepresentatives
-
+module
+public import Theorem.Matrix.CubicInduction_HeckeRepresentatives
+public import Def.LanglandsTunnell_CubicInduction_HeckeRepresentatives
 set_option autoImplicit false
-
 open Matrix IsDedekindDomain NumberField
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_LanglandsTunnell_CubicInduction_HeckeRepresentatives.lean: instance decls only.
 
 noncomputable section
 

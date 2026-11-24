@@ -1,5 +1,5 @@
 import Mathlib.AlgebraicGeometry.Limits
-import Lemma.Scheme.RelEffCartierDivOfPoint
+import Theorem.Scheme.RelEffCartierDivOfPoint
 import Lemma.Scheme.SymmetricPower
 import Abbrev.AlgebraicGeometry_RelEffCartierDivSum
 import Instance.AlgebraicGeometry_RelEffCartierDivSum

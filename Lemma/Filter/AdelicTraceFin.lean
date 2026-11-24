@@ -1,9 +1,12 @@
-import Def.NumberField_AdelicTraceProducer
-import Lemma.Filter.IntegralAdelicTrace
-import Def.NumberField_AdelicBox
-import Mathlib.Filter.Algebra.RestrictedProduct.TopologicalSpace
-
+module
+public import Def.NumberField_AdelicTraceProducer
+public import Lemma.Filter.IntegralAdelicTrace
+public import Def.NumberField_AdelicBox
+public import Mathlib.Filter.Algebra.RestrictedProduct.TopologicalSpace
 set_option synthInstance.maxHeartbeats 100000
+
+
+public section
 
 namespace NumberField.StandardAddChar
 

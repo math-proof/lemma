@@ -1,5 +1,5 @@
 import Lemma.UpperHalfPlane.PeriodMap
-import Lemma.UpperHalfPlane.PeriodMapBundled
+import Theorem.UpperHalfPlane.PeriodMapBundled
 import Mathlib.LinearAlgebra.Prod
 
 set_option autoImplicit false

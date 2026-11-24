@@ -15,7 +15,7 @@ open Chapter3.SetTheory.Set
 [SetTheory.Set.ext](https://github.com/teorth/analysis/blob/main/Analysis/Section_3_1.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   [SetTheory]
   {X Y:Chapter3.Set}
 -- given

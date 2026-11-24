@@ -1,8 +1,12 @@
--- Carved from Lemma/Definitions/Def_CohCarrier_Lower.lean: instance decls only.
-import Instance.CohCarrier_Level
-import Def.CohCarrier_Lower
-
+module
+public import Instance.CohCarrier_Level
+public import Def.CohCarrier_Lower
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_CohCarrier_Lower.lean: instance decls only.
 
 namespace CohCarrier
 

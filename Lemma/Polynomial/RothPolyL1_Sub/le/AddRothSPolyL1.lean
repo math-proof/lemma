@@ -1,12 +1,15 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.NumberTheory.RothAuxiliary
-import Def.NumberTheory.RothAuxiliary.Part2
-import Lemma.Polynomial.RothPolyL1Add.le.AddRothSPolyL1
-import Lemma.Polynomial.RothPolyL1Neg.eq.RothPolyL1
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.NumberTheory.RothAuxiliary
+public import Def.NumberTheory.RothAuxiliary.Part2
+public import Lemma.Polynomial.RothPolyL1Add.le.AddRothSPolyL1
+public import Lemma.Polynomial.RothPolyL1Neg.eq.RothPolyL1
 open MathlibExt.NumberTheory.RothAuxiliary
 open Polynomial
 
+
+public section
 
 /--
 [rothPolyL1_sub](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

@@ -1,10 +1,12 @@
+module
+public import Theorem.Nat.NumberField.ExtensionDiscriminantLocalization
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/ExtensionDiscriminantLocalization.lean -/
-
-
-import Lemma.Nat.NumberField.ExtensionDiscriminantLocalization
-
-
 -- Generic restatement applying `extensionDiscriminant_localization`.
+
 example (A K : Type*) (L : Type*) (B : Type*) [CommRing A] [Field K]
     [CommRing B] [Field L] [Algebra A K] [Algebra B L] [Algebra A B]
     [Algebra K L] [Algebra A L] [IsScalarTower A K L] [IsScalarTower A B L]

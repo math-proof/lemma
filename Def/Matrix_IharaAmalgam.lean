@@ -1,6 +1,10 @@
-import Def.Matrix_IharaIota
-import Mathlib.GroupTheory.PushoutI
-import Instance.IharaAmalgam
+module
+public import Def.Matrix_IharaIota
+public import Mathlib.GroupTheory.PushoutI
+public import Instance.IharaAmalgam
+
+
+public section
 
 namespace Ihara
 

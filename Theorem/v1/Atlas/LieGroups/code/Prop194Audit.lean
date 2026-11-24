@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/Prop194Audit.lean -/
+module
+public import Def.v1.Atlas.LieGroups.code.PrincipalSeries.Part6
+public import Theorem.Int.GetLift_ToEndSubMulS.eq.Zero.of.All_EqGetLiftSMul
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/Prop194Audit.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,10 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.LieGroups.code.PrincipalSeries.Part6
-import Lemma.Int.GetLift_ToEndSubMulS.eq.Zero.of.All_EqGetLiftSMul
-
 
 example (R : Type*) [CommRing R] (𝔤 : Type*) [LieRing 𝔤] [LieAlgebra R 𝔤]
     {Δ : TriangularDecomposition R 𝔤}

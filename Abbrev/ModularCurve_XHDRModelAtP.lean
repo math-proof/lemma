@@ -1,14 +1,17 @@
-import Mathlib
-import Instance.ModularCurve_XHDifferentialsModL
-import Def.ModularCurve_XHOperators
-import Abbrev.ModularCurve_IgusaScheme
-import Instance.AlgebraicCurve_TwoChartIntegralModel
-import Structure.AlgebraicCurve_CurveModel
-import Structure.AlgebraicGeometry_NeronModelPropertyBundleCarrier
-
+module
+public import Mathlib
+public import Instance.ModularCurve_XHDifferentialsModL
+public import Def.ModularCurve_XHOperators
+public import Abbrev.ModularCurve_IgusaScheme
+public import Instance.AlgebraicCurve_TwoChartIntegralModel
+public import Structure.AlgebraicCurve_CurveModel
+public import Structure.AlgebraicGeometry_NeronModelPropertyBundleCarrier
 set_option autoImplicit false
 set_option maxHeartbeats 800000
 set_option synthInstance.maxHeartbeats 400000
+
+
+public section
 
 noncomputable section
 

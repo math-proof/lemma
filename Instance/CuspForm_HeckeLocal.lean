@@ -1,12 +1,16 @@
--- Carved from Lemma/Definitions/Def_CuspForm_HeckeLocal.lean: instance decls only.
-import Structure.CuspForm_HeckeGaloisRepDatum
-import Def.CuspForm_IntegralStructure
-import Theorems.Thm_CuspForm_mem_intLattice_of_mem_heckeAlgebra
-import Theorems.Thm_CuspForm_intLattice_fg
-import Theorems.Thm_IsLocalRing_isAdicComplete_of_module_finite
-import Theorems.Thm_Algebra_finite_maximalSpectrum_and_bijective_localization_of_module_finite
-
+module
+public import Structure.CuspForm_HeckeGaloisRepDatum
+public import Def.CuspForm_IntegralStructure
+public import Theorems.Thm_CuspForm_mem_intLattice_of_mem_heckeAlgebra
+public import Theorems.Thm_CuspForm_intLattice_fg
+public import Theorems.Thm_IsLocalRing_isAdicComplete_of_module_finite
+public import Theorems.Thm_Algebra_finite_maximalSpectrum_and_bijective_localization_of_module_finite
 set_option autoImplicit false
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_CuspForm_HeckeLocal.lean: instance decls only.
 
 noncomputable section
 

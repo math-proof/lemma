@@ -1,7 +1,11 @@
-import Mathlib
-import Mathlib.Algebra.Group.MinimalAxioms
-import Theorem.Analysis.Section_4_1.Part5
+module
+public import Mathlib
+public import Mathlib.Algebra.Group.MinimalAxioms
+public import Theorem.Analysis.Section_4_1.Part5
 set_option doc.verso.suggestions false
+
+
+public section
 
 /-!
 # Analysis I, Section 4.1: The integers
@@ -29,8 +33,6 @@ Users of the companion who have completed the exercises in this section are welc
 - (Add tip here)
 
 -/
-
-
 namespace Section_4_1
 
 instance Int.instOfNat {n:ℕ} : OfNat Int n where

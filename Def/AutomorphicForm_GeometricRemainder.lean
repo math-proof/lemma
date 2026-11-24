@@ -1,16 +1,18 @@
-import Def.AutomorphicForm_TruncationOperator
-import Def.AutomorphicForm_AdelicKernel
-import Def.NumberField_AdelicHeight
-import Def.Analysis_HalfLineIntercept
-import Lemma.Measure.CarrierPins
-import Def.NumberField_PrincipalLevel
-import Def.AutomorphicForm_SmoothAutomorphicFnAt
-import Def.NumberField_AdelicBox
-
+module
+public import Def.AutomorphicForm_TruncationOperator
+public import Def.AutomorphicForm_AdelicKernel
+public import Def.NumberField_AdelicHeight
+public import Def.Analysis_HalfLineIntercept
+public import Lemma.Measure.CarrierPins
+public import Def.NumberField_PrincipalLevel
+public import Def.AutomorphicForm_SmoothAutomorphicFnAt
+public import Def.NumberField_AdelicBox
 set_option autoImplicit false
-
 open MeasureTheory NumberField NumberField.AdelicLevel NumberField.AdelicBox NumberField.AdelicHaar
 open IsDedekindDomain
+
+
+public section
 
 noncomputable section
 

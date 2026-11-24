@@ -1,5 +1,19 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/GoalVerification61_64_66_67_68.lean -/
+module
+public import Theorem.v1.Atlas.BooleanFunctions.code.UncoveredBatch2
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Majority
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.BonamilBeckner
+public import Def.v1.Atlas.BooleanFunctions.code.TwoPointInequality
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.TwoPointInequality
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.GaussianSpace
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Claim32Lec8
+public import Def.v1.Atlas.BooleanFunctions.code.GaussianSpace
+public import Def.v1.Atlas.BooleanFunctions.code.Claim32Lec8
+open Finset BigOperators Real MeasureTheory
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/GoalVerification61_64_66_67_68.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +21,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.v1.Atlas.BooleanFunctions.code.UncoveredBatch2
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Majority
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.BonamilBeckner
-import Def.v1.Atlas.BooleanFunctions.code.TwoPointInequality
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.TwoPointInequality
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.GaussianSpace
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Claim32Lec8
-import Def.v1.Atlas.BooleanFunctions.code.GaussianSpace
-import Def.v1.Atlas.BooleanFunctions.code.Claim32Lec8
-open Finset BigOperators Real MeasureTheory
-
 
 example (δ : ℝ) (hδ_pos : 0 < δ) (hδ_le : δ ≤ 1 / 2) :
     Filter.Tendsto

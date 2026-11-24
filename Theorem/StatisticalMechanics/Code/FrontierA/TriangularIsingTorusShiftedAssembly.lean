@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/TriangularIsingTorusShiftedAssembly.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusLocalAngularSplit.Part4
+public import Theorem.StatisticalMechanics.Code.FrontierA.SurfaceKacWardShiftedCycleAssembly.Part6
+public import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusSurfaceReduction
+public import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusSplitCyclePhase
+public import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusSplitIsotropy
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/TriangularIsingTorusShiftedAssembly.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusLocalAngularSplit.Part4
-import Theorem.StatisticalMechanics.Code.FrontierA.SurfaceKacWardShiftedCycleAssembly.Part6
-import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusSurfaceReduction
-import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusSplitCyclePhase
-import Theorem.StatisticalMechanics.Code.FrontierA.TriangularIsingTorusSplitIsotropy
-
-
 namespace StatMech.FrontierA
 
 theorem triangularTorus_native_det_square_of_localSplit

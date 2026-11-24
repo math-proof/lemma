@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/KacWardPolygonJordanEquivalence.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardChordEndpointOrderFour
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPolygonPhaseInduction
+public import Def.StatisticalMechanics.Code.FrontierA.KacWardPolygonJordanEquivalence
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/KacWardPolygonJordanEquivalence.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardChordEndpointOrderFour
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardPolygonPhaseInduction
-import Def.StatisticalMechanics.Code.FrontierA.KacWardPolygonJordanEquivalence
-
-
 namespace StatMech.FrontierA
 
 theorem kwCleanChordPhaseCompatibility_iff_polygonPhaseSign :

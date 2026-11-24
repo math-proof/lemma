@@ -14,7 +14,6 @@ namespace BooleanFourier
 /--
 [plancherel](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Parseval.lean)
 -/
-@[path]
 public theorem plancherel
   {n : ℕ}
   {f g : (Fin n → Bool) → ℝ} :
@@ -62,7 +61,6 @@ namespace BooleanFourier
 /--
 [parseval](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Parseval.lean)
 -/
-@[path]
 public theorem parseval
   {n : ℕ}
   {f : (Fin n → Bool) → ℝ} :
@@ -85,7 +83,6 @@ namespace BooleanFourier
 /--
 [claim_2_2](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Parseval.lean)
 -/
-@[path]
 public theorem claim_2_2
   {n : ℕ}
   {f g : (Fin n → Bool) → ℝ} :

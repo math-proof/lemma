@@ -1,13 +1,16 @@
-import Mathlib.RingTheory.LaurentSeries
-import Mathlib.RingTheory.PowerSeries.PiTopology
-import Mathlib.RingTheory.PowerSeries.Inverse
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
-import Mathlib.RingTheory.Algebraic.Basic
-import Mathlib.NumberTheory.Divisors
-import Mathlib.Data.Nat.Squarefree
-import Structure.ModularCurve_X0
-
+module
+public import Mathlib.RingTheory.LaurentSeries
+public import Mathlib.RingTheory.PowerSeries.PiTopology
+public import Mathlib.RingTheory.PowerSeries.Inverse
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+public import Mathlib.RingTheory.Algebraic.Basic
+public import Mathlib.NumberTheory.Divisors
+public import Mathlib.Data.Nat.Squarefree
+public import Structure.ModularCurve_X0
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

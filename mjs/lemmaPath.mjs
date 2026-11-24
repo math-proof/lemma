@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import { pathToFileURL } from "url";
 import { compile } from "../js/parser/lean.js";
+import { Lean } from "../js/parser/lean/base.js";
 import { json2pathPatterns, suggestionMatches } from "../js/parser/lean/json2regex.js";
 import {
   TYPE_TO_SECTION,
@@ -112,12 +113,23 @@ function getLemmaName(lemma) {
 }
 
 function extractLemma(ast, lemmaName) {
+  return selectLemma(ast, lemmaName).lemma;
+}
+
+/**
+ * The declaration the conclusion fingerprint is taken from, and its zero-based
+ * position among the file's `lemma` / `theorem` declarations: the declaration
+ * carrying the `main` attribute wins, otherwise the first one. That position is
+ * `inverted.lemma_id` — `main` is not necessarily declaration 0.
+ */
+function selectLemma(ast, lemmaName) {
   const lemmas = extractLemmas(ast);
   if (lemmaName) {
     const named = lemmas.find((l) => getLemmaName(l) === lemmaName);
-    if (named) return named;
+    if (named) return { lemma: named, index: lemmas.indexOf(named) };
   }
-  return lemmas.find(hasMainAttr) || lemmas[0];
+  const lemma = lemmas.find(hasMainAttr) || lemmas[0];
+  return { lemma, index: lemma ? lemmas.indexOf(lemma) : -1 };
 }
 
 function findColonDeep(node) {
@@ -381,8 +393,12 @@ export function conclusionNodeOf(filePath, lemmaName, options = {}) {
     ? String(options.source).replace(/\r\n/g, "\n")
     : fs.readFileSync(abs, "utf8").replace(/\r\n/g, "\n");
   const ast = compileLemmaSource(source);
-  const lemma = extractLemma(ast, lemmaName);
+  const { lemma, index } = selectLemma(ast, lemmaName);
   if (!lemma) throw new Error("No Lean_lemma found");
+  // `lemma_id` of the fingerprinted declaration, for axiom.inverted postings.
+  if (options.location && typeof options.location === "object") {
+    options.location.lemmaId = Math.max(0, index);
+  }
   const sig = extractSignature(lemma);
   if (!sig) throw new Error("Could not find lemma signature");
   const conclusion = conclusionNode(sig.colon);
@@ -397,6 +413,138 @@ export function conclusionJson(filePath, lemmaName, options = {}) {
 /** Fingerprint tree: free leaves `$n`, binders De Bruijn `?n`. */
 export function conclusionSearchJson(filePath, lemmaName, options = {}) {
   return conclusionNodeOf(filePath, lemmaName, options).toJSON({ leaves: new Map(), binders: [] });
+}
+
+function searchContext() {
+  return { leaves: new Map(), binders: [] };
+}
+
+/** Proof steps in the same source-level positions as `render2vue(null)`. */
+function proofStepsOf(lemma) {
+  const L = Lean.classes;
+  const assign = (lemma.args || []).find((a) => cls(a) === "LeanAssign");
+  const proof = assign?.rhs ?? assign?.args?.[1];
+  if (!proof) return [];
+  const root = proof instanceof L.LeanBy ? proof.arg : proof;
+  if (!root) return [];
+  const list = (proof instanceof L.LeanCalc ? [proof] : (root.args || [root]))
+    .filter((s) => !(s instanceof L.LeanCaret))
+    .filter((s, i) => !(i === 0 && s instanceof L.LeanLineComment && s.text === "proof"));
+  const syntax = {};
+  const statements = [];
+  for (const statement of list) statements.push(...statement.split(syntax));
+  const steps = [];
+  let current = [];
+  for (const statement of statements) {
+    if (statement instanceof L.Lean_let || statement instanceof L.LeanTactic) {
+      current.push(statement);
+      steps.push(current);
+      current = [];
+    } else {
+      current.push(statement);
+    }
+  }
+  if (current.length) steps.push(current);
+  return steps;
+}
+
+function withoutTacticJson(json) {
+  if (Array.isArray(json)) {
+    return json.map(withoutTacticJson).filter((item) => item !== null);
+  }
+  if (json && typeof json === "object") {
+    // LeanTactic.toJSON() always carries `modifiers`; nested `by` terms can
+    // therefore be removed after an enclosing mathematical application renders.
+    if (Object.hasOwn(json, "modifiers")) return null;
+    return Object.fromEntries(
+      Object.entries(json)
+        .map(([key, value]) => [key, withoutTacticJson(value)])
+        .filter(([, value]) => value !== null),
+    );
+  }
+  return json;
+}
+
+/**
+ * Collect mathematical expressions below a proof step without indexing tactic
+ * names as expression heads. In particular, `have h : P := proof` must include
+ * `P`; its ordinary `toJSON()` contains only the assignment and proof term.
+ */
+function appendProofMath(node, ctx, out) {
+  if (!node || typeof node !== "object") return;
+  const L = Lean.classes;
+  if (node instanceof L.LeanLineComment || node instanceof L.LeanCaret) return;
+  if (node instanceof L.LeanAssign) {
+    const lhs = node.lhs ?? node.args?.[0];
+    const rhs = node.rhs ?? node.args?.[1];
+    if (lhs instanceof L.LeanColon) appendProofMath(lhs.rhs ?? lhs.args?.[1], ctx, out);
+    else appendProofMath(lhs, ctx, out);
+    appendProofMath(rhs, ctx, out);
+    return;
+  }
+  if (node instanceof L.LeanColon) {
+    appendProofMath(node.rhs ?? node.args?.[1], ctx, out);
+    return;
+  }
+  const containers = [
+    L.Lean_let, L.LeanTactic, L.Lean_show, L.LeanBy, L.LeanCalc, L.LeanIte,
+    L.LeanStatements, L.LeanArgsNewLineSeparated, L.LeanArgsIndented,
+    L.LeanBracket, L.LeanParenthesis, L.LeanArgsCommaSeparated,
+    L.LeanArgsCommaNewLineSeparated, L.LeanFrom,
+    L.LeanSequentialTacticCombinator, L.LeanUsing, L.LeanWith,
+  ].filter(Boolean);
+  if (containers.some((Ctor) => node instanceof Ctor)) {
+    for (const arg of node.args || []) appendProofMath(arg, ctx, out);
+    return;
+  }
+  if (typeof node.toJSON === "function") {
+    const json = withoutTacticJson(node.toJSON(ctx));
+    if (json !== null) out.push(json);
+  }
+}
+
+/**
+ * Extract every searchable formula from the selected declaration. The whole
+ * imply tree remains the metadata fingerprint used by exact conclusion search;
+ * postings point at individual given / imply-conjunct / proof-step formulas.
+ *
+ * @returns {{ lemmaId: number, fingerprint: object, documents: {json: object|object[], lemmaId: number, section: 'given'|'imply'|'proof', latexId: number}[] }}
+ */
+export function lemmaSearchDocuments(filePath, lemmaName, options = {}) {
+  const abs = options.file ? path.resolve(options.file) : path.resolve(filePath);
+  const source = options.source != null
+    ? String(options.source).replace(/\r\n/g, "\n")
+    : fs.readFileSync(abs, "utf8").replace(/\r\n/g, "\n");
+  const ast = compileLemmaSource(source);
+  const { lemma, index } = selectLemma(ast, lemmaName);
+  if (!lemma) throw new Error("No Lean_lemma found");
+  const lemmaId = Math.max(0, index);
+  if (options.location && typeof options.location === "object") options.location.lemmaId = lemmaId;
+  const sig = extractSignature(lemma);
+  if (!sig) throw new Error("Could not find lemma signature");
+  const conclusion = conclusionNode(sig.colon);
+  if (!conclusion) throw new Error("Could not find the lemma conclusion");
+
+  const documents = [];
+  const givens = extractGivens(sig.nls ?? sig.colon.args[0])
+    .filter((h) => h.prop || expressionRelation(h.typeNode));
+  givens.forEach(({ typeNode }, latexId) => {
+    documents.push({ json: typeNode.toJSON(searchContext()), lemmaId, section: "given", latexId });
+  });
+
+  const implyParts = splitTopConjunction(conclusion, true) ?? [conclusion];
+  implyParts.forEach((node, latexId) => {
+    documents.push({ json: node.toJSON(searchContext()), lemmaId, section: "imply", latexId });
+  });
+
+  proofStepsOf(lemma).forEach((step, latexId) => {
+    const json = [];
+    const ctx = searchContext();
+    for (const node of step) appendProofMath(node, ctx, json);
+    documents.push({ json, lemmaId, section: "proof", latexId });
+  });
+
+  return { lemmaId, fingerprint: conclusion.toJSON(searchContext()), documents };
 }
 
 function expressionPathSegments(candidate) {

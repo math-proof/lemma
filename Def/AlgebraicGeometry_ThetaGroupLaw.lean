@@ -1,8 +1,11 @@
-import Lemma.Scheme.ThetaGroupAction
-import Def.AlgebraicGeometry_ThetaGroup
-import Instance.AlgebraicGeometry_ThetaGroupLaw
-
+module
+public import Theorem.Scheme.ThetaGroupAction
+public import Def.AlgebraicGeometry_ThetaGroup
+public import Instance.AlgebraicGeometry_ThetaGroupLaw
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

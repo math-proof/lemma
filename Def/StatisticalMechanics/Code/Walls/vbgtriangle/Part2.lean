@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/vbgtriangle.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Ising.GKS.Part5
+public import Theorem.StatisticalMechanics.Code.Ising.AizenmanBarsky.Part5
+public import Theorem.StatisticalMechanics.Code.Ising.IsingFKGLayer
+public import Theorem.StatisticalMechanics.Code.Walls.ghc_urselleqgap
+public import Theorem.StatisticalMechanics.Code.Walls.vbgtriangle
+open scoped BigOperators
+open Finset
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/vbgtriangle.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,18 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Ising.GKS.Part5
-import Theorem.StatisticalMechanics.Code.Ising.AizenmanBarsky.Part5
-import Theorem.StatisticalMechanics.Code.Ising.IsingFKGLayer
-import Theorem.StatisticalMechanics.Code.Walls.ghc_urselleqgap
-import Theorem.StatisticalMechanics.Code.Walls.vbgtriangle
-open scoped BigOperators
-open Finset
-
-
 namespace StatMech
 
 namespace Walls

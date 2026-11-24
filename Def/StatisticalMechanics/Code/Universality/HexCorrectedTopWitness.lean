@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexCorrectedTopWitness.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedHighestCut.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWColumns.Part5
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedTopWitness
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexCorrectedTopWitness.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedHighestCut.Part3
-import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWColumns.Part5
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedTopWitness
-
-
 namespace StatMech.Universality
 
 open HexWalk

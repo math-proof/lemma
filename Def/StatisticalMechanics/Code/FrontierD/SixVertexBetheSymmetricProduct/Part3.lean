@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexBetheSymmetricProduct.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheScattering.Part3
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheThermodynamicReduction.Part5
+public import Abbrev.StatisticalMechanics.Code.FrontierD.SixVertexBetheSymmetricProduct
+open Finset Matrix Filter Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexBetheSymmetricProduct.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheScattering.Part3
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheThermodynamicReduction.Part5
-import Abbrev.StatisticalMechanics.Code.FrontierD.SixVertexBetheSymmetricProduct
-open Finset Matrix Filter Topology
-
-
 namespace StatMech.FrontierD
 
 noncomputable def sixVertexSymmetricBetheRootAverage

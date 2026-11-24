@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/SLE/LoewnerExistence.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.SLE.LoewnerProps.Part4
+open Complex Set Metric Filter Topology
+open scoped NNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/SLE/LoewnerExistence.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.SLE.LoewnerProps.Part4
-open Complex Set Metric Filter Topology
-open scoped NNReal
-
-
 namespace StatMech.SLE
 
 theorem picard_exists_ball {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]

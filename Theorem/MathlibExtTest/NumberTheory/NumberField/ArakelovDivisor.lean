@@ -1,16 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/ArakelovDivisor.lean -/
-
-
-import Def.NumberTheory.NumberField.ArakelovDivisor.Part3
-import Lemma.Nat.NumberField.ArakelovDivisor
+module
+public import Def.NumberTheory.NumberField.ArakelovDivisor.Part3
+public import Theorem.Nat.NumberField.ArakelovDivisor
 open NumberField
 open scoped nonZeroDivisors NumberField
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/NumberField/ArakelovDivisor.lean -/
 /-!
 # Tests for Arakelov divisors of a number field
 -/
-
-
 namespace MathlibExtTest.NumberTheory.ArakelovDivisor
 
 variable {K : Type*} [Field K] [NumberField K]

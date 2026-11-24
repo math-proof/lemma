@@ -14,7 +14,7 @@ open scoped Classical
 [coxeterHalfGroupMap_idempotent](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/ChamberComplex/GalleryTypes/CoxeterFoldingHelpers.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   [DecidableEq V]
   {M : CoxeterMatrix B_idx}
   {i : B_idx}

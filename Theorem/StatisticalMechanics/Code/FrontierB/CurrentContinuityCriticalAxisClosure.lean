@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/CurrentContinuityCriticalAxisClosure.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityAxisInfrared
+public import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityAxisClosure
+public import Theorem.StatisticalMechanics.Code.Ising.GibbsSimplexInfinite.Part3
+open MeasureTheory
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierB/CurrentContinuityCriticalAxisClosure.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityAxisInfrared
-import Theorem.StatisticalMechanics.Code.FrontierB.CurrentContinuityAxisClosure
-import Theorem.StatisticalMechanics.Code.Ising.GibbsSimplexInfinite.Part3
-open MeasureTheory
-
-
 namespace StatMech.FrontierB
 
 open StatMech.Ising

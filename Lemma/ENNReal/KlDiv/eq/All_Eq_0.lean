@@ -1,12 +1,15 @@
-import Mathlib.InformationTheory.KullbackLeibler.Basic
-import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
-import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
-import Mathlib.MeasureTheory.Integral.IntegrableOn
-import Mathlib.MeasureTheory.Measure.Decomposition.Lebesgue
-import Mathlib.Probability.ProbabilityMassFunction.Basic
-import Initialize.Tactic.Attr.Basic
+module
+public import Mathlib.InformationTheory.KullbackLeibler.Basic
+public import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
+public import Mathlib.MeasureTheory.Integral.Bochner.SumMeasure
+public import Mathlib.MeasureTheory.Integral.IntegrableOn
+public import Mathlib.MeasureTheory.Measure.Decomposition.Lebesgue
+public import Mathlib.Probability.ProbabilityMassFunction.Basic
+public import Initialize.Tactic.Attr.Basic
 open Classical ENNReal InformationTheory MeasureTheory Real
 
+
+public section
 
 private lemma kl_eq [Fintype α] [DecidableEq α] [MeasurableSpace α] [MeasurableSingletonClass α] (μ ν : PMF α) :
   klDiv ν.toMeasure μ.toMeasure = if ∀ a, μ a = 0 → ν a = 0 then ENNReal.ofReal (∑ a, (ν a).toReal * log ((ν a).toReal / (μ a).toReal)) else ⊤ := by

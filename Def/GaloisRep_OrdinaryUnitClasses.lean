@@ -1,14 +1,16 @@
-import Mathlib
-import Lemma.LinearMap.AdZero
-import Lemma.Rep.TangentSpace
-import Instance.ExtEndgame_ProductionDatum
-import Def.GaloisRep_LocalFlatClasses
-import Instance.GaloisRep_CompletionBridge
-import Def.FLTPrelim_Ramification
-
+module
+public import Mathlib
+public import Lemma.LinearMap.AdZero
+public import Lemma.Rep.TangentSpace
+public import Instance.ExtEndgame_ProductionDatum
+public import Def.GaloisRep_LocalFlatClasses
+public import Instance.GaloisRep_CompletionBridge
+public import Def.FLTPrelim_Ramification
 set_option autoImplicit false
-
 open CategoryTheory groupCohomology ExtCitation
+
+
+public section
 
 namespace ResidualGaloisRep
 

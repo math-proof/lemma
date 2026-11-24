@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/Twists.lean -/
+module
+public import Abbrev.v1.Atlas.TensorCategories.code.QuasiTensorFunctor.Part5
+public import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
+public import Theorem.Category.Atlas.v1.TensorCategories.code.MonoidalFunctorsCohomology
+public import Abbrev.v1.Atlas.TensorCategories.code.QuasiBialgebra
+public import Def.v1.Atlas.TensorCategories.code.MonoidalFunctorsCohomology.Part5
+public import Theorem.v1.Atlas.TensorCategories.code.Twists
+open scoped TensorProduct
+open CategoryTheory TensorCategories
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/Twists.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Abbrev.v1.Atlas.TensorCategories.code.QuasiTensorFunctor.Part5
-import Theorem.Category.Atlas.v1.TensorCategories.code.QuasiTensorFunctor
-import Theorem.Category.Atlas.v1.TensorCategories.code.MonoidalFunctorsCohomology
-import Abbrev.v1.Atlas.TensorCategories.code.QuasiBialgebra
-import Def.v1.Atlas.TensorCategories.code.MonoidalFunctorsCohomology.Part5
-import Theorem.v1.Atlas.TensorCategories.code.Twists
-open scoped TensorProduct
-open CategoryTheory TensorCategories
-
 universe u
 
 

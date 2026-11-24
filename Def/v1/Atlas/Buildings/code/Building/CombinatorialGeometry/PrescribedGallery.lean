@@ -1,5 +1,22 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/CombinatorialGeometry/PrescribedGallery.lean -/
+module
+public import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
+public import Theorem.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
+public import Theorem.Finset.LabelMap.eq.ImageLabelMap.of.EqLabelMap_Head_ImageLabelMap_Head.IsChainAdjacent.Ne.All_EqLabelMap_ImageLabelMap
+public import Theorem.List.Any.of.Not.In_A.IsChainA
+public import Theorem.Finset.IsMaximalToSimplicialComplex.of.IsMaximal.In_Apartments
+public import Theorem.Nat.NotChamberAdjacent
+public import Def.v1.Atlas.Buildings.code.Building.Labels
+public import Def.v1.Atlas.Buildings.code.Building.Convexity
+public import Structure.v1.Atlas.Buildings.code.Building.ApartmentsCoxeter
+public import Def.v1.Atlas.Buildings.code.ChamberComplex.CoxeterComplex.Part2
+public import Theorem.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes
+public import Def.v1.Atlas.Buildings.code.Building.RetractionDef
+open scoped Classical
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/CombinatorialGeometry/PrescribedGallery.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,21 +24,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
-import Theorem.Finset.Any_And_All_Eq.of.IsMaximal.In_Faces.In_Apartments
-import Theorem.Finset.LabelMap.eq.ImageLabelMap.of.EqLabelMap_Head_ImageLabelMap_Head.IsChainAdjacent.Ne.All_EqLabelMap_ImageLabelMap
-import Theorem.List.Any.of.Not.In_A.IsChainA
-import Theorem.Finset.IsMaximalToSimplicialComplex.of.IsMaximal.In_Apartments
-import Theorem.Nat.NotChamberAdjacent
-import Def.v1.Atlas.Buildings.code.Building.Labels
-import Def.v1.Atlas.Buildings.code.Building.Convexity
-import Structure.v1.Atlas.Buildings.code.Building.ApartmentsCoxeter
-import Def.v1.Atlas.Buildings.code.ChamberComplex.CoxeterComplex.Part2
-import Theorem.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes
-import Def.v1.Atlas.Buildings.code.Building.RetractionDef
-open scoped Classical
-
 variable {V : Type*} [DecidableEq V]
 
 

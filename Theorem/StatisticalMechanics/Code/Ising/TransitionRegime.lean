@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/TransitionRegime.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Ising.Transition
+public import Theorem.StatisticalMechanics.Code.Ising.TransitionUncond
+public import Theorem.StatisticalMechanics.Code.Ising.TransitionFK
+open Real
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/TransitionRegime.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Ising.Transition
-import Theorem.StatisticalMechanics.Code.Ising.TransitionUncond
-import Theorem.StatisticalMechanics.Code.Ising.TransitionFK
-open Real
-
-
 namespace StatMech
 
 namespace Ising

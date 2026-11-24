@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/AdelePlusFDim.lean -/
+module
+public import Def.v1.Atlas.ArithmeticGeometry.code.AdeleQuotientDim.Part2
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.AdeleQuotientDim
+public import Mathlib.Order.ModularLattice
+public import Abbrev.v1.Atlas.ArithmeticGeometry.code.AdelePlusFDim
+open scoped RestrictedProduct
+open FunctionFieldAdeleRing DiscreteValuationFamily
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/ArithmeticGeometry/code/AdelePlusFDim.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.ArithmeticGeometry.code.AdeleQuotientDim.Part2
-import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.AdeleQuotientDim
-import Mathlib.Order.ModularLattice
-import Abbrev.v1.Atlas.ArithmeticGeometry.code.AdelePlusFDim
-open scoped RestrictedProduct
-open FunctionFieldAdeleRing DiscreteValuationFamily
-
-
 section Lemma22_9
 
 variable {F : Type*} [Field F] {P : Type*} [DecidableEq P]

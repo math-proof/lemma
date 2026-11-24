@@ -1,13 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Order/ErdosSzekeres.lean -/
-
-
-import Def.Combinatorics.Order.ErdosSzekeres.Part2
-import Lemma.Finset.Order.ErdosSzekeres
-import Mathlib.Tactic
+module
+public import Def.Combinatorics.Order.ErdosSzekeres.Part2
+public import Theorem.Finset.Order.ErdosSzekeres
+public import Mathlib.Tactic
 open MathlibExt.Combinatorics.Order.ErdosSzekeres
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Order/ErdosSzekeres.lean -/
 /-- The migrated theorem retains the exact former Wanted signature. -/
+
 example {r s : ℕ} (hr : 0 < r) (hs : 0 < s)
     (f : Fin ((r - 1) * (s - 1) + 1) → ℝ) (hinj : Function.Injective f) :
     (∃ φ : Fin r → Fin ((r - 1) * (s - 1) + 1),

@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexBetheRootBounds.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBethePerronBounds
+public import Mathlib.Analysis.SpecialFunctions.Log.Base
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheRootBounds
+open Finset Filter Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexBetheRootBounds.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBethePerronBounds
-import Mathlib.Analysis.SpecialFunctions.Log.Base
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Bounds
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexBetheRootBounds
-open Finset Filter Topology
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

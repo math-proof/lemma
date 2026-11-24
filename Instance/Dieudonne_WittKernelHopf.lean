@@ -1,17 +1,20 @@
--- Carved from Lemma/Definitions/Def_Dieudonne_WittKernelHopf.lean: instance decls only.
-import Mathlib
-import Theorem.LinearMap.DatumAndHonda
-import Instance.Dieudonne_WittVectorHom
-import Instance.Dieudonne_WittHomColimit
-import Instance.Dieudonne_WittGroupHopf
-import Class.HopfAlgebra_HopfIdealQuotient
-import Theorem.Ideal.WittKernelHopf
-import Def.Ideal_WittKernelHopf
-
+module
+public import Mathlib
+public import Theorem.LinearMap.DatumAndHonda
+public import Instance.Dieudonne_WittVectorHom
+public import Instance.Dieudonne_WittHomColimit
+public import Instance.Dieudonne_WittGroupHopf
+public import Class.HopfAlgebra_HopfIdealQuotient
+public import Theorem.Ideal.WittKernelHopf
+public import Def.Ideal_WittKernelHopf
 set_option autoImplicit false
-
 open Function
 open scoped TensorProduct
+
+
+public section
+
+-- Carved from Lemma/Definitions/Def_Dieudonne_WittKernelHopf.lean: instance decls only.
 
 universe u v w
 

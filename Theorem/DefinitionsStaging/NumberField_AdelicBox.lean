@@ -1,9 +1,12 @@
-import Instance.NumberField_AdelicHaar
-import Lemma.Definitions.Def_NumberField_AdelicHaar
-import Def.NumberField_AdelicBox
+module
+public import Instance.NumberField_AdelicHaar
+public import Lemma.Definitions.Def_NumberField_AdelicHaar
+public import Def.NumberField_AdelicBox
 open IsDedekindDomain NumberField MeasureTheory
 open scoped RestrictedProduct
 
+
+public section
 
 noncomputable section
 

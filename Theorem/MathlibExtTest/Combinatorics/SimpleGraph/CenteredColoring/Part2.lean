@@ -1,15 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/CenteredColoring.lean -/
-
--- MathlibExtTest/Combinatorics/SimpleGraph/CenteredColoring.lean
-
-import Mathlib.Combinatorics.SimpleGraph.Coloring.Constructions
-import Def.Combinatorics.SimpleGraph.CenteredColoring
-import Theorem.SimpleGraph.CenteredColoring
-import Def.MathlibExtTest.Combinatorics.SimpleGraph.CenteredColoring
+module
+public import Mathlib.Combinatorics.SimpleGraph.Coloring.Constructions
+public import Def.Combinatorics.SimpleGraph.CenteredColoring
+public import Theorem.SimpleGraph.CenteredColoring
+public import Def.MathlibExtTest.Combinatorics.SimpleGraph.CenteredColoring
 open SimpleGraph
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/SimpleGraph/CenteredColoring.lean -/
+-- MathlibExtTest/Combinatorics/SimpleGraph/CenteredColoring.lean
 /-- On the full edgeless graph the constant color repeats, so no center. -/
+
 example : ¬ IsPhiCenter constColor (Set.univ : Set (Fin 2)) 0 := by
   rintro ⟨_, huniq⟩
   have h10 : (1 : Fin 2) = 0 := huniq 1 (Set.mem_univ 1) rfl

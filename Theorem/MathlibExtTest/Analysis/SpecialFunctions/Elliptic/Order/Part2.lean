@@ -1,11 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/Elliptic/Order.lean -/
-
-
-import Def.Analysis.SpecialFunctions.Elliptic.Order
-import Theorem.Real.SpecialFunctions.Elliptic.Order
-import Def.MathlibExtTest.Analysis.SpecialFunctions.Elliptic.Order
+module
+public import Def.Analysis.SpecialFunctions.Elliptic.Order
+public import Theorem.Real.SpecialFunctions.Elliptic.Order
+public import Def.MathlibExtTest.Analysis.SpecialFunctions.Elliptic.Order
 open scoped Topology
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/SpecialFunctions/Elliptic/Order.lean -/
 /-!
 # Tests for pole sets and elliptic order
 
@@ -16,8 +18,6 @@ It also contains an honest far-away failure witness: a function with pole
 multiplicity one at `0` that is nonmeromorphic on every neighborhood of the
 remote point `1`, hence not globally meromorphic.
 -/
-
-
 namespace PeriodPair
 
 /-- The test function has pole multiplicity one at `0`, by transport of the order

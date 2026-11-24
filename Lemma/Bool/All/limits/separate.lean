@@ -1,21 +1,25 @@
 import Initialize.Tactic.Attr.Basic
+import Lemma.Bool.All.doit.outer.setlimit
 
 
 @[path]
 private lemma main
   {n : ℕ}
-  {p : ℕ → Prop}
-  {q : ℕ → ℕ → Prop} :
+  {f : ℕ → Prop}
+  {g : ℕ → ℕ → Prop}
+-- given
+  (h : 0 < n) :
 -- imply
-  (∀ i < n, ∀ j < n, p j ∧ q i j) ↔
-    ∀ j < n, p j ∧ ∀ i < n, q i j := by
+  (∀ j < n, ∀ i < n, f j ∧ g i j) ↔ ∀ j < n, f j ∧ ∀ i < n, g i j := by
 -- proof
   constructor
-  · intro h j hj
-    refine ⟨(h 0 (by omega) j hj).1, fun i hi => (h i hi j hj).2⟩
-  · rintro h i hi j hj
-    obtain ⟨hp, hq⟩ := h j hj
-    exact ⟨hp, hq i hi⟩
+  ·
+    intro h' j hj
+    exact ⟨(h' j hj 0 h).1, fun i hi => (h' j hj i hi).2⟩
+  ·
+    intro h' j hj i hi
+    exact ⟨(h' j hj).1, (h' j hj).2 i hi⟩
 
 
 -- created on 2023-06-06
+-- updated on 2026-11-24

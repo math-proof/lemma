@@ -1,12 +1,13 @@
+module
+public import Theorem.Algebra.Lie.Ado.Part5
+public import Theorem.Int.Lie.Ado
+public import Mathlib.Algebra.Lie.OfAssociative
+public import Mathlib.Data.Rat.Defs
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Algebra/Lie/Ado.lean -/
-
-
-import Theorem.Algebra.Lie.Ado.Part5
-import Lemma.Int.Lie.Ado
-import Mathlib.Algebra.Lie.OfAssociative
-import Mathlib.Data.Rat.Defs
-
-
 namespace MathlibExtTest.Algebra.Lie.Ado
 
 attribute [local instance 100] LieRing.ofAssociativeRing

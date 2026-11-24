@@ -4,7 +4,7 @@ import Lemma.PowerSeries.CartierModuleHomothety
 import Lemma.MvPowerSeries.CartierModuleWittAction
 import Lemma.MvPolynomial.CartierModuleIntVerschiebung
 import Lemma.MvPowerSeries.SpecialFormalModule
-import Lemma.FormalGroup.CartierGradedPiece
+import Theorem.FormalGroup.CartierGradedPiece
 import Lemma.Fin.GradedCartierModuleData
 
 set_option autoImplicit false

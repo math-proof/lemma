@@ -1,11 +1,14 @@
-import Lemma.ValuationSubring.SemistableCharts
-import Lemma.Matrix.FullLevelJacobian
-import Lemma.HahnSeries.QAdicPlace
-import Lemma.Scheme.JZeroSemistableSpecialization
-import Lemma.AlgEquiv.SemistableChartsComap
-import Structure.ModularCurve_FullLevelSemistableCovering
-
+module
+public import Lemma.ValuationSubring.SemistableCharts
+public import Lemma.Matrix.FullLevelJacobian
+public import Lemma.HahnSeries.QAdicPlace
+public import Theorem.Scheme.JZeroSemistableSpecialization
+public import Lemma.AlgEquiv.SemistableChartsComap
+public import Structure.ModularCurve_FullLevelSemistableCovering
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

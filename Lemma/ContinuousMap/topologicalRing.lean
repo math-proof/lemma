@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Theorem.IsModuleTopology
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Theorem.IsModuleTopology
 open IsModuleTopology
 
+
+public section
 
 @[path]
 private lemma main

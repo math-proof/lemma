@@ -1,7 +1,10 @@
-import Mathlib
-import Instance.ModularCurve_PDPairing
-
+module
+public import Mathlib
+public import Instance.ModularCurve_PDPairing
 set_option autoImplicit false
+
+
+public section
 
 namespace ModularCurve.CupPairing
 

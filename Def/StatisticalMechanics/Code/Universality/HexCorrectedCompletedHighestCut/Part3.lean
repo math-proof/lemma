@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexCorrectedCompletedHighestCut.lean -/
+module
+public import Def.StatisticalMechanics.Code.Universality.HexCorrectedSideDepth
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedShiftedDivergence
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripExteriorPeriod.Part3
+public import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWDepthCompletion.Part8
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedCompletedHighestCut.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexCorrectedCompletedHighestCut.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Def.StatisticalMechanics.Code.Universality.HexCorrectedSideDepth
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedShiftedDivergence
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripExteriorPeriod.Part3
-import Theorem.StatisticalMechanics.Code.Universality.HexLiteralHWDepthCompletion.Part8
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedCompletedHighestCut.Part2
-
-
 namespace StatMech.Universality
 
 open HexWalk

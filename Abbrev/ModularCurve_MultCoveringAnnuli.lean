@@ -1,11 +1,13 @@
-import Instance.ModularCurve_MultCoveringCharts
-import Def.ModularCurve_JWidth
-
+module
+public import Instance.ModularCurve_MultCoveringCharts
+public import Def.ModularCurve_JWidth
 set_option maxHeartbeats 200000
 set_option synthInstance.maxHeartbeats 400000
 set_option autoImplicit false
-
 open AlgebraicCurve IsLocalRing ModularCurve
+
+
+public section
 
 namespace ModularCurve.MultCovering
 

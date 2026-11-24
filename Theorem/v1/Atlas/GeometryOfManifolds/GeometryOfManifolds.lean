@@ -1,5 +1,140 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/GeometryOfManifolds.lean -/
+module
+public import Class.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part11
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.AdvancedKahler
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.AdvancedKahlerMathlib
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.AlmostComplexManifolds
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ArnoldConjecture
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ChernClassProperties
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.CohomologyIsomorphismConcrete
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.CompatibleComplexStructures
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ComplexProjectiveSpace
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ConnectionsCurvature
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.CotangentBundleBridge
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.Counterexamples
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialForms
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialFormsBridge
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.DolbeaultHodgeMathlib
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.DonaldsonApproxHolomorphic
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.DonaldsonHolomorphicApprox
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.EllipticRegularityBridge
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.EllipticRegularityConcrete
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.EuclideanDFS
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.EuclideanSymplectic
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.FourManifoldsSW
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.GaugeAction
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.HamiltonianVectorFields
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.HodgeRepresentative
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.HodgeTheory
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.HodgeTheoryMathlib
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.Integration
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.LefschetzPencils
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ManifoldDFS
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ManifoldIntegration
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.MatrixGroupIntersections
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.MoserDarboux
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.NijenhuisGoals
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.PolynomialDFS
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.PontrjaginObstructions
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SWModuliGoal62
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SWModuliQuotient
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.Symp2TangentSpaces
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticCapacity
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticFibrations
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticLinearAlgebra
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifoldMathlib
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticStandardBasis
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplectomorphismFixedPoints
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.TwoDimDFS
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.VectorFieldFlow
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.WeinsteinNeighborhood
+public import Def.v1.Atlas.GeometryOfManifolds.code.AdvancedKahlerMathlib
+public import Structure.v1.Atlas.GeometryOfManifolds.code.AlmostComplexManifolds.Part4
+public import Class.v1.Atlas.GeometryOfManifolds.code.ArnoldConjecture.Part4
+public import Theorem.v1.Atlas.GeometryOfManifolds.code.AuditBatch1
+public import Def.v1.Atlas.GeometryOfManifolds.code.BlockMatrixLp
+public import Theorem.v1.Atlas.GeometryOfManifolds.code.BlockerAnnotations
+public import Theorem.v1.Atlas.GeometryOfManifolds.code.BuildVerification
+public import Def.v1.Atlas.GeometryOfManifolds.code.BundleDFS.Part4
+public import Theorem.v1.Atlas.GeometryOfManifolds.code.CauchyEstimates
+public import Def.v1.Atlas.GeometryOfManifolds.code.ChernClassProperties.Part2
+public import Def.v1.Atlas.GeometryOfManifolds.code.ChernFormGrading
+public import Def.v1.Atlas.GeometryOfManifolds.code.ClassInstances
+public import Def.v1.Atlas.GeometryOfManifolds.code.CohomologyIsomorphismConcrete.Part2
+public import Theorem.v1.Atlas.GeometryOfManifolds.code.CompatibleComplexStructures
+public import Instance.v1.Atlas.GeometryOfManifolds.code.ComplexProjectiveSpace.Part2
+public import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part7
+public import Instance.v1.Atlas.GeometryOfManifolds.code.CotangentBundleBridge
+public import Structure.v1.Atlas.GeometryOfManifolds.code.Counterexamples.Part2
+public import Theorem.v1.Atlas.GeometryOfManifolds.code.CoverageL17L25
+public import Theorem.v1.Atlas.GeometryOfManifolds.code.CoverageL1L8
+public import Theorem.v1.Atlas.GeometryOfManifolds.code.CoverageL9L16
+public import Theorem.v1.Atlas.GeometryOfManifolds.code.DedupeCP2Verification
+public import Def.v1.Atlas.GeometryOfManifolds.code.DifferentialForms.Part2
+public import Def.v1.Atlas.GeometryOfManifolds.code.DifferentialFormsBridge.Part2
+public import Structure.v1.Atlas.GeometryOfManifolds.code.DolbeaultHodgeMathlib.Part2
+public import Def.v1.Atlas.GeometryOfManifolds.code.DonaldsonApproxHolomorphic
+public import Structure.v1.Atlas.GeometryOfManifolds.code.DonaldsonHolomorphicApprox
+public import Structure.v1.Atlas.GeometryOfManifolds.code.DonaldsonLefschetz
+public import Def.v1.Atlas.GeometryOfManifolds.code.EllipticParametrix.Part4
+public import Def.v1.Atlas.GeometryOfManifolds.code.EllipticRegularityBridge.Part3
+public import Structure.v1.Atlas.GeometryOfManifolds.code.EllipticRegularityConcrete.Part2
+public import Def.v1.Atlas.GeometryOfManifolds.code.EuclideanDFS.Part3
+public import Def.v1.Atlas.GeometryOfManifolds.code.EuclideanSymplectic
+public import Theorem.v1.Atlas.GeometryOfManifolds.code.FourManifoldsClassification
+public import Def.v1.Atlas.GeometryOfManifolds.code.FourManifoldsSW.Part8
+public import Def.v1.Atlas.GeometryOfManifolds.code.GaugeAction.Part2
+public import Structure.v1.Atlas.GeometryOfManifolds.code.GompfConstruction
+public import Def.v1.Atlas.GeometryOfManifolds.code.HamiltonianVectorFields.Part3
+public import Class.v1.Atlas.GeometryOfManifolds.code.HardLefschetz
+public import Structure.v1.Atlas.GeometryOfManifolds.code.HodgeRepresentative.Part2
+public import Def.v1.Atlas.GeometryOfManifolds.code.HodgeStarMathlib.Part2
+public import Def.v1.Atlas.GeometryOfManifolds.code.HodgeTheory.Part12
+public import Structure.v1.Atlas.GeometryOfManifolds.code.HodgeTheoryMathlib.Part6
+public import Def.v1.Atlas.GeometryOfManifolds.code.Integration
+public import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
+public import Theorem.v1.Atlas.GeometryOfManifolds.code.L2AdjointnessMathlib
+public import Theorem.v1.Atlas.GeometryOfManifolds.code.L2InnerProductSpace
+public import Structure.v1.Atlas.GeometryOfManifolds.code.LefschetzFibrationMathlib
+public import Structure.v1.Atlas.GeometryOfManifolds.code.LefschetzPencils.Part7
+public import Theorem.v1.Atlas.GeometryOfManifolds.code.LefschetzPencilsAudit
+public import Def.v1.Atlas.GeometryOfManifolds.code.ManifoldDFS.Part2
+public import Theorem.v1.Atlas.GeometryOfManifolds.code.ManifoldDFSVerify
+public import Class.v1.Atlas.GeometryOfManifolds.code.ManifoldIntegration
+public import Def.v1.Atlas.GeometryOfManifolds.code.MatrixGroupIntersections
+public import Structure.v1.Atlas.GeometryOfManifolds.code.MoserDarboux.Part2
+public import Def.v1.Atlas.GeometryOfManifolds.code.NijenhuisGoals.Part2
+public import Def.v1.Atlas.GeometryOfManifolds.code.OmitIndex
+public import Structure.v1.Atlas.GeometryOfManifolds.code.ParametrixOnManifold
+public import Instance.v1.Atlas.GeometryOfManifolds.code.PolynomialDFS.Part3
+public import Structure.v1.Atlas.GeometryOfManifolds.code.PontrjaginObstructions.Part7
+public import Structure.v1.Atlas.GeometryOfManifolds.code.SWModuliGoal62
+public import Def.v1.Atlas.GeometryOfManifolds.code.SWModuliQuotient
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SWNonVacuousVerification
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticEvenDim
+public import Theorem.v1.Atlas.GeometryOfManifolds.code.SmoothingOpVerify
+public import Class.v1.Atlas.GeometryOfManifolds.code.SpinCConnectionsAffine.Part2
+public import Instance.v1.Atlas.GeometryOfManifolds.code.Symp2TangentSpaces
+public import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticCapacity
+public import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticFibrations
+public import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
+public import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticManifoldMathlib.Part2
+public import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
+public import Theorem.v1.Atlas.GeometryOfManifolds.code.SymplecticStandardBasis
+public import Abbrev.v1.Atlas.GeometryOfManifolds.code.SymplecticSum
+public import Theorem.v1.Atlas.GeometryOfManifolds.code.SymplecticSumAudit
+public import Def.v1.Atlas.GeometryOfManifolds.code.SymplectomorphismFixedPoints
+public import Class.v1.Atlas.GeometryOfManifolds.code.TangentBundleDFS
+public import Instance.v1.Atlas.GeometryOfManifolds.code.TrivialDFS
+public import Def.v1.Atlas.GeometryOfManifolds.code.TwoDimDFS.Part3
+public import Structure.v1.Atlas.GeometryOfManifolds.code.VectorFieldFlow
+public import Structure.v1.Atlas.GeometryOfManifolds.code.WeinsteinNeighborhood.Part7
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/GeometryOfManifolds/GeometryOfManifolds.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,137 +142,4 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Class.v1.Atlas.GeometryOfManifolds.code.AdvancedKahler.Part11
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.AdvancedKahler
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.AdvancedKahlerMathlib
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.AlmostComplexManifolds
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ArnoldConjecture
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ChernClassProperties
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.CohomologyIsomorphismConcrete
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.CompatibleComplexStructures
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ComplexProjectiveSpace
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ConnectionsCurvature
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.CotangentBundleBridge
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.Counterexamples
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialForms
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.DifferentialFormsBridge
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.DolbeaultHodgeMathlib
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.DonaldsonApproxHolomorphic
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.DonaldsonHolomorphicApprox
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.EllipticRegularityBridge
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.EllipticRegularityConcrete
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.EuclideanDFS
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.EuclideanSymplectic
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.FourManifoldsSW
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.GaugeAction
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.HamiltonianVectorFields
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.HodgeRepresentative
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.HodgeTheory
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.HodgeTheoryMathlib
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.Integration
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.KahlerManifolds
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.LefschetzPencils
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ManifoldDFS
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ManifoldIntegration
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.MatrixGroupIntersections
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.MoserDarboux
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.NijenhuisGoals
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.PolynomialDFS
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.PontrjaginObstructions
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SWModuliGoal62
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SWModuliQuotient
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.Symp2TangentSpaces
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticCapacity
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticFibrations
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticLinearAlgebra
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifoldMathlib
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticStandardBasis
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplectomorphismFixedPoints
-import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.TwoDimDFS
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.VectorFieldFlow
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.WeinsteinNeighborhood
-import Def.v1.Atlas.GeometryOfManifolds.code.AdvancedKahlerMathlib
-import Structure.v1.Atlas.GeometryOfManifolds.code.AlmostComplexManifolds.Part4
-import Class.v1.Atlas.GeometryOfManifolds.code.ArnoldConjecture.Part4
-import Theorem.v1.Atlas.GeometryOfManifolds.code.AuditBatch1
-import Def.v1.Atlas.GeometryOfManifolds.code.BlockMatrixLp
-import Theorem.v1.Atlas.GeometryOfManifolds.code.BlockerAnnotations
-import Theorem.v1.Atlas.GeometryOfManifolds.code.BuildVerification
-import Def.v1.Atlas.GeometryOfManifolds.code.BundleDFS.Part4
-import Theorem.v1.Atlas.GeometryOfManifolds.code.CauchyEstimates
-import Def.v1.Atlas.GeometryOfManifolds.code.ChernClassProperties.Part2
-import Def.v1.Atlas.GeometryOfManifolds.code.ChernFormGrading
-import Def.v1.Atlas.GeometryOfManifolds.code.ClassInstances
-import Def.v1.Atlas.GeometryOfManifolds.code.CohomologyIsomorphismConcrete.Part2
-import Theorem.v1.Atlas.GeometryOfManifolds.code.CompatibleComplexStructures
-import Instance.v1.Atlas.GeometryOfManifolds.code.ComplexProjectiveSpace.Part2
-import Structure.v1.Atlas.GeometryOfManifolds.code.ConnectionsCurvature.Part7
-import Instance.v1.Atlas.GeometryOfManifolds.code.CotangentBundleBridge
-import Structure.v1.Atlas.GeometryOfManifolds.code.Counterexamples.Part2
-import Theorem.v1.Atlas.GeometryOfManifolds.code.CoverageL17L25
-import Theorem.v1.Atlas.GeometryOfManifolds.code.CoverageL1L8
-import Theorem.v1.Atlas.GeometryOfManifolds.code.CoverageL9L16
-import Theorem.v1.Atlas.GeometryOfManifolds.code.DedupeCP2Verification
-import Def.v1.Atlas.GeometryOfManifolds.code.DifferentialForms.Part2
-import Def.v1.Atlas.GeometryOfManifolds.code.DifferentialFormsBridge.Part2
-import Structure.v1.Atlas.GeometryOfManifolds.code.DolbeaultHodgeMathlib.Part2
-import Def.v1.Atlas.GeometryOfManifolds.code.DonaldsonApproxHolomorphic
-import Structure.v1.Atlas.GeometryOfManifolds.code.DonaldsonHolomorphicApprox
-import Structure.v1.Atlas.GeometryOfManifolds.code.DonaldsonLefschetz
-import Def.v1.Atlas.GeometryOfManifolds.code.EllipticParametrix.Part4
-import Def.v1.Atlas.GeometryOfManifolds.code.EllipticRegularityBridge.Part3
-import Structure.v1.Atlas.GeometryOfManifolds.code.EllipticRegularityConcrete.Part2
-import Def.v1.Atlas.GeometryOfManifolds.code.EuclideanDFS.Part3
-import Def.v1.Atlas.GeometryOfManifolds.code.EuclideanSymplectic
-import Theorem.v1.Atlas.GeometryOfManifolds.code.FourManifoldsClassification
-import Def.v1.Atlas.GeometryOfManifolds.code.FourManifoldsSW.Part8
-import Def.v1.Atlas.GeometryOfManifolds.code.GaugeAction.Part2
-import Structure.v1.Atlas.GeometryOfManifolds.code.GompfConstruction
-import Def.v1.Atlas.GeometryOfManifolds.code.HamiltonianVectorFields.Part3
-import Class.v1.Atlas.GeometryOfManifolds.code.HardLefschetz
-import Structure.v1.Atlas.GeometryOfManifolds.code.HodgeRepresentative.Part2
-import Def.v1.Atlas.GeometryOfManifolds.code.HodgeStarMathlib.Part2
-import Def.v1.Atlas.GeometryOfManifolds.code.HodgeTheory.Part12
-import Structure.v1.Atlas.GeometryOfManifolds.code.HodgeTheoryMathlib.Part6
-import Def.v1.Atlas.GeometryOfManifolds.code.Integration
-import Def.v1.Atlas.GeometryOfManifolds.code.KahlerManifolds.Part2
-import Theorem.v1.Atlas.GeometryOfManifolds.code.L2AdjointnessMathlib
-import Theorem.v1.Atlas.GeometryOfManifolds.code.L2InnerProductSpace
-import Structure.v1.Atlas.GeometryOfManifolds.code.LefschetzFibrationMathlib
-import Structure.v1.Atlas.GeometryOfManifolds.code.LefschetzPencils.Part7
-import Theorem.v1.Atlas.GeometryOfManifolds.code.LefschetzPencilsAudit
-import Def.v1.Atlas.GeometryOfManifolds.code.ManifoldDFS.Part2
-import Theorem.v1.Atlas.GeometryOfManifolds.code.ManifoldDFSVerify
-import Class.v1.Atlas.GeometryOfManifolds.code.ManifoldIntegration
-import Def.v1.Atlas.GeometryOfManifolds.code.MatrixGroupIntersections
-import Structure.v1.Atlas.GeometryOfManifolds.code.MoserDarboux.Part2
-import Def.v1.Atlas.GeometryOfManifolds.code.NijenhuisGoals.Part2
-import Def.v1.Atlas.GeometryOfManifolds.code.OmitIndex
-import Structure.v1.Atlas.GeometryOfManifolds.code.ParametrixOnManifold
-import Instance.v1.Atlas.GeometryOfManifolds.code.PolynomialDFS.Part3
-import Structure.v1.Atlas.GeometryOfManifolds.code.PontrjaginObstructions.Part7
-import Structure.v1.Atlas.GeometryOfManifolds.code.SWModuliGoal62
-import Def.v1.Atlas.GeometryOfManifolds.code.SWModuliQuotient
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SWNonVacuousVerification
-import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticEvenDim
-import Theorem.v1.Atlas.GeometryOfManifolds.code.SmoothingOpVerify
-import Class.v1.Atlas.GeometryOfManifolds.code.SpinCConnectionsAffine.Part2
-import Instance.v1.Atlas.GeometryOfManifolds.code.Symp2TangentSpaces
-import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticCapacity
-import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticFibrations
-import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticLinearAlgebra.Part3
-import Def.v1.Atlas.GeometryOfManifolds.code.SymplecticManifoldMathlib.Part2
-import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
-import Theorem.v1.Atlas.GeometryOfManifolds.code.SymplecticStandardBasis
-import Abbrev.v1.Atlas.GeometryOfManifolds.code.SymplecticSum
-import Theorem.v1.Atlas.GeometryOfManifolds.code.SymplecticSumAudit
-import Def.v1.Atlas.GeometryOfManifolds.code.SymplectomorphismFixedPoints
-import Class.v1.Atlas.GeometryOfManifolds.code.TangentBundleDFS
-import Instance.v1.Atlas.GeometryOfManifolds.code.TrivialDFS
-import Def.v1.Atlas.GeometryOfManifolds.code.TwoDimDFS.Part3
-import Structure.v1.Atlas.GeometryOfManifolds.code.VectorFieldFlow
-import Structure.v1.Atlas.GeometryOfManifolds.code.WeinsteinNeighborhood.Part7
-
 

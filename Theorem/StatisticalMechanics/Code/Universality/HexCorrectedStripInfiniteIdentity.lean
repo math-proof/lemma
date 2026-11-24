@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexCorrectedStripInfiniteIdentity.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripMassLimits.Part2
+public import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripColumn.Part2
+public import Def.StatisticalMechanics.Code.Universality.HexCorrectedStripInfiniteIdentity
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Universality/HexCorrectedStripInfiniteIdentity.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripMassLimits.Part2
-import Theorem.StatisticalMechanics.Code.Universality.HexCorrectedStripColumn.Part2
-import Def.StatisticalMechanics.Code.Universality.HexCorrectedStripInfiniteIdentity
-
-
 namespace StatMech.Universality
 
 open HexWalk Filter Topology

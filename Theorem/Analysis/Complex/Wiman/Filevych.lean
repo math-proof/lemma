@@ -1,14 +1,18 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/Filevych.lean -/
+module
+public import Theorem.Complex.Wiman.CorrectedEstimateAbsorption
+public import Theorem.Measure.Lebesgue.Finite
+public import Theorem.Complex.Wiman.MaximumTermTendsToInfinity
+public import Theorem.Analysis.Complex.Wiman.CorrectedMajorantBoundOffExceptionalSet
+public import Theorem.Complex.Wiman.CorrectedMajorantBoundOffExceptionalSet
+public import Theorem.Complex.Wiman.MaximumModulusLeMajorant
+public import Theorem.Complex.Wiman.MaximumTermLeModulus
+public import Theorem.Analysis.Complex.Wiman.MaximumModulusLeMajorant
+public import Theorem.Analysis.Complex.Wiman.MaximumTermLeModulus
 
-import Theorem.Complex.Wiman.CorrectedEstimateAbsorption
-import Theorem.Measure.Lebesgue.Finite
-import Theorem.Complex.Wiman.MaximumTermTendsToInfinity
-import Theorem.Analysis.Complex.Wiman.CorrectedMajorantBoundOffExceptionalSet
-import Theorem.Complex.Wiman.CorrectedMajorantBoundOffExceptionalSet
-import Theorem.Complex.Wiman.MaximumModulusLeMajorant
-import Theorem.Complex.Wiman.MaximumTermLeModulus
-import Theorem.Analysis.Complex.Wiman.MaximumModulusLeMajorant
-import Theorem.Analysis.Complex.Wiman.MaximumTermLeModulus
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Analysis/Complex/Wiman/Filevych.lean -/
 /-!
 # An unbounded-radius Wiman corollary
 
@@ -21,8 +25,6 @@ than `1 / 2`, and states that the exceptional radii have finite logarithmic
 measure. The result below instead assumes transcendence, fixes the exponent to
 `2 / 3`, and concludes only that suitable radii are unbounded.
 -/
-
-
 noncomputable section
 end
 namespace Complex

@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/GrahamWeightedLemmaOneResummation.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.GrahamLemmaOneFourColor
+public import Theorem.StatisticalMechanics.Code.FrontierA.GrahamWeightedFourReplicaCore
+public import Theorem.StatisticalMechanics.Code.FrontierA.GrahamWeightedFourCurrent
+public import Theorem.StatisticalMechanics.Code.Sharpness.DeltaBound.Part2
+open Finset SimpleGraph
+open scoped BigOperators symmDiff
+open Classical
+set_option maxHeartbeats 8000000
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/GrahamWeightedLemmaOneResummation.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.GrahamLemmaOneFourColor
-import Theorem.StatisticalMechanics.Code.FrontierA.GrahamWeightedFourReplicaCore
-import Theorem.StatisticalMechanics.Code.FrontierA.GrahamWeightedFourCurrent
-import Theorem.StatisticalMechanics.Code.Sharpness.DeltaBound.Part2
-open Finset SimpleGraph
-open scoped BigOperators symmDiff
-open Classical
-
-set_option maxHeartbeats 8000000
-
-
 namespace StatMech.FrontierA
 
 open StatMech.Sharpness

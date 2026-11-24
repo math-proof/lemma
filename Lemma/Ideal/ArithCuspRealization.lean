@@ -1,8 +1,10 @@
-import Lemma.Ideal.SmoothCuspRealization
-
+module
+public import Lemma.Ideal.SmoothCuspRealization
 set_option autoImplicit false
-
 open IsDedekindDomain NumberField
+
+
+public section
 
 noncomputable section
 

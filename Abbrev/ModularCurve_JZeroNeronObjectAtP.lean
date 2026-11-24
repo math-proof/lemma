@@ -1,20 +1,22 @@
-import Mathlib
-import Structure.ModularCurve_JZeroNeronIdentityComponent
-import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
-import Def.ModularCurve_ReductionOfPointsAgreesModL
-import Instance.ModularCurve_JZeroSemistableSpecialization
-import Structure.ModularCurve_JZeroNeronData
-import Structure.ModularCurve_ToricDescentData
-import Def.GaloisRep_Flat
-import Def.FLTPrelim_Ramification
-import Theorem.Finset.SupersingularNodePlaces
-import Structure.JacJ1Iface
-import Structure.ModularCurve_JZeroNeronObjectAtP
-
+module
+public import Mathlib
+public import Structure.ModularCurve_JZeroNeronIdentityComponent
+public import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
+public import Def.ModularCurve_ReductionOfPointsAgreesModL
+public import Instance.ModularCurve_JZeroSemistableSpecialization
+public import Structure.ModularCurve_JZeroNeronData
+public import Structure.ModularCurve_ToricDescentData
+public import Def.GaloisRep_Flat
+public import Def.FLTPrelim_Ramification
+public import Theorem.Finset.SupersingularNodePlaces
+public import Structure.JacJ1Iface
+public import Structure.ModularCurve_JZeroNeronObjectAtP
 set_option autoImplicit false
-
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry NeronModelInfra GoodReductionJacobian
   AlgebraicCurve IsLocalRing
+
+
+public section
 
 noncomputable section
 

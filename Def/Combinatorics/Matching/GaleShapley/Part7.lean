@@ -1,17 +1,19 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Matching/GaleShapley.lean -/
+module
+public import Mathlib.Data.Fintype.Card
+public import Instance.Order.StrictTotalOrder
+public import Theorem.Set.StrictTotalOrder
+public import Mathlib.Algebra.Group.Action.Defs
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Theorem.Combinatorics.Matching.GaleShapley.Part6
 
-import Mathlib.Data.Fintype.Card
-import Instance.Order.StrictTotalOrder
-import Theorem.Set.StrictTotalOrder
-import Mathlib.Algebra.Group.Action.Defs
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Theorem.Combinatorics.Matching.GaleShapley.Part6
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/Combinatorics/Matching/GaleShapley.lean -/
 /-! # Gale–Shapley stable marriage existence
 
 Stable perfect matchings for two equal finite sides with strict total preferences.
 -/
-
-
 namespace MathlibExt.Combinatorics.Matching.GaleShapley
 
 /-- Initial state: no proposals, no holders. -/

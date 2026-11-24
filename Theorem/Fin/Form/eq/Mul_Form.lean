@@ -13,7 +13,7 @@ open DVRContext DVRContext.AnisotropicQuadSpace
 [form_smul_right](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Valuation/MaximalLattice.lean)
 -/
 @[path]
-public theorem main
+private theorem main
   {C : DVRContext}
   {B : AnisotropicQuadSpace C}
   {r : C.k}

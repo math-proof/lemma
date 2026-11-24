@@ -1,13 +1,16 @@
-import Lemma.ResidueField.FullLevelSemistableCovering
-import Theorem.AlgEquiv.SemistableChartsComap
-import Lemma.ResidueField.ConstantReduction
-import Theorem.RingHom.FunctionField
-import Def.GaloisRep_TameCharacter
-import Def.FLTPrelim_Ramification
-import Lemma.LaurentSeries.ArithmeticGalois
-import Abbrev.ModularCurve_FullLevelSemistableCoveringW2
-
+module
+public import Lemma.ResidueField.FullLevelSemistableCovering
+public import Theorem.AlgEquiv.SemistableChartsComap
+public import Lemma.ResidueField.ConstantReduction
+public import Theorem.RingHom.FunctionField
+public import Def.GaloisRep_TameCharacter
+public import Def.FLTPrelim_Ramification
+public import Lemma.LaurentSeries.ArithmeticGalois
+public import Abbrev.ModularCurve_FullLevelSemistableCoveringW2
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

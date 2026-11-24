@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/SphericalBuilding/GLnBuildingInstance.lean -/
+module
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnInstance
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnThinApartmentUnconditional
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnApartmentIsoUnconditional.Part2
+public import Theorem.Nat.InjectiveJoinSub
+public import Theorem.List.Lt.of.Lt.Lt_Length.Lt_Length.IsChainLt
+public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnCommonApartmentUnconditional.Part3
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/SphericalBuilding/GLnBuildingInstance.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnInstance
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnThinApartmentUnconditional
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnApartmentIsoUnconditional.Part2
-import Lemma.Nat.InjectiveJoinSub
-import Lemma.List.Lt.of.Lt.Lt_Length.Lt_Length.IsChainLt
-import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnCommonApartmentUnconditional.Part3
-
-
 namespace GLnBuilding
 
 /-- Main theorem: the flag complex of $\mathrm{GL}_n(k)$ over any field $k$ is a building,

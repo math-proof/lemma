@@ -1,5 +1,20 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/Section28.lean -/
+module
+public import Def.v1.Atlas.AlgebraicTopologyI.code.Section26.Part8
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
+public import Mathlib.AlgebraicTopology.SimplexCategory.Defs
+public import Mathlib.AlgebraicTopology.SimplexCategory.Basic
+public import Mathlib.AlgebraicTopology.TopologicalSimplex
+public import Mathlib.Topology.ContinuousMap.Basic
+public import Mathlib.Analysis.Convex.StdSimplex
+public import Mathlib.GroupTheory.FreeAbelianGroup
+public import Mathlib.LinearAlgebra.TensorProduct.Basic
+public import Mathlib.Topology.Constructions.SumProd
+open SimplexCategory CategoryTheory
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/Section28.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,20 +22,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.AlgebraicTopologyI.code.Section26.Part8
-import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section26
-import Mathlib.AlgebraicTopology.SimplexCategory.Defs
-import Mathlib.AlgebraicTopology.SimplexCategory.Basic
-import Mathlib.AlgebraicTopology.TopologicalSimplex
-import Mathlib.Topology.ContinuousMap.Basic
-import Mathlib.Analysis.Convex.StdSimplex
-import Mathlib.GroupTheory.FreeAbelianGroup
-import Mathlib.LinearAlgebra.TensorProduct.Basic
-import Mathlib.Topology.Constructions.SumProd
-open SimplexCategory CategoryTheory
-
-
 noncomputable section
 
 namespace ProductsInCohomology

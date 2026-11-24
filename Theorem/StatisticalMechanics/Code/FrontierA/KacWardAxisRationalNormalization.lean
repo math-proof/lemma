@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/KacWardAxisRationalNormalization.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardIntegralAxisSubdivision.Part7
+public import Theorem.StatisticalMechanics.Code.FrontierA.KacWardRationalNormalization.Part3
+public import Def.StatisticalMechanics.Code.FrontierA.KacWardAxisRationalNormalization
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/KacWardAxisRationalNormalization.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardIntegralAxisSubdivision.Part7
-import Theorem.StatisticalMechanics.Code.FrontierA.KacWardRationalNormalization.Part3
-import Def.StatisticalMechanics.Code.FrontierA.KacWardAxisRationalNormalization
-
-
 namespace StatMech.FrontierA
 
 open Set

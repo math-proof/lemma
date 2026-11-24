@@ -1,10 +1,11 @@
+module
+public import Def.NumberTheory.Ramanujan.Part1Ch3Entry16PsiSeries
+public import Theorem.Nat.Ramanujan.Part1Ch3Entry16PsiSeries
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/NumberTheory/Ramanujan/Part1Ch3Entry16PsiSeries.lean -/
-
-
-import Def.NumberTheory.Ramanujan.Part1Ch3Entry16PsiSeries
-import Lemma.Nat.Ramanujan.Part1Ch3Entry16PsiSeries
-
-
 namespace MathlibExt.NumberTheory.Ramanujan.Part1Ch3.Entry16PsiSeries
 
 -- The public identity specializes to the Jensen-series base case at `r = 0`.

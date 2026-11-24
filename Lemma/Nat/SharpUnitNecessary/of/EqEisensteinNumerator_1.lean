@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.UpperHalfPlane.EtaQuotient
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open Complex ModularGroup
 open UpperHalfPlane hiding I

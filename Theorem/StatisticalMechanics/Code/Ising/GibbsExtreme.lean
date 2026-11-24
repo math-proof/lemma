@@ -1,5 +1,17 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/GibbsExtreme.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Ising.InfiniteVolume.Part9
+public import Theorem.StatisticalMechanics.Code.Foundations.StochasticDomination
+public import Theorem.StatisticalMechanics.Code.Inequalities.FKG
+open scoped BigOperators ENNReal StatMech
+open StatMech.Ising StatMech.Lattice Finset MeasureTheory Set
+set_option linter.style.longLine false
+set_option linter.unusedSectionVars false
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Ising/GibbsExtreme.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,19 +19,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Ising.InfiniteVolume.Part9
-import Theorem.StatisticalMechanics.Code.Foundations.StochasticDomination
-import Theorem.StatisticalMechanics.Code.Inequalities.FKG
-open scoped BigOperators ENNReal StatMech
-open StatMech.Ising StatMech.Lattice Finset MeasureTheory Set
-
-set_option linter.style.longLine false
-set_option linter.unusedSectionVars false
-
-
 namespace StatMech
 
 namespace Ising

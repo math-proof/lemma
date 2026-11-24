@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectMedialClusterBoundary.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectMedialReachability
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusRibbonReduction
+public import Theorem.StatisticalMechanics.Code.FrontierD.FKRectEulerDefectClassification
+open SimpleGraph
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/FKRectMedialClusterBoundary.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectMedialReachability
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectTorusRibbonReduction
-import Theorem.StatisticalMechanics.Code.FrontierD.FKRectEulerDefectClassification
-open SimpleGraph
-
-
 namespace StatMech.FrontierD
 
 noncomputable section

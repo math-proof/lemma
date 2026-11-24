@@ -1,10 +1,13 @@
-import Mathlib
-import Lemma.Fin.RothDegreeBoundSMul
-import Lemma.Fin.RothDegreeBound_ProdMulCard.of.All_RothDegreeBound
-import Lemma.Fin.RothDegreeBound_Sum.of.All_RothDegreeBound
+module
+public import Mathlib
+public import Lemma.Fin.RothDegreeBoundSMul
+public import Lemma.Fin.RothDegreeBound_ProdMulCard.of.All_RothDegreeBound
+public import Lemma.Fin.RothDegreeBound_Sum.of.All_RothDegreeBound
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [rothDegreeBound_det](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

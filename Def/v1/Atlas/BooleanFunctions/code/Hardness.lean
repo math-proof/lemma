@@ -1,5 +1,35 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Hardness.lean -/
+module
+public import Mathlib.Combinatorics.SimpleGraph.VertexCover
+public import Mathlib.Combinatorics.SimpleGraph.Basic
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Data.Real.Sqrt
+public import Mathlib.Data.Fintype.Basic
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Data.Fin.Basic
+public import Def.v1.Atlas.BooleanFunctions.code.PCP.Part5
+public import Def.v1.Atlas.BooleanFunctions.code.UniqueGames.Part8
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.UniqueGames
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Borel
+public import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.MultilinearExtension
+public import Def.v1.Atlas.BooleanFunctions.code.MajorityStablest
+public import Def.v1.Atlas.BooleanFunctions.code.Talagrand
+public import Def.v1.Atlas.BooleanFunctions.code.Borel
+public import Def.v1.Atlas.BooleanFunctions.code.GaussianStability.Part2
+public import Def.v1.Atlas.BooleanFunctions.code.InfluenceFourier
+public import Def.v1.Atlas.BooleanFunctions.code.MultilinearExtension
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+public import Mathlib.Order.ConditionallyCompleteLattice.Basic
+public import Def.v1.Atlas.BooleanFunctions.code.UGCHardness
+set_option maxHeartbeats 800000
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Hardness.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,35 +37,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib.Combinatorics.SimpleGraph.VertexCover
-import Mathlib.Combinatorics.SimpleGraph.Basic
-import Mathlib.Data.Real.Basic
-import Mathlib.Data.Real.Sqrt
-import Mathlib.Data.Fintype.Basic
-import Mathlib.Data.Fintype.Pi
-import Mathlib.Data.Finset.Card
-import Mathlib.Data.Fin.Basic
-import Def.v1.Atlas.BooleanFunctions.code.PCP.Part5
-import Def.v1.Atlas.BooleanFunctions.code.UniqueGames.Part8
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.UniqueGames
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Borel
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.MultilinearExtension
-import Def.v1.Atlas.BooleanFunctions.code.MajorityStablest
-import Def.v1.Atlas.BooleanFunctions.code.Talagrand
-import Def.v1.Atlas.BooleanFunctions.code.Borel
-import Def.v1.Atlas.BooleanFunctions.code.GaussianStability.Part2
-import Def.v1.Atlas.BooleanFunctions.code.InfluenceFourier
-import Def.v1.Atlas.BooleanFunctions.code.MultilinearExtension
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
-import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import Mathlib.Order.ConditionallyCompleteLattice.Basic
-import Def.v1.Atlas.BooleanFunctions.code.UGCHardness
-set_option maxHeartbeats 800000
-
-
 namespace Hardness
 
 open SimpleGraph

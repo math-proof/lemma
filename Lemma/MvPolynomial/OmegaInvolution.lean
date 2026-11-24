@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.Young.OmegaInvolution.Part2
-import Lemma.MvPolynomial.SymmetricDefinitions
+import Theorem.MvPolynomial.SymmetricDefinitions
 open MvPolynomial hiding R
 open Finset
 open SymmetricFunctions

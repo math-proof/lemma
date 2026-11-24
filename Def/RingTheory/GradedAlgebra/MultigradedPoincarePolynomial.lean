@@ -1,11 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/GradedAlgebra/MultigradedPoincarePolynomial.lean -/
+module
+public import Theorem.RingTheory.GradedAlgebra.MultigradedPoincareFiniteSupport
+public import Theorem.Int.GradedAlgebra.MultigradedPoincareFiniteSupport
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/RingTheory/GradedAlgebra/MultigradedPoincarePolynomial.lean -/
 /-
   Author: Muse Code powered by Meta Muse Spark
 -/
-
-import Theorem.RingTheory.GradedAlgebra.MultigradedPoincareFiniteSupport
-import Lemma.Int.GradedAlgebra.MultigradedPoincareFiniteSupport
 /-!
 # Multigraded Poincaré polynomial
 
@@ -43,8 +46,6 @@ Main definitions and results:
   polynomial at `(i, α)` returns exactly
   `multigradedBettiNumber data α i`.
 -/
-
-
 namespace MetaMathlibExt
 
 universe u

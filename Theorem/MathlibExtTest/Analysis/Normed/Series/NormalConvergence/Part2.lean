@@ -1,13 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Normed/Series/NormalConvergence.lean -/
-
-
-import Def.Analysis.Normed.Series.NormalConvergence
-import Theorem.Real.NormalConvergence
-import Mathlib.Analysis.Normed.Field.Basic
-import Def.MathlibExtTest.Analysis.Normed.Series.NormalConvergence
+module
+public import Def.Analysis.Normed.Series.NormalConvergence
+public import Theorem.Real.NormalConvergence
+public import Mathlib.Analysis.Normed.Field.Basic
+public import Def.MathlibExtTest.Analysis.Normed.Series.NormalConvergence
 open Topology
 open scoped ENNReal
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Analysis/Normed/Series/NormalConvergence.lean -/
 /-!
 # Tests for normal convergence of series of functions
 
@@ -16,9 +18,8 @@ Exercises `supNormOn`, `ConvergesNormallyOn`, and
 monotonicity under shrinking the domain, projection from local convergence
 at a point, and a concrete nonzero one-term series on a singleton domain.
 -/
-
-
 /-- The active term is genuinely nonzero on the singleton domain. -/
+
 example : supNormOn (oneTermSeries 0) ({0} : Set ℝ) = 1 := by
   rw [supNormOn_oneTermSeries, ite_eq_left rfl]
 

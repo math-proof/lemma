@@ -14,7 +14,6 @@ namespace BooleanFourier
 /--
 [influence_nonneg](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Juntas.lean)
 -/
-@[path]
 public theorem influence_nonneg
   {n : ℕ}
   {f : (Fin n → Bool) → Bool}
@@ -32,7 +31,6 @@ namespace BooleanFourier
 /--
 [high_influence_count_le](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Juntas.lean)
 -/
-@[path]
 public theorem high_influence_count_le
   {n : ℕ}
   {f : (Fin n → Bool) → Bool}

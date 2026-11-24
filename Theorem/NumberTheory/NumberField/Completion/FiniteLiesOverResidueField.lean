@@ -1,7 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOverResidueField.lean -/
+module
+public import Theorem.NumberTheory.NumberField.Completion.FiniteLiesOverMaximalIdeal
+public import Theorem.Nat.NumberField.Completion.FiniteLiesOverMaximalIdeal
 
-import Theorem.NumberTheory.NumberField.Completion.FiniteLiesOverMaximalIdeal
-import Theorem.Nat.NumberField.Completion.FiniteLiesOverMaximalIdeal
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/Completion/FiniteLiesOverResidueField.lean -/
 /-!
 # Naturality of adic integer maps with ring-of-integers algebra maps
 
@@ -48,8 +52,6 @@ one of the finite-place local-degree ingredients supporting N265,
 Theorem 13.5. This module proves neither the quotient equivalence nor the final
 tensor-product decomposition itself.
 -/
-
-
 namespace IsDedekindDomain.HeightOneSpectrum
 
 open scoped NumberField

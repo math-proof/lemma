@@ -1,5 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/JantzenFiltration.lean -/
+module
+public import Def.v1.Atlas.LieGroups.code.VermaModules.Part7
+public import Theorem.Int.WeightSubspace.eq.ToSubmoduleWeightSpace
+public import Theorem.Int.Any_All_Eq.of.LeKer_Ker.Surjective
+public import Structure.v1.Atlas.LieGroups.code.HarishChandraIsomorphism.Part2
+public import Structure.v1.Atlas.LieGroups.code.JantzenFiltration.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/LieGroups/code/JantzenFiltration.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +16,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.LieGroups.code.VermaModules.Part7
-import Theorem.Int.WeightSubspace.eq.ToSubmoduleWeightSpace
-import Lemma.Int.Any_All_Eq.of.LeKer_Ker.Surjective
-import Structure.v1.Atlas.LieGroups.code.HarishChandraIsomorphism.Part2
-import Structure.v1.Atlas.LieGroups.code.JantzenFiltration.Part2
-
-
 section JantzenFiltrationProps
 
 variable {R : Type*} [CommRing R]

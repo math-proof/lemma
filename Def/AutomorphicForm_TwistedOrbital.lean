@@ -1,15 +1,17 @@
-import Lemma.Matrix.UnitFactorizableOfType
-import Theorem.ContinuousMap.topologicalRing
-import Theorem.LinearMap.t2Space
-import Theorem.ContinuousMap.locallyCompactSpaceOfFinite
-import Instance.DedekindDomain_Completion_BaseChange
-import Theorem.Kernel.SigmaCentralizer
-import Def.M4aHerbrand_ArchSemilocal
-
+module
+public import Theorem.Matrix.UnitFactorizableOfType
+public import Theorem.ContinuousMap.topologicalRing
+public import Theorem.LinearMap.t2Space
+public import Theorem.ContinuousMap.locallyCompactSpaceOfFinite
+public import Instance.DedekindDomain_Completion_BaseChange
+public import Theorem.Kernel.SigmaCentralizer
+public import Def.M4aHerbrand_ArchSemilocal
 set_option autoImplicit false
-
 open NumberField IsDedekindDomain MeasureTheory TopologicalSpace TensorProduct RingHom
 open scoped TensorProduct.RightActions
+
+
+public section
 
 noncomputable section
 

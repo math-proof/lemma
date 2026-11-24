@@ -1,7 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/ListSortCollapseCost.lean -/
+module
+public import Theorem.CPythonListsort.Code.Assembly.ListSortMergePolicy
+public import Structure.CPythonListsort.Code.Assembly.PowerSortPolicyCost.Part2
 
-import Theorem.CPythonListsort.Code.Assembly.ListSortMergePolicy
-import Structure.CPythonListsort.Code.Assembly.PowerSortPolicyCost.Part2
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/CPythonListsort/Code/Assembly/ListSortCollapseCost.lean -/
 /-!
 # Final-collapse policy cost for the real traced evaluator
 
@@ -9,8 +13,6 @@ This module connects the exact selector used by `merge_force_collapse` to the
 pure `CPythonForceCollapseCost` relation.  It deliberately keeps CPython's
 final-collapse schedule distinct from canonical repeated-top-pair completion.
 -/
-
-
 namespace CPythonListsort
 
 universe u v

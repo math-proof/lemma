@@ -1,7 +1,10 @@
-import Mathlib
-import Def.LocalLanglands_CartanDecomposition
-
+module
+public import Mathlib
+public import Def.LocalLanglands_CartanDecomposition
 open Matrix
+
+
+public section
 
 noncomputable section
 

@@ -1,11 +1,13 @@
+module
+public import Theorem.Scheme.EllipticCurve.HasseBound
+public import Mathlib.Algebra.Field.ZMod
+public import Mathlib.Tactic.NormNum
+public import Def.MathlibExtTest.AlgebraicGeometry.EllipticCurve.HasseBound
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/AlgebraicGeometry/EllipticCurve/HasseBound.lean -/
-
-import Lemma.Scheme.EllipticCurve.HasseBound
-import Mathlib.Algebra.Field.ZMod
-import Mathlib.Tactic.NormNum
-import Def.MathlibExtTest.AlgebraicGeometry.EllipticCurve.HasseBound
-
-
 namespace MathlibExtTest.AlgebraicGeometry.EllipticCurve.HasseBound
 
 open WeierstrassCurve

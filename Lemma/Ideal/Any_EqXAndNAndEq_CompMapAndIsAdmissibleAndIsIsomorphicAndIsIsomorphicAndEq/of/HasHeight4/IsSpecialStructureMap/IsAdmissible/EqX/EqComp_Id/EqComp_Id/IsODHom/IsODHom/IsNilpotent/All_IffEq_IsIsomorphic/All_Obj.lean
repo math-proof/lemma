@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.MvPowerSeries.SpecialFormalModule
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 
 open CerednikDrinfeld CerednikDrinfeld.SpecialFormal MvPowerSeries
 open MvPowerSeries (subst HasSubst hasSubst_of_constantCoeff_zero constantCoeff coe_substAlgHom)

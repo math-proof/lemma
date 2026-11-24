@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.WeierstrassCurve.GaloisRep
 import Def.FLTPrelim_Ramification
-import Lemma.Int.P2MUtil
+import Theorem.Int.P2MUtil
 open WeierstrassCurve WeierstrassCurve.Affine WeierstrassCurve.Affine.Point Int
 
 

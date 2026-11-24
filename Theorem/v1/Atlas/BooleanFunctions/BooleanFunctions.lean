@@ -1,5 +1,148 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/BooleanFunctions.lean -/
+module
+public import Def.v1.Atlas.BooleanFunctions.code.Arrow
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Arrow
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Boltzmann
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Borel
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.BorelCoordSymmetrization
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.BorelOneD
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Claim21Lec10
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Claim32Lec8
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Convolution
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Corollary12Lec9
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.DisagreementStability
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.EdgeExpansion
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Friedgut
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.GaussianNoiseSemigroup
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.GaussianSpace
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Hardness
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Hypercontractivity
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Influence
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.InfluenceDerivative
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Invariance
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Juntas
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Lemma26Lec10
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.LindebergHybrid
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Monotone
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.MonotoneFourier
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.MultilinearExtension
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.NoiseSensitivity
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.NoisyHypercube
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.OUSemigroup
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Parseval
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.RussoMargulis
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.SharpThreshold
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Sheppard
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Stability
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Theorems
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.TwoPointDerivCompute
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.TwoPointInequality
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.UncoveredBatch3
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.UncoveredTargets
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.UniqueGames
+public import Def.v1.Atlas.BooleanFunctions.code.Boltzmann
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.BonamilBeckner
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Corollary12Lec11
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Corollary42Majority
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Corollary43Majority
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierCoeffBasic
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierConcentration
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierSampling
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FriedgutLevelConcentration
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.HypercontractivityThm
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Isoperimetric
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.KKL
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Majority
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.NoiseSemigroup
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.NoiseStability
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.NoiseStabilityBounds
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.NoiseStabilityMono
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Poincare
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Theorem45
+public import Def.v1.Atlas.BooleanFunctions.code.Borel
+public import Def.v1.Atlas.BooleanFunctions.code.BorelCoordSymmetrization
+public import Def.v1.Atlas.BooleanFunctions.code.BorelOneD
+public import Theorem.v1.Atlas.BooleanFunctions.code.BourgainNoiseSensitivity
+public import Def.v1.Atlas.BooleanFunctions.code.Claim21Lec10
+public import Def.v1.Atlas.BooleanFunctions.code.Claim32Lec8
+public import Theorem.v1.Atlas.BooleanFunctions.code.Claim42Lec8
+public import Theorem.v1.Atlas.BooleanFunctions.code.Concentration
+public import Def.v1.Atlas.BooleanFunctions.code.Convolution
+public import Theorem.v1.Atlas.BooleanFunctions.code.Corollary12Lec9
+public import Def.v1.Atlas.BooleanFunctions.code.Definitions
+public import Def.v1.Atlas.BooleanFunctions.code.Derivatives
+public import Def.v1.Atlas.BooleanFunctions.code.DisagreementStability
+public import Def.v1.Atlas.BooleanFunctions.code.EdgeExpansion
+public import Def.v1.Atlas.BooleanFunctions.code.FKN
+public import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
+public import Theorem.v1.Atlas.BooleanFunctions.code.FourierWeightNoiseVerification
+public import Def.v1.Atlas.BooleanFunctions.code.Friedgut
+public import Def.v1.Atlas.BooleanFunctions.code.FriedgutKalai
+public import Def.v1.Atlas.BooleanFunctions.code.GaussianBorelCorollary
+public import Def.v1.Atlas.BooleanFunctions.code.GaussianHypercontractivity
+public import Theorem.v1.Atlas.BooleanFunctions.code.GaussianNoiseSemigroup
+public import Def.v1.Atlas.BooleanFunctions.code.GaussianSpace
+public import Def.v1.Atlas.BooleanFunctions.code.GaussianStability.Part2
+public import Theorem.v1.Atlas.BooleanFunctions.code.GoalVerification
+public import Theorem.v1.Atlas.BooleanFunctions.code.GoalVerification15_19_40_45
+public import Theorem.v1.Atlas.BooleanFunctions.code.GoalVerification61_64_66_67_68
+public import Theorem.v1.Atlas.BooleanFunctions.code.GoalVerification69_74
+public import Theorem.v1.Atlas.BooleanFunctions.code.GoalVerification80_81_82
+public import Theorem.v1.Atlas.BooleanFunctions.code.GoalVerification87_88_101_102_106
+public import Theorem.v1.Atlas.BooleanFunctions.code.GoalVerification_0_8_10_11_12_13
+public import Def.v1.Atlas.BooleanFunctions.code.Hardness
+public import Def.v1.Atlas.BooleanFunctions.code.Hastad
+public import Def.v1.Atlas.BooleanFunctions.code.Hypercontractivity
+public import Def.v1.Atlas.BooleanFunctions.code.Influence
+public import Def.v1.Atlas.BooleanFunctions.code.InfluenceDerivative
+public import Def.v1.Atlas.BooleanFunctions.code.InfluenceFourier
+public import Def.v1.Atlas.BooleanFunctions.code.Invariance
+public import Structure.v1.Atlas.BooleanFunctions.code.InvarianceDefs
+public import Def.v1.Atlas.BooleanFunctions.code.Juntas
+public import Theorem.v1.Atlas.BooleanFunctions.code.KKLApplication
+public import Def.v1.Atlas.BooleanFunctions.code.Lemma26Lec10
+public import Theorem.v1.Atlas.BooleanFunctions.code.LindebergBound
+public import Def.v1.Atlas.BooleanFunctions.code.LindebergHybrid.Part2
+public import Theorem.v1.Atlas.BooleanFunctions.code.LindebergOneDim
+public import Theorem.v1.Atlas.BooleanFunctions.code.MISBound
+public import Def.v1.Atlas.BooleanFunctions.code.MajorityStablest
+public import Def.v1.Atlas.BooleanFunctions.code.Margulis
+public import Def.v1.Atlas.BooleanFunctions.code.Monotone
+public import Def.v1.Atlas.BooleanFunctions.code.MonotoneFourier
+public import Theorem.v1.Atlas.BooleanFunctions.code.MonotoneTotalInfluence
+public import Def.v1.Atlas.BooleanFunctions.code.MultilinearExtension
+public import Def.v1.Atlas.BooleanFunctions.code.NoiseSensitivity
+public import Theorem.v1.Atlas.BooleanFunctions.code.NoiseSensitivityMonotone
+public import Def.v1.Atlas.BooleanFunctions.code.NoisyHypercube.Part2
+public import Def.v1.Atlas.BooleanFunctions.code.OUSemigroup
+public import Instance.v1.Atlas.BooleanFunctions.code.PBiased.Part2
+public import Def.v1.Atlas.BooleanFunctions.code.PCP.Part5
+public import Def.v1.Atlas.BooleanFunctions.code.Parseval
+public import Theorem.v1.Atlas.BooleanFunctions.code.PendingDefinitions
+public import Def.v1.Atlas.BooleanFunctions.code.RussoMargulis
+public import Def.v1.Atlas.BooleanFunctions.code.Sensitivity
+public import Def.v1.Atlas.BooleanFunctions.code.SharpThreshold
+public import Def.v1.Atlas.BooleanFunctions.code.Sheppard
+public import Theorem.v1.Atlas.BooleanFunctions.code.SpectralEntropy
+public import Def.v1.Atlas.BooleanFunctions.code.SpectralSample
+public import Def.v1.Atlas.BooleanFunctions.code.Stability
+public import Def.v1.Atlas.BooleanFunctions.code.Talagrand
+public import Def.v1.Atlas.BooleanFunctions.code.Theorems
+public import Theorem.v1.Atlas.BooleanFunctions.code.TotalInfluenceFourier
+public import Def.v1.Atlas.BooleanFunctions.code.TwoPointDerivCompute
+public import Def.v1.Atlas.BooleanFunctions.code.TwoPointInequality
+public import Def.v1.Atlas.BooleanFunctions.code.UGCHardness
+public import Theorem.v1.Atlas.BooleanFunctions.code.UncoveredBatch2
+public import Def.v1.Atlas.BooleanFunctions.code.UncoveredBatch3
+public import Def.v1.Atlas.BooleanFunctions.code.UncoveredTargets
+public import Def.v1.Atlas.BooleanFunctions.code.UniqueGames.Part8
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/BooleanFunctions.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,145 +150,4 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.BooleanFunctions.code.Arrow
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Arrow
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Boltzmann
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Borel
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.BorelCoordSymmetrization
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.BorelOneD
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Claim21Lec10
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Claim32Lec8
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Convolution
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Corollary12Lec9
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.DisagreementStability
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.EdgeExpansion
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Friedgut
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.GaussianNoiseSemigroup
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.GaussianSpace
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Hardness
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Hypercontractivity
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Influence
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.InfluenceDerivative
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Invariance
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Juntas
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Lemma26Lec10
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.LindebergHybrid
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Monotone
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.MonotoneFourier
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.MultilinearExtension
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.NoiseSensitivity
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.NoisyHypercube
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.OUSemigroup
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Parseval
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.RussoMargulis
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.SharpThreshold
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Sheppard
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Stability
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Theorems
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.TwoPointDerivCompute
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.TwoPointInequality
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.UncoveredBatch3
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.UncoveredTargets
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.UniqueGames
-import Def.v1.Atlas.BooleanFunctions.code.Boltzmann
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.BonamilBeckner
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Corollary12Lec11
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Corollary42Majority
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Corollary43Majority
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.FourierCoeffBasic
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.FourierConcentration
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierSampling
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.FriedgutLevelConcentration
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.HypercontractivityThm
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Isoperimetric
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.KKL
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Majority
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.NoiseSemigroup
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.NoiseStability
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.NoiseStabilityBounds
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.NoiseStabilityMono
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Poincare
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Theorem45
-import Def.v1.Atlas.BooleanFunctions.code.Borel
-import Def.v1.Atlas.BooleanFunctions.code.BorelCoordSymmetrization
-import Def.v1.Atlas.BooleanFunctions.code.BorelOneD
-import Theorem.v1.Atlas.BooleanFunctions.code.BourgainNoiseSensitivity
-import Def.v1.Atlas.BooleanFunctions.code.Claim21Lec10
-import Def.v1.Atlas.BooleanFunctions.code.Claim32Lec8
-import Theorem.v1.Atlas.BooleanFunctions.code.Claim42Lec8
-import Theorem.v1.Atlas.BooleanFunctions.code.Concentration
-import Def.v1.Atlas.BooleanFunctions.code.Convolution
-import Theorem.v1.Atlas.BooleanFunctions.code.Corollary12Lec9
-import Def.v1.Atlas.BooleanFunctions.code.Definitions
-import Def.v1.Atlas.BooleanFunctions.code.Derivatives
-import Def.v1.Atlas.BooleanFunctions.code.DisagreementStability
-import Def.v1.Atlas.BooleanFunctions.code.EdgeExpansion
-import Def.v1.Atlas.BooleanFunctions.code.FKN
-import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
-import Theorem.v1.Atlas.BooleanFunctions.code.FourierWeightNoiseVerification
-import Def.v1.Atlas.BooleanFunctions.code.Friedgut
-import Def.v1.Atlas.BooleanFunctions.code.FriedgutKalai
-import Def.v1.Atlas.BooleanFunctions.code.GaussianBorelCorollary
-import Def.v1.Atlas.BooleanFunctions.code.GaussianHypercontractivity
-import Theorem.v1.Atlas.BooleanFunctions.code.GaussianNoiseSemigroup
-import Def.v1.Atlas.BooleanFunctions.code.GaussianSpace
-import Def.v1.Atlas.BooleanFunctions.code.GaussianStability.Part2
-import Theorem.v1.Atlas.BooleanFunctions.code.GoalVerification
-import Theorem.v1.Atlas.BooleanFunctions.code.GoalVerification15_19_40_45
-import Theorem.v1.Atlas.BooleanFunctions.code.GoalVerification61_64_66_67_68
-import Theorem.v1.Atlas.BooleanFunctions.code.GoalVerification69_74
-import Theorem.v1.Atlas.BooleanFunctions.code.GoalVerification80_81_82
-import Theorem.v1.Atlas.BooleanFunctions.code.GoalVerification87_88_101_102_106
-import Theorem.v1.Atlas.BooleanFunctions.code.GoalVerification_0_8_10_11_12_13
-import Def.v1.Atlas.BooleanFunctions.code.Hardness
-import Def.v1.Atlas.BooleanFunctions.code.Hastad
-import Def.v1.Atlas.BooleanFunctions.code.Hypercontractivity
-import Def.v1.Atlas.BooleanFunctions.code.Influence
-import Def.v1.Atlas.BooleanFunctions.code.InfluenceDerivative
-import Def.v1.Atlas.BooleanFunctions.code.InfluenceFourier
-import Def.v1.Atlas.BooleanFunctions.code.Invariance
-import Structure.v1.Atlas.BooleanFunctions.code.InvarianceDefs
-import Def.v1.Atlas.BooleanFunctions.code.Juntas
-import Theorem.v1.Atlas.BooleanFunctions.code.KKLApplication
-import Def.v1.Atlas.BooleanFunctions.code.Lemma26Lec10
-import Theorem.v1.Atlas.BooleanFunctions.code.LindebergBound
-import Def.v1.Atlas.BooleanFunctions.code.LindebergHybrid.Part2
-import Theorem.v1.Atlas.BooleanFunctions.code.LindebergOneDim
-import Theorem.v1.Atlas.BooleanFunctions.code.MISBound
-import Def.v1.Atlas.BooleanFunctions.code.MajorityStablest
-import Def.v1.Atlas.BooleanFunctions.code.Margulis
-import Def.v1.Atlas.BooleanFunctions.code.Monotone
-import Def.v1.Atlas.BooleanFunctions.code.MonotoneFourier
-import Theorem.v1.Atlas.BooleanFunctions.code.MonotoneTotalInfluence
-import Def.v1.Atlas.BooleanFunctions.code.MultilinearExtension
-import Def.v1.Atlas.BooleanFunctions.code.NoiseSensitivity
-import Theorem.v1.Atlas.BooleanFunctions.code.NoiseSensitivityMonotone
-import Def.v1.Atlas.BooleanFunctions.code.NoisyHypercube.Part2
-import Def.v1.Atlas.BooleanFunctions.code.OUSemigroup
-import Instance.v1.Atlas.BooleanFunctions.code.PBiased.Part2
-import Def.v1.Atlas.BooleanFunctions.code.PCP.Part5
-import Def.v1.Atlas.BooleanFunctions.code.Parseval
-import Theorem.v1.Atlas.BooleanFunctions.code.PendingDefinitions
-import Def.v1.Atlas.BooleanFunctions.code.RussoMargulis
-import Def.v1.Atlas.BooleanFunctions.code.Sensitivity
-import Def.v1.Atlas.BooleanFunctions.code.SharpThreshold
-import Def.v1.Atlas.BooleanFunctions.code.Sheppard
-import Theorem.v1.Atlas.BooleanFunctions.code.SpectralEntropy
-import Def.v1.Atlas.BooleanFunctions.code.SpectralSample
-import Def.v1.Atlas.BooleanFunctions.code.Stability
-import Def.v1.Atlas.BooleanFunctions.code.Talagrand
-import Def.v1.Atlas.BooleanFunctions.code.Theorems
-import Theorem.v1.Atlas.BooleanFunctions.code.TotalInfluenceFourier
-import Def.v1.Atlas.BooleanFunctions.code.TwoPointDerivCompute
-import Def.v1.Atlas.BooleanFunctions.code.TwoPointInequality
-import Def.v1.Atlas.BooleanFunctions.code.UGCHardness
-import Theorem.v1.Atlas.BooleanFunctions.code.UncoveredBatch2
-import Def.v1.Atlas.BooleanFunctions.code.UncoveredBatch3
-import Def.v1.Atlas.BooleanFunctions.code.UncoveredTargets
-import Def.v1.Atlas.BooleanFunctions.code.UniqueGames.Part8
-
 

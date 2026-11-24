@@ -1,5 +1,15 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingCriticalTwoPointReduction.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierA.IsingInfraredReduction
+public import Theorem.StatisticalMechanics.Code.Lattice.BoxSurfaceVolume.Part5
+public import Theorem.StatisticalMechanics.Code.Sharpness.EpsToZeroLattice
+public import Theorem.StatisticalMechanics.Code.Sharpness.IsingSusceptibilityPlus.Part2
+open Finset Set
+open scoped BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierA/IsingCriticalTwoPointReduction.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +17,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierA.IsingInfraredReduction
-import Theorem.StatisticalMechanics.Code.Lattice.BoxSurfaceVolume.Part5
-import Theorem.StatisticalMechanics.Code.Sharpness.EpsToZeroLattice
-import Theorem.StatisticalMechanics.Code.Sharpness.IsingSusceptibilityPlus.Part2
-open Finset Set
-open scoped BigOperators
-
-
 namespace StatMech.FrontierA
 
 open Lattice Percolation Sharpness

@@ -1,11 +1,12 @@
+module
+public import Theorem.Combinatorics.Enumerative.ZagierCyclicPermutationProduct.Part44
+public import Theorem.Finset.Enumerative.ZagierCyclicPermutationProduct
+public import Mathlib.Tactic.NormNum
+
+
+public section
+
 /- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Combinatorics/Enumerative/ZagierCyclicPermutationProduct.lean -/
-
-
-import Theorem.Combinatorics.Enumerative.ZagierCyclicPermutationProduct.Part44
-import Lemma.Finset.Enumerative.ZagierCyclicPermutationProduct
-import Mathlib.Tactic.NormNum
-
-
 namespace MathlibExtTest.Combinatorics.Enumerative.ZagierCyclicPermutationProduct
 
 open MetaMathlibExt

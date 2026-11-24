@@ -1,5 +1,23 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/GenusConstruction.lean -/
+module
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves.Part2
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyP1
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRoch
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TateCechInfra
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DedekindCurve
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.CohomologyP1.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRoch
+public import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochCurves
+public import Def.v1.Atlas.AlgebraicGeometryI.code.TateCechInfra.Part2
+public import Def.v1.Atlas.AlgebraicGeometryI.code.DedekindCurve
+public import Def.v1.Atlas.AlgebraicGeometryI.code.GenusConstruction
+open RiemannRochCurves CanonicalSheafCurves CohomologyP1 RiemannRoch
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicGeometryI/code/GenusConstruction.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,23 +25,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves.Part2
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CohomologyP1
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRoch
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.RiemannRochCurves
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.TateCechInfra
-import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DedekindCurve
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.CohomologyP1.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.RiemannRoch
-import Theorem.v1.Atlas.AlgebraicGeometryI.code.RiemannRochCurves
-import Def.v1.Atlas.AlgebraicGeometryI.code.TateCechInfra.Part2
-import Def.v1.Atlas.AlgebraicGeometryI.code.DedekindCurve
-import Def.v1.Atlas.AlgebraicGeometryI.code.GenusConstruction
-open RiemannRochCurves CanonicalSheafCurves CohomologyP1 RiemannRoch
-
-
 noncomputable section
 
 namespace GenusConstruction

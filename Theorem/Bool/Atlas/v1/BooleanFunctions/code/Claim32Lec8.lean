@@ -15,7 +15,6 @@ namespace BooleanAnalysis
 /--
 [indicator_ne_iff](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Claim32Lec8.lean)
 -/
-@[path]
 public theorem indicator_ne_iff
   {n : ℕ}
   {A : Finset (Fin n → Bool)}
@@ -39,7 +38,6 @@ namespace BooleanAnalysis
 /--
 [flipCoord_eq_flip](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Claim32Lec8.lean)
 -/
-@[path]
 public theorem flipCoord_eq_flip
   {n : ℕ}
   {x : Fin n → Bool}
@@ -59,7 +57,6 @@ namespace BooleanAnalysis
 /--
 [totalInfluence_indicator](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Claim32Lec8.lean)
 -/
-@[path]
 public theorem totalInfluence_indicator
   {n : ℕ}
   {A : Finset (Fin n → Bool)} :
@@ -77,7 +74,6 @@ namespace BooleanAnalysis
 /--
 [card_boundary_eq_sum](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Claim32Lec8.lean)
 -/
-@[path]
 public theorem card_boundary_eq_sum
   {n : ℕ}
   {A : Finset (Fin n → Bool)} :
@@ -115,7 +111,6 @@ namespace BooleanAnalysis
 /--
 [edgeBoundaryMeasure_eq_totalInfluence_indicator_div_n](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/Claim32Lec8.lean)
 -/
-@[path]
 public theorem edgeBoundaryMeasure_eq_totalInfluence_indicator_div_n
   {n : ℕ}
   {A : Finset (Fin n → Bool)}

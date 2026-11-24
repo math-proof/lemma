@@ -1,7 +1,10 @@
-import Mathlib
-import Instance.WeierstrassCurve_FunctionFieldQuadratic
-
+module
+public import Mathlib
+public import Instance.WeierstrassCurve_FunctionFieldQuadratic
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

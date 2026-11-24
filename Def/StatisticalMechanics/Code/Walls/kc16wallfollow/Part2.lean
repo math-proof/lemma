@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/kc16wallfollow.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Walls.kc9core
+public import Theorem.StatisticalMechanics.Code.Walls.kc16wallfollow.Part2
+open Set SimpleGraph Function
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/kc16wallfollow.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Walls.kc9core
-import Theorem.StatisticalMechanics.Code.Walls.kc16wallfollow.Part2
-open Set SimpleGraph Function
-
-
 namespace StatMech
 
 namespace Walls

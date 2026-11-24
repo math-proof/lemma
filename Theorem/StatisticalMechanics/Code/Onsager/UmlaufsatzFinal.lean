@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/UmlaufsatzFinal.lean -/
+module
+public import Mathlib
+public import Theorem.StatisticalMechanics.Code.Onsager.MasterCorner
+public import Theorem.StatisticalMechanics.Code.Onsager.PinchFree
+public import Theorem.StatisticalMechanics.Code.Onsager.CellGaussBonnetGlobal
+public import Theorem.StatisticalMechanics.Code.Onsager.WalkCellBoundary
+public import Theorem.StatisticalMechanics.Code.Onsager.WalkCellRegion.Part7
+public import Theorem.StatisticalMechanics.Code.Onsager.CellEulerFaithful.Part6
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Onsager/UmlaufsatzFinal.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Mathlib
-import Theorem.StatisticalMechanics.Code.Onsager.MasterCorner
-import Theorem.StatisticalMechanics.Code.Onsager.PinchFree
-import Theorem.StatisticalMechanics.Code.Onsager.CellGaussBonnetGlobal
-import Theorem.StatisticalMechanics.Code.Onsager.WalkCellBoundary
-import Theorem.StatisticalMechanics.Code.Onsager.WalkCellRegion.Part7
-import Theorem.StatisticalMechanics.Code.Onsager.CellEulerFaithful.Part6
-
-
 namespace StatMech.Onsager.UmlaufsatzFinal
 
 open Finset StatMech.Onsager.BaseCase StatMech.Onsager.NoDoubleWind StatMech.Onsager.WalkCrossing

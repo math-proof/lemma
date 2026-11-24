@@ -1,7 +1,10 @@
-import Abbrev.AlgebraicGeometry_IdealSheafModule
-import Instance.AlgebraicGeometry_RelativePicardFunctor
-
+module
+public import Abbrev.AlgebraicGeometry_IdealSheafModule
+public import Instance.AlgebraicGeometry_RelativePicardFunctor
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

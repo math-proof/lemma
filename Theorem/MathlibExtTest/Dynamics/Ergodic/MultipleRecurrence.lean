@@ -1,13 +1,14 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Dynamics/Ergodic/MultipleRecurrence.lean -/
-
-
-import Def.Dynamics.Ergodic.MultipleRecurrence
-import Lemma.Set.Ergodic.MultipleRecurrence
-import Mathlib.Tactic
+module
+public import Def.Dynamics.Ergodic.MultipleRecurrence
+public import Theorem.Set.Ergodic.MultipleRecurrence
+public import Mathlib.Tactic
 open MeasureTheory
 open MathlibExt.Dynamics.Ergodic.MultipleRecurrenceWanted
 
 
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/Dynamics/Ergodic/MultipleRecurrence.lean -/
 namespace MathlibExtTest.Dynamics.Ergodic.MultipleRecurrence
 
 -- The two-term case gives Poincaré recurrence.

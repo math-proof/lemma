@@ -1,13 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/HadamardDeterminant.lean -/
+module
+public import Theorem.Matrix.HadamardDeterminant
+public import Mathlib.Tactic.NormNum
+public import Def.MathlibExtTest.LinearAlgebra.Matrix.HadamardDeterminant
+open MathlibExt.LinearAlgebra.Matrix.HadamardDeterminant
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExtTest/LinearAlgebra/Matrix/HadamardDeterminant.lean -/
 /-
 Author: Muse Spark 1.3
 -/
-
-import Theorem.Matrix.HadamardDeterminant
-import Mathlib.Tactic.NormNum
-import Def.MathlibExtTest.LinearAlgebra.Matrix.HadamardDeterminant
-open MathlibExt.LinearAlgebra.Matrix.HadamardDeterminant
 
 #check @hadamard_determinant_inequality
 

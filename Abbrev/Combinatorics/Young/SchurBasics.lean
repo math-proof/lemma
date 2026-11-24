@@ -1,12 +1,17 @@
+module
+public import Mathlib
+public import Def.Combinatorics.Young.LittlewoodRichardson.Part17
+public import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
+public import Instance.GroupTheory.Perm.Basics.Part2
+public import Theorem.MvPolynomial.LittlewoodRichardson
+
+
+public section
+
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
 -/
-import Mathlib
-import Def.Combinatorics.Young.LittlewoodRichardson.Part17
-import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
-import Instance.GroupTheory.Perm.Basics.Part2
-import Theorem.MvPolynomial.LittlewoodRichardson
 /-!
 # Schur Polynomials
 
@@ -39,8 +44,6 @@ Based on the LaTeX source `AlgebraicCombinatorics/tex/SymmetricFunctions/SchurBa
 
 Schur polynomial, Young diagram, semistandard tableau, alternant, symmetric polynomial
 -/
-
-
 noncomputable section
 
 open Finset Matrix Polynomial MvPolynomial BigOperators

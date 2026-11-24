@@ -1,5 +1,9 @@
-import Def.Matrix_IharaAmalgam
-import Def.Matrix_Main
+module
+public import Def.Matrix_IharaAmalgam
+public import Def.Matrix_Main
+
+
+public section
 
 namespace Ihara
 

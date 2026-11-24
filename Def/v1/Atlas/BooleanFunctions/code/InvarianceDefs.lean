@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/InvarianceDefs.lean -/
+module
+public import Def.v1.Atlas.BooleanFunctions.code.MultilinearExtension
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.MultilinearExtension
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
+public import Def.v1.Atlas.BooleanFunctions.code.Talagrand
+public import Def.v1.Atlas.BooleanFunctions.code.GaussianHypercontractivity
+public import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
+public import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/BooleanFunctions/code/InvarianceDefs.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,16 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.BooleanFunctions.code.MultilinearExtension
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.MultilinearExtension
-import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
-import Def.v1.Atlas.BooleanFunctions.code.Talagrand
-import Def.v1.Atlas.BooleanFunctions.code.GaussianHypercontractivity
-import Mathlib.Analysis.Calculus.IteratedDeriv.Defs
-import Mathlib.Analysis.Calculus.IteratedDeriv.Lemmas
-
-
 noncomputable section
 
 open Finset BigOperators MeasureTheory

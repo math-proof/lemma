@@ -1,8 +1,11 @@
-import Mathlib
-import Lemma.Fin.GetRothFlip.eq.Sub.of.RothBox
+module
+public import Mathlib
+public import Lemma.Fin.GetRothFlip.eq.Sub.of.RothBox
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 
+
+public section
 
 /--
 [rothCentered_flip_same](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)

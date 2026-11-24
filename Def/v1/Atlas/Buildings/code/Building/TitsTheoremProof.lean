@@ -1,5 +1,16 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/TitsTheoremProof.lean -/
+module
+public import Def.v1.Atlas.Buildings.code.Building.AptIsCoxeterProof
+public import Theorem.Set.ApartmentsToApartmentSystem.eq.Apartments.of.IsThick
+public import Theorem.List.All.of.All.IsChain.Ne
+public import Def.v1.Atlas.Buildings.code.ChamberComplex.Folding.Part3
+public import Theorem.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes
+public import Mathlib.GroupTheory.Coxeter.Length
+open ChamberComplex AptIsCoxeterProof
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/Buildings/code/Building/TitsTheoremProof.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,15 +18,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Def.v1.Atlas.Buildings.code.Building.AptIsCoxeterProof
-import Theorem.Set.ApartmentsToApartmentSystem.eq.Apartments.of.IsThick
-import Theorem.List.All.of.All.IsChain.Ne
-import Def.v1.Atlas.Buildings.code.ChamberComplex.Folding.Part3
-import Theorem.v1.Atlas.Buildings.code.ChamberComplex.GalleryTypes
-import Mathlib.GroupTheory.Coxeter.Length
-open ChamberComplex AptIsCoxeterProof
-
 variable {V : Type*} [DecidableEq V]
 
 

@@ -1,13 +1,16 @@
-import Mathlib
-import Structure.TateCurve_XMultDistinctRouteB
-import Theorem.WeierstrassCurve.TateFiltrationPrep
-import Structure.TateCurve_KeystoneVocab
-import Theorems.Thm_TateCurve_symAddHyps_unconditional
-import Theorems.Thm_TateCurve_diffHyp_unconditional
-import Theorems.Thm_TateCurve_eq_zero_or_eq_tateParam_unconditional
-
+module
+public import Mathlib
+public import Structure.TateCurve_XMultDistinctRouteB
+public import Theorem.WeierstrassCurve.TateFiltrationPrep
+public import Structure.TateCurve_KeystoneVocab
+public import Theorems.Thm_TateCurve_symAddHyps_unconditional
+public import Theorems.Thm_TateCurve_diffHyp_unconditional
+public import Theorems.Thm_TateCurve_eq_zero_or_eq_tateParam_unconditional
 set_option linter.unusedSectionVars false
 set_option autoImplicit false
+
+
+public section
 
 universe u
 

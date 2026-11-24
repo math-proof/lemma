@@ -1,5 +1,11 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Percolation/CanonBurtonKeane.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Percolation.CanonTrifProb
+public import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeaneClose.Part2
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Percolation/CanonBurtonKeane.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,11 +13,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Theorem.StatisticalMechanics.Code.Percolation.CanonTrifProb
-import Theorem.StatisticalMechanics.Code.Percolation.BurtonKeaneClose.Part2
-
-
 namespace StatMech.Percolation
 
 open StatMech StatMech.ConfigSpace MeasureTheory SimpleGraph Finset Filter Topology

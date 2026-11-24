@@ -1,11 +1,13 @@
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
-import Def.AlgebraicGeometry_RelEffCartierDivSupportedIn
-import Instance.AlgebraicGeometry_RelEffCartierDivRestrict
-
+module
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
+public import Def.AlgebraicGeometry_RelEffCartierDivSupportedIn
+public import Instance.AlgebraicGeometry_RelEffCartierDivRestrict
 set_option autoImplicit false
-
 open CategoryTheory CategoryTheory.Limits
+
+
+public section
 
 universe u
 

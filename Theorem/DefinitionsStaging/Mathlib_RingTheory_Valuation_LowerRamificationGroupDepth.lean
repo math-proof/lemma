@@ -1,12 +1,13 @@
-import Mathlib
-import Lemma.Definitions.Def_Mathlib_RingTheory_Valuation_LowerRamificationGroup
-import Def.Mathlib_RingTheory_Valuation_LowerRamificationGroupDepth
+module
+public import Mathlib
+public import Lemma.Definitions.Def_Mathlib_RingTheory_Valuation_LowerRamificationGroup
+public import Def.Mathlib_RingTheory_Valuation_LowerRamificationGroupDepth
 set_option autoImplicit false
-
 open scoped Pointwise
-
 open IsLocalRing
 
+
+public section
 
 namespace Subgroup
 

@@ -1,8 +1,11 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Structure.v1.Atlas.TensorCategories.code.RegularElement
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Structure.v1.Atlas.TensorCategories.code.RegularElement
 open Finset FusionRing
 
+
+public section
 
 namespace FusionRing
 

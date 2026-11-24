@@ -2,7 +2,7 @@ import Def.AutomorphicForm_HeckeEigensystem
 import Def.LanglandsTunnell_ExplicitLift
 import Def.ModularForm_EisensteinChiNegThree
 import Def.FLTPrelim_Ramification
-import Lemma.WeierstrassCurve.FrobeniusTrace
+import Theorem.WeierstrassCurve.FrobeniusTrace
 import Notation.LanglandsTunnell_IsAttached
 
 set_option autoImplicit false

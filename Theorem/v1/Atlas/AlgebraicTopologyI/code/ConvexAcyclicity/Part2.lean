@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/ConvexAcyclicity.lean -/
+module
+public import Structure.v1.Atlas.AlgebraicTopologyI.code.Section6
+public import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section6
+public import Def.v1.Atlas.AlgebraicTopologyI.code.ConvexAcyclicity.Part2
+open Finset BigOperators
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/AlgebraicTopologyI/code/ConvexAcyclicity.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-import Structure.v1.Atlas.AlgebraicTopologyI.code.Section6
-import Theorem.Set.Atlas.v1.AlgebraicTopologyI.code.Section6
-import Def.v1.Atlas.AlgebraicTopologyI.code.ConvexAcyclicity.Part2
-open Finset BigOperators
-
-
 namespace AlgebraicTopologyI
 
 noncomputable section

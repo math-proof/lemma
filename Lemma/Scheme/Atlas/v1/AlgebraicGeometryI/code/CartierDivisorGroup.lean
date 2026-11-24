@@ -1,10 +1,13 @@
-import Mathlib
-import Initialize.Tactic.Attr.Basic
-import Def.v1.Atlas.AlgebraicGeometryI.code.CartierDivisorGroup.Part2
+module
+public import Mathlib
+public import Initialize.Tactic.Attr.Basic
+public import Def.v1.Atlas.AlgebraicGeometryI.code.CartierDivisorGroup.Part2
 open CartierDivisorGroup
 open scoped nonZeroDivisors
 open FractionalIdeal
 
+
+public section
 
 namespace CartierDivisorGroup
 

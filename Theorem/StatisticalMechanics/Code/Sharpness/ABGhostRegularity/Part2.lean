@@ -1,5 +1,13 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/ABGhostRegularity.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.Sharpness.ABFiniteAssembly.Part2
+public import Def.StatisticalMechanics.Code.Sharpness.ABGhostRegularity
+open Filter Finset Set SimpleGraph Topology
+open Asymptotics
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Sharpness/ABGhostRegularity.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,14 +15,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.Sharpness.ABFiniteAssembly.Part2
-import Def.StatisticalMechanics.Code.Sharpness.ABGhostRegularity
-open Filter Finset Set SimpleGraph Topology
-open Asymptotics
-
-
 namespace StatMech
 
 namespace Sharpness

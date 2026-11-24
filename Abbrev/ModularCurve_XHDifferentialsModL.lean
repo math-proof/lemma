@@ -1,12 +1,15 @@
-import Mathlib
-import Def.ModularCurve_XHDiamondModL
-import Theorem.LaurentSeries.QExpFrobeniusModL
-import Instance.ModularCurve_HeckeDifferential
-import Theorem.Set.PolarDifferentials
-import Def.ModularCurve_SupersingularModuli
-import Instance.CuspForm_TwoCuspLattice
-
+module
+public import Mathlib
+public import Def.ModularCurve_XHDiamondModL
+public import Theorem.LaurentSeries.QExpFrobeniusModL
+public import Instance.ModularCurve_HeckeDifferential
+public import Theorem.Set.PolarDifferentials
+public import Def.ModularCurve_SupersingularModuli
+public import Instance.CuspForm_TwoCuspLattice
 set_option autoImplicit false
+
+
+public section
 
 noncomputable section
 

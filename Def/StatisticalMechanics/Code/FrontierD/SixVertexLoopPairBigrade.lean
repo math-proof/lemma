@@ -1,5 +1,12 @@
-/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexLoopPairBigrade.lean -/
+module
+public import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexColoredStrandSplice.Part11
+public import Def.StatisticalMechanics.Code.FrontierD.SixVertexMarkedPairLoopFiber.Part5
+public import Instance.StatisticalMechanics.Code.FrontierD.SixVertexLoopPairBigrade
 
+
+public section
+
+/- https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/FrontierD/SixVertexLoopPairBigrade.lean -/
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.
 All rights reserved.
@@ -7,13 +14,6 @@ All rights reserved.
 This source code is licensed under the license found in the
 LICENSE file in the root directory of this source tree.
 -/
-
-
-import Theorem.StatisticalMechanics.Code.FrontierD.SixVertexColoredStrandSplice.Part11
-import Def.StatisticalMechanics.Code.FrontierD.SixVertexMarkedPairLoopFiber.Part5
-import Instance.StatisticalMechanics.Code.FrontierD.SixVertexLoopPairBigrade
-
-
 namespace StatMech.FrontierD
 
 noncomputable section
