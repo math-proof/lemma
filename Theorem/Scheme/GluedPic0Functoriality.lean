@@ -42,12 +42,32 @@ namespace SemilinearAut
 variable (S : Finset (Place K F × Place K F))
 
 
+def IsNodeStable (g : SemilinearAut K F) : Prop :=
+  ∀ s ∈ S, (g • s.1, g • s.2) ∈ S
+
+variable (g : SemilinearAut K F)
+
 @[simp]
 public theorem nodePerm_apply (hstab : IsNodeStable S g) (s : ↥S) :
     (nodePerm S g hstab s : Place K F × Place K F)
       = (g • (s : Place K F × Place K F).1, g • (s : Place K F × Place K F).2) :=
   rfl
 
+
+def nodePerm (hstab : IsNodeStable S g) : ↥S ≃ ↥S :=
+  Equiv.ofBijective
+    (fun s => ⟨(g • (s : Place K F × Place K F).1, g • (s : Place K F × Place K F).2),
+      hstab _ s.2⟩)
+    (Finite.injective_iff_bijective.mp (by
+      intro s t hst
+      have h1 := congrArg (fun z : ↥S => (z : Place K F × Place K F).1) hst
+      have h2 := congrArg (fun z : ↥S => (z : Place K F × Place K F).2) hst
+      apply Subtype.ext
+      refine Prod.ext ?_ ?_
+      · exact MulAction.injective g (by simpa using h1)
+      · exact MulAction.injective g (by simpa using h2)))
+
+@[simp]
 
 public theorem nodePerm_symm_apply (hstab : IsNodeStable S g) (t : ↥S) :
     ((nodePerm S g hstab).symm t : Place K F × Place K F)
@@ -74,12 +94,33 @@ public theorem baseAutUnitsHom_apply (x : Additive Kˣ) :
   rfl
 
 
+def baseAutUnitsHom : Additive Kˣ →+ Additive Kˣ :=
+  AddMonoidHom.mk'
+    (fun x => Additive.ofMul (Units.map ((baseAut g : K →+* K) : K →* K) x.toMul))
+    (fun x y => by simp)
+
+@[simp]
+
 @[simp]
 public theorem gluingMap_apply (hstab : IsNodeStable S g) (x : GluingData K F S) :
     gluingMap S g hstab x = (g • x.1, g • x.2.1,
       fun t => baseAutUnitsHom g (x.2.2 ((nodePerm S g hstab).symm t))) :=
   rfl
 
+
+def gluingMap (hstab : IsNodeStable S g) :
+    GluingData K F S →+ GluingData K F S :=
+  AddMonoidHom.mk'
+    (fun x => (g • x.1, g • x.2.1,
+      fun t => baseAutUnitsHom g (x.2.2 ((nodePerm S g hstab).symm t))))
+    (fun x y => by
+      refine Prod.ext ?_ (Prod.ext ?_ ?_)
+      · simp [smul_add]
+      · simp [smul_add]
+      · funext t
+        simp)
+
+@[simp]
 
 public theorem gluingMap_mem_admissible (hstab : IsNodeStable S g) {x : GluingData K F S}
     (hx : x ∈ GluingData.admissible S) :
@@ -145,11 +186,26 @@ open SemilinearAut
 variable (S : Finset (Place K F × Place K F)) (g : SemilinearAut K F)
 
 
+def admissibleMap (hstab : IsNodeStable S g) :
+    ↥(GluingData.admissible S) →+ ↥(GluingData.admissible S) :=
+  ((gluingMap S g hstab).domRestrict (GluingData.admissible S)).codRestrict _
+    (fun x => gluingMap_mem_admissible S g hstab x.2)
+
+@[simp]
+
 @[simp]
 public theorem glueMap_mk (hstab : IsNodeStable S g) (x : ↥(GluingData.admissible S)) :
     glueMap S g hstab (mk S x) = mk S (admissibleMap S g hstab x) :=
   rfl
 
+
+def glueMap (hstab : IsNodeStable S g) : GluedPic0 K F S →+ GluedPic0 K F S :=
+  QuotientAddGroup.map _ _ (admissibleMap S g hstab) (by
+    rintro x hx
+    simp only [AddSubgroup.mem_addSubgroupOf] at hx ⊢
+    exact gluingMap_mem_gluedPrincipal S g hstab hx)
+
+@[simp]
 
 public theorem toPic0Pair_glueMap (hstab : IsNodeStable S g) (ξ : GluedPic0 K F S) :
     toPic0Pair S (glueMap S g hstab ξ)

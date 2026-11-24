@@ -1,10 +1,10 @@
 module
-public import Lemma.ResidueField.GluedPic0
-public import Lemma.Scheme.GluedPic0Functoriality
-public import Lemma.LaurentSeries.ArithmeticGalois
-public import Lemma.HahnSeries.JqCoeff
+public import Theorem.ResidueField.GluedPic0
+public import Theorem.Scheme.GluedPic0Functoriality
+public import Theorem.LaurentSeries.ArithmeticGalois
+public import Theorem.HahnSeries.JqCoeff
 public import Def.HeckeGalois_EichlerShimura
-public import Lemma.Finset.ComponentGroup
+public import Theorem.Finset.ComponentGroup
 public import Instance.ModularCurve_JZeroSemistableSpecialization
 public import Structure.ModularCurve_JZeroSemistableSpecialization
 public import Notation.ModularCurve_JZeroSemistableSpecialization

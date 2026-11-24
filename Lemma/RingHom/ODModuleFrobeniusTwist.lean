@@ -1,8 +1,8 @@
 import Mathlib
-import Lemma.MvPowerSeries.NegV2
-import Lemma.MvPowerSeries.CartierModule
-import Lemma.PowerSeries.CartierModuleHomothety
-import Lemma.MvPowerSeries.SpecialFormalModule
+import Theorem.MvPowerSeries.NegV2
+import Theorem.MvPowerSeries.CartierModule
+import Theorem.PowerSeries.CartierModuleHomothety
+import Theorem.MvPowerSeries.SpecialFormalModule
 import Theorem.FormalGroup.CartierGradedPiece
 import Def.CerednikDrinfeld_ODModuleFrobeniusTwist
 

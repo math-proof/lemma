@@ -1,9 +1,9 @@
 module
 public import Theorem.Filter.StandardLocalConstantsAt
 public import Theorem.Complex.ArchEpsilon
-public import Lemma.Polynomial.HonestLDatum
-public import Lemma.Measure.TateGlobalZeta
-public import Lemma.Set.HeckeEigenfunction
+public import Theorem.Polynomial.HonestLDatum
+public import Theorem.Measure.TateGlobalZeta
+public import Theorem.Set.HeckeEigenfunction
 public import Def.LanglandsTunnell_ConverseData
 set_option autoImplicit false
 

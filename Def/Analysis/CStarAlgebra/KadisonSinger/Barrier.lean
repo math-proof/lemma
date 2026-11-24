@@ -1,6 +1,6 @@
 module
 public import Def.Analysis.CStarAlgebra.KadisonSinger.MixedCharPoly
-public import Lemma.Real.CStarAlgebra.KadisonSinger.MixedCharPoly
+public import Theorem.Real.CStarAlgebra.KadisonSinger.MixedCharPoly
 public import Theorem.Polynomial.RealRooted
 public import Theorem.Real.CStarAlgebra.KadisonSinger.RealStable
 public import Theorem.MvPolynomial.PDeriv

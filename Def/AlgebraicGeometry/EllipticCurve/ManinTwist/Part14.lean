@@ -2,8 +2,8 @@ module
 public import Def.AlgebraicGeometry.EllipticCurve.ManinSequence
 public import Theorem.Int.EllipticCurve.ManinSequence
 public import Theorem.Polynomial.PrimitiveTripleManinProjectiveDegreeEllipticCurve.of.All_False.Ne_0
-public import Lemma.Scheme.EllipticCurve.VariableChangePoint
-public import Lemma.Nat.FrobeniusTrace.eq.SubAddCardF1CardPoint.of.AffineF
+public import Theorem.Scheme.EllipticCurve.VariableChangePoint
+public import Theorem.Nat.FrobeniusTrace.eq.SubAddCardF1CardPoint.of.AffineF
 public import Def.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree
 public import Def.AlgebraicGeometry.EllipticCurve.VariableChangePoint.Part3
 public import Mathlib.AlgebraicGeometry.EllipticCurve.NormalForms

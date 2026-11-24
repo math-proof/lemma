@@ -1,6 +1,6 @@
 module
 public import Def.AlgebraicGeometry_PolarisedAbelianSchemeOfType
-public import Lemma.Scheme.ModulesPullbackLocalSection
+public import Theorem.Scheme.ModulesPullbackLocalSection
 public import Structure.AlgebraicGeometry_ThetaGroupAction
 set_option autoImplicit false
 

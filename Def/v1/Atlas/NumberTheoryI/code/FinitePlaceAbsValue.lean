@@ -1,6 +1,6 @@
 module
 public import Theorem.v1.Atlas.NumberTheoryI.code.CompleteFields.Part2
-public import Lemma.Nat.Atlas.v1.NumberTheoryI.code.CompleteFields
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.CompleteFields
 public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 open NumberField IsDedekindDomain
 open scoped NNReal

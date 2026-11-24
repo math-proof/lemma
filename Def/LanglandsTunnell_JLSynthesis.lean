@@ -1,6 +1,6 @@
 module
 public import Def.LanglandsTunnell_JLConverse
-public import Lemma.Measure.CarrierPins
+public import Theorem.Measure.CarrierPins
 public import Def.NumberField_AdelicBox
 public import Theorem.Matrix.CentreCutSiegelSet
 public import Abbrev.LanglandsTunnell_JLSynthesis

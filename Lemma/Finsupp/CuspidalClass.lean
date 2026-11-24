@@ -1,5 +1,5 @@
-import Lemma.HahnSeries.AtkinLehner
-import Lemma.LaurentSeries.GeometricBaseChange
+import Theorem.HahnSeries.AtkinLehner
+import Theorem.LaurentSeries.GeometricBaseChange
 
 set_option autoImplicit false
 

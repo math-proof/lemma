@@ -1,6 +1,6 @@
 module
-public import Lemma.Matrix.LocalOrbitalBase
-public import Lemma.Submodule.IsotypicCuspSpace
+public import Theorem.Matrix.LocalOrbitalBase
+public import Theorem.Submodule.IsotypicCuspSpace
 public import Def.AutomorphicForm_UnitFactorizableOfType
 set_option autoImplicit false
 open NumberField IsDedekindDomain

@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.RingTheory.PowerSeries.InfiniteProducts2Details
-import Lemma.PowerSeries.InfiniteProducts2
+import Theorem.PowerSeries.InfiniteProducts2
 open PowerSeries
 open scoped PowerSeries BigOperators
 

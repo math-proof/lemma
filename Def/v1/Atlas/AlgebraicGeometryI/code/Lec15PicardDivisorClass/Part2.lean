@@ -2,9 +2,9 @@ module
 public import Def.v1.Atlas.AlgebraicGeometryI.code.PicardProjective.Part7
 public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PicardProjective
 public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DivisorsPicard
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.PrincipalDivisorDegree
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PrincipalDivisorDegree
 public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.BezoutTheorem
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.LinearEquivDivisors
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.LinearEquivDivisors
 public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PowerSeriesUFD
 public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.PicardGroup
 public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SmoothCurveDivisors

@@ -43,6 +43,7 @@ import { assembleLeanSourceFromPostBody } from './lean/assembleLemmaPost.mjs';
 import { handleDeleteLemma } from './lean/deleteLemma.mjs';
 import { handleDeletePackage } from './lean/deletePackage.mjs';
 import { handleRenameLemma } from './lean/renameLemma.mjs';
+import { handleRebuildFingerprint } from './lean/rebuildFingerprint.mjs';
 import { buildSearchPayload, leanGetWantsSearch } from './lean/buildSearchPayload.mjs';
 import {
   resolveMissingModuleRedirect,
@@ -427,6 +428,14 @@ app.post('/:userSegment/php/request/segment_detection.php', ensureProjectUser, (
     console.error('[segment_detection]', e);
     res.json({ error: String(e?.message || e) });
   }
+});
+
+/** Replace `axiom.inverted` and `axiom.fingerprint` for one module after echo. */
+app.post('/:userSegment/php/request/rebuild_fingerprint.php', ensureProjectUser, (req, res) => {
+  handleRebuildFingerprint(req, res).catch((e) => {
+    console.error('[rebuild_fingerprint]', e);
+    res.status(500).json({ error: String(e?.message || e) });
+  });
 });
 
 /** Same contract as `php/request/echo.php` (POST `module` → JSON `render` payload). */

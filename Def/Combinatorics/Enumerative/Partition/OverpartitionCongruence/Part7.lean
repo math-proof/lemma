@@ -6,7 +6,7 @@ public import Mathlib.SetTheory.Cardinal.Finite
 public import Def.Combinatorics.Enumerative.Partition.Overpartition
 public import Theorem.Nat.Enumerative.Partition.Overpartition
 public import Theorem.Nat.QuadraticForms.ThreeSquares
-public import Lemma.Real.SpecialFunctions.JacobiTripleProduct
+public import Theorem.Real.SpecialFunctions.JacobiTripleProduct
 public import Def.NumberTheory.QuadraticForms.ThreeSquares
 public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 public import Mathlib.Combinatorics.Enumerative.Partition.Basic

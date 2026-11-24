@@ -2,7 +2,7 @@ module
 public import Def.v1.Atlas.LieGroups.code.GKModule.Part2
 public import Def.v1.Atlas.LieGroups.code.GKModuleDefs.Part2
 public import Def.v1.Atlas.LieGroups.code.DixmierLemma
-public import Lemma.Set.In_RangeAlgebraMap.of.IsAlgebraic
+public import Theorem.Set.In_RangeAlgebraMap.of.IsAlgebraic
 public import Theorem.v1.Atlas.LieGroups.code.InfinitesimalEquivalence
 public import Mathlib.LinearAlgebra.FreeAlgebra
 public import Mathlib.Topology.DenseEmbedding

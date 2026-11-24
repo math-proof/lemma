@@ -1,4 +1,4 @@
-import Lemma.Ideal.Main
+import Theorem.Ideal.Main
 
 set_option autoImplicit false
 set_option maxHeartbeats 800000

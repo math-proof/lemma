@@ -1,9 +1,9 @@
 module
-public import Lemma.ResidueField.FullLevelSemistableCovering
+public import Theorem.ResidueField.FullLevelSemistableCovering
 public import Theorem.Finset.SupersingularNodePlaces
-public import Lemma.ResidueField.ConstantReduction
+public import Theorem.ResidueField.ConstantReduction
 public import Def.FLTPrelim_Ramification
-public import Lemma.Scheme.RegularProlongation
+public import Theorem.Scheme.RegularProlongation
 public import Theorem.ResidueField.ResidueDiscs
 public import Def.ModularCurve_PlaceWidthChar
 public import Def.ModularCurve_FullLevelSemistableCoveringW2

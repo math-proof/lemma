@@ -1,6 +1,6 @@
 module
 public import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.RefinementDimJumps
-public import Lemma.Fin.FinrankKSpacesValAdd1.of.IsStrictFlag
+public import Theorem.Fin.FinrankKSpacesValAdd1.of.IsStrictFlag
 public import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.JordanHolderPermutation.Part2
 set_option maxHeartbeats 800000
 

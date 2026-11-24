@@ -1,5 +1,5 @@
 import Def.CerednikDrinfeld_JPrimeTorsionDatum
-import Lemma.Ideal.Mathlib430
+import Theorem.Ideal.Mathlib430
 import Def.CerednikDrinfeld_ToricUniformization
 import Structure.CerednikDrinfeld_ToricUniformization
 

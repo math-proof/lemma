@@ -3,7 +3,7 @@ public import Mathlib
 public import Theorem.WeierstrassCurve.FreyPackage
 public import Def.FreyPackage_LevelRaising
 public import Theorem.WeierstrassCurve.FreyPackageGaloisRep
-public import Lemma.ValuationSubring.GlobalUnramifiedAt
+public import Theorem.ValuationSubring.GlobalUnramifiedAt
 public import Theorem.MvPolynomial.HeckeModule
 public import Def.ModularCurve_HeckeInputsAll
 public import Theorem.MvPolynomial.MazurPrincipleCore

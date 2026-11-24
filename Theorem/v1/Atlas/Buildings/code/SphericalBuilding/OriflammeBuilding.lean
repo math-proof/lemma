@@ -10,6 +10,6 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.Buildings.code.SphericalBuilding.Oriflamme.Part5
-public import Lemma.Fin.SquareDetV'.eq.One.of.All_Eq.Nondegenerate
+public import Theorem.Fin.SquareDetV'.eq.One.of.All_Eq.Nondegenerate
 
 public section

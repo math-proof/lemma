@@ -6,7 +6,7 @@ public import Mathlib.RingTheory.Ideal.Norm.AbsNorm
 public import Mathlib.NumberTheory.RamificationInertia.Inertia
 public import Mathlib.NumberTheory.NumberField.Basic
 public import Mathlib.Tactic.Ring
-public import Lemma.Polynomial.HonestLDatum
+public import Theorem.Polynomial.HonestLDatum
 public import Def.LanglandsTunnell_RankinSelbergEuler
 
 

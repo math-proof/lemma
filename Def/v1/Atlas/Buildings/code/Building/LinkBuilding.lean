@@ -6,7 +6,7 @@ public import Theorem.Finset.IsMaximalUnion.of.IsMaximalLinkComplex.In_Faces
 public import Structure.v1.Atlas.Buildings.code.Building.Basic.Part2
 public import Theorem.v1.Atlas.Buildings.code.Building.LinkBuildingIsoHelper
 public import Theorem.Finset.IsMaximalLinkComplex.of.IsMaximalUnion.In_FacesLinkComplex.In_Faces
-public import Lemma.Finset.IsFacetToSimplicialComplexAndIsMaximalToSimplicialComplex.Unique.of.IsMaximalToSimplicialComplex.IsFacetToSimplicialComplex.IsThin
+public import Theorem.Finset.IsFacetToSimplicialComplexAndIsMaximalToSimplicialComplex.Unique.of.IsMaximalToSimplicialComplex.IsFacetToSimplicialComplex.IsThin
 public import Theorem.Finset.IsMaximalToSimplicialComplexToChamberComplexUnion.of.IsMaximalLinkComplexToSimplicialComplexToChamberComplex.In_FacesToSimplicialComplexToChamberComplex
 public import Theorem.v1.Atlas.Buildings.code.Building.LinkBuilding
 open scoped Classical

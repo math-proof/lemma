@@ -1,5 +1,5 @@
 module
-public import Lemma.Matrix.ArchType
+public import Theorem.Matrix.ArchType
 open AutomorphicForm AutomorphicForm.WindowedSiegel NumberField IsDedekindDomain Matrix
 open scoped Classical
 

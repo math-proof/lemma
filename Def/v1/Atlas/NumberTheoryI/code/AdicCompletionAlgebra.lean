@@ -4,7 +4,7 @@ public import Mathlib.RingTheory.Ideal.IntegralClosure
 public import Mathlib.NumberTheory.RamificationInertia.Ramification
 public import Mathlib.RingTheory.Ideal.Over
 public import Theorem.v1.Atlas.NumberTheoryI.code.CompleteFields.Part2
-public import Lemma.Nat.Atlas.v1.NumberTheoryI.code.CompleteFields
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.CompleteFields
 public import Theorem.v1.Atlas.NumberTheoryI.code.AdicCompletionAlgebra
 open IsDedekindDomain UniformSpace
 set_option maxHeartbeats 800000

@@ -1,4 +1,4 @@
-import Lemma.Measure.TwistedOrbital
+import Theorem.Measure.TwistedOrbital
 
 set_option autoImplicit false
 

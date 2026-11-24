@@ -2,11 +2,11 @@ module
 public import Mathlib
 public import Structure.JacJ1Iface
 public import Def.AlgebraicGeometry_RelativePicardFunctor
-public import Lemma.Scheme.RepresentsRelSubPic
+public import Theorem.Scheme.RepresentsRelSubPic
 public import Def.AlgebraicGeometry_RelPicardAlgEquivZeroCut
 public import Def.AlgebraicGeometry_RelPicardAlgEquivZeroGroupCut
-public import Lemma.Scheme.RelSubPicGroup
-public import Lemma.Scheme.TwoAffineOpenCover
+public import Theorem.Scheme.RelSubPicGroup
+public import Theorem.Scheme.TwoAffineOpenCover
 public import Instance.AlgebraicGeometry_RigKerDualNumber
 public import Abbrev.AlgebraicGeometry_RigKerDualNumber
 set_option autoImplicit false

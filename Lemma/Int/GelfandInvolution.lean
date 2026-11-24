@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Set.HeckePair
+import Theorem.Set.HeckePair
 import Structure.LocalLanglands_GelfandInvolution
 
 set_option autoImplicit false

@@ -1,5 +1,5 @@
 import Theorem.Measure.WhittakerCoefficient
-import Lemma.Matrix.SiegelVolume
+import Theorem.Matrix.SiegelVolume
 import Def.AutomorphicForm_WhittakerModelLocal
 
 set_option autoImplicit false

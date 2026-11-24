@@ -1,6 +1,6 @@
 module
 public import Def.LanglandsTunnell_CubicInduction_HeckeDatum
-public import Lemma.Matrix.CubicInduction_IotaTorus
+public import Theorem.Matrix.CubicInduction_IotaTorus
 public import Def.LanglandsTunnell_CubicInduction_TorusValues
 set_option autoImplicit false
 open IsDedekindDomain NumberField Matrix

@@ -1,5 +1,5 @@
 import Lemma.List.Get.dvd.ProdDrop.of.GtLength
-import Lemma.List.Prod.eq.MulProdS
+import Theorem.List.Prod.eq.MulProdS
 open List Nat
 
 

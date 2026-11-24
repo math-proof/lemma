@@ -3,7 +3,7 @@ public import Mathlib
 public import Def.Combinatorics.Young.LittlewoodRichardson.Part17
 public import Def.Combinatorics.Enumerative.Partition.NPartition.Part9
 public import Instance.GroupTheory.Perm.Basics.Part2
-public import Lemma.MvPolynomial.LittlewoodRichardson
+public import Theorem.MvPolynomial.LittlewoodRichardson
 public import Theorem.Combinatorics.Young.SchurBasics.Part3
 
 

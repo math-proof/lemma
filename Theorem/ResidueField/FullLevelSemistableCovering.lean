@@ -41,6 +41,16 @@ variable {q M' A}
 variable {SS : Finset (Place (ResidueField A) (modularFunctionFieldC (ResidueField A) M'))}
 
 
+def EquivClauses (𝒞 : SemistableCovering q M' A SS) : Prop :=
+  ∀ (ζ : Idx q) (γ : Matrix.SpecialLinearGroup (Fin 2) ℤ), γ ∈ CongruenceSubgroup.Gamma0 M' →
+    ∃ σ : Equiv.Perm (CuspidalType.ProjLine q),
+      (∀ ℓ, ((𝒞.CIg ℓ).comap (levelAutBar q M' ζ γ)).integers = (𝒞.CIg (σ ℓ)).integers ∧
+        ((𝒞.CIg ℓ).comap (levelAutBar q M' ζ γ)).dom = (𝒞.CIg (σ ℓ)).dom) ∧
+      (∀ s, ((𝒞.CSS s).comap (levelAutBar q M' ζ γ)).integers = (𝒞.CSS s).integers ∧
+        ((𝒞.CSS s).comap (levelAutBar q M' ζ γ)).dom = (𝒞.CSS s).dom) ∧
+      (∀ ℓ s, ((𝒞.An ℓ s).comap (levelAutBar q M' ζ γ)).dom = (𝒞.An (σ ℓ) s).dom ∧
+        (𝒞.An ℓ s).modulus = (𝒞.An (σ ℓ) s).modulus)
+
 public theorem equivClauses_iff (𝒞 : SemistableCovering q M' A SS) :
     𝒞.EquivClauses ↔
       ∀ (ζ : Idx q) (γ : Matrix.SpecialLinearGroup (Fin 2) ℤ), γ ∈ CongruenceSubgroup.Gamma0 M' →

@@ -1,5 +1,5 @@
 module
-public import Lemma.Ideal.BadPrimes
+public import Theorem.Ideal.BadPrimes
 public import Mathlib.NumberTheory.NumberField.DedekindZeta
 public import Mathlib.RingTheory.DedekindDomain.Factorization
 public import Instance.FrobeniusDensity_PrimeSums

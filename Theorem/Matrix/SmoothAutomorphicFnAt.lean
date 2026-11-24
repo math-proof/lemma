@@ -1,7 +1,7 @@
 module
 public import Theorem.Measure.AutomorphicFnAt
-public import Lemma.Set.SmoothVectors
-public import Lemma.Matrix.AdelicLevel
+public import Theorem.Set.SmoothVectors
+public import Theorem.Matrix.AdelicLevel
 public import Def.AutomorphicForm_SmoothAutomorphicFnAt
 open IsDedekindDomain NumberField MeasureTheory Matrix
 open FLT.SmoothVectors

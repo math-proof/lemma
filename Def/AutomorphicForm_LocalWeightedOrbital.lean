@@ -1,5 +1,5 @@
 module
-public import Lemma.Matrix.LocalOrbitalBase
+public import Theorem.Matrix.LocalOrbitalBase
 public import Def.AutomorphicForm_ConstantTerm
 public import Def.LanglandsTunnell_CubicInduction_TorusValues
 set_option autoImplicit false

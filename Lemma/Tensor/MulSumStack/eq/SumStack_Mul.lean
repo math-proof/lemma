@@ -1,4 +1,4 @@
-import Lemma.Nat.EqMul0_0
+import Theorem.Nat.EqMul0_0
 import Lemma.Tensor.UFnSumStack.eq.SumStack_UFn.All_EqUFnAdd.EqUFn_0
 open Nat Tensor
 set_option maxHeartbeats 250000

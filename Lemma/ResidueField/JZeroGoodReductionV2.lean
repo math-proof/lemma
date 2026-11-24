@@ -1,7 +1,7 @@
 import Mathlib
 import Lemma.MvPolynomial.HeckeModule
-import Lemma.Set.SpecializationWitness
-import Lemma.HahnSeries.JqCoeff
+import Theorem.Set.SpecializationWitness
+import Theorem.HahnSeries.JqCoeff
 import Theorem.WeierstrassCurve.FrobeniusTrace
 import Structure.ModularCurve_JZeroGoodReductionV2
 import Instance.ModularCurve_JZeroGoodReductionV2

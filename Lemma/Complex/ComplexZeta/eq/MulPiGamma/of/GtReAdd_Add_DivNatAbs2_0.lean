@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.Measure.ArchPlace
-import Lemma.Measure.TateLocalZeta
+import Theorem.Measure.TateLocalZeta
 import Theorem.Complex.ArchEpsilon
 import Theorem.Int.P2MUtil
 

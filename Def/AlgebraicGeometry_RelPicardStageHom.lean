@@ -1,7 +1,7 @@
 module
 public import Mathlib
 public import Instance.AlgebraicGeometry_RelativePicardFunctor
-public import Lemma.Scheme.TwoAffineOpenCover
+public import Theorem.Scheme.TwoAffineOpenCover
 set_option autoImplicit false
 
 

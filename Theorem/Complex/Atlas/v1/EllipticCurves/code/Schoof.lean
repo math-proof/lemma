@@ -3,7 +3,7 @@ public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.v1.Atlas.EllipticCurves.code.FrobeniusEndomorphism.Part2
 public import Theorem.Complex.Atlas.v1.EllipticCurves.code.FrobeniusEndomorphism
-public import Lemma.Complex.Atlas.v1.EllipticCurves.code.TorsionEndomorphism
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.TorsionEndomorphism
 public import Def.v1.Atlas.EllipticCurves.code.TorsionEndomorphism.Part3
 
 

@@ -1,8 +1,8 @@
 import Lemma.Matrix.RowIsometryInvariance
 import Def.AutomorphicForm_AdelicLsXi
-import Lemma.Matrix.AdelicLevel
+import Theorem.Matrix.AdelicLevel
 import Instance.NumberField_AdelicHaar
-import Lemma.Measure.AdelicHaar
+import Theorem.Measure.AdelicHaar
 
 set_option autoImplicit false
 

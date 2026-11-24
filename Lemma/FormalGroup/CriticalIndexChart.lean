@@ -1,12 +1,12 @@
 import Mathlib
-import Lemma.MvPowerSeries.NegV2
-import Lemma.MvPowerSeries.CartierModule
-import Lemma.PowerSeries.CartierModuleHomothety
-import Lemma.MvPowerSeries.CartierModuleWittAction
-import Lemma.MvPowerSeries.CartierModuleBaseChange
-import Lemma.MvPowerSeries.SpecialFormalModule
+import Theorem.MvPowerSeries.NegV2
+import Theorem.MvPowerSeries.CartierModule
+import Theorem.PowerSeries.CartierModuleHomothety
+import Theorem.MvPowerSeries.CartierModuleWittAction
+import Theorem.MvPowerSeries.CartierModuleBaseChange
+import Theorem.MvPowerSeries.SpecialFormalModule
 import Theorem.FormalGroup.CartierGradedPiece
-import Lemma.MvPolynomial.CartierStructureConstants
+import Theorem.MvPolynomial.CartierStructureConstants
 import Abbrev.CerednikDrinfeld_CriticalIndexChart
 
 set_option autoImplicit false

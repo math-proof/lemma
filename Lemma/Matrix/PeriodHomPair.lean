@@ -1,4 +1,4 @@
-import Lemma.UpperHalfPlane.PeriodMap
+import Theorem.UpperHalfPlane.PeriodMap
 import Theorem.UpperHalfPlane.PeriodMapBundled
 import Mathlib.LinearAlgebra.Prod
 

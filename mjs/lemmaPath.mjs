@@ -467,8 +467,9 @@ function withoutTacticJson(json) {
 
 /**
  * Collect mathematical expressions below a proof step without indexing tactic
- * names as expression heads. In particular, `have h : P := proof` must include
- * `P`; its ordinary `toJSON()` contains only the assignment and proof term.
+ * names as expression heads. In particular, `have h : P := proof` contributes
+ * the asserted proposition `P` only: the proof term (`Real.cos_sq_add_sin_sq θ`)
+ * is not mathematics, and its LaTeX would just print the lemma name.
  */
 function appendProofMath(node, ctx, out, onNode = null) {
   if (!node || typeof node !== "object") return;
@@ -477,8 +478,11 @@ function appendProofMath(node, ctx, out, onNode = null) {
   if (node instanceof L.LeanAssign) {
     const lhs = node.lhs ?? node.args?.[0];
     const rhs = node.rhs ?? node.args?.[1];
-    if (lhs instanceof L.LeanColon) appendProofMath(lhs.rhs ?? lhs.args?.[1], ctx, out, onNode);
-    else appendProofMath(lhs, ctx, out, onNode);
+    if (lhs instanceof L.LeanColon) {
+      appendProofMath(lhs.rhs ?? lhs.args?.[1], ctx, out, onNode);
+      return;
+    }
+    appendProofMath(lhs, ctx, out, onNode);
     appendProofMath(rhs, ctx, out, onNode);
     return;
   }

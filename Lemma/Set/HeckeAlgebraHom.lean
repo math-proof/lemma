@@ -1,5 +1,5 @@
 import Lemma.Matrix.Gamma0HeckeOperatorHom
-import Lemma.UpperHalfPlane.PeriodMap
+import Theorem.UpperHalfPlane.PeriodMap
 import Mathlib.RingTheory.Finiteness.Subalgebra
 import Mathlib.GroupTheory.Schreier
 import Mathlib.LinearAlgebra.Matrix.FixedDetMatrices

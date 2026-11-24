@@ -1,4 +1,4 @@
-import Lemma.Matrix.CubicInduction_Structure
+import Theorem.Matrix.CubicInduction_Structure
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 
 set_option autoImplicit false

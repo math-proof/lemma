@@ -3,8 +3,8 @@ public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.v1.Atlas.Buildings.code.Building.TitsTheoremProof
 public import Theorem.Finset.Any_And_EqImageToFunMorph.of.AdjacentToSimplicialComplex.HasSufficientFoldings
-public import Lemma.Nat.Any_And_EqAdd1AndEqAdd1.of.Gt.EqAdd_1OrEqAdd1.Eq0
-public import Lemma.List.Any_And_IsReduced_EraseIdx.of.LtLengthMulWordProdSimple_Length_WordProd.IsReduced
+public import Theorem.Nat.Any_And_EqAdd1AndEqAdd1.of.Gt.EqAdd_1OrEqAdd1.Eq0
+public import Theorem.List.Any_And_IsReduced_EraseIdx.of.LtLengthMulWordProdSimple_Length_WordProd.IsReduced
 public import Def.v1.Atlas.Buildings.code.CoxeterGroup.ExchangeDeletion
 open TitsTheoremProof CoxeterExchange StrongExchangeBridge
 open CoxeterExchange

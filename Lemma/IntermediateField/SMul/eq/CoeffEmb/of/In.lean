@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.LaurentSeries.ArithmeticGalois
+import Theorem.LaurentSeries.ArithmeticGalois
 import Theorem.Int.P2MUtil
 
 open ModularCurve AlgebraicCurve IntermediateField HahnSeries LaurentSeries

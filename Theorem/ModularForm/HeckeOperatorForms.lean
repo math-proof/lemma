@@ -1,6 +1,6 @@
 module
 public import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
-public import Lemma.ModularForm.HeckeOperator
+public import Theorem.ModularForm.HeckeOperator
 public import Theorems.Thm_ModularForm_heckeT_slash_eq_self_of_mem_Gamma0
 public import Theorems.Thm_ModularForm_heckeU_slash_eq_self_of_mem_Gamma0
 public import Theorems.Thm_ModularForm_mdifferentiable_heckeT

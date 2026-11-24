@@ -1,6 +1,6 @@
 module
 public import Def.NumberField_AdelicVolume
-public import Lemma.Matrix.AdelicLevel
+public import Theorem.Matrix.AdelicLevel
 open MeasureTheory Set IsDedekindDomain NumberField
 open scoped ENNReal
 

@@ -1,7 +1,7 @@
 import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
 import Mathlib.GroupTheory.Transfer
 import Mathlib.GroupTheory.FreeGroup.NielsenSchreier
-import Lemma.UpperHalfPlane.PeriodMap
+import Theorem.UpperHalfPlane.PeriodMap
 import Instance.ModularCurve_PDPairing
 import Abbrev.ModularCurve_PDPairing
 

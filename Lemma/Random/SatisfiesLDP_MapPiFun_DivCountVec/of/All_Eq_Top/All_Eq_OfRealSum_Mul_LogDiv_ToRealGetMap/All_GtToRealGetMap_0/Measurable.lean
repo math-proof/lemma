@@ -1,5 +1,5 @@
 import Theorem.ENNReal.SatisfiesLDP_Map_DivCountVecPi_ToMeasure.of.All_Eq_Top.All_Eq_OfRealSum_Mul_LogDiv_ToReal.All_GtToReal_0
-import Lemma.Random.MapPi.of.Measurable
+import Theorem.Random.MapPi.of.Measurable
 import Initialize.Tactic.Attr.Basic
 open ENNReal MeasureTheory Random Real
 

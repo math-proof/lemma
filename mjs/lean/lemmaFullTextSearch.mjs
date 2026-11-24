@@ -92,9 +92,10 @@ function* iterLeanFiles(lemmaRoot) {
  *   wholeWord: boolean;
  *   regularExpression: boolean;
  *   limit: number;
+ *   offset?: number;
  *   repoRoot?: string;
  * }} opts
- * @returns {{ module: string; line: number; text: string }[]}
+ * @returns {{ results: { module: string; line: number; text: string }[]; more: boolean }}
  */
 export function searchLemmaFullText(opts) {
   const {
@@ -103,8 +104,10 @@ export function searchLemmaFullText(opts) {
     wholeWord,
     regularExpression,
     limit,
+    offset = 0,
     repoRoot = REPO_ROOT,
   } = opts;
+  const start = Math.max(0, Number(offset) || 0);
 
   const matcher = buildLineMatcher(
     query,
@@ -112,15 +115,17 @@ export function searchLemmaFullText(opts) {
     wholeWord,
     regularExpression
   );
-  if (!matcher) return [];
+  if (!matcher) return { results: [], more: false };
 
   const lemmaRoot = path.join(repoRoot, 'Lemma');
-  if (!fs.existsSync(lemmaRoot)) return [];
+  if (!fs.existsSync(lemmaRoot)) return { results: [], more: false };
 
   /** @type {{ module: string; line: number; text: string }[]} */
   const results = [];
+  let seen = 0;
+  let more = false;
 
-  for (const absPath of iterLeanFiles(lemmaRoot)) {
+  outer: for (const absPath of iterLeanFiles(lemmaRoot)) {
     const mod = leanPathToModule(absPath, repoRoot);
     if (!mod) continue;
 
@@ -134,15 +139,19 @@ export function searchLemmaFullText(opts) {
     const lines = content.split(/\r?\n/);
     for (let i = 0; i < lines.length; i++) {
       if (matcher(lines[i])) {
+        if (seen++ < start) continue;
+        if (results.length >= limit) {
+          more = true;
+          break outer;
+        }
         results.push({
           module: mod,
           line: i + 1,
           text: lines[i],
         });
-        if (results.length >= limit) return results;
       }
     }
   }
 
-  return results;
+  return { results, more };
 }

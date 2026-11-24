@@ -100,6 +100,11 @@ public theorem qSeriesBar_jModElt (hF : jqModC K ∈ F) :
 
 variable {F} in
 
+def jModElt (hF : jqModC K ∈ F) : F := ⟨jqModC K, hF⟩
+
+variable {F} in
+@[simp]
+
 public theorem jModElt_ne_zero (hF : jqModC K ∈ F) : jModElt K hF ≠ 0 := by
   intro h
   exact jqModC_ne_zero_def K (by simpa [jModElt, Subtype.ext_iff] using h)
@@ -120,6 +125,10 @@ public theorem qIntegersBar_ne_top_of_jqModC_mem (hF : jqModC K ∈ F) : qIntege
 
 variable {F} in
 
+
+def jModInvElt (hF : jqModC K ∈ F) : F := (jModElt K hF)⁻¹
+
+variable {F} in
 
 public theorem qSeriesBar_jModInvElt (hF : jqModC K ∈ F) :
     qSeriesBar K F (jModInvElt K hF) = (jqModC K)⁻¹ := by
@@ -153,6 +162,12 @@ public theorem coe_uniformizerMod (hF : jqModC K ∈ F) :
     ((uniformizerMod K hF : qIntegersBar K F) : F) = jModInvElt K hF := rfl
 
 variable {F} in
+
+def uniformizerMod (hF : jqModC K ∈ F) : qIntegersBar K F :=
+  ⟨jModInvElt K hF, jModInvElt_mem_qIntegersBar K hF⟩
+
+variable {F} in
+@[simp]
 
 public theorem uniformizerMod_ne_zero (hF : jqModC K ∈ F) :
     ((uniformizerMod K hF : qIntegersBar K F) : F) ≠ 0 :=
@@ -230,6 +245,19 @@ public theorem qInftyPlaceMod_toValuationSubring (hF : jqModC K ∈ F) :
 
 variable {F} in
 
+
+def qInftyPlaceMod (hF : jqModC K ∈ F) : Place K F where
+  toValuationSubring := qIntegersBar K F
+  algebraMap_mem' := fun a => by
+    rw [mem_qIntegersBar_iff, qSeriesBar_algebraMap]
+    rcases eq_or_ne a 0 with rfl | ha
+    · simp only [HahnSeries.single_eq_zero, HahnSeries.order_zero, le_refl]
+    · rw [HahnSeries.order_single ha]
+  ne_top' := qIntegersBar_ne_top_of_jqModC_mem K hF
+  isPrincipalIdealRing' := qIntegersBar_isPrincipalIdealRing_of_jqModC_mem K hF
+
+variable {F} in
+@[simp]
 
 public theorem ord_qInftyPlaceMod (hF : jqModC K ∈ F) (f : F) :
     (qInftyPlaceMod K hF).ord f = (qSeriesBar K F f).order := by
@@ -335,6 +363,9 @@ section LevelN
 
 variable (N : ℕ) [NeZero N]
 
+
+def cuspInftyGeom : Place K (modularFunctionFieldC K N) :=
+  qInftyPlaceMod K (jqModC_mem K N)
 
 public theorem nonempty_place_modularFunctionFieldC :
     Nonempty (Place K (modularFunctionFieldC K N)) :=

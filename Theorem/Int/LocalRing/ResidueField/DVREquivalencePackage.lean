@@ -2,7 +2,7 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Theorem.RingTheory.DiscreteValuationRing.Monogenic
-public import Lemma.Int.DiscreteValuationRing.Monogenic
+public import Theorem.Int.DiscreteValuationRing.Monogenic
 public import Theorem.Int.LocalRing.ResidueField.AdjoinRootLift
 public import Def.RingTheory.LocalRing.ResidueField.AdjoinRootLift.Part3
 

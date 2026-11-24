@@ -20,6 +20,31 @@ variable {L : Type*} [Field L] [Algebra ℚ L] (A : ValuationSubring L)
 variable {k : Type*} [Field k] (π : A →+* k) (N : ℕ)
 
 
+def IsPlaceReductionAlong
+    (r : Place L (laurentBaseChange L (modularFunctionFieldFull N)) →
+      Place k (modularFunctionFieldFullC k N)) : Prop :=
+  (∀ P, (r P).deg = P.deg) ∧
+    ∀ (y : LaurentSeries A)
+      (hy : coeffMap A.subtype y ∈ laurentBaseChange L (modularFunctionFieldFull N))
+      (hyk : coeffMap π y ∈ modularFunctionFieldFullC k N),
+      coeffMap π y ≠ 0 →
+        ∀ D : Divisor L (laurentBaseChange L (modularFunctionFieldFull N)),
+          (∀ P, D P = P.ord (⟨coeffMap A.subtype y, hy⟩ : laurentBaseChange L (modularFunctionFieldFull N))) →
+            ∀ Q, Finsupp.mapDomain r D Q = Q.ord (⟨coeffMap π y, hyk⟩ : modularFunctionFieldFullC k N)
+
+def integralPrincipalDivisors : Set (Divisor L (laurentBaseChange L (modularFunctionFieldFull N))) :=
+  {D | ∃ (y : LaurentSeries A)
+      (hy : coeffMap A.subtype y ∈ laurentBaseChange L (modularFunctionFieldFull N)),
+      coeffMap π y ∈ modularFunctionFieldFullC k N ∧ coeffMap π y ≠ 0 ∧
+        ∀ P, D P = P.ord (⟨coeffMap A.subtype y, hy⟩ : laurentBaseChange L (modularFunctionFieldFull N))}
+
+def PrincipalGeneratedByIntegral : Prop :=
+  Divisor.principal (K := L) (F := laurentBaseChange L (modularFunctionFieldFull N)) ≤
+    AddSubgroup.closure (integralPrincipalDivisors A π N)
+
+def ReductionInputsAlong : Prop :=
+  ∃ r, IsPlaceReductionAlong A π N r ∧ PrincipalGeneratedByIntegral A π N
+
 public theorem IsPlaceReductionAlong.deg_eq (hr : IsPlaceReductionAlong A π N r)
     (P : Place L (laurentBaseChange L (modularFunctionFieldFull N))) : (r P).deg = P.deg :=
   hr.1 P
@@ -85,6 +110,12 @@ public theorem reductionDivAlong_apply (D : Divisor L (laurentBaseChange L (modu
   rfl
 
 
+def reductionDivAlong :
+    Divisor L (laurentBaseChange L (modularFunctionFieldFull N)) →+ Divisor k (modularFunctionFieldFullC k N) :=
+  Finsupp.mapDomain.addMonoidHom r
+
+@[simp]
+
 public theorem reductionDivAlong_single (P : Place L (laurentBaseChange L (modularFunctionFieldFull N))) (n : ℤ) :
     reductionDivAlong r (Finsupp.single P n) = Finsupp.single (r P) n :=
   Finsupp.mapDomain_single
@@ -97,6 +128,20 @@ public theorem coe_reductionDegZeroAlong (hdeg : ∀ P, (r P).deg = P.deg)
       Finsupp.mapDomain r (D : Divisor L (laurentBaseChange L (modularFunctionFieldFull N))) :=
   rfl
 
+
+def reductionDegZeroAlong (hdeg : ∀ P, (r P).deg = P.deg) :
+    Divisor.degZero (K := L) (F := laurentBaseChange L (modularFunctionFieldFull N)) →+
+      Divisor.degZero (K := k) (F := modularFunctionFieldFullC k N) :=
+  ((reductionDivAlong r).domRestrict _).codRestrict _ fun D => mapDomain_mem_degZero_of_deg_eq hdeg D.2
+
+@[simp]
+
+def reductionPic0Along (hr : IsPlaceReductionAlong A π N r) (hgen : PrincipalGeneratedByIntegral A π N) :
+    Pic0 L (laurentBaseChange L (modularFunctionFieldFull N)) →+ JZeroC k N :=
+  QuotientAddGroup.map _ _ (reductionDegZeroAlong r hr.1) (by
+    rintro ⟨D, hD0⟩ hD
+    simp only [AddSubgroup.mem_addSubgroupOf] at hD ⊢
+    exact hr.mapDomain_mem_principal hgen hD)
 
 public theorem reductionPic0Along_mk (hr : IsPlaceReductionAlong A π N r)
     (hgen : PrincipalGeneratedByIntegral A π N)
@@ -113,6 +158,11 @@ variable {k : Type*} [Field k] (π : A →+* k) (N : ℕ)
 
 open Classical in
 
+
+def reductionAlong : Pic0 L (laurentBaseChange L (modularFunctionFieldFull N)) →+ JZeroC k N :=
+  if h : ReductionInputsAlong A π N then reductionPic0Along h.choose h.choose_spec.1 h.choose_spec.2 else 0
+
+variable {A π N}
 
 public theorem reductionAlong_eq (h : ReductionInputsAlong A π N) :
     reductionAlong A π N = reductionPic0Along h.choose h.choose_spec.1 h.choose_spec.2 := by
@@ -138,10 +188,32 @@ set_option synthInstance.maxHeartbeats 400000
 variable (A : ValuationSubring (AlgebraicClosure ℚ)) (N : ℕ)
 
 
+abbrev IsPlaceReductionModL
+    (r : Place (AlgebraicClosure ℚ) (modularFunctionFieldBar N) →
+      Place (IsLocalRing.ResidueField A) (modularFunctionFieldFullC (IsLocalRing.ResidueField A) N)) : Prop :=
+  IsPlaceReductionAlong A (IsLocalRing.residue A) N r
+
+abbrev ReductionInputsModL : Prop :=
+  ReductionInputsAlong A (IsLocalRing.residue A) N
+
+variable {A N} in
+
+def placeReductionModL (h : ReductionInputsModL A N) :
+    Place (AlgebraicClosure ℚ) (modularFunctionFieldBar N) →
+      Place (IsLocalRing.ResidueField A) (modularFunctionFieldFullC (IsLocalRing.ResidueField A) N) :=
+  h.choose
+
+variable {A N} in
+
 public theorem isPlaceReductionModL_placeReductionModL (h : ReductionInputsModL A N) :
     IsPlaceReductionModL A N (placeReductionModL h) :=
   h.choose_spec.1
 
+
+abbrev reductionModL : JZero N →+ JZeroC (IsLocalRing.ResidueField A) N :=
+  reductionAlong A (IsLocalRing.residue A) N
+
+variable {A N} in
 
 public theorem reductionModL_mk (h : ReductionInputsModL A N)
     (D : Divisor.degZero (K := AlgebraicClosure ℚ) (F := modularFunctionFieldBar N)) :

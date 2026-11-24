@@ -1,6 +1,6 @@
 import Mathlib
 import Lemma.MvPowerSeries.TateSlots
-import Lemma.LaurentSeries.LaurentCoeff
+import Theorem.LaurentSeries.LaurentCoeff
 import Lemma.LaurentSeries.KatzLevelPCusps
 import Lemma.WeierstrassCurve.Velu
 import Lemma.WeierstrassCurve.VeluPointMap

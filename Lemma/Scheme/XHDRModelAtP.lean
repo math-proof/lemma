@@ -1,10 +1,10 @@
 import Mathlib
-import Lemma.CuspForm.XHDifferentialsModL
+import Theorem.CuspForm.XHDifferentialsModL
 import Theorem.UpperHalfPlane.XHOperators
 import Abbrev.ModularCurve_IgusaScheme
 import Lemma.Scheme.TwoChartIntegralModel
-import Lemma.Scheme.CurveModel
-import Lemma.Scheme.NeronModelPropertyBundleCarrier
+import Theorem.Scheme.CurveModel
+import Theorem.Scheme.NeronModelPropertyBundleCarrier
 import Abbrev.ModularCurve_XHDRModelAtP
 import Instance.ModularCurve_XHDRModelAtP
 import Structure.ModularCurve_XHDRModelAtP

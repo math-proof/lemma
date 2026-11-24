@@ -1,6 +1,6 @@
 module
 public import Mathlib
-public import Lemma.LinearMap.InternalHom
+public import Theorem.LinearMap.InternalHom
 public import Instance.SheafOfModules_Monoidal
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false

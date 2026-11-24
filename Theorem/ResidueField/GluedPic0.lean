@@ -33,6 +33,10 @@ public theorem residue_algebraMap (c : K) :
     ResidueField.algebraMap_eq]
 
 
+def HasValue (g : F) (a : K) : Prop :=
+  ∃ h : g ∈ v.toValuationSubring,
+    residue v.toValuationSubring ⟨g, h⟩ = algebraMap K v.ResidueField a
+
 public theorem hasValue_iff (g : F) (a : K) :
     v.HasValue g a ↔ ∃ h : g ∈ v.toValuationSubring,
       residue v.toValuationSubring ⟨g, h⟩ = algebraMap K v.ResidueField a :=
@@ -141,6 +145,21 @@ variable {K F}
 variable (S : Finset (Place K F × Place K F))
 
 
+def admissible : AddSubgroup (GluingData K F S) where
+  carrier := {x | x.1 ∈ Divisor.degZero (K := K) (F := F) ∧
+    x.2.1 ∈ Divisor.degZero (K := K) (F := F) ∧ ∀ s ∈ S, x.1 s.1 = 0 ∧ x.2.1 s.2 = 0}
+  zero_mem' := ⟨zero_mem _, zero_mem _, fun _ _ => ⟨rfl, rfl⟩⟩
+  add_mem' := by
+    rintro x y ⟨hx₁, hx₂, hx⟩ ⟨hy₁, hy₂, hy⟩
+    refine ⟨add_mem hx₁ hy₁, add_mem hx₂ hy₂, fun s hs => ⟨?_, ?_⟩⟩
+    · rw [Prod.fst_add, Finsupp.add_apply, (hx s hs).1, (hy s hs).1, add_zero]
+    · rw [Prod.snd_add, Prod.fst_add, Finsupp.add_apply, (hx s hs).2, (hy s hs).2, add_zero]
+  neg_mem' := by
+    rintro x ⟨hx₁, hx₂, hx⟩
+    refine ⟨neg_mem hx₁, neg_mem hx₂, fun s hs => ⟨?_, ?_⟩⟩
+    · rw [Prod.fst_neg, Finsupp.neg_apply, (hx s hs).1, neg_zero]
+    · rw [Prod.snd_neg, Prod.fst_neg, Finsupp.neg_apply, (hx s hs).2, neg_zero]
+
 public theorem mem_admissible {x : GluingData K F S} :
     x ∈ admissible S ↔ x.1 ∈ Divisor.degZero (K := K) (F := F) ∧
       x.2.1 ∈ Divisor.degZero (K := K) (F := F) ∧ ∀ s ∈ S, x.1 s.1 = 0 ∧ x.2.1 s.2 = 0 :=
@@ -152,12 +171,58 @@ public theorem zero_zero_mem_admissible (w : ↥S → Additive Kˣ) :
   ⟨zero_mem _, zero_mem _, fun _ _ => ⟨rfl, rfl⟩⟩
 
 
+def IsGluedPrincipal (x : GluingData K F S) : Prop :=
+  ∃ (g₁ g₂ : F) (a b : ↥S → Kˣ), g₁ ≠ 0 ∧ g₂ ≠ 0 ∧
+    (∀ v : Place K F, x.1 v = v.ord g₁) ∧ (∀ v : Place K F, x.2.1 v = v.ord g₂) ∧
+    (∀ s : ↥S, (s : Place K F × Place K F).1.HasValue g₁ (a s) ∧
+      (s : Place K F × Place K F).2.HasValue g₂ (b s)) ∧
+    x.2.2 = fun s => Additive.ofMul (a s / b s)
+
+def gluedPrincipal : AddSubgroup (GluingData K F S) where
+  carrier := {x | IsGluedPrincipal S x}
+  zero_mem' := by
+    refine ⟨1, 1, 1, 1, one_ne_zero, one_ne_zero, fun v => by simp, fun v => by simp,
+      fun s => ⟨?_, ?_⟩, ?_⟩
+    · simpa using (s : Place K F × Place K F).1.hasValue_one
+    · simpa using (s : Place K F × Place K F).2.hasValue_one
+    · funext s
+      simp
+  add_mem' := by
+    rintro x y ⟨g₁, g₂, a, b, hg₁, hg₂, hx₁, hx₂, hv, hw⟩
+      ⟨g₁', g₂', a', b', hg₁', hg₂', hy₁, hy₂, hv', hw'⟩
+    refine ⟨g₁ * g₁', g₂ * g₂', a * a', b * b', mul_ne_zero hg₁ hg₁', mul_ne_zero hg₂ hg₂',
+      fun v => ?_, fun v => ?_, fun s => ⟨?_, ?_⟩, ?_⟩
+    · rw [Prod.fst_add, Finsupp.add_apply, hx₁ v, hy₁ v, v.ord_mul hg₁ hg₁']
+    · rw [Prod.snd_add, Prod.fst_add, Finsupp.add_apply, hx₂ v, hy₂ v, v.ord_mul hg₂ hg₂']
+    · simpa only [Pi.mul_apply, Units.val_mul] using (hv s).1.mul (hv' s).1
+    · simpa only [Pi.mul_apply, Units.val_mul] using (hv s).2.mul (hv' s).2
+    · rw [Prod.snd_add, Prod.snd_add, hw, hw']
+      funext s
+      rw [Pi.add_apply, Pi.mul_apply, Pi.mul_apply, ← ofMul_mul, div_mul_div_comm]
+  neg_mem' := by
+    rintro x ⟨g₁, g₂, a, b, hg₁, hg₂, hx₁, hx₂, hv, hw⟩
+    refine ⟨g₁⁻¹, g₂⁻¹, a⁻¹, b⁻¹, inv_ne_zero hg₁, inv_ne_zero hg₂,
+      fun v => ?_, fun v => ?_, fun s => ⟨?_, ?_⟩, ?_⟩
+    · rw [Prod.fst_neg, Finsupp.neg_apply, hx₁ v, v.ord_inv]
+    · rw [Prod.snd_neg, Prod.fst_neg, Finsupp.neg_apply, hx₂ v, v.ord_inv]
+    · simpa only [Pi.inv_apply, Units.val_inv_eq_inv_val] using (hv s).1.inv (a s).ne_zero
+    · simpa only [Pi.inv_apply, Units.val_inv_eq_inv_val] using (hv s).2.inv (b s).ne_zero
+    · rw [Prod.snd_neg, Prod.snd_neg, hw]
+      funext s
+      rw [Pi.neg_apply, Pi.inv_apply, Pi.inv_apply, inv_div_inv, ← ofMul_inv, inv_div]
+
 public theorem mem_gluedPrincipal {x : GluingData K F S} :
     x ∈ gluedPrincipal S ↔ IsGluedPrincipal S x :=
   Iff.rfl
 
 end GluingData
 
+
+abbrev GluedPic0 (S : Finset (Place K F × Place K F)) : Type _ :=
+  ↥(GluingData.admissible S) ⧸ (GluingData.gluedPrincipal S).addSubgroupOf (GluingData.admissible S)
+
+def mk : ↥(GluingData.admissible S) →+ GluedPic0 K F S :=
+  QuotientAddGroup.mk' _
 
 public theorem mk_surjective : Function.Surjective (mk S) :=
   QuotientAddGroup.mk'_surjective _
@@ -173,12 +238,35 @@ public theorem mk_eq_mk_iff (x y : ↥(GluingData.admissible S)) :
   QuotientAddGroup.eq
 
 
+def toPic0PairAux : ↥(GluingData.admissible S) →+ Pic0 K F × Pic0 K F where
+  toFun x := (Pic0.mk ⟨(x : GluingData K F S).1, x.2.1⟩,
+    Pic0.mk ⟨(x : GluingData K F S).2.1, x.2.2.1⟩)
+  map_zero' := rfl
+  map_add' _ _ := rfl
+
 @[simp]
 public theorem toPic0Pair_mk (x : ↥(GluingData.admissible S)) :
     toPic0Pair S (mk S x) = (Pic0.mk ⟨(x : GluingData K F S).1, x.2.1⟩,
       Pic0.mk ⟨(x : GluingData K F S).2.1, x.2.2.1⟩) :=
   rfl
 
+
+def toPic0Pair : GluedPic0 K F S →+ Pic0 K F × Pic0 K F :=
+  QuotientAddGroup.lift _ (toPic0PairAux S) <| by
+    rintro x ⟨g₁, g₂, _, _, hg₁, hg₂, h₁, h₂, -, -⟩
+    rw [AddMonoidHom.mem_ker]
+    exact Prod.ext ((QuotientAddGroup.eq_zero_iff _).mpr ⟨g₁, hg₁, h₁⟩)
+      ((QuotientAddGroup.eq_zero_iff _).mpr ⟨g₂, hg₂, h₂⟩)
+
+@[simp]
+
+def nodeUnitAux : (↥S → Additive Kˣ) →+ ↥(GluingData.admissible S) where
+  toFun w := ⟨(0, 0, w), GluingData.zero_zero_mem_admissible S w⟩
+  map_zero' := rfl
+  map_add' _ _ := Subtype.ext <| Prod.ext (add_zero _).symm (Prod.ext (add_zero _).symm rfl)
+
+def nodeUnit : (↥S → Additive Kˣ) →+ GluedPic0 K F S :=
+  (mk S).comp (nodeUnitAux S)
 
 public theorem nodeUnit_apply (w : ↥S → Additive Kˣ) :
     nodeUnit S w = mk S ⟨(0, 0, w), GluingData.zero_zero_mem_admissible S w⟩ :=

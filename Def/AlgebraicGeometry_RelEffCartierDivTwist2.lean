@@ -1,5 +1,5 @@
 module
-public import Lemma.Scheme.Dual_ObjPullbackL
+public import Theorem.Scheme.Dual_ObjPullbackL
 public import Def.AlgebraicGeometry_RelPicardThetaBundle
 public import Instance.AlgebraicGeometry_RelEffCartierDivOfPoint
 set_option autoImplicit false

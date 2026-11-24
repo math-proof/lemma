@@ -2,7 +2,7 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Theorem.v1.Atlas.AlgebraicGeometryI.code.SheafCohomology.Part2
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.SheafCohomology
 
 
 public section

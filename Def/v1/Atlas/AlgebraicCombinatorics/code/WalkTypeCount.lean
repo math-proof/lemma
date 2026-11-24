@@ -3,7 +3,7 @@ public import Theorem.v1.Atlas.AlgebraicCombinatorics.code.HasseWalks
 public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.HasseWalks
 public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.HasseWalkFormula
 public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.WalkOperatorLemmas
-public import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.WalkCountOps
+public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.WalkCountOps
 public import Instance.v1.Atlas.AlgebraicCombinatorics.code.HasseWalkFormula.Part2
 public import Theorem.v1.Atlas.AlgebraicCombinatorics.code.WalkOperatorLemmas
 public import Def.v1.Atlas.AlgebraicCombinatorics.code.WalkCountOps

@@ -45,12 +45,25 @@ public theorem cohomologyMap_apply {F G : Sheaf J AddCommGrpCat.{w}} (φ : F ⟶
     cohomologyMap φ n x = x.comp (Ext.mk₀ φ) (add_zero n) := rfl
 
 
+noncomputable def cohomologyMap {F G : Sheaf J AddCommGrpCat.{w}} (φ : F ⟶ G) (n : ℕ) :
+    F.H n →+ G.H n :=
+  (Ext.mk₀ φ).postcomp (constIntSheaf J) (add_zero n)
+
+@[simp]
+
 @[simp]
 public theorem cohomologyδ_apply {S : ShortComplex (Sheaf J AddCommGrpCat.{w})}
     (hS : S.ShortExact) (n₀ n₁ : ℕ) (h : n₀ + 1 = n₁)
     (x : Ext (constIntSheaf J) S.X₃ n₀) :
     cohomologyδ hS n₀ n₁ h x = x.comp hS.extClass h := rfl
 
+
+noncomputable def cohomologyδ {S : ShortComplex (Sheaf J AddCommGrpCat.{w})}
+    (hS : S.ShortExact) (n₀ n₁ : ℕ) (h : n₀ + 1 = n₁) :
+    S.X₃.H n₀ →+ S.X₁.H n₁ :=
+  hS.extClass.postcomp (constIntSheaf J) h
+
+@[simp]
 
 public theorem cohomologyMap_id (F : Sheaf J AddCommGrpCat.{w}) (n : ℕ)
     (x : Ext (constIntSheaf J) F n) :
@@ -123,11 +136,24 @@ public theorem sixTermLES {S : ShortComplex (Sheaf J AddCommGrpCat.{w})} (hS : S
     cohomology_exact_two hS 1⟩
 
 
+noncomputable def cohomologyComposableArrows {S : ShortComplex (Sheaf J AddCommGrpCat.{w})}
+    (hS : S.ShortExact) (n₀ n₁ : ℕ) (h : n₀ + 1 = n₁) :
+    ComposableArrows AddCommGrpCat.{w'} 5 :=
+  Ext.covariantSequence (constIntSheaf J) hS n₀ n₁ h
+
 public theorem cohomologyComposableArrows_exact {S : ShortComplex (Sheaf J AddCommGrpCat.{w})}
     (hS : S.ShortExact) (n₀ n₁ : ℕ) (h : n₀ + 1 = n₁) :
     (cohomologyComposableArrows hS n₀ n₁ h).Exact :=
   Ext.covariantSequence_exact (constIntSheaf J) hS n₀ n₁ h
 
+
+noncomputable def cohomologyZeroAddEquivHom (F : Sheaf J AddCommGrpCat.{w}) :
+    F.H 0 ≃+ (constIntSheaf J ⟶ F) :=
+  Ext.addEquiv₀
+
+noncomputable def biprodSES (F G : Sheaf J AddCommGrpCat.{w}) :
+    ShortComplex (Sheaf J AddCommGrpCat.{w}) :=
+  ShortComplex.mk (biprod.inl : F ⟶ F ⊞ G) (biprod.snd : F ⊞ G ⟶ G) (by simp)
 
 public theorem biprodSES_shortExact (F G : Sheaf J AddCommGrpCat.{w}) :
     (biprodSES F G).ShortExact :=
@@ -200,6 +226,10 @@ public theorem fppf_composableArrowsLES_exact
     (cohomologyComposableArrows hS n₀ n₁ h).Exact :=
   cohomologyComposableArrows_exact hS n₀ n₁ h
 
+
+noncomputable def fppfCohomologyZeroAddEquivHom (F : Sheaf Scheme.fppfTopology.{u} Ab.{u + 1}) :
+    FppfH F 0 ≃+ (constIntSheaf Scheme.fppfTopology.{u} ⟶ F) :=
+  cohomologyZeroAddEquivHom F
 
 public theorem fppf_satGate_biprodSES_shortExact (F G : Sheaf Scheme.fppfTopology.{u} Ab.{u + 1}) :
     (biprodSES F G).ShortExact :=
@@ -408,6 +438,16 @@ public theorem cohomologyMapAddEquiv_apply {F G : Sheaf J AddCommGrpCat.{w}} (e 
     cohomologyMapAddEquiv e n x = cohomologyMap e.hom n x := rfl
 
 
+noncomputable def cohomologyMapAddEquiv {F G : Sheaf J AddCommGrpCat.{w}} (e : F ≅ G) (n : ℕ) :
+    F.H n ≃+ G.H n where
+  toFun := cohomologyMap e.hom n
+  invFun := cohomologyMap e.inv n
+  left_inv x := by rw [← cohomologyMap_comp, Iso.hom_inv_id, cohomologyMap_id]
+  right_inv x := by rw [← cohomologyMap_comp, Iso.inv_hom_id, cohomologyMap_id]
+  map_add' x y := map_add (cohomologyMap e.hom n) x y
+
+@[simp]
+
 @[simp]
 public theorem cohomologyMapAddEquiv_symm_apply {F G : Sheaf J AddCommGrpCat.{w}} (e : F ≅ G) (n : ℕ)
     (y : Ext (constIntSheaf J) G n) :
@@ -474,6 +514,17 @@ public theorem biprodSESHom_τ₁ (F : Sheaf J AddCommGrpCat.{w}) {G G' : Sheaf 
     (ψ : G ⟶ G') : (biprodSESHom F ψ).τ₁ = 𝟙 F := rfl
 
 
+noncomputable def biprodSESHom (F : Sheaf J AddCommGrpCat.{w})
+    {G G' : Sheaf J AddCommGrpCat.{w}} (ψ : G ⟶ G') :
+    biprodSES F G ⟶ biprodSES F G' where
+  τ₁ := 𝟙 F
+  τ₂ := biprod.map (𝟙 F) ψ
+  τ₃ := ψ
+  comm₁₂ := by simp [biprodSES]
+  comm₂₃ := by simp [biprodSES]
+
+@[simp]
+
 @[simp]
 public theorem biprodSESHom_τ₃ (F : Sheaf J AddCommGrpCat.{w}) {G G' : Sheaf J AddCommGrpCat.{w}}
     (ψ : G ⟶ G') : (biprodSESHom F ψ).τ₃ = ψ := rfl
@@ -500,6 +551,20 @@ public theorem satGate_biprodSESHom_delta_zero_consistency (F : Sheaf J AddCommG
   ⟨biprodSES_delta_apply_eq_zero F G' n₀ n₁ h _,
     by rw [biprodSES_delta_apply_eq_zero F G n₀ n₁ h x, map_zero]⟩
 
+
+noncomputable def biprodSESSwap (F G : Sheaf J AddCommGrpCat.{w}) :
+    ShortComplex (Sheaf J AddCommGrpCat.{w}) :=
+  ShortComplex.mk (biprod.inr : F ⟶ G ⊞ F) (biprod.fst : G ⊞ F ⟶ G) (by simp)
+
+noncomputable def biprodSESSwapIso (F G : Sheaf J AddCommGrpCat.{w}) :
+    biprodSES F G ≅ biprodSESSwap F G :=
+  ShortComplex.isoMk (Iso.refl F) (biprod.braiding F G) (Iso.refl G)
+    (by
+      dsimp [biprodSES, biprodSESSwap]
+      apply biprod.hom_ext <;> simp)
+    (by
+      dsimp [biprodSES, biprodSESSwap]
+      simp)
 
 public theorem biprodSESSwap_shortExact (F G : Sheaf J AddCommGrpCat.{w}) :
     (biprodSESSwap F G).ShortExact :=

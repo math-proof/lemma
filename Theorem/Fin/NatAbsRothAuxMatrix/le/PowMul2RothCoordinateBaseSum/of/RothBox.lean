@@ -1,7 +1,7 @@
 module
 public import Mathlib
 public import Theorem.Fin.RothPolyL1_RothAuxTerm.le.PowMul2RothCoordinateBaseSum.of.RothBox
-public import Lemma.Polynomial.NatAbsCoeff.le.RothPolyL1
+public import Theorem.Polynomial.NatAbsCoeff.le.RothPolyL1
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin Polynomial
 

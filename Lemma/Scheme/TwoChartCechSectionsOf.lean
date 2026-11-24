@@ -1,4 +1,4 @@
-import Lemma.Scheme.TwoAffineOpenCover
+import Theorem.Scheme.TwoAffineOpenCover
 import Mathlib.AlgebraicGeometry.Modules.Sheaf
 
 set_option autoImplicit false

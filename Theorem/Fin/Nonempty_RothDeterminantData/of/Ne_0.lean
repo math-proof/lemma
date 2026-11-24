@@ -1,23 +1,23 @@
 module
 public import Mathlib
-public import Lemma.Fin.RothMvL1_RothMvHasse.le.MulPow2SumRothMvL1.of.RothMvIndex
-public import Lemma.Fin.RothMvL1Det.le.MulFactorialPow.of.All_LeRothMvL1
-public import Lemma.Fin.RothDegreeBoundOver_RothMvHasse.of.RothMvIndex
-public import Lemma.Fin.RothDegreeBound.of.All_RothDegreeBound
-public import Lemma.Fin.MapRothMvHasse.eq.RothMvHasse_Map.of.RothMvIndex
+public import Theorem.Fin.RothMvL1_RothMvHasse.le.MulPow2SumRothMvL1.of.RothMvIndex
+public import Theorem.Fin.RothMvL1Det.le.MulFactorialPow.of.All_LeRothMvL1
+public import Theorem.Fin.RothDegreeBoundOver_RothMvHasse.of.RothMvIndex
+public import Theorem.Fin.RothDegreeBound.of.All_RothDegreeBound
+public import Theorem.Fin.MapRothMvHasse.eq.RothMvHasse_Map.of.RothMvIndex
 public import Theorem.Fin.Any_And_Det_RothMvHasse.ne.Zero.of.All_RothDegreeBoundOver.LinearIndependent
-public import Lemma.Fin.LeNatDegreeRothLastEquiv
-public import Lemma.Fin.MapRothHasseDet.eq.RothHasseDet_Map
-public import Lemma.Fin.RothDegreeBoundOver
-public import Lemma.Fin.RothDegreeBoundOver_Map
-public import Lemma.Fin.RothDegreeBound_RothHasseDetMul
-public import Lemma.Fin.RothLastEquiv_Map.eq.Map_MapRothLastEquiv
-public import Lemma.Fin.RothMvL1_CoeffRothLastEquiv.le.RothMvL1
-public import Lemma.Fin.RothMvL1_RothHasseDet.le.MulFactorialPowMulPow2SumRothMvL1
-public import Lemma.Polynomial.Any_And_Le_AddNatDegree1AndAll_Eq_CoeffAndAll_LeNatDegreeAndLinearIndependentAndLinearIndependentAndEq_Sum_MulCMap.of.Ne_0
-public import Lemma.Polynomial.Det_HasseDerivVal.ne.Zero.of.LinearIndependent
-public import Lemma.Nat.RothLastIndex.eq.AddRothSLastIndex.of.RothMvIndex
-public import Lemma.Polynomial.RothLastEquiv.eq.Sum_MulCMap.of.RothMvIndex.Eq_Sum_MulCMapC
+public import Theorem.Fin.LeNatDegreeRothLastEquiv
+public import Theorem.Fin.MapRothHasseDet.eq.RothHasseDet_Map
+public import Theorem.Fin.RothDegreeBoundOver
+public import Theorem.Fin.RothDegreeBoundOver_Map
+public import Theorem.Fin.RothDegreeBound_RothHasseDetMul
+public import Theorem.Fin.RothLastEquiv_Map.eq.Map_MapRothLastEquiv
+public import Theorem.Fin.RothMvL1_CoeffRothLastEquiv.le.RothMvL1
+public import Theorem.Fin.RothMvL1_RothHasseDet.le.MulFactorialPowMulPow2SumRothMvL1
+public import Theorem.Polynomial.Any_And_Le_AddNatDegree1AndAll_Eq_CoeffAndAll_LeNatDegreeAndLinearIndependentAndLinearIndependentAndEq_Sum_MulCMap.of.Ne_0
+public import Theorem.Polynomial.Det_HasseDerivVal.ne.Zero.of.LinearIndependent
+public import Theorem.Nat.RothLastIndex.eq.AddRothSLastIndex.of.RothMvIndex
+public import Theorem.Polynomial.RothLastEquiv.eq.Sum_MulCMap.of.RothMvIndex.Eq_Sum_MulCMapC
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 open Polynomial

@@ -1,4 +1,4 @@
-import Lemma.UpperHalfPlane.PeriodMap
+import Theorem.UpperHalfPlane.PeriodMap
 import Lemma.Matrix.Gamma0HeckeOperatorHom
 import Mathlib.Analysis.Complex.UpperHalfPlane.MoebiusAction
 import Mathlib.Tactic.Group

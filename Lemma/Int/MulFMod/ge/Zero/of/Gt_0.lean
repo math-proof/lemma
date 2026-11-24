@@ -1,6 +1,6 @@
 import Lemma.Int.FMod.ge.Zero.of.Gt_0
 import Lemma.Nat.LeMulS.of.Le.Gt_0
-import Lemma.Nat.EqMul0_0
+import Theorem.Nat.EqMul0_0
 open Int Nat
 
 

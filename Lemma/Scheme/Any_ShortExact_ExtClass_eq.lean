@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.Scheme.FppfCohomologyLES
+import Theorem.Scheme.FppfCohomologyLES
 import Theorem.Int.P2MUtil
 open CategoryTheory CategoryTheory.Abelian CategoryTheory.Limits AlgebraicGeometry Scheme
 

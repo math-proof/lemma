@@ -3,7 +3,7 @@ import Def.CerednikDrinfeld_JPrimeTorsionDatum
 import Instance.ValuationSubring_CompletionDecompositionAction
 import Theorem.WeierstrassCurve.FrobeniusTrace
 import Def.FLTPrelim_Ramification
-import Lemma.Ideal.Mathlib430
+import Theorem.Ideal.Mathlib430
 import Def.CerednikDrinfeld_MumfordUniformization
 import Structure.CerednikDrinfeld_MumfordUniformization
 

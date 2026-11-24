@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.HahnSeries.ModularUnit
+import Theorem.HahnSeries.ModularUnit
 import Theorem.Int.P2MUtil
 
 open ModularCurve HahnSeries

@@ -1,6 +1,6 @@
 import Mathlib
-import Lemma.ModularForm.HeckeOperator
-import Lemma.ModularForm.AtkinLehnerDatum
+import Theorem.ModularForm.HeckeOperator
+import Theorem.ModularForm.AtkinLehnerDatum
 import Theorems.Thm_ModularForm_add_heckeU_alSlash_slash_eq_self_of_mem_Gamma0
 import Theorems.Thm_ModularForm_mdifferentiable_add_heckeU_alSlash
 import Theorems.Thm_ModularForm_isZeroAt_add_heckeU_alSlash

@@ -8,7 +8,7 @@ public import Mathlib.Algebra.Quaternion
 public import Mathlib.Algebra.QuaternionBasis
 public import Instance.v1.Atlas.EllipticCurves.code.EndAlgebra.Part5
 public import Theorem.Complex.Atlas.v1.EllipticCurves.code.EndAlgebra
-public import Lemma.Complex.Atlas.v1.EllipticCurves.code.EndomorphismAlgebra
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.EndomorphismAlgebra
 public import Instance.v1.Atlas.EllipticCurves.code.EndomorphismAlgebra.Part2
 public import Mathlib.RingTheory.Flat.Localization
 public import Mathlib.RingTheory.SimpleRing.Basic

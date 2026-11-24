@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.HahnSeries.JqCoeff
+import Theorem.HahnSeries.JqCoeff
 import Theorem.Int.P2MUtil
 
 open Polynomial ModularCurve HahnSeries

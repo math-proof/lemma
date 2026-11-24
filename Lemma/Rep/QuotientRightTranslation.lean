@@ -1,7 +1,7 @@
 import Mathlib
 import Lemma.Rep.Selmer
 import Abbrev.Rep_QuotientRightTranslation
-import Lemma.Ideal.Mathlib430
+import Theorem.Ideal.Mathlib430
 
 set_option autoImplicit false
 

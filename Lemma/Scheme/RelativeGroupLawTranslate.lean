@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Scheme.RelativeGroupLaw
+import Theorem.Scheme.RelativeGroupLaw
 import Lemma.Scheme.RelativeGroupLawKernel
 import Def.AlgebraicGeometry_RelativePicardFunctor
 

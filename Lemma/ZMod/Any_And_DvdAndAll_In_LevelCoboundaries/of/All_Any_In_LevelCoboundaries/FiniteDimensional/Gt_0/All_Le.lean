@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.Submodule.ContinuousH2
-import Lemma.Rep.ContinuousH2Map
+import Theorem.Submodule.ContinuousH2
+import Theorem.Rep.ContinuousH2Map
 import Theorem.Int.P2MUtil
 set_option maxHeartbeats 999999
 open groupCohomology Int

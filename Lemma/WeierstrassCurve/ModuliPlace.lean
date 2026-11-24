@@ -1,6 +1,6 @@
 import Mathlib
 import Theorem.HahnSeries.X0ModL
-import Lemma.HahnSeries.QAdicPlaceMod
+import Theorem.HahnSeries.QAdicPlaceMod
 import Lemma.WeierstrassCurve.ModuliPointMap
 import Lemma.WeierstrassCurve.ReduceHom
 import Lemma.WeierstrassCurve.CyclicQuotientJ

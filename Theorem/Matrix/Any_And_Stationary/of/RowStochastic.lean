@@ -1,7 +1,7 @@
 module
-public import Lemma.Matrix.VecMul.Continuous
-public import Lemma.Matrix.NormOfL1Sub.le.Div2Add
-public import Lemma.Matrix.StochasticVecCesaroAverage
+public import Theorem.Matrix.VecMul.Continuous
+public import Theorem.Matrix.NormOfL1Sub.le.Div2Add
+public import Theorem.Matrix.StochasticVecCesaroAverage
 public import Theorem.Matrix.IsCompactSimplex
 public import Class.Probability.Process.StochasticProcessTypes.Part4
 open WithLp Matrix Metric Topology Function PiLp

@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.LaurentSeries.LaurentCoeff
+import Theorem.LaurentSeries.LaurentCoeff
 import Class.AlgebraicCurve_DivisorClassGroup
 import Def.ModularCurve_ComplexPlaceDictionary
 import Structure.ModularCurve_ComplexPlaceDictionaryOf

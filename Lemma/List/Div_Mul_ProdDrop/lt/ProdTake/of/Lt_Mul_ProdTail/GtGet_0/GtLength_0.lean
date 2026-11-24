@@ -1,5 +1,5 @@
 import Lemma.Nat.LtDiv.of.Lt_Mul
-import Lemma.List.Prod.eq.MulProdS
+import Theorem.List.Prod.eq.MulProdS
 import Lemma.Nat.Mul_Mul
 import Lemma.List.Prod.eq.Mul_ProdTail.of.GtLength_0
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt

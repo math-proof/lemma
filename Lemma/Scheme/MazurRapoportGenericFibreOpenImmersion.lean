@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Scheme.NeronModelPropertyBundleCarrier
+import Theorem.Scheme.NeronModelPropertyBundleCarrier
 
 set_option autoImplicit false
 

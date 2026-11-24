@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.Scheme.RegularProlongation
+import Theorem.Scheme.RegularProlongation
 import Def.AlgebraicCurve_PlaceEvaluation
 import Theorem.Int.P2MUtil
 

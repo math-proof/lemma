@@ -2,7 +2,7 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.Combinatorics.Young.Definitions.Part8
-public import Lemma.Equiv.Basics
+public import Theorem.Equiv.Basics
 open MvPolynomial hiding R
 open Finset
 open AlgebraicCombinatorics.SymmetricPolynomials

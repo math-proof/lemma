@@ -50,6 +50,23 @@ variable {A : Rep k H} {B : Rep k G} (φ : A →ₗ[k] B) (hφ : ∀ (g : G) (a 
 
 include hφ in
 
+def cochainsPullPush₁ : (H → A) →ₗ[k] (G → B) where
+  toFun x := φ ∘ x ∘ f
+  map_add' x y := by ext; simp
+  map_smul' c x := by ext; simp
+
+def cochainsPullPush₂ : (H × H → A) →ₗ[k] (G × G → B) where
+  toFun x := φ ∘ x ∘ Prod.map f f
+  map_add' x y := by ext; simp
+  map_smul' c x := by ext; simp
+
+@[simp] theorem cochainsPullPush₁_apply (x : H → A) (g : G) : cochainsPullPush₁ f φ x g = φ (x (f g)) := rfl
+
+@[simp] theorem cochainsPullPush₂_apply (x : H × H → A) (g : G × G) :
+    cochainsPullPush₂ f φ x g = φ (x (f g.1, f g.2)) := rfl
+
+include hφ in
+
 public theorem cochainsPullPush₂_d₁₂ (x : H → A) :
     cochainsPullPush₂ f φ ((d₁₂ A).hom x) = (d₁₂ B).hom (cochainsPullPush₁ f φ x) := by
   ext ⟨g, g'⟩
@@ -95,6 +112,20 @@ public theorem cochainsPullPush₂_mem_levelCoboundaries₂ {x : H × H → A} (
 
 
 @[simp] public theorem continuousH2Map_continuousH2π (x : ↥(levelCocycles₂ rH A)) :
+    continuousH2Map f hf φ hφ (continuousH2π rH A x) = continuousH2π rG B (levelCocycles₂Map f hf φ hφ x) :=
+  rfl
+
+def levelCocycles₂Map : ↥(levelCocycles₂ rH A) →ₗ[k] ↥(levelCocycles₂ rG B) :=
+  (cochainsPullPush₂ f φ).restrict fun _ hx => cochainsPullPush₂_mem_levelCocycles₂ f hf φ hφ hx
+
+@[simp] theorem coe_levelCocycles₂Map (x : ↥(levelCocycles₂ rH A)) :
+    (levelCocycles₂Map f hf φ hφ x : G × G → B) = cochainsPullPush₂ f φ x := rfl
+
+def continuousH2Map : continuousH2 rH A →ₗ[k] continuousH2 rG B :=
+  Submodule.mapQ _ _ (levelCocycles₂Map f hf φ hφ) fun _ hx =>
+    cochainsPullPush₂_mem_levelCoboundaries₂ f hf φ hφ hx
+
+@[simp] theorem continuousH2Map_continuousH2π (x : ↥(levelCocycles₂ rH A)) :
     continuousH2Map f hf φ hφ (continuousH2π rH A x) = continuousH2π rG B (levelCocycles₂Map f hf φ hφ x) :=
   rfl
 

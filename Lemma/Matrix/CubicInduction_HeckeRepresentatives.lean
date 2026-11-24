@@ -1,4 +1,4 @@
-import Lemma.Matrix.CubicInduction_Structure
+import Theorem.Matrix.CubicInduction_Structure
 import Instance.LanglandsTunnell_CubicInduction_HeckeRepresentatives
 import Structure.LanglandsTunnell_CubicInduction_HeckeRepresentatives
 

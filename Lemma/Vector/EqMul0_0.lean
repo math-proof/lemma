@@ -1,4 +1,4 @@
-import Lemma.Nat.EqMul0_0
+import Theorem.Nat.EqMul0_0
 import Theorem.Vector.EqGet0_0
 import Lemma.Vector.GetMul.eq.MulGet
 open Vector Nat

@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
+import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
 open BooleanFourier Bool
 
 

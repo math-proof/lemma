@@ -16,6 +16,10 @@ open Finset MeasureTheory
 open scoped ENNReal Nat
 
 
+/-- Number of coordinates of `ω` equal to `a`. -/
+def countVec {α : Type*} [DecidableEq α] {n : ℕ} (ω : Fin n → α) (a : α) : ℕ :=
+  ∑ i, if ω i = a then 1 else 0
+
 public theorem countVec_eq_card {α : Type*} [DecidableEq α] {n : ℕ} (ω : Fin n → α) (a : α) :
   countVec ω a = #{i | ω i = a} := by
   simp only [countVec]
@@ -28,6 +32,10 @@ public theorem countVec_cons {α : Type*} [DecidableEq α] {n : ℕ} (x : α) (p
 
 /-- Decrement the count of one letter. -/
 
+
+/-- Decrement the count of one letter. -/
+def predCount {α : Type*} [DecidableEq α] (c : α → ℕ) (a : α) : α → ℕ :=
+  Function.update c a (c a - 1)
 
 public theorem sum_predCount {α : Type*} [Fintype α] [DecidableEq α] {n : ℕ} (c : α → ℕ) (a : α) (ha : 0 < c a) (hsum : ∑ i, c i = n + 1) : ∑ i, predCount c a i = n := by
   have hupd : ∑ i, predCount c a i = (c a - 1) + ∑ i ∈ univ \ {a}, c i := by
@@ -100,6 +108,11 @@ public theorem sum_multinomial_predCount {α : Type*} [Fintype α] [DecidableEq 
 
 /-- Samples whose empirical counts are exactly `c`. -/
 
+
+/-- Samples whose empirical counts are exactly `c`. -/
+def empiricalSet {α : Type*} [Fintype α] [DecidableEq α] (n : ℕ) (c : α → ℕ) :
+  Finset (Fin n → α) :=
+  {ω | ∀ a, countVec ω a = c a}
 
 public theorem card_empiricalSet {α : Type*} [Fintype α] [DecidableEq α] {n : ℕ} (c : α → ℕ) (hsum : ∑ a, c a = n) : #(empiricalSet n c) = Nat.multinomial univ c := by
   induction n generalizing c with

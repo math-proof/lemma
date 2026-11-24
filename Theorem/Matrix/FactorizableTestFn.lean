@@ -1,5 +1,5 @@
 module
-public import Lemma.Matrix.AdelicLevel
+public import Theorem.Matrix.AdelicLevel
 public import Mathlib.Analysis.Calculus.ContDiff.Defs
 public import Mathlib.Topology.LocallyConstant.Basic
 public import Def.AutomorphicForm_FactorizableTestFn

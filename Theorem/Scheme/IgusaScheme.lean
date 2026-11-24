@@ -39,6 +39,22 @@ public theorem jFull_ne_zero : jFull N ≠ 0 :=
   fun h => jq_ne_zero (by simpa using congrArg Subtype.val h)
 
 
+def jFull : F := ⟨jq, modularFunctionField_le_full N (jq_mem N)⟩
+
+@[simp] theorem coe_jFull : (jFull N : LaurentSeries ℚ) = jq := rfl
+
+def chartAlg (S : Set F) : Subalgebra ℤℓ F where
+  carrier := {x | IsIntegral (Algebra.adjoin ℤℓ S) x}
+  mul_mem' ha hb := ha.mul hb
+  one_mem' := isIntegral_one
+  add_mem' ha hb := ha.add hb
+  zero_mem' := isIntegral_zero
+  algebraMap_mem' a := by
+    have : IsIntegral (Algebra.adjoin ℤℓ S)
+        (algebraMap (Algebra.adjoin ℤℓ S) F (algebraMap ℤℓ (Algebra.adjoin ℤℓ S) a)) :=
+      isIntegral_algebraMap
+    simpa [← IsScalarTower.algebraMap_apply] using this
+
 public theorem mem_chartAlg_iff {S : Set F} {x : F} :
     x ∈ chartAlg N ℓ S ↔ IsIntegral (Algebra.adjoin ℤℓ S) x := Iff.rfl
 
@@ -58,6 +74,9 @@ public theorem chartAlg_mono {S S' : Set F} (h : S ⊆ S') : chartAlg N ℓ S �
   exact hx.map_of_comp_eq
     (Subalgebra.inclusion (Algebra.adjoin_mono h)).toRingHom (RingHom.id F) (by ext; rfl)
 
+
+abbrev chartIncl {S S' : Set F} (h : S ⊆ S') : chartAlg N ℓ S →ₐ[ℤℓ] chartAlg N ℓ S' :=
+  Subalgebra.inclusion (chartAlg_mono N ℓ h)
 
 public theorem coe_chartIncl {S S' : Set F} (h : S ⊆ S') (x : chartAlg N ℓ S) :
     (chartIncl N ℓ h x : F) = x :=
@@ -153,6 +172,26 @@ public theorem sInf_subset : ({(jFull N)⁻¹} : Set F) ⊆ {jFull N, (jFull N)�
 @[simp] public theorem coe_jInvChartInf : (jInvChartInf N ℓ : F) = (jFull N)⁻¹ := rfl
 
 
+abbrev chartAlgFin : Subalgebra ℤℓ F := chartAlg N ℓ {jFull N}
+
+abbrev chartAlgInf : Subalgebra ℤℓ F := chartAlg N ℓ {(jFull N)⁻¹}
+
+abbrev chartAlgMid : Subalgebra ℤℓ F := chartAlg N ℓ {jFull N, (jFull N)⁻¹}
+
+def jChartFin : chartAlgFin N ℓ := ⟨jFull N, subset_chartAlg N ℓ _ rfl⟩
+
+def jInvChartInf : chartAlgInf N ℓ := ⟨(jFull N)⁻¹, subset_chartAlg N ℓ _ rfl⟩
+
+@[simp] theorem coe_jChartFin : (jChartFin N ℓ : F) = jFull N := rfl
+@[simp] theorem coe_jInvChartInf : (jInvChartInf N ℓ : F) = (jFull N)⁻¹ := rfl
+
+@[simp] theorem coe_jChartFin : (jChartFin N ℓ : F) = jFull N := rfl
+@[simp] theorem coe_jInvChartInf : (jInvChartInf N ℓ : F) = (jFull N)⁻¹ := rfl
+
+abbrev inclFin : chartAlgFin N ℓ →ₐ[ℤℓ] chartAlgMid N ℓ := chartIncl N ℓ (sFin_subset N)
+
+abbrev inclInf : chartAlgInf N ℓ →ₐ[ℤℓ] chartAlgMid N ℓ := chartIncl N ℓ (sInf_subset N)
+
 public theorem isUnit_inclFin_jChartFin : IsUnit (inclFin N ℓ (jChartFin N ℓ)) := by
   refine .of_mul_eq_one ⟨(jFull N)⁻¹, subset_chartAlg N ℓ _ (by simp)⟩ (Subtype.ext ?_)
   rw [Subalgebra.coe_mul, Subalgebra.coe_one, coe_chartIncl, coe_jChartFin]
@@ -212,6 +251,22 @@ public theorem isLocalization_away_inclInf :
     rw [chartIncl_injective N ℓ _ h]
 
 
+abbrev XFin : Scheme.{0} := Spec (CommRingCat.of (chartAlgFin N ℓ))
+
+abbrev XInf : Scheme.{0} := Spec (CommRingCat.of (chartAlgInf N ℓ))
+
+abbrev XMid : Scheme.{0} := Spec (CommRingCat.of (chartAlgMid N ℓ))
+
+abbrev fFin : XMid N ℓ ⟶ XFin N ℓ := Spec.map (CommRingCat.ofHom (inclFin N ℓ).toRingHom)
+
+abbrev fInf : XMid N ℓ ⟶ XInf N ℓ := Spec.map (CommRingCat.ofHom (inclInf N ℓ).toRingHom)
+
+def _root_.Scheme.IgusaScheme : Scheme.{0} := pushout (fFin N ℓ) (fInf N ℓ)
+
+def ιFin : XFin N ℓ ⟶ Scheme.IgusaScheme N ℓ := pushout.inl (fFin N ℓ) (fInf N ℓ)
+
+def ιInf : XInf N ℓ ⟶ Scheme.IgusaScheme N ℓ := pushout.inr (fFin N ℓ) (fInf N ℓ)
+
 public theorem glue_condition : fFin N ℓ ≫ ιFin N ℓ = fInf N ℓ ≫ ιInf N ℓ := pushout.condition
 
 
@@ -229,6 +284,13 @@ public theorem ιFin_igusaTo : ιFin N ℓ ≫ igusaTo N ℓ =
     Spec.map (CommRingCat.ofHom (algebraMap ℤℓ (chartAlgFin N ℓ))) :=
   pushout.inl_desc _ _ _
 
+
+def igusaTo : Scheme.IgusaScheme N ℓ ⟶ Spec (CommRingCat.of ℤℓ) :=
+  pushout.desc (Spec.map (CommRingCat.ofHom (algebraMap ℤℓ (chartAlgFin N ℓ))))
+    (Spec.map (CommRingCat.ofHom (algebraMap ℤℓ (chartAlgInf N ℓ))))
+    (fFin_toBase_eq_fInf_toBase N ℓ)
+
+@[reassoc (attr := simp)]
 
 @[reassoc (attr := simp)]
 public theorem ιInf_igusaTo : ιInf N ℓ ≫ igusaTo N ℓ =
@@ -249,6 +311,10 @@ public theorem mem_range_ιFin_or_mem_range_ιInf (x : Scheme.IgusaScheme N ℓ)
   · exact Or.inl ⟨y, hy⟩
   · exact Or.inr ⟨y, hy⟩
 
+
+def chartFinOpen : (Scheme.IgusaScheme N ℓ).Opens := (ιFin N ℓ).opensRange
+
+def chartInfOpen : (Scheme.IgusaScheme N ℓ).Opens := (ιInf N ℓ).opensRange
 
 public theorem isAffineOpen_chartFinOpen : IsAffineOpen (chartFinOpen N ℓ) :=
   isAffineOpen_opensRange (ιFin N ℓ)

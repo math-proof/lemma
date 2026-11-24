@@ -1,7 +1,7 @@
 -- Instance-notation and End/linearPart material split from
 -- Lemma/MvFormalGroup/NegV2.lean so the core module no longer imports
 -- Instance.MvFormalGroup_NegV2 (that import cycled with this file).
-import Lemma.MvPowerSeries.NegV2
+import Theorem.MvPowerSeries.NegV2
 import Lemma.MvPowerSeries.EndRingV2LinearPart
 import Instance.MvFormalGroup_NegV2
 

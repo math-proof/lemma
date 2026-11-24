@@ -1,4 +1,4 @@
-import Lemma.Measure.TwistedOrbital
+import Theorem.Measure.TwistedOrbital
 import Def.NumberField_AdelicHeight
 import Def.AutomorphicForm_WeightedOrbitalRelation
 

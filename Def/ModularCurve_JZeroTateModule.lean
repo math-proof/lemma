@@ -1,7 +1,7 @@
 module
-public import Lemma.LaurentSeries.ArithmeticGalois
+public import Theorem.LaurentSeries.ArithmeticGalois
 public import Def.HeckeGalois_EichlerShimura
-public import Lemma.WeierstrassCurve.TateModule
+public import Theorem.WeierstrassCurve.TateModule
 public import Mathlib.LinearAlgebra.TensorProduct.Tower
 public import Mathlib.Algebra.Algebra.Subalgebra.Lattice
 public import Mathlib.LinearAlgebra.Basis.Defs

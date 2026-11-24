@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Scheme.GluedPic0Functoriality
+import Theorem.Scheme.GluedPic0Functoriality
 import Def.AlgebraicCurve_GluedPic0SliceOps
 
 set_option autoImplicit false

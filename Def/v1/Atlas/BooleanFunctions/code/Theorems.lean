@@ -2,8 +2,8 @@ module
 public import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion
 public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
 public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Influence
-public import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
-public import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Convolution
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Convolution
 public import Def.v1.Atlas.BooleanFunctions.code.Influence
 public import Def.v1.Atlas.BooleanFunctions.code.InfluenceFourier
 public import Def.v1.Atlas.BooleanFunctions.code.Convolution

@@ -1,6 +1,6 @@
 module
 public import Def.HeckeCharacter_FiniteOrder
-public import Lemma.Matrix.AdelicLevel
+public import Theorem.Matrix.AdelicLevel
 public import Def.AutomorphicForm_ConstantTerm
 public import Instance.AutomorphicForm_GaussTwist
 public import Abbrev.AutomorphicForm_GaussTwist

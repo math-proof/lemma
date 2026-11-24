@@ -1,7 +1,7 @@
 module
 public import Mathlib.MeasureTheory.Constructions.BorelSpace.Basic
-public import Lemma.ENNReal.In.inf.EReal.eq.In_SetOfAnd_Sum.eq.One_And.inf.ToEReal.of.All_Eq_Top.All_Eq_OfRealSum_Mul_LogDiv_ToReal.All_GtToReal_0
-public import Lemma.ENNReal.LowerSemicontinuous.of.All_Eq_Top.All_Eq_OfRealSum_Mul_LogDiv_ToReal.All_GtToReal_0
+public import Theorem.ENNReal.In.inf.EReal.eq.In_SetOfAnd_Sum.eq.One_And.inf.ToEReal.of.All_Eq_Top.All_Eq_OfRealSum_Mul_LogDiv_ToReal.All_GtToReal_0
+public import Theorem.ENNReal.LowerSemicontinuous.of.All_Eq_Top.All_Eq_OfRealSum_Mul_LogDiv_ToReal.All_GtToReal_0
 public import Theorem.Real.Limsup.le.NegIn_SetOfAll_Ge_0AndSum.eq.OneAndIn.inf.ToEReal.of.All_GtToReal_0
 public import Theorem.Real.Negν.in.SetOfAll_Geν0AndSum_ν.eq.OneAndInν.inf.ToEReal.le.Liminf.of.IsOpen.All_GtToReal_0
 public import Structure.v1.Atlas.Probability.code.LargeDeviations

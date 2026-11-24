@@ -2,7 +2,7 @@ module
 public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_6
 public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_6
 public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter3.Thm_3_3
-public import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_4
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_4
 public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter5.Thm_5_9
 public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter16.Props
 public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_2

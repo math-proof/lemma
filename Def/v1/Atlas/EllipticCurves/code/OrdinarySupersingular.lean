@@ -3,7 +3,7 @@ public import Def.v1.Atlas.EllipticCurves.code.Isogenies.Part13
 public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Isogenies
 public import Theorem.Complex.Atlas.v1.EllipticCurves.code.PointCounting
 public import Theorem.Complex.Atlas.v1.EllipticCurves.code.JInvariant
-public import Lemma.Complex.Atlas.v1.EllipticCurves.code.EndomorphismAlgebra
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.EndomorphismAlgebra
 public import Theorem.Complex.Atlas.v1.EllipticCurves.code.EndAlgClassification
 public import Def.v1.Atlas.EllipticCurves.code.PointCounting.Part2
 public import Def.v1.Atlas.EllipticCurves.code.JInvariant

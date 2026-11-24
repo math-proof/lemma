@@ -1,10 +1,10 @@
 import Mathlib
 import Def.FLTPrelim_Ramification
 import Theorem.WeierstrassCurve.FrobeniusTrace
-import Lemma.ResidueField.GluedPic0
+import Theorem.ResidueField.GluedPic0
 import Lemma.Scheme.Correspondence
 import Def.AlgebraicCurve_WeilDatum
-import Lemma.LaurentSeries.ArithmeticGalois
+import Theorem.LaurentSeries.ArithmeticGalois
 import Lemma.Finsupp.QExpReductionModL
 import Lemma.IntermediateField.QExpSemistableSpecializationPinned
 import Structure.ModularCurve_QExpSemistableSpecializationPinnedV3

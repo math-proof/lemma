@@ -1,6 +1,6 @@
 module
 public import Mathlib
-public import Lemma.Polynomial.DegreeRothPowerCoord.lt.NatDegree.of.GtNatDegree_0.Monic
+public import Theorem.Polynomial.DegreeRothPowerCoord.lt.NatDegree.of.GtNatDegree_0.Monic
 public import Theorem.Rat.MonicRothIntegralPolynomial.of.IsAlgebraic
 public import Theorem.Rat.NatDegreeRothIntegralPolynomial.Gt_0.of.IsAlgebraic
 open MathlibExt.NumberTheory.RothAuxiliary

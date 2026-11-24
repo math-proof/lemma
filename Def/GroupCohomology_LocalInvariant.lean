@@ -1,7 +1,7 @@
 module
 public import Mathlib
 public import Instance.ExtEndgame_ProductionDatum
-public import Lemma.Submodule.ContinuousH2
+public import Theorem.Submodule.ContinuousH2
 public import Def.GroupCohomology_GaloisUnitsInflation
 public import Def.GroupCohomology_CyclicCarry
 set_option autoImplicit false

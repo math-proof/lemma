@@ -1,4 +1,4 @@
-import Lemma.Matrix.AdelicLevel
+import Theorem.Matrix.AdelicLevel
 import Def.NumberField_PrincipalLevel
 open IsDedekindDomain NumberField Matrix
 

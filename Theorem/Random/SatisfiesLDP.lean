@@ -1,9 +1,9 @@
 module
-public import Lemma.EReal.Le_Neg.of.All_Le_Neg
-public import Lemma.Random.IsProbabilityMeasure.of.Gt_0
-public import Lemma.Random.Limsup_MulInvERealLog.le.NegIn.inf.KlDivMeasure.of.IsCompact
-public import Lemma.Random.LowerSemicontinuous_KlDivMeasure
-public import Lemma.Random.Measurable.of.Gt_0
+public import Theorem.EReal.Le_Neg.of.All_Le_Neg
+public import Theorem.Random.IsProbabilityMeasure.of.Gt_0
+public import Theorem.Random.Limsup_MulInvERealLog.le.NegIn.inf.KlDivMeasure.of.IsCompact
+public import Theorem.Random.LowerSemicontinuous_KlDivMeasure
+public import Theorem.Random.Measurable.of.Gt_0
 public import Theorem.Random.NegIn.inf.KlDivMeasure.le.Liminf_MulInvERealLog.of.IsOpen
 public import Mathlib.Analysis.SpecialFunctions.Exp
 public import Mathlib.Analysis.SpecialFunctions.Log.ENNRealLog

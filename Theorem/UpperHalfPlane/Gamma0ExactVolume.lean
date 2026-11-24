@@ -1,6 +1,6 @@
 module
 public import Mathlib
-public import Lemma.UpperHalfPlane.FundamentalDomainExactVolume
+public import Theorem.UpperHalfPlane.FundamentalDomainExactVolume
 public import Theorem.UpperHalfPlane.Gamma0FundamentalSet
 open MeasureTheory Set ModularGroup UpperHalfPlane CongruenceSubgroup
 open scoped MatrixGroups Pointwise ENNReal Modular

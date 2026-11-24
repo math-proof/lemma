@@ -3,7 +3,7 @@ public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.v1.Atlas.BooleanFunctions.code.NoiseSensitivity
 public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.NoiseSensitivity
-public import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
 public import Def.v1.Atlas.BooleanFunctions.code.InfluenceFourier
 open Finset BigOperators
 

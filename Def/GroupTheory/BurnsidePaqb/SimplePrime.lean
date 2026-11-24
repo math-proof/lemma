@@ -3,7 +3,7 @@ public import Theorem.Nat.Any_Eq_MulPowS.of.Prime.Prime
 public import Def.GroupTheory.BurnsidePaqb.KillingLemma
 public import Theorem.Representation.Character.eq.SumRootsCharpoly
 public import Theorem.Representation.All_All_Eq.of.EqNormCharacter_FinrankV
-public import Lemma.Representation.IsIrreducible.of.EqRepresentationG
+public import Theorem.Representation.IsIrreducible.of.EqRepresentationG
 public import Instance.GroupTheory.BurnsidePaqb.ScalarCenter
 public import Def.GroupTheory.BurnsidePaqb.CharacterOrthogonality.Part6
 public import Theorem.GroupTheory.BurnsidePaqb.SimplePrime

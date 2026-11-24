@@ -1,5 +1,5 @@
 module
-public import Lemma.LaurentSeries.X1HeckeOperator
+public import Theorem.LaurentSeries.X1HeckeOperator
 public import Theorem.UpperHalfPlane.X1Diamond
 public import Def.ModularCurve_JZeroTateModule
 public import Mathlib.Algebra.MvPolynomial.CommRing

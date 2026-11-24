@@ -1,4 +1,4 @@
-import Lemma.Measure.TateLocalZeta
+import Theorem.Measure.TateLocalZeta
 
 noncomputable section
 

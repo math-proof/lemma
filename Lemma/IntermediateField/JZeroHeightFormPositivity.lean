@@ -1,5 +1,5 @@
 import Lemma.Finsupp.JZeroHeightForm
-import Lemma.Ideal.Mathlib430
+import Theorem.Ideal.Mathlib430
 import Def.ModularCurve_JZeroHeightFormPositivity
 import Structure.ModularCurve_JZeroHeightFormPositivity
 set_option autoImplicit false

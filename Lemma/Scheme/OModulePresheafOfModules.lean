@@ -1,4 +1,4 @@
-import Lemma.Scheme.OrderedAffineCoverCech
+import Theorem.Scheme.OrderedAffineCoverCech
 import Lemma.Scheme.TwoChartCechSectionsOf
 import Mathlib.AlgebraicGeometry.Modules.Sheaf
 import Def.AlgebraicGeometry_OModulePresheafOfModules

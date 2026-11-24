@@ -1,6 +1,6 @@
 import Mathlib
-import Lemma.Scheme.NeronModelPropertyBundleCarrier
-import Lemma.Scheme.TwoAffineOpenCover
+import Theorem.Scheme.NeronModelPropertyBundleCarrier
+import Theorem.Scheme.TwoAffineOpenCover
 import Structure.AlgebraicGeometry_SmoothProperCurveFiniteMapData
 
 set_option autoImplicit false

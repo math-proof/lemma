@@ -1,8 +1,8 @@
 module
 public import Mathlib
-public import Lemma.Fin.LinearIndependent_RothKronecker.of.All_RothKroneckerBounded.LinearIndependent.Gt_1
-public import Lemma.Polynomial.Det_PowDerivativeGetVal.ne.Zero.of.LinearIndependent
-public import Lemma.Submodule.Any_And_All_In.of.All_In_Span.NeDet_0
+public import Theorem.Fin.LinearIndependent_RothKronecker.of.All_RothKroneckerBounded.LinearIndependent.Gt_1
+public import Theorem.Polynomial.Det_PowDerivativeGetVal.ne.Zero.of.LinearIndependent
+public import Theorem.Submodule.Any_And_All_In.of.All_In_Span.NeDet_0
 public import Theorem.Submodule.RothPolyDerivativeRow_RothKronecker.in.Span_XRothKronHasseJetRows
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin

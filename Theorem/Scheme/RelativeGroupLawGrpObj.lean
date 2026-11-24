@@ -1,5 +1,5 @@
 module
-public import Lemma.Scheme.RelativeGroupLaw
+public import Theorem.Scheme.RelativeGroupLaw
 public import Def.AlgebraicGeometry_RelativeGroupLawGrpObj
 set_option autoImplicit false
 

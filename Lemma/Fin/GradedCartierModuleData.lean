@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.MvPowerSeries.SpecialFormalModule
+import Theorem.MvPowerSeries.SpecialFormalModule
 import Structure.CerednikDrinfeld_GradedCartierModuleData
 
 set_option autoImplicit false

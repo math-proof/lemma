@@ -1,7 +1,7 @@
 module
 public import Mathlib
 public import Def.ModularCurve_JHNeronObjectAtP
-public import Lemma.Scheme.RegularProlongation
+public import Theorem.Scheme.RegularProlongation
 public import Structure.ModularCurve_JHPlaceSpecialization
 public import Notation.ModularCurve_JHPlaceSpecialization
 set_option autoImplicit false

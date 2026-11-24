@@ -2,8 +2,8 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.v1.Atlas.AlgebraicGeometryI.code.GrothendieckBirkhoff
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckBirkhoff
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckBirkhoff
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CanonicalSheafCurves
 public import Def.v1.Atlas.AlgebraicGeometryI.code.CanonicalSheafCurves.Part2
 open GrothendieckBirkhoff CanonicalSheafCurves
 

@@ -1,10 +1,10 @@
 module
 public import Mathlib
-public import Lemma.HahnSeries.JqCoeff
-public import Lemma.LaurentSeries.LaurentCoeff
+public import Theorem.HahnSeries.JqCoeff
+public import Theorem.LaurentSeries.LaurentCoeff
 public import Class.AlgebraicCurve_DivisorClassGroup
-public import Lemma.LaurentSeries.CoeffSemilinearAut
-public import Lemma.HahnSeries.QAdicPlaceMod
+public import Theorem.LaurentSeries.CoeffSemilinearAut
+public import Theorem.HahnSeries.QAdicPlaceMod
 public import Def.ModularCurve_X0ModL
 public import Abbrev.ModularCurve_X0ModL
 set_option autoImplicit false

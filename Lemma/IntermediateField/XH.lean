@@ -1,7 +1,7 @@
 import Mathlib
 import Lemma.UpperHalfPlane.X1
 import Def.CohCarrier_Level
-import Lemma.WeierstrassCurve.TateModule
+import Theorem.WeierstrassCurve.TateModule
 import Abbrev.ModularCurve_XH
 
 set_option autoImplicit false

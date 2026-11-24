@@ -1,6 +1,6 @@
 import Mathlib
-import Lemma.Scheme.OrderedAffineCoverCech
-import Lemma.Scheme.OrderedAffineCoverComap
+import Theorem.Scheme.OrderedAffineCoverCech
+import Theorem.Scheme.OrderedAffineCoverComap
 
 set_option autoImplicit false
 

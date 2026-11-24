@@ -235,12 +235,21 @@ const { mode, module, href, keydown_a, blur, keydown } = self.globals;
 }
 
 .formula {
+	display: block;
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
 	margin-top: 6px;
 	font-size: 16px;
 	line-height: 1.6;
 	color: #202124;
 	overflow-x: auto;
 	overflow-y: hidden;
+}
+
+.formula :deep(.katex) {
+	white-space: nowrap;
 }
 
 .formula :deep(.lean-hit) {

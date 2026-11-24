@@ -104,6 +104,11 @@ public theorem borelSpace_adeleBorel : @BorelSpace (AdeleRing R K) _ (adeleBorel
 variable [Module.Free ℤ R] [Module.Finite ℤ R]
 
 
+def adelicAddHaar [NumberField K] : @Measure (AdeleRing R K) (adeleBorel R K) := by
+  letI := adeleBorel R K
+  haveI := borelSpace_adeleBorel R K
+  exact Measure.addHaar
+
 public theorem isAddHaarMeasure_adelicAddHaar [NumberField K] :
     @Measure.IsAddHaarMeasure (AdeleRing R K) _ _ (adeleBorel R K) (adelicAddHaar R K) := by
   letI := adeleBorel R K
@@ -129,6 +134,12 @@ variable [Module.Free ℤ R] [Module.Finite ℤ R] [NumberField K]
 (no ContinuousInv path); leave as sorry so AdelicLevel/Carrier oleans can build.
 IotaGL extract only needs Carrier.iotaGL / Structure.transposeInv3. -/
 
+
+IotaGL extract only needs Carrier.iotaGL / Structure.transposeInv3. -/
+
+
+def adelicGLHaar : @Measure (Matrix.GeneralLinearGroup n (AdeleRing R K)) (glBorel n R K) := by
+  sorry
 
 public theorem isHaarMeasure_adelicGLHaar :
     @Measure.IsHaarMeasure (Matrix.GeneralLinearGroup n (AdeleRing R K)) _ _ (glBorel n R K)

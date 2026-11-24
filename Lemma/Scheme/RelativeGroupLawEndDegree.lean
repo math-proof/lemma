@@ -1,6 +1,6 @@
 module
 public import Mathlib
-public import Lemma.Scheme.RelativeGroupLaw
+public import Theorem.Scheme.RelativeGroupLaw
 public import Lemma.Scheme.RelativeGroupLawKernel
 public import Lemma.Scheme.NeronModelEndomorphismExtension
 public import Instance.AlgebraicGeometry_RelativeGroupLawEndDegree

@@ -1,4 +1,4 @@
-import Lemma.ZMod.Inst
+import Theorem.ZMod.Inst
 import Def.CohCarrier_SubfamilyHeckeData
 import Abbrev.CohCarrier_SubfamilyHeckeData
 

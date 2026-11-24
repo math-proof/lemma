@@ -1,8 +1,8 @@
 module
 public import Mathlib
 public import Def.NumberTheory.RothAuxiliary.Part5
-public import Lemma.Fin.Sum_SquareRothCenteredSum.le.DivMul_CardRothBox4.of.All_Gt_0
-public import Lemma.Fin.RothWeight.eq.AddRothCenteredSumDiv_2.of.RothBox
+public import Theorem.Fin.Sum_SquareRothCenteredSum.le.DivMul_CardRothBox4.of.All_Gt_0
+public import Theorem.Fin.RothWeight.eq.AddRothCenteredSumDiv_2.of.RothBox
 open MathlibExt.NumberTheory.RothAuxiliary
 open Fin
 

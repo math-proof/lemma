@@ -8,7 +8,7 @@ public import Mathlib.MeasureTheory.Measure.LevyConvergence
 public import Mathlib.Topology.UrysohnsLemma
 public import Def.v1.Atlas.DifferentialAnalysis.code.JordanDecomposition.Part5
 public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.JordanDecomposition
-public import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras
 public import Def.v1.Atlas.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras.Part3
 
 

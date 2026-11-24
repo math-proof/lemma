@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.WeierstrassCurve.FreyPackage
+import Theorem.WeierstrassCurve.FreyPackage
 import Structure.FreyPackage_IsConductorLevel
 
 set_option autoImplicit false

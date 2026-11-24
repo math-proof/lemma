@@ -1,4 +1,4 @@
-import Lemma.Matrix.WindowedSiegelSet
+import Theorem.Matrix.WindowedSiegelSet
 
 open IsDedekindDomain NumberField MeasureTheory Matrix
 

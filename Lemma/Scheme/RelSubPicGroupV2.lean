@@ -1,11 +1,11 @@
 import Mathlib
 import Def.AlgebraicGeometry_RelativePicardFunctor
-import Lemma.Scheme.RepresentsRelSubPic
+import Theorem.Scheme.RepresentsRelSubPic
 import Def.AlgebraicGeometry_RelSubPicPresheaf
 import Theorem.Scheme.RelativeGroupLawGrpObj
 import Structure.JacJ1Iface
 import Abbrev.SheafOfModules_MonoidalV2
-import Lemma.Scheme.RelSubPicGroup
+import Theorem.Scheme.RelSubPicGroup
 import Instance.AlgebraicGeometry_RelSubPicGroupV2
 import Structure.AlgebraicGeometry_RelSubPicGroupV2
 

@@ -1,10 +1,10 @@
 import Mathlib
-import Lemma.MvPowerSeries.NegV2
-import Lemma.MvPowerSeries.CartierModule
-import Lemma.PowerSeries.CartierModuleHomothety
-import Lemma.MvPowerSeries.SpecialFormalModule
-import Lemma.MvPowerSeries.CartierModuleWittAction
-import Lemma.MvPowerSeries.CartierModuleBaseChange
+import Theorem.MvPowerSeries.NegV2
+import Theorem.MvPowerSeries.CartierModule
+import Theorem.PowerSeries.CartierModuleHomothety
+import Theorem.MvPowerSeries.SpecialFormalModule
+import Theorem.MvPowerSeries.CartierModuleWittAction
+import Theorem.MvPowerSeries.CartierModuleBaseChange
 import Theorem.FormalGroup.CartierGradedPiece
 import Lemma.FormalGroup.CriticalIndexChart
 import Lemma.Int.CartierNModule

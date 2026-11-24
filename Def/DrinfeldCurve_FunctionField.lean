@@ -1,5 +1,5 @@
 module
-public import Lemma.MvPolynomial.CoordRing
+public import Theorem.MvPolynomial.CoordRing
 public import Mathlib.RingTheory.Localization.FractionRing
 public import Abbrev.DrinfeldCurve_FunctionField
 set_option autoImplicit false

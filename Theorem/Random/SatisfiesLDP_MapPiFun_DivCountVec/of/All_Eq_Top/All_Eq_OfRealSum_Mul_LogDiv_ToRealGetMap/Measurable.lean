@@ -1,6 +1,6 @@
 module
 public import Theorem.Measure.SatisfiesLDP_Map_DivCountVecPi_ToMeasure.of.All_Eq_Top.All_Eq_OfRealSum_Mul_LogDiv_ToReal
-public import Lemma.Random.MapPi.of.Measurable
+public import Theorem.Random.MapPi.of.Measurable
 public import Initialize.Tactic.Attr.Basic
 open ENNReal MeasureTheory Random Real Measure
 

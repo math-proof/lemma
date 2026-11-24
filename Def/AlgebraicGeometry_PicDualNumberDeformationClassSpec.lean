@@ -1,7 +1,7 @@
 module
 public import Mathlib
 public import Def.AlgebraicGeometry_RigKerDualNumber
-public import Lemma.Scheme.TwoAffineOpenCoverH1BaseChange
+public import Theorem.Scheme.TwoAffineOpenCoverH1BaseChange
 public import Theorem.Scheme.ModulesSectionsTensor
 public import Abbrev.AlgebraicGeometry_PicDualNumberDeformationClassSpec
 set_option autoImplicit false

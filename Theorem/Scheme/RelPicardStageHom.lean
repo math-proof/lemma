@@ -1,7 +1,7 @@
 module
 public import Mathlib
 public import Def.AlgebraicGeometry_RelativePicardFunctor
-public import Lemma.Scheme.TwoAffineOpenCover
+public import Theorem.Scheme.TwoAffineOpenCover
 public import Def.AlgebraicGeometry_RelPicardStageHom
 set_option autoImplicit false
 

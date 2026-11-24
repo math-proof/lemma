@@ -3,7 +3,7 @@ import Lemma.MvPolynomial.CommFamilyAnnPart
 import Lemma.LaurentSeries.HeckeU
 import Lemma.LaurentSeries.HeckeV
 import Lemma.LaurentSeries.QExpansionDiff
-import Lemma.HahnSeries.JqCoeff
+import Theorem.HahnSeries.JqCoeff
 import Def.AlgebraicCurve_RegularDifferentials
 import Def.ModularCurve_MTorsionDiff
 

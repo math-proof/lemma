@@ -1,7 +1,7 @@
 module
 public import Abbrev.v1.Atlas.NumberTheoryI.code.GlobalFields
 public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GlobalFields
-public import Lemma.Nat.Atlas.v1.NumberTheoryI.code.CompleteFields
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.CompleteFields
 public import Theorem.v1.Atlas.NumberTheoryI.code.CompleteFields.Part2
 public import Theorem.v1.Atlas.NumberTheoryI.code.Cor1126.Part2
 

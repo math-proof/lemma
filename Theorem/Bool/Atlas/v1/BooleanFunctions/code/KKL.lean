@@ -2,7 +2,7 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.v1.Atlas.BooleanFunctions.code.Talagrand
-public import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
 open Finset BigOperators Real
 
 

@@ -1,6 +1,6 @@
 module
 public import Instance.Gamma0HeckeOperatorHom
-public import Lemma.UpperHalfPlane.PeriodMap
+public import Theorem.UpperHalfPlane.PeriodMap
 public import Mathlib.RingTheory.Finiteness.Subalgebra
 public import Mathlib.GroupTheory.Schreier
 public import Mathlib.LinearAlgebra.Matrix.FixedDetMatrices

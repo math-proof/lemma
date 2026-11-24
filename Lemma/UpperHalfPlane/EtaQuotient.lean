@@ -1,5 +1,5 @@
-import Lemma.HahnSeries.ModularUnit
-import Lemma.ModularForm.HeckeOperator
+import Theorem.HahnSeries.ModularUnit
+import Theorem.ModularForm.HeckeOperator
 import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
 import Mathlib.NumberTheory.ModularForms.Discriminant
 import Def.ModularCurve_EtaQuotient

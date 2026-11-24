@@ -2,8 +2,8 @@ module
 public import Def.v1.Atlas.DifferentialAnalysis.code.DifferentialOperators.Part2
 public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.DifferentialOperators
 public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbedding
-public import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.FourierInversion
-public import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SobolevDerivatives
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.FourierInversion
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevDerivatives
 public import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbedding.Part5
 public import Def.v1.Atlas.DifferentialAnalysis.code.FourierInversion.Part7
 public import Def.v1.Atlas.DifferentialAnalysis.code.SobolevDerivatives

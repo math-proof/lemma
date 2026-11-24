@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Scheme.RelativeGroupLaw
+import Theorem.Scheme.RelativeGroupLaw
 import Abbrev.GoodReductionJacobian_RelativeGroupLawAction
 
 set_option autoImplicit false

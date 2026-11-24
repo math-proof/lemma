@@ -1,6 +1,6 @@
 import Lemma.Nat.LtDiv.of.Lt_Mul
 import Lemma.List.Drop.eq.DropDrop__Sub.of.Ge
-import Lemma.List.Prod.eq.MulProdS
+import Theorem.List.Prod.eq.MulProdS
 import Lemma.Nat.Mul_Mul
 open List Nat
 

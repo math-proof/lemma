@@ -1,5 +1,5 @@
 import Lemma.Random.Any_ContinuousAndAny_All_LeAbsAndLeSubToRealIntegral_Sub_Log.of.Lt0
-import Lemma.Random.KlDiv.eq.All_EqGetMap0.of.Measurable
+import Theorem.Random.KlDiv.eq.All_EqGetMap0.of.Measurable
 import Mathlib.Algebra.BigOperators.Field
 import Mathlib.Analysis.Calculus.Deriv.MeanValue
 import Mathlib.Analysis.SpecialFunctions.Log.Basic

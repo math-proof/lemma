@@ -1,5 +1,5 @@
 import Theorem.Measure.ProductionPinsCompact
-import Lemma.Ideal.ArithCuspRealization
+import Theorem.Ideal.ArithCuspRealization
 import Def.LanglandsTunnell_DeltaLift
 
 set_option autoImplicit false

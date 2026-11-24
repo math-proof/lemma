@@ -17,6 +17,8 @@ namespace HeckeEigensystem
 variable {F : Type*} [Field F] [NumberField F]
 
 
+def cNorm (v : HeightOneSpectrum (𝓞 F)) : ℂ := (Ideal.absNorm v.asIdeal : ℂ)
+
 public theorem cNorm_ne_zero (v : HeightOneSpectrum (𝓞 F)) : cNorm v ≠ 0 := by
   have hN : Ideal.absNorm v.asIdeal ≠ 0 := Ideal.absNorm_eq_zero_iff.not.mpr v.ne_bot
   rw [cNorm, Ne, Nat.cast_eq_zero]
@@ -58,6 +60,39 @@ public theorem cNorm_ne_zero (v : HeightOneSpectrum (𝓞 F)) : cNorm v ≠ 0 :=
     rw [← mul_assoc, inv_mul_cancel₀ (cNorm_ne_zero v), one_mul]
 
 
+def ofRawCentral (Ψ : HeckeEigensystem F ℂ) : HeckeEigensystem F ℂ where
+  level := Ψ.level
+  level_ne_bot := Ψ.level_ne_bot
+  a := Ψ.a
+  b := fun v => cNorm v * Ψ.b v
+
+@[simp] theorem toRawCentral_level (Φ : HeckeEigensystem F ℂ) : Φ.toRawCentral.level = Φ.level := rfl
+@[simp] theorem toRawCentral_a (Φ : HeckeEigensystem F ℂ) (v : HeightOneSpectrum (𝓞 F)) :
+    Φ.toRawCentral.a v = Φ.a v := rfl
+@[simp] theorem toRawCentral_b (Φ : HeckeEigensystem F ℂ) (v : HeightOneSpectrum (𝓞 F)) :
+    Φ.toRawCentral.b v = (cNorm v)⁻¹ * Φ.b v := rfl
+@[simp] theorem ofRawCentral_level (Ψ : HeckeEigensystem F ℂ) : Ψ.ofRawCentral.level = Ψ.level := rfl
+@[simp] theorem ofRawCentral_a (Ψ : HeckeEigensystem F ℂ) (v : HeightOneSpectrum (𝓞 F)) :
+    Ψ.ofRawCentral.a v = Ψ.a v := rfl
+@[simp] theorem ofRawCentral_b (Ψ : HeckeEigensystem F ℂ) (v : HeightOneSpectrum (𝓞 F)) :
+    Ψ.ofRawCentral.b v = cNorm v * Ψ.b v := rfl
+
+@[simp] theorem ofRawCentral_toRawCentral (Φ : HeckeEigensystem F ℂ) :
+    Φ.toRawCentral.ofRawCentral = Φ := by
+  cases Φ with
+  | mk level hl a b =>
+    simp only [toRawCentral, ofRawCentral, mk.injEq, true_and]
+    funext v
+    rw [← mul_assoc, mul_inv_cancel₀ (cNorm_ne_zero v), one_mul]
+
+@[simp] theorem toRawCentral_ofRawCentral (Ψ : HeckeEigensystem F ℂ) :
+    Ψ.ofRawCentral.toRawCentral = Ψ := by
+  cases Ψ with
+  | mk level hl a b =>
+    simp only [toRawCentral, ofRawCentral, mk.injEq, true_and]
+    funext v
+    rw [← mul_assoc, inv_mul_cancel₀ (cNorm_ne_zero v), one_mul]
+
 public theorem toRawCentral_injective : Function.Injective (toRawCentral (F := F)) := fun Φ Φ' h => by
   rw [← ofRawCentral_toRawCentral Φ, h, ofRawCentral_toRawCentral]
 
@@ -79,6 +114,9 @@ end HeckeEigensystem
 variable (F : Type) [Field F] [NumberField F]
 
 
+def IsArithCuspRealizable (pins : CarrierPins F) (Φ : HeckeEigensystem F ℂ) : Prop :=
+  IsSmoothCuspRealizable F pins Φ.toRawCentral
+
 public theorem isArithCuspRealizable_iff (pins : CarrierPins F) (Φ : HeckeEigensystem F ℂ) :
     IsArithCuspRealizable F pins Φ ↔ Nonempty (SmoothCuspRealizationAt F pins Φ.toRawCentral) :=
   Iff.rfl
@@ -90,10 +128,19 @@ public theorem isSmoothCuspRealizable_iff_isArithCuspRealizable_ofRawCentral (pi
   unfold IsArithCuspRealizable; rw [HeckeEigensystem.toRawCentral_ofRawCentral]
 
 
+def IsArithCuspRealizableVia (pins : CarrierPins F) {R : Type*} [CommRing R]
+    (ι : R →+* ℂ) (Φ : HeckeEigensystem F R) : Prop :=
+  IsArithCuspRealizable F pins (Φ.map ι)
+
 public theorem isArithCuspRealizableVia_id (pins : CarrierPins F) (Φ : HeckeEigensystem F ℂ) :
     IsArithCuspRealizableVia F pins (RingHom.id ℂ) Φ ↔ IsArithCuspRealizable F pins Φ := by
   unfold IsArithCuspRealizableVia; rw [HeckeEigensystem.map_id]
 
+
+def arithCuspNotionOf
+    (pins : ∀ (F : Type) [Field F] [NumberField F], CarrierPins F) :
+    CuspidalityNotion ℂ where
+  IsCusp := fun F _i1 _i2 Φ => @IsArithCuspRealizable F _i1 _i2 (pins F) Φ
 
 public theorem arithCuspNotionOf_isCusp_iff
     (pins : ∀ (F : Type) [Field F] [NumberField F], CarrierPins F)

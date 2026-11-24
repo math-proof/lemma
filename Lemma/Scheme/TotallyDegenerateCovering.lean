@@ -1,4 +1,4 @@
-import Lemma.ValuationSubring.SemistableCharts
+import Theorem.ValuationSubring.SemistableCharts
 import Def.CerednikDrinfeld_Ribbon
 import Mathlib.FieldTheory.RatFunc.AsPolynomial
 import Structure.AlgebraicCurve_TotallyDegenerateCovering

@@ -1,5 +1,5 @@
 module
-public import Lemma.Nat.EqMul0_0
+public import Theorem.Nat.EqMul0_0
 public import Theorem.Nat.EqMul_0'0
 open Nat
 

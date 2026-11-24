@@ -1,9 +1,9 @@
 module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
-public import Lemma.List.IsReducedDrop.of.IsReduced
+public import Theorem.List.IsReducedDrop.of.IsReduced
 public import Theorem.Nat.EqBilinInversions
-public import Lemma.List.Any_And_IsReduced_EraseIdx.of.LtLengthMulWordProdSimple_Length_WordProd.IsReduced.SignChangeExchangeHyp
+public import Theorem.List.Any_And_IsReduced_EraseIdx.of.LtLengthMulWordProdSimple_Length_WordProd.IsReduced.SignChangeExchangeHyp
 public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.SimpleReflectionInversions
 public import Theorem.v1.Atlas.Buildings.code.CoxeterGroup.StrongExchangeBridge
 open CoxeterGroup CoxeterSignChangeExchangeFinal

@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.WeierstrassCurve.VeluQuotientMap
+import Theorem.WeierstrassCurve.VeluQuotientMap
 import Macro.WeierstrassCurve_VeluPointMap
 import Def.WeierstrassCurve_VeluPointMap
 

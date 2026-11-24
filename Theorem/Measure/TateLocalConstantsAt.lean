@@ -1,6 +1,6 @@
 module
-public import Lemma.Measure.TateLocalZeta
-public import Lemma.Matrix.AdelicLevel
+public import Theorem.Measure.TateLocalZeta
+public import Theorem.Matrix.AdelicLevel
 public import Def.LanglandsTunnell_TateLocalConstantsAt
 set_option autoImplicit false
 

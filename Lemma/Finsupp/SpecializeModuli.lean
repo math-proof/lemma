@@ -1,6 +1,6 @@
 import Mathlib
-import Lemma.HahnSeries.JqCoeff
-import Lemma.Ideal.RatFuncPlaces
+import Theorem.HahnSeries.JqCoeff
+import Theorem.Ideal.RatFuncPlaces
 import Abbrev.ModularCurve_SpecializeModuli
 
 namespace ModularCurve

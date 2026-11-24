@@ -47,6 +47,16 @@ open ProartinianCat
 variable (𝓞) in
 
 
+def traceSet {A : ProartinianCat 𝓞} (ρ : G →ₜ* GL n A) : Set A.carrier :=
+  Set.range fun g => Matrix.trace ((ρ g : GL n A.carrier) : Matrix n n A.carrier)
+
+variable (𝓞) in
+
+def traceSubalgebra {A : ProartinianCat 𝓞} (ρ : G →ₜ* GL n A) : Subalgebra 𝓞 A.carrier :=
+  (Algebra.adjoin 𝓞 (traceSet 𝓞 ρ)).topologicalClosure
+
+omit [IsLocalRing 𝓞] in
+
 public theorem isClosed_traceSubalgebra {A : ProartinianCat 𝓞} (ρ : G →ₜ* GL n A) :
     IsClosed ((traceSubalgebra 𝓞 ρ : Subalgebra 𝓞 A.carrier) : Set A.carrier) :=
   Subalgebra.isClosed_topologicalClosure _
@@ -110,3 +120,8 @@ section Universal
 
 open ProartinianCat
 
+namespace Deformation
+def TraceAlgebra.Descends {A : ProartinianCat 𝓞} (ρ : G →ₜ* GL n A) : Prop :=
+  ∃ γ ∈ conjKer (n := n) A, ∀ (g : G) (i j : n),
+    (((γ • ρ) g : GL n A.carrier) : Matrix n n A.carrier) i j ∈ traceSubalgebra 𝓞 ρ
+end Deformation

@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.Scheme.CurveModel
-import Lemma.ResidueField.GluedPic0
+import Theorem.Scheme.CurveModel
+import Theorem.ResidueField.GluedPic0
 import Theorem.Int.P2MUtil
 
 open scoped TensorProduct

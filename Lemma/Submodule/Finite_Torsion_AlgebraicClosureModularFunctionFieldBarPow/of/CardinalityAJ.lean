@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.LinearMap.EichlerShimuraData
-import Lemma.LaurentSeries.ArithmeticGalois
+import Theorem.LaurentSeries.ArithmeticGalois
 import Lemma.Submodule.Repartitions
 import Theorem.Int.P2MUtil
 

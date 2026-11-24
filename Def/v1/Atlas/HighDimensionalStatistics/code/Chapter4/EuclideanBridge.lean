@@ -7,7 +7,7 @@ public import Mathlib.Probability.Moments.Basic
 public import Mathlib.Analysis.SpecialFunctions.Log.Basic
 public import Mathlib.Analysis.SpecialFunctions.Pow.Real
 public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Thm_4_6
-public import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_6
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Thm_4_6
 public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter4.Cor_4_9
 public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter4.Cor_4_9
 open MeasureTheory ProbabilityTheory Matrix Real Finset BigOperators

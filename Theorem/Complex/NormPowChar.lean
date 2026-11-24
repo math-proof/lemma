@@ -25,6 +25,15 @@ public theorem ofReal_ideleNorm_cpow_ne_zero (x : (AdeleRing (𝓞 F) F)ˣ) (s :
   (ideleNorm_pos x).ne' (ofReal_eq_zero.mp ((cpow_eq_zero_iff _ _).mp h).1)
 
 
+def normPowChar (t : ℝ) : (AdeleRing (𝓞 F) F)ˣ →* ℂˣ where
+  toFun x := Units.mk0 (((ideleNorm F x : ℝ) : ℂ) ^ (I * t)) (ofReal_ideleNorm_cpow_ne_zero F x _)
+  map_one' := Units.ext (by rw [Units.val_mk0, ideleNorm_one, ofReal_one, one_cpow, Units.val_one])
+  map_mul' x y := Units.ext (by
+    rw [Units.val_mul, Units.val_mk0, Units.val_mk0, Units.val_mk0, ideleNorm_mul, ofReal_mul,
+      mul_cpow_ofReal_nonneg (ideleNorm_pos x).le (ideleNorm_pos y).le])
+
+variable {F}
+
 public theorem coe_normPowChar_apply (t : ℝ) (x : (AdeleRing (𝓞 F) F)ˣ) :
     ((normPowChar F t x : ℂˣ) : ℂ) = ((ideleNorm F x : ℝ) : ℂ) ^ (I * t) := rfl
 

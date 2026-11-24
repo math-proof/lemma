@@ -1,6 +1,6 @@
 module
 public import Mathlib.Basic.ENNReal.BigOperators
-public import Lemma.Fin.Pi_ToMeasure.of.EqSum
+public import Theorem.Fin.Pi_ToMeasure.of.EqSum
 public import Theorem.Finset.AbsAddMulInvLogInf'.le.DivMulCardAddAddLogDivLog2'1.of.All_Gt_0.Nonempty.All_EqSum.Gt_0
 open ENNReal Fin Finset MeasureTheory Real
 

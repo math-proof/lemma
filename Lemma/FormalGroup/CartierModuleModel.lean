@@ -1,9 +1,9 @@
 import Mathlib
-import Lemma.MvPowerSeries.CartierModule
-import Lemma.PowerSeries.CartierModuleHomothety
-import Lemma.MvPowerSeries.CartierModuleWittAction
+import Theorem.MvPowerSeries.CartierModule
+import Theorem.PowerSeries.CartierModuleHomothety
+import Theorem.MvPowerSeries.CartierModuleWittAction
 import Lemma.MvPolynomial.CartierModuleIntVerschiebung
-import Lemma.MvPowerSeries.SpecialFormalModule
+import Theorem.MvPowerSeries.SpecialFormalModule
 import Theorem.FormalGroup.CartierGradedPiece
 import Lemma.Fin.GradedCartierModuleData
 

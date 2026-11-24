@@ -1,6 +1,6 @@
 module
 public import Def.v1.Atlas.GeometryOfManifolds.code.ManifoldDFS.Part2
-public import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.ManifoldDFS
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.ManifoldDFS
 public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.SymplecticManifolds
 public import Structure.v1.Atlas.GeometryOfManifolds.code.SymplecticManifolds.Part3
 public import Abbrev.v1.Atlas.GeometryOfManifolds.code.CotangentBundleBridge

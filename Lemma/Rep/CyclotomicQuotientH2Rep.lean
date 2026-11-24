@@ -2,7 +2,7 @@ import Mathlib
 import Lemma.Rep.QuotientRightTranslation
 import Lemma.Rep.ContinuousUnramifiedLevelMap
 import Instance.ExtEndgame_ProductionDatum
-import Lemma.Ideal.Mathlib430
+import Theorem.Ideal.Mathlib430
 import Abbrev.GroupCohomology_CyclotomicQuotientH2Rep
 
 set_option autoImplicit false

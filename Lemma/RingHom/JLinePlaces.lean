@@ -1,6 +1,6 @@
 import Mathlib
 import Def.ModularCurve_RouteBCoordRing
-import Lemma.Ideal.RatFuncPlaces
+import Theorem.Ideal.RatFuncPlaces
 import Lemma.Valuation.RatFuncPlaceInfty
 import Theorems.Thm_ModularCurve_transcendental_jq
 import Instance.ModularCurve_JLinePlaces

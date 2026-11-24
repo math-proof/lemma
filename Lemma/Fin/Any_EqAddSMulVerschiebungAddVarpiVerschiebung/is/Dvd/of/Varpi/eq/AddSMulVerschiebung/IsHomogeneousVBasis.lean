@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.MvPowerSeries.SpecialFormalModule
+import Theorem.MvPowerSeries.SpecialFormalModule
 import Lemma.Fin.GradedCartierModuleData
 import Theorem.Int.P2MUtil
 

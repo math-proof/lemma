@@ -1,6 +1,6 @@
 module
 public import Mathlib
-public import Lemma.Scheme.NeronModelPropertyBundleCarrier
+public import Theorem.Scheme.NeronModelPropertyBundleCarrier
 set_option autoImplicit false
 
 

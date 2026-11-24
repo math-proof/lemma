@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.LinearMap.InternalHom
+import Theorem.LinearMap.InternalHom
 import Instance.SheafOfModules_Monoidal
 
 set_option autoImplicit false

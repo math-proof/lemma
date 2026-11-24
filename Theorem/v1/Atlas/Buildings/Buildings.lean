@@ -19,7 +19,7 @@ public import Theorem.Nat.In_BruhatCell1.of.In_B
 public import Theorem.Nat.Simple.ne.One
 public import Theorem.Nat.In_BruhatCell.of.In_BruhatCell
 public import Theorem.Set.SetMul_SetMul
-public import Lemma.Group.Atlas.v1.Buildings.code.BNPair.CellMulParabolicProof
+public import Theorem.v1.Atlas.Buildings.code.BNPair.CellMulParabolicProof
 public import Theorem.Set.All_In_StandardParabolic
 public import Theorem.Fin.T.eq.B
 public import Theorem.Real.In_G.of.All_Eq_SimpleToCoxeterSystemAndEqGMulMul_G.In_Tt
@@ -36,7 +36,7 @@ public import Theorem.Nat.Embed_Add1S.ne.Zero
 public import Theorem.Fin.IsUpperTriangularModMIsometry.of.IsCongruentToIdentityIsometry
 public import Theorem.Set.IsBoundedImage.of.IsBounded.IsSimilitude
 public import Theorem.Fin.DistFn.of.Any_In.Any_In.Any_In.Any_In
-public import Lemma.Set.IsHomothetic_πLattice
+public import Theorem.Set.IsHomothetic_πLattice
 public import Theorem.Set.IsOpen_SLVSet_SLV.of.IsOpen_SetOfIsInMaxIdeal.IsOpen_SetOfIsInO.All_Continuous.EqSet_SLVIwahoriSetSLV.IsAdicComplete_MaxIdeal
 public import Theorem.Finset.IsMaximalToSimplicialComplex.of.IsMaximal.In_Apartments
 public import Theorem.Nat.TopologicalGroupDef

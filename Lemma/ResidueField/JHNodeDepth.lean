@@ -1,8 +1,8 @@
 import Mathlib
 import Def.ModularCurve_JHPlaceSpecialization
-import Lemma.Finset.ComponentGroup
+import Theorem.Finset.ComponentGroup
 import Def.ModularCurve_NodeDepth
-import Lemma.ValuationSubring.SemistableCharts
+import Theorem.ValuationSubring.SemistableCharts
 import Notation.ModularCurve_JHNodeDepth
 
 set_option autoImplicit false

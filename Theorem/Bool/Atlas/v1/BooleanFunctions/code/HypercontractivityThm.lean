@@ -4,7 +4,7 @@ public import Initialize.Tactic.Attr.Basic
 public import Def.v1.Atlas.BooleanFunctions.code.Hypercontractivity
 public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Hypercontractivity
 public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Stability
-public import Lemma.Bool.Atlas.v1.BooleanFunctions.code.TwoPointInequality
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.TwoPointInequality
 public import Def.v1.Atlas.BooleanFunctions.code.Stability
 public import Def.v1.Atlas.BooleanFunctions.code.TwoPointInequality
 open Finset BigOperators Real

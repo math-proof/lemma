@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Submodule.ContinuousH2
+import Theorem.Submodule.ContinuousH2
 import Instance.GroupCohomology_LevelSubgroup
 
 set_option autoImplicit false

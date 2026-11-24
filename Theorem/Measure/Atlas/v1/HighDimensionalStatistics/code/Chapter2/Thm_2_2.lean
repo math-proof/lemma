@@ -2,8 +2,8 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Prop_2_1
-public import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Prop_2_1
-public import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_2
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Prop_2_1
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_2
 public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_19
 public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_2
 public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Thm_1_19

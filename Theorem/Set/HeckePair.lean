@@ -82,6 +82,26 @@ public theorem image_mk_doubleCoset (g : G) :
 variable (R₀) in
 
 
+def heckeIndicator (g : G) (hfin : (QuotientGroup.mk '' ((U : Set G) * {g})
+    : Set (G ⧸ U)).Finite) : HeckeAlgebra U R₀ :=
+  ⟨Set.indicator (doubleCoset U g) 1, by
+    refine ⟨fun u hu x => ?_, fun u hu x => ?_, ?_⟩
+    · by_cases hx : x ∈ doubleCoset U g
+      · simp only [Set.indicator_of_mem (mul_mem_doubleCoset hx hu), Set.indicator_of_mem hx,
+          Pi.one_apply]
+      · rw [Set.indicator_of_notMem (fun h => hx ?_), Set.indicator_of_notMem hx]
+        simpa using mul_mem_doubleCoset h (inv_mem hu)
+    · by_cases hx : x ∈ doubleCoset U g
+      · simp only [Set.indicator_of_mem (doubleCoset_mul_mem hx hu), Set.indicator_of_mem hx,
+          Pi.one_apply]
+      · rw [Set.indicator_of_notMem (fun h => hx ?_), Set.indicator_of_notMem hx]
+        simpa using doubleCoset_mul_mem h (inv_mem hu)
+    · rw [← image_mk_doubleCoset] at hfin
+      refine hfin.subset (Set.image_mono ?_)
+      intro y hy
+      by_contra hyD
+      exact hy (Set.indicator_of_notMem hyD 1)⟩
+
 public theorem heckeIndicator_apply_of_mem {g x : G} (hfin) (hx : x ∈ doubleCoset U g) :
     ((heckeIndicator R₀ g hfin : HeckeAlgebra U R₀) : G → R₀) x = 1 :=
   Set.indicator_of_mem hx 1

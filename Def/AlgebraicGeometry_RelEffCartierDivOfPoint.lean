@@ -1,6 +1,6 @@
 module
 public import Mathlib.AlgebraicGeometry.Morphisms.Separated
-public import Lemma.Scheme.RelEffCartierDiv
+public import Theorem.Scheme.RelEffCartierDiv
 public import Instance.AlgebraicGeometry_RelEffCartierDivOfPoint
 set_option autoImplicit false
 open CategoryTheory CategoryTheory.Limits

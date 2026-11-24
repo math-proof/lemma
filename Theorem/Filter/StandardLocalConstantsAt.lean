@@ -1,5 +1,5 @@
 module
-public import Lemma.Filter.AdelicTraceFin
+public import Theorem.Filter.AdelicTraceFin
 public import Theorem.Measure.TateLocalConstantsAt
 public import Def.LanglandsTunnell_StandardLocalConstantsAt
 set_option autoImplicit false

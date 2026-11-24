@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Scheme.OrderedAffineCoverCech
+import Theorem.Scheme.OrderedAffineCoverCech
 import Def.AlgebraicGeometry_DoubleComplex
 import Lemma.Scheme.BiCech
 import Structure.AlgebraicGeometry_BoundedCochainTensor

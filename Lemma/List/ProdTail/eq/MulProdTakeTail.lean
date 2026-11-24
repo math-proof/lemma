@@ -1,5 +1,5 @@
 import Lemma.List.ProdDrop.eq.MulProdS
-import Lemma.List.Tail.eq.Drop_1
+import Theorem.List.Tail.eq.Drop_1
 import Lemma.Nat.Add
 open List Nat
 

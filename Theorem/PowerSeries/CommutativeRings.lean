@@ -2,7 +2,7 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Theorem.RingTheory.PowerSeries.CommutativeRings.Part3
-public import Lemma.PowerSeries.DividingFPS
+public import Theorem.PowerSeries.DividingFPS
 open AlgebraicCombinatorics.FPS
 open scoped BigOperators
 

@@ -7,7 +7,7 @@ public import Mathlib.LinearAlgebra.Matrix.ToLin
 public import Mathlib.LinearAlgebra.Charpoly.Basic
 public import Mathlib.LinearAlgebra.Dimension.Free
 public import Mathlib.FieldTheory.Finite.GaloisField
-public import Lemma.Ideal.Mathlib430
+public import Theorem.Ideal.Mathlib430
 public import Instance.CuspidalType_IsCuspidalOfType
 public import Structure.CuspidalType_IsCuspidalOfType
 public import Abbrev.CuspidalType_IsCuspidalOfType

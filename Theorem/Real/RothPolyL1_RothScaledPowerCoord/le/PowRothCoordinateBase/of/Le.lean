@@ -2,11 +2,11 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.NumberTheory.RothAuxiliary.Part7
-public import Lemma.Polynomial.NatAbsCoeff.le.RothPolyL1
-public import Lemma.Polynomial.RothPolyL1Mul.le.MulRothSPolyL1
-public import Lemma.Polynomial.RothPolyL1X.eq.One
-public import Lemma.Polynomial.RothPolyL1_C.eq.NatAbs
-public import Lemma.Polynomial.RothPolyL1_Sub.le.AddRothSPolyL1
+public import Theorem.Polynomial.NatAbsCoeff.le.RothPolyL1
+public import Theorem.Polynomial.RothPolyL1Mul.le.MulRothSPolyL1
+public import Theorem.Polynomial.RothPolyL1X.eq.One
+public import Theorem.Polynomial.RothPolyL1_C.eq.NatAbs
+public import Theorem.Polynomial.RothPolyL1_Sub.le.AddRothSPolyL1
 open MathlibExt.NumberTheory.RothAuxiliary
 open Polynomial
 

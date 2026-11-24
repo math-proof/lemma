@@ -1,9 +1,9 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.Young.SchurBasics.Part11
-import Lemma.MvPolynomial.LittlewoodRichardson
+import Theorem.MvPolynomial.LittlewoodRichardson
 import Lemma.Partition.NPartition
-import Lemma.Equiv.Basics
+import Theorem.Equiv.Basics
 open AlgebraicCombinatorics hiding IsNPartition skewYoungDiagram schurPoly alternant skewSchurPoly simpleTransposition
 open Finset
 open Matrix

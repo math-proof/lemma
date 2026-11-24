@@ -1,6 +1,6 @@
 module
 public import Def.v1.Atlas.BooleanFunctions.code.Monotone
-public import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Monotone
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Monotone
 public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.NoiseSensitivity
 public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
 public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.UniqueGames

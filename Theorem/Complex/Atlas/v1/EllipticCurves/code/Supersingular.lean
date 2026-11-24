@@ -2,7 +2,7 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.v1.Atlas.EllipticCurves.code.OrdinarySupersingular
-public import Lemma.Complex.Atlas.v1.EllipticCurves.code.OrdinarySupersingular
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.OrdinarySupersingular
 open OrdinarySupersingular Hasse
 
 

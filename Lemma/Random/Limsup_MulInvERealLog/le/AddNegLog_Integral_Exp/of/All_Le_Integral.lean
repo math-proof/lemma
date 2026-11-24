@@ -1,7 +1,7 @@
 module
 public import Lemma.Random.GetPiFunSetOfGeSum_Mul.le.OfRealMulExpMulNegPowIntegral_Exp.of.BoundedContinuousFunction
-public import Lemma.Random.IsProbabilityMeasure.of.Gt_0
-public import Lemma.Random.Measurable.of.Gt_0
+public import Theorem.Random.IsProbabilityMeasure.of.Gt_0
+public import Theorem.Random.Measurable.of.Gt_0
 public import Mathlib.Analysis.SpecialFunctions.Exp
 public import Mathlib.Analysis.SpecialFunctions.Log.ENNRealLog
 public import Mathlib.Data.EReal.Operations

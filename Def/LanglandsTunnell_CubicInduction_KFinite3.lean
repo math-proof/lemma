@@ -1,5 +1,5 @@
 module
-public import Lemma.Matrix.CubicInduction_Structure
+public import Theorem.Matrix.CubicInduction_Structure
 public import Instance.LanglandsTunnell_CubicInduction_EnvelopingAction3
 
 

@@ -2,7 +2,7 @@ module
 public import Mathlib
 public import Theorem.Scheme.NeronModelPropertyBundleCarrier
 public import Instance.AlgebraicGeometry_RelativePicardFunctor
-public import Lemma.Scheme.RelPicardPullback
+public import Theorem.Scheme.RelPicardPullback
 set_option autoImplicit false
 
 

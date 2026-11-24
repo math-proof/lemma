@@ -1,4 +1,4 @@
-import Lemma.LaurentSeries.X1HeckeOperator
+import Theorem.LaurentSeries.X1HeckeOperator
 import Lemma.Scheme.ShimuraKernel
 
 set_option autoImplicit false

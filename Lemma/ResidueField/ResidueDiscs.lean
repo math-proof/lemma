@@ -1,4 +1,4 @@
-import Lemma.Scheme.RegularProlongation
+import Theorem.Scheme.RegularProlongation
 import Lemma.AlgEquiv.SemistableChartsComap
 
 set_option autoImplicit false

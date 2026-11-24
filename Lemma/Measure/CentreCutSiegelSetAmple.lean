@@ -1,5 +1,5 @@
 import Theorem.Matrix.CentreCutSiegelSet
-import Lemma.Matrix.SiegelVolume
+import Theorem.Matrix.SiegelVolume
 import Def.AutomorphicForm_CentreCutSiegelSetAmple
 
 set_option autoImplicit false

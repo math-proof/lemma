@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.HahnSeries.JqCoeff
+import Theorem.HahnSeries.JqCoeff
 import Lemma.HahnSeries.X0
 
 set_option autoImplicit false

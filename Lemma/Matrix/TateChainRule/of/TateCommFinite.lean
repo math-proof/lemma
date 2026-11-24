@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.Valuation.DivisorClassGroup
-import Lemma.Ideal.RatFuncPlaces
+import Theorem.Ideal.RatFuncPlaces
 import Lemma.Scheme.IsCurveOver
 import Lemma.Scheme.CanonicalDivisor
 import Lemma.Scheme.CanonicalDivisorUniformizer

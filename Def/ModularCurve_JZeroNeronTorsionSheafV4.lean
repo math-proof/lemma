@@ -5,8 +5,8 @@ public import Theorem.Ideal.EisensteinIdeal
 public import Structure.ModularCurve_FppfKummerInterface
 public import Def.ModularCurve_MazurStepThreeInputs
 public import Instance.AlgebraicGeometry_FppfSiteCohomology
-public import Lemma.Scheme.FppfCohomologyLES
-public import Lemma.Scheme.FppfKummerProp17
+public import Theorem.Scheme.FppfCohomologyLES
+public import Theorem.Scheme.FppfKummerProp17
 public import Theorem.ValuationSubring.JZeroToricTorsion
 public import Abbrev.ModularCurve_JZeroNeronTorsionSheafV4
 public import Structure.ModularCurve_JZeroNeronTorsionSheafV4

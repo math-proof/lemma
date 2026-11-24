@@ -1,8 +1,8 @@
 import Lemma.Submodule.GodementSection
 import Lemma.Matrix.WeylIntertwining
 import Def.AutomorphicForm_UnipotentQuotient
-import Lemma.Matrix.WindowedSiegelSet
-import Lemma.Measure.TateLocalZeta
+import Theorem.Matrix.WindowedSiegelSet
+import Theorem.Measure.TateLocalZeta
 import Abbrev.LanglandsTunnell_RS22GlobalIntegral
 
 set_option autoImplicit false

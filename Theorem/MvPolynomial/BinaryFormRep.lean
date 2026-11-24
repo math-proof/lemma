@@ -28,6 +28,10 @@ section BinaryForms
 variable (K : Type*) [CommRing K]
 
 
+noncomputable def binarySubst (M : Matrix (Fin 2) (Fin 2) ℤ) :
+    MvPolynomial (Fin 2) K →ₐ[K] MvPolynomial (Fin 2) K :=
+  MvPolynomial.aeval fun j => ∑ i : Fin 2, C ((M i j : ℤ) : K) * X i
+
 public theorem binarySubst_X (M : Matrix (Fin 2) (Fin 2) ℤ) (j : Fin 2) :
     binarySubst K M (X j) = ∑ i : Fin 2, C ((M i j : ℤ) : K) * X i :=
   MvPolynomial.aeval_X _ _
@@ -69,6 +73,23 @@ public theorem binaryFormRepSL_apply_coe (g : SL(2, ℤ)) (F : BinaryForm K n) :
   rfl
 
 
+noncomputable def binaryFormRepSL : Representation K SL(2, ℤ) (BinaryForm K n) where
+  toFun g := (binarySubst K (g : Matrix (Fin 2) (Fin 2) ℤ)).toLinearMap.restrict
+    fun F hF => binarySubst_mem K _ hF
+  map_one' := by
+    refine LinearMap.ext fun F => Subtype.ext ?_
+    change binarySubst K ((1 : SL(2, ℤ)) : Matrix (Fin 2) (Fin 2) ℤ) F.1 = F.1
+    rw [Matrix.SpecialLinearGroup.coe_one, binarySubst_one]
+    rfl
+  map_mul' g h := by
+    refine LinearMap.ext fun F => Subtype.ext ?_
+    change binarySubst K ((g * h : SL(2, ℤ)) : Matrix (Fin 2) (Fin 2) ℤ) F.1
+      = binarySubst K (g : Matrix (Fin 2) (Fin 2) ℤ) (binarySubst K (h : Matrix (Fin 2) (Fin 2) ℤ) F.1)
+    rw [Matrix.SpecialLinearGroup.coe_mul, binarySubst_mul]
+    rfl
+
+@[simp]
+
 @[simp]
 public theorem binaryFormAlphaAdj_apply_coe (ℓ : ℕ) (F : BinaryForm K n) :
     ((binaryFormAlphaAdj K n ℓ F : BinaryForm K n) : MvPolynomial (Fin 2) K)
@@ -81,6 +102,14 @@ section Eval
 
 variable (p : ℕ) [Fact p.Prime] (K : Type*) [CommRing K] [CharP K p]
 
+
+noncomputable def binaryFormAlphaAdj (ℓ : ℕ) : BinaryForm K n →ₗ[K] BinaryForm K n :=
+  (binarySubst K !![(ℓ : ℤ), 0; 0, 1]).toLinearMap.restrict fun F hF => binarySubst_mem K _ hF
+
+@[simp]
+
+noncomputable def evalRow (F : MvPolynomial (Fin 2) K) (v : UnimodularRow (ZMod p)) : K :=
+  MvPolynomial.eval ![ZMod.castHom (dvd_refl p) K v.1.1, ZMod.castHom (dvd_refl p) K v.1.2] F
 
 public theorem evalRow_eq_of_unit_mul {F : MvPolynomial (Fin 2) K} (hF : F ∈ BinaryForm K (p - 1))
     (u : (ZMod p)ˣ) (v w : UnimodularRow (ZMod p))
@@ -103,5 +132,26 @@ public theorem binaryFormEval_mk (F : BinaryForm K (p - 1)) (v : UnimodularRow (
   rfl
 
 end Eval
+
+noncomputable def binaryFormEval : BinaryForm K (p - 1) →ₗ[K] (ProjectiveLine (ZMod p) → K) where
+  toFun F := Quotient.lift (evalRow p K (F : MvPolynomial (Fin 2) K)) fun v w hvw => by
+    obtain ⟨u, h1, h2⟩ := hvw
+    exact (evalRow_eq_of_unit_mul p K F.2 u v w h1 h2).symm
+  map_add' F G := by
+    funext P
+    induction P using Quotient.inductionOn with
+    | h v =>
+      change evalRow p K ((F + G : BinaryForm K (p - 1)) : MvPolynomial (Fin 2) K) v
+        = evalRow p K (F : MvPolynomial (Fin 2) K) v + evalRow p K (G : MvPolynomial (Fin 2) K) v
+      simp [evalRow]
+  map_smul' c F := by
+    funext P
+    induction P using Quotient.inductionOn with
+    | h v =>
+      change evalRow p K ((c • F : BinaryForm K (p - 1)) : MvPolynomial (Fin 2) K) v
+        = c • evalRow p K (F : MvPolynomial (Fin 2) K) v
+      simp [evalRow, MvPolynomial.smul_eval]
+
+@[simp]
 
 end HeckeEis

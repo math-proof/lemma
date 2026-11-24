@@ -7,7 +7,7 @@ public import Mathlib.LinearAlgebra.Dimension.Finrank
 public import Mathlib.LinearAlgebra.Dimension.StrongRankCondition
 public import Mathlib.LinearAlgebra.Dimension.Finite
 public import Def.v1.Atlas.ArithmeticGeometry.code.EffectiveDivisors
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.EffectiveDivisors
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.EffectiveDivisors
 public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.CanonicalDivisors
 public import Def.v1.Atlas.ArithmeticGeometry.code.CanonicalDivisors.Part2
 public import Theorem.v1.Atlas.ArithmeticGeometry.code.RiemannRoch.Part5

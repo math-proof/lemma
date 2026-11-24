@@ -1,6 +1,6 @@
 module
-public import Lemma.Matrix.CongruenceSubgroupK1
-public import Lemma.Matrix.GL2CongruenceSubgroup
+public import Theorem.Matrix.CongruenceSubgroupK1
+public import Theorem.Matrix.GL2CongruenceSubgroup
 public import Theorem.Matrix.LocalHeckeInstance
 public import Def.LocalNewvector_ConductorDatum
 set_option autoImplicit false

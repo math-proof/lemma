@@ -1,6 +1,6 @@
 module
 public import Mathlib
-public import Lemma.LinearMap.InternalHom
+public import Theorem.LinearMap.InternalHom
 public import Theorems.Thm_PresheafOfModules_isMonoidal_inverseImage_W_toPresheaf
 public import Abbrev.SheafOfModules_Monoidal
 set_option autoImplicit false

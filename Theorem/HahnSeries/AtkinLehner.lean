@@ -18,6 +18,15 @@ section Fricke
 variable (N : ℕ) [NeZero N]
 
 
+def IsFrickeAut (σ : modularFunctionField N ≃ₐ[ℚ] modularFunctionField N) : Prop :=
+  σ ⟨jq, jq_mem N⟩ = ⟨jqN N, jqN_mem N⟩ ∧ σ ⟨jqN N, jqN_mem N⟩ = ⟨jq, jq_mem N⟩
+
+open Classical in
+
+def frickeInvolution : modularFunctionField N ≃ₐ[ℚ] modularFunctionField N :=
+  if h : ∃ σ : modularFunctionField N ≃ₐ[ℚ] modularFunctionField N, IsFrickeAut N σ
+  then h.choose else AlgEquiv.refl
+
 public theorem isFrickeAut_frickeInvolution
     (h : ∃ σ : modularFunctionField N ≃ₐ[ℚ] modularFunctionField N, IsFrickeAut N σ) :
     IsFrickeAut N (frickeInvolution N) := by
@@ -31,12 +40,27 @@ public theorem frickeInvolution_eq_refl
   rw [frickeInvolution, dif_neg h]
 
 
+def cuspZero : Place ℚ (modularFunctionField N) := frickeInvolution N • cuspInfty N
+
 public theorem cuspZero_def : cuspZero N = frickeInvolution N • cuspInfty N := rfl
 
 end Fricke
 
 section Full
 
+
+def IsFrickeAutFull (N : ℕ) [NeZero N]
+    (σ : modularFunctionFieldFull N ≃ₐ[ℚ] modularFunctionFieldFull N) : Prop :=
+  ∀ (a b : ℕ) (hab : a * b = N) (_ : NeZero a) (_ : NeZero b),
+    σ ⟨qExpand ℚ a jq, jqd_mem_full N (Dvd.intro b hab)⟩
+      = ⟨qExpand ℚ b jq, jqd_mem_full N (Dvd.intro_left a hab)⟩
+
+open Classical in
+
+def frickeInvolutionFull (N : ℕ) [NeZero N] :
+    modularFunctionFieldFull N ≃ₐ[ℚ] modularFunctionFieldFull N :=
+  if h : ∃ σ : modularFunctionFieldFull N ≃ₐ[ℚ] modularFunctionFieldFull N, IsFrickeAutFull N σ
+  then h.choose else AlgEquiv.refl
 
 public theorem isFrickeAutFull_frickeInvolutionFull (N : ℕ) [NeZero N]
     (h : ∃ σ : modularFunctionFieldFull N ≃ₐ[ℚ] modularFunctionFieldFull N,
@@ -54,6 +78,9 @@ public theorem frickeInvolutionFull_eq_refl (N : ℕ) [NeZero N]
 
 variable (N : ℕ) [NeZero N]
 
+
+def cuspZeroFull : Place ℚ (modularFunctionFieldFull N) :=
+  frickeInvolutionFull N • cuspInftyFull N
 
 public theorem cuspZeroFull_def : cuspZeroFull N = frickeInvolutionFull N • cuspInftyFull N := rfl
 
@@ -74,6 +101,12 @@ public theorem order_coeffEmb_jq (L : Type*) [Field L] [Algebra ℚ L] : (coeffE
 
 variable (N : ℕ) [NeZero N]
 
+
+def cuspInftyBar : Place (AlgebraicClosure ℚ) (modularFunctionFieldBar N) :=
+  qInftyPlaceBar (AlgebraicClosure ℚ) (modularFunctionFieldBar N)
+    ⟨⟨coeffEmb (AlgebraicClosure ℚ) jq,
+      coeffEmb_mem_laurentBaseChange (L := AlgebraicClosure ℚ) (hx := jq_mem_full N)⟩,
+      order_coeffEmb_jq (AlgebraicClosure ℚ)⟩
 
 public theorem cuspInftyBar_toValuationSubring :
     (cuspInftyBar N).toValuationSubring

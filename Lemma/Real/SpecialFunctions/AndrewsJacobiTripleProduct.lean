@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.Analysis.SpecialFunctions.JacobiTripleProduct
-import Lemma.Real.SpecialFunctions.JacobiTripleProduct
+import Theorem.Real.SpecialFunctions.JacobiTripleProduct
 
 
 namespace MetaMathlibExt

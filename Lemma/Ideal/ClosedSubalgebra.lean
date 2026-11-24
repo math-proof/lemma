@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Matrix.TraceAlgebra
+import Theorem.Matrix.TraceAlgebra
 import Instance.Deformations_ProartinianCompact
 import Instance.Deformations_ClosedSubalgebra
 

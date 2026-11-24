@@ -1,6 +1,6 @@
 module
 public import Mathlib
-public import Lemma.ModularForm.AtkinLehnerDatum
+public import Theorem.ModularForm.AtkinLehnerDatum
 public import Theorems.Thm_ModularForm_alSlash_slash_eq_self_of_mem_Gamma0
 public import Theorems.Thm_ModularForm_mdifferentiable_alSlash
 public import Theorems.Thm_ModularForm_isBoundedAt_alSlash

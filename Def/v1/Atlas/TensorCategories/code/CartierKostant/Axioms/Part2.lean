@@ -1,7 +1,7 @@
 module
 public import Theorem.v1.Atlas.TensorCategories.code.HopfAlgebra.Part3
 public import Theorem.Category.Atlas.v1.TensorCategories.code.HopfAlgebra
-public import Lemma.Category.Atlas.v1.TensorCategories.code.CoradicalFiltration
+public import Theorem.Category.Atlas.v1.TensorCategories.code.CoradicalFiltration
 public import Def.v1.Atlas.TensorCategories.code.CoradicalFiltration.Part8
 public import Mathlib.Algebra.Lie.UniversalEnveloping
 public import Mathlib.Algebra.Lie.OfAssociative

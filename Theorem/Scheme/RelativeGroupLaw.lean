@@ -25,11 +25,23 @@ public theorem schemeHomOverToOverHom_left {B Y X : Scheme.{u}} {g : Y ⟶ B} {f
   rfl
 
 
+def schemeHomOverToOverHom {B Y X : Scheme.{u}} {g : Y ⟶ B} {f : X ⟶ B}
+    (φ : SchemeHomOver g f) : Over.mk g ⟶ Over.mk f :=
+  Over.homMk φ.1 (by simpa using φ.2)
+
+@[simp]
+
 @[simp]
 public theorem overHomToSchemeHomOver_coe {B Y X : Scheme.{u}} {g : Y ⟶ B} {f : X ⟶ B}
     (h : Over.mk g ⟶ Over.mk f) : (overHomToSchemeHomOver h).1 = h.left :=
   rfl
 
+
+def overHomToSchemeHomOver {B Y X : Scheme.{u}} {g : Y ⟶ B} {f : X ⟶ B}
+    (h : Over.mk g ⟶ Over.mk f) : SchemeHomOver g f :=
+  ⟨h.left, by simpa using Over.w h⟩
+
+@[simp]
 
 @[simp]
 public theorem overHomToSchemeHomOver_schemeHomOverToOverHom {B Y X : Scheme.{u}} {g : Y ⟶ B}
@@ -51,6 +63,15 @@ public theorem schemeHomOverEquivOverHom_apply {B Y X : Scheme.{u}} {g : Y ⟶ B
   rfl
 
 
+def schemeHomOverEquivOverHom {B Y X : Scheme.{u}} (g : Y ⟶ B) (f : X ⟶ B) :
+    SchemeHomOver g f ≃ (Over.mk g ⟶ Over.mk f) where
+  toFun := schemeHomOverToOverHom
+  invFun := overHomToSchemeHomOver
+  left_inv := overHomToSchemeHomOver_schemeHomOverToOverHom
+  right_inv := schemeHomOverToOverHom_overHomToSchemeHomOver
+
+@[simp]
+
 @[simp]
 public theorem schemeHomOverEquivOverHom_symm_apply {B Y X : Scheme.{u}} {g : Y ⟶ B} {f : X ⟶ B}
     (h : Over.mk g ⟶ Over.mk f) :
@@ -71,12 +92,29 @@ public theorem schemeHomOverComp_coe {B T' T A : Scheme.{u}} {t : T ⟶ B} {t' :
 namespace RelativeGroupLaw
 
 
+def IsCommutative {R : Type u} [CommRing R] {A : Scheme.{u}}
+    {f : A ⟶ Spec (CommRingCat.of R)} (G : RelativeGroupLaw R f) : Prop :=
+  ∀ {T : Scheme.{u}} (t : T ⟶ Spec (CommRingCat.of R)) (x y : SchemeHomOver t f),
+    G.mul t x y = G.mul t y x
+
 public theorem IsCommutative.mul_comm {R : Type u} [CommRing R] {A : Scheme.{u}}
     {f : A ⟶ Spec (CommRingCat.of R)} {G : RelativeGroupLaw R f} (hc : G.IsCommutative)
     {T : Scheme.{u}} (t : T ⟶ Spec (CommRingCat.of R)) (x y : SchemeHomOver t f) :
     G.mul t x y = G.mul t y x :=
   hc t x y
 
+
+@[reducible]
+def pointGroup {R : Type u} [CommRing R] {A : Scheme.{u}} {f : A ⟶ Spec (CommRingCat.of R)}
+    (G : RelativeGroupLaw R f) {T : Scheme.{u}} (t : T ⟶ Spec (CommRingCat.of R)) :
+    Group (SchemeHomOver t f) where
+  mul x y := G.mul t x y
+  one := G.one t
+  inv x := G.inv t x
+  mul_assoc := G.mul_assoc t
+  one_mul := G.one_mul t
+  mul_one := G.mul_one t
+  inv_mul_cancel := G.inv_mul_cancel t
 
 public theorem mul_inv_cancel {R : Type u} [CommRing R] {A : Scheme.{u}}
     {f : A ⟶ Spec (CommRingCat.of R)} (G : RelativeGroupLaw R f) {T : Scheme.{u}}
@@ -118,6 +156,19 @@ public theorem one_natural {R : Type u} [CommRing R] {A : Scheme.{u}}
 
 end RelativeGroupLaw
 
+
+def trivialRelativeGroupLaw (R : Type u) [CommRing R] :
+    RelativeGroupLaw R (𝟙 (Spec (CommRingCat.of R))) where
+  mul := fun _ x _ => x
+  one := fun t => ⟨t, Category.comp_id t⟩
+  inv := fun _ x => x
+  mul_assoc := fun _ _ _ _ => rfl
+  one_mul := fun t _ =>
+    (subsingleton_schemeHomOver_of_isIso t (𝟙 (Spec (CommRingCat.of R)))).allEq _ _
+  mul_one := fun _ _ => rfl
+  inv_mul_cancel := fun t _ =>
+    (subsingleton_schemeHomOver_of_isIso t (𝟙 (Spec (CommRingCat.of R)))).allEq _ _
+  mul_natural := fun _ _ _ _ _ _ => rfl
 
 public theorem relativeGroupLaw_pointwise_eq_of_isIso {R : Type u} [CommRing R] {A : Scheme.{u}}
     (f : A ⟶ Spec (CommRingCat.of R)) [IsIso f]

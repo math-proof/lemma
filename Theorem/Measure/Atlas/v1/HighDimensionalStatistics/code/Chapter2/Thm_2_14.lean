@@ -2,9 +2,9 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Abbrev.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Def_2_12
-public import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Def_2_12
-public import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_2
-public import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_6
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Def_2_12
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Def_1_2
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_6
 public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter1.Thm_1_19
 public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Thm_2_14_SubspaceBound
 public import Def.v1.Atlas.HighDimensionalStatistics.code.Chapter1.Def_1_2

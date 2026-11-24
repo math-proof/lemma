@@ -27,12 +27,25 @@ namespace CurveModel
 variable {K : Type u} [Field K] {L : Type v} [Field L] [Algebra K L]
 
 
+def ffAlgEquiv (M : CurveModel K L) :
+    letI := M.functionFieldAlgebra
+    L ≃ₐ[K] M.C.functionField :=
+  letI := M.functionFieldAlgebra
+  AlgEquiv.ofRingEquiv (f := M.ffEquiv) M.ffEquiv_algebraMap
+
 public theorem ffAlgEquiv_apply (M : CurveModel K L) (f : L) : M.ffAlgEquiv f = M.ffEquiv f := rfl
 
+
+def placeEquiv (M : CurveModel K L) : closedPoints M.C ≃ Place K L :=
+  Equiv.ofBijective M.placeOfPoint M.placeOfPoint_bijective
 
 public theorem placeEquiv_apply (M : CurveModel K L) (x : closedPoints M.C) :
     M.placeEquiv x = M.placeOfPoint x := rfl
 
+
+def pointEquivPlace [IsAlgClosed K] (M : CurveModel K L) :
+    {p : Spec (CommRingCat.of K) ⟶ M.C // p ≫ M.toBase = 𝟙 _} ≃ Place K L :=
+  (pointEquivClosedPoint M.toBase).trans M.placeEquiv
 
 public theorem pointEquivPlace_apply [IsAlgClosed K] (M : CurveModel K L)
     (p : {p : Spec (CommRingCat.of K) ⟶ M.C // p ≫ M.toBase = 𝟙 _}) :

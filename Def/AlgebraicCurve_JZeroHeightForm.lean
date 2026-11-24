@@ -2,7 +2,7 @@ module
 public import Theorem.Finsupp.JZeroNaiveHeight
 public import Def.AlgebraicCurve_PlaceEvaluation
 public import Theorem.Submodule.Repartitions
-public import Lemma.Ideal.Mathlib430
+public import Theorem.Ideal.Mathlib430
 
 
 public section

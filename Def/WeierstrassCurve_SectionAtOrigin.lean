@@ -1,6 +1,6 @@
 module
 public import Mathlib
-public import Lemma.WeierstrassCurve.ProjModel
+public import Theorem.WeierstrassCurve.ProjModel
 public import Def.WeierstrassCurve_DrinfeldBasisGlobal
 public import Abbrev.WeierstrassCurve_SectionAtOrigin
 set_option autoImplicit false

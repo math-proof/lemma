@@ -1,11 +1,11 @@
 module
 public import Def.Analysis.CStarAlgebra.KadisonSinger.MixedCharPoly
-public import Lemma.Real.CStarAlgebra.KadisonSinger.MixedCharPoly
+public import Theorem.Real.CStarAlgebra.KadisonSinger.MixedCharPoly
 public import Theorem.Complex.CStarAlgebra.KadisonSinger.Paving
 public import Theorem.Polynomial.RealRooted
 public import Theorem.Real.CStarAlgebra.KadisonSinger.Barrier
 public import Theorem.Real.CStarAlgebra.KadisonSinger.RealStable
-public import Lemma.Polynomial.Interlacing
+public import Theorem.Polynomial.Interlacing
 public import Theorem.Matrix.Spectrum
 public import Def.Analysis.CStarAlgebra.KadisonSinger.Paving
 public import Def.Algebra.Polynomial.RealRooted.Part2

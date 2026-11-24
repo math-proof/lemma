@@ -1,7 +1,7 @@
 import Lemma.ValuationSubring.FinitePlaceLift
-import Lemma.Ideal.RatFuncPlaces
+import Theorem.Ideal.RatFuncPlaces
 import Lemma.Valuation.RatFuncPlaceInfty
-import Lemma.ValuationSubring.SemistableCharts
+import Theorem.ValuationSubring.SemistableCharts
 
 namespace AlgebraicCurve.GaussReduction
 

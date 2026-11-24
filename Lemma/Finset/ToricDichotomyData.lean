@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Submodule.ToricDescentData
+import Theorem.Submodule.ToricDescentData
 import Def.ModularCurve_ToricDichotomyData
 
 set_option autoImplicit false

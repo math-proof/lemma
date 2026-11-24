@@ -4,7 +4,7 @@ public import Mathlib.MeasureTheory.OuterMeasure.Induced
 public import Mathlib.Topology.ContinuousMap.ZeroAtInfty
 public import Mathlib.Topology.Order
 public import Def.v1.Atlas.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras.Part3
-public import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.MeasuresAndSigmaAlgebras
 public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.ContinuousFunctions
 public import Def.v1.Atlas.DifferentialAnalysis.code.ContinuousFunctions.Part2
 public import Theorem.v1.Atlas.DifferentialAnalysis.code.OuterMeasureFromFunctional

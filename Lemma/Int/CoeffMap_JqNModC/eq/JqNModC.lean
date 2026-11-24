@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.LaurentSeries.LaurentCoeff
-import Lemma.HahnSeries.JqCoeff
+import Theorem.LaurentSeries.LaurentCoeff
+import Theorem.HahnSeries.JqCoeff
 import Theorem.Int.P2MUtil
 
 open ModularCurve HahnSeries LaurentSeries

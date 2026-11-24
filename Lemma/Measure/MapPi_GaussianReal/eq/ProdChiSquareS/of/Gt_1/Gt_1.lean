@@ -101,7 +101,7 @@ private lemma sum_sq_eq_helmert_tail {n : Nat} (hn : 0 < n) (z : Fin n → Real)
   calc
     _ = (∑ j : Fin n, z j ^ 2) - (∑ k, z k) ^ 2 / (n : Real) := by
       simpa [card_univ] using
-        Sum_SquareSub_DivSum.eq.Sub_DivSquareSum.fun
+        Sum_SquareSub_DivSum.eq.Sub_DivSquareSum
           (s := (univ : Finset (Fin n))) (a := z)
     _ = ‖(toLp 2 z : EuclideanSpace Real (Fin n))‖ ^ 2 -
         ((helmertBasis hn).repr (toLp 2 z) ⟨0, hn⟩) ^ 2 := by
@@ -856,4 +856,4 @@ private lemma main
 
 
 -- created on 2026-10-30
--- updated on 2026-10-31
+-- updated on 2026-11-24

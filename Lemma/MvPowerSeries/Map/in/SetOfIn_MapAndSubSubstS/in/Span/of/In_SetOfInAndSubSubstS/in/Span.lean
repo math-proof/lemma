@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.MvPowerSeries.NegV2
-import Lemma.MvPowerSeries.SpecialFormalModule
+import Theorem.MvPowerSeries.NegV2
+import Theorem.MvPowerSeries.SpecialFormalModule
 import Theorem.Int.P2MUtil
 
 open CerednikDrinfeld CerednikDrinfeld.SpecialFormal MvPowerSeries

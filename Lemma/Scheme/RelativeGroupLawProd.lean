@@ -1,5 +1,5 @@
 import Mathlib.AlgebraicGeometry.Pullbacks
-import Lemma.Scheme.RelativeGroupLaw
+import Theorem.Scheme.RelativeGroupLaw
 import Lemma.Scheme.NeronModelEndomorphismExtension
 import Abbrev.GoodReductionJacobian_RelativeGroupLawProd
 

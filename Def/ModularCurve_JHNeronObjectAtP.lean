@@ -3,7 +3,7 @@ public import Mathlib
 public import Def.ModularCurve_JZeroNeronObjectAtP
 public import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
 public import Theorem.Scheme.NeronSpecialFibreRestriction
-public import Lemma.CuspForm.XHDifferentialsModL
+public import Theorem.CuspForm.XHDifferentialsModL
 public import Theorem.UpperHalfPlane.XHOperators
 public import Theorem.ResidueField.GluedPic0
 public import Def.GaloisRep_Flat

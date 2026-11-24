@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.WeierstrassCurve.VeluQuotientMap
+import Theorem.WeierstrassCurve.VeluQuotientMap
 open WeierstrassCurve
 
 

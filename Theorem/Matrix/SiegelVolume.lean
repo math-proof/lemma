@@ -26,6 +26,12 @@ section ArchEmbed
 open scoped Classical in
 
 
+def archPiMat (v₀ : InfinitePlace F) (g : Matrix (Fin 2) (Fin 2) v₀.Completion) :
+    Matrix (Fin 2) (Fin 2) (InfiniteAdeleRing F) :=
+  Matrix.of fun i j =>
+    (Function.update ((1 : Matrix (Fin 2) (Fin 2) (InfiniteAdeleRing F)) i j) v₀ (g i j) :
+      InfiniteAdeleRing F)
+
 public theorem matrix_eq_of_forall_archEval {M N : Matrix (Fin 2) (Fin 2) (InfiniteAdeleRing F)}
     (h : ∀ w : InfinitePlace F, (archEval F w).mapMatrix M = (archEval F w).mapMatrix N) :
     M = N := by
@@ -82,6 +88,11 @@ variable [NumberField F]
 section AdelicEmbed
 
 
+def infMat (M : Matrix (Fin 2) (Fin 2) (InfiniteAdeleRing F)) :
+    Matrix (Fin 2) (Fin 2) (AdeleRing (𝓞 F) F) :=
+  Matrix.of fun i j => ((M i j, (1 : Matrix (Fin 2) (Fin 2) (FiniteAdeleRing (𝓞 F) F)) i j) :
+    AdeleRing (𝓞 F) F)
+
 public theorem matrix_eq_of_arch_fin {M N : Matrix (Fin 2) (Fin 2) (AdeleRing (𝓞 F) F)}
     (h₁ : (adeleArch (𝓞 F) F).mapMatrix M = (adeleArch (𝓞 F) F).mapMatrix N)
     (h₂ : (adeleFin (𝓞 F) F).mapMatrix M = (adeleFin (𝓞 F) F).mapMatrix N) : M = N := by
@@ -118,6 +129,17 @@ public theorem infMat_mul (M N : Matrix (Fin 2) (Fin 2) (InfiniteAdeleRing F)) :
       adeleFin_mapMatrix_infMat,
       mul_one])
 
+
+def archEmbed (v₀ : InfinitePlace F) : GL (Fin 2) v₀.Completion →* AdelicGL2 (𝓞 F) F where
+  toFun g :=
+    { val := infMat F (archPiMat F v₀ g)
+      inv := infMat F (archPiMat F v₀ ((g⁻¹ : GL (Fin 2) v₀.Completion) : Matrix _ _ _))
+      val_inv := by rw [← infMat_mul, ← archPiMat_mul, Units.mul_inv, archPiMat_one, infMat_one]
+      inv_val := by rw [← infMat_mul, ← archPiMat_mul, Units.inv_mul, archPiMat_one, infMat_one] }
+  map_one' := Units.ext (by simp only [Units.val_one]; rw [archPiMat_one, infMat_one])
+  map_mul' g h := Units.ext (by simp only [Units.val_mul]; rw [archPiMat_mul, infMat_mul])
+
+variable {F}
 
 public theorem glFin_archEmbed (v₀ : InfinitePlace F) (g : GL (Fin 2) v₀.Completion) :
     glFin (𝓞 F) F (archEmbed F v₀ g) = 1 :=
@@ -189,6 +211,10 @@ public theorem two_ne_zero_completion (w : InfinitePlace F) : (2 : w.Completion)
   norm_pos_iff.mp (by rw [norm_two_completion]; norm_num)
 
 
+def contraction (w : InfinitePlace F) (b : w.Completion) : AdelicGL2 (𝓞 F) F :=
+  archEmbed F w (upperUnit (2⁻¹ : w.Completion) b 2 (inv_ne_zero (two_ne_zero_completion w))
+    (two_ne_zero_completion w))
+
 public theorem localHeight_contraction_mul (w : InfinitePlace F) (b : w.Completion)
     (g : AdelicGL2 (𝓞 F) F) :
     localHeight (archComponent F w (glArch (𝓞 F) F (contraction w b * g)))
@@ -215,6 +241,10 @@ public theorem archDetNorm_contraction_mul_self (w : InfinitePlace F) (b : w.Com
     ring
   rw [hdet, norm_one, one_mul]
 
+
+def xAt (w : InfinitePlace F) (g : AdelicGL2 (𝓞 F) F) : ℂ :=
+  xCoord (((archComponent F w (glArch (𝓞 F) F g) : GL (Fin 2) w.Completion) :
+    Matrix (Fin 2) (Fin 2) w.Completion).map (InfinitePlace.Completion.extensionEmbedding w))
 
 public theorem xWindowSq_eq_norm_xAt_sq (w : InfinitePlace F) (g : AdelicGL2 (𝓞 F) F) :
     xWindowSq (archComponent F w (glArch (𝓞 F) F g)) = ‖xAt w g‖ ^ 2 :=
@@ -249,6 +279,10 @@ section Capping
 
 variable {F}
 
+
+def capAt (c : ℝ) (P : Finset (InfinitePlace F)) (D : Set (AdelicGL2 (𝓞 F) F)) :
+    Set (AdelicGL2 (𝓞 F) F) :=
+  D ∩ {g | ∀ w ∈ P, localHeight (archComponent F w (glArch (𝓞 F) F g)) < 4 * c}
 
 public theorem capAt_empty (c : ℝ) (D : Set (AdelicGL2 (𝓞 F) F)) : capAt c ∅ D = D := by
   ext g; simp [capAt]

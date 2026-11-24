@@ -1,6 +1,6 @@
 import Def.HaarQuotient
-import Lemma.Matrix.CubicInduction_Structure
-import Lemma.Measure.TateGlobalZeta
+import Theorem.Matrix.CubicInduction_Structure
+import Theorem.Measure.TateGlobalZeta
 import Instance.M4aHerbrand_AdeleTopologyFacts
 import Instance.LanglandsTunnell_CubicInduction_WhittakerBlock
 import Def.LanglandsTunnell_CubicInduction_WhittakerBlock

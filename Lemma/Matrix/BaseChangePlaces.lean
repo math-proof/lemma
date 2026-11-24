@@ -1,4 +1,4 @@
-import Lemma.Measure.TwistedOrbital
+import Theorem.Measure.TwistedOrbital
 import Lemma.ContinuousMap.GenuineDescent
 
 set_option autoImplicit false

@@ -190,6 +190,14 @@ open MvPolynomial
 variable (p : ℕ) (R : Type v) [CommRing R] {B : Type u}
 
 
+def liftRel (u v : B) : MvPolynomial B R := X u * X v - C (p : R)
+
+abbrev LiftRing (u v : B) : Type (max u v) := MvPolynomial B R ⧸ Ideal.span {liftRel p R u v}
+
+variable {p R}
+
+def liftVar (u v : B) (b : B) : LiftRing p R u v := Ideal.Quotient.mk _ (X b)
+
 public theorem liftVar_mul_liftVar (u v : B) :
     liftVar (p := p) (R := R) u v u * liftVar (p := p) (R := R) u v v = p := by
   rw [liftVar, liftVar, ← map_mul, ← map_natCast (Ideal.Quotient.mk (Ideal.span {liftRel p R u v})),
@@ -203,6 +211,17 @@ public theorem liftVar_mul_liftVar (u v : B) :
   rw [liftHom, liftVar, Ideal.Quotient.lift_mk, eval₂Hom_X']
   rfl
 
+
+def liftHom [CommRing B] (j : R →+* B) (u v : B) (huv : u * v = p) : LiftRing p R u v →+* B :=
+  Ideal.Quotient.lift _ (eval₂Hom j id) (fun a ha => by
+    obtain ⟨c, rfl⟩ := Ideal.mem_span_singleton'.mp ha
+    rw [map_mul, liftRel, map_sub, map_mul, eval₂Hom_X', eval₂Hom_X', eval₂Hom_C, map_natCast, id, id,
+      huv, sub_self, mul_zero])
+
+@[simp] theorem liftHom_liftVar [CommRing B] (j : R →+* B) (u v : B) (huv : u * v = p) (b : B) :
+    liftHom j u v huv (liftVar u v b) = b := by
+  rw [liftHom, liftVar, Ideal.Quotient.lift_mk, eval₂Hom_X']
+  rfl
 
 public theorem liftHom_mk_C [CommRing B] (j : R →+* B) (u v : B) (huv : u * v = p) (r : R) :
     liftHom j u v huv (Ideal.Quotient.mk _ (C r)) = j r := by
@@ -232,6 +251,13 @@ public theorem natCast_mul_eq_zero (hR : ∀ r : R, (p : R) * r = 0 → r = 0) (
     (m : ℕ) (i : Fin 2) : liftHom j (a 0 0) (a 0 1) h (liftConstants (p := p) a m i) = a m i :=
   liftHom_liftVar j _ _ h _
 
+
+def liftConstants (a : ℕ → Fin 2 → B) (m : ℕ) (i : Fin 2) : LiftRing p R (a 0 0) (a 0 1) :=
+  liftVar (a 0 0) (a 0 1) (a m i)
+
+@[simp] theorem liftHom_liftConstants [CommRing B] (j : R →+* B) (a : ℕ → Fin 2 → B) (h : a 0 0 * a 0 1 = p)
+    (m : ℕ) (i : Fin 2) : liftHom j (a 0 0) (a 0 1) h (liftConstants (p := p) a m i) = a m i :=
+  liftHom_liftVar j _ _ h _
 
 public theorem liftConstants_zero_zero_mul (a : ℕ → Fin 2 → B) :
     liftConstants (p := p) (R := R) a 0 0 * liftConstants (p := p) (R := R) a 0 1 = p :=
@@ -286,6 +312,10 @@ public theorem baseChange_mem_gradedPiece (φ : B →+* B') (X : FormalODModule 
   rfl
 
 
+def IsHomogeneousVBasis (X : FormalODModule p B) (j : Zp2 p →+* B) (γ : Fin 2 → CartierModule p X.F) :
+    Prop :=
+  (∀ i : Fin 2, γ i ∈ X.gradedPiece j i) ∧ IsUnit (Matrix.of fun i k => tangent (γ i) k).det
+
 public theorem IsHomogeneousVBasis.map (φ : B →+* B') {X : FormalODModule p B} {j : Zp2 p →+* B}
     {γ : Fin 2 → CartierModule p X.F} (h : X.IsHomogeneousVBasis j γ) :
     (X.map φ).IsHomogeneousVBasis (φ.comp j) fun i => baseChange φ (γ i) :=
@@ -294,6 +324,20 @@ public theorem IsHomogeneousVBasis.map (φ : B →+* B') {X : FormalODModule p B
 
 @[simp] public theorem piIndex_val (m : ℕ) (i : Fin 2) : (piIndex m i : ℕ) = (m + i + 1) % 2 := rfl
 
+
+def piIndex (m : ℕ) (i : Fin 2) : Fin 2 := ⟨(m + i + 1) % 2, Nat.mod_lt _ two_pos⟩
+
+@[simp] theorem piIndex_val (m : ℕ) (i : Fin 2) : (piIndex m i : ℕ) = (m + i + 1) % 2 := rfl
+
+@[simp] theorem piIndex_val (m : ℕ) (i : Fin 2) : (piIndex m i : ℕ) = (m + i + 1) % 2 := rfl
+
+def HasStructureConstants (X : FormalODModule p B) (γ : Fin 2 → CartierModule p X.F)
+    (a : ℕ → Fin 2 → B) : Prop :=
+  ∀ (i : Fin 2) (N : ℕ), ∃ h : CartierModule p X.F,
+    endAct X.varpiEnd (γ i) =
+      (∑ m : Fin N, (⇑(verschiebungInt (p := p) (Φ := X.F)))^[m]
+        (homothety (a m i) (γ (piIndex m i)))) +
+        (⇑(verschiebungInt (p := p) (Φ := X.F)))^[N] h
 
 public theorem HasStructureConstants.exists_eq {X : FormalODModule p B} {γ : Fin 2 → CartierModule p X.F}
     {a : ℕ → Fin 2 → B} (h : X.HasStructureConstants γ a) (i : Fin 2) (N : ℕ) :

@@ -2,7 +2,7 @@ module
 public import Def.AlgebraicGeometry.EllipticCurve.ManinSequence
 public import Theorem.Int.EllipticCurve.ManinSequence
 public import Theorem.Polynomial.PrimitiveTripleManinProjectiveDegreeEllipticCurve.of.All_False.Ne_0
-public import Lemma.Nat.FrobeniusTrace.eq.SubAddCardF1CardPoint.of.AffineF
+public import Theorem.Nat.FrobeniusTrace.eq.SubAddCardF1CardPoint.of.AffineF
 public import Mathlib.AlgebraicGeometry.EllipticCurve.NormalForms
 public import Mathlib.AlgebraicGeometry.EllipticCurve.Affine.Point
 public import Def.AlgebraicGeometry.EllipticCurve.ManinProjectiveDegree

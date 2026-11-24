@@ -3,7 +3,7 @@ public import Mathlib.Analysis.SpecificLimits.Basic
 public import Mathlib.Basic.ENNReal.BigOperators
 public import Mathlib.Topology.Instances.EReal.Lemmas
 public import Mathlib.Topology.MetricSpace.Pseudo.Lemmas
-public import Lemma.Fin.Pi_ToMeasure.of.EqSum
+public import Theorem.Fin.Pi_ToMeasure.of.EqSum
 public import Theorem.Real.Any_And_AbsSub.le.DivCard.of.EqSum_1.All_Ge_0.Gt_0
 public import Theorem.Real.NhdsNegSum_Mul_LogDiv.of.All_Gt_0.All_LeAbsSub_DivCard.All_EqSum.All_Ge_0
 public import Initialize.Tactic.Attr.Basic

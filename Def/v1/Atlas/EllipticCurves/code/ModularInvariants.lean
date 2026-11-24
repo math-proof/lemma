@@ -1,6 +1,6 @@
 module
 public import Def.v1.Atlas.EllipticCurves.code.EisensteinSeries
-public import Lemma.Complex.Atlas.v1.EllipticCurves.code.EisensteinSeries
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.EisensteinSeries
 public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Uniformization
 public import Def.v1.Atlas.EllipticCurves.code.Uniformization
 open Complex

@@ -1,5 +1,5 @@
 import Def.NumberField_AdelicFourier
-import Lemma.Measure.TateGlobalZeta
+import Theorem.Measure.TateGlobalZeta
 import Lemma.Complex.EtaFamily
 import Def.AutomorphicForm_GodementSection
 

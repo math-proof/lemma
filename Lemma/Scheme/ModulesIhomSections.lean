@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.LinearMap.InternalHom
+import Theorem.LinearMap.InternalHom
 import Instance.SheafOfModules_Monoidal
 import Lemma.Scheme.ModulesSectionsTensor
 import Instance.AlgebraicGeometry_ModulesIhomSections

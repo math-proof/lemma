@@ -1,7 +1,7 @@
 module
 public import Def.AutomorphicForm_AdelicLsXi
 public import Def.AutomorphicForm_ConstantTerm
-public import Lemma.Matrix.AdelicLevel
+public import Theorem.Matrix.AdelicLevel
 public import Abbrev.LanglandsTunnell_CubicInduction_Carrier
 set_option autoImplicit false
 open IsDedekindDomain NumberField Matrix

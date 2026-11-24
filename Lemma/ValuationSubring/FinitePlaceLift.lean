@@ -1,6 +1,6 @@
 module
 public import Lemma.WeierstrassCurve.ReductionMap
-public import Lemma.ResidueField.ConstantReduction
+public import Theorem.ResidueField.ConstantReduction
 public import Def.AlgebraicCurve_PlaceEvaluation
 public import Structure.ModularCurve_FinitePlaceLift
 set_option autoImplicit false

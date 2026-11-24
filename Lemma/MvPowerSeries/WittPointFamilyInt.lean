@@ -1,8 +1,8 @@
 import Mathlib
-import Lemma.MvPowerSeries.NegV2
-import Lemma.MvPowerSeries.CartierModule
-import Lemma.PowerSeries.CartierModuleHomothety
-import Lemma.MvPowerSeries.CartierModuleWittAction
+import Theorem.MvPowerSeries.NegV2
+import Theorem.MvPowerSeries.CartierModule
+import Theorem.PowerSeries.CartierModuleHomothety
+import Theorem.MvPowerSeries.CartierModuleWittAction
 import Lemma.MvPolynomial.CartierModuleIntVerschiebung
 import Lemma.MvPowerSeries.WittPointFamily
 

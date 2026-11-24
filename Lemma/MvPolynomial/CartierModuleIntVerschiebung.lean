@@ -1,9 +1,9 @@
 module
 public import Mathlib
-public import Lemma.MvPowerSeries.NegV2
-public import Lemma.MvPowerSeries.CartierModule
-public import Lemma.PowerSeries.CartierModuleHomothety
-public import Lemma.MvPowerSeries.CartierModuleWittAction
+public import Theorem.MvPowerSeries.NegV2
+public import Theorem.MvPowerSeries.CartierModule
+public import Theorem.PowerSeries.CartierModuleHomothety
+public import Theorem.MvPowerSeries.CartierModuleWittAction
 set_option autoImplicit false
 
 

@@ -1,6 +1,6 @@
-import Lemma.LaurentSeries.ArithmeticGalois
+import Theorem.LaurentSeries.ArithmeticGalois
 import Def.HeckeGalois_EichlerShimura
-import Lemma.WeierstrassCurve.TateModule
+import Theorem.WeierstrassCurve.TateModule
 import Mathlib.LinearAlgebra.TensorProduct.Tower
 import Mathlib.Algebra.Algebra.Subalgebra.Lattice
 import Mathlib.LinearAlgebra.Basis.Defs

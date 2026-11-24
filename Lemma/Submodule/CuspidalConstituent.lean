@@ -1,4 +1,4 @@
-import Lemma.Submodule.IsotypicCuspSpace
+import Theorem.Submodule.IsotypicCuspSpace
 import Theorem.Matrix.FactorizableTestFn
 import Structure.AutomorphicForm_CuspidalConstituent
 

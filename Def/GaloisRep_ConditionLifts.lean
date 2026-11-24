@@ -1,7 +1,7 @@
 module
 public import Mathlib
 public import Def.GaloisRep_Adic
-public import Lemma.Matrix.TraceAlgebra
+public import Theorem.Matrix.TraceAlgebra
 
 
 public section

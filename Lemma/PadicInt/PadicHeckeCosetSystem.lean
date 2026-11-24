@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Matrix.HeckeCosetLocal
+import Theorem.Matrix.HeckeCosetLocal
 import Structure.LocalLanglands_HeckeCosetSystem
 import Instance.LocalLanglands_PadicHeckeCosetSystem
 

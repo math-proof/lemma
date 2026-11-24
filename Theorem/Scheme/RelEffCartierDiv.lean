@@ -32,6 +32,13 @@ public theorem mapOnProdOver_fst {𝒞 S : Scheme.{u}} (f : 𝒞 ⟶ S)
   simp only [mapOnProdOver, pullback.map, pullback.lift_fst, Category.comp_id]
 
 
+noncomputable def mapOnProdOver {𝒞 S : Scheme.{u}} (f : 𝒞 ⟶ S)
+    {T T' : Scheme.{u}} {g : T ⟶ S} {g' : T' ⟶ S} (φ : T ⟶ T') (hφ : φ ≫ g' = g) :
+    pullback f g ⟶ pullback f g' :=
+  pullback.map f g f g' (𝟙 𝒞) φ (𝟙 S) (by simp) (by rw [Category.comp_id, hφ])
+
+@[reassoc (attr := simp)]
+
 @[reassoc (attr := simp)]
 public theorem mapOnProdOver_snd {𝒞 S : Scheme.{u}} (f : 𝒞 ⟶ S)
     {T T' : Scheme.{u}} {g : T ⟶ S} {g' : T' ⟶ S} (φ : T ⟶ T') (hφ : φ ≫ g' = g) :
@@ -53,6 +60,20 @@ public theorem isPullback_mapOnProdOver {𝒞 S : Scheme.{u}} (f : 𝒞 ⟶ S)
   simpa using IsPullback.of_hasPullback f (φ ≫ g')
 
 
+def PullsBackOver {𝒞 S : Scheme.{u}} {f : 𝒞 ⟶ S} {r : ℕ}
+    {T' : Scheme.{u}} {g' : T' ⟶ S} (D : RelEffCartierDiv f r g')
+    {T : Scheme.{u}} {g : T ⟶ S} (φ : T ⟶ T') (hφ : φ ≫ g' = g)
+    (D' : RelEffCartierDiv f r g) : Prop :=
+  D.I.comap (mapOnProdOver f φ hφ) = D'.I
+
+section transport
+
+variable {𝒞 S : Scheme.{u}} {f : 𝒞 ⟶ S} {T T' : Scheme.{u}} {g : T ⟶ S} {g' : T' ⟶ S}
+
+noncomputable def comapSubschemeMapOver (I : (pullback f g').IdealSheafData) (φ : T ⟶ T')
+    (hφ : φ ≫ g' = g) : (I.comap (mapOnProdOver f φ hφ)).subscheme ⟶ I.subscheme :=
+  (I.comapIso (mapOnProdOver f φ hφ)).hom ≫ pullback.snd _ _
+
 public theorem isPullback_comapSubschemeMapOver (I : (pullback f g').IdealSheafData) (φ : T ⟶ T')
     (hφ : φ ≫ g' = g) :
     IsPullback (comapSubschemeMapOver I φ hφ) (I.comap (mapOnProdOver f φ hφ)).subschemeι
@@ -72,6 +93,26 @@ public theorem isPullback_comap_snd_over (I : (pullback f g').IdealSheafData) (�
 
 end transport
 
+
+noncomputable def RelEffCartierDiv.pullbackAlong {𝒞 S : Scheme.{u}} {f : 𝒞 ⟶ S} {r : ℕ}
+    {T' : Scheme.{u}} {g' : T' ⟶ S} (D : RelEffCartierDiv f r g')
+    {T : Scheme.{u}} {g : T ⟶ S} (φ : T ⟶ T') (hφ : φ ≫ g' = g) : RelEffCartierDiv f r g where
+  I := D.I.comap (mapOnProdOver f φ hφ)
+  isFinite :=
+    have := D.isFinite
+    MorphismProperty.of_isPullback (isPullback_comap_snd_over D.I φ hφ) ‹_›
+  flat :=
+    have := D.flat
+    MorphismProperty.of_isPullback (isPullback_comap_snd_over D.I φ hφ) ‹_›
+  locallyOfFinitePresentation :=
+    have := D.locallyOfFinitePresentation
+    MorphismProperty.of_isPullback (isPullback_comap_snd_over D.I φ hφ) ‹_›
+  finrank_eq t := by
+    have := D.isFinite
+    have := D.flat
+    have := D.locallyOfFinitePresentation
+    rw [Scheme.Hom.finrank_of_isPullback _ _ _ _ (isPullback_comap_snd_over D.I φ hφ) t]
+    exact D.finrank_eq (φ t)
 
 public theorem pullsBackOver_pullbackAlong {𝒞 S : Scheme.{u}} {f : 𝒞 ⟶ S} {r : ℕ}
     {T' : Scheme.{u}} {g' : T' ⟶ S} (D : RelEffCartierDiv f r g')
@@ -129,6 +170,16 @@ variable {k : Type u} [Field k]
     D.toRelEffDivisor.I = D.I := rfl
 
 
+def RelEffCartierDiv.toRelEffDivisor {C : Scheme.{u}} {c : C ⟶ Spec (CommRingCat.of k)}
+    {r : ℕ} {T : Scheme.{u}} {t : T ⟶ Spec (CommRingCat.of k)} (D : RelEffCartierDiv c r t) :
+    AlgebraicCurve.RelEffDivisor C c r T t :=
+  ⟨D.I, D.isFinite, D.flat, D.finrank_eq⟩
+
+@[simp] theorem RelEffCartierDiv.toRelEffDivisor_I {C : Scheme.{u}}
+    {c : C ⟶ Spec (CommRingCat.of k)} {r : ℕ} {T : Scheme.{u}}
+    {t : T ⟶ Spec (CommRingCat.of k)} (D : RelEffCartierDiv c r t) :
+    D.toRelEffDivisor.I = D.I := rfl
+
 public theorem RelEffCartierDiv.toRelEffDivisor_injective {C : Scheme.{u}}
     {c : C ⟶ Spec (CommRingCat.of k)} {r : ℕ} {T : Scheme.{u}}
     {t : T ⟶ Spec (CommRingCat.of k)} :
@@ -142,6 +193,19 @@ public theorem RelEffCartierDiv.toRelEffDivisor_injective {C : Scheme.{u}}
     (h : LocallyOfFinitePresentation (D.I.subschemeι ≫ pullback.snd c t)) :
     (RelEffCartierDiv.ofRelEffDivisor D h).toRelEffDivisor = D := rfl
 
+
+def RelEffCartierDiv.ofRelEffDivisor {C : Scheme.{u}} {c : C ⟶ Spec (CommRingCat.of k)}
+    {r : ℕ} {T : Scheme.{u}} {t : T ⟶ Spec (CommRingCat.of k)}
+    (D : AlgebraicCurve.RelEffDivisor C c r T t)
+    (h : LocallyOfFinitePresentation (D.I.subschemeι ≫ pullback.snd c t)) :
+    RelEffCartierDiv c r t :=
+  ⟨D.I, D.isFinite, D.flat, h, D.finrank_eq⟩
+
+@[simp] theorem RelEffCartierDiv.toRelEffDivisor_ofRelEffDivisor {C : Scheme.{u}}
+    {c : C ⟶ Spec (CommRingCat.of k)} {r : ℕ} {T : Scheme.{u}}
+    {t : T ⟶ Spec (CommRingCat.of k)} (D : AlgebraicCurve.RelEffDivisor C c r T t)
+    (h : LocallyOfFinitePresentation (D.I.subschemeι ≫ pullback.snd c t)) :
+    (RelEffCartierDiv.ofRelEffDivisor D h).toRelEffDivisor = D := rfl
 
 public theorem RelEffCartierDiv.toRelEffDivisor_pullbackAlong {C : Scheme.{u}}
     {c : C ⟶ Spec (CommRingCat.of k)} {r : ℕ}

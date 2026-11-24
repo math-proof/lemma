@@ -14,7 +14,7 @@ public import Mathlib.Analysis.Normed.Group.Ultra
 public import Mathlib.NumberTheory.NumberField.CanonicalEmbedding.ConvexBody
 public import Def.v1.Atlas.NumberTheoryI.code.KroneckerWeber.Part5
 public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.KroneckerWeber
-public import Lemma.Nat.Atlas.v1.NumberTheoryI.code.AdicCompletionAlgebra
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.AdicCompletionAlgebra
 public import Theorem.v1.Atlas.NumberTheoryI.code.AdicCompletionAlgebra.Part3
 public import Instance.v1.Atlas.NumberTheoryI.code.Adeles.Part7
 

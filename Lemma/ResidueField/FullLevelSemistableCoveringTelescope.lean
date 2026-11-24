@@ -1,4 +1,4 @@
-import Lemma.ResidueField.FullLevelSemistableCovering
+import Theorem.ResidueField.FullLevelSemistableCovering
 import Instance.ModularCurve_FullLevelSemistableCoveringTelescope
 import Abbrev.ModularCurve_FullLevelSemistableCoveringTelescope
 

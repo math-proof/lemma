@@ -1,5 +1,5 @@
 module
-public import Lemma.Matrix.WindowedSiegelSet
+public import Theorem.Matrix.WindowedSiegelSet
 open IsDedekindDomain NumberField Matrix
 
 

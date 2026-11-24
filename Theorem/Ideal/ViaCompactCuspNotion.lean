@@ -1,7 +1,7 @@
 module
-public import Lemma.Ideal.ArithCuspRealization
+public import Theorem.Ideal.ArithCuspRealization
 public import Theorem.Measure.ProductionPinsCompact
-public import Lemma.Matrix.ArchWeightCharTransport
+public import Theorem.Matrix.ArchWeightCharTransport
 public import Def.ModularForm_EisensteinChiNegThree
 public import Def.AutomorphicForm_ViaCompactCuspNotion
 set_option autoImplicit false

@@ -1,4 +1,4 @@
-import Lemma.Matrix.CubicInduction_Structure
+import Theorem.Matrix.CubicInduction_Structure
 import Lemma.Matrix.SmoothingKernel
 
 set_option autoImplicit false

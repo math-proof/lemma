@@ -26,6 +26,22 @@ set_option maxHeartbeats 999999
 attribute [local instance] Matrix.seminormedAddCommGroup
 
 
+-/
+
+structure RothLemmaInput (n : ℕ) (δ : ℝ) (Q R : ℕ) where
+  P : MvPolynomial (Fin (n + 1)) ℤ
+  r : Fin (n + 1) → ℕ
+  q : Fin (n + 1) → ℚ
+  P_ne : P ≠ 0
+  P_degree : rothDegreeBound P r
+  r_large : ∀ h, R ≤ r h
+  den_large : Q ≤ (q 0).den
+  den_monotone : Monotone fun h ↦ (q h).den
+  r_antitone : Antitone r
+  separated : ∀ i : Fin n, (r i.succ : ℝ) ≤ δ * r i.castSucc
+  den_power : ∀ h, (q 0).den ^ r 0 ≤ (q h).den ^ r h
+  height : (rothMvL1 P : ℝ) ≤ Real.rpow (q 0).den (δ * r 0)
+
 public theorem EvalAlgebraMap.eq.Eval_AlgebraMapFun
   {m : ℕ}
   (P : MvPolynomial (Fin m) ℤ) (q : Fin m → ℚ) :

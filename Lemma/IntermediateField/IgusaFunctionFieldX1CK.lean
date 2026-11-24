@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.LaurentSeries.IgusaFunctionFieldX1
-import Lemma.LaurentSeries.LaurentCoeff
+import Theorem.LaurentSeries.LaurentCoeff
 import Theorem.Int.P2MUtil
 
 open ModularCurve LaurentSeries

@@ -150,6 +150,34 @@ end Local
 section Projections
 
 
+def archEval (w : InfinitePlace K) : InfiniteAdeleRing K →+* w.Completion where
+  toFun a := a w
+  map_one' := rfl
+  map_mul' _ _ := rfl
+  map_zero' := rfl
+  map_add' _ _ := rfl
+
+def finAdeleEval (v : HeightOneSpectrum R) : FiniteAdeleRing R K →+* v.adicCompletion K where
+  toFun a := a v
+  map_one' := rfl
+  map_mul' _ _ := rfl
+  map_zero' := rfl
+  map_add' _ _ := rfl
+
+def adeleArch : AdeleRing R K →+* InfiniteAdeleRing K where
+  toFun a := a.1
+  map_one' := rfl
+  map_mul' _ _ := rfl
+  map_zero' := rfl
+  map_add' _ _ := rfl
+
+def adeleFin : AdeleRing R K →+* FiniteAdeleRing R K where
+  toFun a := a.2
+  map_one' := rfl
+  map_mul' _ _ := rfl
+  map_zero' := rfl
+  map_add' _ _ := rfl
+
 public theorem archEval_apply (w : InfinitePlace K) (a : InfiniteAdeleRing K) : archEval K w a = a w := rfl
 
 public theorem finAdeleEval_apply (v : HeightOneSpectrum R) (a : FiniteAdeleRing R K) :
@@ -176,6 +204,19 @@ public theorem continuous_adeleArch : Continuous (adeleArch R K) :=
 public theorem continuous_adeleFin : Continuous (adeleFin R K) :=
   (continuous_snd : Continuous fun x : AdeleRing R K => x.2)
 
+
+def archComponent (w : InfinitePlace K) : GL (Fin 2) (InfiniteAdeleRing K) →* GL (Fin 2) w.Completion :=
+  Matrix.GeneralLinearGroup.map (archEval K w)
+
+def finComponent (v : HeightOneSpectrum R) :
+    GL (Fin 2) (FiniteAdeleRing R K) →* GL (Fin 2) (v.adicCompletion K) :=
+  Matrix.GeneralLinearGroup.map (finAdeleEval R K v)
+
+def glArch : GL (Fin 2) (AdeleRing R K) →* GL (Fin 2) (InfiniteAdeleRing K) :=
+  Matrix.GeneralLinearGroup.map (adeleArch R K)
+
+def glFin : GL (Fin 2) (AdeleRing R K) →* GL (Fin 2) (FiniteAdeleRing R K) :=
+  Matrix.GeneralLinearGroup.map (adeleFin R K)
 
 public theorem archComponent_apply (w : InfinitePlace K) (g : GL (Fin 2) (InfiniteAdeleRing K)) (i j : Fin 2) :
     (archComponent K w g : Matrix (Fin 2) (Fin 2) w.Completion) i j
@@ -404,6 +445,24 @@ public protected theorem _root_.NumberField.AdelicLevel.IsLevelOneMatrix.mul (hm
 variable (R K) (N)
 
 
+def finiteLevelZero : Subgroup (GL (Fin 2) (FiniteAdeleRing R K)) where
+  carrier := {g | IsLevelZeroMatrix R K N (g : Matrix (Fin 2) (Fin 2) (FiniteAdeleRing R K)) ∧
+    IsLevelZeroMatrix R K N ((g⁻¹ : GL (Fin 2) (FiniteAdeleRing R K)) : Matrix _ _ _)}
+  one_mem' := ⟨by rw [Units.val_one]; exact .one, by rw [inv_one, Units.val_one]; exact .one⟩
+  mul_mem' ha hb := ⟨by rw [Units.val_mul]; exact ha.1.mul hb.1,
+    by simpa [Units.val_mul, Units.val_inv, mul_inv_rev] using hb.2.mul ha.2⟩
+  inv_mem' ha := ⟨ha.2, by rw [inv_inv]; exact ha.1⟩
+
+def finiteLevelOne : Subgroup (GL (Fin 2) (FiniteAdeleRing R K)) where
+  carrier := {g | IsLevelOneMatrix R K N (g : Matrix (Fin 2) (Fin 2) (FiniteAdeleRing R K)) ∧
+    IsLevelOneMatrix R K N ((g⁻¹ : GL (Fin 2) (FiniteAdeleRing R K)) : Matrix _ _ _)}
+  one_mem' := ⟨by rw [Units.val_one]; exact .one, by rw [inv_one, Units.val_one]; exact .one⟩
+  mul_mem' ha hb := ⟨by rw [Units.val_mul]; exact ha.1.mul hb.1,
+    by simpa [Units.val_mul, Units.val_inv, mul_inv_rev] using hb.2.mul ha.2⟩
+  inv_mem' ha := ⟨ha.2, by rw [inv_inv]; exact ha.1⟩
+
+variable {R K N}
+
 public theorem mem_finiteLevelZero_iff {g : GL (Fin 2) (FiniteAdeleRing R K)} :
     g ∈ finiteLevelZero R K N ↔ IsLevelZeroMatrix R K N (g : Matrix _ _ _) ∧
       IsLevelZeroMatrix R K N ((g⁻¹ : GL (Fin 2) (FiniteAdeleRing R K)) : Matrix _ _ _) :=
@@ -421,6 +480,10 @@ variable (R K N)
 public theorem finiteLevelOne_le_finiteLevelZero : finiteLevelOne R K N ≤ finiteLevelZero R K N :=
   fun _ hg => ⟨hg.1.toIsLevelZeroMatrix, hg.2.toIsLevelZeroMatrix⟩
 
+
+abbrev finiteIntegralGL2 : Subgroup (GL (Fin 2) (FiniteAdeleRing R K)) := finiteLevelZero R K ⊤
+
+variable {R K} in
 
 public theorem mem_finiteIntegralGL2_iff {g : GL (Fin 2) (FiniteAdeleRing R K)} :
     g ∈ finiteIntegralGL2 R K ↔
@@ -547,6 +610,12 @@ section Adelic
 variable (N : Ideal R)
 
 
+def levelZero : Subgroup (GL (Fin 2) (AdeleRing R K)) := (finiteLevelZero R K N).comap (glFin R K)
+
+def levelOne : Subgroup (GL (Fin 2) (AdeleRing R K)) := (finiteLevelOne R K N).comap (glFin R K)
+
+variable {R K N}
+
 public theorem mem_levelZero_iff {g : GL (Fin 2) (AdeleRing R K)} :
     g ∈ levelZero R K N ↔ glFin R K g ∈ finiteLevelZero R K N := Iff.rfl
 
@@ -585,9 +654,23 @@ end Adelic
 section Gen
 
 
+def diagOne {A : Type*} [CommRing A] : Aˣ →* GL (Fin 2) A where
+  toFun a :=
+    { val := Matrix.diagonal ![(a : A), 1]
+      inv := Matrix.diagonal ![((a⁻¹ : Aˣ) : A), 1]
+      val_inv := by ext i j; fin_cases i <;> fin_cases j <;> simp
+      inv_val := by ext i j; fin_cases i <;> fin_cases j <;> simp }
+  map_one' := by ext i j; fin_cases i <;> fin_cases j <;> simp
+  map_mul' a b := by ext i j; fin_cases i <;> fin_cases j <;> simp
+
 public theorem diagOne_coe_apply {A : Type*} [CommRing A] (a : Aˣ) (i j : Fin 2) :
     (diagOne a : Matrix (Fin 2) (Fin 2) A) i j = Matrix.diagonal ![(a : A), 1] i j := rfl
 
+
+def finIncl : FiniteAdeleRing R K →* AdeleRing R K where
+  toFun x := ((1 : InfiniteAdeleRing K), x)
+  map_one' := rfl
+  map_mul' _ _ := Prod.ext (one_mul _).symm rfl
 
 public theorem finIncl_apply_fst (x : FiniteAdeleRing R K) : (finIncl R K x).1 = 1 := rfl
 
@@ -597,6 +680,54 @@ variable (v : HeightOneSpectrum R)
 
 open scoped Classical in
 
+
+def localUnit : (v.adicCompletion K)ˣ →* (FiniteAdeleRing R K)ˣ where
+  toFun t :=
+    { val := ⟨Function.update 1 v (t : v.adicCompletion K),
+        Filter.eventually_cofinite.mpr ((Set.finite_singleton v).subset fun w hw => by
+          by_contra hwv
+          exact hw (by rw [Function.update_of_ne hwv]; exact one_mem _))⟩
+      inv := ⟨Function.update 1 v ((t⁻¹ : (v.adicCompletion K)ˣ) : v.adicCompletion K),
+        Filter.eventually_cofinite.mpr ((Set.finite_singleton v).subset fun w hw => by
+          by_contra hwv
+          exact hw (by rw [Function.update_of_ne hwv]; exact one_mem _))⟩
+      val_inv := by
+        refine Subtype.ext (funext fun w => ?_)
+        show Function.update (1 : ∀ w : HeightOneSpectrum R, w.adicCompletion K) v
+            (t : v.adicCompletion K) w *
+          Function.update (1 : ∀ w : HeightOneSpectrum R, w.adicCompletion K) v
+            ((t⁻¹ : (v.adicCompletion K)ˣ) : v.adicCompletion K) w = 1
+        by_cases hw : w = v
+        · subst hw; simp
+        · simp [Function.update_of_ne hw]
+      inv_val := by
+        refine Subtype.ext (funext fun w => ?_)
+        show Function.update (1 : ∀ w : HeightOneSpectrum R, w.adicCompletion K) v
+            ((t⁻¹ : (v.adicCompletion K)ˣ) : v.adicCompletion K) w *
+          Function.update (1 : ∀ w : HeightOneSpectrum R, w.adicCompletion K) v
+            (t : v.adicCompletion K) w = 1
+        by_cases hw : w = v
+        · subst hw; simp
+        · simp [Function.update_of_ne hw] }
+  map_one' := by
+    refine Units.ext (Subtype.ext (funext fun w => ?_))
+    show Function.update (1 : ∀ w : HeightOneSpectrum R, w.adicCompletion K) v 1 w = 1
+    by_cases hw : w = v
+    · subst hw; simp
+    · simp [Function.update_of_ne hw]
+  map_mul' t t' := by
+    refine Units.ext (Subtype.ext (funext fun w => ?_))
+    show Function.update (1 : ∀ w : HeightOneSpectrum R, w.adicCompletion K) v
+        ((t * t' : (v.adicCompletion K)ˣ) : v.adicCompletion K) w =
+      Function.update (1 : ∀ w : HeightOneSpectrum R, w.adicCompletion K) v
+          (t : v.adicCompletion K) w *
+        Function.update (1 : ∀ w : HeightOneSpectrum R, w.adicCompletion K) v
+          (t' : v.adicCompletion K) w
+    by_cases hw : w = v
+    · subst hw; simp
+    · simp [Function.update_of_ne hw]
+
+open scoped Classical in
 
 public theorem localUnit_apply_self (t : (v.adicCompletion K)ˣ) :
     ((localUnit R K v t : (FiniteAdeleRing R K)ˣ) : FiniteAdeleRing R K) v = t := by
@@ -612,6 +743,11 @@ public theorem localUnit_apply_of_ne (t : (v.adicCompletion K)ˣ) {w : HeightOne
       (t : v.adicCompletion K) w = 1
   simp [Function.update_of_ne hw]
 
+
+def heckeGenAt : (v.adicCompletion K)ˣ →* GL (Fin 2) (AdeleRing R K) :=
+  diagOne.comp ((Units.map (finIncl R K)).comp (localUnit R K v))
+
+variable {R K v}
 
 public theorem heckeGenAt_fst (t : (v.adicCompletion K)ˣ) (i j : Fin 2) :
     ((heckeGenAt R K v t : Matrix (Fin 2) (Fin 2) (AdeleRing R K)) i j).1
@@ -682,6 +818,8 @@ public theorem heckeGenAt_inv_mul_heckeGenAt_mem_levelOne (t t' : (v.adicComplet
 variable (K v)
 
 
+def uniformizer : R := Classical.choose v.intValuation_exists_uniformizer
+
 public theorem intValuation_uniformizer : v.intValuation (uniformizer v) = WithZero.exp (-1 : ℤ) :=
   Classical.choose_spec v.intValuation_exists_uniformizer
 
@@ -692,12 +830,22 @@ public theorem valued_uniformizer :
   rw [valued_algebraMap, intValuation_uniformizer]
 
 
+def uniformizerUnit : (v.adicCompletion K)ˣ :=
+  Units.mk0 (algebraMap K (v.adicCompletion K) (algebraMap R K (uniformizer v))) fun h => by
+    have := valued_uniformizer K v
+    rw [h, map_zero] at this
+    exact WithZero.exp_ne_zero this.symm
+
 public theorem valued_uniformizerUnit :
     Valued.v (uniformizerUnit K v : v.adicCompletion K) = WithZero.exp (-1 : ℤ) :=
   valued_uniformizer K v
 
 variable (R)
 
+
+def heckeGen : GL (Fin 2) (AdeleRing R K) := heckeGenAt R K v (uniformizerUnit K v)
+
+variable {R K v}
 
 public theorem heckeGen_inv_mul_heckeGenAt_mem_levelOne (t : (v.adicCompletion K)ˣ)
     (ht : Valued.v (t : v.adicCompletion K) = WithZero.exp (-1 : ℤ)) (N : Ideal R) :

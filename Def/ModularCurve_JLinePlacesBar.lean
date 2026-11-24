@@ -1,7 +1,7 @@
 module
 public import Mathlib
-public import Lemma.LaurentSeries.ArithmeticGalois
-public import Lemma.Ideal.RatFuncPlaces
+public import Theorem.LaurentSeries.ArithmeticGalois
+public import Theorem.Ideal.RatFuncPlaces
 public import Theorem.Valuation.RatFuncPlaceInfty
 public import Theorems.Thm_ModularCurve_transcendental_coeffEmb_jq
 public import Instance.ModularCurve_JLinePlacesBar

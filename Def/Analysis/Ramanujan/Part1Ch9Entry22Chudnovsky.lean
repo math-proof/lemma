@@ -5,7 +5,7 @@ public import Mathlib.Data.Nat.Choose.Basic
 public import Mathlib.Topology.Algebra.InfiniteSum.Defs
 public import Def.Analysis.Ramanujan.Part1Ch9Entry20Piseries1
 public import Theorem.Real.Part1Ch9Entry20Piseries1
-public import Lemma.Real.Ramanujan.Part1Ch9Entry21Piseries2
+public import Theorem.Real.Ramanujan.Part1Ch9Entry21Piseries2
 public import Theorem.Real.ArcsinCentralBinomialReciprocal
 public import Theorem.Real.ArcsinTaylorSeries
 public import Def.Analysis.Ramanujan.Part1Ch9Entry21Piseries2

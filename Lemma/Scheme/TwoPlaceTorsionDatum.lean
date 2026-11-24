@@ -1,5 +1,5 @@
 import Def.CerednikDrinfeld_JPrimeTorsionDatum
-import Lemma.Ideal.Mathlib430
+import Theorem.Ideal.Mathlib430
 import Structure.CerednikDrinfeld_TwoPlaceTorsionDatum
 
 set_option autoImplicit false

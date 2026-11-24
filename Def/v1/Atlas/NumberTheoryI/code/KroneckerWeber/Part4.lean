@@ -25,7 +25,7 @@ public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 public import Mathlib.NumberTheory.Padics.HeightOneSpectrum
 public import Theorem.v1.Atlas.NumberTheoryI.code.GroupCounts.Part8
 public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GroupCounts
-public import Lemma.Nat.Atlas.v1.NumberTheoryI.code.AdicCompletionAlgebra
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.AdicCompletionAlgebra
 public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.KroneckerWeberLocal2
 public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.ResidueFieldHelper
 public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.CyclotomicDVRInstances

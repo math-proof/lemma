@@ -1,6 +1,6 @@
 module
 public import Mathlib
-public import Lemma.WeierstrassCurve.ProjModel
+public import Theorem.WeierstrassCurve.ProjModel
 public import Abbrev.AlgebraicGeometry_RelEffCartierDivSum
 set_option autoImplicit false
 

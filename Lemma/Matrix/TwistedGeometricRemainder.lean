@@ -1,11 +1,11 @@
-import Lemma.Measure.TwistedOrbital
+import Theorem.Measure.TwistedOrbital
 import Def.AutomorphicForm_FormalBaseChange
 import Lemma.Matrix.PrincipalLevel
-import Lemma.Measure.TateGlobalZeta
+import Theorem.Measure.TateGlobalZeta
 import Theorem.Finset.ConverseData
-import Lemma.Matrix.HeckeCosetLocal
+import Theorem.Matrix.HeckeCosetLocal
 import Lemma.ContinuousMap.GenuineDescent
-import Lemma.Matrix.TwistedNormClasses
+import Theorem.Matrix.TwistedNormClasses
 import Def.AdelicDock_LocalEmbedding
 import Lemma.Matrix.GL2ConjugacyCells
 import Lemma.Measure.TruncationOperator

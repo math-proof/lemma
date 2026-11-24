@@ -1,5 +1,5 @@
 import Lemma.Scheme.FppfH0Identification
-import Lemma.Scheme.FppfKummerProp17
+import Theorem.Scheme.FppfKummerProp17
 
 universe w' w v u
 

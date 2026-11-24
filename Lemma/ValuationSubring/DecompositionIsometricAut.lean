@@ -1,4 +1,4 @@
-import Lemma.Polynomial.DrinfeldHolomorphic
+import Theorem.Polynomial.DrinfeldHolomorphic
 import Lemma.ValuationSubring.CompletionRatClosure
 import Instance.ValuationSubring_CompletionDecompositionAction
 import Mathlib.FieldTheory.Fixed

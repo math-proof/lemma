@@ -1,6 +1,6 @@
 module
 public import Instance.v1.Atlas.GeometryOfManifolds.code.PolynomialDFS.Part3
-public import Lemma.Real.Atlas.v1.GeometryOfManifolds.code.PolynomialDFS
+public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.PolynomialDFS
 public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.TwoDimDFS
 public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.AlmostComplexManifolds
 public import Theorem.Real.Atlas.v1.GeometryOfManifolds.code.MoserDarboux

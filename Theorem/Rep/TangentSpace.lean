@@ -20,6 +20,15 @@ public theorem adjointAux_one : adjointAux k (1 : Aˣ) = LinearMap.id := by
   simp
 
 
+@[simps]
+def adjointAux (u : Aˣ) : A →ₗ[k] A where
+  toFun a := ↑u * a * ↑u⁻¹
+  map_add' a b := by rw [mul_add, add_mul]
+  map_smul' c a := by
+    rw [RingHom.id_apply, Algebra.mul_smul_comm, Algebra.smul_mul_assoc]
+
+@[simp]
+
 public theorem adjointAux_mul (u v : Aˣ) :
     adjointAux k (u * v) = (adjointAux k u).comp (adjointAux k v) := by
   ext a
@@ -51,11 +60,65 @@ variable {A : Type*} [Ring A]
     (((dualUnit u m)⁻¹ : (A[ε])ˣ) : A[ε]).snd = -(↑u⁻¹ * m) := rfl
 
 
+def adjoint (ρ₀ : G →* Aˣ) : Representation k G A where
+  toFun g := adjointAux k (ρ₀ g)
+  map_one' := by
+    ext a
+    simp
+  map_mul' g h := by
+    ext a
+    simp only [map_mul, adjointAux_mul, LinearMap.comp_apply, Module.End.mul_apply]
+
+@[simp]
+
 @[simp]
 public theorem dualUnit_one_zero : dualUnit (1 : Aˣ) (0 : A) = 1 := by
   apply Units.ext
   exact TrivSqZeroExt.ext (by simp) (by simp)
 
+
+def dualUnit (u : Aˣ) (m : A) : (A[ε])ˣ where
+  val := ⟨↑u, m * ↑u⟩
+  inv := ⟨↑u⁻¹, -(↑u⁻¹ * m)⟩
+  val_inv := by
+    let x : A[ε] := ⟨↑u, m * ↑u⟩
+    let y : A[ε] := ⟨↑u⁻¹, -(↑u⁻¹ * m)⟩
+    change x * y = 1
+    have h1 : fst (x * y) = 1 := by
+      rw [fst_mul, show fst x = ↑u from rfl, show fst y = ↑u⁻¹ from rfl]
+      apply Units.mul_inv
+    have h2 : snd (x * y) = 0 := by
+      rw [snd_mul, show fst x = ↑u from rfl, show snd y = -(↑u⁻¹ * m) from rfl,
+        show snd x = m * ↑u from rfl, show fst y = ↑u⁻¹ from rfl,
+        smul_eq_mul, op_smul_eq_mul, mul_neg, Units.mul_inv_cancel_left,
+        Units.mul_inv_cancel_right]
+      apply neg_add_cancel
+    apply ext h1 h2
+  inv_val := by
+    let y : A[ε] := ⟨↑u⁻¹, -(↑u⁻¹ * m)⟩
+    let x : A[ε] := ⟨↑u, m * ↑u⟩
+    change y * x = 1
+    have h1 : fst (y * x) = 1 := by
+      rw [fst_mul, show fst y = ↑u⁻¹ from rfl, show fst x = ↑u from rfl]
+      apply Units.inv_mul
+    have h2 : snd (y * x) = 0 := by
+      rw [snd_mul, show fst y = ↑u⁻¹ from rfl, show snd x = m * ↑u from rfl,
+        show snd y = -(↑u⁻¹ * m) from rfl, show fst x = ↑u from rfl,
+        smul_eq_mul, op_smul_eq_mul, neg_mul, ← mul_assoc]
+      apply add_neg_cancel
+    apply ext h1 h2
+
+@[simp] theorem dualUnit_val_fst (u : Aˣ) (m : A) : (dualUnit u m : A[ε]).fst = ↑u := rfl
+
+@[simp] theorem dualUnit_val_snd (u : Aˣ) (m : A) : (dualUnit u m : A[ε]).snd = m * ↑u := rfl
+
+@[simp] theorem dualUnit_inv_val_fst (u : Aˣ) (m : A) :
+    (((dualUnit u m)⁻¹ : (A[ε])ˣ) : A[ε]).fst = ↑u⁻¹ := rfl
+
+@[simp] theorem dualUnit_inv_val_snd (u : Aˣ) (m : A) :
+    (((dualUnit u m)⁻¹ : (A[ε])ˣ) : A[ε]).snd = -(↑u⁻¹ * m) := rfl
+
+@[simp]
 
 public theorem dualUnit_mul_dualUnit (u v : Aˣ) (m n : A) :
     dualUnit u m * dualUnit v n = dualUnit (u * v) (↑u * n * ↑u⁻¹ + m) := by
@@ -87,6 +150,18 @@ public theorem adjointRep_ρ_apply (ρ₀ : G →* Aˣ) (g : G) (a : A) :
     (adjointRep k ρ₀).ρ g a = ↑(ρ₀ g) * a * ↑(ρ₀ g)⁻¹ := rfl
 
 
+noncomputable abbrev adjointRep (k : Type u) [CommRing k] [Algebra k A] (ρ₀ : G →* Aˣ) :
+    Rep k G :=
+  Rep.of (Representation.adjoint k ρ₀)
+
+@[simp]
+
+def IsDualLift (ρ₀ : G →* Aˣ) (ρ : G →* (A[ε])ˣ) : Prop :=
+  ∀ g, ((ρ g : A[ε])).fst = ↑(ρ₀ g)
+
+def dualLiftToCochain (ρ₀ : G →* Aˣ) (ρ : G →* (A[ε])ˣ) (g : G) : A :=
+  ((ρ g : A[ε])).snd * ↑(ρ₀ g)⁻¹
+
 public theorem dualLift_ext {ρ₀ : G →* Aˣ} {ρ ρ' : G →* (A[ε])ˣ}
     (hρ : IsDualLift ρ₀ ρ) (hρ' : IsDualLift ρ₀ ρ')
     (h : dualLiftToCochain ρ₀ ρ = dualLiftToCochain ρ₀ ρ') : ρ = ρ' := by
@@ -113,10 +188,30 @@ public theorem dualLiftToCocycle_coe {ρ₀ : G →* Aˣ} {ρ : G →* (A[ε])ˣ
       = dualLiftToCochain ρ₀ ρ := rfl
 
 
+noncomputable def dualLiftToCocycle (k : Type u) [CommRing k] [Algebra k A]
+    {ρ₀ : G →* Aˣ} {ρ : G →* (A[ε])ˣ} (hρ : IsDualLift ρ₀ ρ) :
+    cocycles₁ (adjointRep k ρ₀) :=
+  ⟨dualLiftToCochain ρ₀ ρ, dualLiftToCochain_mem_cocycles₁ hρ⟩
+
+@[simp]
+
 @[simp]
 public theorem cocycleToDualLift_apply (ρ₀ : G →* Aˣ) (c : cocycles₁ (adjointRep k ρ₀)) (g : G) :
     cocycleToDualLift ρ₀ c g = dualUnit (ρ₀ g) (c g) := rfl
 
+
+noncomputable def cocycleToDualLift (ρ₀ : G →* Aˣ) (c : cocycles₁ (adjointRep k ρ₀)) :
+    G →* (A[ε])ˣ where
+  toFun g := dualUnit (ρ₀ g) (c g)
+  map_one' := by
+    simp only [map_one, cocycles₁_map_one, dualUnit_one_zero]
+  map_mul' g h := by
+    dsimp only
+    rw [dualUnit_mul_dualUnit, ← map_mul ρ₀]
+    congr 1
+    exact (mem_cocycles₁_iff (A := adjointRep k ρ₀) (c : G → A)).mp c.2 g h
+
+@[simp]
 
 public theorem isDualLift_cocycleToDualLift (ρ₀ : G →* Aˣ) (c : cocycles₁ (adjointRep k ρ₀)) :
     IsDualLift ρ₀ (cocycleToDualLift ρ₀ c) := fun _ => rfl
@@ -126,6 +221,26 @@ public theorem isDualLift_cocycleToDualLift (ρ₀ : G →* Aˣ) (c : cocycles�
 public theorem dualLiftEquivCocycles₁_apply (ρ₀ : G →* Aˣ) (ρ : {ρ : G →* (A[ε])ˣ // IsDualLift ρ₀ ρ}) :
     dualLiftEquivCocycles₁ k ρ₀ ρ = dualLiftToCocycle k ρ.2 := rfl
 
+
+noncomputable def dualLiftEquivCocycles₁ (k : Type u) [CommRing k] [Algebra k A]
+    (ρ₀ : G →* Aˣ) :
+    {ρ : G →* (A[ε])ˣ // IsDualLift ρ₀ ρ} ≃ cocycles₁ (adjointRep k ρ₀) where
+  toFun ρ := dualLiftToCocycle k ρ.2
+  invFun c := ⟨cocycleToDualLift ρ₀ c, isDualLift_cocycleToDualLift ρ₀ c⟩
+  left_inv ρ := by
+    refine Subtype.ext
+      (dualLift_ext (isDualLift_cocycleToDualLift ρ₀ _) ρ.2 (funext fun g => ?_))
+    show (dualUnit (ρ₀ g) (dualLiftToCochain ρ₀ ρ.1 g) : A[ε]).snd * ↑(ρ₀ g)⁻¹
+        = dualLiftToCochain ρ₀ ρ.1 g
+    rw [dualUnit_val_snd]
+    exact Units.mul_inv_cancel_right _ _
+  right_inv c := by
+    refine Subtype.ext (funext fun g => ?_)
+    show (dualUnit (ρ₀ g) ((c : G → A) g) : A[ε]).snd * ↑(ρ₀ g)⁻¹ = (c : G → A) g
+    rw [dualUnit_val_snd]
+    exact Units.mul_inv_cancel_right _ _
+
+@[simp]
 
 @[simp]
 public theorem dualLiftEquivCocycles₁_symm_apply (ρ₀ : G →* Aˣ) (c : cocycles₁ (adjointRep k ρ₀)) :

@@ -1,6 +1,6 @@
 module
 public import Def.v1.Atlas.AlgebraicCombinatorics.code.SpernerProperty.Part2
-public import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.SpernerProperty
+public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.SpernerProperty
 public import Mathlib.GroupTheory.GroupAction.Quotient
 public import Mathlib.Algebra.Group.Action.Pointwise.Finset
 public import Mathlib.Data.Finset.Card

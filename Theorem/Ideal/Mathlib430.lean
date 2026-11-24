@@ -33,6 +33,21 @@ section MulAction
 variable (k : Type*) [Semiring k] (G : Type*) [Monoid G] (H : Type*) [MulAction G H]
 
 
+noncomputable def ofMulActionFinsupp : Representation k G (H →₀ k) where
+  toFun g := Finsupp.lmapDomain k k (g • ·)
+  map_one' := by
+    ext x y
+    simp
+  map_mul' x y := by
+    ext z w
+    simp [mul_smul]
+
+noncomputable abbrev leftRegularFinsupp := ofMulActionFinsupp k G G
+
+noncomputable abbrev diagonalFinsupp (n : ℕ) := ofMulActionFinsupp k G (Fin n → G)
+
+variable {k G H}
+
 public theorem ofMulActionFinsupp_def (g : G) : ofMulActionFinsupp k G H g = Finsupp.lmapDomain k k (g • ·) :=
   rfl
 
@@ -69,6 +84,25 @@ section Bridge
 
 variable (k : Type*) [Semiring k] (G : Type*) [Monoid G] (H : Type*) [MulAction G H]
 
+
+noncomputable def ofMulActionFinsuppEquiv : (ofMulActionFinsupp k G H).Equiv (ofMulAction k G H) :=
+  Equiv.mk (MonoidAlgebra.coeffLinearEquiv k).symm fun g => by
+    rw [ofMulAction_def, ofMulActionFinsupp_def]
+    ext
+    simp
+
+noncomputable abbrev leftRegularFinsupp : Rep k G := -- [port] noncomputable
+  of <| Representation.ofMulActionFinsupp k G G
+
+noncomputable abbrev diagonalFinsupp (n : ℕ) : Rep k G := -- [port] noncomputable
+  of <| Representation.ofMulActionFinsupp k G (Fin n → G)
+
+noncomputable def ofMulActionFinsuppIso (H : Type w') [MulAction G H] :
+    of (Representation.ofMulActionFinsupp k G H) ≅ ofMulAction k G H :=
+  mkIso (Representation.ofMulActionFinsuppEquiv k G H)
+
+noncomputable abbrev leftRegularHomFinsupp (A : Rep k G) (x : A) : leftRegularFinsupp k G ⟶ A := -- [port] noncomputable
+  Rep.ofHom ⟨Finsupp.lift A k G fun g ↦ A.ρ g x, fun g ↦ by ext; simp⟩
 
 public theorem leftRegularHomFinsupp_hom_single {A : Rep k G} (g : G) (x : A) (r : k) :
     (leftRegularHomFinsupp A x).hom (.single g r) = r • A.ρ g x := by
@@ -166,6 +200,33 @@ variable {R : Type u} [CommRing R]
 
 variable (W : ℤ → R)
 
+
+@[simps]
+def DistribMulAction.toAddAut' (G A : Type*) [Group G] [AddMonoid A] [DistribMulAction G A] :
+    G →* AddAut A where
+  toFun := DistribMulAction.toAddEquiv A
+  map_one' := AddEquiv.ext (one_smul _)
+  map_mul' _ _ := AddEquiv.ext (mul_smul _ _)
+
+@[simps! +simpRhs]
+
+@[simps! +simpRhs]
+def AddAut.mulLeft' {R : Type*} [Semiring R] : Rˣ →* AddAut R :=
+  DistribMulAction.toAddAut' _ _
+
+/-! ### Block D (continued) — Mathlib v4.30.0 Mathlib/Algebra/GroupWithZero/Action/Basic.lean:104-112: the tautological `DistribMulAction (AddAut A) A`
+(`AddAut.applyDistribMulAction`, its `smul_def` and `apply_faithfulSMul`), dropped in v4.33.0 together with the multiplicative structure;
+vendored with primed names on top of the Group instance above. -/
+
+def IsEllSequence' : Prop :=
+  ∀ m n r : ℤ, W (m + n) * W (m - n) * W r ^ 2 =
+    W (m + r) * W (m - r) * W n ^ 2 - W (n + r) * W (n - r) * W m ^ 2
+
+def IsDivSequence' : Prop :=
+  ∀ m n : ℕ, m ∣ n → W m ∣ W n
+
+def IsEllDivSequence' : Prop :=
+  IsEllSequence' W ∧ IsDivSequence' W
 
 public theorem isEllSequence'_id : IsEllSequence' id :=
   fun _ _ _ => by simp_rw [id_eq]; ring1

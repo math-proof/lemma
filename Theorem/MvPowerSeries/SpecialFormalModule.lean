@@ -40,6 +40,10 @@ public theorem of_hom (f : MvFormalGroup.Hom F G) : IsLawHom F G f.toPowerSeries
   ⟨f.constantCoeff_eq_zero, f.subst_eq⟩
 
 
+def toHom (h : IsLawHom F G φ) : MvFormalGroup.Hom F G := ⟨φ, h.1, h.2⟩
+
+@[simp] theorem toHom_toPowerSeries (h : IsLawHom F G φ) : h.toHom.toPowerSeries = φ := rfl
+
 public theorem hasSubst (h : IsLawHom F G φ) : HasSubst φ := hasSubst_of_constantCoeff_zero h.1
 
 
@@ -208,6 +212,31 @@ public theorem map_map {B'' : Type*} [CommRing B''] (f : B →+* B') (g : B' →
     X.varpiEnd.toPowerSeries = X.varpi := rfl
 
 
+private instance (X : FormalODModule p B) : X.F.IsComm := X.isComm
+
+def actEnd (X : FormalODModule p B) (a : Zp2 p) : MvFormalGroup.End X.F := (X.isLawHom_act a).toHom
+
+def varpiEnd (X : FormalODModule p B) : MvFormalGroup.End X.F := X.isLawHom_varpi.toHom
+
+def actRingHom (X : FormalODModule p B) : Zp2 p →+* MvFormalGroup.End X.F where
+  toFun := X.actEnd
+  map_one' := MvFormalGroup.Hom.ext (X.act_one)
+  map_mul' a b := MvFormalGroup.Hom.ext (X.act_mul a b)
+  map_zero' := by
+    have h : X.actEnd 0 + X.actEnd 0 = X.actEnd 0 :=
+      MvFormalGroup.Hom.ext (by have h := (X.act_add 0 0).symm; rw [add_zero] at h; exact h)
+    exact add_eq_left.mp h
+  map_add' a b := MvFormalGroup.Hom.ext (X.act_add a b)
+
+@[simp] theorem actRingHom_apply (X : FormalODModule p B) (a : Zp2 p) :
+    X.actRingHom a = X.actEnd a := rfl
+
+@[simp] theorem actEnd_toPowerSeries (X : FormalODModule p B) (a : Zp2 p) :
+    (X.actEnd a).toPowerSeries = X.act a := rfl
+
+@[simp] theorem varpiEnd_toPowerSeries (X : FormalODModule p B) :
+    X.varpiEnd.toPowerSeries = X.varpi := rfl
+
 public theorem varpiEnd_mul_varpiEnd (X : FormalODModule p B) :
     X.varpiEnd * X.varpiEnd = X.actRingHom (p : Zp2 p) :=
   MvFormalGroup.Hom.ext X.varpi_comp_varpi
@@ -289,6 +318,44 @@ variable {X Y Z : FormalODModule p B}
 @[ext] public theorem ext {f g : Hom X Y} (h : f.toSeries = g.toSeries) : f = g := by
   cases f; cases g; cases h; rfl
 
+
+def toLawHom (f : Hom X Y) : MvFormalGroup.Hom X.F Y.F := f.isODHom.1.toHom
+
+def IsIso (f : Hom X Y) : Prop := ∃ g : Hom Y X, g.comp f = Hom.id X ∧ f.comp g = Hom.id Y
+
+def IsIsogenyOfHeight (X Y : FormalODModule p B) (φ : Series B) (h : ℕ) : Prop :=
+  IsODHom X Y φ ∧ HasKernelOfDegree φ (p ^ h)
+
+def residueMap {O : Type v} [CommRing O] {B : Type u} [CommRing B] (ψ : O →+* B) :
+    O ⧸ pIdeal p O →+* B ⧸ pIdeal p B :=
+  Ideal.quotientMap (pIdeal p B) ψ (by
+    rw [pIdeal, Ideal.span_le, Set.singleton_subset_iff, SetLike.mem_coe, Ideal.mem_comap,
+      map_natCast]
+    exact Ideal.subset_span rfl)
+
+def reduceMap {B B' : Type u} [CommRing B] [CommRing B'] (f : B →+* B') :
+    B ⧸ pIdeal p B →+* B' ⧸ pIdeal p B' :=
+  residueMap f
+
+abbrev structureMap {O : Type v} [CommRing O] {B : Type u} [CommRing B] (ι : Zp2 p →+* O)
+    (ψ : O →+* B) : Zp2 p →+* B :=
+  ψ.comp ι
+
+abbrev Xbar (t : Rigidified p Φ B) : FormalODModule p (B ⧸ pIdeal p B) :=
+  t.X.map (Ideal.Quotient.mk (pIdeal p B))
+
+abbrev Φbar (ψ : O →+* B) (_t : Rigidified p Φ B) : FormalODModule p (B ⧸ pIdeal p B) :=
+  Φ.map (residueMap ψ)
+
+def IsAdmissible (ι : Zp2 p →+* O) (ψ : O →+* B) (t : Rigidified p Φ B) : Prop :=
+  t.X.IsSpecial (structureMap ι ψ) ∧ t.X.HasHeight 4 ∧
+    FormalODModule.IsIsogenyOfHeight (t.Φbar ψ) t.Xbar t.ρ (4 * t.n)
+
+def IsIsomorphic (t t' : Rigidified p Φ B) : Prop :=
+  ∃ (u v : Series B) (m : ℕ), FormalODModule.IsODHom t.X t'.X u ∧ FormalODModule.IsODHom t'.X t.X v ∧
+    v.comp u = Series.id B ∧ u.comp v = Series.id B ∧
+    (t'.Xbar.act ((p : Zp2 p) ^ (m + t'.n))).comp ((u.map (Ideal.Quotient.mk (pIdeal p B))).comp t.ρ)
+      = (t'.Xbar.act ((p : Zp2 p) ^ (m + t.n))).comp t'.ρ
 
 public theorem IsIsomorphic.refl (t : Rigidified p Φ B) (hρ : ∀ i, constantCoeff (t.ρ i) = 0) :
     t.IsIsomorphic t := by
@@ -417,9 +484,73 @@ variable {O : Type v} [CommRing O]
     (ψ : O →+* B) (hB : IsNilpotent (p : B)) : (M.twist τ).obj B ψ hB = M.obj B (ψ.comp τ) hB := rfl
 
 
+def twist (τ : O →+* O) (M : ModuliPackage.{u, v} p O) : ModuliPackage.{u, v} p O where
+  obj B _ ψ hB := M.obj B (ψ.comp τ) hB
+  map hB hB' f hf := M.map hB hB' f (by rw [← RingHom.comp_assoc, hf])
+  map_id hB x := M.map_id hB x
+  map_comp hB hB' hB'' g f hf hg x := M.map_comp hB hB' hB'' g f _ _ x
+
+@[simp] theorem twist_obj (τ : O →+* O) (M : ModuliPackage.{u, v} p O) (B : Type u) [CommRing B]
+    (ψ : O →+* B) (hB : IsNilpotent (p : B)) : (M.twist τ).obj B ψ hB = M.obj B (ψ.comp τ) hB := rfl
+
 public theorem twist_map (τ : O →+* O) (M : ModuliPackage.{u, v} p O) {B B' : Type u} [CommRing B]
     [CommRing B'] {ψ : O →+* B} {ψ' : O →+* B'} (hB : IsNilpotent (p : B))
     (hB' : IsNilpotent (p : B')) (f : B →+* B') (hf : f.comp ψ = ψ') (x : (M.twist τ).obj B ψ hB) :
     (M.twist τ).map hB hB' f hf x =
       M.map (ψ := ψ.comp τ) (ψ' := ψ'.comp τ) hB hB' f (by rw [← RingHom.comp_assoc, hf]) x := rfl
 
+namespace CerednikDrinfeld
+namespace SpecialFormal
+namespace ModuliPackage
+def IsZariskiSheaf (M : ModuliPackage.{u, v} p O) : Prop :=
+  ∀ (B : Type u) [CommRing B] (ψ : O →+* B) (hB : IsNilpotent (p : B))
+    (n : ℕ) (f : Fin n → B) (_hf : Ideal.span (Set.range f) = ⊤)
+    (L : Fin n → Type u) [∀ i, CommRing (L i)] [∀ i, Algebra B (L i)]
+    [∀ i, IsLocalization.Away (f i) (L i)]
+    (hL : ∀ i, IsNilpotent (p : L i))
+    (L₂ : Fin n → Fin n → Type u) [∀ i j, CommRing (L₂ i j)] [∀ i j, Algebra B (L₂ i j)]
+    [∀ i j, IsLocalization.Away (f i * f j) (L₂ i j)]
+    (hL₂ : ∀ i j, IsNilpotent (p : L₂ i j))
+    (l : ∀ i j, L i →+* L₂ i j) (r : ∀ i j, L j →+* L₂ i j)
+    (hl : ∀ i j (b : B), l i j (algebraMap B (L i) b) = algebraMap B (L₂ i j) b)
+    (hr : ∀ i j (b : B), r i j (algebraMap B (L j) b) = algebraMap B (L₂ i j) b),
+    (∀ m m' : M.obj B ψ hB,
+      (∀ i, M.map (ψ' := (algebraMap B (L i)).comp ψ) hB (hL i) (algebraMap B (L i)) rfl m =
+        M.map (ψ' := (algebraMap B (L i)).comp ψ) hB (hL i) (algebraMap B (L i)) rfl m') →
+      m = m') ∧
+    (∀ x : ∀ i, M.obj (L i) ((algebraMap B (L i)).comp ψ) (hL i),
+      (∀ i j, M.map (ψ' := (algebraMap B (L₂ i j)).comp ψ) (hL i) (hL₂ i j) (l i j)
+            (RingHom.ext fun b => hl i j (ψ b)) (x i) =
+          M.map (ψ' := (algebraMap B (L₂ i j)).comp ψ) (hL j) (hL₂ i j) (r i j)
+            (RingHom.ext fun b => hr i j (ψ b)) (x j)) →
+      ∃ m : M.obj B ψ hB, ∀ i,
+        M.map (ψ' := (algebraMap B (L i)).comp ψ) hB (hL i) (algebraMap B (L i)) rfl m = x i)
+end ModuliPackage
+end SpecialFormal
+end CerednikDrinfeld
+
+namespace CerednikDrinfeld
+namespace SpecialFormal
+namespace ModuliPackage
+def IsModuli (ι : Zp2 p →+* O) (Φ : FormalODModule p (O ⧸ pIdeal p O))
+    (M : ModuliPackage.{u, v} p O) : Prop :=
+  M.IsZariskiSheaf ∧
+  ∃ η : ∀ (B : Type u) [CommRing B] (ψ : O →+* B) (hB : IsNilpotent (p : B)),
+      Rigidified p Φ B → M.obj B ψ hB,
+    (∀ (B : Type u) [CommRing B] (ψ : O →+* B) (hB : IsNilpotent (p : B))
+        (t t' : Rigidified p Φ B), t.IsAdmissible ι ψ → t'.IsAdmissible ι ψ →
+        (η B ψ hB t = η B ψ hB t' ↔ t.IsIsomorphic t')) ∧
+    (∀ (B B' : Type u) [CommRing B] [CommRing B'] (ψ : O →+* B) (ψ' : O →+* B')
+        (hB : IsNilpotent (p : B)) (hB' : IsNilpotent (p : B')) (f : B →+* B')
+        (hf : f.comp ψ = ψ') (t : Rigidified p Φ B), t.IsAdmissible ι ψ →
+        η B' ψ' hB' (t.map f) = M.map hB hB' f hf (η B ψ hB t)) ∧
+    (∀ (B : Type u) [CommRing B] (ψ : O →+* B) (hB : IsNilpotent (p : B)) (m : M.obj B ψ hB),
+        ∃ (n : ℕ) (f : Fin n → B), Ideal.span (Set.range f) = ⊤ ∧
+          ∀ (i : Fin n) (L : Type u) [CommRing L] [Algebra B L] [IsLocalization.Away (f i) L]
+            (hL : IsNilpotent (p : L)),
+            ∃ t : Rigidified p Φ L, t.IsAdmissible ι ((algebraMap B L).comp ψ) ∧
+              η L ((algebraMap B L).comp ψ) hL t =
+                M.map (ψ' := (algebraMap B L).comp ψ) hB hL (algebraMap B L) rfl m)
+end ModuliPackage
+end SpecialFormal
+end CerednikDrinfeld

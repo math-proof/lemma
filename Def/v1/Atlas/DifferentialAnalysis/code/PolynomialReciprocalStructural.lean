@@ -5,7 +5,7 @@ public import Mathlib.Analysis.Calculus.FDeriv.Basic
 public import Mathlib.Analysis.Calculus.FDeriv.Congr
 public import Mathlib.Analysis.InnerProductSpace.EuclideanDist
 public import Def.v1.Atlas.DifferentialAnalysis.code.SmoothingOperators
-public import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.SmoothingOperators
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SmoothingOperators
 public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.QuotientFDerivStep
 public import Def.v1.Atlas.DifferentialAnalysis.code.QuotientFDerivStep
 open MvPolynomial Finsupp

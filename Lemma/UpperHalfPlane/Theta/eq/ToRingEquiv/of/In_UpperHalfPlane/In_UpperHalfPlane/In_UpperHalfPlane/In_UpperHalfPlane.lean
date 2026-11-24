@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.Polynomial.DrinfeldHolomorphic
+import Theorem.Polynomial.DrinfeldHolomorphic
 open scoped MatrixGroups
 open CerednikDrinfeld.Omega
 

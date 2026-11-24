@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.WeierstrassCurve.FreyPackage
+import Theorem.WeierstrassCurve.FreyPackage
 import Def.FLTPrelim_Modularity
 open WeierstrassCurve
 open FreyPackage

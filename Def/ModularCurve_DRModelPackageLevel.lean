@@ -1,11 +1,11 @@
 module
 public import Mathlib
-public import Lemma.Scheme.IgusaScheme
+public import Theorem.Scheme.IgusaScheme
 public import Def.GaloisRep_Flat
-public import Lemma.AlgEquiv.AtkinLehnerPartial
-public import Lemma.Scheme.CurveModel
-public import Lemma.LaurentSeries.GeometricBaseChange
-public import Lemma.LaurentSeries.ArithmeticGalois
+public import Theorem.AlgEquiv.AtkinLehnerPartial
+public import Theorem.Scheme.CurveModel
+public import Theorem.LaurentSeries.GeometricBaseChange
+public import Theorem.LaurentSeries.ArithmeticGalois
 public import Theorem.Nat.PlaceWidthChar
 public import Theorem.LaurentSeries.CoeffSemilinearAut
 public import Theorem.Scheme.NeronModelPropertyBundleCarrier

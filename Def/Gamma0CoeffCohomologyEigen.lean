@@ -1,7 +1,7 @@
 module
 public import Mathlib
 public import Instance.Gamma0CoeffCohomology
-public import Lemma.MvPolynomial.BinaryFormRep
+public import Theorem.MvPolynomial.BinaryFormRep
 public import Instance.Gamma0CoeffCohomologyEigen
 set_option autoImplicit false
 

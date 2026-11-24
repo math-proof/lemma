@@ -1,4 +1,4 @@
-import Lemma.Scheme.OrderedAffineCoverCech
+import Theorem.Scheme.OrderedAffineCoverCech
 
 set_option autoImplicit false
 

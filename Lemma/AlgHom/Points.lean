@@ -1,6 +1,6 @@
 import Mathlib
 import Lemma.AlgHom.Basic
-import Lemma.WeierstrassCurve.TateModule
+import Theorem.WeierstrassCurve.TateModule
 import Instance.PDivisibleGroup_Points
 
 set_option autoImplicit false

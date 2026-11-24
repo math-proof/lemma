@@ -4,7 +4,7 @@ public import Initialize.Tactic.Attr.Basic
 public import Def.NumberTheory.RothAuxiliary
 public import Def.NumberTheory.RothAuxiliary.Part3
 public import Def.NumberTheory.RothAuxiliary.Part7
-public import Lemma.Polynomial.EvalRothPowerCoord.eq.Pow.of.EqEval_0
+public import Theorem.Polynomial.EvalRothPowerCoord.eq.Pow.of.EqEval_0
 public import Theorem.Polynomial.Eval_AlgebraMapMulLeadingCoeffRothIntPolynomialRothIntegralPolynomial.eq.Zero.of.IsAlgebraic
 open MathlibExt.NumberTheory.RothAuxiliary
 open Polynomial

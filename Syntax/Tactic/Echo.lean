@@ -63,7 +63,9 @@ elab_rules : tactic
       | `(echo_ident| $h:ident) => do
         -- Print only if the local is a hypothesis (Prop), not a variable
         try
-          let hypType ← inferType (← getLocalDeclFromUserName h.getId).toExpr
+          -- `have h := e` records an unassigned metavariable as the local's type;
+          -- instantiate it first, otherwise `is_Prop` is false and nothing is logged.
+          let hypType ← instantiateMVars (← inferType (← getLocalDeclFromUserName h.getId).toExpr)
           if ← hypType.is_Prop then
             logInfo h.getId (pure hypType)
         catch e =>

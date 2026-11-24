@@ -2,7 +2,7 @@ module
 public import Def.v1.Atlas.AlgebraicCombinatorics.code.NormalOrderCoeff.Part2
 public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.NormalOrderCoeff
 public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.HasseWalks
-public import Lemma.Finset.Atlas.v1.AlgebraicCombinatorics.code.WalkCountOps
+public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.WalkCountOps
 public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.WalkCountBridge
 public import Theorem.Finset.Atlas.v1.AlgebraicCombinatorics.code.WalkOperatorLemmas
 public import Theorem.v1.Atlas.AlgebraicCombinatorics.code.HasseWalks

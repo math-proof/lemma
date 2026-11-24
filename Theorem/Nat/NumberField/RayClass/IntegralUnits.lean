@@ -788,3 +788,21 @@ public theorem integralUnitsToResidueSign_apply_eq
 /--
 [integralUnitsToRayQuotient_ker](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/IntegralUnits.lean)
 -/
+-/
+@[path]
+private def integralUnitsToRayQuotient_ker_eq :=
+  @NumberField.Modulus.integralUnitsToRayQuotient_ker
+
+/--
+[integralUnitsToResidueSign_ker](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/IntegralUnits.lean)
+-/
+@[path]
+
+-/
+@[path]
+private def integralUnitsToResidueSign_ker_eq :=
+  @NumberField.Modulus.integralUnitsToResidueSign_ker
+
+
+-- created on 2026-10-20
+-- updated on 2026-11-13

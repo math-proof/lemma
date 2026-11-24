@@ -1,4 +1,4 @@
-import Lemma.Polynomial.DrinfeldHolomorphic
+import Theorem.Polynomial.DrinfeldHolomorphic
 import Def.CerednikDrinfeld_ThetaMer
 
 set_option autoImplicit false

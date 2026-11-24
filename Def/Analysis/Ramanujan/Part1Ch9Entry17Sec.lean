@@ -43,7 +43,7 @@ public import Mathlib.Tactic.Ring
 public import Mathlib.Topology.Algebra.InfiniteSum.Basic
 public import Mathlib.Topology.Basic
 public import Def.Analysis.Ramanujan.Part1Ch9Entry21Piseries2
-public import Lemma.Real.Ramanujan.Part1Ch9Entry21Piseries2
+public import Theorem.Real.Ramanujan.Part1Ch9Entry21Piseries2
 public import Theorem.Real.Part1Ch9Entry32Lambertdivisor
 public import Def.Analysis.Ramanujan.Part1Ch9Entry32Lambertdivisor
 

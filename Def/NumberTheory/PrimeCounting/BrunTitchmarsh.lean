@@ -2,7 +2,7 @@ module
 public import Mathlib.Analysis.SpecialFunctions.Log.Basic
 public import Def.NumberTheory.PrimeCounting.ResidueClass
 public import Theorem.Nat.PrimeCounting.ResidueClass
-public import Lemma.Nat.PrimeCounting.WeightedLargeSieve
+public import Theorem.Nat.PrimeCounting.WeightedLargeSieve
 public import Theorem.Nat.PrimeCounting.ArithmeticLargeSieve
 public import Theorem.Nat.PrimeCounting.SquarefreeTotientWeighted
 public import Def.NumberTheory.PrimeCounting.WeightedLargeSieve

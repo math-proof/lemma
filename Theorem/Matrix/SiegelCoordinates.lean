@@ -1,5 +1,5 @@
 module
-public import Lemma.Matrix.WindowedSiegelSet
+public import Theorem.Matrix.WindowedSiegelSet
 public import Def.AutomorphicForm_SiegelCoordinates
 open NumberField Matrix
 

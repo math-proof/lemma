@@ -1,4 +1,4 @@
-import Lemma.List.Prod.eq.MulProdS
+import Theorem.List.Prod.eq.MulProdS
 import Lemma.Nat.Dvd_Mul
 open List Nat
 

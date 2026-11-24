@@ -1,6 +1,6 @@
 import Mathlib
 import Def.GaloisRep_Adic
-import Lemma.Matrix.TraceAlgebra
+import Theorem.Matrix.TraceAlgebra
 import Def.GaloisRep_ConditionLifts
 
 namespace GaloisRep

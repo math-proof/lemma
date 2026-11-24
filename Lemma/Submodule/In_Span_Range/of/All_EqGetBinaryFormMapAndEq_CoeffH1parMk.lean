@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.MvPolynomial.BinaryFormRep
+import Theorem.MvPolynomial.BinaryFormRep
 import Lemma.Representation.Main
 import Initialize.Tactic.Attr.Basic
 open HeckeEis MvPolynomial

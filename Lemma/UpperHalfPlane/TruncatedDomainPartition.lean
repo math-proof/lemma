@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.UpperHalfPlane.FundamentalDomainVolume
+import Theorem.UpperHalfPlane.FundamentalDomainVolume
 
 open MeasureTheory Set ModularGroup UpperHalfPlane Filter
 open scoped MatrixGroups Modular Pointwise NNReal ENNReal Topology

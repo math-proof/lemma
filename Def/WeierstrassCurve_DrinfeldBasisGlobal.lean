@@ -1,6 +1,6 @@
 module
 public import Mathlib
-public import Lemma.WeierstrassCurve.ProjModel
+public import Theorem.WeierstrassCurve.ProjModel
 public import Abbrev.AlgebraicGeometry_RelEffCartierDivSum
 public import Def.ModularCurve_WeierstrassLevelComponents
 public import Structure.WeierstrassCurve_DrinfeldBasisGlobal

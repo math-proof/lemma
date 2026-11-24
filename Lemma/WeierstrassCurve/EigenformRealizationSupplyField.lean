@@ -1,5 +1,5 @@
 import Def.ModularCurve_ResidualRealization
-import Lemma.LaurentSeries.ArithmeticGalois
+import Theorem.LaurentSeries.ArithmeticGalois
 import Lemma.CuspForm.ModularRep
 import Def.FreyPackage_EigenformRealizationSupplyField
 

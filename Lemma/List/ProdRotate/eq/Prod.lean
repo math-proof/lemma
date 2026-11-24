@@ -1,5 +1,5 @@
 import Theorem.List.Rotate.eq.AppendDrop__Take
-import Lemma.List.Prod.eq.MulProdS
+import Theorem.List.Prod.eq.MulProdS
 open List
 
 

@@ -1,4 +1,4 @@
-import Lemma.Matrix.AdelicLevel
+import Theorem.Matrix.AdelicLevel
 import Def.AutomorphicForm_AdelicLsXi
 import Def.AutomorphicForm_ConstantTerm
 import Def.AutomorphicForm_IwasawaShellIndex

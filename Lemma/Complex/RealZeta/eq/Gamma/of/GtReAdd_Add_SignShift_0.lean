@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Lemma.Measure.ArchPlace
 import Lemma.Complex.ArchParam
-import Lemma.Measure.TateLocalZeta
+import Theorem.Measure.TateLocalZeta
 import Theorem.Int.P2MUtil
 
 open scoped Real

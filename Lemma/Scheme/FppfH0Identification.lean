@@ -1,6 +1,6 @@
 import Mathlib.CategoryTheory.Sites.Continuous
 import Instance.AlgebraicGeometry_FppfSiteCohomology
-import Lemma.Scheme.FppfCohomologyLES
+import Theorem.Scheme.FppfCohomologyLES
 import Instance.AlgebraicGeometry_FppfH0Identification
 import Abbrev.AlgebraicGeometry_FppfH0Identification
 

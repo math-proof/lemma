@@ -1,7 +1,7 @@
 module
 public import Mathlib
 public import Def.v1.Atlas.NumberTheoryI.code.LocalFields.Part9
-public import Lemma.Nat.Atlas.v1.NumberTheoryI.code.LocalFields
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.LocalFields
 public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.RayClassFields
 public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GlobalCFT
 public import Def.v1.Atlas.NumberTheoryI.code.RayClassFields.Part28

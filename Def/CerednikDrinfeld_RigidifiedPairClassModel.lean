@@ -1,5 +1,5 @@
 module
-public import Lemma.Scheme.QMRigidification
+public import Theorem.Scheme.QMRigidification
 public import Structure.CerednikDrinfeld_QMFineModuli
 public import Theorem.UpperHalfPlane.QMFineModuliT
 public import Def.CerednikDrinfeld_FormalUpperHalfPlaneCharts

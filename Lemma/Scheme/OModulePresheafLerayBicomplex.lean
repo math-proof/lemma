@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Scheme.OrderedAffineCoverCech
+import Theorem.Scheme.OrderedAffineCoverCech
 import Def.AlgebraicGeometry_OrderedAffineCoverOf
 import Instance.AlgebraicGeometry_OModulePresheafLerayBicomplex
 import Abbrev.AlgebraicGeometry_OModulePresheafLerayBicomplex

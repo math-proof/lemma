@@ -2,10 +2,10 @@ module
 public import Mathlib
 public import Lemma.Scheme.IsCurveOver
 public import Lemma.Matrix.DivisorPushPull
-public import Lemma.Ideal.RatFuncPlaces
+public import Theorem.Ideal.RatFuncPlaces
 public import Lemma.Polynomial.FrobeniusEndo
 public import Lemma.ValuationSubring.FrobeniusEndoPic0
-public import Lemma.HahnSeries.JqCoeff
+public import Theorem.HahnSeries.JqCoeff
 public import Lemma.Polynomial.FibrePoly
 public import Def.HeckeGalois_EichlerShimura
 

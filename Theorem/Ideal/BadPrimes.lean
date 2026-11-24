@@ -72,6 +72,10 @@ public theorem finite_setOf_inertia_ne_bot_heightOneSpectrum :
     exact hgmem (x ⟨g, hgne⟩)
 
 
+noncomputable def badPrimes : Finset ℕ :=
+  insert 0 (insert 1 (((finite_setOf_inertia_ne_bot_heightOneSpectrum L).image
+    (fun v => Nat.card (ℤ ⧸ v.asIdeal.under ℤ))).toFinset))
+
 public theorem inertia_eq_bot_of_notMem_badPrimes {ℓ : ℕ} (hℓ : ℓ.Prime)
     (hℓbad : ℓ ∉ badPrimes L) (Q : Ideal (𝓞 L)) [Q.IsPrime] [Q.LiesOver (ratPrimeIdeal ℓ)] :
     Q.inertia (L ≃ₐ[ℚ] L) = ⊥ := by

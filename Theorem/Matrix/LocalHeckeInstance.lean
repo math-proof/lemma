@@ -1,7 +1,7 @@
 module
 public import Mathlib
-public import Lemma.Set.HeckePair
-public import Lemma.Matrix.CartanDecomposition
+public import Theorem.Set.HeckePair
+public import Theorem.Matrix.CartanDecomposition
 public import Def.LocalLanglands_LocalHeckeInstance
 set_option autoImplicit false
 open Matrix

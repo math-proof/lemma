@@ -1,5 +1,5 @@
 import Lemma.MvPolynomial.ProjSpace
-import Lemma.Scheme.OrderedAffineCoverCech
+import Theorem.Scheme.OrderedAffineCoverCech
 import Mathlib.AlgebraicGeometry.Morphisms.Affine
 import Notation.AlgebraicGeometry_ProjSpaceCover
 

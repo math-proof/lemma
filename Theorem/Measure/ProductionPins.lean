@@ -1,6 +1,6 @@
 module
 public import Def.NumberField_AdelicBox
-public import Lemma.Matrix.SiegelVolume
+public import Theorem.Matrix.SiegelVolume
 public import Def.AutomorphicForm_ProductionPins
 public import Theorem.Measure.AdelicBox
 open IsDedekindDomain NumberField MeasureTheory Matrix Measure

@@ -1,5 +1,5 @@
 import Lemma.Nat.AddMul.lt.Mul.of.Lt.Lt
-import Lemma.List.Prod.eq.MulProdS
+import Theorem.List.Prod.eq.MulProdS
 open List Nat
 
 

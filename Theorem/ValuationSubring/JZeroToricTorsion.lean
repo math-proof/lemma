@@ -1,7 +1,7 @@
 module
 public import Mathlib
 public import Def.ModularCurve_JZeroNeronDataPrime
-public import Lemma.HahnSeries.ModularUnit
+public import Theorem.HahnSeries.ModularUnit
 public import Def.ModularCurve_JZeroToricTorsion
 set_option autoImplicit false
 

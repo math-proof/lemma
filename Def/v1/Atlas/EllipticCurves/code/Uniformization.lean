@@ -1,6 +1,6 @@
 module
 public import Def.v1.Atlas.EllipticCurves.code.EisensteinSeries
-public import Lemma.Complex.Atlas.v1.EllipticCurves.code.EisensteinSeries
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.EisensteinSeries
 public import Theorem.Complex.Atlas.v1.EllipticCurves.code.JInvariant
 public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Isogenies
 public import Theorem.Complex.Atlas.v1.EllipticCurves.code.WeierstrassPOrder

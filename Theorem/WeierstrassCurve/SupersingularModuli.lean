@@ -1,5 +1,5 @@
 module
-public import Lemma.WeierstrassCurve.ModuliPoint
+public import Theorem.WeierstrassCurve.ModuliPoint
 public import Def.ModularCurve_SupersingularModuli
 set_option autoImplicit false
 

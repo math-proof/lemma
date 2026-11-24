@@ -1,9 +1,9 @@
 import Mathlib
 import Def.AlgebraicGeometry_RelativePicardFunctor
-import Lemma.Scheme.RelSubPicGroup
+import Theorem.Scheme.RelSubPicGroup
 import Instance.SheafOfModules_Monoidal
 import Instance.AlgebraicGeometry_ModulesPullbackMonoidal
-import Lemma.Scheme.Dual_ObjPullbackL
+import Theorem.Scheme.Dual_ObjPullbackL
 import Theorems.Thm_AlgebraicGeometry_Scheme_Modules_IsInvertible_dual
 import Theorems.Thm_AlgebraicGeometry_Scheme_Modules_IsInvertible_pullback_dual
 import Theorems.Thm_AlgebraicGeometry_Scheme_Modules_IsInvertible_dual_tensor

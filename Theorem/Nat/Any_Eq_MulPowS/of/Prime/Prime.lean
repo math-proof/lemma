@@ -2,7 +2,7 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Theorem.GroupTheory.BurnsidePaqbReduction.Part2
-public import Lemma.Nat.MulCardConjClassCard_StabilizerConjActG.eq.CardG
+public import Theorem.Nat.MulCardConjClassCard_StabilizerConjActG.eq.CardG
 public import Theorem.Nat.ConjClass.of.IsConj
 public import Theorem.GroupTheory.BurnsidePaqb.ClassSum.Part3
 

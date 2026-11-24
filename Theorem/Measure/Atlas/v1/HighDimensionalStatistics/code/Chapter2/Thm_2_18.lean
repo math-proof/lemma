@@ -3,7 +3,7 @@ public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Theorem.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Lemma_2_17
 public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Lemma_2_17
-public import Lemma.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Def_2_12
+public import Theorem.Measure.Atlas.v1.HighDimensionalStatistics.code.Chapter2.Def_2_12
 public import Abbrev.v1.Atlas.HighDimensionalStatistics.code.Chapter2.Def_2_12
 open Matrix Finset BigOperators Rigollet MeasureTheory
 

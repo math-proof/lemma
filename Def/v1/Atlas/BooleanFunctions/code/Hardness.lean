@@ -12,7 +12,7 @@ public import Def.v1.Atlas.BooleanFunctions.code.UniqueGames.Part8
 public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.UniqueGames
 public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
 public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Borel
-public import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
 public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.MultilinearExtension
 public import Def.v1.Atlas.BooleanFunctions.code.MajorityStablest
 public import Def.v1.Atlas.BooleanFunctions.code.Talagrand

@@ -1,6 +1,6 @@
 module
 public import Theorem.Measure.ProductionPinsCompact
-public import Lemma.Ideal.ArithCuspRealization
+public import Theorem.Ideal.ArithCuspRealization
 public import Theorem.UpperHalfPlane.SiegelCovering
 set_option autoImplicit false
 open IsDedekindDomain NumberField MeasureTheory Matrix Measure

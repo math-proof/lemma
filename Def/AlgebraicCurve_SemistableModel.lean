@@ -1,6 +1,6 @@
 module
 public import Mathlib
-public import Lemma.ValuationSubring.SemistableCharts
+public import Theorem.ValuationSubring.SemistableCharts
 public import Abbrev.AlgebraicCurve_SemistableModel
 public import Instance.AlgebraicCurve_SemistableModel
 set_option autoImplicit false

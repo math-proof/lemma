@@ -1,5 +1,5 @@
 import Lemma.List.Drop.eq.Nil.of.LeLength
-import Lemma.List.Tail.eq.Drop_1
+import Theorem.List.Tail.eq.Drop_1
 open List
 
 

@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Finset.ComponentGroup
+import Theorem.Finset.ComponentGroup
 
 set_option autoImplicit false
 

@@ -1,5 +1,5 @@
 import Lemma.HahnSeries.X0
-import Lemma.LaurentSeries.LaurentCoeff
+import Theorem.LaurentSeries.LaurentCoeff
 import Mathlib.NumberTheory.Cyclotomic.PrimitiveRoots
 import Mathlib.LinearAlgebra.Matrix.GeneralLinearGroup.Defs
 

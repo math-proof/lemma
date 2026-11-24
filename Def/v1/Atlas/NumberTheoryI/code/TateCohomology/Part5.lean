@@ -7,7 +7,7 @@ public import Mathlib.LinearAlgebra.Quotient.Pi
 public import Mathlib.Algebra.Category.ModuleCat.Basic
 public import Mathlib.LinearAlgebra.DirectSum.Finsupp
 public import Def.v1.Atlas.NumberTheoryI.code.Cor2328
-public import Lemma.Nat.Atlas.v1.NumberTheoryI.code.Cor2328
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Cor2328
 public import Theorem.v1.Atlas.NumberTheoryI.code.TateCohomology
 
 

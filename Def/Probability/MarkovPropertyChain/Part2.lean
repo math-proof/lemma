@@ -1,6 +1,6 @@
 module
 public import Instance.v1.Atlas.Probability.code.MarkovChainConstruction.Part2
-public import Lemma.Measure.Atlas.v1.Probability.code.MarkovChainConstruction
+public import Theorem.Measure.Atlas.v1.Probability.code.MarkovChainConstruction
 public import Instance.v1.Atlas.Probability.code.MarkovPropertyChain
 open MeasureTheory ProbabilityTheory
 

@@ -31,6 +31,23 @@ section HEqToolbox
 variable {K : Type*} [Field K]
 
 
+def Gamma0Pair.Step (P Q : Gamma0Pair N L) : Prop :=
+  ∃ γ : VariableChange L, ∃ _ : γ • P.toCurve = Q.toCurve, ∃ k : ℕ, k.Coprime N ∧
+    HEq Q.gen (k • Point.vcInvFun γ P.toCurve.toAffine P.gen)
+
+variable (N L) in
+
+def ModuliPoint : Type _ := Quot (Gamma0Pair.Step (N := N) (L := L))
+
+noncomputable def ModuliPoint.j : ModuliPoint N L → L :=
+  Quot.lift (fun P => P.toCurve.j) fun P Q h => by
+    obtain ⟨γ, hγ, -⟩ := h
+    show P.toCurve.j = Q.toCurve.j
+    simp_rw [← hγ, variableChange_j]
+
+@[simp] theorem ModuliPoint.j_mk (P : Gamma0Pair N L) :
+    ModuliPoint.j (Quot.mk _ P : ModuliPoint N L) = P.toCurve.j := rfl
+
 public theorem Point.heq_zero {V V' : WeierstrassCurve.Affine K} (hV : V' = V) :
     HEq (0 : V'.Point) (0 : V.Point) := by
   subst hV
@@ -107,6 +124,18 @@ variable {N : ℕ}
     (gamma0PairMap σ P).gen = WeierstrassCurve.ratPointMap σ (W₀ := P.toCurve) P.gen := rfl
 
 
+def gamma0PairMap (σ : L →+* L') (P : Gamma0Pair N L) : Gamma0Pair N L' where
+  toCurve := P.toCurve.map σ
+  isElliptic := inferInstance
+  gen := WeierstrassCurve.ratPointMap σ (W₀ := P.toCurve) P.gen
+  addOrderOf_gen := (addOrderOf_ratPointMap σ P.toCurve P.gen).trans P.addOrderOf_gen
+
+@[simp] theorem gamma0PairMap_toCurve (σ : L →+* L') (P : Gamma0Pair N L) :
+    (gamma0PairMap σ P).toCurve = P.toCurve.map σ := rfl
+
+@[simp] theorem gamma0PairMap_gen (σ : L →+* L') (P : Gamma0Pair N L) :
+    (gamma0PairMap σ P).gen = WeierstrassCurve.ratPointMap σ (W₀ := P.toCurve) P.gen := rfl
+
 public theorem gamma0PairStep_map (σ : L →+* L') {P Q : Gamma0Pair N L}
     (h : Gamma0Pair.Step P Q) :
     Gamma0Pair.Step (gamma0PairMap σ P) (gamma0PairMap σ Q) := by
@@ -133,6 +162,14 @@ public theorem gamma0PairStep_map (σ : L →+* L') {P Q : Gamma0Pair N L}
     moduliPointMapRingHom σ (Quot.mk _ P : ModuliPoint N L) =
       (Quot.mk _ (gamma0PairMap σ P) : ModuliPoint N L') := rfl
 
+
+def moduliPointMapRingHom (σ : L →+* L') : ModuliPoint N L → ModuliPoint N L' :=
+  Quot.lift (fun P => (Quot.mk _ (gamma0PairMap σ P) : ModuliPoint N L'))
+    fun _ _ h => Quot.sound (gamma0PairStep_map σ h)
+
+@[simp] theorem moduliPointMapRingHom_mk (σ : L →+* L') (P : Gamma0Pair N L) :
+    moduliPointMapRingHom σ (Quot.mk _ P : ModuliPoint N L) =
+      (Quot.mk _ (gamma0PairMap σ P) : ModuliPoint N L') := rfl
 
 public theorem j_moduliPointMapRingHom (σ : L →+* L') (x : ModuliPoint N L) :
     (moduliPointMapRingHom σ x).j = σ x.j := by

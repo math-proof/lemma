@@ -1,4 +1,4 @@
-import Lemma.Measure.TateLocalZeta
+import Theorem.Measure.TateLocalZeta
 import Mathlib.Topology.Clopen
 import Mathlib.Topology.Compactness.Compact
 import Abbrev.LanglandsTunnell_SchwartzBruhatSpace

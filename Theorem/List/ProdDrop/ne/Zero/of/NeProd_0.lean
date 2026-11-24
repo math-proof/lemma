@@ -1,5 +1,5 @@
 module
-public import Lemma.List.Prod.eq.MulProdS
+public import Theorem.List.Prod.eq.MulProdS
 public import Theorem.Nat.Ne_0.of.Mul.ne.Zero
 open List Nat
 

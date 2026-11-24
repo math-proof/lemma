@@ -3,7 +3,7 @@ public import Def.AutomorphicForm_TruncationOperator
 public import Def.AutomorphicForm_AdelicKernel
 public import Def.NumberField_AdelicHeight
 public import Def.Analysis_HalfLineIntercept
-public import Lemma.Measure.CarrierPins
+public import Theorem.Measure.CarrierPins
 public import Def.NumberField_PrincipalLevel
 public import Def.AutomorphicForm_SmoothAutomorphicFnAt
 public import Def.NumberField_AdelicBox

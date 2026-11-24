@@ -1,7 +1,7 @@
 module
 public import Instance.NumberField_AdelicHaar
 public import Def.NumberField_AdelicBox
-public import Lemma.Measure.AdelicHaar
+public import Theorem.Measure.AdelicHaar
 open IsDedekindDomain NumberField MeasureTheory Measure
 open Measure.AdelicHaar
 open scoped RestrictedProduct ENNReal

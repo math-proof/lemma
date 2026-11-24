@@ -13,6 +13,10 @@ open Modulus
 
 /--
 [principalRayIdealMap_integralUnitsToRayElements](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/NumberField/RayClass/QuotientToRayClass.lean)
+noncomputable instance {K : Type*} [Field K] [NumberField K] (m : Modulus K) :
+    Group (rayElements m ⧸ rayOneElements m) :=
+  QuotientGroup.Quotient.group (rayOneElements m)
+
 -/
 @[path]
 public theorem principalRayIdealMap_integralUnitsToRayElements

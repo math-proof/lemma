@@ -10,7 +10,7 @@ LICENSE file in the root directory of this source tree.
 module
 
 public import Def.v1.Atlas.Buildings.code.Building.AffineSLV.Part4
-public import Lemma.Set.IsHomothetic_πLattice
+public import Theorem.Set.IsHomothetic_πLattice
 set_option linter.unusedSectionVars false
 
 public section

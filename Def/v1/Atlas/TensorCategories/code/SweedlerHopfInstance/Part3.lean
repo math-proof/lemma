@@ -1,6 +1,6 @@
 module
 public import Theorem.v1.Atlas.TensorCategories.code.SweedlerConcrete.Part4
-public import Lemma.Category.Atlas.v1.TensorCategories.code.SweedlerConcrete
+public import Theorem.Category.Atlas.v1.TensorCategories.code.SweedlerConcrete
 public import Def.v1.Atlas.TensorCategories.code.HopfAlgebraExamples.Part2
 public import Theorem.v1.Atlas.TensorCategories.code.SweedlerHopfInstance.Part3
 set_option linter.unusedSimpArgs false

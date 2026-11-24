@@ -1,4 +1,4 @@
-import Lemma.Scheme.RelEffCartierDiv
+import Theorem.Scheme.RelEffCartierDiv
 
 set_option autoImplicit false
 

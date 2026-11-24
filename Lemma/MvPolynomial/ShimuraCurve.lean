@@ -4,7 +4,7 @@ import Def.ModularCurve_UniformizedHeckeCurve
 import Lemma.Scheme.AlgebraicCurveBaseChangeGalois
 import Instance.AlgebraicCurve_IsCurveOver
 import Structure.CerednikDrinfeld_TwoPlaceTorsionDatum
-import Lemma.Ideal.Mathlib430
+import Theorem.Ideal.Mathlib430
 import Instance.CerednikDrinfeld_ShimuraCurve
 import Structure.CerednikDrinfeld_ShimuraCurve
 import Abbrev.CerednikDrinfeld_ShimuraCurve

@@ -1,6 +1,6 @@
 import Mathlib
 import Class.AlgebraicCurve_DivisorClassGroup
-import Lemma.HahnSeries.JqCoeff
+import Theorem.HahnSeries.JqCoeff
 import Def.ModularCurve_WeightDivisor
 
 set_option autoImplicit false

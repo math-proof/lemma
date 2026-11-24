@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Scheme.NeronModelPropertyBundleCarrier
+import Theorem.Scheme.NeronModelPropertyBundleCarrier
 import Structure.AlgebraicGeometry_MazurRapoportAppendixPicNeronCarriers
 
 set_option autoImplicit false

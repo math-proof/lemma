@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.Measure.TateLocalZeta
+import Theorem.Measure.TateLocalZeta
 open MeasureTheory LanglandsTunnell.TateLocal Metric
 open scoped NNReal ENNReal Pointwise
 

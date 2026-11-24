@@ -1,6 +1,6 @@
 module
 public import Theorem.NumberTheory.NumberField.RayClass.IntegralUnits.Part4
-public import Lemma.Nat.NumberField.RayClass.IntegralUnits
+public import Theorem.Nat.NumberField.RayClass.IntegralUnits
 public import Theorem.Nat.NumberField.RayClass.PrincipalIdeal
 public import Theorem.Nat.NumberField.RayClass.Group
 public import Theorem.NumberTheory.NumberField.RayClass.PrincipalIdeal

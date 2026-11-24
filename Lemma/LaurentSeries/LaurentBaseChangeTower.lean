@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.LaurentSeries.LaurentCoeff
+import Theorem.LaurentSeries.LaurentCoeff
 import Instance.ModularCurve_LaurentBaseChangeTower
 
 noncomputable section

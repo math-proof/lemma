@@ -1,7 +1,7 @@
 module
 public import Def.v1.Atlas.AlgebraicGeometryI.code.CartierDivisorScheme.Part3
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CartierDivisorScheme
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.CartierDivisorGroup
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CartierDivisorScheme
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.CartierDivisorGroup
 public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.LocallyFactorialDivisors
 public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DivisorsPicard
 public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.WeilDivisor

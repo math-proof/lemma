@@ -1,4 +1,4 @@
-import Lemma.Finset.ComponentGroup
+import Theorem.Finset.ComponentGroup
 import Theorems.Thm_ModularCurve_gramMap_injective
 import Mathlib.LinearAlgebra.FreeModule.PID
 import Mathlib.LinearAlgebra.Dual.Lemmas

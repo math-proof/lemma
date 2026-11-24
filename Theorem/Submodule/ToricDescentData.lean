@@ -24,6 +24,10 @@ variable {G : Type*} [Group G]
   {J₀ : Type*} [AddCommGroup J₀] [Module HeckeAlg J₀]
 
 
+def ExistsToricDataQGuarded (q : ℕ) (S : Finset Nat.Primes) (I : Subgroup G) (φ : G)
+    (δ : Fin 2 → J →+ J₀) : Prop :=
+  ∃ 𝒯 : Submodule HeckeAlg J, ToricFrobeniusSq q φ 𝒯 ∧ IsAbelianPartDataQGuarded q S I 𝒯 δ
+
 public theorem IsAbelianPartData.qGuarded {q : ℕ} {S : Finset Nat.Primes} {I : Subgroup G}
     {𝒯 : Submodule HeckeAlg J} {δ : Fin 2 → J →+ J₀} (h : IsAbelianPartData S I 𝒯 δ) :
     IsAbelianPartDataQGuarded q S I 𝒯 δ where
@@ -31,6 +35,28 @@ public theorem IsAbelianPartData.qGuarded {q : ℕ} {S : Finset Nat.Primes} {I :
   goodPrime_equivariant := h.goodPrime_equivariant
   component_eisenstein := fun 𝔪 hmax heis _ => h.component_eisenstein 𝔪 hmax heis
 
+
+def ExistsToricData (q : ℕ) (S : Finset Nat.Primes) (I : Subgroup G) (φ : G)
+    (δ : Fin 2 → J →+ J₀) : Prop :=
+  ∃ 𝒯 : Submodule HeckeAlg J, ToricFrobeniusSq q φ 𝒯 ∧ IsAbelianPartData S I 𝒯 δ
+
+def toric (h : ExistsToricData q S I φ δ) : Submodule HeckeAlg J :=
+  h.choose
+
+def toric (h : ExistsToricDataQGuarded q S I φ δ) : Submodule HeckeAlg J :=
+  h.choose
+
+def ToricFrobeniusHecke (q : Nat.Primes) (φ : G) (𝒯 : Submodule HeckeAlg J) : Prop :=
+  ∀ x ∈ 𝒯, φ • x = (((q : ℕ) : HeckeAlg) * heckeGen q) • x
+
+def ExistsToricDataFullQGuarded (q : Nat.Primes) (S : Finset Nat.Primes) (I : Subgroup G)
+    (φ : G) (δ : Fin 2 → J →+ J₀) : Prop :=
+  ∃ 𝒯 : Submodule HeckeAlg J,
+    ToricFrobeniusSq (q : ℕ) φ 𝒯 ∧ IsAbelianPartDataQGuarded (q : ℕ) S I 𝒯 δ ∧
+    ToricFrobeniusHecke q φ 𝒯
+
+def toric (h : ExistsToricDataFullQGuarded q S I φ δ) : Submodule HeckeAlg J :=
+  h.choose
 
 public theorem toricFrobeniusSq (h : ExistsToricData q S I φ δ) : ToricFrobeniusSq q φ h.toric :=
   h.choose_spec.1
@@ -92,6 +118,24 @@ section Degeneracy
 
 variable (N q : ℕ) [NeZero N] [NeZero q]
 
+
+def DegeneracyPushforwardInputs : Prop :=
+  ∃ (_ : HeckeAlphaBarIntegral (AlgebraicClosure ℚ) N q)
+    (_ : HeckeBetaBarIntegral (AlgebraicClosure ℚ) N q)
+    (hfinα : FiniteAlong (AlgebraicClosure ℚ) (heckeAlphaBar (AlgebraicClosure ℚ) N q))
+    (hfinβ : FiniteAlong (AlgebraicClosure ℚ) (heckeBetaBar (AlgebraicClosure ℚ) N q)),
+    NormFormulaAlong (AlgebraicClosure ℚ) (heckeAlphaBar (AlgebraicClosure ℚ) N q) hfinα ∧
+      NormFormulaAlong (AlgebraicClosure ℚ) (heckeBetaBar (AlgebraicClosure ℚ) N q) hfinβ
+
+open Classical in
+
+def degeneracyPushforwardPair : Fin 2 → (JZero (N * q) →+ JZero N) :=
+  if h : DegeneracyPushforwardInputs N q then
+    ![Pic0.pushforwardAlongHom (heckeAlphaBar (AlgebraicClosure ℚ) N q) h.1 h.2.2.1 h.2.2.2.2.1,
+      Pic0.pushforwardAlongHom (heckeBetaBar (AlgebraicClosure ℚ) N q) h.2.1 h.2.2.2.1 h.2.2.2.2.2]
+  else 0
+
+variable {N q}
 
 public theorem degeneracyPushforwardInputs_intro
     (hα : HeckeAlphaBarIntegral (AlgebraicClosure ℚ) N q)

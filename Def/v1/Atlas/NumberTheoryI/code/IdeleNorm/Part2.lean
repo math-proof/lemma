@@ -1,7 +1,7 @@
 module
 public import Def.v1.Atlas.NumberTheoryI.code.Ideles.Part3
 public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.Ideles
-public import Lemma.Nat.Atlas.v1.NumberTheoryI.code.AdicCompletionAlgebra
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.AdicCompletionAlgebra
 public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.KroneckerWeber
 public import Theorem.v1.Atlas.NumberTheoryI.code.AdicCompletionAlgebra.Part3
 public import Def.v1.Atlas.NumberTheoryI.code.KroneckerWeber.Part5

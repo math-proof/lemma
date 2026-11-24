@@ -3,7 +3,7 @@ public import Mathlib
 public import Structure.v1.Atlas.TensorCategories.code.PivotalSpherical.Part3
 public import Theorem.Category.Atlas.v1.TensorCategories.code.PivotalSpherical
 public import Theorem.Category.Atlas.v1.TensorCategories.code.VecInstances
-public import Lemma.Category.Atlas.v1.TensorCategories.code.VecDualMapBridge
+public import Theorem.Category.Atlas.v1.TensorCategories.code.VecDualMapBridge
 public import Abbrev.v1.Atlas.TensorCategories.code.VecInstances.Part2
 public import Theorem.v1.Atlas.TensorCategories.code.VecDualMapBridge
 public import Theorem.v1.Atlas.TensorCategories.code.VecPivotalConcrete

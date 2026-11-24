@@ -1,6 +1,6 @@
 module
-public import Lemma.Scheme.CharLSpecialFibrePic0ForallMBridge
-public import Lemma.Set.SpecializationWitness
+public import Theorem.Scheme.CharLSpecialFibrePic0ForallMBridge
+public import Theorem.Set.SpecializationWitness
 public import Def.ModularCurve_CharLSpecialFibrePic0CommutingFamilyBridge
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 400000

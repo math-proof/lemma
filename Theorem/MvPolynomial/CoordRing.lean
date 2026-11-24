@@ -20,6 +20,14 @@ namespace DrinfeldCurve
 variable (q : ℕ) (k : Type u) [Field k]
 
 
+def drinfeldPoly : MvPolynomial (Fin 2) k := X 0 * X 1 ^ q - X 0 ^ q * X 1
+
+def drinfeldIdeal : Ideal (MvPolynomial (Fin 2) k) := Ideal.span {drinfeldPoly q k - 1}
+
+def CoordRing : Type u := MvPolynomial (Fin 2) k ⧸ drinfeldIdeal q k
+
+def mk : MvPolynomial (Fin 2) k →ₐ[k] CoordRing q k := Ideal.Quotient.mkₐ k (drinfeldIdeal q k)
+
 public theorem mk_surjective : Function.Surjective (mk q k) := Ideal.Quotient.mkₐ_surjective k _
 
 
@@ -34,6 +42,10 @@ public theorem mk_drinfeldPoly : mk q k (drinfeldPoly q k) = 1 := by
   rwa [map_sub, map_one, sub_eq_zero] at h
 
 
+def x : CoordRing q k := mk q k (X 0)
+
+def y : CoordRing q k := mk q k (X 1)
+
 public theorem relation : x q k * y q k ^ q - x q k ^ q * y q k = 1 := by
   have h := mk_drinfeldPoly q k
   rwa [drinfeldPoly, map_sub, map_mul, map_mul, map_pow, map_pow] at h
@@ -43,6 +55,9 @@ public theorem mk_mul_drinfeldPoly_sub_one (p : MvPolynomial (Fin 2) k) :
     mk q k (p * (drinfeldPoly q k - 1)) = 0 := by
   rw [map_mul, map_sub, map_one, mk_drinfeldPoly, sub_self, mul_zero]
 
+
+def scalePoly (c : k) : MvPolynomial (Fin 2) k →ₐ[k] MvPolynomial (Fin 2) k :=
+  aeval fun i => C c * X i
 
 public theorem scalePoly_X (c : k) (i : Fin 2) : scalePoly k c (X i) = C c * X i := by
   simp [scalePoly]
@@ -71,6 +86,9 @@ section Actions
 variable [Fact q.Prime] [Algebra (GaloisField q 2) k]
 
 
+def ofZMod : ZMod q →+* k :=
+  (algebraMap (GaloisField q 2) k).comp (algebraMap (ZMod q) (GaloisField q 2))
+
 public theorem ofZMod_pow_card (a : ZMod q) : ofZMod q k a ^ q = ofZMod q k a := by
   rw [← map_pow, ZMod.pow_card]
 
@@ -83,6 +101,10 @@ public theorem C_ofZMod_pow (a : ZMod q) :
     (C (ofZMod q k a) : MvPolynomial (Fin 2) k) ^ q = C (ofZMod q k a) := by
   rw [← map_pow, ofZMod_pow_card]
 
+
+def substPoly (g : Matrix (Fin 2) (Fin 2) (ZMod q)) :
+    MvPolynomial (Fin 2) k →ₐ[k] MvPolynomial (Fin 2) k :=
+  aeval fun j => ∑ i, C (ofZMod q k (g i j)) * X i
 
 public theorem substPoly_X (g : Matrix (Fin 2) (Fin 2) (ZMod q)) (j : Fin 2) :
     substPoly q k g (X j) = ∑ i, C (ofZMod q k (g i j)) * X i := by
@@ -113,10 +135,36 @@ public theorem substPoly_drinfeldPoly (g : Matrix (Fin 2) (Fin 2) (ZMod q)) :
   ring
 
 
+private def slEnd (g : Matrix.SpecialLinearGroup (Fin 2) (ZMod q)) : CoordRing q k →ₐ[k] CoordRing q k :=
+  Ideal.Quotient.liftₐ (drinfeldIdeal q k) ((mk q k).comp (substPoly q k (g : Matrix (Fin 2) (Fin 2) (ZMod q))))
+    (by
+      intro a ha
+      rw [drinfeldIdeal, Ideal.mem_span_singleton'] at ha
+      obtain ⟨b, rfl⟩ := ha
+      rw [AlgHom.comp_apply, map_mul, map_sub, map_one, substPoly_drinfeldPoly,
+        Matrix.SpecialLinearGroup.det_coe, map_one, C_1, one_mul]
+      exact mk_mul_drinfeldPoly_sub_one q k _)
+
 public theorem slEnd_mk (g : Matrix.SpecialLinearGroup (Fin 2) (ZMod q)) (p : MvPolynomial (Fin 2) k) :
     slEnd q k g (mk q k p) = mk q k (substPoly q k (g : Matrix (Fin 2) (Fin 2) (ZMod q)) p) :=
   rfl
 
+
+private def slEndHom : Matrix.SpecialLinearGroup (Fin 2) (ZMod q) →* (CoordRing q k →ₐ[k] CoordRing q k) where
+  toFun := slEnd q k
+  map_one' := by
+    apply algHom_ext
+    apply MvPolynomial.algHom_ext
+    intro j
+    simp [slEnd_mk, Matrix.SpecialLinearGroup.coe_one, substPoly_one]
+  map_mul' g h := by
+    apply algHom_ext
+    apply MvPolynomial.algHom_ext
+    intro j
+    simp [slEnd_mk, Matrix.SpecialLinearGroup.coe_mul, substPoly_mul]
+
+def slAction : Matrix.SpecialLinearGroup (Fin 2) (ZMod q) →* (CoordRing q k ≃ₐ[k] CoordRing q k) :=
+  (AlgEquiv.algHomUnitsEquiv k (CoordRing q k)).toMonoidHom.comp (slEndHom q k).toHomUnits
 
 public theorem slAction_mk (g : Matrix.SpecialLinearGroup (Fin 2) (ZMod q)) (p : MvPolynomial (Fin 2) k) :
     slAction q k g (mk q k p) = mk q k (substPoly q k (g : Matrix (Fin 2) (Fin 2) (ZMod q)) p) :=
@@ -157,6 +205,8 @@ public theorem natCard_rootsOfUnity_galoisField_two :
   exact hprim.card_rootsOfUnity'
 
 
+def scalarOf (ζ : (GaloisField q 2)ˣ) : k := algebraMap (GaloisField q 2) k ζ
+
 public theorem scalarOf_pow_of_mem {ζ : (GaloisField q 2)ˣ} (hζ : ζ ∈ rootsOfUnity (q + 1) (GaloisField q 2)) :
     scalarOf q k ζ ^ (q + 1) = 1 := by
   rw [mem_rootsOfUnity] at hζ
@@ -172,10 +222,36 @@ public theorem scalarOf_mul (ζ η : (GaloisField q 2)ˣ) :
   simp [scalarOf]
 
 
+private def muEnd (ζ : rootsOfUnity (q + 1) (GaloisField q 2)) : CoordRing q k →ₐ[k] CoordRing q k :=
+  Ideal.Quotient.liftₐ (drinfeldIdeal q k) ((mk q k).comp (scalePoly k (scalarOf q k ζ)))
+    (by
+      intro a ha
+      rw [drinfeldIdeal, Ideal.mem_span_singleton'] at ha
+      obtain ⟨b, rfl⟩ := ha
+      rw [AlgHom.comp_apply, map_mul, map_sub, map_one, scalePoly_drinfeldPoly, scalarOf_pow_of_mem q k ζ.2,
+        C_1, one_mul]
+      exact mk_mul_drinfeldPoly_sub_one q k _)
+
 public theorem muEnd_mk (ζ : rootsOfUnity (q + 1) (GaloisField q 2)) (p : MvPolynomial (Fin 2) k) :
     muEnd q k ζ (mk q k p) = mk q k (scalePoly k (scalarOf q k ζ) p) :=
   rfl
 
+
+private def muEndHom : rootsOfUnity (q + 1) (GaloisField q 2) →* (CoordRing q k →ₐ[k] CoordRing q k) where
+  toFun := muEnd q k
+  map_one' := by
+    apply algHom_ext
+    apply MvPolynomial.algHom_ext
+    intro i
+    simp [muEnd_mk, scalarOf_one, scalePoly_one]
+  map_mul' ζ η := by
+    apply algHom_ext
+    apply MvPolynomial.algHom_ext
+    intro i
+    simp [muEnd_mk, scalarOf_mul, scalePoly_mul]
+
+def muAction : rootsOfUnity (q + 1) (GaloisField q 2) →* (CoordRing q k ≃ₐ[k] CoordRing q k) :=
+  (AlgEquiv.algHomUnitsEquiv k (CoordRing q k)).toMonoidHom.comp (muEndHom q k).toHomUnits
 
 public theorem muAction_mk (ζ : rootsOfUnity (q + 1) (GaloisField q 2)) (p : MvPolynomial (Fin 2) k) :
     muAction q k ζ (mk q k p) = mk q k (scalePoly k (scalarOf q k ζ) p) :=
@@ -218,12 +294,19 @@ public theorem scalePoly_substPoly_drinfeldPoly (g : Matrix (Fin 2) (Fin 2) (ZMo
   ring
 
 
+def hChar : Matrix.GeneralLinearGroup (Fin 2) (ZMod q) × (GaloisField q 2)ˣ →* (GaloisField q 2)ˣ :=
+  ((Units.map (algebraMap (ZMod q) (GaloisField q 2)).toMonoidHom).comp
+      (Matrix.GeneralLinearGroup.det.comp (MonoidHom.fst _ _))) *
+    ((powMonoidHom (q + 1)).comp (MonoidHom.snd _ _))
+
 public theorem coe_hChar_apply (p : Matrix.GeneralLinearGroup (Fin 2) (ZMod q) × (GaloisField q 2)ˣ) :
     ((hChar q p : (GaloisField q 2)ˣ) : GaloisField q 2) =
       algebraMap (ZMod q) (GaloisField q 2) (p.1 : Matrix (Fin 2) (Fin 2) (ZMod q)).det *
         ((p.2 : (GaloisField q 2)ˣ) : GaloisField q 2) ^ (q + 1) := by
   simp [hChar, Matrix.GeneralLinearGroup.val_det_apply]
 
+
+def hSubgroup : Subgroup (Matrix.GeneralLinearGroup (Fin 2) (ZMod q) × (GaloisField q 2)ˣ) := (hChar q).ker
 
 public theorem mem_hSubgroup_iff (p : Matrix.GeneralLinearGroup (Fin 2) (ZMod q) × (GaloisField q 2)ˣ) :
     p ∈ hSubgroup q ↔ hChar q p = 1 :=
@@ -238,6 +321,19 @@ public theorem hFactor {p : Matrix.GeneralLinearGroup (Fin 2) (ZMod q) × (Galoi
   simpa [ofZMod, scalarOf] using h
 
 
+private def hEnd (p : hSubgroup q) : CoordRing q k →ₐ[k] CoordRing q k :=
+  Ideal.Quotient.liftₐ (drinfeldIdeal q k)
+    ((mk q k).comp ((scalePoly k (scalarOf q k (p : Matrix.GeneralLinearGroup (Fin 2) (ZMod q) ×
+      (GaloisField q 2)ˣ).2)).comp (substPoly q k ((p : Matrix.GeneralLinearGroup (Fin 2) (ZMod q) ×
+      (GaloisField q 2)ˣ).1 : Matrix (Fin 2) (Fin 2) (ZMod q)))))
+    (by
+      intro a ha
+      rw [drinfeldIdeal, Ideal.mem_span_singleton'] at ha
+      obtain ⟨b, rfl⟩ := ha
+      rw [AlgHom.comp_apply, AlgHom.comp_apply, map_mul, map_sub, map_one, map_mul, map_sub, map_one,
+        scalePoly_substPoly_drinfeldPoly, hFactor q k p.2, C_1, one_mul]
+      exact mk_mul_drinfeldPoly_sub_one q k _)
+
 public theorem hEnd_mk (p : hSubgroup q) (f : MvPolynomial (Fin 2) k) :
     hEnd q k p (mk q k f) =
       mk q k (scalePoly k (scalarOf q k (p : Matrix.GeneralLinearGroup (Fin 2) (ZMod q) × (GaloisField q 2)ˣ).2)
@@ -245,6 +341,25 @@ public theorem hEnd_mk (p : hSubgroup q) (f : MvPolynomial (Fin 2) k) :
           Matrix (Fin 2) (Fin 2) (ZMod q)) f)) :=
   rfl
 
+
+private def hEndHom : hSubgroup q →* (CoordRing q k →ₐ[k] CoordRing q k) where
+  toFun := hEnd q k
+  map_one' := by
+    apply algHom_ext
+    apply MvPolynomial.algHom_ext
+    intro i
+    simp [hEnd_mk, scalarOf_one, scalePoly_one, substPoly_one]
+  map_mul' p₁ p₂ := by
+    apply algHom_ext
+    apply MvPolynomial.algHom_ext
+    intro j
+    simp only [AlgHom.comp_apply, AlgHom.mul_apply, hEnd_mk]
+    simp only [Subgroup.coe_mul, Prod.fst_mul, Prod.snd_mul, Units.val_mul, scalarOf_mul, substPoly_X, scalePoly_X,
+      map_mul, map_add, MvPolynomial.algHom_C, MvPolynomial.algebraMap_eq, Matrix.mul_apply, Fin.sum_univ_two]
+    ring
+
+def hAction : hSubgroup q →* (CoordRing q k ≃ₐ[k] CoordRing q k) :=
+  (AlgEquiv.algHomUnitsEquiv k (CoordRing q k)).toMonoidHom.comp (hEndHom q k).toHomUnits
 
 public theorem hAction_mk (p : hSubgroup q) (f : MvPolynomial (Fin 2) k) :
     hAction q k p (mk q k f) =

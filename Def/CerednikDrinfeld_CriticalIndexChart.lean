@@ -1,13 +1,13 @@
 module
 public import Mathlib
-public import Lemma.MvPowerSeries.NegV2
-public import Lemma.MvPowerSeries.CartierModule
+public import Theorem.MvPowerSeries.NegV2
+public import Theorem.MvPowerSeries.CartierModule
 public import Def.PowerSeries_CartierModuleHomothety
-public import Lemma.MvPowerSeries.CartierModuleWittAction
-public import Lemma.MvPowerSeries.CartierModuleBaseChange
-public import Lemma.MvPowerSeries.SpecialFormalModule
+public import Theorem.MvPowerSeries.CartierModuleWittAction
+public import Theorem.MvPowerSeries.CartierModuleBaseChange
+public import Theorem.MvPowerSeries.SpecialFormalModule
 public import Theorem.FormalGroup.CartierGradedPiece
-public import Lemma.MvPolynomial.CartierStructureConstants
+public import Theorem.MvPolynomial.CartierStructureConstants
 public import Abbrev.CerednikDrinfeld_CriticalIndexChart
 set_option autoImplicit false
 

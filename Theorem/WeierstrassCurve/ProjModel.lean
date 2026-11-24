@@ -54,6 +54,53 @@ public theorem ext_of_isSchemeTheoreticallyDominant_of_isSeparated {W X Y Z : Sc
   haveI : IsIso (equalizer.ι f' g').left := IsClosedImmersion.isIso_iff_ker_eq_bot.mpr hker
   exact (cancel_epi (equalizer.ι f' g').left).mp congr($(equalizer.condition f' g').left)
 
+def projModelHomogeneousIdealCR (V : WeierstrassCurve.Projective R) :
+    HomogeneousIdeal (homogeneousSubmodule (Fin 3) R) :=
+  ⟨Ideal.span {V.polynomial}, span_polynomial_isHomogeneousCR V⟩
+
+@[simp]
+
+abbrev ProjModelRingCR (V : WeierstrassCurve.Projective R) : Type _ :=
+  MvPolynomial (Fin 3) R ⧸ (projModelHomogeneousIdealCR V).toIdeal
+
+abbrev projModelGradingCR (V : WeierstrassCurve.Projective R) :
+    ℕ → Submodule R (ProjModelRingCR V) :=
+  quotGradingSubmodule (homogeneousSubmodule (Fin 3) R) (projModelHomogeneousIdealCR V).toIdeal
+
+abbrev projModelCR (V : WeierstrassCurve.Projective R) : Scheme :=
+  Proj (projModelGradingCR V)
+
+def projModelStrCR (V : WeierstrassCurve.Projective R) :
+    Proj (projModelGradingCR V) ⟶ Spec (CommRingCat.of R) :=
+  Proj.toSpecZero (projModelGradingCR V) ≫
+    Spec.map (CommRingCat.ofHom (algebraMap R ((projModelGradingCR V) 0)))
+
+def galTwist {X : Scheme.{u}} {f : X ⟶ Spec (CommRingCat.of R)} {F : Type u} [Field F]
+    [Algebra R F] (σ : F ≃ₐ[R] F)
+    (P : SchemeHomOver (Spec.map (CommRingCat.ofHom (algebraMap R F))) f) :
+    SchemeHomOver (Spec.map (CommRingCat.ofHom (algebraMap R F))) f :=
+  schemeHomOverComp (Spec.map (CommRingCat.ofHom (σ : F →+* F)))
+    (by
+      rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
+      exact congrArg Spec.map (congrArg CommRingCat.ofHom
+        (RingHom.ext fun x => σ.commutes x)))
+    P
+
+def IsPointsEval (V : WeierstrassCurve.Projective R)
+    (G : RelativeGroupLaw R (projModelStrCR V))
+    (ev : ∀ (F : Type u) [Field F] [DecidableEq F] [Algebra R F],
+      SchemeHomOver (Spec.map (CommRingCat.ofHom (algebraMap R F))) (projModelStrCR V) ≃
+        (V.baseChange F).toAffine.Point) : Prop :=
+  (∀ (F : Type u) [Field F] [DecidableEq F] [Algebra R F]
+      (P Q : SchemeHomOver (Spec.map (CommRingCat.ofHom (algebraMap R F)))
+        (projModelStrCR V)),
+      ev F (G.mul (Spec.map (CommRingCat.ofHom (algebraMap R F))) P Q) = ev F P + ev F Q) ∧
+  (∀ (F : Type u) [Field F] [DecidableEq F] [Algebra R F] (σ : F ≃ₐ[R] F)
+      (P : SchemeHomOver (Spec.map (CommRingCat.ofHom (algebraMap R F)))
+        (projModelStrCR V)),
+      ev F (galTwist σ P) =
+        WeierstrassCurve.Affine.Point.map (σ : F →ₐ[R] F) (ev F P))
+
 end WeierstrassProjModel
 
 namespace WeierstrassProjModel
@@ -80,6 +127,12 @@ public theorem nsmul_zero (G : RelativeGroupLaw R f) {T : Scheme.{u}}
   rfl
 
 
+def nsmul (G : RelativeGroupLaw R f) {T : Scheme.{u}} (t : T ⟶ Spec (CommRingCat.of R))
+    (n : ℕ) (x : SchemeHomOver t f) : SchemeHomOver t f :=
+  Nat.rec (G.one t) (fun _ ih => G.mul t ih x) n
+
+@[simp]
+
 @[simp]
 public theorem nsmul_succ (G : RelativeGroupLaw R f) {T : Scheme.{u}}
     (t : T ⟶ Spec (CommRingCat.of R)) (n : ℕ) (x : SchemeHomOver t f) :
@@ -101,6 +154,17 @@ public theorem nsmul_unit (G : RelativeGroupLaw R f) {T : Scheme.{u}}
   | zero => rfl
   | succ n ih => rw [nsmul_succ, ih, G.mul_one]
 
+
+@[reducible]
+def pointGroup (G : RelativeGroupLaw R f) {T : Scheme.{u}}
+    (t : T ⟶ Spec (CommRingCat.of R)) : Group (SchemeHomOver t f) where
+  mul x y := G.mul t x y
+  one := G.one t
+  inv x := G.inv t x
+  mul_assoc := G.mul_assoc t
+  one_mul := G.one_mul t
+  mul_one := G.mul_one t
+  inv_mul_cancel := G.inv_mul_cancel t
 
 public theorem one_natural (G : RelativeGroupLaw R f) {T T' : Scheme.{u}}
     (t : T ⟶ Spec (CommRingCat.of R)) (t' : T' ⟶ Spec (CommRingCat.of R))
@@ -140,6 +204,10 @@ public theorem nsmul_natural (G : RelativeGroupLaw R f) {T T' : Scheme.{u}}
         _ = G.nsmul t' (n + 1) (schemeHomOverComp ψ hψ x) := rfl
 
 
+def IsTorsionPoint (G : RelativeGroupLaw R f) {T : Scheme.{u}}
+    (t : T ⟶ Spec (CommRingCat.of R)) (n : ℕ) (x : SchemeHomOver t f) : Prop :=
+  G.nsmul t n x = G.one t
+
 public theorem isTorsionPoint_def (G : RelativeGroupLaw R f) {T : Scheme.{u}}
     (t : T ⟶ Spec (CommRingCat.of R)) (n : ℕ) (x : SchemeHomOver t f) :
     G.IsTorsionPoint t n x ↔ G.nsmul t n x = G.one t :=
@@ -152,6 +220,12 @@ public theorem mem_torsionSubset (G : RelativeGroupLaw R f) {T : Scheme.{u}}
     x ∈ G.torsionSubset t n ↔ G.IsTorsionPoint t n x :=
   Iff.rfl
 
+
+def torsionSubset (G : RelativeGroupLaw R f) {T : Scheme.{u}}
+    (t : T ⟶ Spec (CommRingCat.of R)) (n : ℕ) : Set (SchemeHomOver t f) :=
+  {x | G.IsTorsionPoint t n x}
+
+@[simp]
 
 public theorem isTorsionPoint_unit (G : RelativeGroupLaw R f) {T : Scheme.{u}}
     (t : T ⟶ Spec (CommRingCat.of R)) (n : ℕ) :
@@ -203,10 +277,20 @@ variable {R : Type u} [CommRing R]
 variable {A : Scheme.{u}} {f : A ⟶ Spec (CommRingCat.of R)}
 
 
+def schemeNsmul (G : RelativeGroupLaw R f) (n : ℕ) : A ⟶ A :=
+  (G.nsmul f n idPoint).1
+
 public theorem schemeNsmul_over (G : RelativeGroupLaw R f) (n : ℕ) :
     G.schemeNsmul n ≫ f = f :=
   (G.nsmul f n idPoint).2
 
+
+abbrev schemeKer (G : RelativeGroupLaw R f) (n : ℕ) : Scheme.{u} :=
+  pullback (G.schemeNsmul n) (G.one (𝟙 (Spec (CommRingCat.of R)))).1
+
+abbrev schemeKerStr (G : RelativeGroupLaw R f) (n : ℕ) :
+    G.schemeKer n ⟶ Spec (CommRingCat.of R) :=
+  pullback.snd (G.schemeNsmul n) (G.one (𝟙 (Spec (CommRingCat.of R)))).1
 
 public theorem span_polynomial_isHomogeneousCR (V : WeierstrassCurve.Projective R) :
     (Ideal.span {V.polynomial}).IsHomogeneous (homogeneousSubmodule (Fin 3) R) := by
@@ -219,4 +303,3 @@ public theorem span_polynomial_isHomogeneousCR (V : WeierstrassCurve.Projective 
 @[simp]
 public theorem projModelHomogeneousIdealCR_toIdeal (V : WeierstrassCurve.Projective R) :
     (projModelHomogeneousIdealCR V).toIdeal = Ideal.span {V.polynomial} := rfl
-

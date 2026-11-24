@@ -1,7 +1,7 @@
 module
 public import Theorem.Matrix.SmoothAutomorphicFnAt
 public import Lemma.RingHom.HeckeEigensystemMap
-public import Lemma.Set.HeckePair
+public import Theorem.Set.HeckePair
 public import Structure.LocalLanglands_HeckeCosetSystem
 public import Structure.AutomorphicForm_SmoothCuspRealization
 open IsDedekindDomain NumberField MeasureTheory Matrix

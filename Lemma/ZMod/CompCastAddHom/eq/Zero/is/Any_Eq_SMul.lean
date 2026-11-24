@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.UpperHalfPlane.PeriodMap
+import Theorem.UpperHalfPlane.PeriodMap
 open scoped MatrixGroups
 open ModularCurve.Period
 

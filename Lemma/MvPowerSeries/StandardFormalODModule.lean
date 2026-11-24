@@ -1,6 +1,6 @@
 import Mathlib
-import Lemma.MvPowerSeries.NegV2
-import Lemma.MvPowerSeries.SpecialFormalModule
+import Theorem.MvPowerSeries.NegV2
+import Theorem.MvPowerSeries.SpecialFormalModule
 import Lemma.MvPowerSeries.LubinTateModule
 import Lemma.MvPowerSeries.EndRingV2LinearPart
 import Abbrev.CerednikDrinfeld_StandardFormalODModule

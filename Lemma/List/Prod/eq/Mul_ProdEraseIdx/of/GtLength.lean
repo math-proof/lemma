@@ -1,5 +1,5 @@
 import Lemma.List.EraseIdx.eq.Append_Drop_Add_1
-import Lemma.List.Prod.eq.MulProdS
+import Theorem.List.Prod.eq.MulProdS
 import Lemma.List.ProdTake.eq.Mul_ProdTake.of.GtLength
 import Lemma.Nat.MulMul.eq.Mul_Mul
 open List Nat

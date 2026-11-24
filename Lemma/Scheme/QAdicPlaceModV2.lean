@@ -1,7 +1,7 @@
 import Mathlib
 import Lemma.HahnSeries.QAdicPlace
-import Lemma.HahnSeries.JqCoeff
-import Lemma.HahnSeries.QAdicPlaceMod
+import Theorem.HahnSeries.JqCoeff
+import Theorem.HahnSeries.QAdicPlaceMod
 
 noncomputable section InlinedTheorems
 

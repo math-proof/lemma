@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.MvPowerSeries.SpecialFormalModule
+import Theorem.MvPowerSeries.SpecialFormalModule
 import Lemma.Fin.GradedCartierModuleData
 import Structure.CerednikDrinfeld_GradedCartierNModule
 import Notation.CerednikDrinfeld_GradedCartierNModule

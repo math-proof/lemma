@@ -2,8 +2,8 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.v1.Atlas.Buildings.code.CoxeterGroup.ReflectionIdentificationGenuine
-public import Lemma.Nat.StrongExchangeForBruhat
-public import Lemma.List.IsReducedDrop.of.IsReduced
+public import Theorem.Nat.StrongExchangeForBruhat
+public import Theorem.List.IsReducedDrop.of.IsReduced
 open CoxeterReflectionId
 
 

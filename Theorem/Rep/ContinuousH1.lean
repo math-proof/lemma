@@ -1,7 +1,7 @@
 module
 public import Mathlib
-public import Lemma.Submodule.ContinuousH2
-public import Lemma.Rep.ContinuousH2Map
+public import Theorem.Submodule.ContinuousH2
+public import Theorem.Rep.ContinuousH2Map
 public import Def.GroupCohomology_ContinuousH1
 public import Abbrev.GroupCohomology_ContinuousH1
 set_option autoImplicit false

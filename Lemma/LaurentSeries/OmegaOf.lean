@@ -1,5 +1,5 @@
 import Lemma.HahnSeries.QAdicPlace
-import Lemma.LaurentSeries.ArithmeticGalois
+import Theorem.LaurentSeries.ArithmeticGalois
 import Lemma.LaurentSeries.QExpansionDiff
 import Theorem.NumberTheory.ModularCurve.ThetaCoeff
 import Theorem.NumberTheory.ModularCurve.CoeffMap

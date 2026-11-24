@@ -3,7 +3,7 @@ public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.NumberTheory.RothAuxiliary.Part7
 public import Theorem.Real.AbsEval.le.MulMulMulPow8SumRothMvL1Prod_PowMaxRpow.of.All_LeProd_PowAbsSub_RpowMulNegRothMvWeight.Ge_1.Ge_0.RothMvIndex.All_Gt_0
-public import Lemma.Real.RothFiniteDeps
+public import Theorem.Real.RothFiniteDeps
 open MathlibExt.NumberTheory.RothAuxiliary
 open MvPolynomial Real
 set_option maxHeartbeats 800000

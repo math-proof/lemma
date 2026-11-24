@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Ideal.RatFuncPlaces
+import Theorem.Ideal.RatFuncPlaces
 import Lemma.Valuation.RatFuncPlaceInfty
 import Instance.AlgebraicCurve_RatFuncPlaceClassification
 

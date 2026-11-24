@@ -1,5 +1,5 @@
 module
-public import Lemma.Scheme.CurveModel
+public import Theorem.Scheme.CurveModel
 public import Instance.JacJ1_ChartAlgebra
 public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
 public import Mathlib.AlgebraicGeometry.Morphisms.Etale

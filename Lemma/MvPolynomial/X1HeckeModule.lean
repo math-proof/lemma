@@ -1,4 +1,4 @@
-import Lemma.LaurentSeries.X1HeckeOperator
+import Theorem.LaurentSeries.X1HeckeOperator
 import Lemma.UpperHalfPlane.X1Diamond
 import Lemma.WeierstrassCurve.JZeroTateModule
 import Mathlib.Algebra.MvPolynomial.CommRing

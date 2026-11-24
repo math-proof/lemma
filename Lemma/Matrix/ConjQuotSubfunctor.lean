@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Matrix.TraceAlgebra
+import Theorem.Matrix.TraceAlgebra
 
 set_option autoImplicit false
 

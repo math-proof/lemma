@@ -1,4 +1,4 @@
-import Lemma.Scheme.OrderedAffineCoverCech
+import Theorem.Scheme.OrderedAffineCoverCech
 import Lemma.Scheme.OrderedAffineCoverCechCup
 import Lemma.Scheme.OrderedAffineCoverCochainPullback
 

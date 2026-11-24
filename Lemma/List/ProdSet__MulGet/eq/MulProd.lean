@@ -1,5 +1,5 @@
 import Lemma.List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength
-import Lemma.List.Prod.eq.MulProdS
+import Theorem.List.Prod.eq.MulProdS
 open List
 
 

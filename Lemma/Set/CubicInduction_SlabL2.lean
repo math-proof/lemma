@@ -1,5 +1,5 @@
 import Lemma.Matrix.CubicInduction_Carrier
-import Lemma.Measure.TateGlobalZeta
+import Theorem.Measure.TateGlobalZeta
 import Mathlib.MeasureTheory.Function.L2Space
 
 set_option autoImplicit false

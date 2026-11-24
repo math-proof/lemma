@@ -1,5 +1,5 @@
 module
-public import Lemma.CuspForm.TWLevelHeckeModule
+public import Theorem.CuspForm.TWLevelHeckeModule
 public import Def.CuspForm_TWLevelHeckeRing
 set_option autoImplicit false
 

@@ -1,6 +1,6 @@
 import Mathlib
 import Lemma.Scheme.RelSubPicBaseChange
-import Lemma.Scheme.RelSubPicGroup
+import Theorem.Scheme.RelSubPicGroup
 import Instance.AlgebraicGeometry_ModulesPullbackMonoidal
 import Def.AlgebraicGeometry_RigKerDualNumber
 

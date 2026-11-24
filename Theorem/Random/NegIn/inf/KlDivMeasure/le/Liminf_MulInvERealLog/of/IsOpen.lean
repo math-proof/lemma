@@ -1,9 +1,9 @@
 module
-public import Lemma.Fin.GetMapSMul.eq.DivCountVec.of.Measurable
-public import Lemma.Random.Any_And_Any_And_InAndAll_InSMul.of.In.IsOpen
-public import Lemma.Random.IsProbabilityMeasure.of.Gt_0
-public import Lemma.Random.KlDiv.eq.All_EqGetMap0.of.Measurable
-public import Lemma.Random.Measurable.of.Gt_0
+public import Theorem.Fin.GetMapSMul.eq.DivCountVec.of.Measurable
+public import Theorem.Random.Any_And_Any_And_InAndAll_InSMul.of.In.IsOpen
+public import Theorem.Random.IsProbabilityMeasure.of.Gt_0
+public import Theorem.Random.KlDiv.eq.All_EqGetMap0.of.Measurable
+public import Theorem.Random.Measurable.of.Gt_0
 public import Theorem.Random.SatisfiesLDP_MapPiFun_DivCountVec.of.All_Eq_Top.All_Eq_OfRealSum_Mul_LogDiv_ToRealGetMap.Measurable
 public import Mathlib.Data.EReal.Inv
 public import Mathlib.Data.EReal.Operations

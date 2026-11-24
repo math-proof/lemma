@@ -1,7 +1,7 @@
 module
 public import Def.v1.Atlas.BooleanFunctions.code.Stability
 public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Stability
-public import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
 public import Def.v1.Atlas.BooleanFunctions.code.GaussianStability.Part2
 public import Def.v1.Atlas.BooleanFunctions.code.InfluenceFourier
 

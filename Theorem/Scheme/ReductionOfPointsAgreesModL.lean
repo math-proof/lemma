@@ -1,8 +1,8 @@
 module
 public import Mathlib
-public import Lemma.Scheme.NeronModelPropertyBundleCarrier
-public import Lemma.Scheme.RelativeGroupLaw
-public import Lemma.Finsupp.ReductionModL
+public import Theorem.Scheme.NeronModelPropertyBundleCarrier
+public import Theorem.Scheme.RelativeGroupLaw
+public import Theorem.Finsupp.ReductionModL
 public import Def.ModularCurve_ReductionOfPointsAgreesModL
 set_option autoImplicit false
 

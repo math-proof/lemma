@@ -1,6 +1,6 @@
 import Lemma.Nat.LtMod.of.Gt_0
 import Lemma.List.Drop.eq.DropDrop__Sub.of.Ge
-import Lemma.List.Tail.eq.Drop_1
+import Theorem.List.Tail.eq.Drop_1
 import Lemma.List.ProdDrop.gt.Zero.of.GtProd_0
 import Lemma.Nat.Gt_0.of.GtMul
 open List Nat

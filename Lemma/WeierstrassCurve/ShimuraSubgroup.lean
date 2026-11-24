@@ -1,5 +1,5 @@
 import Lemma.MvPolynomial.HeckeModule
-import Lemma.HahnSeries.ModularUnit
+import Theorem.HahnSeries.ModularUnit
 import Structure.ModularCurve_ShimuraSubgroup
 
 set_option autoImplicit false

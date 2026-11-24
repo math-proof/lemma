@@ -2,9 +2,9 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.NumberTheory.RothAuxiliary.Part7
-public import Lemma.Polynomial.NatAbsCoeff.le.RothPolyL1
-public import Lemma.Polynomial.RothPolyL1Mul.le.MulRothSPolyL1
-public import Lemma.Polynomial.RothPolyL1_C.eq.NatAbs
+public import Theorem.Polynomial.NatAbsCoeff.le.RothPolyL1
+public import Theorem.Polynomial.RothPolyL1Mul.le.MulRothSPolyL1
+public import Theorem.Polynomial.RothPolyL1_C.eq.NatAbs
 public import Theorem.Real.RothCoordinateBase.Gt_0
 public import Theorem.Real.RothPolyL1_RothScaledPowerCoord.le.PowRothCoordinateBase.of.Le
 open MathlibExt.NumberTheory.RothAuxiliary

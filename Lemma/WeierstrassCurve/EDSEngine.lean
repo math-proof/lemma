@@ -1,5 +1,5 @@
 import Mathlib.NumberTheory.EllipticDivisibilitySequence
-import Lemma.Ideal.Mathlib430
+import Theorem.Ideal.Mathlib430
 import Mathlib.Algebra.Ring.NegOnePow
 import Mathlib.Data.Fin.VecNotation
 import Mathlib.Data.Fin.Tuple.Sort

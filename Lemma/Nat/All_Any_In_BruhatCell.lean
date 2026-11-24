@@ -2,7 +2,7 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Theorem.v1.Atlas.Buildings.code.BNPair.CellCoverProof
 import Lemma.Nat.In_BruhatCell1.of.In_B
-import Lemma.Nat.NonemptyBruhatCell
+import Theorem.Nat.NonemptyBruhatCell
 import Def.v1.Atlas.Buildings.code.BNPair.ParabolicDefs.Part2
 
 

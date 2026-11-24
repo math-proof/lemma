@@ -19,6 +19,8 @@ section IntegralUnits
 variable {A : Type*}
 
 
+def integralMatrixSet (U : Set A) : Set (Matrix (Fin 2) (Fin 2) A) := {m | ∀ i j, m i j ∈ U}
+
 public theorem integralMatrixSet_eq_pi (U : Set A) :
     integralMatrixSet U = Set.pi Set.univ fun _ : Fin 2 => Set.pi Set.univ fun _ : Fin 2 => U := by
   ext m
@@ -37,6 +39,10 @@ public theorem isOpen_integralMatrixSet [TopologicalSpace A] {U : Set A} (hU : I
 
 variable [CommRing A]
 
+
+def integralUnitsSet (U : Set A) : Set (GL (Fin 2) A) :=
+  {g | (g : Matrix (Fin 2) (Fin 2) A) ∈ integralMatrixSet U ∧
+    ((g⁻¹ : GL (Fin 2) A) : Matrix (Fin 2) (Fin 2) A) ∈ integralMatrixSet U}
 
 public theorem mem_integralUnitsSet {U : Set A} {g : GL (Fin 2) A} :
     g ∈ integralUnitsSet U ↔ (∀ i j, (g : Matrix (Fin 2) (Fin 2) A) i j ∈ U) ∧
@@ -94,13 +100,22 @@ section Local
 variable (K : Type*) [Field K] [NumberField K] (v : HeightOneSpectrum (𝓞 K))
 
 
+def IsLocalTestFn (fv : GL (Fin 2) (v.adicCompletion K) → ℂ) : Prop :=
+  IsLocallyConstant fv ∧ HasCompactSupport fv
+
 public theorem isLocalTestFn_zero : IsLocalTestFn K v (fun _ => 0) :=
   ⟨IsLocallyConstant.const 0, HasCompactSupport.zero⟩
 
 
+def localAt : GL (Fin 2) (AdeleRing (𝓞 K) K) →* GL (Fin 2) (v.adicCompletion K) :=
+  (AdelicLevel.finComponent (𝓞 K) K v).comp (AdelicLevel.glFin (𝓞 K) K)
+
 public theorem continuous_localAt : Continuous (localAt K v) :=
   (AdelicLevel.continuous_finComponent (𝓞 K) K v).comp (AdelicLevel.continuous_glFin (𝓞 K) K)
 
+
+def localIntegralSet : Set (GL (Fin 2) (v.adicCompletion K)) :=
+  integralUnitsSet (v.adicCompletionIntegers K : Set (v.adicCompletion K))
 
 public theorem mem_localIntegralSet {g : GL (Fin 2) (v.adicCompletion K)} :
     g ∈ localIntegralSet K v ↔
@@ -122,6 +137,13 @@ public theorem isCompact_localIntegralSet : IsCompact (localIntegralSet K v) :=
 public theorem isOpen_localIntegralSet : IsOpen (localIntegralSet K v) :=
   isOpen_integralUnitsSet ((AdelicHaar.fact_isOpen_adicCompletionIntegers (𝓞 K) K).out v)
 
+
+def localIntegralCompacts : PositiveCompacts (GL (Fin 2) (v.adicCompletion K)) where
+  carrier := localIntegralSet K v
+  isCompact' := isCompact_localIntegralSet K v
+  interior_nonempty' := by
+    rw [(isOpen_localIntegralSet K v).interior_eq]
+    exact ⟨1, one_mem_localIntegralSet K v⟩
 
 public theorem coe_localIntegralCompacts :
     (localIntegralCompacts K v : Set (GL (Fin 2) (v.adicCompletion K))) = localIntegralSet K v :=
@@ -168,6 +190,12 @@ public theorem locallyCompactSpace_localGL : LocallyCompactSpace (GL (Fin 2) (v.
   infer_instance
 
 
+def localHaar : @Measure (GL (Fin 2) (v.adicCompletion K)) (localGLBorel K v) := by
+  letI := localGLBorel K v
+  haveI := borelSpace_localGLBorel K v
+  haveI := locallyCompactSpace_localGL K v
+  exact Measure.haarMeasure (localIntegralCompacts K v)
+
 public theorem isHaarMeasure_localHaar :
     @Measure.IsHaarMeasure (GL (Fin 2) (v.adicCompletion K)) _ _ (localGLBorel K v) (localHaar K v) := by
   letI := localGLBorel K v
@@ -188,6 +216,21 @@ section OrbitalIntegral
 
 variable (K : Type*) [Field K] [NumberField K] (v : HeightOneSpectrum (𝓞 K))
 
+
+def IsSectionFn (γ : GL (Fin 2) (v.adicCompletion K))
+    (τ : @Measure (localCentralizer K v γ) (localCentralizerBorel K v γ))
+    (fv : GL (Fin 2) (v.adicCompletion K) → ℂ) (w : GL (Fin 2) (v.adicCompletion K) → ℝ) : Prop :=
+  letI := localGLBorel K v
+  letI := localCentralizerBorel K v γ
+  (∀ x, 0 ≤ w x) ∧ Measurable w ∧ HasCompactSupport w ∧
+    ∀ x, fv (x⁻¹ * γ * x) ≠ 0 → ∫ t : localCentralizer K v γ, w (t * x) ∂τ = 1
+
+def IsOrbitalIntegral (γ : GL (Fin 2) (v.adicCompletion K))
+    (τ : @Measure (localCentralizer K v γ) (localCentralizerBorel K v γ))
+    (fv : GL (Fin 2) (v.adicCompletion K) → ℂ) (I : ℂ) : Prop :=
+  letI := localGLBorel K v
+  ∃ w : GL (Fin 2) (v.adicCompletion K) → ℝ, IsSectionFn K v γ τ fv w ∧
+    I = ∫ x, fv (x⁻¹ * γ * x) * (w x : ℂ) ∂(localHaar K v)
 
 public theorem isSectionFn_zero (γ : GL (Fin 2) (v.adicCompletion K))
     (τ : @Measure (localCentralizer K v γ) (localCentralizerBorel K v γ)) :
@@ -213,6 +256,9 @@ section UnitFactor
 
 variable (K : Type) [Field K] [NumberField K]
 
+
+def unitFinSet : Set (GL (Fin 2) (FiniteAdeleRing (𝓞 K) K)) :=
+  {h | ∀ v : HeightOneSpectrum (𝓞 K), AdelicLevel.finComponent (𝓞 K) K v h ∈ localIntegralSet K v}
 
 public theorem unitFinSet_eq :
     unitFinSet K = integralUnitsSet (AdelicLevel.integralFiniteAdeles (𝓞 K) K) := by
@@ -280,6 +326,24 @@ public theorem indicator_unitFinSet_mul_right {u : GL (Fin 2) (FiniteAdeleRing (
   · rw [Set.indicator_of_notMem hx, Set.indicator_of_notMem (fun h => hx (key.1 h))]
 
 
+def IsBiInvariantUnder (U : Subgroup (GL (Fin 2) (AdeleRing (𝓞 K) K)))
+    (f : GL (Fin 2) (AdeleRing (𝓞 K) K) → ℂ) : Prop :=
+  ∀ u ∈ U, ∀ g, f (u * g) = f g ∧ f (g * u) = f g
+
+def IsUnitFactorizableAt (U : Subgroup (GL (Fin 2) (AdeleRing (𝓞 K) K)))
+    (S : Finset (HeightOneSpectrum (𝓞 K))) (f : GL (Fin 2) (AdeleRing (𝓞 K) K) → ℂ) : Prop :=
+  IsBiInvariantUnder K U f ∧
+  ∃ (fa : GL (Fin 2) (InfiniteAdeleRing K) → ℂ)
+    (ff : GL (Fin 2) (FiniteAdeleRing (𝓞 K) K) → ℂ)
+    (fS : ∀ v : HeightOneSpectrum (𝓞 K), GL (Fin 2) (v.adicCompletion K) → ℂ),
+    IsArchTestFactor K fa ∧ IsFinTestFactor K ff ∧ (∀ v ∈ S, IsLocalTestFn K v (fS v)) ∧
+    (∀ h : GL (Fin 2) (FiniteAdeleRing (𝓞 K) K),
+      (∀ v ∉ S, AdelicLevel.finComponent (𝓞 K) K v h ∈ localIntegralSet K v) →
+        ff h = ∏ v ∈ S, fS v (AdelicLevel.finComponent (𝓞 K) K v h)) ∧
+    (∀ h : GL (Fin 2) (FiniteAdeleRing (𝓞 K) K),
+      (∃ v ∉ S, AdelicLevel.finComponent (𝓞 K) K v h ∉ localIntegralSet K v) → ff h = 0) ∧
+    ∀ g, f g = fa (AdelicLevel.glArch (𝓞 K) K g) * ff (AdelicLevel.glFin (𝓞 K) K g)
+
 public theorem IsBiInvariantUnder.mono {U V : Subgroup (GL (Fin 2) (AdeleRing (𝓞 K) K))} (hUV : U ≤ V)
     {f : GL (Fin 2) (AdeleRing (𝓞 K) K) → ℂ} (hf : IsBiInvariantUnder K V f) :
     IsBiInvariantUnder K U f :=
@@ -311,6 +375,10 @@ public theorem IsUnitFactorizableAt.isFactorizableTestFn {U : Subgroup (GL (Fin 
   obtain ⟨-, fa, ff, _, hfa, hff, -, -, -, hf⟩ := hf
   exact ⟨fa, ff, hfa, hff, hf⟩
 
+
+def IsIntegralLevel (U : Subgroup (GL (Fin 2) (AdeleRing (𝓞 K) K))) : Prop :=
+  ∀ u ∈ U, AdelicLevel.glArch (𝓞 K) K u = 1 ∧
+    AdelicLevel.glFin (𝓞 K) K u ∈ AdelicLevel.finiteIntegralGL2 (𝓞 K) K
 
 public theorem isIntegralLevel_bot : IsIntegralLevel K ⊥ := by
   intro u hu
@@ -370,6 +438,9 @@ section RegularSemisimple
 
 variable {A : Type*} [CommRing A]
 
+
+def IsRegularSemisimple (g : GL (Fin 2) A) : Prop :=
+  IsUnit (Matrix.trace (g : Matrix (Fin 2) (Fin 2) A) ^ 2 - 4 * Matrix.det (g : Matrix (Fin 2) (Fin 2) A))
 
 public theorem isRegularSemisimple_iff (g : GL (Fin 2) A) :
     IsRegularSemisimple g ↔

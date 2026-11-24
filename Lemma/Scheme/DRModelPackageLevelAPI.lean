@@ -1,7 +1,7 @@
 import Mathlib
 import Def.ModularCurve_DRModelPackageLevel
 import Lemma.Scheme.SmoothProperCurveBase
-import Lemma.Scheme.RelPicardPullback
+import Theorem.Scheme.RelPicardPullback
 
 set_option autoImplicit false
 

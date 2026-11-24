@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.Finset.ComponentGroup
+import Theorem.Finset.ComponentGroup
 import Lemma.Finset.CharacterLatticePairings
 import Theorem.Int.P2MUtil
 

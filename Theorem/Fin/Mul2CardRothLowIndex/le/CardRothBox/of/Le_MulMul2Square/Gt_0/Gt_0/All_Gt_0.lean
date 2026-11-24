@@ -45,3 +45,10 @@ private theorem main
 
 -- created on 2026-10-21
 -- updated on 2026-11-13
+private abbrev RothLowIndex {m : ℕ} (r : Fin m → ℕ) (γ : ℝ) :=
+  {i : RothBox r // i ∈ rothLowIndices r γ}
+
+/--
+[roth_low_equation_twice_card_le](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/RothAuxiliary.lean)
+-/
+@[path]

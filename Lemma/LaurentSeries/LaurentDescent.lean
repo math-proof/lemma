@@ -1,4 +1,4 @@
-import Lemma.LaurentSeries.GeometricBaseChange
+import Theorem.LaurentSeries.GeometricBaseChange
 
 noncomputable section
 

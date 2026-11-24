@@ -1,5 +1,5 @@
 import Lemma.Set.CubicInduction_SlabL2
-import Lemma.Matrix.CubicInduction_Structure
+import Theorem.Matrix.CubicInduction_Structure
 import Mathlib.Analysis.Calculus.ContDiff.Defs
 
 set_option autoImplicit false

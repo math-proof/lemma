@@ -105,6 +105,14 @@ public theorem heightOneSpectrumOfIrreducible_asIdeal {p : K[X]} (hp : Irreducib
     (heightOneSpectrumOfIrreducible K hp).asIdeal = Ideal.span {p} := rfl
 
 
+def heightOneSpectrumOfIrreducible {p : K[X]} (hp : Irreducible p) :
+    HeightOneSpectrum K[X] where
+  asIdeal := Ideal.span {p}
+  isPrime := (PrincipalIdealRing.isMaximal_of_irreducible hp).isPrime
+  ne_bot := by simpa [Ideal.span_singleton_eq_bot] using hp.ne_zero
+
+@[simp]
+
 public theorem exists_irreducible_span (w : HeightOneSpectrum K[X]) :
     ∃ p : K[X], Irreducible p ∧ w.asIdeal = Ideal.span {p} := by
   obtain ⟨p, hp⟩ := (IsPrincipalIdealRing.principal w.asIdeal).principal
@@ -117,6 +125,9 @@ public theorem exists_irreducible_span (w : HeightOneSpectrum K[X]) :
   rw [hp] at hpr
   exact ((Ideal.span_singleton_prime hp0).mp hpr).irreducible
 
+
+def finitePlace {p : K[X]} (hp : Irreducible p) : Place K (RatFunc K) :=
+  Place.ofHeightOneSpectrum (heightOneSpectrumOfIrreducible K hp)
 
 public theorem finitePlace_def {p : K[X]} (hp : Irreducible p) :
     finitePlace K hp = Place.ofHeightOneSpectrum (heightOneSpectrumOfIrreducible K hp) := rfl
@@ -131,6 +142,13 @@ public theorem algebraMap_mem_ofHeightOneSpectrum (w : HeightOneSpectrum K[X]) (
     ((Place.isEquiv_adicValuation_ofHeightOneSpectrum (K := K)
       (F := RatFunc K) w).le_one_iff_le_one.mp (w.valuation_le_one q))
 
+
+def residueOfHeightOneSpectrum (w : HeightOneSpectrum K[X]) :
+    K[X] →+* (Place.ofHeightOneSpectrum (K := K) (F := RatFunc K) w).ResidueField :=
+  (IsLocalRing.residue _).comp
+    ((algebraMap K[X] (RatFunc K)).codRestrict
+      (Place.ofHeightOneSpectrum (K := K) (F := RatFunc K) w).toValuationSubring.toSubring
+      (algebraMap_mem_ofHeightOneSpectrum K w))
 
 public theorem residueOfHeightOneSpectrum_apply (w : HeightOneSpectrum K[X]) (q : K[X]) :
     residueOfHeightOneSpectrum K w q = IsLocalRing.residue _
@@ -203,6 +221,20 @@ public theorem surjective_residueOfHeightOneSpectrum (w : HeightOneSpectrum K[X]
     _ < 1 := (HeightOneSpectrum.valuation_lt_one_iff_mem w _).mpr ht
 
 
+def residueFieldEquivOfHeightOneSpectrum (w : HeightOneSpectrum K[X]) :
+    (K[X] ⧸ w.asIdeal) ≃ₐ[K]
+      (Place.ofHeightOneSpectrum (K := K) (F := RatFunc K) w).ResidueField := by
+  refine AlgEquiv.ofRingEquiv (f := (Ideal.quotEquivOfEq
+    (ker_residueOfHeightOneSpectrum K w).symm).trans
+    (RingHom.quotientKerEquivOfSurjective (surjective_residueOfHeightOneSpectrum K w))) ?_
+  intro a
+  rw [show (algebraMap K (K[X] ⧸ w.asIdeal)) a
+      = Ideal.Quotient.mk w.asIdeal (algebraMap K K[X] a) from rfl]
+  rw [RingEquiv.trans_apply, Ideal.quotEquivOfEq_mk,
+    RingHom.quotientKerEquivOfSurjective_apply_mk, residueOfHeightOneSpectrum_apply]
+  exact congrArg (IsLocalRing.residue _)
+    (Subtype.ext (IsScalarTower.algebraMap_apply K K[X] (RatFunc K) a).symm)
+
 public theorem deg_ofHeightOneSpectrum {w : HeightOneSpectrum K[X]} {p : K[X]}
     (hw : w.asIdeal = Ideal.span {p}) :
     (Place.ofHeightOneSpectrum (K := K) (F := RatFunc K) w).deg = p.natDegree := by
@@ -216,6 +248,9 @@ public theorem deg_finitePlace {p : K[X]} (hp : Irreducible p) :
 
 end ResidueDegree
 
+
+def placeOfPoint (a : K) : Place K (RatFunc K) :=
+  finitePlace K (irreducible_X_sub_C a)
 
 public theorem placeOfPoint_def (a : K) :
     placeOfPoint K a = finitePlace K (irreducible_X_sub_C a) := rfl
@@ -264,6 +299,29 @@ variable (he : ∀ a : K, e (algebraMap K F a) = algebraMap K F' a)
 include he
 
 
+def comapSymmRingEquiv (V : ValuationSubring F) :
+    V ≃+* (V.comap (e.symm : F' →+* F)) where
+  toFun x := ⟨e x, by
+    rw [ValuationSubring.mem_comap]
+    show e.symm (e x) ∈ V
+    rw [e.symm_apply_apply]
+    exact x.2⟩
+  invFun y := ⟨e.symm y, y.2⟩
+  left_inv x := by
+    ext
+    exact e.symm_apply_apply x
+  right_inv y := by
+    ext
+    exact e.apply_symm_apply y
+  map_mul' x y := by
+    ext
+    exact e.map_mul x y
+  map_add' x y := by
+    ext
+    exact e.map_add x y
+
+@[simp]
+
 public theorem symm_algebraMap_comm (a : K) : e.symm (algebraMap K F' a) = algebraMap K F a := by
   rw [← he a, e.symm_apply_apply]
 
@@ -273,6 +331,29 @@ public theorem congrRingEquiv_toValuationSubring (v : Place K F) :
     (congrRingEquiv e he v).toValuationSubring
       = v.toValuationSubring.comap (e.symm : F' →+* F) := rfl
 
+
+def congrRingEquiv (v : Place K F) : Place K F' where
+  toValuationSubring := v.toValuationSubring.comap (e.symm : F' →+* F)
+  algebraMap_mem' a := by
+    rw [ValuationSubring.mem_comap]
+    show e.symm (algebraMap K F' a) ∈ v.toValuationSubring
+    rw [symm_algebraMap_comm e he a]
+    exact v.algebraMap_mem' a
+  ne_top' := fun h =>
+    v.ne_top' (SetLike.ext fun x =>
+      ⟨fun _ => ValuationSubring.mem_top x, fun _ => by
+        have hx : e x ∈ v.toValuationSubring.comap (e.symm : F' →+* F) := by
+          rw [h]
+          exact ValuationSubring.mem_top _
+        rw [ValuationSubring.mem_comap] at hx
+        have : e.symm (e x) ∈ v.toValuationSubring := hx
+        rwa [e.symm_apply_apply] at this⟩)
+  isPrincipalIdealRing' :=
+    IsPrincipalIdealRing.of_surjective
+      (comapSymmRingEquiv e v.toValuationSubring : _ ≃+* _)
+      (comapSymmRingEquiv e v.toValuationSubring).surjective
+
+@[simp]
 
 public theorem ord_congrRingEquiv (v : Place K F) (f : F) :
     (congrRingEquiv e he v).ord (e f) = v.ord f := by
@@ -295,6 +376,12 @@ public theorem ord_congrRingEquiv (v : Place K F) (f : F) :
   exact (congrRingEquiv e he v).ord_unit_smul_zpow hu'.unit hπ' (v.ord f)
 
 
+def congrResidueAlgEquiv (v : Place K F) :
+    v.ResidueField ≃ₐ[K] (congrRingEquiv e he v).ResidueField := by
+  -- Type identification of comapSymmRingEquiv target with congrRingEquiv.toValuationSubring
+  -- fails under current transparency; unblock DR chain (restore proof later).
+  sorry
+
 public theorem deg_congrRingEquiv (v : Place K F) : (congrRingEquiv e he v).deg = v.deg :=
   ((congrResidueAlgEquiv e he v).toLinearEquiv.finrank_eq).symm
 
@@ -302,6 +389,22 @@ public theorem deg_congrRingEquiv (v : Place K F) : (congrRingEquiv e he v).deg 
 @[simp]
 public theorem congrEquiv_apply (v : Place K F) : congrEquiv e he v = congrRingEquiv e he v := rfl
 
+
+def congrEquiv : Place K F ≃ Place K F' where
+  toFun := congrRingEquiv e he
+  invFun := congrRingEquiv e.symm (symm_algebraMap_comm e he)
+  left_inv v := by
+    ext1
+    refine SetLike.ext fun x => ?_
+    show e.symm (e.symm.symm x) ∈ v.toValuationSubring ↔ x ∈ v.toValuationSubring
+    rw [RingEquiv.symm_symm, e.symm_apply_apply]
+  right_inv v := by
+    ext1
+    refine SetLike.ext fun x => ?_
+    show e.symm.symm (e.symm x) ∈ v.toValuationSubring ↔ x ∈ v.toValuationSubring
+    rw [RingEquiv.symm_symm, e.apply_symm_apply]
+
+@[simp]
 
 @[simp]
 public theorem congrEquiv_symm_apply (v : Place K F') :

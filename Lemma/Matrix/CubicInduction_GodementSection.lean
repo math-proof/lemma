@@ -1,7 +1,7 @@
 import Lemma.Matrix.CubicInduction_PrincipalSeries3
 import Theorem.Filter.StandardLocalConstantsAt
 import Lemma.Matrix.SmoothingKernel
-import Lemma.Matrix.LocalOrbitalBase
+import Theorem.Matrix.LocalOrbitalBase
 import Def.LanglandsTunnell_CubicInduction_GodementSection
 
 set_option autoImplicit false

@@ -1,6 +1,6 @@
 module
-public import Lemma.LaurentSeries.XHHeckeOperator
-public import Lemma.ZMod.Inst
+public import Theorem.LaurentSeries.XHHeckeOperator
+public import Theorem.ZMod.Inst
 public import Def.ModularCurve_XHOperators
 set_option autoImplicit false
 

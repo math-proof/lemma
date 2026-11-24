@@ -3,7 +3,7 @@ import Mathlib.RingTheory.Frobenius
 import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
 import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
 import Mathlib.FieldTheory.Galois.IsGaloisGroup
-import Lemma.Ideal.Main
+import Theorem.Ideal.Main
 
 set_option autoImplicit false
 

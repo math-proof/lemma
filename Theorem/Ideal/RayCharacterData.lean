@@ -1,5 +1,5 @@
 module
-public import Lemma.Ideal.Main
+public import Theorem.Ideal.Main
 public import Mathlib.RingTheory.DedekindDomain.Different
 public import Def.NumberField_RayCharacterData
 set_option autoImplicit false

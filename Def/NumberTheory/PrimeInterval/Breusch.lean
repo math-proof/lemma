@@ -1,6 +1,6 @@
 module
 public import Def.NumberTheory.PrimeInterval.Breusch.Lower
-public import Lemma.Nat.PrimeInterval.Breusch.Lower
+public import Theorem.Nat.PrimeInterval.Breusch.Lower
 public import Theorem.Nat.PrimeInterval.Breusch.Theta
 public import Theorem.Nat.PrimeInterval.Breusch.Upper
 public import Def.NumberTheory.PrimeInterval.Breusch.Theta

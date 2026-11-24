@@ -1,4 +1,4 @@
-import Lemma.ValuationSubring.SemistableCharts
+import Theorem.ValuationSubring.SemistableCharts
 import Def.AlgebraicCurve_ChordalProximity
 import Theorem.WeierstrassCurve.SupersingularModuli
 import Def.ModularCurve_LevelOneProlongationPair

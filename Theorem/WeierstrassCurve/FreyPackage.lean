@@ -71,3 +71,20 @@ public theorem two_dvd_abc (P : FreyPackage) : (2 : ℤ) ∣ P.a * P.b * P.c :=
   dvd_mul_of_dvd_left (dvd_mul_of_dvd_right
     ((ZMod.intCast_zmod_eq_zero_iff_dvd P.b 2).1 P.hb2) _) _
 
+namespace FreyPackage
+def freyCurveInt (P : FreyPackage) : WeierstrassCurve ℤ where
+  a₁ := 1
+  a₂ := (P.b ^ P.p - 1 - P.a ^ P.p) / 4
+  a₃ := 0
+  a₄ := -(P.a ^ P.p) * (P.b ^ P.p) / 16
+  a₆ := 0
+end FreyPackage
+
+namespace FreyPackage
+def freyCurve (P : FreyPackage) : WeierstrassCurve ℚ where
+  a₁ := 1
+  a₂ := (P.b ^ P.p - 1 - P.a ^ P.p) / 4
+  a₃ := 0
+  a₄ := -(P.a ^ P.p) * (P.b ^ P.p) / 16
+  a₆ := 0
+end FreyPackage

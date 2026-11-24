@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.HahnSeries.QAdicPlaceMod
+import Theorem.HahnSeries.QAdicPlaceMod
 import Lemma.LaurentSeries.CharLFrobeniusGeomLevel
 import Lemma.Finsupp.SpecializeModuli
 import Def.AlgebraicCurve_PlaceEvaluation

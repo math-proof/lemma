@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.Submodule.ContinuousH2
+import Theorem.Submodule.ContinuousH2
 import Theorem.Rep.ContinuousH1
 import Lemma.Rep.CupProduct
 import Theorem.Int.P2MUtil

@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.LinearMap.AdZero
+import Theorem.LinearMap.AdZero
 import Def.Deformations_TaylorWilesLocal
 
 set_option autoImplicit false

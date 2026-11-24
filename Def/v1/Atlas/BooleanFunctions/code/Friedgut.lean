@@ -2,7 +2,7 @@ module
 public import Def.v1.Atlas.BooleanFunctions.code.FKN
 public import Def.v1.Atlas.BooleanFunctions.code.Influence
 public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Influence
-public import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
 public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.MonotoneFourier
 public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Stability
 public import Def.v1.Atlas.BooleanFunctions.code.InfluenceFourier

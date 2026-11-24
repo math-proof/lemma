@@ -1,7 +1,7 @@
 module
 public import Def.v1.Atlas.ArithmeticGeometry.code.HilbertSymbol.Part2
 public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertSymbol
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertPrimitiveSolutions
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertPrimitiveSolutions
 public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Theorem11_1
 public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertProductFormula
 public import Theorem.v1.Atlas.ArithmeticGeometry.code.HilbertPrimitiveSolutions.Part2

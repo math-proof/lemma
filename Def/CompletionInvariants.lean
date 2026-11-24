@@ -1,7 +1,7 @@
 module
 public import Theorem.LinearMap.Main
 public import Theorem.Algebra.AdicCompletion.TensorRing.Part4
-public import Lemma.AdicCompletion.StabilizerCompletionAction
+public import Theorem.AdicCompletion.StabilizerCompletionAction
 
 
 public section

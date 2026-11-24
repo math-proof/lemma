@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.WeierstrassCurve.TateModule
+import Theorem.WeierstrassCurve.TateModule
 import Instance.PDivisibleGroup_PrimaryTorsion
 
 set_option autoImplicit false

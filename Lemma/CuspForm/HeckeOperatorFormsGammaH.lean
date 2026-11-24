@@ -1,7 +1,7 @@
 module
 public import Mathlib.NumberTheory.ModularForms.Basic
-public import Lemma.ZMod.Inst
-public import Lemma.ModularForm.HeckeOperator
+public import Theorem.ZMod.Inst
+public import Theorem.ModularForm.HeckeOperator
 set_option autoImplicit false
 
 

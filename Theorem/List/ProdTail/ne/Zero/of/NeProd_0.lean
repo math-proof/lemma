@@ -1,6 +1,6 @@
 module
 public import Theorem.List.ProdDrop.ne.Zero.of.NeProd_0
-public import Lemma.List.Tail.eq.Drop_1
+public import Theorem.List.Tail.eq.Drop_1
 open List
 
 

@@ -1,10 +1,10 @@
 module
 public import Mathlib
-public import Lemma.Scheme.CurveModel
+public import Theorem.Scheme.CurveModel
 public import Instance.AlgebraicCurve_RatFuncPlaces
 public import Theorem.Scheme.NeronModelPropertyBundleCarrier
 public import Instance.AlgebraicGeometry_RelativePicardFunctor
-public import Lemma.Scheme.RelPicardPullback
+public import Theorem.Scheme.RelPicardPullback
 set_option autoImplicit false
 
 

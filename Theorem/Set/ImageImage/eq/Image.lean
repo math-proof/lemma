@@ -3,7 +3,7 @@ public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Structure.v1.Atlas.Buildings.code.BNPair.Basic.Part2
 public import Def.v1.Atlas.Buildings.code.BNPair.ParabolicDefs.Part2
-public import Lemma.Nat.NonemptyBruhatCell
+public import Theorem.Nat.NonemptyBruhatCell
 public import Theorem.Set.ConjugateParabolicMul.eq.ImageConjugateParabolic
 public import Def.v1.Atlas.Buildings.code.BNPair.BuildingsFromBNPairs.Part6
 

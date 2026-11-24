@@ -1,4 +1,4 @@
-import Lemma.Random.KlDiv.eq.All_EqGetMap0.of.Measurable
+import Theorem.Random.KlDiv.eq.All_EqGetMap0.of.Measurable
 import Mathlib.MeasureTheory.Measure.Typeclasses.Probability
 import Initialize.Tactic.Attr.Basic
 open Classical ENNReal InformationTheory MeasureTheory Random

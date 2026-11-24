@@ -1,4 +1,4 @@
-import Lemma.List.Tail.eq.Drop_1
+import Theorem.List.Tail.eq.Drop_1
 import Lemma.List.LengthTail.ge.Sub_1.of.GeLength.Gt_0
 open List
 

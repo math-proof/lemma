@@ -1,8 +1,8 @@
 module
 public import Def.v1.Atlas.BooleanFunctions.code.Parseval
-public import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Parseval
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Parseval
 public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.FourierExpansion
-public import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
 public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Stability
 public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Hypercontractivity
 public import Def.v1.Atlas.BooleanFunctions.code.FourierExpansion

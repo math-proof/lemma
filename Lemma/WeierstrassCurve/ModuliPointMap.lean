@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.WeierstrassCurve.ModuliPoint
+import Theorem.WeierstrassCurve.ModuliPoint
 import Lemma.WeierstrassCurve.MapPoint
 
 noncomputable section

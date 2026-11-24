@@ -1,6 +1,6 @@
 import Mathlib
 import Lemma.Representation.Main
-import Lemma.MvPolynomial.BinaryFormRep
+import Theorem.MvPolynomial.BinaryFormRep
 import Instance.Gamma0CoeffCohomologyEigen
 import Def.Gamma0CoeffCohomologyEigen
 

@@ -1,7 +1,7 @@
 module
 public import Mathlib
-public import Lemma.UpperHalfPlane.FundamentalDomainVolume
-public import Lemma.UpperHalfPlane.SiegelSetCover
+public import Theorem.UpperHalfPlane.FundamentalDomainVolume
+public import Theorem.UpperHalfPlane.SiegelSetCover
 public import Instance.AutomorphicForm_Gamma0FundamentalSet
 public import Def.AutomorphicForm_Gamma0FundamentalSet
 set_option autoImplicit false

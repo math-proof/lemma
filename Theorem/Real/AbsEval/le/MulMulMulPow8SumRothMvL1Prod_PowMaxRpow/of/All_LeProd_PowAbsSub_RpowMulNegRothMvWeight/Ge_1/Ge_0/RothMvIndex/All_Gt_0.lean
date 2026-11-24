@@ -2,11 +2,11 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.NumberTheory.RothAuxiliary.Part7
-public import Lemma.Fin.EvalRothTranslateM.eq.Eval_Add
-public import Lemma.Fin.MapRothMvHasse.eq.RothMvHasse_Map.of.RothMvIndex
-public import Lemma.Fin.RothMvVanishesBelow_Sub.of.RothMvIndex
-public import Lemma.Nat.Add_1.le.Pow2.of.Gt_0
-public import Lemma.Real.RothFiniteDeps
+public import Theorem.Fin.EvalRothTranslateM.eq.Eval_Add
+public import Theorem.Fin.MapRothMvHasse.eq.RothMvHasse_Map.of.RothMvIndex
+public import Theorem.Fin.RothMvVanishesBelow_Sub.of.RothMvIndex
+public import Theorem.Nat.Add_1.le.Pow2.of.Gt_0
+public import Theorem.Real.RothFiniteDeps
 open MathlibExt.NumberTheory.RothAuxiliary
 open MvPolynomial Fin Nat Real
 

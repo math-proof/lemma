@@ -19,6 +19,12 @@ variable {G : Type*} [Group G] [TopologicalSpace G]
 variable {M : Type*}
 
 
+def IsSmoothVector (G : Type*) {M : Type*} [Group G] [TopologicalSpace G] [MulAction G M]
+    (v : M) : Prop :=
+  IsOpen ((MulAction.stabilizer G v : Subgroup G) : Set G)
+
+variable [MulAction G M]
+
 public theorem isSmoothVector_iff_isOpen_stabilizer (v : M) :
     IsSmoothVector G v ↔ IsOpen ((MulAction.stabilizer G v : Subgroup G) : Set G) :=
   Iff.rfl
@@ -144,6 +150,16 @@ variable [DistribMulAction G M] [SMulCommClass G R M]
 public theorem mem_smoothVectors_iff {v : M} : v ∈ smoothVectors G R M ↔ IsSmoothVector G v :=
   Iff.rfl
 
+
+def smoothVectors : Submodule R M where
+  carrier := {v : M | IsSmoothVector G v}
+  zero_mem' := isSmoothVector_zero
+  add_mem' hv hw := hv.add hw
+  smul_mem' r _v hv := hv.const_smul r
+
+variable {G R M}
+
+@[simp]
 
 public theorem smul_mem_smoothVectors (g : G) {v : M} (hv : v ∈ smoothVectors G R M) :
     g • v ∈ smoothVectors G R M :=

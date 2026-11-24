@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ResidueField.GluedPic0
+import Theorem.ResidueField.GluedPic0
 import Theorem.Int.P2MUtil
 
 open AlgebraicCurve IsLocalRing ResidueField

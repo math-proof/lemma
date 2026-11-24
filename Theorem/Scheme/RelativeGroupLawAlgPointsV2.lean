@@ -26,9 +26,24 @@ variable {R : Type} [CommRing R] {A : Scheme.{0}} {f : A ⟶ Spec (CommRingCat.o
 @[simp] public theorem ofPoint_toPoint (x : L.AlgPoints hc T) : ofPoint (toPoint x) = x := rfl
 
 
+def AlgPoints (L : RelativeGroupLaw R f) (_hc : L.IsCommutative) (T : Type) [CommRing T]
+    [Algebra R T] : Type :=
+  Additive (SchemeHomOver (Spec.map (CommRingCat.ofHom (algebraMap R T))) f)
+
+def ofPoint (x : SchemeHomOver (Spec.map (CommRingCat.ofHom (algebraMap R T))) f) :
+    L.AlgPoints hc T := Additive.ofMul x
+
 public theorem toPoint_injective : Function.Injective (toPoint : L.AlgPoints hc T → _) :=
   fun _ _ h => h
 
+
+def toPoint (x : L.AlgPoints hc T) :
+    SchemeHomOver (Spec.map (CommRingCat.ofHom (algebraMap R T))) f := Additive.toMul x
+
+@[simp] theorem toPoint_ofPoint (x : SchemeHomOver (Spec.map (CommRingCat.ofHom (algebraMap R T))) f) :
+    toPoint (ofPoint x : L.AlgPoints hc T) = x := rfl
+
+@[simp] theorem ofPoint_toPoint (x : L.AlgPoints hc T) : ofPoint (toPoint x) = x := rfl
 
 public theorem ofPoint_injective :
     Function.Injective (ofPoint : _ → L.AlgPoints hc T) :=
@@ -45,6 +60,20 @@ public theorem ofPoint_injective :
     (x : SchemeHomOver (Spec.map (CommRingCat.ofHom (algebraMap R T))) f) :
     (equivPoint.symm x : L.AlgPoints hc T) = ofPoint x := rfl
 
+
+@[ext] theorem ext {x y : L.AlgPoints hc T} (h : toPoint x = toPoint y) : x = y := h
+
+def equivPoint : L.AlgPoints hc T ≃ SchemeHomOver (Spec.map (CommRingCat.ofHom (algebraMap R T))) f where
+  toFun := toPoint
+  invFun := ofPoint
+  left_inv _ := rfl
+  right_inv _ := rfl
+
+@[simp] theorem equivPoint_apply (x : L.AlgPoints hc T) : equivPoint x = toPoint x := rfl
+
+@[simp] theorem equivPoint_symm_apply
+    (x : SchemeHomOver (Spec.map (CommRingCat.ofHom (algebraMap R T))) f) :
+    (equivPoint.symm x : L.AlgPoints hc T) = ofPoint x := rfl
 
 public theorem toPoint_add (x y : L.AlgPoints hc T) :
     toPoint (x + y) = L.mul _ (toPoint x) (toPoint y) := rfl
@@ -117,6 +146,24 @@ public theorem mem_torsionBy_iff (n : ℕ) (x : L.AlgPoints hc T) :
       L.AlgPoints hc T) = ofPoint y.1 := rfl
 
 
+def torsionByEquiv (n : ℕ) :
+    Submodule.torsionBy ℤ (L.AlgPoints hc T) (n : ℤ) ≃
+      L.torsionSubset (Spec.map (CommRingCat.ofHom (algebraMap R T))) n where
+  toFun x := ⟨toPoint (x : L.AlgPoints hc T), (mem_torsionBy_iff n _).1 x.2⟩
+  invFun y := ⟨ofPoint y.1, (mem_torsionBy_iff n _).2 y.2⟩
+  left_inv _ := rfl
+  right_inv _ := rfl
+
+@[simp] theorem torsionByEquiv_apply_coe (n : ℕ)
+    (x : Submodule.torsionBy ℤ (L.AlgPoints hc T) (n : ℤ)) :
+    ((torsionByEquiv n x : L.torsionSubset _ n) : SchemeHomOver _ f) =
+      toPoint (x : L.AlgPoints hc T) := rfl
+
+@[simp] theorem torsionByEquiv_symm_apply_coe (n : ℕ)
+    (y : L.torsionSubset (Spec.map (CommRingCat.ofHom (algebraMap R T))) n) :
+    (((torsionByEquiv n).symm y : Submodule.torsionBy ℤ (L.AlgPoints hc T) (n : ℤ)) :
+      L.AlgPoints hc T) = ofPoint y.1 := rfl
+
 public theorem natCard_torsionBy (n : ℕ) :
     Nat.card (Submodule.torsionBy ℤ (L.AlgPoints hc T) (n : ℤ)) =
       Nat.card (L.torsionSubset (Spec.map (CommRingCat.ofHom (algebraMap R T))) n) :=
@@ -140,6 +187,16 @@ public theorem specMap_comp_algebraMap (a : T →ₐ[R] T') :
     (mapPoint a x).1 = Spec.map (CommRingCat.ofHom a.toRingHom) ≫ x.1 := rfl
 
 
+def mapPoint (a : T →ₐ[R] T')
+    (x : SchemeHomOver (Spec.map (CommRingCat.ofHom (algebraMap R T))) f) :
+    SchemeHomOver (Spec.map (CommRingCat.ofHom (algebraMap R T'))) f :=
+  GoodReductionJacobian.schemeHomOverComp (Spec.map (CommRingCat.ofHom a.toRingHom))
+    (specMap_comp_algebraMap a) x
+
+@[simp] theorem mapPoint_coe (a : T →ₐ[R] T')
+    (x : SchemeHomOver (Spec.map (CommRingCat.ofHom (algebraMap R T))) f) :
+    (mapPoint a x).1 = Spec.map (CommRingCat.ofHom a.toRingHom) ≫ x.1 := rfl
+
 public theorem mapPoint_mul (a : T →ₐ[R] T')
     (x y : SchemeHomOver (Spec.map (CommRingCat.ofHom (algebraMap R T))) f) :
     mapPoint a (L.mul _ x y) = L.mul _ (mapPoint a x) (mapPoint a y) :=
@@ -150,6 +207,13 @@ public theorem mapPoint_one (a : T →ₐ[R] T') :
     mapPoint (f := f) a (L.one _) = L.one _ :=
   L.one_natural _ _ _ (specMap_comp_algebraMap a)
 
+
+def map (a : T →ₐ[R] T') : L.AlgPoints hc T →+ L.AlgPoints hc T' :=
+  AddMonoidHom.mk' (fun x => ofPoint (mapPoint a (toPoint x))) fun x y => by
+    apply toPoint_injective
+    change mapPoint a (toPoint (x + y)) = L.mul _ (mapPoint a (toPoint x)) (mapPoint a (toPoint y))
+    rw [toPoint_add]
+    exact mapPoint_mul a _ _
 
 public theorem toPoint_map (a : T →ₐ[R] T') (x : L.AlgPoints hc T) :
     toPoint (map a x) = mapPoint a (toPoint x) := rfl

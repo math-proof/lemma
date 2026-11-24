@@ -1,7 +1,7 @@
 module
 public import Def.v1.Atlas.BooleanFunctions.code.Stability
 public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Stability
-public import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Parseval
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Parseval
 public import Def.v1.Atlas.BooleanFunctions.code.Parseval
 open Finset BigOperators
 

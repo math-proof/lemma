@@ -646,7 +646,7 @@ function compareHit(a, b) {
 }
 
 /** Shortlist + exact subtree match for one already-parsed query. */
-async function searchParsedQuery(query, { limit = 100, db, sections = ["imply"] }) {
+async function searchParsedQuery(query, { limit = 100, offset = 0, db, sections = ["imply"] }) {
   // A top-level conjunction is indexed as separate imply formulas, so its root
   // `And` and aggregate head counts are not present at any one latex_id. Exact
   // matching still uses the whole-imply tree stored at imply/latex_id 0.
@@ -685,7 +685,8 @@ async function searchParsedQuery(query, { limit = 100, db, sections = ["imply"] 
   }
   hits.sort(compareHit);
   const cap = Math.max(0, Number(limit) || 0);
-  return { shortlist: ids.length, hits: hits.slice(0, cap) };
+  const start = Math.max(0, Number(offset) || 0);
+  return { shortlist: ids.length, total: hits.length, hits: hits.slice(start, start + cap) };
 }
 
 /**
@@ -717,10 +718,10 @@ async function readSnapshot(db, fn) {
  * @param {{ limit?: number, pool?: import('mysql2/promise').Pool }} [options]
  * @returns {Promise<{ query: { json: object, fingerprint: string, counts: Map<string, number> }, shortlist: number, hits: { id: number, module: string }[] }>}
  */
-export async function searchLeanExact(expr, { limit = 100, pool = null, sections = ["imply"] } = {}) {
+export async function searchLeanExact(expr, { limit = 100, offset = 0, pool = null, sections = ["imply"] } = {}) {
   const db = pool ?? requirePool();
   const query = headsOfQuery(expr);
-  const result = await readSnapshot(db, (conn) => searchParsedQuery(query, { limit, db: conn, sections }));
+  const result = await readSnapshot(db, (conn) => searchParsedQuery(query, { limit, offset, db: conn, sections }));
   return { query, ...result };
 }
 
@@ -738,28 +739,56 @@ export async function searchLeanExact(expr, { limit = 100, pool = null, sections
  *   shortlist: number,
  * }>}
  */
-export async function searchLeanSimilar(expr, { limit = 100, pool = null, sections = ["imply"] } = {}) {
+export async function searchLeanSimilar(expr, { limit = 100, offset = 0, pool = null, sections = ["imply"] } = {}) {
   const db = pool ?? requirePool();
+  const start = Math.max(0, Number(offset) || 0);
+  const cap = Math.max(0, Number(limit) || 0);
   return readSnapshot(db, async (conn) => {
-    const exact = await searchLeanExact(expr, { limit, pool: conn, sections });
+    const exact = await searchLeanExact(expr, { limit: cap, offset: start, pool: conn, sections });
     const similar = [];
-    if (exact.hits.length > 0) return { query: exact.query, exact: exact.hits, similar, shortlist: exact.shortlist };
+    if ((exact.total ?? exact.hits.length) > 0) {
+      return {
+        query: exact.query,
+        exact: exact.hits,
+        similar,
+        shortlist: exact.shortlist,
+        total: exact.total,
+        exactTotal: exact.total,
+        more: exact.total > start + exact.hits.length,
+      };
+    }
 
-    const seen = new Set(exact.hits.map((hit) => hit.id));
+    const seen = new Set();
     let shortlist = exact.shortlist;
+    // Page 1 keeps the previous per-expansion cap. Later pages read far enough
+    // to fill `start + cap` after the expansions are merged.
+    const fetchLimit = start + cap;
+    let capped = false;
     for (const query of expandedQueries(expr)) {
       if (query.fingerprint === exact.query.fingerprint) continue;
-      const found = await searchParsedQuery(query, { limit, db: conn, sections });
+      const found = await searchParsedQuery(query, { limit: fetchLimit, db: conn, sections });
       shortlist += found.shortlist;
+      if ((found.total ?? found.hits.length) > fetchLimit) capped = true;
       for (const hit of found.hits) {
         if (seen.has(hit.id)) continue;
         seen.add(hit.id);
-        similar.push({ ...hit, match: "similar" });
+        // Keep the expansion that matched: search-result rendering must look for
+        // this tree, not the original expression (`a²+b²` is `Square`; the hit
+        // stores `Pow` after expansion).
+        similar.push({ ...hit, match: "similar", queryJson: query.json });
       }
     }
     similar.sort(compareHit);
-    const cap = Math.max(0, Number(limit) || 0);
-    return { query: exact.query, exact: exact.hits, similar: similar.slice(0, cap), shortlist };
+    const page = similar.slice(start, start + cap);
+    return {
+      query: exact.query,
+      exact: exact.hits,
+      similar: page,
+      shortlist,
+      total: similar.length,
+      exactTotal: 0,
+      more: similar.length > start + cap || (capped && page.length === cap),
+    };
   });
 }
 

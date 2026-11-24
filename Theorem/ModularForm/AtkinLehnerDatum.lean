@@ -45,10 +45,20 @@ public theorem R_pos [NeZero M] : 0 < W.R := by
   linear_combination (q : ℤ) * W.bezout
 
 
+def mat : Matrix (Fin 2) (Fin 2) ℤ := !![(q : ℤ) * W.a, W.b; (q : ℤ) * (W.R : ℤ), (q : ℤ)]
+
+@[simp] theorem det_mat : W.mat.det = (q : ℤ) := by
+  rw [mat, Matrix.det_fin_two_of]
+  linear_combination (q : ℤ) * W.bezout
+
 public theorem mat_lowerLeft : W.mat 1 0 = (M : ℤ) := by
   rw [mat, W.hM_int]
   simp
 
+
+def sqUnit : Matrix (Fin 2) (Fin 2) ℤ :=
+  !![(q : ℤ) * W.a ^ 2 + (W.R : ℤ) * W.b, W.b * (W.a + 1);
+     (q : ℤ) * (W.R : ℤ) * (W.a + 1), (W.R : ℤ) * W.b + (q : ℤ)]
 
 public theorem mat_sq : W.mat * W.mat = (q : ℤ) • W.sqUnit := by
   rw [mat, sqUnit, Matrix.mul_fin_two]
@@ -89,6 +99,20 @@ public theorem sqUnitSL_mem : W.sqUnitSL ∈ Gamma0 M := by
     (W.alGL : Matrix (Fin 2) (Fin 2) ℝ) = (W.mat).map (algebraMap ℤ ℝ) := rfl
 
 
+def sqUnitSL : SL(2, ℤ) := ⟨W.sqUnit, W.det_sqUnit⟩
+
+@[simp] theorem sqUnitSL_coe : (W.sqUnitSL : Matrix (Fin 2) (Fin 2) ℤ) = W.sqUnit := rfl
+
+def alGL [NeZero M] : GL (Fin 2) ℝ :=
+  Matrix.GeneralLinearGroup.mkOfDetNeZero (W.mat.map (algebraMap ℤ ℝ)) (by
+    have h : ((W.mat).map (algebraMap ℤ ℝ)).det = (algebraMap ℤ ℝ) W.mat.det := by
+      rw [← RingHom.mapMatrix_apply, ← RingHom.map_det]
+    rw [h, W.det_mat]
+    simpa using W.q_pos.ne')
+
+@[simp] theorem alGL_coe [NeZero M] :
+    (W.alGL : Matrix (Fin 2) (Fin 2) ℝ) = (W.mat).map (algebraMap ℤ ℝ) := rfl
+
 public theorem alGL_entry [NeZero M] (i j : Fin 2) :
     W.alGL i j = algebraMap ℤ ℝ (W.mat i j) := by
   show ((W.alGL : Matrix (Fin 2) (Fin 2) ℝ)) i j = _
@@ -113,6 +137,13 @@ public theorem σ_alGL_apply [NeZero M] (z : ℂ) : σ W.alGL z = z := by
   simp
 
 
+def alGLQ [NeZero M] : GL (Fin 2) ℚ :=
+  Matrix.GeneralLinearGroup.mkOfDetNeZero (W.mat.map (algebraMap ℤ ℚ)) (by
+    have h : ((W.mat).map (algebraMap ℤ ℚ)).det = (algebraMap ℤ ℚ) W.mat.det := by
+      rw [← RingHom.mapMatrix_apply, ← RingHom.map_det]
+    rw [h, W.det_mat]
+    simpa using W.q_pos.ne')
+
 public theorem alGLQ_map_castHom [NeZero M] : (W.alGLQ).map (Rat.castHom ℝ) = W.alGL := by
   apply Units.ext
   show (Rat.castHom ℝ).mapMatrix ((W.alGLQ : Matrix (Fin 2) (Fin 2) ℚ))
@@ -124,6 +155,9 @@ public theorem alGLQ_map_castHom [NeZero M] : (W.alGLQ).map (Rat.castHom ℝ) = 
 
 end AtkinLehnerDatum
 
+
+def alSlash {M q : ℕ} (W : AtkinLehnerDatum M q) (k : ℤ) [NeZero M] (f : ℍ → ℂ) : ℍ → ℂ :=
+  f ∣[k] W.alGL
 
 public theorem alSlash_def {M q : ℕ} (W : AtkinLehnerDatum M q) (k : ℤ) [NeZero M] (f : ℍ → ℂ) :
     alSlash W k f = f ∣[k] W.alGL := rfl

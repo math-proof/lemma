@@ -1,5 +1,5 @@
 module
-public import Lemma.UpperHalfPlane.PeriodMap
+public import Theorem.UpperHalfPlane.PeriodMap
 public import Mathlib.Analysis.Complex.UpperHalfPlane.FunctionsBoundedAtInfty
 public import Mathlib.NumberTheory.ModularForms.Basic
 public import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups

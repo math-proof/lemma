@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Ideal.RatFuncPlaces
+import Theorem.Ideal.RatFuncPlaces
 
 set_option autoImplicit false
 

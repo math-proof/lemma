@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.WeierstrassCurve.ProjModel
+import Theorem.WeierstrassCurve.ProjModel
 import Def.ModularCurve_WeierstrassLevelComponents
 import Def.WeierstrassCurve_DrinfeldBasisGlobal
 import Def.WeierstrassCurve_DrinfeldTransportPin

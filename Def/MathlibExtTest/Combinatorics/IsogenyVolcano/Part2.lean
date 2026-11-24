@@ -1,6 +1,6 @@
 module
 public import Instance.Combinatorics.IsogenyVolcano.Part2
-public import Lemma.Finset.IsogenyVolcano
+public import Theorem.Finset.IsogenyVolcano
 public import Mathlib.Tactic.FinCases
 public import Theorem.MathlibExtTest.Combinatorics.IsogenyVolcano
 set_option autoImplicit false

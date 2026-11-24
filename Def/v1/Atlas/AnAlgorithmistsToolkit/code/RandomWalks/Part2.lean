@@ -6,8 +6,8 @@ public import Mathlib.Data.Real.Basic
 public import Def.v1.Atlas.AnAlgorithmistsToolkit.code.Cheeger
 public import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.Cheeger
 public import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.Expanders
-public import Lemma.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.HallTheorem
-public import Lemma.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.LovaszSimonovits
+public import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.HallTheorem
+public import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.LovaszSimonovits
 public import Theorem.Nat.Atlas.v1.AnAlgorithmistsToolkit.code.CanonicalPaths
 public import Abbrev.v1.Atlas.AnAlgorithmistsToolkit.code.Expanders.Part2
 public import Def.v1.Atlas.AnAlgorithmistsToolkit.code.HallTheorem.Part2

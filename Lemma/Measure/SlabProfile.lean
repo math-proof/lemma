@@ -1,7 +1,7 @@
 import Lemma.Matrix.BorelSubgroup
 import Lemma.Matrix.WeylIntertwining
 import Def.NumberField_AdelicHeight
-import Lemma.Measure.TateGlobalZeta
+import Theorem.Measure.TateGlobalZeta
 import Structure.AutomorphicForm_SlabProfile
 
 open MeasureTheory NumberField Measure

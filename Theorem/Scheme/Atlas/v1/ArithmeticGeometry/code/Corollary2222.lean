@@ -2,7 +2,7 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.v1.Atlas.ArithmeticGeometry.code.RiemannRoch.Part6
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.RiemannRoch
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.RiemannRoch
 open RiemannRochSpace CurveDivisor CurveWithOrd
 
 

@@ -1,4 +1,4 @@
-import Lemma.MvPolynomial.CoordRing
+import Theorem.MvPolynomial.CoordRing
 import Mathlib.RingTheory.Localization.FractionRing
 import Abbrev.DrinfeldCurve_FunctionField
 

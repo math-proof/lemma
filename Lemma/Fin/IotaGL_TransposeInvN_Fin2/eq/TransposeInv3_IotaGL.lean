@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.Matrix.CubicInduction_Structure
+import Theorem.Matrix.CubicInduction_Structure
 open Matrix
 open LanglandsTunnell.CubicInduction
 set_option autoImplicit false

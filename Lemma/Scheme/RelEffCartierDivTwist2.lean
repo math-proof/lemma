@@ -1,4 +1,4 @@
-import Lemma.Scheme.Dual_ObjPullbackL
+import Theorem.Scheme.Dual_ObjPullbackL
 import Def.AlgebraicGeometry_RelPicardThetaBundle
 import Theorem.Scheme.RelEffCartierDivOfPoint
 import Def.AlgebraicGeometry_RelEffCartierDivTwist2

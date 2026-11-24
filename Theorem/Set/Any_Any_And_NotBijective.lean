@@ -3,9 +3,9 @@ public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Abbrev.Analysis.Section_3_3.Part2
 public import Theorem.Set.OneToOne.is.All_Eq
-public import Lemma.Set.EqIffP
-public import Lemma.Set.EqToFn
-public import Lemma.Set.EqGetMkFn
+public import Theorem.Set.EqIffP
+public import Theorem.Set.EqToFn
+public import Theorem.Set.EqGetMkFn
 open Chapter3 hiding Nat Set
 open Chapter3.Function
 open Set

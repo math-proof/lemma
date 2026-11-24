@@ -1,4 +1,4 @@
-import Lemma.ResidueField.GluedPic0
+import Theorem.ResidueField.GluedPic0
 import Abbrev.AlgebraicCurve_NodalPic0
 
 set_option autoImplicit false

@@ -1,5 +1,5 @@
-import Lemma.Matrix.ArchType
-import Lemma.Matrix.ArchWeightCharTransport
+import Theorem.Matrix.ArchType
+import Theorem.Matrix.ArchWeightCharTransport
 import Lemma.Complex.ArchParam
 import Def.AutomorphicForm_ConstantTerm
 import Inductive.AutomorphicForm_ArchDir

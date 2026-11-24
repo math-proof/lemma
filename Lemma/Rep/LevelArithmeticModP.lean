@@ -2,7 +2,7 @@ import Mathlib
 import Lemma.Rep.SUnitsModule
 import Instance.ExtEndgame_ProductionDatum
 import Lemma.ClassGroup.GaloisAction
-import Lemma.Ideal.Mathlib430
+import Theorem.Ideal.Mathlib430
 import Instance.NumberField_LevelArithmeticModP
 import Abbrev.NumberField_LevelArithmeticModP
 

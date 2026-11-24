@@ -3,7 +3,7 @@ public import Mathlib.RingTheory.DiscreteValuationRing.Basic
 public import Mathlib.RingTheory.Ideal.Quotient.Operations
 public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
 public import Def.RingTheory.DiscreteValuationRing.MaximalIdealGradedPiece
-public import Lemma.Int.DiscreteValuationRing.MaximalIdealGradedPiece
+public import Theorem.Int.DiscreteValuationRing.MaximalIdealGradedPiece
 public import Theorem.RingTheory.DiscreteValuationRing.MaximalIdealPowFactor.Part2
 open IsLocalRing
 

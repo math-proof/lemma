@@ -1,6 +1,6 @@
 import Mathlib
 import Theorem.Scheme.JZeroSemistableSpecialization
-import Lemma.HahnSeries.ModularUnit
+import Theorem.HahnSeries.ModularUnit
 import Instance.ModularCurve_LevelOneComp
 import Def.ModularCurve_LevelOneComp
 

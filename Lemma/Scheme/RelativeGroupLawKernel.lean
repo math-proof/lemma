@@ -1,5 +1,5 @@
 module
-public import Lemma.Scheme.RelativeGroupLaw
+public import Theorem.Scheme.RelativeGroupLaw
 public import Mathlib.AlgebraicGeometry.Pullbacks
 public import Abbrev.GoodReductionJacobian_RelativeGroupLawKernel
 set_option autoImplicit false

@@ -1,5 +1,5 @@
-import Lemma.LaurentSeries.LaurentCoeff
-import Lemma.HahnSeries.JqCoeff
+import Theorem.LaurentSeries.LaurentCoeff
+import Theorem.HahnSeries.JqCoeff
 
 set_option autoImplicit false
 

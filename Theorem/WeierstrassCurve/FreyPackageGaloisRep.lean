@@ -1,5 +1,5 @@
 module
-public import Lemma.WeierstrassCurve.FreyPackage
+public import Theorem.WeierstrassCurve.FreyPackage
 public import Instance.FLTPrelim_GaloisRep
 public import Theorem.WeierstrassCurve.FrobeniusTrace
 public import Mathlib.LinearAlgebra.FiniteDimensional.Defs

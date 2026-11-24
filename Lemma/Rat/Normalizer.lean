@@ -1,4 +1,4 @@
-import Lemma.Matrix.AdelicLevel
+import Theorem.Matrix.AdelicLevel
 import Mathlib.NumberTheory.Padics.HeightOneSpectrum
 
 set_option autoImplicit false

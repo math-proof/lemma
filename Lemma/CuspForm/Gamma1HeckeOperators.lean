@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.ModularForm.HeckeOperator
+import Theorem.ModularForm.HeckeOperator
 
 set_option autoImplicit false
 

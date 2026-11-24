@@ -1,5 +1,5 @@
 import Lemma.Submodule.CuspidalConstituent
-import Lemma.Measure.TateGlobalZeta
+import Theorem.Measure.TateGlobalZeta
 import Structure.AutomorphicForm_CuspidalSpectrumCarrier
 
 set_option autoImplicit false

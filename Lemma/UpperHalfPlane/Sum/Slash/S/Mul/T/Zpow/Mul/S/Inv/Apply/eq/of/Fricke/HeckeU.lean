@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.ModularForm.HeckeOperator
+import Theorem.ModularForm.HeckeOperator
 import Theorem.Int.P2MUtil
 open UpperHalfPlane ModularForm
 open scoped MatrixGroups ModularForm

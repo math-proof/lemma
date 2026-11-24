@@ -1,4 +1,4 @@
-import Lemma.MvPowerSeries.NegV2
+import Theorem.MvPowerSeries.NegV2
 import Mathlib.RingTheory.AdicCompletion.Topology
 import Mathlib.RingTheory.Finiteness.Ideal
 import Structure.MvFormalGroup_PointsV2

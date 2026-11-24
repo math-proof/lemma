@@ -1,8 +1,8 @@
 module
 public import Def.v1.Atlas.ArithmeticGeometry.code.Hilbert2Adic
 public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Hilbert2Adic
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Hilbert2AdicCore
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertPrimitiveSolutions
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Hilbert2AdicCore
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertPrimitiveSolutions
 public import Def.v1.Atlas.ArithmeticGeometry.code.Hilbert2AdicCore.Part2
 public import Theorem.v1.Atlas.ArithmeticGeometry.code.HilbertPrimitiveSolutions.Part2
 open PadicInt HilbertSymbol

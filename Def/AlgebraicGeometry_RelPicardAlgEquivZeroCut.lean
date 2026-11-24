@@ -1,7 +1,7 @@
 module
 public import Mathlib
 public import Def.AlgebraicGeometry_RelativePicardFunctor
-public import Lemma.Scheme.RepresentsRelSubPic
+public import Theorem.Scheme.RepresentsRelSubPic
 set_option autoImplicit false
 
 

@@ -1,9 +1,9 @@
 module
-public import Lemma.HahnSeries.AtkinLehner
+public import Theorem.HahnSeries.AtkinLehner
 public import Mathlib.Algebra.Ring.Action.Submonoid
 public import Mathlib.FieldTheory.Galois.Basic
 public import Mathlib.NumberTheory.Height.NumberField
-public import Lemma.Ideal.Mathlib430
+public import Theorem.Ideal.Mathlib430
 public import Instance.ModularCurve_JZeroNaiveHeight
 public import Def.ModularCurve_JZeroNaiveHeight
 

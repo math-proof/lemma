@@ -1,5 +1,5 @@
 module
-public import Lemma.Measure.TwistedOrbital
+public import Theorem.Measure.TwistedOrbital
 public import Def.NumberField_AdelicHeight
 set_option autoImplicit false
 

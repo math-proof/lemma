@@ -5,7 +5,7 @@ public import Abbrev.GoodReductionJacobian_RelativeGroupLawBaseChange
 public import Theorem.Scheme.ReductionOfPointsAgreesModL
 public import Theorem.Scheme.JZeroSemistableSpecialization
 public import Def.ModularCurve_JZeroNeronData
-public import Lemma.Submodule.ToricDescentData
+public import Theorem.Submodule.ToricDescentData
 public import Def.GaloisRep_Flat
 public import Def.FLTPrelim_Ramification
 public import Theorem.Finset.SupersingularNodePlaces

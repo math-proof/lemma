@@ -1,6 +1,6 @@
 import Mathlib
-import Lemma.MvPowerSeries.CartierModuleBaseChange
-import Lemma.MvPolynomial.CartierStructureConstants
+import Theorem.MvPowerSeries.CartierModuleBaseChange
+import Theorem.MvPolynomial.CartierStructureConstants
 import Lemma.FormalGroup.CartierModuleModel
 import Lemma.Submodule.GradedCartierNModule
 import Def.CerednikDrinfeld_DrinfeldQuadruple

@@ -3,7 +3,7 @@ public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.v1.Atlas.TheoryOfComputation.code.LogSpace.Part4
 public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.LogSpace
-public import Lemma.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity
+public import Theorem.Nat.Atlas.v1.TheoryOfComputation.code.SpaceComplexity
 public import Def.v1.Atlas.TheoryOfComputation.code.SpaceComplexity.Part7
 open SpaceComplexity
 

@@ -27,6 +27,11 @@ variable {Γ₀ : Type} [LinearOrderedCommGroupWithZero Γ₀] [Valued K Γ₀]
 variable {K₀ K} (ϖ : PseudoUniformizer K₀ K)
 
 
+def affinoid (n : ℕ) : Set K :=
+  {z | Valued.v z ≤ (Valued.v (algebraMap K₀ K ϖ.ϖ))⁻¹ ^ n ∧
+    ∀ a : K₀, Valued.v (algebraMap K₀ K a) ≤ (Valued.v (algebraMap K₀ K ϖ.ϖ))⁻¹ ^ n →
+      (Valued.v (algebraMap K₀ K ϖ.ϖ)) ^ n ≤ Valued.v (z - algebraMap K₀ K a)}
+
 public theorem affinoid_subset_upperHalfPlane (n : ℕ) : affinoid ϖ n ⊆ upperHalfPlane K₀ K := by
   rintro z ⟨hz₁, hz₂⟩
   rw [mem_upperHalfPlane_iff]
@@ -111,6 +116,10 @@ public theorem evalAt_mul (p q : RatPair K) (z : K) : (mul p q).evalAt z = p.eva
   simp [neg, evalAt, neg_div]
 
 
+def homog (a b c d : K) (D : ℕ) (P : Polynomial K) : Polynomial K :=
+  ∑ i ∈ Finset.range (D + 1), Polynomial.C (P.coeff i) * (Polynomial.C a * Polynomial.X + Polynomial.C b) ^ i *
+    (Polynomial.C c * Polynomial.X + Polynomial.C d) ^ (D - i)
+
 public theorem eval_homog {a b c d : K} {D : ℕ} {P : Polynomial K} (hD : P.natDegree ≤ D) (z : K) (hcd : c * z + d ≠ 0) :
     (homog a b c d D P).eval z = (c * z + d) ^ D * P.eval ((a * z + b) / (c * z + d)) := by
   rw [Polynomial.eval_eq_sum_range' (Nat.lt_succ_of_le hD), Finset.mul_sum, homog, Polynomial.eval_finsetSum]
@@ -120,6 +129,12 @@ public theorem eval_homog {a b c d : K} {D : ℕ} {P : Polynomial K} (hD : P.nat
   rw [div_pow, pow_sub₀ _ hcd hi']
   field_simp
 
+
+def pullback (g : GL (Fin 2) K₀) (r : RatPair K) : RatPair K :=
+  ⟨homog (algebraMap K₀ K (g 0 0)) (algebraMap K₀ K (g 0 1)) (algebraMap K₀ K (g 1 0)) (algebraMap K₀ K (g 1 1))
+      (max r.num.natDegree r.den.natDegree) r.num,
+   homog (algebraMap K₀ K (g 0 0)) (algebraMap K₀ K (g 0 1)) (algebraMap K₀ K (g 1 0)) (algebraMap K₀ K (g 1 1))
+      (max r.num.natDegree r.den.natDegree) r.den⟩
 
 public theorem pullback_den_eval {z : K} (hz : z ∈ upperHalfPlane K₀ K) (g : GL (Fin 2) K₀) (r : RatPair K) :
     (pullback g r).den.eval z =
@@ -141,6 +156,8 @@ public theorem isPoleFreeOn_pullback {S S' : Set K} (hS : S ⊆ upperHalfPlane K
   rw [pullback_den_eval (hS hz)]
   exact mul_ne_zero (pow_ne_zero _ (moebius_denom_ne_zero_of_mem K₀ (hS hz) g)) (hr _ (hmaps hz))
 
+
+def map (s : K ≃+* K) (r : RatPair K) : RatPair K := ⟨r.num.map (s : K →+* K), r.den.map (s : K →+* K)⟩
 
 public theorem map_den_eval (s : K ≃+* K) (r : RatPair K) (z : K) : (r.map s).den.eval (s z) = s (r.den.eval z) := by
   rw [map, Polynomial.eval_map]; exact Polynomial.eval₂_hom (s : K →+* K) z
@@ -181,6 +198,13 @@ public theorem tendstoUniformly_iff_vRestrict {α : Type} (F : ℕ → α → K)
     exact ⟨j, trivial, fun k hk z => hj k hk z⟩
 
 
+def IsHolOn (S : Set K) (f : ↥S → K) : Prop :=
+  ∃ r : ℕ → RatPair K, (∀ k, (r k).IsPoleFreeOn S) ∧
+    (∃ b : K, ∀ k (z : ↥S), Valued.v ((r k).evalAt z) ≤ Valued.v b) ∧
+    TendstoUniformly (fun k (z : ↥S) => (r k).evalAt z) f atTop
+
+variable {K}
+
 public theorem isHolOn_ratPair {S : Set K} (r : RatPair K) (hr : r.IsPoleFreeOn S)
     (hb : ∃ b : K, ∀ z ∈ S, Valued.v (r.evalAt z) ≤ Valued.v b) : IsHolOn K S (fun z => r.evalAt z) := by
   obtain ⟨b, hb⟩ := hb
@@ -188,6 +212,12 @@ public theorem isHolOn_ratPair {S : Set K} (r : RatPair K) (hr : r.IsPoleFreeOn 
   intro u hu
   exact Filter.Eventually.of_forall fun k z => refl_mem_uniformity hu
 
+
+def IsExhausted : Prop := ∀ z ∈ upperHalfPlane K₀ K, ∃ n, z ∈ affinoid ϖ n
+
+def IsPoleFreeOn (S : Set K) (r : RatPair K) : Prop := ∀ z ∈ S, r.den.eval z ≠ 0
+
+def evalAt (r : RatPair K) (z : K) : K := r.num.eval z / r.den.eval z
 
 public theorem IsHolOn.const (S : Set K) (c : K) : IsHolOn K S (fun _ => c) := by
   have := isHolOn_ratPair (S := S) (RatPair.const c) (RatPair.isPoleFreeOn_const S c) ⟨c, fun z _ => by simp⟩
@@ -284,10 +314,29 @@ public theorem IsHolOn.zero (S : Set K) : IsHolOn K S 0 := IsHolOn.const S 0
 variable (K) in
 
 
+def holOn (S : Set K) : Subring (↥S → K) where
+  carrier := {f | IsHolOn K S f}
+  mul_mem' hf hg := hf.mul hg
+  one_mem' := IsHolOn.one S
+  add_mem' hf hg := hf.add hg
+  zero_mem' := IsHolOn.zero S
+  neg_mem' hf := hf.neg
+
 public theorem mem_holOn_iff {S : Set K} (f : ↥S → K) : f ∈ holOn K S ↔ IsHolOn K S f := Iff.rfl
 
 end Hol
 
+
+def restrictAffinoid (n : ℕ) (f : ↥(upperHalfPlane K₀ K) → K) : ↥(affinoid ϖ n) → K :=
+  f ∘ Set.inclusion (affinoid_subset_upperHalfPlane ϖ n)
+
+def holRing : Subring (↥(upperHalfPlane K₀ K) → K) where
+  carrier := {f | ∀ n, IsHolOn K (affinoid ϖ n) (restrictAffinoid ϖ n f)}
+  mul_mem' hf hg := fun n => (hf n).mul (hg n)
+  one_mem' := fun _ => IsHolOn.one _
+  add_mem' hf hg := fun n => (hf n).add (hg n)
+  zero_mem' := fun _ => IsHolOn.zero _
+  neg_mem' hf := fun n => (hf n).neg
 
 public theorem mem_holRing_iff (f : ↥(upperHalfPlane K₀ K) → K) :
     f ∈ holRing ϖ ↔ ∀ n, IsHolOn K (affinoid ϖ n) (restrictAffinoid ϖ n f) := Iff.rfl
@@ -305,9 +354,28 @@ section Actions
 variable [DecidableEq K]
 
 
+def holSubalgebra : Subalgebra K (↥(upperHalfPlane K₀ K) → K) :=
+  { holRing ϖ with algebraMap_mem' := fun c => const_mem_holRing ϖ c }
+
+instance holRingAlgebra : Algebra K ↥(holRing ϖ) := (holSubalgebra ϖ).algebra
+
+@[simp] theorem algebraMap_holRing_apply (c : K) (z : ↥(upperHalfPlane K₀ K)) :
+    ((algebraMap K ↥(holRing ϖ) c : ↥(holRing ϖ)) : ↥(upperHalfPlane K₀ K) → K) z = c := rfl
+
+section Actions
+
+variable [DecidableEq K]
+
+instance pglOmegaAction : MulAction PGL(2, K₀) ↥(upperHalfPlane K₀ K) where
+  smul g z := ⟨pmoebius K₀ g (z : K), pmoebius_mem_upperHalfPlane K₀ z.2 g⟩
+  one_smul z := Subtype.ext (pmoebius_one K₀ (z : K))
+  mul_smul g h z := Subtype.ext (pmoebius_mul K₀ z.2 g h)
+
 public theorem coe_smul_upperHalfPlane (g : PGL(2, K₀)) (z : ↥(upperHalfPlane K₀ K)) :
     ((g • z : ↥(upperHalfPlane K₀ K)) : K) = pmoebius K₀ g (z : K) := rfl
 
+
+def precomp (g : PGL(2, K₀)) (f : ↥(upperHalfPlane K₀ K) → K) : ↥(upperHalfPlane K₀ K) → K := fun z => f (g⁻¹ • z)
 
 public theorem precomp_one (f : ↥(upperHalfPlane K₀ K) → K) : precomp (1 : PGL(2, K₀)) f = f :=
   funext fun z => by rw [precomp, inv_one, one_smul]
@@ -550,6 +618,39 @@ omit [DecidableEq K] in
 
 omit [DecidableEq K] in
 
+instance holRingAction : MulSemiringAction PGL(2, K₀) ↥(holRing ϖ) where
+  smul g f := ⟨precomp g f, precomp_mem_holRing ϖ g f.2⟩
+  one_smul f := Subtype.ext (precomp_one (f : ↥(upperHalfPlane K₀ K) → K))
+  mul_smul g h f := Subtype.ext (precomp_mul g h (f : ↥(upperHalfPlane K₀ K) → K))
+  smul_zero _ := rfl
+  smul_add _ _ _ := rfl
+  smul_one _ := rfl
+  smul_mul _ _ _ := rfl
+
+instance holRingSMulCommClass : SMulCommClass PGL(2, K₀) K ↥(holRing ϖ) :=
+  ⟨fun _ _ _ => rfl⟩
+
+@[simp] theorem coe_smul_holRing_apply (g : PGL(2, K₀)) (f : ↥(holRing ϖ)) (z : ↥(upperHalfPlane K₀ K)) :
+    ((g • f : ↥(holRing ϖ)) : ↥(upperHalfPlane K₀ K) → K) z = (f : ↥(upperHalfPlane K₀ K) → K) (g⁻¹ • z) := rfl
+
+instance instGroup : Group (IsometricAut K₀ K) where
+  mul s t := ⟨t.toRingEquiv.trans s.toRingEquiv, fun x => by
+    rw [RingEquiv.coe_trans, Function.comp_apply, s.isometry, t.isometry],
+    fun a => by rw [RingEquiv.coe_trans, Function.comp_apply, t.fix, s.fix]⟩
+  one := ⟨RingEquiv.refl K, fun _ => rfl, fun _ => rfl⟩
+  inv s := ⟨s.toRingEquiv.symm, fun x => by
+    conv_rhs => rw [← s.toRingEquiv.apply_symm_apply x]; rw [s.isometry],
+    fun a => by apply s.toRingEquiv.injective; rw [RingEquiv.apply_symm_apply, s.fix]⟩
+  mul_assoc s t u := ext rfl
+  one_mul s := ext (RingEquiv.ext fun _ => rfl)
+  mul_one s := ext (RingEquiv.ext fun _ => rfl)
+  inv_mul_cancel s := ext (RingEquiv.ext fun x => s.toRingEquiv.symm_apply_apply x)
+
+omit [DecidableEq K] in
+@[simp] theorem inv_toRingEquiv (s : IsometricAut K₀ K) : (s⁻¹).toRingEquiv = s.toRingEquiv.symm := rfl
+
+omit [DecidableEq K] in
+
 public theorem mapsTo_upperHalfPlane (s : IsometricAut K₀ K) :
     Set.MapsTo s.toRingEquiv (upperHalfPlane K₀ K) (upperHalfPlane K₀ K) := by
   intro z hz
@@ -577,6 +678,16 @@ public theorem comm_pmoebius (s : IsometricAut K₀ K) (g : PGL(2, K₀)) {z : K
       pmoebius_mk K₀ g (s.toRingEquiv z) (moebius_denom_ne_zero_of_mem K₀ hsz g), moebius, moebius,
       map_div₀, map_add, map_add, map_mul, map_mul, s.fix, s.fix, s.fix, s.fix]
 
+
+def funMap (s : IsometricAut K₀ K) : (↥(upperHalfPlane K₀ K) → K) ≃+* (↥(upperHalfPlane K₀ K) → K) where
+  toFun f := fun z => s.toRingEquiv (f ⟨s.toRingEquiv.symm z, (s⁻¹).mapsTo_upperHalfPlane z.2⟩)
+  invFun f := fun z => s.toRingEquiv.symm (f ⟨s.toRingEquiv z, s.mapsTo_upperHalfPlane z.2⟩)
+  left_inv f := funext fun z => by simp
+  right_inv f := funext fun z => by simp
+  map_mul' f f' := funext fun z => map_mul s.toRingEquiv _ _
+  map_add' f f' := funext fun z => map_add s.toRingEquiv _ _
+
+omit [DecidableEq K] in
 
 public theorem vRestrict_map (s : IsometricAut K₀ K) (x : K) : vRestrict K (s.toRingEquiv x) = vRestrict K x :=
   le_antisymm ((v_le_iff_vRestrict_le K _ _).1 (s.isometry x).le) ((v_le_iff_vRestrict_le K _ _).1 (s.isometry x).ge)
@@ -616,6 +727,16 @@ public theorem funMap_mem_holRing (s : IsometricAut K₀ K) {f : ↥(upperHalfPl
     exact hz'
 
 
+def coeffMap (s : IsometricAut K₀ K) : ↥(holRing ϖ) ≃+* ↥(holRing ϖ) where
+  toFun f := ⟨s.funMap f, s.funMap_mem_holRing ϖ f.2⟩
+  invFun f := ⟨(s⁻¹).funMap f, (s⁻¹).funMap_mem_holRing ϖ f.2⟩
+  left_inv f := Subtype.ext (funext fun z => by simp [funMap])
+  right_inv f := Subtype.ext (funext fun z => by simp [funMap])
+  map_mul' f f' := Subtype.ext (map_mul s.funMap _ _)
+  map_add' f f' := Subtype.ext (map_add s.funMap _ _)
+
+omit [DecidableEq K] in
+
 public theorem coeffMap_algebraMap (s : IsometricAut K₀ K) (c : K) :
     s.coeffMap ϖ (algebraMap K ↥(holRing ϖ) c) = algebraMap K ↥(holRing ϖ) (s.toRingEquiv c) :=
   Subtype.ext (funext fun _ => rfl)
@@ -637,6 +758,12 @@ public theorem coeffMap_smul (s : IsometricAut K₀ K) (g : PGL(2, K₀)) (f : �
   exact h.symm
 
 
+def toAmbient (s : IsometricAut K₀ K) : Mumford.AmbientSemilinearAut K PGL(2, K₀) ↥(holRing ϖ) where
+  base := s.toRingEquiv
+  map := s.coeffMap ϖ
+  map_algebraMap := s.coeffMap_algebraMap ϖ
+  map_smul := fun g f => s.coeffMap_smul ϖ g f
+
 public theorem iUnion_affinoid (h : IsExhausted ϖ) : (⋃ n, affinoid ϖ n) = upperHalfPlane K₀ K :=
   Set.Subset.antisymm (Set.iUnion_subset fun n => affinoid_subset_upperHalfPlane ϖ n)
     fun z hz => Set.mem_iUnion.2 (h z hz)
@@ -646,9 +773,51 @@ section Hom
 variable [DecidableEq K]
 
 
+def IsometricAut.toAmbientHom : IsometricAut K₀ K →* Mumford.AmbientSemilinearAut K PGL(2, K₀) ↥(holRing ϖ) where
+  toFun s := s.toAmbient ϖ
+  map_one' := Mumford.AmbientSemilinearAut.ext rfl
+    (RingEquiv.ext fun f => Subtype.ext (funext fun _ => congrArg (f : ↥(upperHalfPlane K₀ K) → K) (Subtype.ext rfl)))
+  map_mul' _ _ := Mumford.AmbientSemilinearAut.ext rfl
+    (RingEquiv.ext fun _ => Subtype.ext (funext fun _ => rfl))
+
+def HolRingOf (ρ : G →* PGL(2, K₀)) : Type := ↥(holRing ϖ)
+
+instance HolRingOf.instCommRing : CommRing (HolRingOf ϖ ρ) := inferInstanceAs (CommRing ↥(holRing ϖ))
+
+instance HolRingOf.instAlgebra : Algebra K (HolRingOf ϖ ρ) := inferInstanceAs (Algebra K ↥(holRing ϖ))
+
+instance HolRingOf.instMulSemiringAction : MulSemiringAction G (HolRingOf ϖ ρ) :=
+  MulSemiringAction.compHom ↥(holRing ϖ) ρ
+
+instance HolRingOf.instSMulCommClass : SMulCommClass G K (HolRingOf ϖ ρ) :=
+  ⟨fun g c f => smul_comm (ρ g) c (show ↥(holRing ϖ) from f)⟩
+
+omit [DecidableEq K] in
+
 public theorem HolRingOf.isDomain_iff : IsDomain (HolRingOf ϖ ρ) ↔ IsDomain ↥(holRing ϖ) := Iff.rfl
 
 
 public theorem HolRingOf.smul_def (g : G) (f : HolRingOf ϖ ρ) : g • f = (ρ g • (show ↥(holRing ϖ) from f) : ↥(holRing ϖ)) :=
   rfl
 
+namespace CerednikDrinfeld.Omega
+def toAmbientOf (s : IsometricAut K₀ K) : Mumford.AmbientSemilinearAut K G (HolRingOf ϖ ρ) where
+  base := s.toRingEquiv
+  map := s.coeffMap ϖ
+  map_algebraMap := s.coeffMap_algebraMap ϖ
+  map_smul := fun g f => s.coeffMap_smul ϖ (ρ g) f
+end CerednikDrinfeld.Omega
+
+namespace CerednikDrinfeld.Omega
+def toAmbientOfHom : IsometricAut K₀ K →* Mumford.AmbientSemilinearAut K G (HolRingOf ϖ ρ) where
+  toFun := toAmbientOf ϖ ρ
+  map_one' := Mumford.AmbientSemilinearAut.ext rfl
+    (RingEquiv.ext fun f => Subtype.ext (funext fun _ =>
+      congrArg ((show ↥(holRing ϖ) from f) : ↥(upperHalfPlane K₀ K) → K) (Subtype.ext rfl)))
+  map_mul' _ _ := Mumford.AmbientSemilinearAut.ext rfl
+    (RingEquiv.ext fun _ => Subtype.ext (funext fun _ => rfl))
+end CerednikDrinfeld.Omega
+
+namespace CerednikDrinfeld.Omega
+abbrev merField : Type := FractionRing ↥(holRing ϖ)
+end CerednikDrinfeld.Omega

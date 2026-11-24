@@ -1,8 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Abbrev.Analysis.Section_3_3.Part2
-import Lemma.Set.EqGetMkFn
-import Lemma.Set.Eq.is.All_Eq
+import Theorem.Set.EqGetMkFn
+import Theorem.Set.Eq.is.All_Eq
 open Chapter3 hiding Nat Set
 open Chapter3.SetTheory
 open Chapter3.SetTheory.Set

@@ -1,5 +1,5 @@
 import Def.HeckeCharacter_FiniteOrder
-import Lemma.Matrix.AdelicLevel
+import Theorem.Matrix.AdelicLevel
 import Def.AutomorphicForm_ConstantTerm
 import Instance.AutomorphicForm_GaussTwist
 import Abbrev.AutomorphicForm_GaussTwist

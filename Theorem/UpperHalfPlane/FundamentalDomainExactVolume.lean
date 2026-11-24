@@ -75,6 +75,8 @@ public theorem integral_inv_sqrt_one_sub_sq :
   ring
 
 
+def lowerArc (x : ℝ) : ℝ := Real.sqrt (1 - x ^ 2)
+
 public theorem lowerArc_pos {x : ℝ} (hx : x ∈ Set.Icc (-(1 / 2) : ℝ) (1 / 2)) : 0 < lowerArc x := by
   have hx2 : x ^ 2 ≤ (1 / 2 : ℝ) ^ 2 := by
     apply sq_le_sq'
@@ -83,6 +85,9 @@ public theorem lowerArc_pos {x : ℝ} (hx : x ∈ Set.Icc (-(1 / 2) : ℝ) (1 / 
   have hpos : (0 : ℝ) < 1 - x ^ 2 := by nlinarith
   exact Real.sqrt_pos.mpr hpos
 
+
+def regionD : Set (ℝ × ℝ) :=
+  {p : ℝ × ℝ | p.1 ∈ Set.Icc (-(1 / 2) : ℝ) (1 / 2) ∧ lowerArc p.1 ≤ p.2}
 
 public theorem measurableSet_regionD : MeasurableSet regionD := by
   apply MeasurableSet.inter
@@ -151,6 +156,8 @@ public theorem image_image_fd :
       rw [this]
       exact abs_le.mpr ⟨by linarith [hx.1], hx.2⟩
 
+
+private def densityP (p : ℝ × ℝ) : ENNReal := (((1 / ‖p.2‖₊) ^ 2 : NNReal) : ENNReal)
 
 public theorem measurable_densityP : Measurable densityP := by
   unfold densityP

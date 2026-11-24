@@ -18,6 +18,17 @@ universe u
 variable {R : Type u} [CommRing R] {C : Scheme.{u}}
 
 
+def SubPicCondition.top (c : C ⟶ Spec (CommRingCat.of R)) (ε : SchemeHomOver (𝟙 (Spec (CommRingCat.of R))) c) :
+    SubPicCondition c ε where
+  P := fun _ _ => True
+  unit_mem := fun _ => trivial
+  congr := fun _ _ _ _ _ => trivial
+  pullback_mem := fun _ _ _ _ _ => trivial
+
+noncomputable def classify (h : RepresentsRelSubPic c ε P D) {T : Scheme.{u}} (t : T ⟶ Spec (CommRingCat.of R))
+    (M : RigidifiedLineBundle c ε t) (hM : P.P t M) : SchemeHomOver t D.toBase :=
+  (h.univ t M hM).choose
+
 public theorem classify_spec (h : RepresentsRelSubPic c ε P D) {T : Scheme.{u}} (t : T ⟶ Spec (CommRingCat.of R))
     (M : RigidifiedLineBundle c ε t) (hM : P.P t M) :
     Nonempty ((h.poincare.pullbackAlong (h.classify t M hM)).L ≅ M.L) :=

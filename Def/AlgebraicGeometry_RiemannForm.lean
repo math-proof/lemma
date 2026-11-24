@@ -1,6 +1,6 @@
 module
-public import Lemma.Scheme.RelativeGroupLawAlgPointsV2
-public import Lemma.WeierstrassCurve.TateModule
+public import Theorem.Scheme.RelativeGroupLawAlgPointsV2
+public import Theorem.WeierstrassCurve.TateModule
 public import Abbrev.AlgebraicGeometry_RiemannForm
 set_option autoImplicit false
 

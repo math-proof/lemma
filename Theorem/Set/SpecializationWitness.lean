@@ -30,6 +30,14 @@ public theorem isMulCommutative_adjoin :
   exact fam.comm q q'
 
 
+noncomputable def endHom : HeckeAlg →+* Module.End ℤ J' :=
+  ((Algebra.adjoin ℤ (Set.range fam.T)).val).toRingHom.comp
+    (MvPolynomial.aeval
+      (fun q : Nat.Primes =>
+        (⟨fam.T q, Algebra.subset_adjoin (Set.mem_range_self q)⟩ :
+          Algebra.adjoin ℤ (Set.range fam.T))) :
+      HeckeAlg →ₐ[ℤ] Algebra.adjoin ℤ (Set.range fam.T)).toRingHom
+
 public theorem endHom_heckeGen (q : Nat.Primes) : fam.endHom (heckeGen q) = fam.T q := by
   show ((Algebra.adjoin ℤ (Set.range fam.T)).val)
       ((MvPolynomial.aeval

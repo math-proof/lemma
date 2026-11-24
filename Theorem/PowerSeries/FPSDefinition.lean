@@ -2,7 +2,7 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.RingTheory.PowerSeries.FPSDefinition.Part3
-public import Lemma.PowerSeries.InfiniteProducts2
+public import Theorem.PowerSeries.InfiniteProducts2
 
 
 public section

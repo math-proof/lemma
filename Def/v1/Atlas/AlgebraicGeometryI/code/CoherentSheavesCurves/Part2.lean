@@ -1,7 +1,7 @@
 module
 public import Structure.v1.Atlas.AlgebraicGeometryI.code.DegreeAdditivity
 public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.DegreeAdditivity
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckGroup
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.GrothendieckGroup
 public import Def.v1.Atlas.AlgebraicGeometryI.code.GrothendieckGroup.Part3
 public import Mathlib.RingTheory.DedekindDomain.Basic
 public import Mathlib.Algebra.Module.Torsion.Basic

@@ -2,12 +2,12 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.NumberTheory.RothAuxiliary.Part7
-public import Lemma.Fin.RothMvWeight.ge.Zero.of.RothMvIndex
-public import Lemma.Fin.RothMvWeightAdd.eq.AddRothSMvWeight.of.RothMvIndex
-public import Lemma.Fin.RothMvWeight_RothRidoutComplement.eq.Sub_RothMvWeight.of.All_Le.All_Gt_0.RothMvIndex
+public import Theorem.Fin.RothMvWeight.ge.Zero.of.RothMvIndex
+public import Theorem.Fin.RothMvWeightAdd.eq.AddRothSMvWeight.of.RothMvIndex
+public import Theorem.Fin.RothMvWeight_RothRidoutComplement.eq.Sub_RothMvWeight.of.All_Le.All_Gt_0.RothMvIndex
 public import Theorem.Real.Prod_MulPowRpowDenPowRpowDenSub.le.Pow_RothRidoutExponent.of.All_LeRpowDenPow.All_LeRpowDenPow.RothMvIndex
-public import Lemma.Real.Rpow.le.Prod_MulPowSRpow.of.All_Le.All_Le_PowDen.Ge_0.Ge_0.All_Gt_0.Gt_0.RothMvIndex
-public import Lemma.Real.RothFiniteDeps
+public import Theorem.Real.Rpow.le.Prod_MulPowSRpow.of.All_Le.All_Le_PowDen.Ge_0.Ge_0.All_Gt_0.Gt_0.RothMvIndex
+public import Theorem.Real.RothFiniteDeps
 open MathlibExt.NumberTheory.RothAuxiliary
 open MvPolynomial Fin Real
 

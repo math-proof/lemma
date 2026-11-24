@@ -27,6 +27,9 @@ variable {A F Fbar}
 set_option linter.unusedVariables false in
 
 
+def IsGood (R : ConstantReduction A F Fbar) : Prop :=
+  genusFF (ResidueField A) Fbar = genusFF L F
+
 public theorem isGood_iff (R : ConstantReduction A F Fbar) :
     R.IsGood ↔ genusFF (ResidueField A) Fbar = genusFF L F :=
   Iff.rfl
@@ -84,11 +87,28 @@ public theorem mapDomain_mem_degZero {D : Divisor L F}
 public theorem divMap_apply (D : Divisor L F) : R.divMap D = Finsupp.mapDomain R.placeMap D := rfl
 
 
+def divMap : Divisor L F →+ Divisor (ResidueField A) Fbar :=
+  Finsupp.mapDomain.addMonoidHom R.placeMap
+
+@[simp]
+
 @[simp]
 public theorem coe_degZeroMap (D : Divisor.degZero (K := L) (F := F)) :
     (R.degZeroMap D : Divisor (ResidueField A) Fbar) = Finsupp.mapDomain R.placeMap (D : Divisor L F) :=
   rfl
 
+
+def degZeroMap :
+    Divisor.degZero (K := L) (F := F) →+ Divisor.degZero (K := ResidueField A) (F := Fbar) :=
+  (R.divMap.domRestrict (Divisor.degZero (K := L) (F := F))).codRestrict _ fun D => R.mapDomain_mem_degZero D.2
+
+@[simp]
+
+def pic0Map : Pic0 L F →+ Pic0 (ResidueField A) Fbar :=
+  QuotientAddGroup.map _ _ R.degZeroMap (by
+    rintro ⟨D, hD0⟩ hD
+    simp only [AddSubgroup.mem_addSubgroupOf] at hD ⊢
+    exact R.mapDomain_mem_principal hD)
 
 public theorem pic0Map_mk (D : Divisor.degZero (K := L) (F := F)) :
     R.pic0Map (Pic0.mk D) = Pic0.mk (R.degZeroMap D) :=

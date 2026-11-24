@@ -7,15 +7,16 @@
 			</div>
 		</header>
 		<main class="results">
-			<p class="stats" v-if="data.length">
-				<span v-if="shownLabel">{{shownLabel}} · </span>{{data.length}} result{{data.length == 1 ? '' : 's'}}
-			</p>
 			<ol v-if="data.length">
 				<li v-for="data, i of data">
 					<searchLink :data=data :ref="el => self.searchLink[i] = el"></searchLink>
 				</li>
 			</ol>
 			<p class="empty" v-else-if="q">No results for “{{q}}”.</p>
+			<nav class="pager" v-if="q && (more || start > 0)">
+				<a v-if="start > 0" class="prev" :href="prevHref">Previous</a>
+				<a v-if="more" class="next" :href="nextHref" rel="next">Next</a>
+			</nav>
 		</main>
 	</div>
 </template>
@@ -27,7 +28,7 @@ import searchLink from "./searchLink.vue";
 
 console.log('import searchResult.vue');
 
-const props = defineProps(['data', 'q', 'caseSensitive', 'wholeWord', 'regularExpression', 'fullText', 'lean', 'section', 'replacement', 'limit', 'exact', 'similar']);
+const props = defineProps(['data', 'q', 'caseSensitive', 'wholeWord', 'regularExpression', 'fullText', 'lean', 'section', 'replacement', 'limit', 'start', 'more', 'exact', 'similar']);
 
 const self = new Vue({
 	props,
@@ -43,40 +44,18 @@ const self = new Vue({
 	},
 
 	computed: {
-		// `data` is already `exact` when it has hits, otherwise `similar`
-		// (mjs/lean/buildSearchPayload.mjs); only the heading differs.
-		shownLabel() {
-			if (!this.lean)
-				return null;
-			if (this.exact && this.exact.length)
-				return 'exact matches';
-			if (this.similar && this.similar.length)
-				return 'similarity matches';
-			return null;
+		href() {
+			return searchQuery(this, Number(this.start) || 0);
 		},
 
-		href() {
-			var {q, replacement, limit} = this;
-			var kwargs = {};
-			if (q)
-				kwargs.q = q.encodeURI();
-			if (this.caseSensitive)
-				kwargs.caseSensitive = 'on';
-			if (this.wholeWord)
-				kwargs.wholeWord = 'on';
-			if (this.regularExpression)
-				kwargs.regularExpression = 'on';
-			if (this.fullText)
-				kwargs.fullText = 'on';
-			if (this.lean)
-				kwargs.lean = 'on';
-			if (this.lean && this.section)
-				kwargs.section = this.section;
-			if (replacement)
-				kwargs.replacement = replacement.encodeURI();
-			if (limit)
-				kwargs.limit = limit;
-			return '?' + get_url(kwargs);
+		nextHref() {
+			var limit = Number(this.limit) || 100;
+			return searchQuery(this, (Number(this.start) || 0) + limit);
+		},
+
+		prevHref() {
+			var limit = Number(this.limit) || 100;
+			return searchQuery(this, Math.max(0, (Number(this.start) || 0) - limit));
 		},
 	},
 
@@ -140,7 +119,33 @@ module = ${module}`);
 	},
 });
 
-const { $refs, href, keydown, shownLabel } = self.globals;
+const { $refs, href, nextHref, prevHref, keydown } = self.globals;
+
+function searchQuery(vm, start) {
+	var {q, replacement, limit} = vm;
+	var kwargs = {};
+	if (q)
+		kwargs.q = q.encodeURI();
+	if (vm.caseSensitive)
+		kwargs.caseSensitive = 'on';
+	if (vm.wholeWord)
+		kwargs.wholeWord = 'on';
+	if (vm.regularExpression)
+		kwargs.regularExpression = 'on';
+	if (vm.fullText)
+		kwargs.fullText = 'on';
+	if (vm.lean)
+		kwargs.lean = 'on';
+	if (vm.lean && vm.section)
+		kwargs.section = vm.section;
+	if (replacement)
+		kwargs.replacement = replacement.encodeURI();
+	if (limit)
+		kwargs.limit = limit;
+	if (start > 0)
+		kwargs.start = start;
+	return '?' + get_url(kwargs);
+}
 </script>
 
 <style scoped>
@@ -180,7 +185,7 @@ const { $refs, href, keydown, shownLabel } = self.globals;
 /* Results page: logo left, search bar and results sharing the same column. */
 .page.has-query {
 	display: grid;
-	grid-template-columns: max-content minmax(0, 652px);
+	grid-template-columns: max-content minmax(0, 1fr);
 	column-gap: 20px;
 	row-gap: 6px;
 	align-items: start;
@@ -197,6 +202,8 @@ const { $refs, href, keydown, shownLabel } = self.globals;
 
 .page.has-query .results {
 	grid-column: 2;
+	width: 100%;
+	min-width: 0;
 	max-width: none;
 	margin: 6px 0 0;
 }
@@ -236,20 +243,18 @@ const { $refs, href, keydown, shownLabel } = self.globals;
 	margin: 8px 0 0;
 }
 
-.stats {
-	margin: 6px 0 22px;
-	font-size: 13px;
-	color: #70757a;
-}
-
 ol {
 	margin: 0;
 	padding: 0;
 	list-style: none;
+	min-width: 0;
+	max-width: 100%;
 }
 
 li {
 	margin: 0 0 28px;
+	min-width: 0;
+	max-width: 100%;
 }
 
 .empty {
@@ -257,5 +262,31 @@ li {
 	font-size: 14px;
 	color: #5f6368;
 	text-align: center;
+}
+
+.pager {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 32px;
+	margin: 12px 0 28px;
+	font-size: 18px;
+}
+
+.pager a {
+	color: #1a0dab;
+	text-decoration: none;
+}
+
+.pager a:hover {
+	text-decoration: underline;
+}
+
+.pager .prev::before {
+	content: "‹ ";
+}
+
+.pager .next::after {
+	content: " ›";
 }
 </style>

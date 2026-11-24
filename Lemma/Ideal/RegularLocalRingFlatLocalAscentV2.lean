@@ -1,6 +1,6 @@
 import Mathlib
 import Lemma.Ideal.RegularLocalRingQuotientRegular
-import Lemma.Ideal.RegularLocalRingRegularSequenceAscent
+import Theorem.Ideal.RegularLocalRingRegularSequenceAscent
 import Def.Mathlib_RingTheory_RegularLocalRingFlatLocalAscent
 
 section InlinedTheorems

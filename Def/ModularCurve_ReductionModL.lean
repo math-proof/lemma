@@ -1,6 +1,6 @@
 module
 public import Mathlib
-public import Lemma.LaurentSeries.ArithmeticGalois
+public import Theorem.LaurentSeries.ArithmeticGalois
 public import Theorem.HahnSeries.X0ModL
 set_option autoImplicit false
 

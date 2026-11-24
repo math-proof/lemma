@@ -1,6 +1,6 @@
 import Lemma.List.EqCons_Tail.of.GtLength_0
 import Lemma.List.SumCons.eq.Add_Sum
-import Lemma.List.Tail.eq.Drop_1
+import Theorem.List.Tail.eq.Drop_1
 open List
 
 

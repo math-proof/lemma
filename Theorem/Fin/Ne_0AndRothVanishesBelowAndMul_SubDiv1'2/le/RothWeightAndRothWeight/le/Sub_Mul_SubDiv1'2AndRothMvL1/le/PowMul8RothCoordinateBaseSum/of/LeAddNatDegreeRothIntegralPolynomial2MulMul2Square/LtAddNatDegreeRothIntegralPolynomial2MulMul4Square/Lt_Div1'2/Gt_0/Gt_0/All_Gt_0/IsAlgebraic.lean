@@ -1,11 +1,11 @@
 module
 public import Mathlib
 public import Def.NumberTheory.RothAuxiliary.Part3
-public import Lemma.Fin.CardRothBox.le.Pow2Sum.of.All_Gt_0
+public import Theorem.Fin.CardRothBox.le.Pow2Sum.of.All_Gt_0
 public import Theorem.Fin.CardRothLowIndex.Gt_0.of.Lt_Div1'2.Gt_0.Gt_0
-public import Lemma.Fin.CardRothLowIndex.lt.CardRothBox.of.Lt_MulMul4Square.Gt_0.Gt_0.All_Gt_0
-public import Lemma.Fin.Mul2CardRothLowIndex.le.CardRothBox.of.Le_MulMul2Square.Gt_0.Gt_0.All_Gt_0
-public import Lemma.Fin.RothMvL1_RothMvOfCoeff.le.Sum_NatAbs.of.RothCoeff
+public import Theorem.Fin.CardRothLowIndex.lt.CardRothBox.of.Lt_MulMul4Square.Gt_0.Gt_0.All_Gt_0
+public import Theorem.Fin.Mul2CardRothLowIndex.le.CardRothBox.of.Le_MulMul2Square.Gt_0.Gt_0.All_Gt_0
+public import Theorem.Fin.RothMvL1_RothMvOfCoeff.le.Sum_NatAbs.of.RothCoeff
 public import Theorem.Matrix.MulVecRothAuxMatrix.eq.Zero.of.EqMulVecRothRidoutAuxMatrix_0.RothCoeff
 public import Theorem.Matrix.Eq_0.of.EqMulVecRothRidoutAuxMatrix_0.RothCoeff
 public import Theorem.Matrix.RothHasseEval_1.eq.Zero.of.EqMulVecRothAuxMatrix_0.RothCoeff.IsAlgebraic

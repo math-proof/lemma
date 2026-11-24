@@ -11,7 +11,7 @@ public import Mathlib.RingTheory.Unramified.Field
 public import Mathlib.RingTheory.Etale.Field
 public import Mathlib.RingTheory.Artinian.Module
 public import Theorem.v1.Atlas.NumberTheoryI.code.CompleteFields.Part2
-public import Lemma.Nat.Atlas.v1.NumberTheoryI.code.CompleteFields
+public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.CompleteFields
 public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.KroneckerWeber
 public import Def.v1.Atlas.NumberTheoryI.code.KroneckerWeber.Part5
 

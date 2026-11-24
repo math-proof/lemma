@@ -2,7 +2,7 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Abbrev.Analysis.Section_3_3_fn
-public import Lemma.Set.EqIffP
+public import Theorem.Set.EqIffP
 open Chapter3 hiding Nat Set
 open Chapter3.SetTheory
 open Chapter3.SetTheory.Set

@@ -1,5 +1,5 @@
 import Instance.CuspForm_HeckeLocal
-import Lemma.Set.SpecializationWitness
+import Theorem.Set.SpecializationWitness
 import Def.CuspForm_LatticeHeckeFamily
 
 noncomputable section

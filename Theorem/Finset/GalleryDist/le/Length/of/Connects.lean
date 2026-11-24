@@ -3,7 +3,7 @@ public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.v1.Atlas.Buildings.code.Building.RetractionDef
 public import Def.v1.Atlas.Buildings.code.Building.Convexity
-public import Lemma.List.Any.of.Not.In_A.IsChainA
+public import Theorem.List.Any.of.Not.In_A.IsChainA
 open scoped Classical
 
 

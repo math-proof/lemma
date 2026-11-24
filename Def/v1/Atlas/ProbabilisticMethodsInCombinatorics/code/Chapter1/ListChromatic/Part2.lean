@@ -11,7 +11,7 @@ public import Mathlib.Analysis.SpecialFunctions.Pow.Real
 public import Mathlib.Data.ENat.Lattice
 public import Mathlib.Tactic
 public import Def.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter1.TwoColorable.Part2
-public import Lemma.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter1.TwoColorable
+public import Theorem.Finset.Atlas.v1.ProbabilisticMethodsInCombinatorics.code.Chapter1.TwoColorable
 public import Abbrev.v1.Atlas.ProbabilisticMethodsInCombinatorics.code.Chapter1.ListChromatic
 set_option maxHeartbeats 800000
 

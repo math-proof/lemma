@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Scheme.NeronModelPropertyBundleCarrier
+import Theorem.Scheme.NeronModelPropertyBundleCarrier
 import Def.AlgebraicGeometry_NeronSpecialFibreRestriction
 
 set_option autoImplicit false

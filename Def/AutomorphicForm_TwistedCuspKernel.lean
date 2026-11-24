@@ -1,5 +1,5 @@
 module
-public import Lemma.Matrix.TwistedNormClasses
+public import Theorem.Matrix.TwistedNormClasses
 public import Def.AutomorphicForm_GL2ConjugacyCells
 public import Def.AutomorphicForm_TruncationOperator
 public import Def.NumberField_AdelicHeight

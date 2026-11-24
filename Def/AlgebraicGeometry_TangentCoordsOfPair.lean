@@ -1,6 +1,6 @@
 module
 public import Mathlib
-public import Lemma.Scheme.RelativeGroupLaw
+public import Theorem.Scheme.RelativeGroupLaw
 public import Def.AlgebraicGeometry_SquareZeroDeformation
 public import Theorem.Scheme.SquareZeroRelTangent
 public import Def.AlgebraicGeometry_SmallExtensionPairTangent

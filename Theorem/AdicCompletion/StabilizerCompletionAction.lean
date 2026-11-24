@@ -36,6 +36,13 @@ public theorem toAlgEquiv_symm (g : G) :
   rw [smul_inv_smul]
 
 
+noncomputable def stabAut (g : MulAction.stabilizer G 𝔓) :
+    AdicCompletion 𝔓 B ≃ₐ[A] AdicCompletion 𝔓 B :=
+  mapAlgEquiv 𝔓 𝔓 (MulSemiringAction.toAlgEquiv A B (g : G))
+    (map_toAlgEquiv_le_of_mem_stabilizer A B G 𝔓 g)
+    (by rw [toAlgEquiv_symm]
+        exact map_toAlgEquiv_le_of_mem_stabilizer A B G 𝔓 g⁻¹)
+
 public theorem evalₐ_stabAut (g : MulAction.stabilizer G 𝔓) (n : ℕ) (x : AdicCompletion 𝔓 B)
     (z : B) (hz : Ideal.Quotient.mk (𝔓 ^ n) z = evalₐ 𝔓 n x) :
     evalₐ 𝔓 n (stabAut A B G 𝔓 g x) = Ideal.Quotient.mk (𝔓 ^ n) ((g : G) • z) := by
@@ -43,12 +50,38 @@ public theorem evalₐ_stabAut (g : MulAction.stabilizer G 𝔓) (n : ℕ) (x : 
   rfl
 
 
+noncomputable def stabilizerToCompletionAut :
+    MulAction.stabilizer G 𝔓 →* (AdicCompletion 𝔓 B ≃ₐ[A] AdicCompletion 𝔓 B) where
+  toFun := stabAut A B G 𝔓
+  map_one' := by
+    refine AlgEquiv.ext fun x => ext_evalₐ fun n => ?_
+    obtain ⟨z, hz⟩ := Ideal.Quotient.mk_surjective (evalₐ 𝔓 n x)
+    rw [evalₐ_stabAut A B G 𝔓 1 n x z hz, AlgEquiv.one_apply, ← hz,
+      OneMemClass.coe_one, one_smul]
+  map_mul' g₁ g₂ := by
+    refine AlgEquiv.ext fun x => ext_evalₐ fun n => ?_
+    obtain ⟨z, hz⟩ := Ideal.Quotient.mk_surjective (evalₐ 𝔓 n x)
+    have h₂ : Ideal.Quotient.mk (𝔓 ^ n) ((g₂ : G) • z) =
+        evalₐ 𝔓 n (stabAut A B G 𝔓 g₂ x) :=
+      (evalₐ_stabAut A B G 𝔓 g₂ n x z hz).symm
+    rw [AlgEquiv.mul_apply, evalₐ_stabAut A B G 𝔓 (g₁ * g₂) n x z hz,
+      evalₐ_stabAut A B G 𝔓 g₁ n _ ((g₂ : G) • z) h₂, Subgroup.coe_mul, mul_smul]
+
+@[reducible]
+
 @[simp]
 public theorem stabilizerToCompletionAut_of (g : MulAction.stabilizer G 𝔓) (b : B) :
     stabilizerToCompletionAut A B G 𝔓 g (of 𝔓 B b) = of 𝔓 B ((g : G) • b) := by
   show stabAut A B G 𝔓 g (of 𝔓 B b) = _
   rw [stabAut, mapAlgEquiv_apply, mapₐ_of]
   rfl
+
+@[reducible]
+noncomputable def stabilizerMulSemiringAction :
+    MulSemiringAction (MulAction.stabilizer G 𝔓) (AdicCompletion 𝔓 B) :=
+  MulSemiringAction.compHom _ (stabilizerToCompletionAut A B G 𝔓)
+
+@[simp]
 
 end AdicCompletion
 

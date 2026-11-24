@@ -1,6 +1,6 @@
 module
 public import Mathlib
-public import Lemma.WeierstrassCurve.VeluQuotientMap
+public import Theorem.WeierstrassCurve.VeluQuotientMap
 public import Instance.WeierstrassCurve_VeluQuotientJInvariant
 public import Def.WeierstrassCurve_VeluQuotientJInvariant
 

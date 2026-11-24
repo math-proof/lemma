@@ -1,7 +1,7 @@
 import Mathlib
 import Def.FLTPrelim_Ramification
 import Lemma.UpperHalfPlane.X1Diamond
-import Lemma.WeierstrassCurve.TateModule
+import Theorem.WeierstrassCurve.TateModule
 import Def.ModularCurve_X1PrimitiveSpecialization
 import Structure.ModularCurve_X1PrimitiveSpecialization
 

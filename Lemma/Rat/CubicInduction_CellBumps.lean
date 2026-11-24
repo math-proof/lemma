@@ -1,4 +1,4 @@
-import Lemma.Matrix.CubicInduction_Structure
+import Theorem.Matrix.CubicInduction_Structure
 import Def.UnramifiedWhittaker_HeckeRecursion
 import Def.LanglandsTunnell_CubicInduction_CellBumps
 

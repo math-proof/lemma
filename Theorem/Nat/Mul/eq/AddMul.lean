@@ -2,7 +2,7 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Instance.Analysis.Section_2_3.Part2
-public import Lemma.Nat.EqRecurse
+public import Theorem.Nat.EqRecurse
 open Chapter2 hiding Nat
 open Chapter2.Nat
 open Nat

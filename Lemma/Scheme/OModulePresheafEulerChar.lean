@@ -1,4 +1,4 @@
-import Lemma.Scheme.OrderedAffineCoverCech
+import Theorem.Scheme.OrderedAffineCoverCech
 import Mathlib.LinearAlgebra.Dimension.Finrank
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Def.AlgebraicGeometry_OModulePresheafEulerChar

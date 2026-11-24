@@ -1,6 +1,6 @@
 module
 public import Def.v1.Atlas.Buildings.code.SphericalBuilding.GLnGapAnalysis.Part2
-public import Lemma.List.InsertIdx.eq.Take.of.Le_Length
+public import Theorem.List.InsertIdx.eq.Take.of.Le_Length
 public import Mathlib.LinearAlgebra.Dimension.Finite
 public import Theorem.v1.Atlas.Buildings.code.SphericalBuilding.FinsetGapCorrespondenceProof.Part2
 

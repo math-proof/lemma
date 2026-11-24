@@ -1,7 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Abbrev.Analysis.Section_3_3_fn
-import Lemma.Nat.EqF333c_CoeNonzeroAdd_1
+import Theorem.Nat.EqF333c_CoeNonzeroAdd_1
 open Chapter3 hiding Nat Set
 open Chapter3.SetTheory
 open Chapter3.SetTheory.Set

@@ -1,5 +1,5 @@
 import Lemma.HahnSeries.X0
-import Lemma.LaurentSeries.LaurentCoeff
+import Theorem.LaurentSeries.LaurentCoeff
 import Mathlib.Algebra.Polynomial.BigOperators
 import Abbrev.ModularCurve_PhiGen
 

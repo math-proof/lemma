@@ -1,5 +1,5 @@
-import Lemma.ZMod.Inst
-import Lemma.UpperHalfPlane.PeriodMap
+import Theorem.ZMod.Inst
+import Theorem.UpperHalfPlane.PeriodMap
 import Lemma.Int.LevelPairing
 import Def.CuspForm_CornerPairingFamily
 

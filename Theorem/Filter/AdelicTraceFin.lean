@@ -20,6 +20,10 @@ section FiniteTrace
 variable (K : Type) [Field K] [NumberField K]
 
 
+private def sm (z : Π v : HeightOneSpectrum (𝓞 K), v.adicCompletionIntegers K) : FiniteAdeleRing (𝓞 K) K :=
+  RestrictedProduct.structureMap (fun v : HeightOneSpectrum (𝓞 K) => v.adicCompletion K)
+    (fun v => (v.adicCompletionIntegers K : Set (v.adicCompletion K))) Filter.cofinite z
+
 public theorem sm_apply (z : Π v : HeightOneSpectrum (𝓞 K), v.adicCompletionIntegers K)
     (v : HeightOneSpectrum (𝓞 K)) : sm K z v = (z v : v.adicCompletion K) := rfl
 
@@ -31,6 +35,11 @@ public theorem sm_add (x y : Π v : HeightOneSpectrum (𝓞 K), v.adicCompletion
 
 public theorem sm_zero : sm K 0 = 0 := RestrictedProduct.ext _ _ fun v => rfl
 
+
+private def smHom : (Π v : HeightOneSpectrum (𝓞 K), v.adicCompletionIntegers K) →+ FiniteAdeleRing (𝓞 K) K where
+  toFun := sm K
+  map_zero' := sm_zero K
+  map_add' := sm_add K
 
 public theorem continuous_sm : Continuous (sm K) :=
   (RestrictedProduct.isEmbedding_structureMap).continuous
@@ -47,6 +56,9 @@ public theorem sm_diag (a : 𝓞 K) :
     rw [coe_algebraMap_adicCompletionIntegers]
     rfl
 
+
+private def pre (z : FiniteAdeleRing (𝓞 K) K) (hz : z ∈ integralFiniteAdeles (𝓞 K) K) :
+    Π v : HeightOneSpectrum (𝓞 K), v.adicCompletionIntegers K := fun v => ⟨z v, hz v⟩
 
 public theorem sm_pre (z : FiniteAdeleRing (𝓞 K) K) (hz : z ∈ integralFiniteAdeles (𝓞 K) K) :
     sm K (pre K z hz) = z := RestrictedProduct.ext _ _ fun v => rfl
@@ -74,6 +86,11 @@ public theorem exists_eq_of_algebraMap_mem {ξ : K}
 
 variable (F : Type) [Field F] [NumberField F]
 
+
+private def traceFinAux (x : FiniteAdeleRing (𝓞 F) F) (k : F)
+    (hk : algebraMap F (FiniteAdeleRing (𝓞 F) F) k + x ∈ integralFiniteAdeles (𝓞 F) F) :
+    FiniteAdeleRing (𝓞 ℚ) ℚ :=
+  sm ℚ (traceInt F (pre F _ hk)) - algebraMap ℚ (FiniteAdeleRing (𝓞 ℚ) ℚ) (Algebra.trace ℚ F k)
 
 public theorem sm_traceInt_diag (a : 𝓞 F) :
     sm ℚ (traceInt F (diag F a)) = algebraMap ℚ (FiniteAdeleRing (𝓞 ℚ) ℚ) (Algebra.trace ℚ F (a : F)) := by
@@ -109,6 +126,31 @@ public theorem traceFinAux_eq (x : FiniteAdeleRing (𝓞 F) F) (k k' : F)
     (algebraMap ℚ (FiniteAdeleRing (𝓞 ℚ) ℚ)).map_sub]
   ring
 
+
+def traceFinHom : FiniteAdeleRing (𝓞 F) F →+ FiniteAdeleRing (𝓞 ℚ) ℚ :=
+  AddMonoidHom.mk' (fun x => traceFinAux F x (Classical.choose (exists_algebraMap_add_mem_integralFiniteAdeles (𝓞 F) F x))
+      (Classical.choose_spec (exists_algebraMap_add_mem_integralFiniteAdeles (𝓞 F) F x))) (by
+    intro x y
+    set kx := Classical.choose (exists_algebraMap_add_mem_integralFiniteAdeles (𝓞 F) F x)
+    have hkx := Classical.choose_spec (exists_algebraMap_add_mem_integralFiniteAdeles (𝓞 F) F x)
+    set ky := Classical.choose (exists_algebraMap_add_mem_integralFiniteAdeles (𝓞 F) F y)
+    have hky := Classical.choose_spec (exists_algebraMap_add_mem_integralFiniteAdeles (𝓞 F) F y)
+    have hkxy : algebraMap F (FiniteAdeleRing (𝓞 F) F) (kx + ky) + (x + y) ∈ integralFiniteAdeles (𝓞 F) F := by
+      have : algebraMap F (FiniteAdeleRing (𝓞 F) F) (kx + ky) + (x + y)
+          = (algebraMap F _ kx + x) + (algebraMap F _ ky + y) := by rw [(algebraMap F (FiniteAdeleRing (𝓞 F) F)).map_add]; ring
+      rw [this]; exact fun v => add_mem (hkx v) (hky v)
+    show traceFinAux F (x + y) _ _ = traceFinAux F x kx hkx + traceFinAux F y ky hky
+    rw [traceFinAux_eq F (x + y) _ (kx + ky) _ hkxy]
+    unfold traceFinAux
+    have hpre : pre F _ hkxy = pre F _ hkx + pre F _ hky := by
+      funext v; apply Subtype.ext
+      show (algebraMap F (FiniteAdeleRing (𝓞 F) F) (kx + ky) + (x + y)) v = _
+      rw [show algebraMap F (FiniteAdeleRing (𝓞 F) F) (kx + ky) + (x + y)
+          = (algebraMap F _ kx + x) + (algebraMap F _ ky + y) by rw [(algebraMap F (FiniteAdeleRing (𝓞 F) F)).map_add]; ring]
+      rfl
+    rw [hpre, (traceInt F).map_add, sm_add, (Algebra.trace ℚ F).map_add,
+      (algebraMap ℚ (FiniteAdeleRing (𝓞 ℚ) ℚ)).map_add]
+    ring)
 
 public theorem traceFinHom_eq (x : FiniteAdeleRing (𝓞 F) F) (k : F)
     (hk : algebraMap F (FiniteAdeleRing (𝓞 F) F) k + x ∈ integralFiniteAdeles (𝓞 F) F) :
@@ -171,3 +213,11 @@ public theorem continuous_traceFinHom : Continuous (traceFinHom F) := by
   have ht := hc.tendsto 0
   rwa [h00] at ht
 
+namespace NumberField.StandardAddChar
+def adelicTraceData : AdelicTraceData F :=
+  archTraceDataOf F (traceFinHom F) (traceFinHom_algebraMap F) (continuous_traceFinHom F)
+end NumberField.StandardAddChar
+
+namespace NumberField.StandardAddChar
+abbrev stdAddChar : AddChar (AdeleRing (𝓞 F) F) ℂ := (adelicTraceData F).psiK
+end NumberField.StandardAddChar

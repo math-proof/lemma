@@ -107,6 +107,18 @@ variable (p : ℕ) [hp : Fact p.Prime] {R : Type u} [CommRing R]
 omit hp in
 
 
+def mulPoly (w : WittVector p R) (n : ℕ) : MvPolynomial ℕ R :=
+  (cVec p w * WittVector.mk p (MvPolynomial.X : ℕ → MvPolynomial ℕ R)).coeff n
+
+def mulFam (w : WittVector p R) : ℕ → MvPowerSeries ℕ R := fun n => (mulPoly p w n : MvPowerSeries ℕ R)
+
+variable {p}
+
+@[simp] theorem mulFam_apply (w : WittVector p R) (n : ℕ) :
+    mulFam p w n = (mulPoly p w n : MvPowerSeries ℕ R) := rfl
+
+omit hp in
+
 public theorem coe_aeval {σ τ : Type*} (y : σ → MvPolynomial τ R) (P : MvPolynomial σ R) :
     ((MvPolynomial.aeval y P : MvPolynomial τ R) : MvPowerSeries τ R) =
       subst (fun i => (y i : MvPowerSeries τ R)) (P : MvPowerSeries σ R) := by
@@ -223,6 +235,18 @@ omit hp in
 
 omit hp in
 
+def verPoly (R : Type u) [CommRing R] : ℕ → MvPolynomial ℕ R
+  | 0 => 0
+  | n + 1 => MvPolynomial.X n
+
+omit hp in
+@[simp] theorem verPoly_zero : verPoly R 0 = 0 := rfl
+
+omit hp in
+@[simp] theorem verPoly_succ (n : ℕ) : verPoly R (n + 1) = MvPolynomial.X n := rfl
+
+omit hp in
+
 public theorem coe_verPoly (n : ℕ) : (verPoly R n : MvPowerSeries ℕ R) = verFam R n := by
   cases n with
   | zero => exact MvPolynomial.coe_zero
@@ -329,6 +353,12 @@ public theorem hasSubst_mulFam (w : WittVector p R) : HasSubst (mulFam p w) := b
   rw [hw]
   exact Nat.lt_pow_self hp.out.one_lt
 
+
+def xVec (R : Type u) [CommRing R] (i : Fin 2) : WittVector p (MvPolynomial (Fin 2 × ℕ) R) :=
+  WittVector.mk p fun m => MvPolynomial.X (i, m)
+
+def addPolyR (R : Type u) [CommRing R] (m : ℕ) : MvPolynomial (Fin 2 × ℕ) R :=
+  MvPolynomial.map (Int.castRingHom R) (WittVector.wittAdd p m)
 
 public theorem coe_addPolyR (m : ℕ) :
     (addPolyR (p := p) R m : MvPowerSeries (Fin 2 × ℕ) R) = addFam p R m := rfl
@@ -456,6 +486,12 @@ variable {Φ : MvFormalGroup d R} {Φ' : MvFormalGroup d' R}
     (wittSMul w f).toPowerSeries = fun j => subst (WittLaw.mulFam p w) (f.toPowerSeries j) := rfl
 
 
+def wittSMul [Φ.IsComm] (w : WittVector p R) : CartierModule p Φ →+ CartierModule p Φ :=
+  precomp (WittLaw.isEndo_mulFam w)
+
+@[simp] theorem toPowerSeries_wittSMul [Φ.IsComm] (w : WittVector p R) (f : CartierModule p Φ) :
+    (wittSMul w f).toPowerSeries = fun j => subst (WittLaw.mulFam p w) (f.toPowerSeries j) := rfl
+
 public theorem wittSMul_one [Φ.IsComm] (f : CartierModule p Φ) : wittSMul (1 : WittVector p R) f = f := by
   apply CartierModule.ext
   funext j
@@ -513,6 +549,15 @@ public theorem wittSMul_add_left [Φ.IsComm] (w₁ w₂ : WittVector p R) (f : C
     funext m
     exact subst_X hS ((1 : Fin 2), m)
 
+
+private instance [Φ.IsComm] : Module (WittVector p R) (CartierModule p Φ) where
+  smul w f := wittSMul w f
+  one_smul := wittSMul_one
+  mul_smul := wittSMul_mul
+  smul_zero w := map_zero (wittSMul w)
+  smul_add w := map_add (wittSMul w)
+  add_smul := wittSMul_add_left
+  zero_smul := wittSMul_zero_left
 
 public theorem smul_def [Φ.IsComm] (w : WittVector p R) (f : CartierModule p Φ) : w • f = wittSMul w f := rfl
 
@@ -591,6 +636,13 @@ public theorem endAct_smul_witt [Φ.IsComm] (φ : MvFormalGroup.End Φ) (w : Wit
 @[simp] public theorem mapLinear_apply [Φ.IsComm] [Φ'.IsComm] (φ : Φ.Hom Φ') (f : CartierModule p Φ) :
     mapLinear φ f = map φ f := rfl
 
+
+def mapLinear [Φ.IsComm] [Φ'.IsComm] (φ : Φ.Hom Φ') :
+    CartierModule p Φ →ₗ[WittVector p R] CartierModule p Φ' :=
+  { map φ with map_smul' := fun w f => map_smul_witt φ w f }
+
+@[simp] theorem mapLinear_apply [Φ.IsComm] [Φ'.IsComm] (φ : Φ.Hom Φ') (f : CartierModule p Φ) :
+    mapLinear φ f = map φ f := rfl
 
 public theorem coeff_single_zero_subst_of_weight {u : ℕ → MvPowerSeries ℕ R}
     (hu : ∀ n (e : ℕ →₀ ℕ), coeff e (u n) ≠ 0 → Finsupp.weight (fun m => p ^ m) e = p ^ n)

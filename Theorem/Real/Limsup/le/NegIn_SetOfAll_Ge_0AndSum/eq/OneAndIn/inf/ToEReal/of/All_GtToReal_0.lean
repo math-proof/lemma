@@ -4,7 +4,7 @@ public import Mathlib.Analysis.SpecialFunctions.Log.Basic
 public import Mathlib.Analysis.SpecialFunctions.Log.ENNRealLog
 public import Mathlib.Analysis.SpecificLimits.Basic
 public import Mathlib.Data.EReal.Inv
-public import Lemma.Fin.Pi_ToMeasure.of.EqSum
+public import Theorem.Fin.Pi_ToMeasure.of.EqSum
 public import Theorem.Finset.AbsAddMulInvLogInf'.le.DivMulCardAddAddLogDivLog2'1.of.All_GtToReal_0.Nonempty.All_EqSum.Gt_0
 public import Initialize.Tactic.Attr.Basic
 open Asymptotics Filter Fin Finset MeasureTheory Real

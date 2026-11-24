@@ -1,5 +1,5 @@
 module
-public import Lemma.Measure.CarrierPins
+public import Theorem.Measure.CarrierPins
 public import Def.AutomorphicForm_ConstantTerm
 public import Def.AutomorphicForm_WhittakerCoefficient
 public import Structure.AutomorphicForm_WhittakerCoefficient

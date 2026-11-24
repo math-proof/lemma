@@ -1,6 +1,6 @@
 module
 public import Def.v1.Atlas.AlgebraicGeometryI.code.QCohProjective.Part2
-public import Lemma.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohProjective
+public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohProjective
 public import Theorem.Scheme.Atlas.v1.AlgebraicGeometryI.code.QCohEquivalenceProof
 public import Instance.v1.Atlas.AlgebraicGeometryI.code.QCohEquivalenceProof
 public import Abbrev.v1.Atlas.AlgebraicGeometryI.code.TwistSheaf

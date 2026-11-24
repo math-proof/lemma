@@ -3,7 +3,7 @@ public import Def.v1.Atlas.ArithmeticGeometry.code.HilbertSymbol.Part2
 public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertSymbol
 public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.HilbertFormulaOdd
 public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Hilbert2Adic
-public import Lemma.Scheme.Atlas.v1.ArithmeticGeometry.code.Hilbert2AdicCore
+public import Theorem.Scheme.Atlas.v1.ArithmeticGeometry.code.Hilbert2AdicCore
 public import Def.v1.Atlas.ArithmeticGeometry.code.HilbertFormulaOdd
 public import Def.v1.Atlas.ArithmeticGeometry.code.Hilbert2Adic
 public import Def.v1.Atlas.ArithmeticGeometry.code.Hilbert2AdicCore.Part2

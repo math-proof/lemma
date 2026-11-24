@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.Scheme.IgusaScheme
+import Theorem.Scheme.IgusaScheme
 import Lemma.Scheme.TwoChartIntegralModel
 import Theorem.Int.P2MUtil
 

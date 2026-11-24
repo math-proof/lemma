@@ -1,9 +1,9 @@
 module
 public import Mathlib
-public import Lemma.MvPowerSeries.NegV2
-public import Lemma.MvPowerSeries.CartierModule
-public import Lemma.PowerSeries.CartierModuleHomothety
-public import Lemma.MvPowerSeries.SpecialFormalModule
+public import Theorem.MvPowerSeries.NegV2
+public import Theorem.MvPowerSeries.CartierModule
+public import Theorem.PowerSeries.CartierModuleHomothety
+public import Theorem.MvPowerSeries.SpecialFormalModule
 public import Def.CerednikDrinfeld_CartierGradedPiece
 set_option autoImplicit false
 

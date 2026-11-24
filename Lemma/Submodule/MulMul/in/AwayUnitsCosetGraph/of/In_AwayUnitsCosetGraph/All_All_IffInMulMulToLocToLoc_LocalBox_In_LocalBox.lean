@@ -1,6 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
-import Lemma.Polynomial.DrinfeldHolomorphic
+import Theorem.Polynomial.DrinfeldHolomorphic
 import Lemma.ValuationSubring.CompletionRatClosure
 import Def.FLTPrelim_Ramification
 import Lemma.UpperHalfPlane.CosetGraphAtPrime

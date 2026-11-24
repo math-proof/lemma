@@ -1688,6 +1688,17 @@ insert into
             form_post('php/request/execute.php', {sql}).then(rowcount => {
                 console.log("rowcount =", rowcount);
             });
+            if (meta == null)
+                this.rebuild_fingerprint(key);
+        },
+
+        // Separate from the lemma upsert: rewrite inverted postings and fingerprint trees.
+        rebuild_fingerprint(module) {
+            form_post('php/request/rebuild_fingerprint.php', {module}).then(result => {
+                console.log('rebuild_fingerprint', result);
+            }).catch(err => {
+                console.error('[rebuild_fingerprint]', err);
+            });
         },
     },
     

@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Ideal.Mathlib430
+import Theorem.Ideal.Mathlib430
 import Abbrev.GroupCohomology_SplittingModule
 
 set_option autoImplicit false

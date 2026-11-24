@@ -1,7 +1,7 @@
 module
 public import Mathlib
-public import Lemma.LinearMap.AdZero
-public import Lemma.Rep.TangentSpace
+public import Theorem.LinearMap.AdZero
+public import Theorem.Rep.TangentSpace
 public import Instance.ExtEndgame_ProductionDatum
 set_option autoImplicit false
 open CategoryTheory groupCohomology TrivSqZeroExt ExtCitation

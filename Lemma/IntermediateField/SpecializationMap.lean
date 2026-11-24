@@ -1,5 +1,5 @@
-import Lemma.HahnSeries.JqCoeff
-import Lemma.LaurentSeries.LaurentCoeff
+import Theorem.HahnSeries.JqCoeff
+import Theorem.LaurentSeries.LaurentCoeff
 import Lemma.Polynomial.PhiGen
 import Class.AlgebraicCurve_DivisorClassGroup
 import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
@@ -23,7 +23,7 @@ import Mathlib.RingTheory.Ideal.Maps
 import Mathlib.RingTheory.Ideal.Maximal
 import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
 import Def.ModularCurve_FibreModel
-import Lemma.LaurentSeries.ArithmeticGalois
+import Theorem.LaurentSeries.ArithmeticGalois
 import Structure.ModularCurve_PlaceSpecialization
 import Instance.ModularCurve_SpecializationMap
 

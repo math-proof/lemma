@@ -1,7 +1,7 @@
 import Mathlib
-import Lemma.Scheme.NeronModelPropertyBundleCarrier
+import Theorem.Scheme.NeronModelPropertyBundleCarrier
 import Def.AlgebraicGeometry_RelativePicardFunctor
-import Lemma.Scheme.RepresentsRelSubPic
+import Theorem.Scheme.RepresentsRelSubPic
 import Def.AlgebraicGeometry_RelPicardAlgEquivZeroCut
 import Def.AlgebraicGeometry_RelSubPicPresheaf
 import Structure.JacJ1Iface

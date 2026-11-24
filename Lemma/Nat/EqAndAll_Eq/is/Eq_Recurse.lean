@@ -2,8 +2,8 @@ import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Abbrev.Analysis.Section_2_1
 import Lemma.Nat.All.of.All_Nat_induction
-import Lemma.Nat.EqRecurse
-import Lemma.Nat.EqRecurseNat0
+import Theorem.Nat.EqRecurse
+import Theorem.Nat.EqRecurseNat0
 open Chapter2 hiding Nat
 open Chapter2.Nat
 open Nat

@@ -2,10 +2,10 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.v1.Atlas.BooleanFunctions.code.Juntas
-public import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Juntas
-public import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Juntas
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
 public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.MonotoneFourier
-public import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
 public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Theorems
 public import Def.v1.Atlas.BooleanFunctions.code.InfluenceFourier
 public import Def.v1.Atlas.BooleanFunctions.code.MonotoneFourier

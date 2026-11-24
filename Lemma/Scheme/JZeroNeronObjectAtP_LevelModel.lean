@@ -1,13 +1,13 @@
 import Mathlib
 import Def.ModularCurve_JZeroNeronObjectAtP
 import Abbrev.ModularCurve_IgusaScheme
-import Lemma.Scheme.CurveModel
+import Theorem.Scheme.CurveModel
 import Def.AlgebraicGeometry_RelativePicardFunctor
-import Lemma.Scheme.RepresentsRelSubPic
+import Theorem.Scheme.RepresentsRelSubPic
 import Def.AlgebraicGeometry_RelPicardAlgEquivZeroCut
 import Def.AlgebraicGeometry_RelPicardAlgEquivZeroGroupCut
 import Abbrev.AlgebraicGeometry_IdealSheafModule
-import Lemma.Scheme.RelEffCartierDiv
+import Theorem.Scheme.RelEffCartierDiv
 import Theorem.Scheme.RelEffCartierDivOfPoint
 import Structure.ModularCurve_JZeroNeronObjectAtP_LevelModel
 

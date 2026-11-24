@@ -48,6 +48,25 @@ variable {p : ℕ}
   simp [genericDefect]
 
 
+def eulerDefect (I : AdmissibleInvariants p) : ℤ := (I.h1 : ℤ) - I.h0
+
+def genericDefect (I : AdmissibleInvariants p) : ℤ := (I.δ : ℤ) - I.α
+
+@[simp] theorem add_δ (I J : AdmissibleInvariants p) : (I + J).δ = I.δ + J.δ := rfl
+@[simp] theorem add_α (I J : AdmissibleInvariants p) : (I + J).α = I.α + J.α := rfl
+@[simp] theorem add_h0 (I J : AdmissibleInvariants p) : (I + J).h0 = I.h0 + J.h0 := rfl
+@[simp] theorem add_h1 (I J : AdmissibleInvariants p) : (I + J).h1 = I.h1 + J.h1 := rfl
+@[simp] theorem zero_δ : (0 : AdmissibleInvariants p).δ = 0 := rfl
+@[simp] theorem zero_α : (0 : AdmissibleInvariants p).α = 0 := rfl
+@[simp] theorem zero_h0 : (0 : AdmissibleInvariants p).h0 = 0 := rfl
+@[simp] theorem zero_h1 : (0 : AdmissibleInvariants p).h1 = 0 := rfl
+
+@[simp] theorem eulerDefect_zero : (0 : AdmissibleInvariants p).eulerDefect = 0 := by
+  simp [eulerDefect]
+
+@[simp] theorem genericDefect_zero : (0 : AdmissibleInvariants p).genericDefect = 0 := by
+  simp [genericDefect]
+
 public theorem genericDefect_add (I J : AdmissibleInvariants p) :
     (I + J).genericDefect = I.genericDefect + J.genericDefect := by
   simp only [genericDefect, add_δ, add_α, Nat.cast_add]
@@ -403,6 +422,37 @@ open CategoryTheory AlgebraicGeometry Limits Opposite Polynomial Scheme
 open FppfRepresentableGroupSchemeSheaf
 
 
+def sheafULift :
+    Sheaf Scheme.fppfTopology.{u} AddCommGrpCat.{u} ⥤
+      Sheaf Scheme.fppfTopology.{u} AddCommGrpCat.{u + 1} :=
+  sheafCompose _ AddCommGrpCat.uliftFunctor.{u + 1, u}
+
+def GmAbelianSheafLifted : Sheaf Scheme.fppfTopology.{u} AddCommGrpCat.{u + 1} :=
+  sheafULift.{u}.obj GmAbelianSheaf.{u}
+
+def gmLiftedSectionsAddEquiv (T : Scheme.{u}) :
+    (GmAbelianSheafLifted.{u}.obj.obj (op T) : Type (u + 1)) ≃+
+      ULift.{u + 1} (Additive ((Γ(T, ⊤) : Type u)ˣ)) :=
+  AddEquiv.refl _
+
+def gmLiftedSectionUnit {T : Scheme.{u}}
+    (s : ToType (GmAbelianSheafLifted.{u}.obj.obj (op T))) : ((Γ(T, ⊤) : Type u))ˣ :=
+  (s : ULift.{u + 1} (Additive ((Γ(T, ⊤) : Type u)ˣ))).down.toMul
+
+def gmPowMul (p : ℕ) : Gm.{u} ⟶ Gm.{u} where
+  app T := CommGrpCat.ofHom (powMonoidHom p)
+  naturality T T' f := by
+    ext u
+    simp only [CommGrpCat.hom_comp, MonoidHom.comp_apply]
+    exact (map_pow (Gm.{u}.map f).hom u p).symm
+
+def gmPowAb (p : ℕ) : GmAbelianSheaf.{u} ⟶ GmAbelianSheaf.{u} :=
+  ObjectProperty.homMk
+    (Functor.whiskerRight (gmPowMul p) commGroupAddCommGroupEquivalence.functor)
+
+def gmPowSelf (p : ℕ) : GmAbelianSheafLifted.{u} ⟶ GmAbelianSheafLifted.{u} :=
+  sheafULift.{u}.map (gmPowAb p)
+
 public theorem gmPowSelf_app_apply (p : ℕ) (T : Scheme.{u})
     (t : ULift.{u + 1} (Additive ((Γ(T, ⊤) : Type u)ˣ))) :
     (gmPowSelf.{u} p).hom.app (op T) t =
@@ -450,6 +500,9 @@ public theorem kummer_root_isUnit (hp : p ≠ 0) :
   exact (u₀.map (algebraMap (R : Type u) (KummerAlgebra R u₀ p)).toMonoidHom).isUnit
 
 
+def kummerRootUnit (hp : p ≠ 0) : (KummerAlgebra R u₀ p)ˣ :=
+  (kummer_root_isUnit R u₀ p hp).unit
+
 public theorem kummerRootUnit_val (hp : p ≠ 0) :
     (kummerRootUnit R u₀ p hp : KummerAlgebra R u₀ p) =
       AdjoinRoot.root (kummerPoly R u₀ p) :=
@@ -480,6 +533,9 @@ public theorem kummer_algebraMap_injective (hp : p ≠ 0) :
   rw [natDegree_C, natDegree_X_pow_sub_C]
   omega
 
+
+def kummerCover : Spec (CommRingCat.of (KummerAlgebra R u₀ p)) ⟶ Spec R :=
+  Spec.map (CommRingCat.ofHom (algebraMap (R : Type u) (KummerAlgebra R u₀ p)))
 
 public theorem kummerCover_flat (hp : p ≠ 0) : Flat (kummerCover R u₀ p) := by
   have := kummerAlgebra_free R u₀ p hp
@@ -618,6 +674,9 @@ variable (p : ℕ)
 @[simp] public theorem kummerSES_g : (kummerSES.{u} p).g = gmPowSelf.{u} p := rfl
 
 
+def muPAbelianSheafLifted : Sheaf Scheme.fppfTopology.{u} AddCommGrpCat.{u + 1} :=
+  kernel (gmPowSelf.{u} p)
+
 public theorem kummerSES_shortExact (hp : p ≠ 0) : (kummerSES.{u} p).ShortExact where
   exact := ShortComplex.exact_of_f_is_kernel _ (kernelIsKernel _)
   mono_f := (inferInstance : Mono (kernel.ι (gmPowSelf.{u} p)))
@@ -631,6 +690,17 @@ open FppfCohomologyLES
 
 variable (p : ℕ)
 
+
+def kummerSES : ShortComplex (Sheaf Scheme.fppfTopology.{u} Ab.{u + 1}) :=
+  ShortComplex.mk (kernel.ι (gmPowSelf.{u} p)) (gmPowSelf.{u} p) (kernel.condition _)
+
+@[simp] theorem kummerSES_X₁ : (kummerSES.{u} p).X₁ = muPAbelianSheafLifted.{u} p := rfl
+
+@[simp] theorem kummerSES_X₂ : (kummerSES.{u} p).X₂ = GmAbelianSheafLifted.{u} := rfl
+
+@[simp] theorem kummerSES_X₃ : (kummerSES.{u} p).X₃ = GmAbelianSheafLifted.{u} := rfl
+
+@[simp] theorem kummerSES_g : (kummerSES.{u} p).g = gmPowSelf.{u} p := rfl
 
 public theorem kummer_sixTermLES (hp : p ≠ 0) :
     Function.Injective (cohomologyMap (kummerSES.{u} p).f 0) ∧
@@ -697,6 +767,13 @@ open FppfCohomologyLES
 
 variable (p : ℕ)
 
+
+def kummerKernelH0AddEquiv (hp : p ≠ 0) :
+    FppfH (muPAbelianSheafLifted.{u} p) 0 ≃+
+      (cohomologyMap (gmPowSelf.{u} p) 0).ker :=
+  (AddMonoidHom.ofInjective (kummer_sixTermLES.{u} p hp).1).trans
+    (AddEquiv.addSubgroupCongr
+      ((kummer_sixTermLES.{u} p hp).2.1.addMonoidHom_ker_eq.symm))
 
 public theorem kummerKernelH0AddEquiv_apply_coe (hp : p ≠ 0)
     (x : FppfH (muPAbelianSheafLifted.{u} p) 0) :

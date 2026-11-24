@@ -10,7 +10,7 @@ import Lemma.Int.Mul_Neg.eq.NegSquare
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Nat.MulMul
 import Lemma.Nat.LtMulS.of.Lt.Gt_0
-import Lemma.Nat.EqMul0_0
+import Theorem.Nat.EqMul0_0
 import Lemma.Int.LeNegSquare_0
 import Lemma.Int.Add.ne.Zero.of.Lt0Mul
 import Lemma.Nat.GtSquare_0.of.Ne_0

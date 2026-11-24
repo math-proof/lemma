@@ -1,4 +1,4 @@
-import Lemma.WeierstrassCurve.ProjModel
+import Theorem.WeierstrassCurve.ProjModel
 import Mathlib.AlgebraicGeometry.EllipticCurve.Projective.Basic
 import Mathlib.RingTheory.MvPolynomial.Homogeneous
 import Mathlib.Algebra.MvPolynomial.Rename

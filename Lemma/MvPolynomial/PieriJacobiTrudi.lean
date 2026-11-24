@@ -4,7 +4,7 @@ import Def.Combinatorics.Young.PieriJacobiTrudi.Part32
 import Lemma.Matrix.LGV2
 import Lemma.MvPolynomial.OmegaInvolution
 import Lemma.Partition.NPartition
-import Lemma.MvPolynomial.LittlewoodRichardson
+import Theorem.MvPolynomial.LittlewoodRichardson
 open SymmetricFunctions
 open SymmetricFunctions.NPartition
 open SymmetricFunctions.SkewPartition

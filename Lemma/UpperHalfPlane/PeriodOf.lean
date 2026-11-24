@@ -1,6 +1,6 @@
 import Mathlib
 import Lemma.CuspForm.PeriodLattice
-import Lemma.UpperHalfPlane.PeriodMap
+import Theorem.UpperHalfPlane.PeriodMap
 import Theorem.UpperHalfPlane.PeriodMapBundled
 import Lemma.CuspForm.Petersson
 

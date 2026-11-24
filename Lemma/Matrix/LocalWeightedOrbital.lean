@@ -1,4 +1,4 @@
-import Lemma.Matrix.LocalOrbitalBase
+import Theorem.Matrix.LocalOrbitalBase
 import Def.AutomorphicForm_ConstantTerm
 import Theorem.Matrix.CubicInduction_TorusValues
 import Def.AutomorphicForm_LocalWeightedOrbital

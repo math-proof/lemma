@@ -1,5 +1,5 @@
 module
-public import Lemma.Polynomial.DrinfeldHolomorphic
+public import Theorem.Polynomial.DrinfeldHolomorphic
 public import Def.CerednikDrinfeld_OmegaTubes
 set_option autoImplicit false
 

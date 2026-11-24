@@ -1,7 +1,7 @@
 module
 public import Mathlib
-public import Lemma.Scheme.OrderedAffineCoverCech
-public import Lemma.Scheme.OrderedAffineCoverComap
+public import Theorem.Scheme.OrderedAffineCoverCech
+public import Theorem.Scheme.OrderedAffineCoverComap
 public import Def.AlgebraicGeometry_RelativePicardFunctor
 public import Abbrev.AlgebraicGeometry_CechPicardObstruction
 set_option autoImplicit false

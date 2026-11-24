@@ -2,7 +2,7 @@ module
 public import Def.v1.Atlas.DifferentialAnalysis.code.SobolevEmbedding.Part5
 public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.SobolevEmbedding
 public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.HilbertSpace
-public import Lemma.Real.Atlas.v1.DifferentialAnalysis.code.FourierInversion
+public import Theorem.Real.Atlas.v1.DifferentialAnalysis.code.FourierInversion
 public import Class.v1.Atlas.DifferentialAnalysis.code.HilbertSpace
 public import Def.v1.Atlas.DifferentialAnalysis.code.FourierInversion.Part7
 public import Mathlib.Analysis.SpecialFunctions.Pow.Real

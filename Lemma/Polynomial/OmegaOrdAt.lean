@@ -1,4 +1,4 @@
-import Lemma.Polynomial.DrinfeldHolomorphic
+import Theorem.Polynomial.DrinfeldHolomorphic
 
 set_option autoImplicit false
 

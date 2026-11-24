@@ -17,6 +17,9 @@ namespace NumberField.Idele
 variable (F : Type) [Field F] [NumberField F]
 
 
+def ord (v : HeightOneSpectrum (𝓞 F)) (a : (AdeleRing (𝓞 F) F)ˣ) : ℤ :=
+  -WithZero.log (Valued.v ((a : AdeleRing (𝓞 F) F).2 v))
+
 public theorem valued_snd_ne_zero (v : HeightOneSpectrum (𝓞 F)) (a : (AdeleRing (𝓞 F) F)ˣ) :
     Valued.v ((a : AdeleRing (𝓞 F) F).2 v) ≠ 0 := by
   rw [← NumberField.AdeleRing.val_finiteUnitsComponent]
@@ -49,6 +52,10 @@ public theorem ord_inv (v : HeightOneSpectrum (𝓞 F)) (a : (AdeleRing (𝓞 F)
   omega
 
 
+def unitComponent (v : HeightOneSpectrum (𝓞 F)) (a : (AdeleRing (𝓞 F) F)ˣ) : v.adicCompletion F :=
+  (a : AdeleRing (𝓞 F) F).2 v *
+    ((uniformizerUnit F v : (v.adicCompletion F)ˣ) : v.adicCompletion F) ^ (-(ord F v a))
+
 public theorem valued_unitComponent (v : HeightOneSpectrum (𝓞 F)) (a : (AdeleRing (𝓞 F) F)ˣ) :
     Valued.v (unitComponent F v a) = 1 := by
   rw [unitComponent, map_mul, map_zpow₀, valued_uniformizerUnit, valued_snd_eq_exp_neg_ord,
@@ -69,6 +76,69 @@ public theorem unitComponent_mul_unitComponent_inv (v : HeightOneSpectrum (𝓞 
 
 open scoped Classical in
 
+
+def truncFin (S : Finset (HeightOneSpectrum (𝓞 F))) :
+    FiniteAdeleRing (𝓞 F) F →* FiniteAdeleRing (𝓞 F) F where
+  toFun x := ⟨fun v => if v ∈ S then x v else 1, x.2.mono fun v hv => by
+      show (if v ∈ S then x v else 1) ∈ v.adicCompletionIntegers F
+      split_ifs
+      · exact hv
+      · exact one_mem _⟩
+  map_one' := by
+    refine Subtype.ext (funext fun v => ?_)
+    show (if v ∈ S then (1 : FiniteAdeleRing (𝓞 F) F) v else 1) = (1 : FiniteAdeleRing (𝓞 F) F) v
+    split_ifs <;> rfl
+  map_mul' x y := by
+    refine Subtype.ext (funext fun v => ?_)
+    show (if v ∈ S then (x * y) v else 1) =
+      (if v ∈ S then x v else 1) * (if v ∈ S then y v else 1)
+    split_ifs
+    · rfl
+    · exact (one_mul (1 : v.adicCompletion F)).symm
+
+def partAtAdele (S : Finset (HeightOneSpectrum (𝓞 F))) : AdeleRing (𝓞 F) F →* AdeleRing (𝓞 F) F where
+  toFun a := (a.1, truncFin F S a.2)
+  map_one' := Prod.ext rfl (map_one (truncFin F S))
+  map_mul' a b := Prod.ext rfl (map_mul (truncFin F S) a.2 b.2)
+
+def partAt (S : Finset (HeightOneSpectrum (𝓞 F))) : (AdeleRing (𝓞 F) F)ˣ →* (AdeleRing (𝓞 F) F)ˣ :=
+  Units.map (partAtAdele F S)
+
+open scoped Classical in
+
+def unitFin (S : Finset (HeightOneSpectrum (𝓞 F))) (a : (AdeleRing (𝓞 F) F)ˣ) :
+    (FiniteAdeleRing (𝓞 F) F)ˣ where
+  val := ⟨fun v => if v ∈ S then 1 else unitComponent F v a, Filter.Eventually.of_forall fun v => by
+      show (if v ∈ S then (1 : v.adicCompletion F) else unitComponent F v a) ∈ v.adicCompletionIntegers F
+      split_ifs
+      · exact one_mem _
+      · rw [HeightOneSpectrum.mem_adicCompletionIntegers]
+        exact (valued_unitComponent F v a).le⟩
+  inv := ⟨fun v => if v ∈ S then 1 else unitComponent F v a⁻¹, Filter.Eventually.of_forall fun v => by
+      show (if v ∈ S then (1 : v.adicCompletion F) else unitComponent F v a⁻¹) ∈
+        v.adicCompletionIntegers F
+      split_ifs
+      · exact one_mem _
+      · rw [HeightOneSpectrum.mem_adicCompletionIntegers]
+        exact (valued_unitComponent F v a⁻¹).le⟩
+  val_inv := by
+    refine Subtype.ext (funext fun v => ?_)
+    show (if v ∈ S then (1 : v.adicCompletion F) else unitComponent F v a) *
+        (if v ∈ S then (1 : v.adicCompletion F) else unitComponent F v a⁻¹) = 1
+    split_ifs
+    · exact one_mul 1
+    · exact unitComponent_mul_unitComponent_inv F v a
+  inv_val := by
+    refine Subtype.ext (funext fun v => ?_)
+    show (if v ∈ S then (1 : v.adicCompletion F) else unitComponent F v a⁻¹) *
+        (if v ∈ S then (1 : v.adicCompletion F) else unitComponent F v a) = 1
+    split_ifs
+    · exact one_mul 1
+    · rw [mul_comm]
+      exact unitComponent_mul_unitComponent_inv F v a
+
+def unitPart (S : Finset (HeightOneSpectrum (𝓞 F))) (a : (AdeleRing (𝓞 F) F)ˣ) : (AdeleRing (𝓞 F) F)ˣ :=
+  Units.map (finIncl (𝓞 F) F) (unitFin F S a)
 
 public theorem ord_uniformizerIdele_self (v : HeightOneSpectrum (𝓞 F)) :
     ord F v (AutomorphicForm.uniformizerIdele F v) = 1 := by
@@ -343,6 +413,21 @@ public theorem diagOne_partAt_mul_finEmbed_localEmbed (S : Finset (HeightOneSpec
       AdelicDock.finEmbed (𝓞 F) F (AdelicDock.localEmbed (𝓞 F) F v x) * diagOne (partAt F S a) := by
   exact diagOne_mul_finEmbed_localEmbed_of_snd_eq_one F (partAt F S a) (partAt_snd_of_not_mem F S a hv) x
 
+def productMeasureData (S : Finset (HeightOneSpectrum (𝓞 F))) :
+    @UnramifiedWhittaker.ProductMeasureData F _ _ (ideleBorel F) S (idelicHaar F) where
+  c := 1
+  c_pos := one_pos
+  νS := sPartMeasure F S
+  projS := partAt F S
+  ord := ord F
+  projS_off a _ hv := partAt_snd_of_not_mem F S a hv
+  decomp L hLS hL a ha := ⟨unitPart F S a, unitPart_fst F S a, unitPart_snd_of_mem F S a,
+    finitePartUnits_unitPart_mem_unitIdeles F S a, eq_partAt_mul_prod_mul_unitPart F S L hLS hL a ha⟩
+  tonelli L hLS hL f φ hf hφ := by
+    obtain ⟨h1, h2⟩ := integrableOn_and_integral_eq F S f φ hf L hLS hL hφ
+    exact ⟨h1, by rw [h2, Complex.ofReal_one, one_mul]⟩
+  measurableSet L _ _ := (isOpen_unitIdelesOutside F _).measurableSet
+
 end NumberField.Idele
 
 namespace NumberField.Idele
@@ -357,6 +442,8 @@ public theorem borelSpace_ideleBorel : @BorelSpace (AdeleRing (𝓞 F) F)ˣ _ (i
 
 attribute [local instance] ideleBorel borelSpace_ideleBorel
 
+
+def idelicHaar : Measure (AdeleRing (𝓞 F) F)ˣ := Measure.haar
 
 public theorem isHaarMeasure_idelicHaar : (idelicHaar F).IsHaarMeasure := by
   rw [idelicHaar]; infer_instance
@@ -431,6 +518,10 @@ public theorem measurable_partAt (S : Finset (HeightOneSpectrum (𝓞 F))) : Mea
   (continuous_partAt F S).measurable
 
 
+def sPartMeasure (S : Finset (HeightOneSpectrum (𝓞 F))) : Measure (AdeleRing (𝓞 F) F)ˣ :=
+  Measure.map (partAt F S)
+    ((idelicHaar F).restrict (NumberField.AdeleRing.unitIdelesOutside (𝓞 F) F (↑S) : Set (AdeleRing (𝓞 F) F)ˣ))
+
 public theorem sPartMeasure_ne_zero (S : Finset (HeightOneSpectrum (𝓞 F))) : sPartMeasure F S ≠ 0 := by
   intro h
   have h1 := congrArg (fun μ : Measure (AdeleRing (𝓞 F) F)ˣ => μ Set.univ) h
@@ -438,6 +529,11 @@ public theorem sPartMeasure_ne_zero (S : Finset (HeightOneSpectrum (𝓞 F))) : 
     Measure.restrict_apply_univ, Measure.coe_zero, Pi.zero_apply] at h1
   exact idelicHaar_unitIdelesOutside_ne_zero F _ h1
 
+
+private def ordHom (v : HeightOneSpectrum (𝓞 F)) : (AdeleRing (𝓞 F) F)ˣ →* Multiplicative ℤ where
+  toFun a := Multiplicative.ofAdd (ord F v a)
+  map_one' := by rw [ord_one]; rfl
+  map_mul' a b := by rw [ord_mul]; rfl
 
 public theorem ord_zpow (v : HeightOneSpectrum (𝓞 F)) (a : (AdeleRing (𝓞 F) F)ˣ) (n : ℤ) :
     ord F v (a ^ n) = n * ord F v a := by
@@ -650,4 +746,3 @@ public theorem integrableOn_and_integral_eq (S : Finset (HeightOneSpectrum (𝓞
     simp_rw [hval]
     rw [tsum_mul_right, List.map_cons, List.prod_cons]
     ring
-

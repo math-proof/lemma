@@ -3,7 +3,7 @@ import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.Enumerative.FubiniNumber
 import Lemma.Finset.Enumerative.FubiniNumber
 import Lemma.Finset.Enumerative.SignedStirlingFirst
-import Lemma.Finset.Enumerative.StirlingMatrices
+import Theorem.Finset.Enumerative.StirlingMatrices
 import Def.Combinatorics.Enumerative.SignedStirlingFirst
 import Def.Combinatorics.Enumerative.StirlingMatrices
 

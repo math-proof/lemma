@@ -1,5 +1,5 @@
 import Mathlib
-import Lemma.Scheme.CurveModel
+import Theorem.Scheme.CurveModel
 import Instance.AlgebraicCurve_CurveModelTransport
 
 set_option autoImplicit false

@@ -1,6 +1,6 @@
 import Lemma.List.LengthEraseIdx.eq.SubLength_1.of.GtLength
 import Lemma.List.Rotate.eq.AppendDrop__Take.of.GeLength
-import Lemma.List.Tail.eq.Drop_1
+import Theorem.List.Tail.eq.Drop_1
 import Lemma.List.TailAppend.eq.AppendTail.of.GtLength_0
 import Lemma.List.TakeAppend.eq.Append_Take.of.LeLength
 import Lemma.List.TakeDrop.eq.DropTake

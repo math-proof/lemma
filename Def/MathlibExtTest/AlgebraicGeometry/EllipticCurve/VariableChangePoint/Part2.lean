@@ -1,6 +1,6 @@
 module
 public import Def.AlgebraicGeometry.EllipticCurve.VariableChangePoint.Part3
-public import Lemma.Scheme.EllipticCurve.VariableChangePoint
+public import Theorem.Scheme.EllipticCurve.VariableChangePoint
 public import Mathlib.Algebra.Field.ZMod
 public import Mathlib.Tactic.NormNum
 public import Instance.MathlibExtTest.AlgebraicGeometry.EllipticCurve.VariableChangePoint.Part2

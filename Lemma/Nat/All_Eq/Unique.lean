@@ -1,8 +1,8 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Abbrev.Analysis.Section_2_1
-import Lemma.Nat.EqRecurseNat0
-import Lemma.Nat.EqRecurse
+import Theorem.Nat.EqRecurseNat0
+import Theorem.Nat.EqRecurse
 import Lemma.Nat.EqAndAll_Eq.is.Eq_Recurse
 open Chapter2 hiding Nat
 open Chapter2.Nat

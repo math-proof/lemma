@@ -4,7 +4,7 @@ public import Initialize.Tactic.Attr.Basic
 public import Theorem.AlgebraicGeometry.EllipticCurve.ManinTwist.Part15
 public import Theorem.Scheme.EllipticCurve.ManinTwist
 public import Theorem.Scheme.EllipticCurve.ManinTwistCharTwo
-public import Lemma.Scheme.EllipticCurve.VariableChangePoint
+public import Theorem.Scheme.EllipticCurve.VariableChangePoint
 public import Theorem.AlgebraicGeometry.EllipticCurve.ManinTwistCharTwo.Part22
 public import Def.AlgebraicGeometry.EllipticCurve.VariableChangePoint.Part3
 

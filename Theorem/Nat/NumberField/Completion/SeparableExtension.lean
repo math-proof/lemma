@@ -2,10 +2,10 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Instance.NumberTheory.NumberField.Completion.FinitePlacesOver
-public import Lemma.Int.SeparableAdjoinRoot
+public import Theorem.Int.SeparableAdjoinRoot
 public import Theorem.Nat.NumberField.Completion.GlobalAdjoinRootCompletionEquiv
-public import Lemma.Polynomial.Normed.Field.AdjoinRootStability
-public import Lemma.Polynomial.Normed.Field.ContinuityOfRoots
+public import Theorem.Polynomial.Normed.Field.AdjoinRootStability
+public import Theorem.Polynomial.Normed.Field.ContinuityOfRoots
 open IsDedekindDomain
 open scoped NumberField NumberField.LiesOver Valued
 

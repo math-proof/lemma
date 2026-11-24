@@ -1,6 +1,6 @@
 import Mathlib
 import Def.AlgebraicCurve_RegularDifferentials
-import Lemma.ResidueField.GluedPic0
+import Theorem.ResidueField.GluedPic0
 import Structure.AlgebraicCurve_LogDeRhamH1
 
 set_option autoImplicit false

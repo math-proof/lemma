@@ -3,7 +3,7 @@ public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.v1.Atlas.EllipticCurves.code.Theorem136.Part4
 public import Theorem.Complex.Atlas.v1.EllipticCurves.code.Theorem136
-public import Lemma.Complex.Atlas.v1.EllipticCurves.code.OrdinarySupersingular
+public import Theorem.Complex.Atlas.v1.EllipticCurves.code.OrdinarySupersingular
 public import Def.v1.Atlas.EllipticCurves.code.OrdinarySupersingular
 open OrdinarySupersingular EndomorphismRingOverFiniteField
 

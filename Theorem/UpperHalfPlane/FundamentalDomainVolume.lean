@@ -13,6 +13,9 @@ noncomputable section
 namespace FLT.FundamentalDomainVolume
 
 
+def band (A a : ℝ) (n : ℕ) : Set ℍ :=
+  {z : ℍ | |z.re| ≤ A ∧ a * 2 ^ n ≤ z.im ∧ z.im ≤ a * 2 ^ (n + 1)}
+
 public theorem verticalStrip_subset_iUnion_band (A : ℝ) {a : ℝ} (ha : 0 < a) :
     UpperHalfPlane.verticalStrip A a ⊆ ⋃ n : ℕ, band A a n := by
   rintro z ⟨hre, him⟩
@@ -34,6 +37,9 @@ public theorem verticalStrip_subset_iUnion_band (A : ℝ) {a : ℝ} (ha : 0 < a)
     rw [not_le] at hlt
     exact le_of_lt hlt
 
+
+private def cbox (relo rehi imlo imhi : ℝ) : Set ℂ :=
+  Complex.measurableEquivRealProd ⁻¹' (Set.Icc relo rehi ×ˢ Set.Icc imlo imhi)
 
 public theorem mem_cbox {relo rehi imlo imhi : ℝ} {w : ℂ} :
     w ∈ cbox relo rehi imlo imhi ↔
@@ -146,6 +152,8 @@ public theorem volume_biUnion_smul_fd_lt_top (S : Finset SL(2, ℤ)) :
   rw [FLT.HyperbolicMeasure.volume_smul_sl2z]
   exact volume_fd_lt_top
 
+
+private def fdoWitness : ℍ := UpperHalfPlane.mk ⟨0, 2⟩ (by norm_num)
 
 public theorem fdoWitness_mem_fdo : fdoWitness ∈ 𝒟ᵒ := by
   constructor

@@ -2,9 +2,9 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.v1.Atlas.BooleanFunctions.code.Talagrand
-public import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
-public import Lemma.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
-public import Lemma.Bool.Atlas.v1.BooleanFunctions.code.Parseval
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Talagrand
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.InfluenceFourier
+public import Theorem.Bool.Atlas.v1.BooleanFunctions.code.Parseval
 public import Def.v1.Atlas.BooleanFunctions.code.InfluenceFourier
 public import Def.v1.Atlas.BooleanFunctions.code.Parseval
 open Finset BigOperators
