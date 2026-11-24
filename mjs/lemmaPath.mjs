@@ -3,7 +3,7 @@ import path from "path";
 import { pathToFileURL } from "url";
 import { compile } from "../js/parser/lean.js";
 import { Lean } from "../js/parser/lean/base.js";
-import { json2pathPatterns, suggestionMatches } from "../js/parser/lean/json2regex.js";
+import { json2pathPatterns, regex2dag, dag2suggession, suggestionMatches } from "../js/parser/lean/json2regex.js";
 import {
   TYPE_TO_SECTION,
   DATA_TYPE_SECTIONS,
@@ -122,8 +122,11 @@ function extractLemma(ast, lemmaName) {
  * carrying the `main` attribute wins, otherwise the first one. That position is
  * `inverted.lemma_id` — `main` is not necessarily declaration 0.
  */
-function selectLemma(ast, lemmaName) {
+function selectLemma(ast, lemmaName, lemmaId) {
   const lemmas = extractLemmas(ast);
+  const index = Number(lemmaId);
+  if (Number.isInteger(index) && index >= 0 && lemmas[index])
+    return { lemma: lemmas[index], index };
   if (lemmaName) {
     const named = lemmas.find((l) => getLemmaName(l) === lemmaName);
     if (named) return { lemma: named, index: lemmas.indexOf(named) };
@@ -318,17 +321,170 @@ function expressionRelation(node) {
   return expr.superscript ? null : EXPRESSION_RELATIONS.get(expr.operator) ?? null;
 }
 
+/** Constructor and literal nodes. A hole `_` is not a node. */
+function pathNodeCount(regex) {
+  if (!regex) return 0;
+  let tree;
+  try {
+    tree = parseRegexTree(regex);
+  } catch {
+    return 0;
+  }
+  let count = 0;
+  (function walk(node) {
+    if (!node) return;
+    if (node.kind === "tok") {
+      if (node.text.replace(/_/g, "") !== "") count++;
+      return;
+    }
+    for (const child of node.children || []) walk(child);
+  })(tree);
+  return count;
+}
+
 function expressionPathPart(node) {
   const expr = unwrapParen(node);
   const relation = expressionRelation(expr);
   const json = expr.toJSON();
   const patterns = json2pathPatterns(relation === "ae" && json.Eq ? { MEq: json.Eq } : json);
+  const named = patterns.filter((pattern) => validModuleComponentBasic(pattern.token));
+  const descriptive = named.filter((pattern) => pathNodeCount(pattern.regex) >= MIN_PATH_NODES);
+  const pool = descriptive.length ? descriptive : named;
   let token = "";
-  for (const pattern of patterns) {
-    const candidate = pattern.token;
-    if (validModuleComponentBasic(candidate) && (!token || candidate.length < token.length)) token = candidate;
+  let regex = "";
+  for (const pattern of pool) {
+    if (!token || pattern.token.length < token.length) {
+      token = pattern.token;
+      regex = pattern.regex;
+    }
   }
-  return { node: expr, token, patterns };
+  return { node: expr, token, regex, patterns };
+}
+
+/** Module path budget. The dotted name itself, not a filesystem path. */
+const MODULE_PATH_MAX = 256;
+
+/**
+ * A path token must keep at least two tree nodes when the expression has them.
+ * `All` alone does not say what was quantified; `All_Differentiable` does.
+ */
+const MIN_PATH_NODES = 2;
+
+function parseRegexTree(regex) {
+  const tokens = regex.match(/[()]|[^()]+/g) ?? [];
+  let index = 0;
+  function seq() {
+    const children = [];
+    while (index < tokens.length && tokens[index] !== ")") {
+      if (tokens[index] === "(") {
+        index++;
+        children.push(group());
+      } else {
+        children.push({ kind: "tok", text: tokens[index++] });
+      }
+    }
+    return { kind: "seq", children };
+  }
+  function group() {
+    const body = seq();
+    if (tokens[index++] !== ")") throw new Error("Unclosed regex group");
+    return { kind: "group", children: body.children };
+  }
+  return seq();
+}
+
+function serializeRegexTree(node) {
+  if (node.kind === "tok") return node.text;
+  if (node.kind === "group") return "(" + node.children.map(serializeRegexTree).join("") + ")";
+  return node.children.map(serializeRegexTree).join("");
+}
+
+/** Every group, deepest first, so a leaf is dropped before its parent. */
+function groupsDeepestFirst(node, parent, index, depth, acc) {
+  if (!node || node.kind === "tok") return;
+  if (node.kind === "group" && parent) acc.push({ parent, index, depth });
+  for (const [i, child] of (node.children || []).entries()) {
+    groupsDeepestFirst(child, node.kind === "group" ? node : node, i, depth + 1, acc);
+  }
+}
+
+/**
+ * Drop one leaf group and rebuild the path token. A leaf that the suggestion
+ * already ignores is skipped in favour of the next deepest group that actually
+ * shortens the token.
+ * @returns {{ regex: string, token: string } | null}
+ */
+function dropPathLeaf(regex, previousToken) {
+  let tree;
+  try {
+    tree = parseRegexTree(regex);
+  } catch {
+    return null;
+  }
+  const groups = [];
+  groupsDeepestFirst(tree, null, 0, 0, groups);
+  groups.sort((a, b) => b.depth - a.depth);
+  for (const { parent, index } of groups) {
+    const removed = parent.children.splice(index, 1);
+    const next = serializeRegexTree(tree);
+    let token = "";
+    try {
+      token = dag2suggession(regex2dag(next));
+    } catch {
+      token = "";
+    }
+    const nodes = pathNodeCount(next);
+    if (nodes < MIN_PATH_NODES && pathNodeCount(regex) >= MIN_PATH_NODES) {
+      parent.children.splice(index, 0, ...removed);
+      continue;
+    }
+    if (validModuleComponentBasic(token) && token.length < previousToken.length) {
+      return { regex: next, token };
+    }
+    parent.children.splice(index, 0, ...removed);
+  }
+  return null;
+}
+
+function implyToken(part) {
+  const split = part.relation && isRealPathToken(part.left?.token) && isRealPathToken(part.right?.token)
+    ? [part.left.token, part.relation, part.right.token].join(".")
+    : "";
+  return split || part.flat.token;
+}
+
+function modulePath(section, implyParts, givenParts) {
+  const imply = implyParts.map(implyToken).join(".");
+  const givens = givenParts.map((part) => part.token);
+  return [section, imply, ...(givens.length ? ["of", ...givens] : [])].join(".");
+}
+
+/**
+ * When the suggested module is longer than 256 characters, drop one leaf from
+ * every imply token and every given token, and repeat. Each tree loses the
+ * same number of leaves until the path fits or no tree has a leaf left.
+ */
+function fitModulePath(section, implyParts, givenParts, max = MODULE_PATH_MAX) {
+  const trees = [];
+  for (const part of implyParts) {
+    if (part.relation && part.left && part.right) trees.push(part.left, part.right);
+    else trees.push(part.flat);
+  }
+  for (const part of givenParts) trees.push(part);
+  let guard = 0;
+  while (modulePath(section, implyParts, givenParts).length > max && guard++ < 500) {
+    let dropped = 0;
+    for (const tree of trees) {
+      if (!tree?.regex) continue;
+      const next = dropPathLeaf(tree.regex, tree.token);
+      if (!next || next.token.length >= tree.token.length) continue;
+      tree.regex = next.regex;
+      tree.token = next.token;
+      dropped++;
+    }
+    if (!dropped) break;
+  }
+  return modulePath(section, implyParts, givenParts);
 }
 
 /** A usable path token: non-empty and not the `_` placeholder. */
@@ -353,25 +509,16 @@ export function suggestExpressionPath(filePath, lemmaName, options = {}) {
     name,
     ...expressionPathPart(typeNode),
   }));
-  const imply = implyParts.map(({ flat, relation, left, right }) => {
-    // A binary relation is written infix only when both sides yield a real token;
-    // otherwise keep the flat (prefix) token.
-    const split = relation && isRealPathToken(left?.token) && isRealPathToken(right?.token)
-      ? [left.token, relation, right.token].join(".")
-      : "";
-    const token = split || flat.token;
-    if (!token) throw new Error("Could not generate a path token for a conclusion");
-    return token;
-  }).join(".");
-  const givenTokens = givenParts.map(({ name, token }) => {
-    if (!token) throw new Error(`Could not generate a path token for hypothesis ${name}`);
-    return token;
-  });
-  return {
-    section, imply, givens: givenTokens.join("."),
-    path: [section, imply, ...(givenTokens.length ? ["of", ...givenTokens] : [])].join("."),
-    implyParts, givenParts,
-  };
+  for (const part of implyParts) {
+    if (!implyToken(part)) throw new Error("Could not generate a path token for a conclusion");
+  }
+  for (const part of givenParts) {
+    if (!part.token) throw new Error(`Could not generate a path token for hypothesis ${part.name}`);
+  }
+  const path = fitModulePath(section, implyParts, givenParts);
+  const imply = implyParts.map(implyToken).join(".");
+  const givenText = givenParts.map((part) => part.token).join(".");
+  return { section, imply, givens: givenText, path, implyParts, givenParts };
 }
 
 /**
@@ -383,7 +530,7 @@ export function suggestExpressionPath(filePath, lemmaName, options = {}) {
  *
  * @param {string} filePath - path to the `.lean` file (relative to the cwd or absolute).
  * @param {string} [lemmaName] - pick this lemma instead of the main one.
- * @param {{ file?: string, source?: string }} [options]
+ * @param {{ file?: string, source?: string, lemmaId?: number }} [options]
  * @returns {object} the conclusion node's JSON tree.
  */
 /** The AST node of a lemma conclusion (`lemma main` after `-- imply`). */
@@ -393,7 +540,7 @@ export function conclusionNodeOf(filePath, lemmaName, options = {}) {
     ? String(options.source).replace(/\r\n/g, "\n")
     : fs.readFileSync(abs, "utf8").replace(/\r\n/g, "\n");
   const ast = compileLemmaSource(source);
-  const { lemma, index } = selectLemma(ast, lemmaName);
+  const { lemma, index } = selectLemma(ast, lemmaName, options.lemmaId);
   if (!lemma) throw new Error("No Lean_lemma found");
   // `lemma_id` of the fingerprinted declaration, for axiom.inverted postings.
   if (options.location && typeof options.location === "object") {

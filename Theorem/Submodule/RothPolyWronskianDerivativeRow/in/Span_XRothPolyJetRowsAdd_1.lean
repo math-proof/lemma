@@ -39,7 +39,7 @@ public import Theorem.Fin.SquareRothCentered.le.Div1'4.of.RothBox.All_Gt_0
 public import Theorem.Fin.RothMvL1.le.MulPowS
 public import Theorem.Polynomial.Any_Eq_SMul.of.EqWronskian_0.Ne_0
 public import Theorem.Fin.GetRothFlip.eq.Sub.of.RothBox
-public import Theorem.Real.Any_LeRpowMulSum_AddSubAndDvd_RothClearEval_RothMvHasse_RothMvOfCoeff.of.LeRothMvWeight.All_Le_RothWeightAndLeRothWeight_Sub.All_LeRpowDenPow.All_LeRpowDenPow.All_DvdProd_Pow_Den.All_DvdProd_PowNum.All_Le_PowDen.All_Ge_0.All_Ge_0.Ge_0.Gt_1.All_Gt_0.RothMvIndex.RothCoeff
+public import Theorem.Real.Any_AndLe__Dvd_RothClearEvalRothMvHasse_RothMvOfCoeff.of.LeRothMvWeight.All_RightarrowNe_0AndLeS.All_RightarrowIn__LeRpowDen__Pow.All_RightarrowIn__LeRpowDen__Pow.All_DvdProd_Pow__Den.All_DvdProd_Pow__Num.All_Le_PowDen.All_Le0.All_Le0.Le0.Lt1.All_Lt0
 public import Theorem.Rat.NatDegreeRothIntPolynomial.Gt_0.of.IsAlgebraic
 public import Theorem.Fin.EqRothMvOrder_Single
 public import Theorem.Fin.RothLastEquiv_Map.eq.Map_MapRothLastEquiv
@@ -137,7 +137,7 @@ public import Theorem.MvPolynomial.RothMvVanishesBelow_MapAlgebraMap.of.All_EqEv
 public import Theorem.Polynomial.IsPrimitiveSubMulCDenXCNum
 public import Theorem.Polynomial.Any_LtDivAndNeEvalHasseDeriv_MapAlgebraMap_0.of.Le_Rpow.Ne_0.GeDen_2.Gt_0.Gt_0
 public import Theorem.Polynomial.RothPolyL1.eq.Sum_NatAbsCoeff
-public import Theorem.Real.RpowMulAddSub.le.Pow_RothRidoutExponent.of.In_SupportRothMvHasse_RothMvOfCoeff.LeRothMvWeight.All_Le_RothWeightAndLeRothWeight_Sub.All_LeRpowDenPow.All_LeRpowDenPow.All_Le_PowDen.Ge_0.Ge_0.Ge_0.Gt_1.All_Gt_0.RothMvIndex.RothCoeff
+public import Theorem.Real.Rpow_MulAdd__Sub.le.Pow_RothRidoutExponent.of.In_SupportRothMvHasse_RothMvOfCoeff.LeRothMvWeight.All_RightarrowNe_0AndLeS.All_LeRpowDen__Pow.All_LeRpowDen__Pow.All_Le_PowDen.Le0.Le0.Le0.Lt1.All_Lt0
 public import Theorem.Fin.EqRothMvHasse0
 public import Theorem.Fin.InjectiveRothBoxIndex
 public import Theorem.Fin.RothMvWeight.ge.Zero.of.RothMvIndex
@@ -184,7 +184,7 @@ public import Theorem.Real.FiniteSetOfLtAbsSub_Div1RpowDen.of.NotLiouvilleWith.G
 public import Theorem.Fin.RothDegreeBoundOver_RothMvHasse.of.RothMvIndex
 public import Theorem.Int.RothFinsuppL1CoeffMul.le.MulRothSFinsuppL1Coeff
 public import Theorem.Fin.EqRothLastIndex.of.RothMvIndexAdd_1
-public import Theorem.Fin.Ne_0AndRothVanishesBelowAndMul_SubDiv1'2.le.RothWeightAndRothWeight.le.Sub_Mul_SubDiv1'2AndRothMvL1.le.PowMul8RothCoordinateBaseSum.of.LeAddNatDegreeRothIntegralPolynomial2MulMul2Square.LtAddNatDegreeRothIntegralPolynomial2MulMul4Square.Lt_Div1'2.Gt_0.Gt_0.All_Gt_0.IsAlgebraic
+public import Theorem.Real.Any_AndNe_0AndRothVanishesBelow_Fun__Mul_SubDiv2_AndAll_Rightarrow_AndLeS__LeRothMvL1RothMvOfCoeff_PowMul8RothCoordinateBase_Sum.of.LeAddNatDegree_MulMul__Pow_2.LtAddNatDegree_MulMul4_Pow_2.Lt_Div2.Lt.Lt.All_Lt.IsAlgebraic
 public import Theorem.Fin.EqRothBoxIndex.of.RothBox
 public import Theorem.Fin.RothMvVanishesBelowNeg
 public import Theorem.Real.All_LeAndAntitoneAndAll_Le_MulAndAll_LePowAndSum.le.Mul2AndAll_LePowRpow.of.GeMul_2.LeMul_1.Gt_0.Le.Gt_0.All_LtPow.Monotone.All_Ge_2
@@ -249,7 +249,7 @@ public import Theorem.Real.AbsSub.le.RpowDivNeg.of.LtAbsSub_Div1RpowDen.Le_PowDe
 public import Theorem.Polynomial.DvdPowSubXC.of.All_EqEvalHasseDeriv_0
 public import Theorem.Fin.CardRothLowIndex.lt.CardRothBox.of.Lt_MulMul4Square.Gt_0.Gt_0.All_Gt_0
 public import Theorem.Real.Abs.le.AddAbs1.of.LtAbsSub_Div1RpowDen.Gt_0
-public import Theorem.Real.All_Eval_AlgebraMapFunRothMvHasse.eq.Zero.of.LeRothMvWeight.Mul_MulMulPow8SumRothMvL1Prod_PowMax.lt.Rpow.All_Any_LeRpowAndDvd_RothClearEval_RothMvHasse.All_LeProd_PowAbsSub_RpowMulNegRothMvWeight.Gt_1.Ge_0.All_Gt_0.RothMvIndex
+public import Theorem.MvPolynomial.All_RightarrowLe_Eval₂AlgebraMap__Fun__EqRothMvHasse__0.of.LtMulRothDenProduct__MulMulPow8Sum__RothMvL1_Prod_PowMax__Rpow_Add_Mul_Sub.All_RightarrowLe__Any_AndLe__Dvd_RothClearEval.All_LeProd_PowAbs_Rpow_MulNeg_RothMvWeight.Lt.Le.All_Lt
 public import Theorem.Fin.RothMvHasse_Sum.eq.Sum_RothMvHasse.of.RothMvIndex
 public import Theorem.Nat.RothLastIndex.eq.AddRothSLastIndex.of.RothMvIndex
 public import Theorem.Fin.InvolutiveRothFlip

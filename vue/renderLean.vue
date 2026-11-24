@@ -11,8 +11,6 @@
 import Vue from "../js/vue.js";
 import { codeMirrorMounted, cmComputedUser, cmComputedModule } from "../js/codeMirrorEditor.js";
 
-console.log('import renderLean.vue');
-
 const props = defineProps(['text', 'index']);
 
 /**

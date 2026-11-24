@@ -2,10 +2,10 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.NumberTheory.RothAuxiliary.Part7
-public import Theorem.Real.All_Eval_AlgebraMapFunRothMvHasse.eq.Zero.of.LeRothMvWeight.Mul_MulMulPow8SumRothMvL1Prod_PowMax.lt.Rpow.All_Any_LeRpowAndDvd_RothClearEval_RothMvHasse.All_LeProd_PowAbsSub_RpowMulNegRothMvWeight.Gt_1.Ge_0.All_Gt_0.RothMvIndex
+public import Theorem.MvPolynomial.All_RightarrowLe_Eval₂AlgebraMap__Fun__EqRothMvHasse__0.of.LtMulRothDenProduct__MulMulPow8Sum__RothMvL1_Prod_PowMax__Rpow_Add_Mul_Sub.All_RightarrowLe__Any_AndLe__Dvd_RothClearEval.All_LeProd_PowAbs_Rpow_MulNeg_RothMvWeight.Lt.Le.All_Lt
 public import Theorem.Real.All_LeAndAntitoneAndAll_Le_MulAndAll_LePowAndSum.le.Mul2AndAll_LePowRpow.of.GeMul_2.LeMul_1.Gt_0.Le.Gt_0.All_LtPow.Monotone.All_Ge_2
 public import Theorem.Real.Any_All_Le_Rpow.of.Gt_0
-public import Theorem.Real.Any_LeRpowMulSum_AddSubAndDvd_RothClearEval_RothMvHasse_RothMvOfCoeff.of.LeRothMvWeight.All_Le_RothWeightAndLeRothWeight_Sub.All_LeRpowDenPow.All_LeRpowDenPow.All_DvdProd_Pow_Den.All_DvdProd_PowNum.All_Le_PowDen.All_Ge_0.All_Ge_0.Ge_0.Gt_1.All_Gt_0.RothMvIndex.RothCoeff
+public import Theorem.Real.Any_AndLe__Dvd_RothClearEvalRothMvHasse_RothMvOfCoeff.of.LeRothMvWeight.All_RightarrowNe_0AndLeS.All_RightarrowIn__LeRpowDen__Pow.All_RightarrowIn__LeRpowDen__Pow.All_DvdProd_Pow__Den.All_DvdProd_Pow__Num.All_Le_PowDen.All_Le0.All_Le0.Le0.Lt1.All_Lt0
 public import Theorem.Real.Mul.lt.Rpow.of.LtAdd.Le_Rpow.Le_Rpow.Ge_0.Gt_1
 public import Theorem.Real.Pow.le.RpowMul.of.LeSquare_Rpow.Le_Mul2.Ge_0.Ge_1
 public import Theorem.Real.Prod_PowAbsSub.le.RpowMulNegRothMvWeight.of.All_LtAbsSub_Div1RpowDen.All_Le_PowDen.Gt_0.Ge_0.All_Gt_0
@@ -272,7 +272,7 @@ private theorem main
         (G : ℤ) ∣ rothClearEval (rothMvHasse i P) q r := by
     intro i hi
     simpa [P, s, σ] using
-      Any_LeRpowMulSum_AddSubAndDvd_RothClearEval_RothMvHasse_RothMvOfCoeff.of.LeRothMvWeight.All_Le_RothWeightAndLeRothWeight_Sub.All_LeRpowDenPow.All_LeRpowDenPow.All_DvdProd_Pow_Den.All_DvdProd_PowNum.All_Le_PowDen.All_Ge_0.All_Ge_0.Ge_0.Gt_1.All_Gt_0.RothMvIndex.RothCoeff S p q r av bv μ ν c Q₀ T θ i
+      Any_AndLe__Dvd_RothClearEvalRothMvHasse_RothMvOfCoeff.of.LeRothMvWeight.All_RightarrowNe_0AndLeS.All_RightarrowIn__LeRpowDen__Pow.All_RightarrowIn__LeRpowDen__Pow.All_DvdProd_Pow__Den.All_DvdProd_Pow__Num.All_Le_PowDen.All_Le0.All_Le0.Le0.Lt1.All_Lt0 S p q r av bv μ ν c Q₀ T θ i
         hrpos hQ₀ hθ.le hμ hν hpowerR
         (fun h ↦ (hav h).1) (fun h ↦ (hav h).2.1)
         (fun h l hl ↦ (hav h).2.2 l hl |>.1)
@@ -287,7 +287,7 @@ private theorem main
       ring
     rw [hs]
     simpa [F] using hmaster
-  have hzero := All_Eval_AlgebraMapFunRothMvHasse.eq.Zero.of.LeRothMvWeight.Mul_MulMulPow8SumRothMvL1Prod_PowMax.lt.Rpow.All_Any_LeRpowAndDvd_RothClearEval_RothMvHasse.All_LeProd_PowAbsSub_RpowMulNegRothMvWeight.Gt_1.Ge_0.All_Gt_0.RothMvIndex P
+  have hzero := All_Eval_AlgebraMapFunRothMvHasse.eq.Zero.of.LeRothMvWeight.Mul_MulMulPow8SumRothMvL1Prod_PowMax.lt.Rpow.All_Any_LeRpowAndDvd_RothClearEval_RothMvHasse.All_LeProd_PowAbsSub_RpowMulNegRothMvWeight.Gt_1.Ge_0.All_Gt_0 P
     (fun h ↦ α) q r T a Q₀ θ s hrpos hPdegree hPvan
     ha.le hQ₀ herr hdiv hmaster'
   have hratvan := roth_rational_vanishing_of_real_hasse_zero_h P q r θ hzero

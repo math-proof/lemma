@@ -1,5 +1,6 @@
 /**
- * Port of php/search.php: MySQL (type / like / regex) + filesystem full-text under Lemma/.
+ * Port of php/search.php: MySQL (type / like / regex). `?docstring=on` ranks
+ * axiom.docstring with InnoDB natural-language full text.
  * `?lean=<expression>` (or the search box's Lean checkbox) is an exact
  * subtree-match over lemma conclusions: shortlist via axiom.inverted, then
  * match stored axiom.fingerprint trees (mjs/leanInvertedIndex.mjs).
@@ -7,8 +8,7 @@
  * `x²` <-> `x ^ 2`, …) are tried and returned separately as `similar`.
  */
 import { getMysqlPool } from './fetchLemmaMysql.mjs';
-import { searchLemmaFullText } from './lemmaFullTextSearch.mjs';
-import { moduleToLeanPath, fileExists } from './modulePath.mjs';
+import { moduleToLeanPath, moduleToRepoLeanPath, fileExists } from './modulePath.mjs';
 import { conclusionNodeOf, sectionFormulaNodes } from '../lemmaPath.mjs';
 import { matchAt } from '../leanSubtreeMatch.mjs';
 
@@ -514,6 +514,94 @@ async function queryByRegexp(pool, pattern, binary, limit, requireImports, offse
   return pageRows(rows, limit);
 }
 
+/** Short excerpt around the first query word in a docstring. */
+function docstringSnippet(text, query) {
+  const src = String(text ?? '').replace(/\s+/g, ' ').trim();
+  if (!src) return '';
+  const q = String(query ?? '').trim();
+  const folded = src.toLowerCase();
+  const needles = [q, ...q.split(/\s+/)].map((s) => s.trim()).filter((s) => s.length > 0);
+  let at = -1;
+  let nlen = 0;
+  for (const needle of needles) {
+    const i = folded.indexOf(needle.toLowerCase());
+    if (i >= 0) {
+      at = i;
+      nlen = needle.length;
+      break;
+    }
+  }
+  const width = 160;
+  if (at < 0) return src.length > width ? `${src.slice(0, width)}…` : src;
+  const start = Math.max(0, at - 50);
+  const end = Math.min(src.length, at + nlen + 90);
+  return `${start > 0 ? '…' : ''}${src.slice(start, end)}${end < src.length ? '…' : ''}`;
+}
+
+/**
+ * Imply LaTeX of one declaration, rendered the same way as a formula hit.
+ * Omitting `lemmaId` selects the declaration the formula index calls main.
+ * @returns {{ latex: string | null, lemmaId: number }}
+ */
+function implyLatexOf(module, lemmaId) {
+  const abs = moduleToRepoLeanPath(module);
+  const chosen = Number.isInteger(lemmaId) ? lemmaId : undefined;
+  if (!abs) return { latex: null, lemmaId: chosen ?? 0 };
+  const location = {};
+  /** @type {{ location: { lemmaId?: number }, lemmaId?: number }} */
+  const opts = { location };
+  if (chosen != null) opts.lemmaId = chosen;
+  try {
+    const node = conclusionNodeOf(abs, undefined, opts);
+    const latex = nodeLatex(node);
+    const id = Number.isInteger(location.lemmaId) ? location.lemmaId : (chosen ?? 0);
+    return { latex: latex || null, lemmaId: id };
+  } catch {
+    return { latex: null, lemmaId: chosen ?? 0 };
+  }
+}
+
+/** Attach the imply formula to each module hit. */
+function withImplyLatex(rows) {
+  return rows.map((row) => {
+    const rendered = implyLatexOf(row.module, row.lemmaId);
+    return {
+      ...row,
+      lemmaId: rendered.lemmaId,
+      section: 'proof',
+      latexId: 0,
+      latex: rendered.latex,
+    };
+  });
+}
+
+async function queryDocstrings(pool, query, limit, offset) {
+  const sql = `
+    SELECT l.module, d.lemma_id, d.text,
+           MATCH(d.text) AGAINST (? IN NATURAL LANGUAGE MODE) AS score
+    FROM docstring d
+    JOIN lemma l ON l.id = d.id
+    WHERE MATCH(d.text) AGAINST (? IN NATURAL LANGUAGE MODE)
+    ORDER BY score DESC
+    LIMIT ? OFFSET ?`;
+  const [rows] = await pool.query(sql, [query, query, limit + 1, offset]);
+  const page = pageRows(rows, limit);
+  return {
+    rows: page.rows.map((row) => {
+      const rendered = implyLatexOf(row.module, Number(row.lemma_id));
+      return {
+        module: row.module,
+        lemmaId: rendered.lemmaId,
+        section: 'proof',
+        latexId: 0,
+        snippet: docstringSnippet(row.text, query),
+        latex: rendered.latex,
+      };
+    }),
+    more: page.more,
+  };
+}
+
 /** One extra row means another page exists. */
 function pageRows(rows, limit) {
   const list = Array.isArray(rows) ? rows : [];
@@ -529,15 +617,15 @@ export async function buildSearchPayload(rawDict, projectUser) {
   /** @type {Record<string, unknown>} */
   const dict = { ...rawDict };
 
-  let fullText = false;
+  let docstring = false;
   /** @type {string | null} */
-  let fullTextPattern = null;
+  let docstringQuery = null;
   /** @type {string | null} */
   let lean = null;
   /** @type {string | undefined} */
   let type;
 
-  // `?lean=<expression>` (URL) or `?q=<expression>&lean=on` (search-box checkbox):
+  // `?lean=<expression>` (URL) or `?q=<expression>&lean=on` (legacy checkbox):
   // exact subtree-match over lemma conclusions, see mjs/leanInvertedIndex.mjs.
   const leanFlag = hasKey(dict, 'lean') ? String(dict.lean ?? '').trim() : null;
   if (leanFlag !== null) {
@@ -549,9 +637,9 @@ export async function buildSearchPayload(rawDict, projectUser) {
   }
 
   if (hasKey(dict, 'q')) {
-    if (dict.fullText === 'on') {
-      fullText = true;
-      fullTextPattern = String(dict.q);
+    if (dict.docstring === 'on' || dict.fullText === 'on') {
+      docstring = true;
+      docstringQuery = String(dict.q);
     }
   } else {
     if (hasKey(dict, 'type')) {
@@ -561,6 +649,30 @@ export async function buildSearchPayload(rawDict, projectUser) {
       dict.q = '.*';
       dict.regularExpression = true;
     }
+  }
+
+  const MODES = new Set(['lean', 'word', 'path']);
+  let mode = MODES.has(String(dict.mode ?? '').trim()) ? String(dict.mode).trim() : '';
+  if (!mode) {
+    if (lean) mode = 'lean';
+    else if (docstring) mode = 'word';
+    else mode = 'path';
+  }
+  if (mode === 'lean') {
+    const expression = String(dict.q ?? '').trim();
+    if (expression) {
+      lean = expression;
+      dict.q = expression;
+    }
+    docstring = false;
+  } else if (mode === 'word') {
+    docstring = true;
+    docstringQuery = String(dict.q ?? '');
+    lean = null;
+  } else {
+    mode = 'path';
+    lean = null;
+    docstring = false;
   }
 
   const qForVue =
@@ -578,7 +690,7 @@ export async function buildSearchPayload(rawDict, projectUser) {
   const regularExpression = hasKey(dict, 'regularExpression');
   const replacement = dict.replacement != null && String(dict.replacement) !== '' ? String(dict.replacement) : null;
   const limit = Math.min(1000, Math.max(1, Number(dict.limit) || 100));
-  const start = Math.max(0, Number(dict.start) || 0);
+  const offset = Math.max(0, Number(dict.offset) || 0);
   let more = false;
 
   let regex = qForVue;
@@ -602,7 +714,7 @@ export async function buildSearchPayload(rawDict, projectUser) {
     try {
       const { searchLeanSimilar } = await import('../leanInvertedIndex.mjs');
       const pool = getMysqlPool();
-      const result = await searchLeanSimilar(lean, { limit, offset: start, pool, sections });
+      const result = await searchLeanSimilar(lean, { limit, offset, pool, sections });
       const queryJson = result.query?.json ?? null;
       const enrich = async (hit) => {
         // A similarity hit matched an expanded query (`a²+b²` → `a^2+b^2`), so
@@ -626,19 +738,18 @@ export async function buildSearchPayload(rawDict, projectUser) {
       console.warn('[lean-search]', e.message);
       data = [];
     }
-  } else if (fullText && fullTextPattern) {
-    const qt = fullTextPattern.trim();
-    if (qt) {
-      const found = searchLemmaFullText({
-        query: qt,
-        caseSensitive,
-        wholeWord,
-        regularExpression,
-        limit,
-        offset: start,
-      });
-      data = found.results;
-      more = found.more;
+  } else if (docstring && docstringQuery) {
+    const qt = docstringQuery.trim();
+    const pool = getMysqlPool();
+    if (qt && pool) {
+      try {
+        const found = await queryDocstrings(pool, qt, limit, offset);
+        data = found.rows;
+        more = found.more;
+      } catch (e) {
+        console.warn('[docstring-search]', e.message);
+        data = [];
+      }
     }
   } else {
     const pool = getMysqlPool();
@@ -651,26 +762,26 @@ export async function buildSearchPayload(rawDict, projectUser) {
         if (like) {
           if (regex == null || regex === '') {
             if (type === 'missing') {
-              assignPage(await queryMissing(pool, limit, start));
+              assignPage(await queryMissing(pool, limit, offset));
             } else if (type != null) {
-              assignPage(await queryByType(pool, type, limit, start));
+              assignPage(await queryByType(pool, type, limit, offset));
             }
           } else {
-            const liked = await queryByLike(pool, regex, caseSensitive, limit, start);
+            const liked = await queryByLike(pool, regex, caseSensitive, limit, offset);
             if (
-              start === 0 &&
+              offset === 0 &&
               liked.rows.length === 0 &&
               !caseSensitive &&
               regex.includes(' ')
             ) {
               const alt = regex.replace(/ /g, '.*');
-              assignPage(await queryByRegexp(pool, alt, caseSensitive, limit, !!replacement, start));
+              assignPage(await queryByRegexp(pool, alt, caseSensitive, limit, !!replacement, offset));
             } else {
               assignPage(liked);
             }
           }
         } else if (regex != null) {
-          assignPage(await queryByRegexp(pool, regex, caseSensitive, limit, !!replacement, start));
+          assignPage(await queryByRegexp(pool, regex, caseSensitive, limit, !!replacement, offset));
         }
       } catch (e) {
         console.warn('[search]', e.message);
@@ -678,6 +789,9 @@ export async function buildSearchPayload(rawDict, projectUser) {
       }
     }
   }
+
+  if (mode === 'path' && data.length > 0)
+    data = withImplyLatex(data);
 
   if (replacement && data.length > 0 && regex != null) {
     data = data.filter((item) => moduleFileExists(item.module));
@@ -702,12 +816,13 @@ export async function buildSearchPayload(rawDict, projectUser) {
     regularExpression,
     wholeWord,
     caseSensitive,
-    fullText: !!fullText,
-    lean,
+    docstring: mode === 'word',
+    mode,
+    lean: mode === 'lean' ? lean : null,
     section: sections.join(','),
     replacement,
     limit,
-    start,
+    offset,
     more,
     exact,
     similar,
@@ -724,6 +839,6 @@ export function leanGetWantsSearch(q, moduleRaw) {
   if (q.type != null && String(q.type).trim() !== '') return true;
   if (q.q != null && String(q.q).trim() !== '') return true;
   if (q.lean != null && String(q.lean).trim() !== '') return true;
-  if (q.fullText === 'on' && q.q != null && String(q.q).trim() !== '') return true;
+  if ((q.docstring === 'on' || q.fullText === 'on') && q.q != null && String(q.q).trim() !== '') return true;
   return false;
 }

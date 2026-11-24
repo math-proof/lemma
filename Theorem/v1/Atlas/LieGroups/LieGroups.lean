@@ -5,7 +5,7 @@ public import Theorem.Submodule.Any_And_All_Eq_GetToMonoidHomAndAll_In_Span.of.I
 public import Theorem.Int.All_Eq_0.of.EqCompositionLengthO_0.IsCategoryO
 public import Theorem.Int.ExtVanishesCategoryO1.of.IsCategoryO.IsProjectiveInO.IsCategoryO
 public import Theorem.AlgHom.EqLiftOfSurjectiveNC.of.All_Eq_0.Surjective
-public import Theorem.Representation.All_Bijective.All_AnyAndAll_Any.of.All_All_Any.All_Any_Eq.All_Eq.All_All_Eq.All_All_Eq.All_All_Any_And_Eq.All_All_Any_And_Eq.All_Prop.All_BijectiveFun.All.All.All_Any.All_Prop.All_Prop.All_Eq.All.All.All_Eq.All.All.All
+public import Theorem.Int.All.All_Any_AndAnd.All_RightarrowIsProjA_RightarrowRightarrow.of.All_RightarrowIsProjA_Rightarrow_All.All.All.All.All.All.All.All.All_RightarrowRightarrow.All.All.All_Any_AndAnd.All.All.All.All.All.All.All_Rightarrow.All_Rightarrow.All
 public import Theorem.Nat.ClosedEmbedding.eq.BundleProjection
 public import Theorem.Nat.Degrees.Gt_0
 public import Theorem.Int.IsInQPlus0

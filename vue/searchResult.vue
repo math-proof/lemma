@@ -1,9 +1,15 @@
 <template>
 	<div class="page" :class="{ 'has-query': !!q }" @keydown=keydown>
 		<header class="search-header">
-			<a class="brand" :class="{ small: !!q }" href=".">Lean<span class="accent">2</span>Latex</a>
+			<div class="brand" :class="{ small: !!q }">
+				<select class="mode" name="mode" form="search" aria-label="search mode" :value="mode" @change="onMode">
+					<option value="lean">lean</option>
+					<option value="word">word</option>
+					<option value="path">path</option>
+				</select><a href="."><span class="accent">2</span>latex</a>
+			</div>
 			<div class="search-slot">
-				<searchForm variant="google" :ref="$refs.searchForm" :q=q :regularExpression=regularExpression :wholeWord=wholeWord :caseSensitive=caseSensitive :fullText=fullText :lean=lean :section=section :replacement=replacement :limit=limit></searchForm>
+				<searchForm variant="google" :ref="$refs.searchForm" :q=q :mode=mode :regularExpression=regularExpression :wholeWord=wholeWord :caseSensitive=caseSensitive :docstring=docstring :lean=lean :section=section :replacement=replacement :limit=limit></searchForm>
 			</div>
 		</header>
 		<main class="results">
@@ -13,8 +19,8 @@
 				</li>
 			</ol>
 			<p class="empty" v-else-if="q">No results for “{{q}}”.</p>
-			<nav class="pager" v-if="q && (more || start > 0)">
-				<a v-if="start > 0" class="prev" :href="prevHref">Previous</a>
+			<nav class="pager" v-if="q && (more || offset > 0)">
+				<a v-if="offset > 0" class="prev" :href="prevHref">Previous</a>
 				<a v-if="more" class="next" :href="nextHref" rel="next">Next</a>
 			</nav>
 		</main>
@@ -28,7 +34,7 @@ import searchLink from "./searchLink.vue";
 
 console.log('import searchResult.vue');
 
-const props = defineProps(['data', 'q', 'caseSensitive', 'wholeWord', 'regularExpression', 'fullText', 'lean', 'section', 'replacement', 'limit', 'start', 'more', 'exact', 'similar']);
+const props = defineProps(['data', 'q', 'mode', 'caseSensitive', 'wholeWord', 'regularExpression', 'docstring', 'lean', 'section', 'replacement', 'limit', 'offset', 'more', 'exact', 'similar']);
 
 const self = new Vue({
 	props,
@@ -45,17 +51,17 @@ const self = new Vue({
 
 	computed: {
 		href() {
-			return searchQuery(this, Number(this.start) || 0);
+			return searchQuery(this, Number(this.offset) || 0);
 		},
 
 		nextHref() {
 			var limit = Number(this.limit) || 100;
-			return searchQuery(this, (Number(this.start) || 0) + limit);
+			return searchQuery(this, (Number(this.offset) || 0) + limit);
 		},
 
 		prevHref() {
 			var limit = Number(this.limit) || 100;
-			return searchQuery(this, Math.max(0, (Number(this.start) || 0) - limit));
+			return searchQuery(this, Math.max(0, (Number(this.offset) || 0) - limit));
 		},
 	},
 
@@ -77,6 +83,13 @@ const self = new Vue({
 				event.preventDefault();
 				break;
 			}
+		},
+
+		onMode(event) {
+			var mode = event.target.value;
+			this.setAttribute('mode', mode);
+			if (this.q)
+				location.search = searchQuery(this, 0, mode);
 		},
 
 		async replace(event) {
@@ -119,9 +132,9 @@ module = ${module}`);
 	},
 });
 
-const { $refs, href, nextHref, prevHref, keydown } = self.globals;
+const { $refs, href, nextHref, prevHref, keydown, onMode } = self.globals;
 
-function searchQuery(vm, start) {
+function searchQuery(vm, offset, mode) {
 	var {q, replacement, limit} = vm;
 	var kwargs = {};
 	if (q)
@@ -132,24 +145,22 @@ function searchQuery(vm, start) {
 		kwargs.wholeWord = 'on';
 	if (vm.regularExpression)
 		kwargs.regularExpression = 'on';
-	if (vm.fullText)
-		kwargs.fullText = 'on';
-	if (vm.lean)
-		kwargs.lean = 'on';
-	if (vm.lean && vm.section)
+	kwargs.mode = mode || vm.mode || 'lean';
+	if (kwargs.mode == 'lean' && vm.section)
 		kwargs.section = vm.section;
 	if (replacement)
 		kwargs.replacement = replacement.encodeURI();
 	if (limit)
 		kwargs.limit = limit;
-	if (start > 0)
-		kwargs.start = start;
+	if (offset > 0)
+		kwargs.offset = offset;
 	return '?' + get_url(kwargs);
 }
 </script>
 
 <style scoped>
-:global(body) {
+:global(html:has(.page)),
+:global(body:has(.page)) {
 	margin: 0;
 	background-color: #fff;
 }
@@ -225,6 +236,36 @@ function searchQuery(vm, start) {
 
 .brand .accent {
 	color: #4285f4;
+}
+
+.brand a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.brand .mode {
+	margin: 0;
+	padding: 0 0.55em 0 0;
+	border: none;
+	border-radius: 4px;
+	background-color: transparent;
+	background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'><path fill='none' stroke='%235f6368' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' d='M1.2 1.4 6 6.2 10.8 1.4'/></svg>");
+	background-repeat: no-repeat;
+	background-position: right center;
+	background-size: 0.42em;
+	font: inherit;
+	letter-spacing: inherit;
+	color: inherit;
+	cursor: pointer;
+	appearance: none;
+	field-sizing: content;
+	vertical-align: baseline;
+}
+
+.brand .mode:hover,
+.brand .mode:focus {
+	background: #f1f3f4;
+	outline: none;
 }
 
 .page:not(.has-query) .brand {

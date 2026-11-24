@@ -8,7 +8,7 @@
             <input type=hidden name=set_option :value=JSON.stringify(set_option) />
             <input type=hidden name=date :value=JSON.stringify(date) />
             <preamble v-for="lean, index in self.preamble" :lean=lean :index=index />
-            <lemma v-for="lemma, index in self.lemma" :comment=lemma.comment :attribute=lemma.attribute :accessibility=lemma.accessibility :name=lemma.name :instImplicit=lemma.instImplicit :strictImplicit=lemma.strictImplicit :implicit=lemma.implicit :explicit=lemma.explicit :given=lemma.given :default=lemma.default :imply=lemma.imply :proof=lemma.proof :index=index />
+            <lemma v-for="row, index in self.lemma" :comment=row.comment :attribute=row.attribute :accessibility=row.accessibility :name=row.name :instImplicit=row.instImplicit :strictImplicit=row.strictImplicit :implicit=row.implicit :explicit=row.explicit :given=row.given :default=row.default :imply=row.imply :proof=row.proof :index=index />
         </form>
 
         <template v-if="meta.error.length != 0">
@@ -1578,31 +1578,19 @@ where
         },
 
         async fetch_proof(module) {
-            var key = module;
-            var sql = `
-SELECT
-    JSON_ARRAYAGG(
-        JSON_OBJECT('proof', j.proof)
-    ) AS lemma
-FROM lemma AS l
-CROSS JOIN JSON_TABLE(
-    l.lemma,
-    '$[*]' COLUMNS (
-        proof JSON PATH '$.proof'
-    )
-) AS j
-WHERE l.module = "${key}"
-GROUP BY l.module`;
-            var rows = await form_post('php/request/execute.php', {sql, resultType: 1});
-            if (!rows?.length)
+            var proofs = await form_post('php/request/proof.php', { module });
+            if (!proofs?.length)
                 return;
-            var proofLemma = JSON.parse(rows[0].lemma);
-            if (!proofLemma?.length)
-                return;
-            for (var [i, {proof}] of enumerate(proofLemma)) {
-                this.lemma[i].proof = proof;
+            // Given and imply have already painted. Fill proof on the next frame.
+            await new Promise((resolve) => requestAnimationFrame(resolve));
+            for (var [i, proof] of enumerate(proofs)) {
+                if (proof)
+                    this.lemma[i].proof = proof;
             }
             this.refresh = true;
+            // Proof lean is on the page. Echo fills the missing proof latex.
+            if (this.lemma.any(lemma => this.heed_update(lemma)) && !getParameterByName('new'))
+                this.echo(module).catch(err => console.error('[echo]', err));
             this.$nextTick(() => {
                 requestAnimationFrame(() => {
                     if (location.hash)

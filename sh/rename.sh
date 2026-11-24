@@ -150,7 +150,7 @@ SELECT ROW_COUNT();
 # them after the move; the next `lake build` of the new module is unaffected.
 remove_build_artifacts() {
   local mod=$1
-  local base=".lake/build/lib/lean/Lemma/${mod//.//}"
+  local base=".lake/build/lib/lean/${lib_root:-Lemma}/${mod//.//}"
   local ext f
   for ext in olean ilean trace hash c; do
     for f in "$base.$ext" "$base.echo.$ext"; do
@@ -165,7 +165,7 @@ remove_build_artifacts() {
 
 # sympy/ may be absent; only search directories that exist.
 search_dirs=()
-for d in Lemma sympy; do
+for d in Lemma Theorem Def Structure Instance Initialize sympy; do
   if [ -d "$d" ]; then
     search_dirs+=("$d")
   fi
@@ -215,10 +215,21 @@ if [[ "$dst" == *.* && "$dst_last" =~ ^[a-z_]+$ ]]; then
   echo real_dst = $real_dst
 fi
 
-srcFile=Lemma/${src//.//}.lean
+lib_root=${LEAN_LIB:-}
+if [ -z "$lib_root" ]; then
+  if [ -f "Lemma/${src//.//}.lean" ]; then
+    lib_root=Lemma
+  elif [ -f "Theorem/${src//.//}.lean" ]; then
+    lib_root=Theorem
+  else
+    echo "error: no Lemma or Theorem file for $src"
+    exit 1
+  fi
+fi
+srcFile=$lib_root/${src//.//}.lean
 echo srcFile = $srcFile
 
-dstFile=Lemma/${real_dst//.//}.lean
+dstFile=$lib_root/${real_dst//.//}.lean
 echo dstFile = $dstFile
 
 if [ ! -f $srcFile ]; then

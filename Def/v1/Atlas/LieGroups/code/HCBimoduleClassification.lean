@@ -2,7 +2,7 @@ module
 public import Def.v1.Atlas.LieGroups.code.HCBimoduleProjectives.Part2
 public import Theorem.Fin.All_Eq.of.All_Eq.All_Eq_RightAction.All_Eq_RightAction.All_Any_Eq_Sum_RightAction
 public import Theorem.Finset.Zero.le.Form.of.In_PosRoots
-public import Theorem.Representation.All_Bijective.All_AnyAndAll_Any.of.All_All_Any.All_Any_Eq.All_Eq.All_All_Eq.All_All_Eq.All_All_Any_And_Eq.All_All_Any_And_Eq.All_Prop.All_BijectiveFun.All.All.All_Any.All_Prop.All_Prop.All_Eq.All.All.All_Eq.All.All.All
+public import Theorem.Int.All.All_Any_AndAnd.All_RightarrowIsProjA_RightarrowRightarrow.of.All_RightarrowIsProjA_Rightarrow_All.All.All.All.All.All.All.All.All_RightarrowRightarrow.All.All.All_Any_AndAnd.All.All.All.All.All.All.All_Rightarrow.All_Rightarrow.All
 public import Def.v1.Atlas.LieGroups.code.GrothendieckGroupO.Part4
 public import Structure.v1.Atlas.LieGroups.code.BernsteinGelfandEquivalence.Part3
 

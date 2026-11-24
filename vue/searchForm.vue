@@ -1,11 +1,11 @@
 <template>
-	<form v-if="variant == 'google'" name=search class="google" method=post :action=action @keydown=keydown>
+	<form v-if="variant == 'google'" id="search" name=search class="google" method=get :action=action @keydown=keydown>
 		<div class="bar-row">
 			<div class="bar">
 				<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
 					<path d="M15.5 14h-.79l-.28-.27a6.471 6.471 0 0 0 1.48-4.24A6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.24-1.48l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
 				</svg>
-				<input v-focus tabindex=1 type=text spellcheck=false name=q :value=q placeholder='search formulas, e.g. a² + b²' @input=input>
+				<input v-focus tabindex=1 type=text spellcheck=false name=q :value=q :placeholder=placeholder @input=input>
 				<button tabindex=1 class="submit" type=submit>Search</button>
 			</div>
 			<details class="options">
@@ -15,18 +15,16 @@
 					</svg>
 				</summary>
 				<div class="panel">
-					<div class="option-row" v-if="lean">
-						<span class="option-title">Sections</span>
-						<label><input tabindex=-1 type=checkbox name=section value=given :checked=sectionList.includes('given')>Given</label>
-						<label><input tabindex=-1 type=checkbox name=section value=imply :checked=sectionList.includes('imply')>Imply</label>
-						<label><input tabindex=-1 type=checkbox name=section value=proof :checked=sectionList.includes('proof')>Proof</label>
+					<div class="option-row" v-if="mode == 'lean'">
+						<span class="option-title">Section</span>
+						<label><input tabindex=-1 type=checkbox name=section value=given :checked="sectionList.includes('given')">Given</label>
+						<label><input tabindex=-1 type=checkbox name=section value=imply :checked="sectionList.includes('imply')">Imply</label>
+						<label><input tabindex=-1 type=checkbox name=section value=proof :checked="sectionList.includes('proof')">Proof</label>
 					</div>
-					<div class="option-row">
+					<div class="option-row" v-if="mode == 'path'">
 						<label><input tabindex=-1 type=checkbox name=caseSensitive :checked=caseSensitive>Case</label>
 						<label><input tabindex=-1 type=checkbox name=wholeWord :checked=wholeWord>WholeWord</label>
 						<label><input tabindex=-1 type=checkbox name=regularExpression :checked=regularExpression>Regex</label>
-						<label><input tabindex=-1 type=checkbox name=lean :checked=lean @change=change>Lean</label>
-						<label><input tabindex=-1 type=checkbox name=fullText :checked=fullText>FullText</label>
 					</div>
 					<div class="option-row" v-if="replacement != null">
 						<input tabindex=1 name=replacement :value=replacement placeholder='input the replacement word' @input=input />
@@ -57,7 +55,7 @@
 		
 		<input tabindex=-1 type=checkbox name=lean :checked=lean @change=change><u>L</u>ean
 
-		<input tabindex=-1 type=checkbox name=fullText :checked=fullText>F<u>u</u>llText
+		<input tabindex=-1 type=checkbox name=docstring :checked=docstring><u>d</u>ocstring
 		<br>
 		limit: <input tabindex=1 name=limit :value=limit placeholder='100' @input=input />
 		<input id=submit_query type=submit value=query style="display: none;" />
@@ -69,7 +67,7 @@ import Vue from "../js/vue.js";
 
 console.log('import searchForm.vue');
 
-const props = defineProps(['q', 'caseSensitive', 'wholeWord', 'regularExpression', 'fullText', 'lean', 'section', 'replacement', 'limit', 'variant']);
+const props = defineProps(['q', 'mode', 'caseSensitive', 'wholeWord', 'regularExpression', 'docstring', 'lean', 'section', 'replacement', 'limit', 'variant']);
 
 const self = new Vue({
 	props,
@@ -82,6 +80,14 @@ const self = new Vue({
 		sectionList() {
 			var raw = String(this.section || 'imply');
 			return raw.split(',').map((name) => name.trim()).filter(Boolean);
+		},
+
+		placeholder() {
+			if (this.mode == 'word')
+				return 'search a sentence, e.g. 悬链线';
+			if (this.mode == 'path')
+				return 'search a path token, e.g. Cosh';
+			return 'search formulas, e.g. a² + b²';
 		},
 
 		action() {
@@ -102,7 +108,7 @@ const self = new Vue({
 		},
 
 		clearSearchOptions() {
-			for (var name of ['caseSensitive', 'wholeWord', 'regularExpression', 'fullText'])
+			for (var name of ['caseSensitive', 'wholeWord', 'regularExpression', 'docstring'])
 				this.setAttribute(name, false);
 		},
 
@@ -125,8 +131,8 @@ const self = new Vue({
 						this.clearSearchOptions();
 					break;
 				}
-				case 'u':
-					this.setAttribute('fullText', !this.fullText);
+				case 'd':
+					this.setAttribute('docstring', !this.docstring);
 					break;
 				}
 			}
@@ -158,7 +164,7 @@ const self = new Vue({
 	},
 });
 
-const { action, keydown, input, change, replace, replaceAll, sectionList } = self.globals;
+const { action, keydown, input, change, replace, replaceAll, sectionList, placeholder } = self.globals;
 </script>
 
 <style scoped>

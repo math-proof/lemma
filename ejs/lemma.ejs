@@ -12,8 +12,8 @@
 <script src="node_modules/qs/dist/qs.js"></script>
 <script src="node_modules/clipboard/dist/clipboard.min.js" defer></script>
 <script src="node_modules/file-saver/dist/FileSaver.min.js" defer></script>
-<script src="node_modules/vue/dist/vue.global.prod.js"></script>
-<script src="node_modules/vue3-sfc-loader/dist/vue3-sfc-loader.js"></script>
+<link rel="stylesheet" href="dist/vue/assets/style.css">
+<script type="module" src="dist/vue/pages.js"></script>
 
 <script src="js/py.js?v=9"></script>
 <script src="js/std.js?v=9"></script>
@@ -23,8 +23,7 @@
 <script type=module src="js/utility.js"></script>
 <script src="node_modules/prismjs/prism.js" defer></script>
 <script src="js/prism-lean.js" defer></script>
-<%- include('codemirror-importmap') %>
-<script type="module" src="js/codemirrorBoot.js?v=guillemet-katex-1"></script>
+<script type="module" src="dist/vue/codemirror.js"></script>
 <script type=module>
 createApp('render', <%- codeJson %>);
 </script>

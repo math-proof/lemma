@@ -1,4 +1,4 @@
-import Lemma.Random.GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.Any_And_All_Integrable_Measure.GtInftySup.All_Differentiable_Prob.All_NeDens_0.All_Eq_JointDens.AbsContJointAS.AbsContStateMarginal.IsPolicyTrajectory.Subset_Ico
+import Lemma.Random.Grad.eq.Expect_DotPow__Fun_SMulMulSub1_Dot_Fun_DotGrad_LogProb_CondGetS.of.All.All.LtSup.All_IntegrableFun_SSupProperty_RangeFun_Measure.All_BddAboveProperty_RangeFun.LtSup_Integral_SSupProperty_RangeFun_Deriv.All.IsConditionalProbability.Subset
 import Lemma.Measure.All_Integrable_Measure.GtInftySup_Integral.of.GtInftySup_Sum
 import Lemma.Random.PSpace_Path.of.All_PSpace
 import Mathlib.MeasureTheory.Constructions.Polish.Basic
@@ -70,7 +70,7 @@ private lemma main
       (fun ((s0, a0) : 𝒮 × 𝒜) => ∇[θ] (ℙ[M θ](a[0] = a0 | s[0] = s0) : ℝ).log) :=
     StronglyMeasurable.of_discrete
   have hVm : ∀ t, Measurable (M.V θ γ t) := fun _ => Measurable.of_discrete
-  exact GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.Any_And_All_Integrable_Measure.GtInftySup.All_Differentiable_Prob.All_NeDens_0.All_Eq_JointDens.AbsContJointAS.AbsContStateMarginal.IsPolicyTrajectory.Subset_Ico
+  exact Grad.eq.Expect_DotPow__Fun_SMulMulSub1_Dot_Fun_DotGrad_LogProb_CondGetS.of.All.All.LtSup.All_IntegrableFun_SSupProperty_RangeFun_Measure.All_BddAboveProperty_RangeFun.LtSup_Integral_SSupProperty_RangeFun_Deriv.All.IsConditionalProbability.Subset
     h₀ hfactor h₁ h₂dens hBdd hIntg hφ hMs hVm hR
 
 

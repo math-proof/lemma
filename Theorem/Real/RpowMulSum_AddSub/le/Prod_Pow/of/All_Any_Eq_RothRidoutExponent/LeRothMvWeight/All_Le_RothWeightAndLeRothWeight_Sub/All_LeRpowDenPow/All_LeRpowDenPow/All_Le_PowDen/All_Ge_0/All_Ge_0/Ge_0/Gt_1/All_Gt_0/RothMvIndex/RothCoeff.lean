@@ -2,7 +2,7 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.NumberTheory.RothAuxiliary.Part7
-public import Theorem.Real.RpowMulAddSub.le.Pow_RothRidoutExponent.of.In_SupportRothMvHasse_RothMvOfCoeff.LeRothMvWeight.All_Le_RothWeightAndLeRothWeight_Sub.All_LeRpowDenPow.All_LeRpowDenPow.All_Le_PowDen.Ge_0.Ge_0.Ge_0.Gt_1.All_Gt_0.RothMvIndex.RothCoeff
+public import Theorem.Real.Rpow_MulAdd__Sub.le.Pow_RothRidoutExponent.of.In_SupportRothMvHasse_RothMvOfCoeff.LeRothMvWeight.All_RightarrowNe_0AndLeS.All_LeRpowDen__Pow.All_LeRpowDen__Pow.All_Le_PowDen.Le0.Le0.Le0.Lt1.All_Lt0
 open MathlibExt.NumberTheory.RothAuxiliary
 open Real
 
@@ -57,7 +57,7 @@ private theorem main
         intro l hl
         obtain ⟨k, hk, hek⟩ := hmin l hl
         simpa [hek] using
-          RpowMulAddSub.le.Pow_RothRidoutExponent.of.In_SupportRothMvHasse_RothMvOfCoeff.LeRothMvWeight.All_Le_RothWeightAndLeRothWeight_Sub.All_LeRpowDenPow.All_LeRpowDenPow.All_Le_PowDen.Ge_0.Ge_0.Ge_0.Gt_1.All_Gt_0.RothMvIndex.RothCoeff
+          Rpow_MulAdd__Sub.le.Pow_RothRidoutExponent.of.In_SupportRothMvHasse_RothMvOfCoeff.LeRothMvWeight.All_RightarrowNe_0AndLeS.All_LeRpowDen__Pow.All_LeRpowDen__Pow.All_Le_PowDen.Le0.Le0.Le0.Lt1.All_Lt0
             p q r a b μ ν c Q T θ l i k
             hr hQ hθ (hμ l hl) (hν l hl) hpower
             (fun h ↦ ha h l hl) (fun h ↦ hb h l hl) hbalanced hi hk)

@@ -248,10 +248,74 @@ export async function fetchLemmaRowFromMysql(module) {
       [k]
     );
     if (Array.isArray(rows) && rows.length > 0) {
-      return /** @type {Record<string, unknown>} */ (rows[0]);
+      const row = /** @type {Record<string, unknown>} */ (rows[0]);
+      await applyDocstringComments(p, row);
+      return row;
     }
   }
   return null;
+}
+
+/**
+ * Drop each declaration's `comment` so it is stored in `axiom.docstring`, not in `lemma` JSON.
+ * Empty comments are dropped and not inserted.
+ * @param {unknown} lemmas
+ * @returns {{ lemmas: unknown[], rows: [number, string][] }}
+ */
+export function peelDocstrings(lemmas) {
+  const list = Array.isArray(lemmas) ? lemmas : [];
+  /** @type {[number, string][]} */
+  const rows = [];
+  const stored = list.map((lemma, lemmaId) => {
+    if (!lemma || typeof lemma !== 'object' || Array.isArray(lemma)) return lemma;
+    const src = /** @type {Record<string, unknown>} */ (lemma);
+    if (!Object.prototype.hasOwnProperty.call(src, 'comment')) return lemma;
+    const text = typeof src.comment === 'string' ? src.comment : '';
+    if (text.trim()) rows.push([lemmaId, text]);
+    const copy = { ...src };
+    delete copy.comment;
+    return copy;
+  });
+  return { lemmas: stored, rows };
+}
+
+/**
+ * Put `docstring.text` back on `lemma[lemma_id].comment` for the Vue payload.
+ * @param {import('mysql2/promise').Pool | import('mysql2/promise').PoolConnection | import('mysql2/promise').Connection} conn
+ * @param {Record<string, unknown>} row
+ */
+async function applyDocstringComments(conn, row) {
+  const id = Number(row.id);
+  if (!Number.isFinite(id)) return;
+  const [docs] = await conn.query(
+    'SELECT lemma_id, text FROM docstring WHERE id = ?',
+    [id]
+  );
+  if (!Array.isArray(docs) || docs.length === 0) return;
+  const lemmas = decode(row.lemma);
+  if (!Array.isArray(lemmas)) return;
+  for (const doc of docs) {
+    const i = Number(doc.lemma_id);
+    const lemma = lemmas[i];
+    if (lemma && typeof lemma === 'object' && !Array.isArray(lemma))
+      lemma.comment = doc.text;
+  }
+  row.lemma = lemmas;
+}
+
+/**
+ * Replace every docstring row for one lemma file.
+ * @param {import('mysql2/promise').PoolConnection | import('mysql2/promise').Connection} conn
+ * @param {number} id axiom.lemma.id
+ * @param {[number, string][]} rows
+ */
+export async function replaceDocstrings(conn, id, rows) {
+  await conn.query('DELETE FROM docstring WHERE id = ?', [id]);
+  if (!rows.length) return;
+  await conn.query(
+    'INSERT INTO docstring (id, lemma_id, text) VALUES ?',
+    [rows.map(([lemmaId, text]) => [id, lemmaId, text])]
+  );
 }
 
 /**

@@ -43,7 +43,7 @@ La bibliothèque contient <label id=count>5000</label> théorèmes établis (<la
   - [somme de gaussiennes indépendantes](../?module=Random.DistributedSum.of.All_Distributed_Gaussian.All_Indep), [𝒳²(n)](../?module=Random.Distributed_ChiSquared.of.All_Distributed_Gaussian.All_Indep), [Fisher](../?module=Random.Distributed_Fisher.of.All_And_Distributed_Gaussian.Gt_1.Gt_1), [loi faible des grands nombres](../?module=Random.Lim_ProbLtAbsSubDivSum.eq.One.of.All_EqVar.All_EqExpect.All_Indep.All_MemLp2.All_PSpace), [Cramér](../?module=Random.SatisfiesLDP_EmpiricalMeanLawPi.of.HasFiniteMGF.ForallBddAbove)
   - [classification de documents naïve bayésienne](../?module=Random.ArgMax_ProbCond.eq.ArgMax_Mul_Prod_ProbCond.of.NeProbJoint__0.All_CondIndep)
   - [fonction de perte CRF](../?module=Random.All_Eq_AddLogSumExpAdd.All_EqNegLogProb.of.All_Eq_LogProbCond.All_Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM)
-  - [GAE à échantillonnage d'importance pour PPO](../?module=Random.GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.Any_And_All_Integrable_Measure.GtInftySup.All_Differentiable_Prob.All_NeDens_0.All_Eq_JointDens.AbsContJointAS.AbsContStateMarginal.IsPolicyTrajectory.Subset_Ico.importance_sampling)
+  - [GAE à échantillonnage d'importance pour PPO](../?module=Random.Grad_Expect.eq.Expect_DotPow__Fun_Expect_ArgsIndented.of.All_Eq.All_Or.All_Measurable.LtSup.All_IntegrableFun_SSupProperty_RangeFun_Measure.All_LtSup.LtSup_Integral_SSupProperty_RangeFun_Deriv.All_Differentiable.IsConditionalProbability.SubsetIco)
 
 <br><br>
 -------

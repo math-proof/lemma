@@ -24,6 +24,7 @@ import {
 } from './lean/modulePath.mjs';
 import { lemmaSearchDocuments } from './lemmaPath.mjs';
 import { writeLemmaIndex } from './leanInvertedIndex.mjs';
+import { peelDocstrings, replaceDocstrings } from './lean/fetchLemmaMysql.mjs';
 
 function jsonCol(v) {
   return JSON.stringify(v ?? (Array.isArray(v) ? [] : {}));
@@ -105,13 +106,14 @@ async function replaceLemmaRow(conn, module, code, abs, startedAt) {
   const meta = {};
   if (errs.length) meta.error = errs;
   const metaJson = Object.keys(meta).length ? JSON.stringify(meta) : null;
+  const peeled = peelDocstrings(code.lemma ?? []);
 
   const fields = [
     jsonCol(code.imports ?? []),
     jsonCol(code.open ?? []),
     jsonCol(code.set_option ?? []),
     jsonCol(code.preamble ?? []),
-    jsonCol(code.lemma ?? []),
+    jsonCol(peeled.lemmas),
     metaJson,
     jsonCol(code.date ?? {}),
   ];
@@ -164,6 +166,7 @@ async function replaceLemmaRow(conn, module, code, abs, startedAt) {
       documents,
       startedAt,
     });
+    await replaceDocstrings(conn, id, peeled.rows);
     await conn.commit();
     return { id, postings };
   } catch (err) {

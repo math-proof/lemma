@@ -3,6 +3,7 @@
 		<a v-focus v-clipboard tabindex=2 class="result-title" :data-clipboard-text=module :href=href @keydown=keydown_a :target="data.target?? '_blank'">
 			{{data.replacement ?? data.text?? module}}
 		</a>
+		<div v-if="data.snippet" class="snippet">{{data.snippet}}</div>
 		<div v-if="data.latex" class="formula" v-katex="data.latex"></div>
 		<div v-if="data.match" class="meta">
 			<span v-if="data.section" class="section">{{data.section}}</span>
@@ -232,6 +233,12 @@ const { mode, module, href, keydown_a, blur, keydown } = self.globals;
 
 .result-title:hover {
 	text-decoration: underline;
+}
+
+.snippet {
+	margin-top: 4px;
+	font: 14px/1.4 Arial, sans-serif;
+	color: #4d5156;
 }
 
 .formula {

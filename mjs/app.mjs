@@ -439,6 +439,27 @@ app.post('/:userSegment/php/request/rebuild_fingerprint.php', ensureProjectUser,
 });
 
 /** Same contract as `php/request/echo.php` (POST `module` → JSON `render` payload). */
+app.post('/:userSegment/php/request/proof.php', ensureProjectUser, async (req, res) => {
+  try {
+    const module = String(req.body?.module || '').trim();
+    if (!module) {
+      res.status(400).json({ error: 'missing module' });
+      return;
+    }
+    const abs = moduleToRepoLeanPath(module);
+    if (!abs || !fileExists(abs)) {
+      res.status(404).json({ error: 'not found', module });
+      return;
+    }
+    const code = await loadLemmaVueCode(module, abs);
+    const proofs = (code?.lemma || []).map((lemma) => lemma?.proof ?? null);
+    res.json(proofs);
+  } catch (e) {
+    console.error('[lemma proof]', e);
+    res.status(500).json({ error: String(e?.message || e) });
+  }
+});
+
 app.post('/:userSegment/php/request/echo.php', ensureProjectUser, async (req, res) => {
   try {
     const {module} = req.body;
@@ -473,6 +494,10 @@ app.use('/:userSegment/ico', ensureProjectUser, express.static(path.join(REPO_RO
 // Top-level `vue/` (single-file components) and its `../js/…` imports from the
 // SFCs resolve to `js/` via the parallel `/:userSegment/js` mount.
 app.use('/:userSegment/vue', ensureProjectUser, express.static(path.join(REPO_ROOT, 'vue'), {
+  fallthrough: true,
+  maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+}));
+app.use('/:userSegment/dist', ensureProjectUser, express.static(path.join(REPO_ROOT, 'dist'), {
   fallthrough: true,
   maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
 }));
@@ -573,9 +598,14 @@ async function renderLemmaPage(res, module, userSegment) {
     return;
   }
 
+  const code = await loadLemmaVueCode(module, abs);
+  renderLemmaCode(res, code, module, userSegment);
+}
+
+/** Lemma payload for the page and for the deferred proof POST. */
+async function loadLemmaVueCode(module, abs) {
   const echoAbs = leanEchoPath(abs);
   let code = null;
-
   if (shouldLoadLemmaFromMysql(abs, echoAbs)) {
     try {
       const row = await fetchLemmaRowFromMysql(module);
@@ -587,19 +617,23 @@ async function renderLemmaPage(res, module, userSegment) {
       console.warn('[lean mysql]', e.message);
     }
   }
-
   if (!code) {
-    const source = readLeanFile(abs);
-    code = render2vueFromSource(source, { user: PROJECT_USER });
+    code = render2vueFromSource(readLeanFile(abs), { user: PROJECT_USER });
     code.module = stripDeclFolderPrefix(module);
   }
+  return code;
+}
 
-  renderLemmaCode(res, code, module, userSegment);
+/** First response omits proof text so given and imply can paint first. */
+function withoutProof(code) {
+  const shell = JSON.parse(JSON.stringify(code));
+  for (const lemma of shell.lemma || []) lemma.proof = null;
+  return shell;
 }
 
 function renderLemmaCode(res, code, module, userSegment) {
   const title = titleFromModule(module);
-  const codeJson = jsonForScriptEmbed(normalizeCodeMeta(code));
+  const codeJson = jsonForScriptEmbed(normalizeCodeMeta(withoutProof(code)));
   res.set('Content-Type', 'text/html; charset=utf-8');
   res.render('lemma', { title, codeJson, userSegment });
 }

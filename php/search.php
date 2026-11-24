@@ -5,10 +5,10 @@ require_once 'utility.php';
 require_once 'mysql.php';
 require_once 'std.php';
 $dict = empty($_POST) ? $_GET : $_POST;
-$fullText = false;
+$docstring = false;
 if (array_key_exists("q", $dict)) {
-    if ($dict["fullText"] == 'on')
-        $fullText = $dict["q"];
+    if (($dict["docstring"] ?? '') == 'on' || ($dict["fullText"] ?? '') == 'on')
+        $docstring = $dict["q"];
     elseif ($dict["latex"] == 'on')
         $latex = $dict["q"];
 }
@@ -48,36 +48,38 @@ elseif ($regularExpression)
 else
     $like = true;
 
-if ($fullText) {
-    if ($wholeWord || $regularExpression) {
-        $fullText = $regex;
-        $P = "P";
-    }
-    else {
-        $P = "";
-        $fullText = str_replace("\\", "\\\\", $fullText);
-    }
-    $fullText = str_replace("\"", "\\\"", $fullText);
-    if (std\is_linux()) {
-        // the following command is used to search for all typeclass names in the Lemma directory
-        // grep -rhP --include="*.lean" --exclude="*.echo.lean" -o "(?<=\[)\w+(?= \p{L}\])" Lemma | sort -u        
-        exec("grep -rn$P --include=*.lean --exclude=*.echo.lean \"$fullText\" Lemma | head -n $limit", $output_array);
-        $sep = '/';
-    }
-    else {
-        exec("powershell.exe -Command \"[System.Console]::OutputEncoding = [System.Text.Encoding]::UTF8; \$OutputEncoding = [System.Text.Encoding]::UTF8; Get-ChildItem -Path Lemma -Recurse -Include *.lean -Exclude *.echo.lean | Select-String -CaseSensitive -Pattern '" . addslashes($fullText) . "' -AllMatches | Select-Object -First $limit\"", $output_array);
-        $sep = '\\\\';
-    }
-
+if ($docstring) {
+    require_once 'init.php';
+    $qEsc = escape_string($docstring);
+    $lim = (int) $limit;
+    $offset = (int) ($dict["offset"] ?? 0);
+    $rows = get_rows("
+        SELECT l.module, d.lemma_id, d.text
+        FROM docstring d
+        JOIN lemma l ON l.id = d.id
+        WHERE MATCH(d.text) AGAINST ('$qEsc' IN NATURAL LANGUAGE MODE)
+        ORDER BY MATCH(d.text) AGAINST ('$qEsc' IN NATURAL LANGUAGE MODE) DESC
+        LIMIT $lim OFFSET $offset
+    ");
     $data = [];
-    foreach ($output_array as &$item) {
-        [$file, $line, $text] = explode(":", $item, 3);
-
-        if (preg_match("#^Lemma$sep(.*)\.lean$#", $file, $matches)) {
+    if (is_array($rows)) {
+        foreach ($rows as $row) {
+            $text = preg_replace('/\s+/', ' ', (string) $row['text']);
+            $at = mb_stripos($text, $docstring);
+            if ($at === false)
+                $snippet = mb_substr($text, 0, 160);
+            else {
+                $from = max(0, $at - 50);
+                $snippet = mb_substr($text, $from, 160);
+                if ($from > 0)
+                    $snippet = "…$snippet";
+            }
             $data[] = [
-                'module' => str_replace($sep, ".", $matches[1]),
-                'line' => $line,
-                'text' => $text,
+                'module' => $row['module'],
+                'lemmaId' => (int) $row['lemma_id'],
+                'section' => 'proof',
+                'latexId' => 0,
+                'snippet' => $snippet,
             ];
         }
     }
@@ -134,7 +136,7 @@ createApp('searchResult', {
     regularExpression: <?php echo std\encode($regularExpression)?>,
     wholeWord: <?php echo std\encode($wholeWord)?>,
     caseSensitive: <?php echo std\encode($caseSensitive)?>,
-    fullText: <?php echo std\encode($fullText? true : false)?>,
+    docstring: <?php echo std\encode($docstring? true : false)?>,
     latex: <?php echo std\encode($latex)?>,
     replacement: <?php echo std\encode($replacement)?>,
     limit: <?php echo $limit?>,

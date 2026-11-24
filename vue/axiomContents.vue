@@ -13,7 +13,7 @@
       :regularExpression="regularExpression"
       :nlp="nlp"
       :lean="lean"
-      :fullText="fullText"
+      :docstring="docstring"
     />
 
     <header v-if="!issearch" class="explorer-toolbar">
@@ -159,7 +159,7 @@ const self = new Vue({
     regularExpression: false,
     nlp: false,
     lean: false,
-    fullText: false,
+    docstring: false,
     folderSearchOpen: false,
     folderSearchQuery: '',
     folderSearchInputId: 'explorer-folder-search-q',
@@ -482,7 +482,7 @@ const {
   regularExpression,
   nlp,
   lean,
-  fullText,
+  docstring,
   folderSearchOpen,
   folderSearchQuery,
   folderSearchInputId,

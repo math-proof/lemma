@@ -6,7 +6,8 @@
   "description": "Lean4 lemma library — Node lemma browser (EJS + stub Lean parser)",
   "scripts": {
     "start": "node mjs/app.mjs",
-    "node": "node mjs/app.mjs"
+    "node": "node mjs/app.mjs",
+    "build:vue": "vite build"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.20.3",
@@ -38,5 +39,9 @@
     "vue": "3.5.13",
     "vue3-sfc-loader": "0.9.5",
     "w3c-keyname": "^2.2.8"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.11",
+    "vite": "^8.3.8"
   }
 }

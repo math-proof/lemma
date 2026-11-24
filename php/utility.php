@@ -426,7 +426,7 @@ SELECT
     l.date,
     JSON_ARRAYAGG(
         JSON_OBJECT(
-            'comment', j.comment,
+            'comment', d.text,
             'attribute', j.attribute,
             'accessibility', j.accessibility,
             'name', j.name,
@@ -439,12 +439,13 @@ SELECT
             'imply', j.imply,
             'proof', j.proof
         )
+        ORDER BY j.lemma_id
     ) AS lemma
 FROM lemma AS l
 CROSS JOIN JSON_TABLE(
     l.lemma,
     '\$[*]' COLUMNS (
-        comment JSON PATH '\$.comment',
+        lemma_id FOR ORDINALITY,
         attribute JSON PATH '\$.attribute',
         accessibility JSON PATH '\$.accessibility',
         name JSON PATH '\$.name',
@@ -458,6 +459,7 @@ CROSS JOIN JSON_TABLE(
         proof JSON PATH '\$.proof'
     )
 ) AS j
+LEFT JOIN docstring AS d ON d.id = l.id AND d.lemma_id = j.lemma_id - 1
 WHERE l.user = '$user' AND l.module = "$module"
 GROUP BY l.user, l.module, l.imports, l.open, l.set_option, l.preamble, l.meta, l.date
 EOT;

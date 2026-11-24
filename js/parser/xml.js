@@ -1149,7 +1149,7 @@ class XMLContainerTag extends XMLArgs {
         console.assert(!tagEnd, "tagEnd should be null");
 
         if (parent.is_XMLArgs) {
-            const index = parent.args.indexOf(this);
+            let index = parent.args.indexOf(this);
             let count = 1;
             let args;
 

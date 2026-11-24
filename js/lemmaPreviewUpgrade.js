@@ -38,9 +38,8 @@
 	var CLASSIC_SCRIPTS = [
 		"node_modules/axios/dist/axios.min.js",
 		"node_modules/qs/dist/qs.js",
-		"node_modules/vue/dist/vue.global.prod.js",
-		"node_modules/vue3-sfc-loader/dist/vue3-sfc-loader.js",
 	];
+	var PAGE_BUNDLE = "dist/vue/pages.js";
 	var DEFERRED_CLASSIC = [
 		"node_modules/clipboard/dist/clipboard.min.js",
 		"node_modules/file-saver/dist/FileSaver.min.js",
@@ -259,13 +258,15 @@
 				return loadModuleScript("js/utility.js");
 			})
 			.then(function () {
-				return loadModuleScript("js/codemirrorBoot.js");
+				return loadModuleScript(PAGE_BUNDLE).then(function () {
+					return loadModuleScript("dist/vue/codemirror.js");
+				});
 			})
 			.then(function () {
 				return waitFor(function () {
 					return typeof global.createApp === "function" &&
-						typeof global.Vue !== "undefined" &&
-						global["vue3-sfc-loader"] &&
+						global.__vuePages &&
+						global.Vue &&
 						global.cmBoot;
 				}, 20000);
 			})

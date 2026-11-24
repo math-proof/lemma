@@ -2214,87 +2214,16 @@ function resolveModuleUrl(url) {
  * @param {string} [id='root']  Mount target element id
  */
 async function createApp(component, data, id) {
-	const options = {
-		moduleCache: Object.assign({ vue: Vue }, window.__cmModules || {}),
-
-		// Called by SFC loader BEFORE getFile. Intercepts bare CM6 specifiers
-		// that somehow miss the moduleCache lookup (e.g. id mismatch).
-		async loadModule(id, opts) {
-			if (window.__cmModules && id in window.__cmModules) {
-				return window.__cmModules[id];
-			}
-			return undefined; // fall through to getFile
-		},
-
-		async getFile(url) {
-			// Handle bare CM6 specifiers from the pre-bundled modules.
-			// Must check BEFORE resolveModuleUrl, which transforms bare
-			// specifiers into resolved URLs (breaking the __cmModules lookup).
-			if (window.__cmModules && url in window.__cmModules) {
-				var mod = window.__cmModules[url];
-				var src = Object.keys(mod).map(function(k) {
-					return 'export var ' + k + ' = window.__cmModules["' + url + '"].' + k + ';';
-				}).join('\n');
-				return { getContentData() { return src; }, type: ".mjs" };
-			}
-			url = resolveModuleUrl(url);
-			var res;
-			try{
-				res = await fetch(url, { cache: 'no-store' });
-			}
-			catch(err){
-				var dotIndex = url.lastIndexOf('.');
-				var ext = url.slice(dotIndex + 1);
-				var name = url.slice(0, dotIndex).split('/');
-				switch (ext){
-				case 'js':
-					var text = getitem(window.js, ...name.slice(1));
-					//console.log(text);
-                    return {
-						getContentData() {
-							return text;
-						},
-						type: ".mjs"
-					};
-				case 'vue':
-					return getitem(window.vue, ...name.slice(1));
-				}
-			}
-
-			if (!res.ok)
-				throw Object.assign(new Error(res.statusText + ' ' + url), { res });
-
-			if (url.endsWith(".js")) {
-				return res.text().then(text => {
-                    return {
-						getContentData() {
-							return text;
-						},
-						type: ".mjs"
-					};
-                });
-            }
-
-			return res.text();
-		},
-
-		addStyle(textContent) {
-			document.head.insertBefore(
-				Object.assign(document.createElement('style'), { textContent }),
-				document.head.getElementsByTagName('style')[0] || null);
-		},
-	};
-
-	// Expose options + a component loader for SFC-compiled .js files that need
-	// to lazy-load .vue components without using native import() (which the
-	// SFC loader's Babel transform misses in Babel 7.x ImportExpression).
-	window.__sfcOptions = options;
+	const Vue = window.Vue;
+	const pages = window.__vuePages;
+	if (!Vue || !pages || !pages[component])
+		throw new Error("Vue bundle is not loaded (dist/vue/pages.js): " + component);
 	window.__loadVueComponent = async function (name) {
-		const mod = await window['vue3-sfc-loader'].loadModule(`vue/${name}.vue`, options);
-		return { default: mod };
+		const comp = pages[name];
+		if (!comp)
+			throw new Error("Unknown Vue component: " + name);
+		return { default: comp };
 	};
-
-	const { loadModule } = window['vue3-sfc-loader'];
 
 	id ||= 'root';
 	var div = document.createElement('div');
@@ -2306,7 +2235,7 @@ async function createApp(component, data, id) {
 	document.body.appendChild(div);
 
 	data ||= {};
-	const Comp = await loadModule(`vue/${component}.vue`, options);
+	const Comp = pages[component];
 	const $data = Vue.reactive(data);
 	const Root = {
 		setup(_, { expose }) {

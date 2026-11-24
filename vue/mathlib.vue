@@ -44,7 +44,7 @@ const self = new Vue({
 			var search = location.search;
 			var m = search.match(/\?mathlib=(.*)/)
 			var mathlib = m[1];
-			location.search = `?q=${mathlib}&fullText=on`;
+			location.search = `?q=${mathlib}&docstring=on`;
 		},
 
 		click_left,

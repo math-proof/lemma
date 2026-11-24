@@ -1,7 +1,7 @@
 <template>
 	<div tabindex=1 @keydown=keydown>
 		the whole math repertoire is composed of the following sections:
-		<searchForm v-if="issearch" :q=q :caseSensitive=caseSensitive :wholeWord=wholeWord :regularExpression=regularExpression :lean=lean :fullText=fullText></searchForm>
+		<searchForm v-if="issearch" :q=q :caseSensitive=caseSensitive :wholeWord=wholeWord :regularExpression=regularExpression :lean=lean :docstring=docstring></searchForm>
 		<ul>
 			<li v-for="(content, section) in repertoire">
 				<a :href=href_section(section)>
@@ -89,7 +89,7 @@ const self = new Vue({
 			wholeWord: false,
 			regularExpression: false,
 			lean: null,
-			fullText: false
+			docstring: false
 		};
 	},
 
@@ -186,7 +186,7 @@ const {
 	wholeWord,
 	regularExpression,
 	lean,
-	fullText,
+	docstring,
 	sectionStatistics,
 	yearStatistics,
 	recentAxioms,
