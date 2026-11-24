@@ -623,7 +623,8 @@ async function loadFingerprintsByIds(pool, ids, sections = ["imply"]) {
     // The imply section is stored per flattened conjunct; latex_id 0 holds the
     // whole conjunction, which is the only tree exact search should compare.
     const [rows] = await pool.query(
-      "SELECT f.id, l.module, f.fingerprint FROM fingerprint f JOIN lemma l ON l.id = f.id " +
+      "SELECT f.id, l.module, f.fingerprint, f.section, f.lemma_id, f.latex_id " +
+        "FROM fingerprint f JOIN lemma l ON l.id = f.id " +
         "WHERE f.id IN (?) AND f.section IN (?) " +
         "AND (f.section <> 'imply' OR f.latex_id = 0)",
       [chunk, sections],
@@ -672,7 +673,14 @@ async function searchParsedQuery(query, { limit = 100, db, sections = ["imply"] 
     if (json == null) continue;
     if (matchesSubtree(query.json, json) && !seen.has(row.id)) {
       seen.add(row.id);
-      hits.push({ id: row.id, module: row.module, len: Buffer.byteLength(fingerprintFormat(json)) });
+      hits.push({
+        id: row.id,
+        module: row.module,
+        len: Buffer.byteLength(fingerprintFormat(json)),
+        section: row.section,
+        lemmaId: row.lemma_id,
+        latexId: row.latex_id,
+      });
     }
   }
   hits.sort(compareHit);

@@ -4,7 +4,10 @@
 			{{data.replacement ?? data.text?? module}}
 		</a>
 		<div v-if="data.latex" class="formula" v-katex="data.latex"></div>
-		<div v-if="data.match" class="meta">{{data.match}} match</div>
+		<div v-if="data.match" class="meta">
+			<span v-if="data.section" class="section">{{data.section}}</span>
+			{{data.section ? '· ' : ''}}{{data.match}} match
+		</div>
 	</template>
 	<span v-else-if="mode == 'span'">
        	{{module}}
@@ -65,9 +68,11 @@ const self = new Vue({
 		},
 
 		href() {
-			var {line, module} = this.data;
+			var {line, module, section, lemmaId, latexId} = this.data;
 			var href = `?module=${module}`;
-			if (line)
+			if (section && lemmaId != null && latexId != null)
+				href += `#${lemmaId}:${section}:${latexId}`;
+			else if (line)
 				href += `#${line}`;
 			return href;
 		},
@@ -247,5 +252,15 @@ const { mode, module, href, keydown_a, blur, keydown } = self.globals;
 	margin-top: 4px;
 	font: 12px Arial, sans-serif;
 	color: #70757a;
+}
+
+.meta .section {
+	display: inline-block;
+	padding: 0 6px;
+	margin-right: 2px;
+	border-radius: 8px;
+	background: #e8f0fe;
+	color: #1a73e8;
+	font-weight: 600;
 }
 </style>

@@ -591,6 +591,25 @@ order by depth desc`);
             if (hash === "window.close" || hash === "lean4web")
                 return false;
 
+            // Formula anchor from search results: #<lemmaIndex>:<section>:<latexId>
+            var formula = hash.match(/^(\d+):(given|imply|proof)(?::(\d+))?$/);
+            if (formula) {
+                var lemmaIndex = parseInt(formula[1]);
+                var section = formula[2];
+                var latexId = formula[3] != null ? parseInt(formula[3]) : 0;
+                var found = this.lemma?.[lemmaIndex];
+                if (!found || (section === "proof" && !found.proof)) {
+                    if (tries < 120) {
+                        this.$nextTick(() => {
+                            requestAnimationFrame(() => this.apply_location_hash(tries + 1));
+                        });
+                        return true;
+                    }
+                    return false;
+                }
+                return this.focus_formula(lemmaIndex, section, latexId);
+            }
+
             var [linePart, colPart] = hash.split(":");
             var line, col, end;
             var index;
@@ -1115,6 +1134,69 @@ where
             if (hash)
                 location.hash = hash;
             location.search = search.substring(0, index);
+        },
+
+        /**
+         * Focus and select the first line of the formula a search result matched.
+         * `given`/`imply` switch to editor mode first, so the CodeMirror leaf is
+         * created on the next tick; `focus()` retries while its editor is async.
+         */
+        focus_formula(index, section, latexId) {
+            var lemma = this.lemma && this.lemma[index];
+            if (!lemma)
+                return false;
+            var indices, lean;
+            switch (section) {
+            case "given": {
+                var given = lemma.given && lemma.given[latexId];
+                if (!given)
+                    return false;
+                given.insert = true;
+                indices = [index, "given", latexId];
+                lean = given.lean;
+                break;
+            }
+            case "imply": {
+                if (!lemma.imply)
+                    return false;
+                lemma.imply.insert = true;
+                indices = [index, "imply"];
+                lean = lemma.imply.lean;
+                break;
+            }
+            case "proof": {
+                var proof = lemma.proof;
+                if (!proof)
+                    return false;
+                indices = [index, "proof"];
+                var by = proof.by ? "by" : (proof.calc ? "calc" : null);
+                if (by) {
+                    indices.push(by);
+                    proof = proof[by];
+                }
+                var step = proof && proof[latexId];
+                if (!step)
+                    return false;
+                indices.push(latexId);
+                lean = step.lean;
+                break;
+            }
+            default:
+                return false;
+            }
+            var len = (String(lean ?? "").split("\n")[0] ?? "").length;
+            var tries = 0;
+            var attempt = () => {
+                var cm = getitem(this.renderLean, ...indices);
+                if (cm) {
+                    this.focus(cm, 0, 0, len);
+                    return;
+                }
+                if (tries++ < 180)
+                    requestAnimationFrame(attempt);
+            };
+            this.$nextTick(attempt);
+            return true;
         },
 
         select(indices, line, col, title, end) {

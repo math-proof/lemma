@@ -9,7 +9,7 @@
 import { getMysqlPool } from './fetchLemmaMysql.mjs';
 import { searchLemmaFullText } from './lemmaFullTextSearch.mjs';
 import { moduleToLeanPath, fileExists } from './modulePath.mjs';
-import { conclusionNodeOf } from '../lemmaPath.mjs';
+import { conclusionNodeOf, sectionFormulaNodes } from '../lemmaPath.mjs';
 import { matchAt } from '../leanSubtreeMatch.mjs';
 
 /** `lean` values that mean "the checkbox is on"; the expression is in `q`. */
@@ -138,6 +138,33 @@ function latexForModule(module, queryJson) {
       };
     }
     return { latex: whole, highlighted: false };
+  } catch {
+    return { latex: null };
+  }
+}
+
+/**
+ * LaTeX of the section formula that matched (given / proof), instead of the
+ * conclusion, with the matched sub-structure highlighted when possible.
+ */
+function sectionLatex(module, { section, latexId }, queryJson) {
+  const abs = moduleToLeanPath(module);
+  if (abs == null || !fileExists(abs)) return { latex: null };
+  try {
+    const items = sectionFormulaNodes(abs, section, latexId);
+    for (const { node } of items) {
+      const whole = nodeLatex(node);
+      if (!whole) continue;
+      const matched = findMatchedLatex(node, queryJson, whole);
+      if (!matched) continue;
+      const { sub } = matched;
+      return {
+        latex: whole.replace(sub, () => `\\htmlClass{lean-hit}{${sub}}`),
+        highlighted: true,
+      };
+    }
+    const whole = items.map(({ node }) => nodeLatex(node)).filter(Boolean).join('\\quad ');
+    return whole ? { latex: whole, highlighted: false } : { latex: null };
   } catch {
     return { latex: null };
   }
@@ -295,7 +322,12 @@ export async function buildSearchPayload(rawDict, projectUser) {
       const pool = getMysqlPool();
       const result = await searchLeanSimilar(lean, { limit, pool, sections });
       const queryJson = result.query?.json ?? null;
-      const enrich = (hit) => ({ ...hit, ...latexForModule(hit.module, queryJson) });
+      const enrich = (hit) => ({
+        ...hit,
+        ...(hit.section && hit.section !== 'imply'
+          ? sectionLatex(hit.module, hit, queryJson)
+          : latexForModule(hit.module, queryJson)),
+      });
       exact = result.exact.map((hit) => enrich({ ...hit, match: 'exact' }));
       similar = result.similar.map((hit) => enrich({ ...hit, match: 'similar' }));
       data = exact.length > 0 ? exact : similar;

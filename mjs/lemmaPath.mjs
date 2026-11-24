@@ -470,20 +470,20 @@ function withoutTacticJson(json) {
  * names as expression heads. In particular, `have h : P := proof` must include
  * `P`; its ordinary `toJSON()` contains only the assignment and proof term.
  */
-function appendProofMath(node, ctx, out) {
+function appendProofMath(node, ctx, out, onNode = null) {
   if (!node || typeof node !== "object") return;
   const L = Lean.classes;
   if (node instanceof L.LeanLineComment || node instanceof L.LeanCaret) return;
   if (node instanceof L.LeanAssign) {
     const lhs = node.lhs ?? node.args?.[0];
     const rhs = node.rhs ?? node.args?.[1];
-    if (lhs instanceof L.LeanColon) appendProofMath(lhs.rhs ?? lhs.args?.[1], ctx, out);
-    else appendProofMath(lhs, ctx, out);
-    appendProofMath(rhs, ctx, out);
+    if (lhs instanceof L.LeanColon) appendProofMath(lhs.rhs ?? lhs.args?.[1], ctx, out, onNode);
+    else appendProofMath(lhs, ctx, out, onNode);
+    appendProofMath(rhs, ctx, out, onNode);
     return;
   }
   if (node instanceof L.LeanColon) {
-    appendProofMath(node.rhs ?? node.args?.[1], ctx, out);
+    appendProofMath(node.rhs ?? node.args?.[1], ctx, out, onNode);
     return;
   }
   const containers = [
@@ -494,12 +494,15 @@ function appendProofMath(node, ctx, out) {
     L.LeanSequentialTacticCombinator, L.LeanUsing, L.LeanWith,
   ].filter(Boolean);
   if (containers.some((Ctor) => node instanceof Ctor)) {
-    for (const arg of node.args || []) appendProofMath(arg, ctx, out);
+    for (const arg of node.args || []) appendProofMath(arg, ctx, out, onNode);
     return;
   }
   if (typeof node.toJSON === "function") {
     const json = withoutTacticJson(node.toJSON(ctx));
-    if (json !== null) out.push(json);
+    if (json !== null) {
+      out.push(json);
+      if (onNode) onNode(node, json);
+    }
   }
 }
 
@@ -545,6 +548,46 @@ export function lemmaSearchDocuments(filePath, lemmaName, options = {}) {
   });
 
   return { lemmaId, fingerprint: conclusion.toJSON(searchContext()), documents };
+}
+
+/**
+ * Source AST nodes of one section formula, in the same order as
+ * `lemmaSearchDocuments`. Used by search results to render the formula that
+ * actually matched instead of the conclusion.
+ */
+export function sectionFormulaNodes(filePath, section, latexId) {
+  const ast = compile(fs.readFileSync(filePath, "utf8"));
+  const { lemma } = selectLemma(ast);
+  const sig = extractSignature(lemma);
+  if (!sig) return [];
+  const nodeItem = (node) => {
+    if (!node) return [];
+    try {
+      return [{ node, json: node.toJSON(searchContext()) }];
+    } catch {
+      return [];
+    }
+  };
+  if (section === "given") {
+    const givens = extractGivens(sig.nls ?? sig.colon.args[0])
+      .filter((h) => h.prop || expressionRelation(h.typeNode));
+    return nodeItem(givens[latexId]?.typeNode);
+  }
+  const conclusion = conclusionNode(sig.colon);
+  if (!conclusion) return [];
+  if (section === "imply") {
+    const parts = splitTopConjunction(conclusion, true) ?? [conclusion];
+    return nodeItem(parts[latexId]);
+  }
+  if (section === "proof") {
+    const step = proofStepsOf(lemma)[latexId];
+    if (!step) return [];
+    const items = [];
+    const ctx = searchContext();
+    for (const node of step) appendProofMath(node, ctx, [], (n, json) => items.push({ node: n, json }));
+    return items;
+  }
+  return [];
 }
 
 function expressionPathSegments(candidate) {
