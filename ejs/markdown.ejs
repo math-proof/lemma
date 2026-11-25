@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<base href="/<%= userSegment %>/">
+<title><%= title %></title>
+<link rel="stylesheet" href="node_modules/katex/dist/katex.min.css">
+<style>
+  body { margin: 0; background: #fff; color: #202124; }
+  .paper {
+    padding: 28px 20px 80px;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+  .paper h1 { font-size: 22px; font-weight: 500; margin: 0 0 16px; }
+  .paper h2 { font-size: 18px; font-weight: 500; margin: 1.4em 0 0.45em; }
+  .paper h3 { font-size: 16px; font-weight: 500; margin: 1.2em 0 0.4em; }
+  .paper a { color: #1a0dab; }
+  .paper code { font-family: ui-monospace, Consolas, monospace; font-size: 0.92em; }
+  .paper pre {
+    overflow: auto;
+    background: #f8f9fa;
+    padding: 12px 14px;
+    border-radius: 6px;
+  }
+  .paper hr { border: none; border-top: 1px solid #dadce0; margin: 18px 0; }
+  .paper table { border-collapse: collapse; margin: 0.8em 0; }
+  .paper th, .paper td {
+    border: 1px solid #dadce0;
+    padding: 6px 12px;
+    vertical-align: top;
+  }
+  .paper th[align="left"], .paper td[align="left"] { text-align: left; }
+  .paper th[align="center"], .paper td[align="center"] { text-align: center; }
+  .paper th[align="right"], .paper td[align="right"] { text-align: right; }
+  .paper th { background: #f8f9fa; font-weight: 500; }
+  .paper .katex-display { margin: 0.8em 0; overflow-x: auto; overflow-y: hidden; }
+</style>
+</head>
+<body>
+<article class="paper">
+<%- body %>
+</article>
+</body>
+</html>

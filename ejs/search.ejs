@@ -23,3 +23,8 @@
 <script type="module">
 createApp('searchResult', <%- searchJson %>);
 </script>
+<% if (countScript) { %>
+<script type="module">
+<%- countScript %>
+</script>
+<% } %>

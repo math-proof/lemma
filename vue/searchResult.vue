@@ -13,17 +13,21 @@
 			</div>
 		</header>
 		<main class="results">
-			<ol v-if="data.length">
-				<li v-for="data, i of data">
-					<searchLink :data=data :ref="el => self.searchLink[i] = el"></searchLink>
-				</li>
-			</ol>
-			<p class="empty" v-else-if="q">No results for “{{q}}”.</p>
-			<nav class="pager" v-if="q && (more || offset > 0)">
-				<a v-if="offset > 0" class="prev" :href="prevHref">Previous</a>
-				<a v-if="more" class="next" :href="nextHref" rel="next">Next</a>
-			</nav>
+			<template v-if="q">
+				<ol v-if="data.length">
+					<li v-for="data, i of data">
+						<searchLink :data=data :ref="el => self.searchLink[i] = el"></searchLink>
+					</li>
+				</ol>
+				<p class="empty" v-else>No results for “{{q}}”.</p>
+				<nav class="pager" v-if="more || offset > 0">
+					<a v-if="offset > 0" class="prev" :href="prevHref">Previous</a>
+					<a v-if="more" class="next" :href="nextHref" rel="next">Next</a>
+				</nav>
+			</template>
+			<article v-else-if="home" class="home" v-html="home"></article>
 		</main>
+		<footer v-if="!q && footer" class="beian" v-html="footer"></footer>
 	</div>
 </template>
 
@@ -34,7 +38,7 @@ import searchLink from "./searchLink.vue";
 
 console.log('import searchResult.vue');
 
-const props = defineProps(['data', 'q', 'mode', 'caseSensitive', 'wholeWord', 'regularExpression', 'docstring', 'lean', 'section', 'replacement', 'limit', 'offset', 'more', 'exact', 'similar']);
+const props = defineProps(['data', 'q', 'mode', 'caseSensitive', 'wholeWord', 'regularExpression', 'docstring', 'lean', 'section', 'replacement', 'limit', 'offset', 'more', 'exact', 'similar', 'home', 'footer']);
 
 const self = new Vue({
 	props,
@@ -182,10 +186,21 @@ function searchQuery(vm, offset, mode) {
 	background: #fff;
 }
 
+.page:not(.has-query) {
+	display: flex;
+	flex-direction: column;
+}
+
 .page:not(.has-query) .search-header {
 	justify-content: center;
-	min-height: 46vh;
-	padding-top: 0;
+	padding-top: 8vh;
+}
+
+.page:not(.has-query) .results {
+	flex: 1;
+	width: 100%;
+	max-width: none;
+	margin: 12px 0 0;
 }
 
 .page:not(.has-query) .search-slot {
@@ -329,5 +344,57 @@ li {
 
 .pager .next::after {
 	content: " ›";
+}
+
+.home {
+	font-size: 14px;
+	line-height: 1.55;
+	color: #202124;
+}
+
+.home :deep(h1) {
+	font-size: 20px;
+	font-weight: 500;
+	margin: 0 0 12px;
+}
+
+.home :deep(h2) {
+	font-size: 16px;
+	font-weight: 500;
+	margin: 18px 0 8px;
+}
+
+.home :deep(a) {
+	color: #1a0dab;
+}
+
+.home :deep(hr) {
+	border: none;
+	border-top: 1px solid #dadce0;
+	margin: 18px 0;
+}
+
+.beian {
+	margin-top: auto;
+	padding: 28px 0 16px;
+	text-align: center;
+	font-size: 12px;
+	color: #5f6368;
+}
+
+.beian :deep(img) {
+	height: 18px;
+	vertical-align: middle;
+	margin-right: 6px;
+}
+
+.beian :deep(a) {
+	color: #5f6368;
+	text-decoration: none;
+	margin: 0 8px;
+}
+
+.beian :deep(a:hover) {
+	text-decoration: underline;
 }
 </style>

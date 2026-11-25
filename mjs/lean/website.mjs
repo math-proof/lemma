@@ -3,9 +3,14 @@
  */
 import fs from 'fs/promises';
 import path from 'path';
+import { createRequire } from 'module';
+import katex from 'katex';
 import { REPO_ROOT } from './modulePath.mjs';
 
-const MD_ROOT = path.join(REPO_ROOT, 'website', 'md');
+const require = createRequire(import.meta.url);
+const marked = require('marked');
+
+const MD_ROOT = path.join(REPO_ROOT, 'md');
 
 function escapeHtml(s) {
   return String(s)
@@ -91,6 +96,207 @@ export function websiteLabels(lang) {
   }
 }
 
+const HOME_LANGS = ['en', 'zh', 'fr'];
+
+/** Shared by every language version of `home.md`. */
+export const HOME_FOOTER_HTML = [
+  '<img src="website/png/national_emblem.png" alt="">',
+  '<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33060202000937"><span>浙公网安备33060202000937号</span></a>',
+  '<a href="https://beian.miit.gov.cn/"><span>浙ICP备20017509号-3</span></a>',
+].join('\n');
+
+/** Fills `#count` and `#lines` after the landing page is mounted. Paths are relative to `/lean/`. */
+export const HOME_COUNT_SCRIPT = `
+const count = document.querySelector('#count');
+const lines = document.querySelector('#lines');
+if (count)
+  count.textContent = await get('php/request/count.php');
+if (lines)
+  lines.textContent = await get('php/request/lines.php');
+`;
+
+/**
+ * First supported language in the browser's `Accept-Language` list.
+ * @param {string | undefined} accept
+ * @returns {'en' | 'zh' | 'fr'}
+ */
+export function homeLangFromAccept(accept) {
+  if (!accept) return 'en';
+  const ranked = [];
+  for (const raw of accept.split(',')) {
+    const match = raw.trim().match(/^([^;]+)(?:;q=([0-9.]+))?$/i);
+    if (!match) continue;
+    const base = match[1].trim().toLowerCase().split('-')[0];
+    const q = match[2] != null ? parseFloat(match[2]) : 1;
+    if (!HOME_LANGS.includes(base) || !Number.isFinite(q) || q <= 0) continue;
+    ranked.push({ base, q });
+  }
+  ranked.sort((a, b) => b.q - a.q);
+  return ranked[0]?.base || 'en';
+}
+
+/**
+ * Home page in the requested language, from its first heading down.
+ * The beian block is separate so the search page can pin it to the bottom.
+ * @param {'en' | 'zh' | 'fr'} [lang]
+ * @returns {Promise<{ home: string, footer: string }>}
+ */
+export async function homeLandingHtml(lang = 'en') {
+  const folder = HOME_LANGS.includes(lang) ? lang : 'en';
+  const file = path.join(MD_ROOT, folder, 'home.md');
+  const text = await fs.readFile(file, 'utf8');
+  const heading = text.search(/^# /m);
+  const start = heading < 0 ? 0 : heading;
+  const prose = text.slice(start)
+    .replace(/<script[\s\S]*?<\/script>/g, '')
+    .replace(/\]\(\.\.\/\?/g, '](?')
+    // A dash line right after `<br>` is a setext heading underline, not a rule.
+    .replace(/([^\n])\n([-*_]{3,})(?=\n)/g, '$1\n\n$2')
+    .trim();
+  return { home: marked(prose), footer: HOME_FOOTER_HTML, countScript: HOME_COUNT_SCRIPT };
+}
+
+/**
+ * Turn a Markdown paper into HTML. Math is taken out before `marked` so
+ * underscores stay in the formula, then drawn with KaTeX.
+ * Delimiters are `\(...\)` and `\[...\]`, including multiline display math.
+ * @param {string} source
+ * @param {string} title
+ * @returns {string} article inner HTML, title heading included
+ */
+export function renderMarkdownDocument(source, title) {
+  const codes = [];
+  const holdCode = (block) => {
+    const token = `CODEPLACEHOLDER${codes.length}X`;
+    codes.push(block);
+    return token;
+  };
+  let text = String(source)
+    .replace(/```[\s\S]*?```/g, holdCode)
+    .replace(/`[^`\n]*`/g, holdCode);
+  const slots = [];
+  const holdMath = (latex, display) => {
+    const token = `MATHPLACEHOLDER${slots.length}X`;
+    slots.push({ latex: latex.trim(), display });
+    return token;
+  };
+  text = text
+    .replace(/\\\[([\s\S]*?)\\\]/g, (_, latex) => holdMath(latex, true))
+    .replace(/\\\(([\s\S]*?)\\\)/g, (_, latex) => holdMath(latex, false));
+  // Papers use `#` for sections. The filename is the document title.
+  text = text.replace(/^(#{1,6}) /gm, (_, hashes) => `${hashes}# `);
+  text = text
+    .replace(/CODEPLACEHOLDER(\d+)X/g, (_, i) => codes[Number(i)])
+    .replace(/([^\n])\n([-*_]{3,})(?=\n)/g, '$1\n\n$2');
+  let html = marked(text);
+  html = html.replace(/MATHPLACEHOLDER(\d+)X/g, (_, i) => {
+    const slot = slots[Number(i)];
+    if (!slot) return '';
+    // KaTeX has no `@{…}` column glue. `{c@{\qquad}c}` is the two-branch
+    // diagram; drop the glue so the array still renders.
+    // `P_\hat\pi` is not a subscript: `\hat` needs a brace, as in `P_{\hat\pi}`.
+    const latex = slot.latex
+      .replace(/@\{[^{}]*\}/g, '')
+      .replace(/_\\hat\s*(\\[a-zA-Z]+|\{[^{}]*\})/g, '_{\\hat$1}');
+    return katex.renderToString(latex, {
+      displayMode: slot.display,
+      throwOnError: false,
+      strict: 'ignore',
+    });
+  });
+  return `<h1>${escapeHtml(title)}</h1>\n${html}`;
+}
+
+/**
+ * Browser GET of a Markdown file under `/md/` returns HTML with KaTeX.
+ * `en|zh|fr/home.md` stays raw: the landing page and the website shell read that source.
+ */
+export async function handleArxivMarkdown(req, res, next) {
+  if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+  let rel = req.path || '/';
+  try {
+    rel = decodeURIComponent(rel);
+  } catch {
+    return next();
+  }
+  if (!rel.startsWith('/')) rel = `/${rel}`;
+  const relFile = rel.replace(/^\/+/, '');
+  if (!/\.md$/i.test(relFile) || rel.includes('..')) return next();
+  if (/^(en|zh|fr)\/home\.md$/i.test(relFile)) return next();
+  const abs = path.resolve(MD_ROOT, `.${rel}`);
+  const root = path.resolve(MD_ROOT);
+  if (abs !== root && !abs.startsWith(`${root}${path.sep}`)) {
+    res.status(400).type('html').send('<p>Bad path</p>');
+    return;
+  }
+  let source;
+  try {
+    source = await fs.readFile(abs, 'utf8');
+  } catch {
+    return next();
+  }
+  const title = path.basename(abs, '.md');
+  const userSegment = req.params.userSegment || path.basename(REPO_ROOT);
+  const body = renderMarkdownDocument(source, title);
+  res.set('Content-Type', 'text/html; charset=utf-8');
+  if (process.env.NODE_ENV !== 'production') res.set('Cache-Control', 'no-store');
+  res.render('markdown', { title, userSegment, body });
+}
+
+/**
+ * GET `/md/` and `/md/<dir>/` lists that directory. Files fall through
+ * to the arXiv HTML renderer or to static serving.
+ */
+export async function handleMdListing(req, res, next) {
+  if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+  let rel = req.path || '/';
+  try {
+    rel = decodeURIComponent(rel);
+  } catch {
+    return next();
+  }
+  if (!rel.startsWith('/')) rel = `/${rel}`;
+  if (rel.includes('..') || rel.includes('\0')) return next();
+  const relDir = rel.replace(/^\/+|\/+$/g, '');
+  const abs = path.resolve(MD_ROOT, relDir);
+  const root = path.resolve(MD_ROOT);
+  if (abs !== root && !abs.startsWith(`${root}${path.sep}`)) {
+    res.status(400).type('html').send('<p>Bad path</p>');
+    return;
+  }
+  let stat;
+  try {
+    stat = await fs.stat(abs);
+  } catch {
+    return next();
+  }
+  if (!stat.isDirectory()) return next();
+
+  const entries = await fs.readdir(abs, { withFileTypes: true });
+  const rows = entries
+    .filter((ent) => ent.name !== '.' && ent.name !== '..' && !ent.name.startsWith('.'))
+    .map((ent) => ({ name: ent.name, dir: ent.isDirectory() }))
+    .sort((a, b) => Number(b.dir) - Number(a.dir) || a.name.localeCompare(b.name));
+
+  const userSegment = req.params.userSegment || path.basename(REPO_ROOT);
+  const link = (relPath, dir) => {
+    const encoded = relPath.split('/').filter(Boolean).map((part) => encodeURIComponent(part)).join('/');
+    if (!encoded) return `/${userSegment}/md/`;
+    return `/${userSegment}/md/${encoded}${dir ? '/' : ''}`;
+  };
+  const parent = relDir
+    ? link(relDir.split('/').slice(0, -1).join('/'), true)
+    : '';
+  const list = rows.map((row) => {
+    const child = relDir ? `${relDir}/${row.name}` : row.name;
+    return { href: link(child, row.dir), label: row.dir ? `${row.name}/` : row.name };
+  });
+  const title = relDir ? `md/${relDir}` : 'md';
+  res.set('Content-Type', 'text/html; charset=utf-8');
+  if (process.env.NODE_ENV !== 'production') res.set('Cache-Control', 'no-store');
+  res.render('mdList', { title, parent, rows: list });
+}
+
 export function renderWebsiteIndex(req, res) {
   const lang = resolveWebsiteLang(req);
   const section = resolveWebsiteSection(req);
@@ -122,7 +328,7 @@ export async function handleWebsiteMdPhp(req, res) {
     const lang = m ? m[1] : 'en';
     const title = lang === 'zh' ? '标记文档' : 'MarkDown Documents';
     const userSegment = req.params.userSegment ?? path.basename(REPO_ROOT);
-    const fetchPath = `/${userSegment}/website/md${pathInfo}`;
+    const fetchPath = `/${userSegment}/md${pathInfo}`;
     res.set('Content-Type', 'text/html; charset=utf-8');
     if (process.env.NODE_ENV !== 'production') {
       res.set('Cache-Control', 'no-store');

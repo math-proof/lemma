@@ -91,7 +91,7 @@ const self = new Vue({
 		},
 
 		action() {
-			return `/${this.user}/index.php`;
+			return `/${this.user}/`;
 		},
 	},
 

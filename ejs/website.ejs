@@ -83,7 +83,7 @@
 
 hljs.initHighlightingOnLoad();
 
-var url = `../website/md/<%= lang %>/<%= section %>.md`;
+var url = `../md/<%= lang %>/<%= section %>.md`;
 
 var text = await get(url);
 url = url.slice(0, -3);

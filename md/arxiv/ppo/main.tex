@@ -1,0 +1,569 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,bm}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{url}
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\do\.\do\_\do\-}
+\makeatother
+\newcommand{\lmod}[2]{\href{http://www.lemma.cn/lean/?module=#2}{\nolinkurl{#1}}}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prb}{\mathbb{P}}
+% colour convention of the lemma.cn renderer
+\newcommand{\rv}[1]{{\color{red}#1}}       % random variable
+\newcommand{\ra}[1]{{\color{magenta}#1}}   % random argument
+\newcommand{\sv}{\rv{s}}
+\newcommand{\av}{\rv{a}}
+\newcommand{\rw}{\rv{r}}
+\newcommand{\grad}{\nabla_{\theta}}
+\newcommand{\tsum}{\textstyle\sum'}
+\newcommand{\lse}{\operatorname{logsumexp}}
+\newcommand{\Y}{\mathcal{Y}}
+\emergencystretch=3em
+
+\title{Lean~4 Descriptions of Markov Models:\\ from CRF to PPO}
+\author{LiZhi Zhou\\[0.3em]
+\small Project artifact: \href{https://github.com/math-proof/lemma}{math-proof/lemma}\\[0.4em]
+\small
+CRF loss function:
+\href{http://www.lemma.cn/lean/?module=Random.All_Eq_AddLogSumExpAdd.All_EqNegLogProb.of.All_Eq_LogProbCond.All_Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM}{$\log Z-\text{score}$},
+\quad
+Viterbi:
+\href{http://www.lemma.cn/lean/?module=Random.All_Eq_Add_MaxAdd.EqMax_ProbJoint.of.All_Eq_LogProbCond.All_Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM}{$\max$}\\[0.25em]
+HMM identity:
+\href{http://www.lemma.cn/lean/?module=Random.Sum_Mul_ProbCond.eq.Prob.of.IsDiscreteHMM}{$\sum_a\text{fwd}\cdot\text{bwd}$},
+\quad
+Bellman:
+\href{http://www.lemma.cn/lean/?module=Random.MEq_Expect.MEq_Expect.MEq_Expect.of.All_MEq_Expect.All_MEq_Expect.CondIndep_Joint.GtInftySup.All_MeasurableJoint.In_Ico}{general},
+\href{http://www.lemma.cn/lean/?module=Random.Eq_Expect.Eq_Expect.MEq_Expect.of.All_Eq_Expect.All_MEq_Expect.CondIndep.All_Measurable.GtInftySup.All_MeasurableJoint.In_Ico}{cont.\ action},
+\quad
+REINFORCE:
+\href{http://www.lemma.cn/lean/?module=Random.GradExpectDotPow_Id.eq.ExpectDot_FunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_NeProb_0.IsPolicyTrajectory.In_Ico}{Lean~4}\\[0.25em]
+Unbiased advantage estimate:
+\href{http://www.lemma.cn/lean/?module=Random.GradExpectDotPow_Id.eq.ExpectDot_FunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_NeProb_0.IsPolicyTrajectory.In_Ico#advantage}{Lean~4},
+\quad
+generalized advantage estimate:
+\href{http://www.lemma.cn/lean/?module=Random.GradExpectDotPow_Id.eq.ExpectDot_FunSMul_GradLogProbCond.of.GtInftySup.All_Differentiable_Prob.All_NeProb_0.IsPolicyTrajectory.In_Icc.In_Ico}{discrete},
+\href{http://www.lemma.cn/lean/?module=Random.GradExpectDotPow_Id.eq.ExpectDotFunSMul_GradLogProbCond.of.GtInftySup.Any_And_All_IntegrableMeasureAndGtInftySup.All_Differentiable_Prob.All_NeDens_0.All_Eq_JointDens.AbsContJointAS.AbsContStateMarginal.IsPolicyTrajectory.Subset_Ico}{continuous}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Linear-chain conditional random fields (CRFs) for sequence labeling and proximal policy optimization (PPO) for reinforcement learning from feedback look like unrelated corners of NLP.
+We organize a Lean~4 account of the path between them around three results: the forward and backward propagation of the linear-chain CRF, the Bellman equation, and the policy gradient theorem with its REINFORCE and generalized-advantage-estimation (GAE) forms.
+All three rest on one device: a Markov structure turns a sum over exponentially many paths (or over an infinite horizon) into a one-step recursion, run forward for the CRF partition function and backward for suffix sums and for the value function.
+We say exactly what is machine-checked in Lean~4 with mathlib.
+For the CRF we formalize the decomposition of the log-score into transition and emission terms, the forward recursion in log-sum-exp form with $-\log p(y\mid x)=\log Z(x)-\text{score}(x,y)$, the Viterbi max-plus recursion (maximal value only), and an HMM identity for a discrete hidden Markov model: the likelihood of an observed sequence is the sum, over the hidden state at any cut, of the forward probability times the backward probability, so it does not depend on the cut.
+For reinforcement learning we formalize a discounted Markov decision process (MDP) with finite state and action spaces and its trajectory measure, the Bellman equations, the policy gradient theorem by induction on the horizon in truncated, action-value and REINFORCE form, the zero-mean score identity that makes a baseline vanish, the unbiased discounted advantage, and GAE with the exact value function for every $\lambda\in[0,1]$.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+
+Sequence labeling with a linear-chain CRF~\cite{lafferty2001crf,sutton2012crf} and reinforcement learning from human feedback with PPO~\cite{schulman2017ppo,ziegler2019finetuning,ouyang2022instructgpt} are usually taught in different chapters.
+The first is supervised: an observed sentence $x$ is mapped to a tag sequence $y$ of the same length by maximizing $\log p(y\mid x)$.
+The second is a reinforcement-learning algorithm: a language model generates tokens, a scalar reward judges the finished text, and the policy is updated by a clipped policy-gradient step.
+This paper is about what they share, seen through what we have been able to prove in Lean~4~\cite{moura2021lean4} on top of mathlib~\cite{mathlib2020,mathlib}, in the \texttt{lemma} library~\cite{lemma_repo}.
+
+\paragraph{Three core topics.}
+The paper is organized around three results, each with its own section and its own Lean statements.
+\begin{enumerate}[leftmargin=1.6em,itemsep=0.25em]
+  \item \textbf{Forward and backward propagation of the linear-chain CRF} (Section~\ref{sec:crf}).
+  The forward recursion $z_{t+1}(a)=\sum_bz_t(b)\,\psi_{t+1}(b,a)$ for a chain with one-step weights $\psi_t$ computes the partition function $Z$ in $O(mk^2)$ operations instead of summing $k^{m+1}$ label paths; the backward recursion $\beta_t(a)=\sum_c\psi_{t+1}(a,c)\,\beta_{t+1}(c)$ summarizes the suffix, and $z_t(a)\beta_t(a)$ is the total weight of the label paths through $a$ at time $t$, the numerator of the posterior marginal (this is the conceptual picture of Section~\ref{sec:analogy}; the Lean statements follow).
+  Lean has the forward recursion with $-\log p(y\mid x)=\log Z-\text{score}$ for the hidden-Markov-conditional case, the Viterbi value recursion, and an HMM identity for a discrete hidden Markov model: the likelihood of an observed sequence is the sum over the hidden state at any cut of the forward probability times the backward probability.
+  \item \textbf{The Bellman equation} (Section~\ref{sec:bellman}).
+  For a discounted MDP with finite state and action spaces, the value function satisfies $V_t(s_t)=\E[\rw_t+\gamma V_{t+1}(\ra{s}_{t+1})\mid\sv_t=s_t]$, and likewise for the action value $Q_t$; Lean proves this for the trajectory measure of the MDP.
+  \item \textbf{The policy gradient theorem, REINFORCE and GAE} (Section~\ref{sec:pg}).
+  $\grad\E[\tsum_t\gamma^t\rw_t]=\E[\tsum_t\gamma^tG_t\grad\log\pi_\theta(\av_t\mid\sv_t)]$ is proved by induction on the horizon, with a finite-horizon identity that has an explicit remainder; replacing $G_t$ by the unbiased advantage, or by the generalized advantage $\hat A^\lambda_t$ built from the exact value function, leaves the gradient unchanged.
+\end{enumerate}
+Section~\ref{sec:gen} is a short conceptual comparison of sequence labeling with sequence-to-sequence generation that is not a theorem.
+
+\paragraph{The common thread.}
+In every model of this paper the probability of a length-$n$ object is a product of one-step factors (the Markov assumption), so its logarithm is a sum of per-step terms: the CRF score, the log-probability of a trajectory, the log-likelihood of a sentence under a language model.
+Two consequences are used.
+First, sums over exponentially many paths are computed by a one-step recursion: the forward and backward recursions of the CRF are a sum-product dynamic program (and Viterbi its max-sum version), and the Bellman recursion is an expectation recursion of the same shape, run backward in time (Section~\ref{sec:analogy}).
+We present this as an analogy, not as a theorem: no Lean statement relates the CRF recursions to the Bellman recursion.
+Second, when each step factor sums to one, $\sum_a p(a)=1$ implies $\E_{a\sim p}[\grad\log p(a)]=0$, which is why a baseline can be subtracted from a policy gradient without changing it (Section~\ref{sec:zeroscore}).
+
+\paragraph{Contributions.}
+\begin{enumerate}[leftmargin=1.6em,itemsep=0.25em]
+  \item CRF propagation (Sections~\ref{sec:markov} and~\ref{sec:crf}): the log-score \lmod{crf.markov.logits}{Tensor.Eq.of.Ne_0.Eq.Eq.Eq.Eq_log.Eq_log.Eq_log} and \lmod{crf.logits}{Tensor.Imp.of.Eq}, the forward recursion with $-\log p(y\mid x)=\log Z-\text{score}$, \lmod{CRF loss function}{Random.All_Eq_AddLogSumExpAdd.All_EqNegLogProb.of.All_Eq_LogProbCond.All_Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM}, the Viterbi value recursion \lmod{crf.viterbi}{Random.All_Eq_Add_MaxAdd.EqMax_ProbJoint.of.All_Eq_LogProbCond.All_Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM}, and the HMM identity \lmod{hmm_identity}{Random.Sum_Mul_ProbCond.eq.Prob.of.IsDiscreteHMM} for a discrete hidden Markov model.
+  \item The Bellman equation \lmod{Bellman}{Random.Eq_Expect.Eq_Expect.MEq_Expect.of.All_Eq_Expect.All_MEq_Expect.CondIndep.All_Measurable.GtInftySup.All_MeasurableJoint.In_Ico} on a trajectory-level MDP whose trajectory law has a proved Markov property (\lmod{joint_succ}{Random.Map}, \lmod{hist_step}{Random.Integral.of.All_LeNorm.StronglyMeasurable.history}) (Section~\ref{sec:bellman}).
+  \item The policy gradient theorem by induction on the horizon, in truncated, action-value and REINFORCE form (\lmod{policy_gradient_theorem}{Tensor.Eq.Dot.Grad.Expect.of.Eq_Conditioned.GtInftySup.policy_gradient_theorem}), the unbiased advantage estimate \lmod{unbiased_advantage_estimate}{Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.All_Differentiable_Prob.GtInftySup.unbiased_advantage_estimate} and GAE with the exact value function for all $\lambda\in[0,1]$, \lmod{generalized_advantage_estimate}{Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.All_Differentiable_Prob.GtInftySup.generalized_advantage_estimate}, with its weighted-average form (Section~\ref{sec:pg}).
+  \item Two comparison tables (Section~\ref{sec:tables}).
+\end{enumerate}
+The textbook syntactic sugar of the library for limits, expectations and probabilities, which makes the Lean statements read like the formulas of the paper, is summarised in Section~\ref{sec:notation}.
+
+\section{Background and related work}
+\label{sec:related}
+
+\paragraph{HMMs, MEMMs and CRFs.}
+A hidden Markov model (HMM)~\cite{rabiner1989hmm} is generative: it models the joint $p(x,y)=\prod_tp(y_t\mid y_{t-1})\,p(x_t\mid y_t)$ with locally normalized factors.
+Maximum-entropy Markov models (MEMMs)~\cite{mccallum2000memm} are discriminative but still locally normalized, $\prod_tp(y_t\mid y_{t-1},x)$, and suffer from the label bias problem; conditional random fields~\cite{lafferty2001crf} remove it by normalizing globally with one partition function $Z(x)$ over whole label sequences.
+Sutton and McCallum~\cite{sutton2012crf} give the standard tutorial treatment, including the forward, backward and Viterbi recursions.
+Neural CRFs put a neural network under the unary scores: Collobert et al.~\cite{collobert2011nlp} train a sentence-level likelihood with transition scores, Huang et al.~\cite{huang2015bilstmcrf}, Lample et al.~\cite{lample2016ner} and Ma and Hovy~\cite{ma2016bilstmcnnscrf} use a BiLSTM encoder with a CRF layer, and Andor et al.~\cite{andor2016global} argue for globally normalized transition-based networks.
+Su Jianlin's blog gives a concise derivation in Chinese of the CRF loss and its recursive normalizer~\cite{su2017crf}; further CRF-related posts are listed on the site's search page~\cite{su2018search}. GlobalPointer is a span-based alternative to CRF for NER~\cite{su2022globalpointer}.
+
+\paragraph{Sequence-to-sequence models and exposure bias.}
+Neural sequence-to-sequence models~\cite{sutskever2014seq2seq,bahdanau2015nmt,vaswani2017attention} factor $p(y\mid x)=\prod_tp(y_t\mid x,y_{<t})$ and are trained with the true prefix (teacher forcing) but decoded with their own; this mismatch is called exposure bias and is attacked by scheduled sampling~\cite{bengio2015scheduled}, sequence-level training~\cite{ranzato2016mixer} and beam-search optimization~\cite{wiseman2016bso}.
+
+
+\paragraph{Policy gradients, GAE and PPO.}
+The policy gradient theorem is due to Sutton et al.~\cite{sutton2000policy}, the likelihood-ratio estimator and the reinforcement baseline to Williams~\cite{williams1992simple}; Greensmith, Bartlett and Baxter~\cite{greensmith2004variance} analyse baselines as variance reducers.
+Schulman et al.~\cite{schulman2016gae} introduced generalized advantage estimation, used there with trust region policy optimization (TRPO)~\cite{schulman2015trpo}; TRPO predates GAE and does not define it.
+PPO~\cite{schulman2017ppo} replaces the trust-region constraint by a clipped surrogate objective and computes its advantages with a truncated (finite-horizon) GAE, its Eqs.~(10)--(11).
+RLHF for language models~\cite{ziegler2019finetuning,ouyang2022instructgpt} runs PPO on tokens with a reward-model score and a KL penalty to a reference model, and GRPO~\cite{shao2024deepseekmath} is a PPO variant without a learned critic.
+Standard references for finite MDPs are Puterman~\cite{puterman1994markov} and Sutton and Barto~\cite{sutton2018reinforcement}.
+
+\paragraph{Formalizations.}
+CertRL~\cite{vajjha2021certrl} formalizes convergence of value and policy iteration in Coq, and Chevallier and Fleuriot~\cite{chevallier2021isabelle} formalize finite MDPs with rewards in Isabelle/HOL, including the Bellman equation, the existence of an optimal policy for $\gamma<1$, and value and policy iteration; neither treats policy gradients.
+In Lean~4, TorchLean~\cite{torchlean} proves structural and dynamic-programming facts about MDPs and Bellman operators and contains policy-gradient and PPO training code, but no policy gradient theorem.
+Closest to Section~\ref{sec:pg} is the \texttt{PolicyGradient} module of Zhang's \texttt{rl-theory-in-lean}~\cite{zhang2026pg}, an experimental, largely machine-generated development (its commits are co-authored with an AI assistant) that was committed in March 2026 and later withdrawn from the project's main branch; it remains accessible at the cited commit.
+For finite state and action spaces and a policy with finitely many real parameters it proves the occupancy-measure form
+$\grad J(\theta)=(1-\gamma)^{-1}\sum_{s,a}d^{\pi_\theta}(s)\,\pi_\theta(a\mid s)\,Q^{\pi_\theta}(s,a)\,\grad\log\pi_\theta(a\mid s)$
+via a Banach fixed point and a Neumann series, requires a strictly positive policy, and has no trajectories, returns or advantages.
+Ours works at the level of trajectories: the law of a trajectory is mathlib's \texttt{Kernel.trajMeasure}~\cite{mathlib}, an implementation of the Ionescu-Tulcea theorem~\cite{kallenberg2002foundations}, the value functions are conditional expectations, and we prove the exact finite-horizon identity of the textbook derivation~\cite[\S13.2]{sutton2018reinforcement} by induction before passing to the limit.
+To the best of our knowledge, based on searches of GitHub, arXiv and the web, this is the first Lean~4 proof that follows the textbook derivation; the two proofs share only the textbook starting point (the one-step recursion of~\cite{sutton2000policy} and the log-derivative trick), and ours was developed independently.
+We are not aware of earlier Lean~4 formalizations of CRF forward or backward recursions.
+
+\section{Lean notation in brief}
+\label{sec:notation}
+
+The statements below are written in the library's \emph{textbook syntactic sugar}: surface syntax that compresses verbose measure-theoretic or filter-theoretic expressions into near-textbook form while elaborating to complete, machine-checked definitions, with no new axioms (the generic term \emph{syntactic sugar} goes back to Landin~\cite{landin1964mechanical}).
+We recall only what the later sections use.
+
+\begin{center}
+\small
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.47\linewidth}>{\raggedright\arraybackslash}p{0.48\linewidth}@{}}
+\toprule
+Lean surface form & meaning \\
+\midrule
+\texttt{lim [n $\to$ $\infty$] e = a} & \texttt{Filter.Tendsto (fun n => e) atTop (nhds a)}; always the equation form, which asserts convergence \\
+\texttt{$\mathbb{E}$[x: $\pi$](f x | y = y0)} & $\E_\pi[f(\rv{x})\mid\rv{y}=y_0]$, the expectation under mathlib's conditional measure; $0$ at a null event \\
+\texttt{$\mathbb{P}$[$\pi$](x = x0 | y = y0)} & $\Prb_\pi(\rv{x}=x_0\mid\rv{y}=y_0)$ (densities w.r.t.\ counting measure give probability masses) \\
+\texttt{x[:n]} & the random vector $(\rv{x}_0,\dots,\rv{x}_{n-1})$; for a plain sequence $f$, \texttt{f[:n]} is $(f_0,\dots,f_{n-1})$ \\
+\texttt{($\mathbb{P}$[$\pi$](\dots) : $\mathbb{R}$).log} & $\log\Prb_\pi(\dots)$ (the scoped coercion $[0,\infty]\to\R$ is not a global instance) \\
+\texttt{$\nabla$[$\theta$] e}, \texttt{sup[x] e $<$ $\infty$} & $\nabla_\theta e$ (Riesz representative of the Fr\'echet derivative); $e$ bounded above \\
+\texttt{max[ys : Fin t $\to$ Y] f ys}, \texttt{v.exp.sum.log} & $\max_{ys}f(ys)$ over a finite index type; $\log\sum_b e^{v_b}$ (\texttt{v.exp}, \texttt{v.sum}, \texttt{v.max} act pointwise or reduce a vector) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Colours.}
+The renderer of lemma.cn typesets every statement in \LaTeX{} and colours identifiers by probabilistic role: \rv{red} for a random variable (a function on the sample space, the integrated variable of an $\E$ binder, the left side of $=$ in a $\Prb$ event), \ra{magenta} for a random argument (a random variable used as the argument of a function, so that the expression is itself random), and black for an observed value.
+We use the same convention: $\sv_t,\av_t,\rw_t$ are red, $s_t,a_t,x,u,y$ are values, and $V_t(\ra{s}_t)$ is a function of the state evaluated along the trajectory.
+
+\paragraph{Conditioning at null events and limits.}
+Because $\mu[\,\cdot\mid B]=\mu(B)^{-1}\mu|_B$ is the zero measure when $\mu(B)=0$, a conditional expectation at an unreachable state is $0$; hypotheses on value functions are therefore restricted to \emph{reachable} values $s_t$, those with $\Prb_\theta(\sv_t=s_t)\ne0$.
+Infinite sums are Lean's \texttt{tsum} ($\tsum$, the sum of a summable family and $0$ otherwise), and every limit is an explicit \texttt{Filter.Tendsto} statement.
+The only limit lemma we state is the following, used for the remainder of the truncated policy gradient (Section~\ref{sec:pg}).
+
+\begin{lemma}[\lmod{Lim.of.LtAbs.GtInftySup}{Real.Eq_0.Lim.of.LtAbs.GtInftySup}]
+\label{lem:lim}
+Let $\gamma\in\R$ and $x:\N\to\R$ with $|\gamma|<1$ and $\{|x_n|:n\in\N\}$ bounded above.
+Then $\displaystyle\lim_{n\to\infty}\gamma^n x_n=0$.
+\end{lemma}
+
+\section{The Markov assumption in Lean}
+\label{sec:markov}
+
+\paragraph{The common property.}
+Whatever the application, a first-order Markov assumption says that the probability of a length-$n$ object is a product of $n$ one-step factors, each of which looks back a bounded amount in the right state space.
+Two consequences are used throughout this paper: (i) the logarithm of the product is the sum of the logarithms of the factors, so a score is a sum of per-step terms; (ii) the product can be built, summed, maximised or differentiated by induction on the length, which gives linear-time recursions.
+What differs from model to model is how the factors are normalized (Section~\ref{sec:tables}).
+For a hidden Markov model and for a decision process the product is the same factorization, with (label, observation) in one case and (state, action) in the other: both are declarations of the one Lean module \lmod{Markov product theorem}{Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM} (the latter is \texttt{crf.markov.mdp}).
+
+\subsection{Conditional independence: the standard bricks}
+\label{sec:cond}
+Three library lemmas formalize the conditional-independence vocabulary in which the Markov assumption is usually stated.
+Let $x,y,z$ be measurable random variables on a probability space.
+\begin{itemize}[leftmargin=1.6em,itemsep=0.2em]
+  \item \lmod{CondIndep.of.Indep_Joint}{Random.CondIndep.of.Indep_Joint}: if $x\perp(y,z)$ then $x\perp y\mid z$.
+  \item \lmod{Indep_Joint.of.CondIndep.Indep}{Random.Indep_Joint.of.CondIndep.Indep}: if $z\perp x\mid y$ and $z\perp y$ then $z\perp(x,y)$.
+  \item \lmod{All_Imp_EqProbSCond.of.CondIndep}{Random.All_Imp_EqProbSCond.of.CondIndep}: if $x\perp y\mid z$ then, almost everywhere on the reference measures, $\Prb(x\mid y,z)=\Prb(x\mid z)$ whenever $\Prb(y,z)\ne0$; this is the Markov property in conditional form.
+\end{itemize}
+The chain rule used to factor a joint probability one variable at a time is the discrete lemma \lmod{ProbCond.eq.Mul.ProbCond}{Random.ProbCond.eq.Mul.ProbCond}: for variables with countable ranges and counting reference measures, $\Prb(x\wedge y\mid z)=\Prb(x\mid z)\,\Prb(y\mid x\wedge z)$.
+It is two-variable and pointwise, and is reduced to the measure-level form \lmod{MulMeasure.eq.MulMeasure.of.CondIndep}{Random.MulMeasure.eq.MulMeasure.of.CondIndep} of conditional independence, $\Prb(x{=}u,y{=}v,z{=}w)\,\Prb(z{=}w)=\Prb(x{=}u,z{=}w)\,\Prb(y{=}v,z{=}w)$ (obtained from the third lemma above, with no non-vanishing hypothesis), and to the identification \lmod{ProbCond.eq.Div.of.Eq_Count.Eq_Count}{Random.ProbCond.eq.Div.of.Eq_Count.Eq_Count} of $\Prb(x\mid y)$ with a ratio of measures.
+
+\section{Forward and backward propagation of the linear-chain CRF}
+\label{sec:crf}
+
+This is the first core topic.
+A linear-chain CRF assigns to a label sequence $ys\in\Y^{m+1}$ a weight that is a product of one-step factors, and its partition function $Z$ is the sum of these weights over all $k^{m+1}$ label sequences.
+The Markov structure makes two sums computable in linear time: the \emph{forward} recursion over prefixes (Section~\ref{sec:forward}) and the \emph{backward} recursion over suffixes; a third recursion over the same chain, with $\max$ in place of $\sum$, is Viterbi (Section~\ref{sec:viterbi}).
+Sections~\ref{sec:forward} and~\ref{sec:viterbi} are stated for the hidden-Markov-conditional instance in the log domain.
+
+\subsection{From the product to the score}
+\label{sec:score}
+Write $G(a,b)=\log\Prb(y_{i+1}=a\mid y_i=b)$ for the transition score into $a$ from $b$, $e_t(a)=\log\Prb(x_t=xo_t\mid y_t=a)$ for the emission (unary) score, and $s_t(ys)=\log P_t(ys)$ for the log-score of a label prefix, where, for a fixed observed sequence $xo$ and a label sequence $ys:\N\to\Y$, $P_t(ys)=\Prb\bigl(x[{:}t{+}1]=xo[{:}t{+}1]\wedge y[{:}t{+}1]=ys[{:}t{+}1]\bigr)$ is the joint probability of the first $t+1$ observations and labels.
+All probabilities are assumed strictly positive in the following statements.
+
+\begin{theorem}[\lmod{crf.markov.logits}{Tensor.Eq.of.Ne_0.Eq.Eq.Eq.Eq_log.Eq_log.Eq_log}]
+\label{thm:logits0}
+If the prefix probabilities satisfy the one-step hidden-Markov factorization $P_{t+1}(ys)=P_t(ys)\cdot T(ys_t,ys_{t+1})\cdot E_{t+1}(ys_{t+1})$ with $P,T,E>0$ (here $T(a,b)$ is read as $\Prb(y_{i+1}=b\mid y_i=a)$ and $E_i(b)$ as $\Prb(x_i=xo_i\mid y_i=b)$), and $s_t=\log P_t$, $x_t=\log E_t$ and $G(a,b)=\log T(b,a)$, then for every $t>0$:
+\[
+s_t(ys)=G(ys_t,ys_{t-1})+s_{t-1}(ys)+x_t(ys_t).
+\]
+\end{theorem}
+
+\begin{theorem}[\lmod{crf.logits}{Tensor.Imp.of.Eq}]
+\label{thm:logits}
+Assume \texttt{IsHiddenMarkovPr}$\;\pi\;x\;y\;xo$, positivity of $\Prb(y_0=a)$, $\Prb(y_{i+1}=a\mid y_i=b)$ and $\Prb(x_t=xo_t\mid y_t=a)$, and the definitions of $s_t$, $e_t$, $G$ above.
+Then for every $ys$,
+\begin{align*}
+s_{t+1}(ys)&=G(ys_{t+1},ys_t)+s_t(ys)+e_{t+1}(ys_{t+1}),\\
+s_t(ys)&=\log\Prb(y_0=ys_0)+\sum_{i=1}^{t}G(ys_i,ys_{i-1})+\sum_{i=0}^{t}e_i(ys_i).
+\end{align*}
+\end{theorem}
+The second line is the textbook linear-chain CRF score: a sum of unary (emission) terms and pairwise (transition) terms.
+It is exactly the \emph{log of a Markov product is a sum of per-step terms} property of Section~\ref{sec:markov}; the neural CRFs~\cite{huang2015bilstmcrf,lample2016ner,ma2016bilstmcnnscrf} replace $e_t$ by the output of a network and treat $G$ as a free matrix, and the derivations of Su~\cite{su2017crf} start from the same additive form.
+
+
+\subsection{The CRF loss function}
+\label{sec:forward}
+Let $\Y$ be finite with $k$ elements, fix a length $m+1$, and put $z_t(a)=\sum_{ys\in\Y^{t+1},\;ys_t=a}e^{s_t(ys)}$ and $\alpha_t(a)=\log z_t(a)$.
+
+\begin{theorem}[\lmod{CRF loss function}{Random.All_Eq_AddLogSumExpAdd.All_EqNegLogProb.of.All_Eq_LogProbCond.All_Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM}]
+\label{thm:nll}
+Under the hypotheses of Theorem~\ref{thm:logits} (with positive prefix probabilities),
+\[
+\alpha_{t+1}(a)=\log\sum_{b\in\Y}\exp\bigl(\alpha_t(b)+G(a,b)\bigr)+e_{t+1}(a),
+\]
+and for every label sequence $ys$,
+\[
+-\log\Prb\bigl(y[{:}m{+}1]=ys[{:}m{+}1]\bigm|x[{:}m{+}1]=xo[{:}m{+}1]\bigr)\;=\;\log\sum_{b\in\Y}e^{\alpha_m(b)}\;-\;s_m(ys).
+\]
+\end{theorem}
+
+\subsection{Viterbi: the max-plus recursion}
+\label{sec:viterbi}
+The second recursion replaces the sum over prefixes by a maximum.
+Let $v_t(a)=\max_{ys\in\Y^{t+1},\,ys_t=a}s_t(ys)$.
+
+\begin{theorem}[\lmod{crf.viterbi}{Random.All_Eq_Add_MaxAdd.EqMax_ProbJoint.of.All_Eq_LogProbCond.All_Eq_LogProbCond.Eq_LogProbJoint.All_Lt0ProbJoint.IsDiscreteHMM}]
+\label{thm:viterbi}
+Under the hypotheses of Theorem~\ref{thm:logits} (with positive prefix probabilities),
+\begin{align*}
+v_{t+1}(a)&=e_{t+1}(a)+\max_{b\in\Y}\bigl(v_t(b)+G(a,b)\bigr),\\
+\max_{ys\in\Y^{m+1}}\Prb\bigl(x[{:}m{+}1]=xo[{:}m{+}1]&\wedge y[{:}m{+}1]=ys\bigr)=\exp\max_{b\in\Y}v_m(b).
+\end{align*}
+\end{theorem}
+Only the maximal \emph{value} is computed; there is no argmax and no backpointer, so the decoded sequence itself is not formalized.
+
+
+\subsection{HMM versus CRF: what the statements say and do not say}
+\label{sec:hmmcrf}
+\paragraph{HMM.}
+A hidden Markov model~\cite{rabiner1989hmm} is \emph{generative} and \emph{locally normalized}:
+\[
+p(x,y)=\prod_{t}p(y_t\mid y_{t-1})\,p(x_t\mid y_t),\qquad Z=1,
+\]
+each factor being a probability distribution in its own argument.
+\paragraph{Linear-chain CRF.}
+A linear-chain CRF~\cite{lafferty2001crf,sutton2012crf} is \emph{discriminative} and \emph{globally normalized}:
+\[
+p(y\mid x)=\frac1{Z(x)}\prod_{t}\psi_t(y_{t-1},y_t,x),\qquad Z(x)=\sum_{y'\in\Y^{n}}\prod_t\psi_t(y'_{t-1},y'_t,x),
+\]
+with arbitrary non-negative potentials $\psi_t$ that need not be probabilities, and one partition function $Z(x)$ that is a sum over $k^n$ label paths.
+The Markov assumption is what makes $Z(x)$ computable by the forward recursion.
+In terms of the score recursion of Theorem~\ref{thm:logits}, a CRF is the HMM score recursion with the local-normalization constraint removed: the potentials $\psi_t=e^{G+e_t}$ are free, and what remains of the probability is $e^{\text{score}}/Z(x)$.
+
+\section{The Bellman equation}
+\label{sec:bellman}
+
+This is the second core topic.
+The CRF lemmas fix an observed sentence and sum over labels; here the randomness is a whole trajectory, and the Markov structure is that of a decision process: the next state and reward depend on the past only through the current state and action.
+The Bellman equation says that the value of a state is the expected immediate reward plus the discounted value of the next state, a one-step recursion that replaces an infinite-horizon expectation.
+
+\subsection{Model and trajectory measure}
+\label{sec:mdp}
+\begin{definition}[Model]
+\label{def:model}
+Let $S$ and $A$ be finite types with the discrete $\sigma$-algebra and $\Theta$ a real normed space.
+A \emph{policy} is $\pi:\Theta\to S\to A\to\R$, written $\pi_\theta(u\mid x)$, with $\pi_\theta(u\mid x)\ge0$ and $\sum_u\pi_\theta(u\mid x)=1$ (local normalization: $Z=1$ at every step).
+An \emph{environment} consists of an initial probability measure $\iota$ on $S$, a Markov kernel $T$ from $S\times A$ to $S$, a Markov kernel $R$ from $S\times A$ to $\R$ with support in $[-R_{\max},R_{\max}]$.
+\end{definition}
+A trajectory is a sequence $\omega\in(S\times A\times\R)^{\N}$ of stages with coordinates $\sv_t,\av_t,\rw_t$.
+One stage from $x$ is drawn by $\kappa_\theta(x)=\delta_x\otimes(\pi_\theta(\cdot\mid x)\otimes R)$ and the stage chain has kernel $K_\theta(x,u,\rho)=(\kappa_\theta\circ T)(x,u)$.
+The trajectory measure $\Prb_\theta=\mathtt{Kernel.trajMeasure}\;\mu_0\;(K_\theta)_n$ is the Ionescu-Tulcea extension~\cite{kallenberg2002foundations} provided by mathlib, with $n$-th kernel reading only the last stage of the history.
+The finite-dimensional marginals have the Markov-product shape $\iota(s_0)\prod_t\pi_\theta(a_t\mid s_t)\,T(s_{t+1}\mid s_t,a_t)\,R(\cdot\mid s_t,a_t)$.
+Its logarithm is a sum of per-step terms, and since the transition and reward factors do not depend on $\theta$, \emph{the score of a trajectory is the sum of the scores of its actions}, $\sum_t\grad\log\pi_\theta(a_t\mid s_t)$.
+This is the MDP counterpart of the CRF score of Theorem~\ref{thm:logits}; Lean uses it only through the expectation lemma \texttt{E\_score} below.
+
+\paragraph{The Markov property is a theorem here.}
+Here the Markov property of $\Prb_\theta$ is not assumed but proved from the construction.
+The trajectory lemmas include \lmod{joint_succ}{Random.Map}: the law of $(\omega_t,\omega_{t+1})$ is the law of $\omega_t$ composed with the kernel $K_\theta$, and \lmod{hist_step}{Random.Integral.of.All_LeNorm.StronglyMeasurable.history}: for a bounded measurable $\varphi$,
+\[
+\E\bigl[\varphi(h_n,\omega_{n+1})\bigr]=\int\!\Bigl(\int\varphi(h,z)\,dK_\theta(\mathrm{last}\,h)(z)\Bigr)\,d\,\mathrm{law}(h_n)(h),
+\]
+where $h_n=(\omega_0,\dots,\omega_n)$ is the history and $\mathrm{last}\,h$ is its last stage, together with iterated versions (\lmod{hist_mul}{Random.Integral_Mul.eq.Integral_Mul_Integral.of.All_LeNorm.StronglyMeasurable.All_LeNorm.StronglyMeasurable}, \lmod{hist_iter}{Random.All_EqIntegral_MulGIntegral_MulGKf.of.All_LeNorm.StronglyMeasurable}) used below.
+The joint law of state and action factors as $\Prb(\sv_t=x,\av_t=u)=\Prb(\sv_t=x)\,\pi_\theta(u\mid x)$ (\lmod{ProbJoint.eq.Mul_Prob_Pr}{Random.ProbJoint.eq.Mul_Prob_Pr}).
+
+
+\subsection{Value functions and the Bellman equations}
+\label{sec:bellmaneq}
+For $\gamma\in[0,1)$, the discounted return from $t$ is $G_t=\tsum_k\gamma^k\rw_{t+k}$, and
+$V_t^\theta(s_t)=\E_\theta[G_t\mid\sv_t]$, $Q_t^\theta(s_t,a_t)=\E_\theta[G_t\mid\sv_t,\av_t]$.
+The objective is $J(\theta)=\E_\theta[\tsum_t\gamma^t\rw_t]=\tsum_t\gamma^t\E_\theta[\rw_t]$.
+The trajectory lemmas show that on reachable states $V_t^\theta$ equals a time-free closed form (\lmod{V_eq}{Random.V.eq.TSum_MulPowWRc.of.Ne0Real_Preimage.In_Ico}), that $|V_t|,|Q_t|\le(1-\gamma)^{-1}R_{\max}$, and that $J$ is Fr\'echet differentiable for a differentiable policy with uniformly bounded gradient.
+We assume throughout:
+(D) $\gamma\in[0,1)$; (P1) $\theta\mapsto\pi_\theta(u\mid x)$ is differentiable; (P2) $\sup_{\theta,x,u}\|\grad\pi_\theta(u\mid x)\|<\infty$.
+Bounds on $V_t$ and $\grad V_t$ are derived, not assumed.
+
+\begin{theorem}[Bellman equations]
+\label{thm:bellman}
+Assume (D) and let $V,Q$ satisfy $V_t(s_t)=\E_\theta[G_t\mid\sv_t]$, $Q_t(s_t,a_t)=\E_\theta[G_t\mid\sv_t,\av_t]$.
+Then
+\begin{align*}
+V_t(s_t)&=\E_\theta\bigl[Q_t(s_t,\av_t)\bigm|\sv_t\bigr],\\
+V_t(s_t)&=\E_\theta\bigl[\rw_t+\gamma\,V_{t+1}(\ra{s}_{t+1})\bigm|\sv_t\bigr],\\
+Q_t(s_t,a_t)&=\E_\theta\bigl[\rw_t+\gamma\,V_{t+1}(\ra{s}_{t+1})\bigm|\sv_t,\av_t\bigr].
+\end{align*}
+\end{theorem}
+In the Lean file the three identities are stated for every $t$ and every pair $(x,u)$ with no reachability hypothesis: at a null conditioning event both sides are $0$ (Section~\ref{sec:notation}).
+Read from $t+1$ to $t$, the second identity is a \emph{backward} recursion for the value function, the same direction as the backward recursion of the CRF; Section~\ref{sec:analogy} compares the two without claiming a theorem.
+The gradient of this recursion is the first step of the policy gradient theorem (Theorem~\ref{thm:rec}).
+
+
+\subsection{Forward, backward and Bellman recursions side by side (analogy)}
+\label{sec:analogy}
+This subsection is an analogy, not a theorem: no Lean statement relates the CRF recursions to the Bellman recursion.
+Table~\ref{tab:rec} lists the four one-step recursions of this paper, the aggregation each performs over the Markov chain, the direction in which it runs, and the Lean statement that proves it.
+Here $z_t$ and $\beta_t$ are the forward and backward variables of a chain with one-step weights $\psi_t$: $z_0=\psi_0$, $z_{t+1}(a)=\sum_bz_t(b)\,\psi_{t+1}(b,a)$, and $\beta_m=1$, $\beta_t(a)=\sum_c\psi_{t+1}(a,c)\,\beta_{t+1}(c)$.
+For a hidden Markov model $\psi_{t+1}(b,a)=\Prb(y_{t+1}=a\mid y_t=b)\Prb(x_{t+1}=xo_{t+1}\mid y_{t+1}=a)$.
+These variables are used only for this comparison; the recursions themselves are not Lean statements, except for the log form of the forward one in Theorem~\ref{thm:nll} and the value recursion of Viterbi in Theorem~\ref{thm:viterbi}.
+
+\begin{table}[ht]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.12\linewidth}>{\raggedright\arraybackslash}p{0.34\linewidth}>{\raggedright\arraybackslash}p{0.10\linewidth}>{\raggedright\arraybackslash}p{0.13\linewidth}>{\raggedright\arraybackslash}p{0.21\linewidth}@{}}
+\toprule
+Recursion & One step & Direction & Aggregation & Lean \\
+\midrule
+CRF forward & $z_{t+1}(a)=\sum_bz_t(b)\,\psi_{t+1}(b,a)$ & forward in $t$ & sum over prefixes (sum-product) & log form Theorem~\ref{thm:nll} \\
+CRF backward & $\beta_t(a)=\sum_c\psi_{t+1}(a,c)\,\beta_{t+1}(c)$ & backward in $t$ & sum over suffixes (sum-product) & not a Lean statement \\
+Viterbi & $v_{t+1}(a)=e_{t+1}(a)+\max_b\bigl(v_t(b)+G(a,b)\bigr)$ & forward in $t$ & max over prefixes (max-sum) & Theorem~\ref{thm:viterbi} (value only) \\
+Bellman & $V_t(s_t)=\E_\theta[\rw_t+\gamma V_{t+1}(\ra{s}_{t+1})\mid\sv_t]$ & backward in $t$ & expectation over the next state and reward & Theorem~\ref{thm:bellman} \\
+\bottomrule
+\end{tabular}
+\caption{One-step recursions on a Markov chain. The first three are dynamic programs over label paths; the Bellman recursion is a dynamic program over trajectories.}
+\label{tab:rec}
+\end{table}
+
+Formally, if one drops the reward in the Bellman recursion and imposes a terminal value, it becomes $V_t(s)=\sum_cK(s,c)\,V_{t+1}(c)$ for the one-step kernel $K$ of the state chain, which has exactly the shape of the backward recursion $\beta_t(a)=\sum_c\psi_{t+1}(a,c)\beta_{t+1}(c)$ with $\psi\leftrightarrow K$ and $\beta_m\leftrightarrow V_m$.
+The differences are real: $K$ is a probability kernel ($\sum_cK(s,c)=1$) whereas $\psi$ is an unnormalized weight, the Bellman recursion carries a reward source term and a discount, and the Lean value function is an infinite-horizon conditional expectation, not a finite suffix sum.
+What the recursions share is the mechanism: a Markov structure replaces a global sum by a one-step recursion, forward when the quantity is built from the past, backward when it is built from the future.
+
+\section{The policy gradient theorem: REINFORCE and GAE}
+\label{sec:pg}
+
+This is the third core topic.
+The policy gradient theorem expresses the gradient of the expected discounted return as an expectation of the return times the score $\grad\log\pi_\theta(\av_t\mid\sv_t)$ of the action actually taken.
+Lean proves it by induction on the horizon from the Bellman recursion, in three forms: a truncated form with an explicit remainder (Theorem~\ref{thm:trunc}), an action-value form, and the REINFORCE form (Theorem~\ref{thm:pgt}).
+Because local normalization makes the score zero-mean (Lemma~\ref{lem:zero}), the return may be replaced by an advantage, which gives the unbiased advantage estimate and GAE (Section~\ref{sec:gae}).
+
+\subsection{The policy gradient theorem by induction}
+\label{sec:pgind}
+\begin{theorem}[Recursion, unrolling]
+\label{thm:rec}
+Assume (D), (P1), (P2) and let $s_0$ be reachable.
+Then $\grad V_t(s_t)=\sum_uQ_t(s_t,u)\grad\pi_\theta(u\mid s_t)+\gamma\sum_y\Prb_\theta(\sv_{t+1}=y\mid\sv_t)\grad V_{t+1}(y)$ at reachable $s_t$, and for every $n$,
+\[
+\grad V_0(s_0)=\sum_{t<n}\gamma^t\sum_y\Prb_\theta(\sv_t=y\mid\sv_0)\sum_uQ_t(y,u)\grad\pi_\theta(u\mid y)+\gamma^n\sum_y\Prb_\theta(\sv_n=y\mid\sv_0)\grad V_n(y).
+\]
+\end{theorem}
+
+\begin{theorem}[Truncated policy gradient]
+\label{thm:trunc}
+Assume (D), (P1), (P2).
+For every $n\in\N$,
+\[
+\tsum_t\gamma^t\grad\E_\theta[\rw_t]=\E_\theta\Bigl[\sum_{t<n}\gamma^tQ_t(\ra{s}_t,\ra{a}_t)\,\grad\log\pi_\theta(\av_t\mid\sv_t)\Bigr]+\gamma^n\,\E_\theta\bigl[\grad V_n(\ra{s}_n)\bigr].
+\]
+\end{theorem}
+Despite the finite sum, the theorem concerns the discounted infinite-horizon objective: it is exact for every truncation level, with an explicit remainder.
+Letting $n\to\infty$, with the remainder going to $0$ by Lemma~\ref{lem:lim} and the bound on $\grad V_n$ over reachable states, gives the action-value form
+$\tsum_t\gamma^t\grad\E_\theta[\rw_t]=\tsum_t\gamma^t\E_\theta[Q_t(\ra{s}_t,\ra{a}_t)\grad\log\pi_\theta(\av_t\mid\sv_t)]$, and with the tower property, $\E_\theta[G_t\grad\log\pi_\theta]=\E_\theta[Q_t\grad\log\pi_\theta]$, the REINFORCE form.
+
+\begin{theorem}[Policy gradient, REINFORCE form]
+\label{thm:pgt}
+Let $\Theta$ be a real Hilbert space, $S$ and $A$ carry counting measure, and assume (D), (P1), (P2).
+Then
+\[
+\grad\E_\theta\Bigl[\tsum_t\gamma^t\rw_t\Bigr]=\E_\theta\Bigl[\tsum_t\gamma^t\,G_t\,\grad\log\pi_\theta(\av_t\mid\sv_t)\Bigr].
+\]
+\end{theorem}
+Here the series sit inside the expectation; this is possible because rewards are bounded, and the shared lemmas \lmod{Log.Pr.of.Bounded}{Tensor.Eq.Expect.Sum.Grad.Log.Pr.of.Bounded} and \lmod{Bounded.Discount}{Tensor.Eq.Expect.Sum.Grad.Log.Pr.of.Bounded.Discount} exchange series and expectations.
+
+
+\subsection{Normalization gives a zero-mean score}
+\label{sec:zeroscore}
+The property that links the local normalization of Definition~\ref{def:model} to variance reduction is the following.
+
+\begin{lemma}[\lmod{Expect_ConditionedGrad_LogProb.eq.Zero}{Random.ExpectConditionedGrad_LogProb.eq.Zero}]
+\label{lem:zero}
+Let $p:\Theta\to A\to\R$ with $\sum_ap_{\theta'}(a)=1$ for all $\theta'$, $p_\theta(a)>0$ and $\theta'\mapsto p_{\theta'}(a)$ differentiable at $\theta$.
+Then $\displaystyle\E_{a\sim p_\theta}\bigl[\grad\log p_\theta(a)\bigr]=\sum_ap_\theta(a)\,\grad\log p_\theta(a)=0$.
+\end{lemma}
+Its conditional form for the policy of the trajectory model is \lmod{LogProb.eq.Zero.policy}{Random.ExpectConditionedGrad_LogProb.eq.Zero#policy}: $\E_\theta[\grad\log\pi_\theta(\av_t\mid\sv_t)\mid\sv_t=x]=0$ for a positive differentiable policy.
+Inside the model file the same fact is used without positivity (terms with $\pi_\theta(u\mid x)=0$ vanish): for every $h:S\to\R$, $\E_\theta[h(\sv_t)\,\grad\log\pi_\theta(\av_t\mid\sv_t)]=0$ (\texttt{E\_h\_score}).
+This is why a baseline depending only on the state leaves the policy gradient unchanged, the step used in Section~\ref{sec:gae}.
+For a globally normalized CRF the analogue is different: $\E_{p(y\mid x)}[\grad\log p(y\mid x)]=0$ holds as well, but $\grad\log p=\grad\mathrm{score}-\E[\grad\mathrm{score}]$ contains the partition function; the identity $\grad\log Z=\E[\grad\mathrm{score}]$ is not formalized.
+
+
+\subsection{Unbiased advantage and generalized advantage estimation}
+\label{sec:gae}
+
+Let $\delta_j=\rw_j+\gamma V_{j+1}(\sv_{j+1})-V_j(\sv_j)$ be the temporal-difference residual of a value function $V$.
+
+\begin{theorem}[Unbiased advantage estimate]
+\label{thm:main}
+Let $\Theta$ be a real Hilbert space, $S$ and $A$ carry counting measure, assume (D), (P1), (P2), and let $V^\theta_t(s_t)=\E_\theta[G_t\mid\sv_t]$ for all $\theta,t$ and all reachable $s_t$.
+With $\hat A_t=\tsum_k\gamma^k\delta_{t+k}$,
+\[
+\grad\E_\theta\Bigl[\tsum_t\gamma^t\rw_t\Bigr]=\E_\theta\Bigl[\tsum_t\gamma^t\,\hat A_t\,\grad\log\pi_\theta(\av_t\mid\sv_t)\Bigr].
+\]
+\end{theorem}
+For bounded $V$ the series telescopes to $\hat A_t=G_t-V_t(\sv_t)$, so Theorem~\ref{thm:main} reduces to Theorem~\ref{thm:pgt} plus the vanishing of the baseline term $\E_\theta[V_t(\sv_t)\grad\log\pi_\theta]=0$ of Section~\ref{sec:zeroscore}.
+
+\begin{theorem}[Generalized advantage estimate]
+\label{thm:gae}
+Under the hypotheses of Theorem~\ref{thm:main}, let $\lambda\in[0,1]$ and $\hat A^{\lambda}_t=\tsum_k(\gamma\lambda)^k\delta_{t+k}$.
+Then
+\[
+\grad\E_\theta\Bigl[\tsum_t\gamma^t\rw_t\Bigr]=\E_\theta\Bigl[\tsum_t\gamma^t\,\hat A^{\lambda}_t\,\grad\log\pi_\theta(\av_t\mid\sv_t)\Bigr].
+\]
+\end{theorem}
+For $\lambda\in[0,1)$ the weighted-average form $\hat A^{\lambda}_t=(1-\lambda)\sum_{k\ge0}\lambda^k\sum_{i\le k}\gamma^i\delta_{t+i}$ of Schulman et al.~\cite{schulman2016gae} gives the same identity via the series identity.
+The statements concern the exact value function: with an approximate critic the terms $k\ge1$ need not have zero mean and $\lambda<1$ is biased~\cite{schulman2016gae}; that is not formalized.
+GAE is the advantage estimator used by PPO~\cite{schulman2017ppo}, in a truncated (finite-horizon) form (its Eqs.~(10)--(11)); the rest of PPO (clipped surrogate, importance ratio, KL penalty, learned critic) is not formalized.
+
+\section{Beyond the core: labeling versus generation (conceptual)}
+\label{sec:gen}
+
+This section is a comparison, not a theorem, and it is not part of the three core topics.
+The library has no sequence-to-sequence, teacher-forcing, exposure-bias or label-bias lemma; what it has are the two building blocks that the comparison combines.
+
+\paragraph{Two normalizations of the same numerator.}
+Let $\mathrm{score}(x,y)=\sum_tf_t(y_{<t},y_t;x)$ be an additive score.
+A \emph{globally normalized} model sets $p(y\mid x)=e^{\mathrm{score}(x,y)}/Z(x)$ with $Z(x)=\sum_{y'}e^{\mathrm{score}(x,y')}$, so that $-\log p=\log Z(x)-\mathrm{score}(x,y)$; for a linear chain, the forward recursion computes $Z$ exactly.
+A \emph{locally normalized} model normalizes every step by its own softmax, $p(y\mid x)=\prod_tp(y_t\mid x,y_{<t})$ with $p(y_t\mid\cdot)=e^{f_t}/\sum_ve^{f_t(v)}$, so that
+\[
+-\log p(y\mid x)=\sum_t\Bigl(\log\sum_ve^{f_t(v)}-f_t(y_t)\Bigr)=\sum_t\bigl(\log Z_t-f_t(y_t)\bigr).
+\]
+Each summand is exactly the Lean identity \lmod{Log.Softmax.eq.Add.LogSumExp}{Tensor.Log.Softmax.eq.Add.LogSumExp}; the product-to-sum step is the same \emph{log of a Markov product is a sum} property.
+The two models have the same numerator and differ only in the denominator: one $Z(x)$ against a product of per-step normalizers.
+The MEMM~\cite{mccallum2000memm} is the locally normalized sibling of the CRF, and its label-bias problem (a state with few outgoing transitions passes all its mass on regardless of the observation) is the counterpart of the exposure bias of sequence-to-sequence models.
+Andor et al.~\cite{andor2016global} make the same case for globally normalized neural parsers.
+
+\paragraph{What changes from labeling to generation.}
+\begin{enumerate}[leftmargin=1.6em,itemsep=0.2em]
+  \item \emph{Alignment and observation.} In labeling, $|y|=|x|$ and $x$ is observed in full at every position; in generation the output length is variable, there is no alignment, and the generated prefix $y_{<t}$ is part of the conditioning of step $t$.
+  \item \emph{The Markov structure is relocated.} A linear-chain CRF is first-order in the \emph{labels} and arbitrary in $x$; an autoregressive model $p(y_t\mid x,y_{<t})$ conditions on the \emph{whole prefix}, so it is Markov only in the enlarged state $(x,y_{<t})$.
+  In that state space the transition is deterministic (append the chosen token), and the Markov property is trivial.
+  \item \emph{Normalizer.} $Z(x)$ over $k^n$ paths is computable by dynamic programming in $O(nk^2)$ because of first-order dependence; for a prefix-conditioned model the global sum over $V^n$ sequences has no such recursion, which is why one normalizes locally.
+  \item \emph{Inference.} Viterbi is exact for the chain; greedy, beam and sampling are approximate for generation.
+  \item \emph{Training.} Labeling minimizes the supervised $\log Z-\mathrm{score}$. Generation is trained by teacher-forced cross-entropy, which needs the true prefix, or by expected reward, which is where policy gradients enter (Section~\ref{sec:pg}).
+\end{enumerate}
+
+\section{Comparison tables}
+\label{sec:tables}
+
+\subsection{The Markov assumption across models}
+Table~\ref{tab:markov} compares what is factorized, what each factor conditions on, how it is normalized, and what is in Lean.
+The rows are the models of this paper; \emph{conditioned on} is the information a factor may use.
+In every row the probability of a length-$n$ object is a product of one-step factors, which gives (i) a sum of local terms in the log, (ii) a linear-time recursion (forward, backward, Viterbi, Bellman, value iteration) and (iii) induction on $t$ as the proof technique (induction on $t$ for the CRF lemmas; \lmod{hist_step}{Random.Integral.of.All_LeNorm.StronglyMeasurable.history} and the unrolling for the MDP).
+
+\begin{table}[ht]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.115\linewidth}>{\raggedright\arraybackslash}p{0.20\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.12\linewidth}>{\raggedright\arraybackslash}p{0.25\linewidth}@{}}
+\toprule
+Model & Factorized & Conditioned on & Normalization & Lean \\
+\midrule
+HMM & $p(x,y)=\prod_tp(y_t\mid y_{t-1})\,p(x_t\mid y_t)$ (generative) & previous label; emission on current label only & local, $Z=1$ & \texttt{IsHiddenMarkovPr} \\
+Linear-chain CRF & $p(y\mid x)=\frac1{Z(x)}\prod_t\psi_t(y_{t-1},y_t,x)$ (discriminative) & adjacent labels; $x$ arbitrary, fully observed & global $Z(x)$ over $k^n$ paths & HMM-conditional instance: \texttt{crf.logits}, $\log Z-$score, \texttt{crf.viterbi}; HMM identity for a discrete HMM (\texttt{hmm\_identity}); general $\psi_t$ as a model, normalized marginals and $\nabla\log Z$ not formalized \\
+MEMM & $\prod_tp(y_t\mid y_{t-1},x)$ & previous label and $x$ & local, per-step softmax & not formalized \\
+MDP / policy gradient & $\iota(s_0)\prod_t\pi_\theta(a_t\mid s_t)T(s_{t+1}\mid s_t,a_t)$ & next state and reward depend on $(s_t,a_t)$ only; policy on $s_t$ only & local, $Z=1$ & trajectory measure, \lmod{joint_succ}{Random.Map}, \lmod{hist_step}{Random.Integral.of.All_LeNorm.StronglyMeasurable.history}, Bellman, policy gradient, advantage, GAE \\
+PPO (algorithm) & same trajectory law; objective $L^{\rm CLIP}$ with ratio $\rho_t$ and learned critic & as MDP & local, $Z=1$ & \textbf{none}: clipped surrogate, ratio, KL, value clipping, learned critic not formalized; only the (truncated) GAE advantage inside the policy gradient is justified (exact $V$) \\
+Autoregressive LM & $\prod_tp(y_t\mid x,y_{<t})$ & full prefix & local, per-step softmax & not formalized (only log-softmax and the two-variable chain rule); as an MDP with state $(x,y_{<t})$ the Markov property is trivial \\
+\bottomrule
+\end{tabular}
+\caption{The Markov assumption in the models of this paper. HMM versus CRF differ in normalization (local versus global) and in what is modelled ($p(x,y)$ versus $p(y\mid x)$); MDP versus PPO differ in kind (model versus algorithm).}
+\label{tab:markov}
+\end{table}
+
+\subsection{Sequence labeling versus sequence-to-sequence generation}
+Table~\ref{tab:labgen} summarizes Section~\ref{sec:gen}; it is a conceptual comparison.
+Only the entries marked ``Lean'' are theorems; everything else is a conceptual comparison.
+
+\begin{table}[ht]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.14\linewidth}>{\raggedright\arraybackslash}p{0.37\linewidth}>{\raggedright\arraybackslash}p{0.37\linewidth}@{}}
+\toprule
+ & Sequence labeling (CRF) & Seq2seq generation (LM / PPO) \\
+\midrule
+Input / alignment & aligned, $|y|=|x|$, $x$ fully observed & unaligned, variable length; the generated prefix is part of the conditioning \\
+Normalization & global partition function over $k^n$ label sequences & locally normalized token softmax \\
+Dependence & adjacent labels (first order) and all of $x$ & full prefix $y_{<t}$ (and $x$); Markov only in the state $(x,y_{<t})$ \\
+Training & supervised likelihood, $\text{NLL}=\log Z-\text{score}$ & teacher-forced cross-entropy, or expected reward (policy gradient / PPO) \\
+Inference & exact dynamic programming: forward, backward, Viterbi (Lean: Viterbi values only) & approximate: greedy, beam, sampling \\
+Failure mode & label bias if locally normalized (MEMM); invalid tag sequences with independent softmax & exposure bias; beam-size anomaly \\
+Gradient & $\grad\text{NLL}=\E_{\rm model}[\text{features}]-\text{empirical}$ (not in Lean) & $\grad\E[R]=\E[\sum_t\gamma^t\hat A_t\grad\log\pi_\theta(a_t\mid s_t)]$ (Lean, finite $S,A$, exact $V$); $\E[\grad\log\pi]=0$ (Lean) \\
+\bottomrule
+\end{tabular}
+\caption{Sequence labeling versus sequence-to-sequence generation.}
+\label{tab:labgen}
+\end{table}
+
+\section{Formalization artifact}
+\label{sec:artifact}
+
+\paragraph{Modules and version.}
+Each theorem links to its module in~\cite{lemma_repo} (prefix \texttt{Lemma.} omitted).
+
+The temporal-difference lemmas (\texttt{delta\_ae\_bdd}, \texttt{E\_delta\_psi}, \texttt{E\_sum\_delta}) are in the advantage file of the trajectory model; the bounds \texttt{V\_bdd} and \texttt{gradV\_bdd} used in place of hypotheses on $V$ and $\grad V$ are in the differentiability file.
+The project uses Lean \texttt{v4.33.1} with mathlib.
+
+\paragraph{Checking.}
+None of the cited modules contains \texttt{sorry}, \texttt{admit} or a new \texttt{axiom}.
+\texttt{\#print axioms} reports for the declarations of Theorems~\ref{thm:logits0}--\ref{thm:viterbi}, for the log-softmax, conditional-independence, chain-rule and zero-score lemmas of Sections~\ref{sec:markov}--\ref{sec:zeroscore}, and for Theorems~\ref{thm:bellman}--\ref{thm:gae} and the helper lemmas, the axioms \texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound} and nothing else.
+
+\paragraph{Acknowledgements.}
+Mathlib~\cite{mathlib2020,mathlib} provides the measure theory and analysis on which every theorem here rests.
+Su Jianlin's articles on his blog Scientific Spaces were the guide to the CRF material~\cite{su2017crf,su2018search}.
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\medskip
+\noindent\small Interactive statements of the modules cited in this paper are available at \href{http://www.lemma.cn/}{lemma.cn}; the project is on \href{https://github.com/math-proof/lemma}{GitHub}: \href{http://www.lemma.cn/lean/?module=Tensor.EqDot_GradExpect.of.Eq_Conditioned.Eq_Expect.All_Differentiable_Prob.GtInftySup.generalized_advantage_estimate}{Lean~4}.
+
+\end{document}

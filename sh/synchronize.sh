@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 # ensure the remote git repo is up to date before sync:
-# ssh "${env:REMOTE_MYSQL_USER}@${env:REMOTE_MYSQL_HOST}" "git -C github/lean pull"
-# ssh "${env:REMOTE_MYSQL_USER}@${env:REMOTE_MYSQL_HOST}" "git -C github/py pull"
+# ssh "$REMOTE_MYSQL_USER@$REMOTE_MYSQL_HOST" "git -C github/lean pull"
+# ssh "$REMOTE_MYSQL_USER@$REMOTE_MYSQL_HOST" "git -C github/py pull"
 # Synchronize local MySQL (axiom) data to the remote server. Two modes:
 #
 # 1. lemma mode (scoped upsert of axiom.lemma rows):
 #   bash sh/synchronize.sh Real.Eq_0.Lim.of.LtAbs.GtInftySup Lemma/Tensor/Eq/Foo/of/Bar.lean ...
 #   bash sh/synchronize.sh -n <modules...>     # dry run: only report what would change
 #   - modules: dotted names or Lemma/....lean paths (*.echo.lean is rejected)
-#   - only rows with user = $LEAN_PROJECT_USER (default: name of the repo directory, as in sh/run.sh)
-#     and the given modules are sent, as INSERT ... ON DUPLICATE KEY UPDATE inside one transaction.
+#   - only rows for the given modules are sent, as INSERT ... ON DUPLICATE KEY UPDATE
+#     keyed on module, inside one transaction.
 #     Nothing is deleted, dropped, truncated or copied as a file (unlike sh/synchronize.ps1).
 #   - after the push the row checksums (MD5 over all non-key columns, and over `lemma`) of the
 #     remote rows are compared with the local ones; the exit status is 1 on any mismatch.
@@ -156,8 +156,6 @@ EOF
 # mode: lemma — scoped upsert of axiom.lemma rows by module
 # =========================================================================
 sync_lemma() {
-  user=${LEAN_PROJECT_USER:-$(basename "$(pwd)")}
-
   # ---- modules -----------------------------------------------------------
   declare -A seen
   MODULES=()
@@ -176,7 +174,7 @@ sync_lemma() {
 
   cols="CAST(imports AS CHAR), CAST(\`open\` AS CHAR), IFNULL(CAST(set_option AS CHAR),'<NULL>'), CAST(preamble AS CHAR), CAST(lemma AS CHAR), IFNULL(CAST(meta AS CHAR),'<NULL>'), CAST(\`date\` AS CHAR)"
   checksum_sql="SELECT '#count', CAST(COUNT(*) AS CHAR), '' FROM lemma
-UNION ALL SELECT module, MD5(CONCAT_WS('#', $cols)), MD5(CAST(lemma AS CHAR)) FROM lemma WHERE user = '$user' AND module IN ($in_list);"
+UNION ALL SELECT module, MD5(CONCAT_WS('#', $cols)), MD5(CAST(lemma AS CHAR)) FROM lemma WHERE module IN ($in_list);"
 
   declare -A L_ROW L_LEM R_ROW R_LEM RB_ROW
   fill() {  # name-prefix, count-var ; reads tab-separated lines on stdin
@@ -192,14 +190,14 @@ UNION ALL SELECT module, MD5(CONCAT_WS('#', $cols)), MD5(CAST(lemma AS CHAR)) FR
     done
   }
 
-  echo "user = $user, ${#MODULES[@]} module(s), remote = $R_USER@$R_HOST (mysql port $R_PORT)"
+  echo "${#MODULES[@]} module(s), remote = $R_USER@$R_HOST (mysql port $R_PORT)"
 
   # 1. local checksums, must all exist
   L_COUNT=""
   fill L L_COUNT < <(printf '%s\n' "$checksum_sql" | local_mysql -N -B --raw)
   missing=0
   for m in "${MODULES[@]}"; do
-    if [ -z "${L_ROW[$m]+x}" ]; then echo "ERROR: no local row for user=$user module=$m (run: node mjs/run.mjs $m)" >&2; missing=1; fi
+    if [ -z "${L_ROW[$m]+x}" ]; then echo "ERROR: no local row for module=$m (run: node mjs/run.mjs $m)" >&2; missing=1; fi
   done
   [ $missing -eq 0 ] || exit 1
 
@@ -219,11 +217,11 @@ UNION ALL SELECT module, MD5(CONCAT_WS('#', $cols)), MD5(CAST(lemma AS CHAR)) FR
 
   # 3. one transaction of INSERT ... ON DUPLICATE KEY UPDATE for exactly these rows
   ups="\`imports\`=VALUES(\`imports\`), \`open\`=VALUES(\`open\`), \`set_option\`=VALUES(\`set_option\`), \`preamble\`=VALUES(\`preamble\`), \`lemma\`=VALUES(\`lemma\`), \`meta\`=VALUES(\`meta\`), \`date\`=VALUES(\`date\`)"
-  gen_sql="SELECT CONCAT('INSERT INTO lemma (user, module, imports, \`open\`, set_option, preamble, lemma, meta, \`date\`) VALUES (',
-    QUOTE(user), ',', QUOTE(module), ',', QUOTE(CAST(imports AS CHAR)), ',', QUOTE(CAST(\`open\` AS CHAR)), ',',
+  gen_sql="SELECT CONCAT('INSERT INTO lemma (module, imports, \`open\`, set_option, preamble, lemma, meta, \`date\`) VALUES (',
+    QUOTE(module), ',', QUOTE(CAST(imports AS CHAR)), ',', QUOTE(CAST(\`open\` AS CHAR)), ',',
     QUOTE(CAST(set_option AS CHAR)), ',', QUOTE(CAST(preamble AS CHAR)), ',', QUOTE(CAST(lemma AS CHAR)), ',',
     QUOTE(CAST(meta AS CHAR)), ',', QUOTE(CAST(\`date\` AS CHAR)), ') ON DUPLICATE KEY UPDATE $ups;')
-FROM lemma WHERE user = '$user' AND module IN ($in_list) ORDER BY module;"
+FROM lemma WHERE module IN ($in_list) ORDER BY module;"
   {
     echo "SET NAMES utf8mb4;"
     echo "START TRANSACTION;"

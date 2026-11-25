@@ -54,7 +54,7 @@ import {
   detectCycleTraceback,
   buildHierarchyTraceback,
 } from './lean/hierarchyData.mjs';
-import { renderWebsiteIndex, handleWebsiteMdPhp } from './lean/website.mjs';
+import { renderWebsiteIndex, handleWebsiteMdPhp, handleArxivMarkdown, handleMdListing, homeLandingHtml, homeLangFromAccept } from './lean/website.mjs';
 import { handleMathlibPhpRequest } from './lean/mathlibRequest.mjs';
 import { getRepoStatsCached } from './lean/lemmaRepoStats.mjs';
 import {
@@ -777,6 +777,27 @@ app.use('/:userSegment/website/md.php', ensureProjectUser, (req, res) => {
     );
   });
 });
+app.use('/:userSegment/md', ensureProjectUser, (req, res, next) => {
+  handleArxivMarkdown(req, res, next).catch((e) => {
+    console.error('[arxiv md]', e);
+    res.status(500).type('html').send(
+      `<!DOCTYPE html><meta charset="utf-8"><title>Error</title><p>${escapeHtml(String(e?.message || e))}</p>`
+    );
+  });
+});
+app.use('/:userSegment/md', ensureProjectUser, (req, res, next) => {
+  handleMdListing(req, res, next).catch((e) => {
+    console.error('[md listing]', e);
+    res.status(500).type('html').send(
+      `<!DOCTYPE html><meta charset="utf-8"><title>Error</title><p>${escapeHtml(String(e?.message || e))}</p>`
+    );
+  });
+});
+app.use('/:userSegment/md', ensureProjectUser, express.static(path.join(REPO_ROOT, 'md'), {
+  index: false,
+  redirect: false,
+  maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+}));
 app.use('/:userSegment/website', ensureProjectUser, 
   express.static(path.join(REPO_ROOT, 'website'), {
   index: false,
@@ -785,15 +806,31 @@ app.use('/:userSegment/website', ensureProjectUser,
 }));
 
 /** Same idea as `php/search.php` + `index.php` (`?type=`, `?q=`, `?lean=`). */
-async function renderSearchPage(res, dict, userSegment) {
+function searchPageLang(req) {
+  const chosen = req?.query?.lang;
+  if (typeof chosen === 'string' && chosen.trim() !== '') {
+    const base = chosen.trim().toLowerCase().split(/[-_]/)[0];
+    if (base === 'en' || base === 'zh' || base === 'fr') return base;
+  }
+  return homeLangFromAccept(req?.get?.('accept-language'));
+}
+
+async function renderSearchPage(res, dict, userSegment, req) {
   try {
     const payload = await buildSearchPayload(dict, PROJECT_USER);
+    let countScript = '';
+    if (payload.q == null) {
+      const landing = await homeLandingHtml(searchPageLang(req));
+      payload.home = landing.home;
+      payload.footer = landing.footer;
+      countScript = landing.countScript;
+    }
     const searchJson = jsonForScriptEmbed(payload);
     res.set('Content-Type', 'text/html; charset=utf-8');
     if (process.env.NODE_ENV !== 'production') {
       res.set('Cache-Control', 'no-store');
     }
-    res.render('search', { searchJson, userSegment });
+    res.render('search', { searchJson, userSegment, countScript });
   } catch (err) {
     console.error('[search]', err);
     res.status(500).type('html').send(
@@ -861,7 +898,7 @@ async function handleLeanPostSearch(req, res) {
   const body = req.body && typeof req.body === 'object' ? req.body : {};
   const moduleRaw = postFieldString(body.module);
   if (leanGetWantsSearch(body, moduleRaw)) {
-    await renderSearchPage(res, body, userSegment);
+    await renderSearchPage(res, body, userSegment, req);
     return;
   }
   const hasLemmaPayload =
@@ -1074,7 +1111,7 @@ async function handleLeanGet(req, res) {
 
   const raw = req.query.module;
   if (leanGetWantsSearch(req.query, raw)) {
-    await renderSearchPage(res, req.query, userSeg);
+    await renderSearchPage(res, req.query, userSeg, req);
     return;
   }
 
@@ -1139,15 +1176,7 @@ async function handleLeanGet(req, res) {
   }
 
   if (raw === undefined || raw === null || raw === '') {
-    try {
-      await renderSummaryPage(res, userSeg);
-    } catch (err) {
-      console.error('[summary]', err);
-      res.status(500).type('html').send(
-        `<!DOCTYPE html><meta charset="utf-8"><title>Server error</title>
-        <p>${escapeHtml(String(err?.message || err))}</p>`
-      );
-    }
+    await renderSearchPage(res, { q: '', mode: 'lean' }, userSeg, req);
     return;
   }
   if (typeof raw !== 'string') {
@@ -1159,15 +1188,7 @@ async function handleLeanGet(req, res) {
   }
   let module = raw.trim();
   if (!module) {
-    try {
-      await renderSummaryPage(res, userSeg);
-    } catch (err) {
-      console.error('[summary]', err);
-      res.status(500).type('html').send(
-        `<!DOCTYPE html><meta charset="utf-8"><title>Server error</title>
-        <p>${escapeHtml(String(err?.message || err))}</p>`
-      );
-    }
+    await renderSearchPage(res, { q: '', mode: 'lean' }, userSeg, req);
     return;
   }
   /** Same as `index.php`: absolute or Lemma-relative `.lean` path → dotted module + redirect. */
@@ -1215,7 +1236,11 @@ async function handleLeanGet(req, res) {
 
 app.get('/:userSegment', ensureProjectUser, handleLeanGet);
 app.get('/:userSegment/', ensureProjectUser, handleLeanGet);
-app.get('/:userSegment/index.php', ensureProjectUser, handleLeanGet);
+app.get('/:userSegment/index.php', ensureProjectUser, (req, res) => {
+  const orig = req.originalUrl || req.url;
+  const q = orig.includes('?') ? orig.slice(orig.indexOf('?')) : '';
+  res.redirect(302, `/${req.params.userSegment}/${q}`);
+});
 
 /** Search form POST (PHP `index.php` + `search.php` use POST when form submits). */
 function handleLeanPostSearchRoute(req, res) {
