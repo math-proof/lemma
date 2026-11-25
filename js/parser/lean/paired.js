@@ -218,7 +218,7 @@ export class LeanPairedGroup extends Closable(LeanUnary) {
 
 /**
  * Multiline module-level `(...) := by` parenthesis closing (JS serializer parity); kept outside the class so
- * member-list audit matches PHP `LeanParenthesis` (no extra instance method vs `lean.php`).
+ * Kept outside the class so the member list stays stable.
  * @param {LeanParenthesis} paren
  */
 function leanParenthesisLemmaAssignByMultilineClose(paren) {

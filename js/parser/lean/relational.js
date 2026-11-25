@@ -3,7 +3,7 @@
  * `==` / `!=` / `≠` / `≡` / `≢` / `≃` / `≈` / `≍` / `∣` / `⟂` / `∼[π]`, plus JS `≪` / `≫`.
  *
  * `LeanFilterRelational` stays in this module (only `≥` / `≤` use it).
- * PHP `Lean_ll` / `Lean_gg` stay in the arithmetic module: there they extend
+ * `Lean_ll` and `Lean_gg` stay in the arithmetic module: there they extend
  * `LeanArithmetic`, not `LeanRelational`.
  *
  * Base classes (the ones in `extends`) are imported from the modules that
@@ -194,6 +194,24 @@ export class LeanEq extends LeanRelational {
     latexFormat() {
         const sep = this.sep();
         return `{%s} ${this.opLatex()}${sep}{%s}`;
+    }
+
+    /**
+     * Inside a `ℙ[…]` event an equality is the observed value, so only its
+     * right-hand side is fingerprinted: `ℙ[π](x[0] = «\sf{x}»[0] | …)` keeps
+     * `«\sf{x}»[0]` and drops `x[0] =`.
+     * @returns {boolean}
+     */
+    inProbEvent() {
+        for (let p = this.parent; p; p = p.parent)
+            if (p instanceof L.Lean_Prob) return true;
+        return false;
+    }
+
+    /** @param {{leaves: Map<string, number>, binders: string[]}} [ctx] */
+    toJSON(ctx = { leaves: new Map() }) {
+        if (this.inProbEvent()) return this.rhs.toJSON(ctx);
+        return super.toJSON(ctx);
     }
 
 }

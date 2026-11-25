@@ -1,14 +1,14 @@
 /**
- * Ports `php/lemma.php` `detect_lemma` (lines 152–203):
+ * Detect lemma imports from source text:
  * - qualified: `Section.Name1…` → add `Lemma.<resolved>` imports;
  * - same pass strips `Section.` prefixes (line 163) from a scratch copy for the next step;
  * - unqualified: chains not starting with a section (e.g. `SEq.of.SEqDataS.Eq` under `open Tensor`)
- *   → try `Lemma.<section>.<chain>` for each top-level `Lemma/` folder (`module_exists` in PHP).
+ *   → try `Lemma.<section>.<chain>` for each top-level `Lemma/` folder.
  */
 import { moduleToLeanPath, fileExists } from './modulePath.mjs';
 import { resolveMissingModuleRedirect } from './moduleResolve.mjs';
 
-/** Same token tail as PHP `$term` in `lemma.php`. */
+/** Token tail used when scanning a name. */
 const TERM =
   "(?:[A-Z][\\w'!₀-₉]*|(?:of|is|et|ou|to|eq|ne|gt|lt|ge|le|in|as|dvd|sub|sup)(?=\\.))";
 
@@ -54,7 +54,7 @@ function resolveModuleOnDisk(dotted) {
 }
 
 /**
- * PHP `detect_lemma` line 173: skip adding if some `Lemma.<section>.<lemmaName>` already exists.
+ * Skip adding an import when `Lemma.<section>.<lemmaName>` is already present.
  * @param {string[]} imports `Lemma.*` strings
  * @param {string} lemmaName first capture from the unqualified regex (dotted chain)
  */
@@ -65,10 +65,10 @@ function importAlreadyCoversLemmaName(imports, lemmaName) {
 }
 
 /**
- * @param {string} text imply + proof lines (same sources PHP passes to `detect_lemma`)
+ * @param {string} text imply + proof lines
  * @param {string[]} sections `listLemmaTopLevelDirs()`
- * @param {string[]} [existingImports] PHP `$imports` already present when `detect_lemma` runs
- * @returns {{ imports: string[]; sectionsFound: string[] }} `Lemma.*` to merge + section roots (for `open_section` like PHP)
+ * @param {string[]} [existingImports] imports already present
+ * @returns {{ imports: string[]; sectionsFound: string[] }} `Lemma.*` to merge, plus section roots
  */
 export function detectLemmaImportsFromScanText(text, sections, existingImports = []) {
   if (!text || !sections.length) return { imports: [], sectionsFound: [] };
@@ -136,7 +136,7 @@ export function detectLemmaImportsFromScanText(text, sections, existingImports =
 }
 
 /**
- * Same as PHP `detect_lemma` line 163: remove `Section.` when `Section` is a lemma package and the
+ * Remove `Section.` when `Section` is a lemma package and the
  * next token matches `$term` (skip when `@` immediately precedes the section, e.g. attributes).
  * @param {string} text
  * @param {string[]} sections `listLemmaTopLevelDirs()`

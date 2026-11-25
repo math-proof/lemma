@@ -10,7 +10,7 @@ export function leanPathToModule(input, repoRoot = REPO_ROOT) {
   if (!trimmed.endsWith(".lean")) {
     return null;
   }
-  // PHP lean_to_module: walk parents until basename is Lemma, then join the collected segments.
+  // Walk parents until the basename is Lemma, then join the collected segments.
   // Do not require the path to live under this machine's REPO_ROOT — VS Code / remote copy-paste
   // often hands `/home/.../Lemma/...` to `?module=`.
   const segs = trimmed.replace(/\\/g, "/").split("/").filter(Boolean);
@@ -58,7 +58,7 @@ export function leanPathToModule(input, repoRoot = REPO_ROOT) {
 /**
  * Map query module to filesystem path, mirroring the common case:
  * `Tensor.Foo.eq.Bar` → `Lemma/Tensor/Foo/eq/Bar.lean`
- * Supports `Foo#suffix` → `Foo/suffix.lean` (Lean submodule filename pattern used in PHP redirects).
+ * Supports `Foo#suffix` → `Foo/suffix.lean`.
  */
 export function moduleToLeanPath(module) {
   if (!module || typeof module !== 'string') return null;
@@ -165,7 +165,7 @@ export function fileExists(absPath) {
 }
 
 /**
- * Directory matching PHP `index.php` `$path_info` for a dotted module:
+ * Directory for a dotted module:
  * `Tensor` → `Lemma/Tensor`, `Tensor.GetDot` → `Lemma/Tensor/GetDot`.
  * For `Foo#bar` → `Lemma/Foo/bar` (Lean submodule path segment).
  * Returns `null` if the resolved path would escape `Lemma/`.
@@ -203,7 +203,7 @@ export function dirExists(absPath) {
 }
 
 /**
- * Same idea as `php/package.php`: subdirs → `packages`, `*.lean` (not `*.echo.lean`) → `theorems` (names without `.lean`).
+ * Subdirs → `packages`, `*.lean` (not `*.echo.lean`) → `theorems` (names without `.lean`).
  * Each entry is `{ name, mtimeMs, size }` (`size` is `null` for folders, like Explorer’s details view).
  */
 export function listLemmaPackageContents(dirAbs) {

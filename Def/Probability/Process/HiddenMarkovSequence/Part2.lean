@@ -16,7 +16,7 @@ open MeasureTheory
 open scoped ENNReal.ToRealCoe
 
 
-/-- The py first-order hidden Markov assumptions in probability notation (py `markov_assumptions` + `Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM`):
+/-- The py first-order hidden Markov assumptions in probability notation (py `markov_assumptions` + `Random.Prob_JointGetS_SliceAdd_1.eq.MulMulProbS__Prod_MulProbS_Cond_Get.of.IsDiscreteHMM`):
 for every label sequence `ys`,
 
   `ℙ(x[:1] = xo[:1], y[:1] = ys[:1]) = ℙ(x[0] = xo[0] | y[0] = ys[0]) * ℙ(y[0] = ys[0])`,

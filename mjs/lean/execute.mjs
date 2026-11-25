@@ -1,5 +1,5 @@
 /**
- * SQL execute endpoint (legacy path `php/request/execute.php`) — runs MySQL when configured,
+ * SQL execute endpoint (legacy path `request/execute`) — runs MySQL when configured,
  * else stub shapes so the Vue client does not 404.
  */
 import { getMysqlConfig, mysqlExecute } from './fetchLemmaMysql.mjs';

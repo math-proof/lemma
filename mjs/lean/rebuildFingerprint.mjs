@@ -1,5 +1,5 @@
 /**
- * POST `php/request/rebuild_fingerprint.php` — replace one lemma's
+ * POST `request/rebuild_fingerprint` — replace one lemma's
  * `axiom.inverted` postings and `axiom.fingerprint` trees from its Lean source.
  * Same write as `node mjs/leanInvertedIndex.mjs --refresh-module`.
  */

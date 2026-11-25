@@ -3,7 +3,6 @@
 *.py    eol=lf
 *.js    eol=lf
 *.vue   eol=lf
-*.php   eol=lf
 *.css   eol=lf
 *.txt   eol=lf
 *.md   eol=lf

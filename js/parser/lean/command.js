@@ -1,8 +1,7 @@
 /**
  * Top-level commands (`LeanCommand`, `import` / `open` / `set_option` / `namespace`).
  *
- * PHP `append` still writes `$this->sql`, and PHP `open` stays `'open'`
- * (JS may render `open scoped`).
+ * `append` records SQL text. `open` may render as `open scoped`.
  *
  * Base classes (the ones in `extends`) are imported from the modules that
  * define them; every other class is read from `Lean.classes` (`L.X`) at

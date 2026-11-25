@@ -1,5 +1,5 @@
 /**
- * Legacy path `php/request/disambiguate.php`: find which top-level `Lemma/<section>/`
+ * Legacy path `request/disambiguate`: find which top-level `Lemma/<section>/`
  * folder contains the file for a dotted module path (no DB).
  */
 
@@ -53,13 +53,13 @@ export function disambiguateModule(moduleInput, onlySection = '') {
     sectionDirs = [only];
   }
 
-  // PHP: "/" . str_replace('.', '/', $module)
+  // '/' + module with dots turned into slashes
   let slashPath = `/${moduleName.replace(/\./g, '/')}`;
 
   let found = findSectionForSlashPath(sectionDirs, slashPath);
   if (found) return found;
 
-  // PHP: if (preg_match("#(.+)/[a-z]+$#", $module, $m)) { $module = $m[1]; try_to_die($module); }
+  // A trailing lowercase segment is a private name; search its parent module.
   const m = slashPath.match(/^(.+)\/([a-z]+)$/);
   if (m) {
     found = findSectionForSlashPath(sectionDirs, m[1]);

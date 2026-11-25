@@ -1,5 +1,5 @@
 /**
- * Port of `LeanModule::echo2vue` (php/parser/lean.php ~4738–4852).
+ * Run Lean on a module and return the echoed render payload.
  * Runs from repo root via subprocess `cwd` (no `process.chdir`).
  * Subprocesses are async so the Node event loop can serve other HTTP requests while Lean runs.
  */

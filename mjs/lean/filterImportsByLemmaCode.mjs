@@ -1,6 +1,5 @@
 /**
- * Ports `php/lemma.php` (≈313–445) + `try_pattern`, `parseInfixSegments`, `Not` from `php/parser/lean.php`
- * so Node save keeps only imports referenced in proof bodies (same as PHP POST save).
+ * Keep only imports referenced in proof bodies when saving.
  */
 import { dropSEqPluralS, parseInfixSegments, Not, tokensToModule } from './moduleResolve.mjs';
 

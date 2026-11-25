@@ -1,9 +1,8 @@
 /**
  * Lazy application `<|` (`Lean_lazy`).
  *
- * `a <| b` is `b a`, low precedence and right-associative. PHP `operator`,
- * `sep`, and `strFormat` stay in the PHP class; JS keeps only
- * `input_priority` and `stack_priority`.
+ * `a <| b` is `b a`, low precedence and right-associative.
+ * This class keeps `input_priority` and `stack_priority`.
  *
  * Base classes (the ones in `extends`) are imported from the modules that
  * define them; every other class is read from `Lean.classes` (`L.X`) at

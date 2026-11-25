@@ -163,6 +163,24 @@ remove_build_artifacts() {
 }
 
 
+# A lemma created in or before 2024 predates the py project workflow. Rename it,
+# then hand over to @py, who must follow py/AGENTS.md.
+warn_py_old_creation() {
+  local file=$1
+  local created year
+  created=$(sed -n 's/^-- created on[[:space:]]*//p' "$file" | head -n 1)
+  year=${created%%-*}
+  case $year in
+    [0-9][0-9][0-9][0-9]) ;;
+    *) return 0 ;;
+  esac
+  if [ "$year" -le 2024 ]; then
+    echo "warning: $file: -- created on $created is in or before 2024" >&2
+    echo "@py: follow py/AGENTS.md (ps1/run.ps1 -> http://localhost:8080/py/ -> commit and push)." >&2
+  fi
+}
+
+
 # sympy/ may be absent; only search directories that exist.
 search_dirs=()
 for d in Lemma Theorem Def Structure Instance Initialize sympy; do
@@ -236,6 +254,8 @@ if [ ! -f $srcFile ]; then
   echo "error: $srcFile does not exist"
   exit 1
 fi
+
+warn_py_old_creation "$srcFile"
 
 parent_path=$(dirname $dstFile)
 echo mkdir -p $parent_path

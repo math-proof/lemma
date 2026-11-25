@@ -1,8 +1,8 @@
 /**
- * Ports `php/lemma.php` lines 608–659: after `compile` + `render2vue`, `$syntax` keys drive extra
+ * After `compile` + `render2vue`, syntax keys drive extra
  * decl-library imports (`import_syntax`). Uses the same JS parser as `render2vue.mjs`.
  *
- * Skips adding an import when PHP would: already present, or implied by `Lemma.*` via MySQL
+ * Skips an import that is already present, or implied by `Lemma.*` via MySQL
  * recursive deps (`importSyntaxDeps.mjs`) or filesystem `contains_module`.
  */
 import { compile, LeanModule } from '../../js/parser/lean.js';
@@ -11,7 +11,7 @@ import { transitiveProvidesImport } from './importSyntaxDeps.mjs';
 /**
  * @param {string[]} imports dotted import paths (no `import ` prefix), e.g. `Theorem.Logic.SEq`
  * @param {string} leanSource full `.lean` file text (imports + body)
- * @returns {Promise<string[]>} `imports` plus any syntax-driven additions (PHP `array_unshift` order)
+ * @returns {Promise<string[]>} `imports` plus any syntax-driven additions, new names first
  */
 export async function mergeSyntaxDrivenImports(imports, leanSource) {
   const out = imports.map(String);

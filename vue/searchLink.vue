@@ -101,7 +101,7 @@ const self = new Vue({
 				console.log('oldText = ' + this.module);
 				console.log('newText = ' + module);
 
-				undeletables = await form_post(`php/request/rename.php`, { old: this.module.replace(/\//g, '.'), new: module.replace(/\//g, '.')});
+				undeletables = await form_post(`request/rename`, { old: this.module.replace(/\//g, '.'), new: module.replace(/\//g, '.')});
 				console.log('undeletables = ' + undeletables);
 
 				var modules = this.$root.data;
@@ -146,7 +146,7 @@ const self = new Vue({
 			case 'F3':
 				console.log("F3 is pressed");
 				this.mode = 'F3';
-				find_and_jump(event, await form_post('php/request/sections.php'));
+				find_and_jump(event, await form_post('request/sections'));
 				break;
 			}
 		},
@@ -180,7 +180,7 @@ const self = new Vue({
 				console.log('oldText = ' + old);
 				console.log('newText = ' + $new);
 
-				undeletables = await form_post(`php/request/rename.php`, { old, new: $new});
+				undeletables = await form_post(`request/rename`, { old, new: $new});
 				console.log('undeletables = ' + undeletables);
 				this.delete_folder(undeletables);
 				await sleep(0.5);

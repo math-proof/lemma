@@ -18,13 +18,13 @@ body {
 </body>
 </html>
 
-<script src="node_modules/highlight.js/lib/highlight.js"></script>
-<script src="node_modules/marked/marked.min.js"></script>
-<script src="node_modules/axios/dist/axios.min.js"></script>
-<script src="node_modules/qs/dist/qs.js"></script>
-<script src="js/py.js"></script>
-<script src="js/std.js"></script>
-<script>
+<script src="node_modules/highlight.js/lib/highlight.js" defer></script>
+<script src="node_modules/marked/marked.min.js" defer></script>
+<script src="node_modules/axios/dist/axios.min.js" defer></script>
+<script src="node_modules/qs/dist/qs.js" defer></script>
+<script src="js/py.js" defer></script>
+<script src="js/std.js" defer></script>
+<script type="module">
 	hljs.initHighlightingOnLoad();
 	var url = '<%= fetchPath %>';
 	get(url).then(text =>{

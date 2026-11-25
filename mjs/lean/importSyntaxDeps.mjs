@@ -1,5 +1,5 @@
 /**
- * PHP `lemma.php` `import_syntax` (lines 546–602): before adding a syntax-driven import, check whether
+ * Before adding a syntax-driven import, check whether
  * some `Lemma.*` import already implies it — first via MySQL recursive `axiom.lemma` deps, then via
  * filesystem `contains_module` on the current import list.
  */
@@ -10,7 +10,7 @@ import { getMysqlPool } from './fetchLemmaMysql.mjs';
 
 const TRANSITIVE_IMPORT_MAX_DEPTH = 14;
 
-/** Same recursive shape as `php/lemma.php` lines 555–586 (JSON roots = dotted modules without `Lemma.`). */
+/** JSON roots are dotted modules without the `Lemma.` prefix. */
 const MYSQL_TRANSITIVE_IMPORT_SQL = `
 WITH RECURSIVE dependencies AS (
   SELECT jt.module
@@ -51,7 +51,7 @@ function resolveImportToLeanPath(imp) {
 }
 
 /**
- * PHP `contains_module` (lines 518–539): walk leading `import` lines only.
+ * Walk leading `import` lines only.
  *
  * @param {string} imp
  * @param {string} target
@@ -83,7 +83,7 @@ function importTransitiveContains(imp, target, depth = 0, visited = new Set()) {
 
 /**
  * @param {string[]} imports dotted paths (may include `Lemma.` prefix)
- * @returns {string[]} `Tensor.Foo…` modules for `JSON_TABLE` (PHP strips `Lemma.` before encode)
+ * @returns {string[]} `Tensor.Foo…` modules for `JSON_TABLE` (`Lemma.` stripped)
  */
 function lemmaRootModulesForMysql(imports) {
   const out = [];
@@ -139,7 +139,7 @@ export async function transitiveProvidesImport(imports, targetImport) {
   return false;
 }
 
-/** Imports that `mergeSyntaxDrivenImports` may add and that PHP may skip when already transitive. */
+/** Imports that `mergeSyntaxDrivenImports` may add and that are skipped when already transitive. */
 const PRUNABLE_SYNTAX_IMPORTS = [
   'Theorem.Logic.SEq',
   'Theorem.Analysis.Real.Relational',
@@ -157,7 +157,7 @@ const PRUNABLE_SYNTAX_IMPORTS = [
 ];
 
 /**
- * Drop syntax-driven imports that are already implied by `Lemma.*` (MySQL or disk), mirroring PHP
+ * Drop syntax-driven imports that are already implied by `Lemma.*` (MySQL or disk).
  * `import_syntax` behaviour for POST output.
  *
  * @param {string[]} imports

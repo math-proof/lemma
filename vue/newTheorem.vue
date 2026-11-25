@@ -52,7 +52,7 @@ const self = new Vue({
 			var sql = `
 select * from lemma where module = "${module}";
 `
-			var lemma = await form_post('php/request/execute.php', {sql});
+			var lemma = await form_post('request/execute', {sql});
 			if (lemma.length)
 				alert(`Lemma ${module} already exists!`);
 			else

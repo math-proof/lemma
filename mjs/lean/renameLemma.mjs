@@ -1,7 +1,7 @@
 /**
- * Node port of `php/request/rename.php` (POST `old`, `new` as dotted modules under `Lemma/`).
+ * Node port of `request/rename` (POST `old`, `new` as dotted modules under `Lemma/`).
  * Runs `sh/rename.sh` (Linux) or `sh/rename.ps1` (Windows), then optional MySQL `update_axiom`-style updates.
- * The `package` + folder branch from PHP is not implemented here (legacy folder UI removed).
+ * Folder rename via `package` is not implemented (use dotted `old` and `new`).
  */
 import path from 'path';
 import { spawnSync } from 'node:child_process';
@@ -84,7 +84,7 @@ export async function handleRenameLemma(req, res) {
   if (pkg != null) {
     res.status(501).json({
       error:
-        'Node server: package-scoped rename (POST package + old/new) is not implemented. Use dotted `old` and `new` only, or run PHP rename.',
+        'Package-scoped rename (POST package + old/new) is not implemented. Use dotted `old` and `new`.'
     });
     return;
   }
@@ -147,6 +147,6 @@ export async function handleRenameLemma(req, res) {
 
   await updateAxiomModuleRow(old, new_);
 
-  /** Same as PHP `echo std\\encode("renamed!");` — JSON string for axios. */
+  /** JSON string `"renamed!"` for the client. */
   res.status(200).json('renamed!');
 }

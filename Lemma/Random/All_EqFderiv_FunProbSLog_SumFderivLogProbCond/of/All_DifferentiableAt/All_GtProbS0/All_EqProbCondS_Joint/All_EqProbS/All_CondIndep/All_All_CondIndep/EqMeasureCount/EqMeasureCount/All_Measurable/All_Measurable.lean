@@ -1,5 +1,5 @@
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-import Lemma.Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM
+import Lemma.Random.Prob_JointGetS_SliceAdd_1.eq.MulMulProbS__Prod_MulProbS_Cond_Get.of.IsDiscreteHMM
 import Initialize.Tactic.Attr.Basic
 open MeasureTheory Random
 open scoped ENNReal.ToRealCoe
@@ -17,7 +17,7 @@ trajectory has nonzero probability, then
   `∇[θ] log ℙ(s[:T + 1] = sv[:T + 1] ∧ a[:T] = av[:T]) = ∑ t < T, ∇[θ] log ℙ(a[t] = av[t] | s[t] = sv[t])`.
 
 The factorization `ℙ(s[:T + 1], a[:T]) = C * ∏ t < T, ℙ(a[t] | s[t])`, with `C` independent of `θ`, is
-derived (`Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM.mdp`), not assumed.
+derived (`Random.Prob_JointGetS_SliceAdd_1.eq.MulMulProbS__Prod_MulProbS_Cond_Get.of.IsDiscreteHMM.mdp`), not assumed.
 
 Python: Tensor.Eq.of.Ne_0.Eq.Eq.Eq.policy_gradient_theorem.
 -/
@@ -52,7 +52,7 @@ private lemma policy_gradient_theorem
     ⟨_, rfl⟩
   have hfac : ∀ θ, (ℙ[π θ](s[:T + 1] = sv[:T + 1] ∧ a[:T] = av[:T]) : ℝ) = C * ∏ t ∈ Finset.range T, p θ t := by
     intro θ
-    have h := ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM.mdp (π := π θ)
+    have h := Prob_JointGetS_SliceAdd_1.eq.MulMulProbS__Prod_MulProbS_Cond_Get.of.IsDiscreteHMM.mdp (π := π θ)
       («\sf{s}» := sv) («\sf{a}» := av) hs ha (hpol θ) (htrans θ) T
     rw [h, ENNReal.toReal_mul, ENNReal.toReal_prod]
     simp only [ENNReal.toReal_mul]

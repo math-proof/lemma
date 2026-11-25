@@ -1,11 +1,8 @@
 /**
- * Optional MySQL load for lemma pages — mirrors php/lemma.php (lines 500–515)
- * and php/utility.php `fetch_from_mysql`.
+ * Optional MySQL load for lemma pages.
  *
- * Env names match sibling `label/index.js`:
- *
- * Defaults when a host is set match php/init.php (DB `axiom`, user/user),
- * not label’s default DB (`corpus`).
+ * Env names match sibling `label/index.js`.
+ * When a host is set, the database is `axiom`.
  *
  * Connection is used when `MYSQL_HOST` is set, or when `MYSQL_PWD` is set
  * (host then defaults to `127.0.0.1`, same as `mjs/run.mjs`).
@@ -37,7 +34,7 @@ export function leanEchoPath(leanAbsPath) {
 }
 
 /**
- * Same condition as PHP: load from DB when there is no echo file, or when the
+ * Load from the database when there is no echo file, or when the
  * echo sidecar is newer than the `.lean` file (lean on disk is stale).
  */
 export function shouldLoadLemmaFromMysql(leanAbsPath, echoAbsPath) {
@@ -68,10 +65,19 @@ export function getMysqlConfig() {
   if (!host) return null;
   const port = Number(process.env.MYSQL_PORT || 3306);
   const database = 'axiom';
-  if (probedLogin) return { host, port, database, ...probedLogin };
   const user = process.env.MYSQL_USER || process.env.USER || process.env.USERNAME;
   const password = process.env.MYSQL_PWD;
-  return { host, port, user, password, database };
+  const socketPath = (process.env.MYSQL_SOCKET || '').trim();
+  const cfg = probedLogin
+    ? { host, port, database, ...probedLogin }
+    : { host, port, user, password, database };
+  // mysql2 prefers `host` and opens TCP. `root@localhost` on the server is the
+  // socket account, so a socket must replace the host.
+  if (socketPath) {
+    cfg.socketPath = socketPath;
+    delete cfg.host;
+  }
+  return cfg;
 }
 
 /**
@@ -96,8 +102,10 @@ async function probeMysqlLogin() {
   for (const c of candidates) {
     if (c.password == null) continue;
     try {
+      const socketPath = (process.env.MYSQL_SOCKET || '').trim();
       const conn = await mysql.createConnection({
-        host, port, database: 'axiom', user: c.user, password: c.password, connectTimeout: 3000,
+        ...(socketPath ? { socketPath } : { host, port }),
+        database: 'axiom', user: c.user, password: c.password, connectTimeout: 3000,
       });
       await conn.end();
       probedLogin = c;
@@ -121,13 +129,13 @@ export function getMysqlPool() {
     queueLimit: 0,
     enableKeepAlive: true,
     keepAliveInitialDelay: 0,
-    /** Match PHP `mysql\execute` multi-statement (`implode(';', $sql)`). */
+    /** Allow several statements separated by `;`. */
     multipleStatements: true,
   });
   return pool;
 }
 
-/** PHP `MYSQLI_ASSOC` / `MYSQLI_NUM` / `MYSQLI_BOTH` */
+/** Result shapes: assoc, numeric, or both. */
 const MYSQLI_ASSOC = 1;
 const MYSQLI_NUM = 2;
 const MYSQLI_BOTH = 3;
@@ -139,9 +147,9 @@ function parseMysqliResultType(v) {
 }
 
 /**
- * Port of `mysql\execute` (php/mysql.php) for `php/request/execute.php`.
+ * Run one SQL statement for `request/execute`.
  * @param {string} sql
- * @param {unknown} resultType POST `resultType` (PHP default `MYSQLI_NUM` = 2)
+ * @param {unknown} resultType POST `resultType` (`MYSQLI_NUM` = 2)
  * @returns {Promise<unknown[] | number | null>} `null` if MySQL not configured
  */
 export async function mysqlExecute(sql, resultType) {
@@ -192,7 +200,7 @@ function decode(jsonOrNull) {
   }
 }
 
-/** PHP-like falsy for decoded lemma / date (PHP treats [] as empty). */
+/** Empty arrays count as missing lemma or date values. */
 function isEmptyDecodedLemmaField(v) {
   if (v == null) return true;
   if (Array.isArray(v)) return v.length === 0;
@@ -319,7 +327,7 @@ export async function replaceDocstrings(conn, id, rows) {
 }
 
 /**
- * One `mathlib` row by exact `name` (PHP `php/new.php` first fallback).
+ * One `mathlib` row by exact `name`.
  * @param {string} name
  * @returns {Promise<Record<string, unknown> | null>}
  */
@@ -340,13 +348,13 @@ export async function fetchMathlibRowByName(name) {
 
 /**
  * Map one `mathlib` table row to the `lemma` prop shape expected by `mathlib.vue` / `lemma.vue`.
- * Mirrors `php/mathlib.php` `get_lemma` + column order from `sql/create/mathlib.sql`.
+ * Column order follows `sql/create/mathlib.sql`.
  * @param {Record<string, unknown>} row
  */
 export function mathlibRowToLemmaPayload(row) {
   const r = row;
   const implyRaw = decode(r.imply);
-  /** PHP `get_lemma` uses `std\\decode($imply)` only — no forced `insert` (DB is source of truth). */
+  /** Decode `imply` as stored. The database value is kept. */
   const imply =
     implyRaw != null && typeof implyRaw === 'object'
       ? /** @type {Record<string, unknown>} */ ({ ...implyRaw })

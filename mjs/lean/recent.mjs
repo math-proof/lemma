@@ -1,5 +1,5 @@
 /**
- * GET `php/request/recent.php` — recent modules by file mtime (PHP uses last-line date).
+ * GET `request/recent` — recent modules by file mtime.
  */
 import fs from 'fs';
 import path from 'path';

@@ -1,8 +1,7 @@
 import Lemma.Random.EqProbJoint.All_Eq_Mul_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasureCount.EqMeasureCount.All_Measurable.All_Measurable
 import Lemma.Random.Prob.eq.Mul_ProbS.Prob.eq.Mul_MulProbS.of.CondIndep.CondIndep
+import Instance.Data.Nat.Fun
 import Instance.Probability.Process.DiscreteHMM
-import Instance.Probability.Process.DiscreteHMM.Part2
-import Initialize.Tactic.Attr.Basic
 open MeasureTheory Random IsDiscreteHMM
 set_option synthInstance.maxHeartbeats 60000
 
@@ -18,25 +17,26 @@ private lemma main
   (h : IsDiscreteHMM π x y)
   (t : ℕ) :
 -- imply
-  have : ∀ i, SinglePSpace π (y i) := fun i =>
+  have : ∀ i : ℕ, SinglePSpace π y[i] := fun i =>
     IsDiscreteHMM.singlePSpace_y (x := x) i
-  have : ∀ i j, SinglePSpace π (y i, y j) := fun i j =>
+  have : ∀ i j : ℕ, SinglePSpace π (y[i], y[j]) := fun i j =>
     IsDiscreteHMM.singlePSpace_yy (x := x) i j
   ℙ[π](x[:t + 1] = «\sf{x}»[:t + 1] ∧ y[:t + 1] = «\sf{y}»[:t + 1]) =
-    ℙ[π]((x 0) = «\sf{x}» 0 | (y 0) = «\sf{y}» 0) * ℙ[π]((y 0) = «\sf{y}» 0) *
+    ℙ[π](x[0] = «\sf{x}»[0] | y[0] = «\sf{y}»[0]) * ℙ[π](y[0] = «\sf{y}»[0]) *
       ∏ i ∈ Finset.Ico 1 (t + 1),
-        ℙ[π]((y i) = «\sf{y}» i | (y (i - 1)) = «\sf{y}» (i - 1)) * ℙ[π]((x i) = «\sf{x}» i | (y i) = «\sf{y}» i) := by
+        ℙ[π](y[i] = «\sf{y}»[i] | y[i - 1] = «\sf{y}»[i - 1]) * ℙ[π](x[i] = «\sf{x}»[i] | y[i] = «\sf{y}»[i]) := by
 -- proof
   intro _ _
   obtain ⟨h₀, h₁⟩ := Prob.eq.Mul_ProbS.Prob.eq.Mul_MulProbS.of.CondIndep.CondIndep
     («\sf{x}» := «\sf{x}») h «\sf{y}»
-  simp only [fun_getElem] at h₀ h₁
+  simp only [fun_getElem]
   induction t with
   | zero =>
     simpa using h₀
   | succ t ih =>
     rw [Finset.prod_Ico_succ_top (by omega : 1 ≤ t + 1), Nat.add_sub_cancel]
     apply (h₁ t).trans
+    simp only [fun_getElem]
     rw [ih]
     ring
 
@@ -48,39 +48,41 @@ private lemma mdp
   {π : Measure Ω} [IsProbabilityMeasure π]
   {s : ℕ → Ω → S} {a : ℕ → Ω → A} {«\sf{s}» : ℕ → S} {«\sf{a}» : ℕ → A}
 -- given
-  (hs : ∀ k, Measurable (s k))
-  (ha : ∀ k, Measurable (a k))
-  (hpol : ∀ t, ∀ _ : Measurable (s t),
-    a t ⟂ᵢ[π] (s[:t], a[:t]) | s t)
-  (htrans : ∀ t, ∀ _ : Measurable (s t, a t),
-    s (t + 1) ⟂ᵢ[π] (s[:t], a[:t]) | (s t, a t))
+  (hs : ∀ k : ℕ, Measurable s[k])
+  (ha : ∀ k : ℕ, Measurable a[k])
+  (hpol : ∀ t : ℕ, ∀ _ : Measurable s[t],
+    a[t] ⟂ᵢ[π] (s[:t], a[:t]) | s[t])
+  (htrans : ∀ t : ℕ, ∀ _ : Measurable (s[t], a[t]),
+    s[t + 1] ⟂ᵢ[π] (s[:t], a[:t]) | (s[t], a[t]))
   (t : ℕ) :
 -- imply
-  have : ∀ i, SinglePSpace π (s i) := fun i =>
+  have : ∀ i : ℕ, SinglePSpace π s[i] := fun i =>
     SinglePSpace.of.Measurable (hs i)
-  have : ∀ i j, SinglePSpace π (a i, s j) := fun i j =>
+  have : ∀ i j : ℕ, SinglePSpace π (a[i], s[j]) := fun i j =>
     SinglePSpace.of.Measurable.Measurable (ha i) (hs j)
-  have : ∀ i, SinglePSpace π (s (i + 1), s i, a i) := fun i =>
+  have : ∀ i : ℕ, SinglePSpace π (s[i + 1], s[i], a[i]) := fun i =>
     SinglePSpace.of.Measurable.Measurable (hs (i + 1)) ((hs i).prodMk (ha i))
   have : ∀ n, SinglePSpace π (s[:n + 1], a[:n]) := fun _ =>
     SinglePSpace.of.All_Measurable.All_Measurable hs ha
   ℙ[π](s[:t + 1] = «\sf{s}»[:t + 1] ∧ a[:t] = «\sf{a}»[:t]) =
-    ℙ[π]((s 0) = «\sf{s}» 0) *
+    ℙ[π](s[0] = «\sf{s}»[0]) *
       ∏ i ∈ Finset.range t,
-        ℙ[π]((a i) = «\sf{a}» i | (s i) = «\sf{s}» i) * ℙ[π]((s (i + 1)) = «\sf{s}» (i + 1) | (s i) = «\sf{s}» i ∧ (a i) = «\sf{a}» i) := by
+        ℙ[π](a[i] = «\sf{a}»[i] | s[i] = «\sf{s}»[i]) * ℙ[π](s[i + 1] = «\sf{s}»[i + 1] | s[i] = «\sf{s}»[i] ∧ a[i] = «\sf{a}»[i]) := by
 -- proof
   intro _ _ _ _
   obtain ⟨h₀, h₁⟩ := EqProbJoint.All_Eq_Mul_MulProbSCond.of.All_CondIndep.All_CondIndep.EqMeasureCount.EqMeasureCount.All_Measurable.All_Measurable
     («\sf{s}» := «\sf{s}») («\sf{a}» := «\sf{a}») hs ha hpol htrans
+  simp only [fun_getElem]
   induction t with
   | zero =>
     simpa using h₀
   | succ t ih =>
     rw [Finset.prod_range_succ]
     apply (h₁ t).trans
+    simp only [fun_getElem]
     rw [ih]
     ring
 
 
 -- created on 2020-12-17
--- updated on 2026-11-17
+-- updated on 2026-11-25

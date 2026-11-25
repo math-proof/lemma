@@ -1,7 +1,7 @@
 /**
  * Abstract argument bases: `LeanArgs`, `LeanUnary`, `LeanBinary`.
  *
- * PHP `LeanUnary` / `LeanBinary` are `abstract`; these JS classes are concrete.
+ * `LeanUnary` and `LeanBinary` are concrete classes.
  *
  * Base classes (the ones in `extends`) are imported from the modules that
  * define them; every other class is read from `Lean.classes` (`L.X`) at

@@ -1,6 +1,6 @@
 /**
- * Node port of `php/request/delete/lemma.php`: unlink `Lemma/<module>.lean`, drop `.echo.lean`,
- * optional MySQL `delete from lemma` (same as `delete_from_lemma` in `php/utility.php`).
+ * Node port of `request/delete/lemma`: unlink `Lemma/<module>.lean`, drop `.echo.lean`,
+ * optional MySQL `delete from lemma`.
  */
 import fs from 'fs/promises';
 import path from 'path';
@@ -68,6 +68,6 @@ export async function handleDeleteLemma(req, res) {
     }
   }
 
-  // PHP: `echo std\encode("deleted!");`
+  // JSON string `"deleted!"` for the client.
   res.json('deleted!');
 }

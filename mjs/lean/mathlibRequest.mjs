@@ -1,5 +1,5 @@
 /**
- * Node implementation of `php/request/mathlib.php`: run a one-off Lean file that
+ * Node implementation of `request/mathlib`: run a one-off Lean file that
  * `println!`s `Name.toJson` for a Mathlib name, return the JSON object (same contract
  * the browser expects from `form_post` + destructuring in `mathlib.vue`).
  */
@@ -53,7 +53,7 @@ function extractJsonObjectFromLeanOutput(text) {
  * @param {import('express').Request} req
  * @param {import('express').Response} res
  */
-export async function handleMathlibPhpRequest(req, res) {
+export async function handleMathlibRequest(req, res) {
   const nameRaw = req.body?.name;
   if (nameRaw == null || String(nameRaw).trim() === '') {
     res.status(400).json({ error: 'missing name' });
@@ -97,7 +97,7 @@ import Def.Lean.PrettyPrinter.Json
     }
     res.type('application/json; charset=utf-8').json(json);
   } catch (e) {
-    console.error('[mathlib.php]', e);
+    console.error('[mathlib]', e);
     res.status(500).json({ error: String(e.message || e) });
   } finally {
     try {

@@ -345,7 +345,7 @@ const self = new Vue({
       if (!confirm(`Delete lemma file “${row.name}”?`)) return;
 
       try {
-        await form_post('php/request/delete/lemma.php', {
+        await form_post('request/delete/lemma', {
           package: pl.package,
           lemma: pl.lemma,
         });
@@ -365,7 +365,7 @@ const self = new Vue({
       if (!confirm(`Delete folder “${row.name}” and everything inside it?`)) return;
 
       try {
-        await form_post('php/request/delete/package.php', {
+        await form_post('request/delete/package', {
           package: pkg,
           section: row.name,
         });
@@ -556,10 +556,10 @@ function isEventFromFolderSearchInput(event) {
 }
 
 /**
- * Same contract as `php/request/delete/lemma.php`:
+ * Same contract as `request/delete/lemma`:
  * `package` = dotted path from `?module=` (strip trailing `.`), `lemma` = basename without `.lean`.
  */
-/** Parent dotted module for `php/request/delete/*.php` (strip trailing `.` from `?module=`). */
+/** Parent dotted module (strip a trailing `.` from `?module=`). */
 function packageFromModuleQuery() {
   const u = new URL(location.href);
   let pkg = (u.searchParams.get('module') || '').replace(/\//g, '.').trim();

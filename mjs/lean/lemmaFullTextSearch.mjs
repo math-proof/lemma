@@ -1,5 +1,5 @@
 /**
- * Full-text search over Lemma/ (all .lean files; skips .echo.lean), matching php/search.php grep.
+ * Full-text search over Lemma/ (all .lean files; skips .echo.lean).
  */
 import fs from 'fs';
 import path from 'path';

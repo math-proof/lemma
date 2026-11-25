@@ -1,7 +1,7 @@
 /**
  * Type tests `is` / `is not` (`Lean_is`, `Lean_is_not`).
  *
- * PHP `operator` and `command` stay on `__get`.
+ * `operator` and `command` are read through the property getter.
  *
  * Base classes (the ones in `extends`) are imported from the modules that
  * define them; every other class is read from `Lean.classes` (`L.X`) at

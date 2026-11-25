@@ -1,0 +1,5206 @@
+{
+  "lean": "ℙ[π](x[:t + 1] = «\\sf{x}»[:t + 1] ∧ y[:t + 1] = «\\sf{y}»[:t + 1]) = ℙ[π](x[0] = «\\sf{x}»[0] | y[0] = «\\sf{y}»[0]) * ℙ[π](y[0] = «\\sf{y}»[0]) * ∏ i ∈ Finset.Ico 1 (t + 1), ℙ[π](y[i] = «\\sf{y}»[i] | y[i - 1] = «\\sf{y}»[i - 1]) * ℙ[π](x[i] = «\\sf{x}»[i] | y[i] = «\\sf{y}»[i])",
+  "regex": [
+    "Eq(Prob_(JointGetS_(Slice(Add_(1)))))(Mul(MulProbS__)(Prod_(MulProbS_(Cond(Get__)(Get__)))))",
+    "Eq(Prob_(JointGetS_(Slice(Add_(1)))))(Mul(MulProbS__)(Prod_(Mul(Prob_(CondGetS__))(Prob_(CondGetS__)))))",
+    "Eq(Prob_(JointGetS_(Slice(Add_(1)))))(Mul(MulProbS__)(Prod_(Mul(Prob_(CondGetS__))(Prob_(Cond(Get__)(Get__))))))",
+    "Eq(Prob_(Joint(Get_(Slice(Add_(1))))(Get_(Slice(Add_(1))))))(Mul(MulProbS__)(Prod_(MulProbS_(Cond(Get__)(Get__)))))",
+    "Eq(Prob_(JointGetS_(Slice(Add_(1)))))(Mul(MulProbS__)(Prod_(Mul(Prob_(Cond(Get__)(Get_(Sub_(1)))))(Prob_(CondGetS__)))))",
+    "Eq(Prob_(JointGetS_(Slice(Add_(1)))))(Mul(Mul(Prob_(CondGetS_(0)))(Prob_(Get_(0))))(Prod_(MulProbS_(Cond(Get__)(Get__)))))",
+    "Eq(Prob_(Joint(Get_(Slice(Add_(1))))(Get_(Slice(Add_(1))))))(Mul(MulProbS__)(Prod_(Mul(Prob_(CondGetS__))(Prob_(CondGetS__)))))",
+    "Eq(Prob_(JointGetS_(Slice(Add_(1)))))(Mul(MulProbS__)(Prod_(Mul(Prob_(Cond(Get__)(Get_(Sub_(1)))))(Prob_(Cond(Get__)(Get__))))))",
+    "Eq(Prob_(JointGetS_(Slice(Add_(1)))))(Mul(Mul(Prob_(Cond(Get_(0))(Get_(0))))(Prob_(Get_(0))))(Prod_(MulProbS_(Cond(Get__)(Get__)))))",
+    "Eq(Prob_(JointGetS_(Slice(Add_(1)))))(Mul(Mul(Prob_(CondGetS_(0)))(Prob_(Get_(0))))(Prod_(Mul(Prob_(CondGetS__))(Prob_(CondGetS__)))))",
+    "Eq(Prob_(Joint(Get_(Slice(Add_(1))))(Get_(Slice(Add_(1))))))(Mul(MulProbS__)(Prod_(Mul(Prob_(CondGetS__))(Prob_(Cond(Get__)(Get__))))))",
+    "Eq(Prob_(JointGetS_(Slice(Add_(1)))))(Mul(Mul(Prob_(CondGetS_(0)))(Prob_(Get_(0))))(Prod_(Mul(Prob_(CondGetS__))(Prob_(Cond(Get__)(Get__))))))",
+    "Eq(Prob_(Joint(Get_(Slice(Add_(1))))(Get_(Slice(Add_(1))))))(Mul(MulProbS__)(Prod_(Mul(Prob_(Cond(Get__)(Get_(Sub_(1)))))(Prob_(CondGetS__)))))",
+    "Eq(Prob_(JointGetS_(Slice(Add_(1)))))(Mul(Mul(Prob_(Cond(Get_(0))(Get_(0))))(Prob_(Get_(0))))(Prod_(Mul(Prob_(CondGetS__))(Prob_(CondGetS__)))))",
+    "Eq(Prob_(Joint(Get_(Slice(Add_(1))))(Get_(Slice(Add_(1))))))(Mul(Mul(Prob_(CondGetS_(0)))(Prob_(Get_(0))))(Prod_(MulProbS_(Cond(Get__)(Get__)))))",
+    "Eq(Prob_(JointGetS_(Slice(Add_(1)))))(Mul(Mul(Prob_(CondGetS_(0)))(Prob_(Get_(0))))(Prod_(Mul(Prob_(Cond(Get__)(Get_(Sub_(1)))))(Prob_(CondGetS__)))))",
+    "Eq(Prob_(Joint(Get_(Slice(Add_(1))))(Get_(Slice(Add_(1))))))(Mul(MulProbS__)(Prod_(Mul(Prob_(Cond(Get__)(Get_(Sub_(1)))))(Prob_(Cond(Get__)(Get__))))))",
+    "Eq(Prob_(JointGetS_(Slice(Add_(1)))))(Mul(Mul(Prob_(Cond(Get_(0))(Get_(0))))(Prob_(Get_(0))))(Prod_(Mul(Prob_(CondGetS__))(Prob_(Cond(Get__)(Get__))))))",
+    "Eq(Prob_(Joint(Get_(Slice(Add_(1))))(Get_(Slice(Add_(1))))))(Mul(Mul(Prob_(Cond(Get_(0))(Get_(0))))(Prob_(Get_(0))))(Prod_(MulProbS_(Cond(Get__)(Get__)))))",
+    "Eq(Prob_(Joint(Get_(Slice(Add_(1))))(Get_(Slice(Add_(1))))))(Mul(Mul(Prob_(CondGetS_(0)))(Prob_(Get_(0))))(Prod_(Mul(Prob_(CondGetS__))(Prob_(CondGetS__)))))",
+    "Eq(Prob_(JointGetS_(Slice(Add_(1)))))(Mul(Mul(Prob_(CondGetS_(0)))(Prob_(Get_(0))))(Prod_(Mul(Prob_(Cond(Get__)(Get_(Sub_(1)))))(Prob_(Cond(Get__)(Get__))))))",
+    "Eq(Prob_(JointGetS_(Slice(Add_(1)))))(Mul(Mul(Prob_(Cond(Get_(0))(Get_(0))))(Prob_(Get_(0))))(Prod_(Mul(Prob_(Cond(Get__)(Get_(Sub_(1)))))(Prob_(CondGetS__)))))",
+    "Eq(Prob_(Joint(Get_(Slice(Add_(1))))(Get_(Slice(Add_(1))))))(Mul(Mul(Prob_(CondGetS_(0)))(Prob_(Get_(0))))(Prod_(Mul(Prob_(CondGetS__))(Prob_(Cond(Get__)(Get__))))))",
+    "Eq(Prob_(Joint(Get_(Slice(Add_(1))))(Get_(Slice(Add_(1))))))(Mul(Mul(Prob_(Cond(Get_(0))(Get_(0))))(Prob_(Get_(0))))(Prod_(Mul(Prob_(CondGetS__))(Prob_(CondGetS__)))))",
+    "Eq(Prob_(JointGetS_(Slice(Add_(1)))))(Mul(Mul(Prob_(Cond(Get_(0))(Get_(0))))(Prob_(Get_(0))))(Prod_(Mul(Prob_(Cond(Get__)(Get_(Sub_(1)))))(Prob_(Cond(Get__)(Get__))))))",
+    "Eq(Prob_(Joint(Get_(Slice(Add_(1))))(Get_(Slice(Add_(1))))))(Mul(Mul(Prob_(CondGetS_(0)))(Prob_(Get_(0))))(Prod_(Mul(Prob_(Cond(Get__)(Get_(Sub_(1)))))(Prob_(CondGetS__)))))",
+    "Eq(Prob_(Joint(Get_(Slice(Add_(1))))(Get_(Slice(Add_(1))))))(Mul(Mul(Prob_(Cond(Get_(0))(Get_(0))))(Prob_(Get_(0))))(Prod_(Mul(Prob_(CondGetS__))(Prob_(Cond(Get__)(Get__))))))",
+    "Eq(Prob_(Joint(Get_(Slice(Add_(1))))(Get_(Slice(Add_(1))))))(Mul(Mul(Prob_(CondGetS_(0)))(Prob_(Get_(0))))(Prod_(Mul(Prob_(Cond(Get__)(Get_(Sub_(1)))))(Prob_(Cond(Get__)(Get__))))))",
+    "Eq(Prob_(Joint(Get_(Slice(Add_(1))))(Get_(Slice(Add_(1))))))(Mul(Mul(Prob_(Cond(Get_(0))(Get_(0))))(Prob_(Get_(0))))(Prod_(Mul(Prob_(Cond(Get__)(Get_(Sub_(1)))))(Prob_(CondGetS__)))))",
+    "Eq(Prob_(Joint(Get_(Slice(Add_(1))))(Get_(Slice(Add_(1))))))(Mul(Mul(Prob_(Cond(Get_(0))(Get_(0))))(Prob_(Get_(0))))(Prod_(Mul(Prob_(Cond(Get__)(Get_(Sub_(1)))))(Prob_(Cond(Get__)(Get__))))))"
+  ],
+  "suggestion": [
+    "EqProb_JointGetS_SliceAdd_1MulMulProbS__Prod_MulProbS_Cond_Get",
+    "EqProb_JointGetS_SliceAdd_1MulMulProbS__Prod_Mul_Prob_CondGetS",
+    "EqProb_JointGetS_SliceAdd_1MulMulProbS__Prod_MulProb_CondGetS__Prob_Cond_Get",
+    "EqProb_JointGet_SliceAdd_1_MulMulProbS__Prod_MulProbS_Cond_Get",
+    "EqProb_JointGetS_SliceAdd_1MulMulProbS__Prod_MulProb_CondGet__Get_Sub__Prob_CondGetS",
+    "EqProb_JointGetS_SliceAdd_1MulMulProb_CondGetS_0Prob_Get__Prod_MulProbS_Cond_Get",
+    "EqProb_JointGet_SliceAdd_1_MulMulProbS__Prod_Mul_Prob_CondGetS",
+    "EqProb_JointGetS_SliceAdd_1MulMulProbS__Prod_MulProb_CondGet__Get_Sub__Prob_Cond",
+    "EqProb_JointGetS_SliceAdd_1MulMulProb_CondGet_0_Prob__Prod_MulProbS_Cond_Get",
+    "EqProb_JointGetS_SliceAdd_1MulMulProb_CondGetS_0Prob_Get__Prod_Mul_Prob_CondGetS",
+    "EqProb_JointGet_SliceAdd_1_MulMulProbS__Prod_MulProb_CondGetS__Prob_Cond_Get",
+    "EqProb_JointGetS_SliceAdd_1MulMulProb_CondGetS_0Prob_Get__Prod_MulProb_CondGetS__Prob_Cond_Get",
+    "EqProb_JointGet_SliceAdd_1_MulMulProbS__Prod_MulProb_CondGet__Get_Sub__Prob_CondGetS",
+    "EqProb_JointGetS_SliceAdd_1MulMulProb_CondGet_0_Prob__Prod_Mul_Prob_CondGetS",
+    "EqProb_JointGet_SliceAdd_1_MulMulProb_CondGetS_0Prob_Get__Prod_MulProbS_Cond_Get",
+    "EqProb_JointGetS_SliceAdd_1MulMulProb_CondGetS_0Prob_Get__Prod_MulProb_CondGet__Get_Sub__Prob_CondGetS",
+    "EqProb_JointGet_SliceAdd_1_MulMulProbS__Prod_MulProb_CondGet__Get_Sub__Prob_Cond",
+    "EqProb_JointGetS_SliceAdd_1MulMulProb_CondGet_0_Prob__Prod_MulProb_CondGetS__Prob_Cond_Get",
+    "EqProb_JointGet_SliceAdd_1_MulMulProb_CondGet_0_Prob__Prod_MulProbS_Cond_Get",
+    "EqProb_JointGet_SliceAdd_1_MulMulProb_CondGetS_0Prob_Get__Prod_Mul_Prob_CondGetS",
+    "EqProb_JointGetS_SliceAdd_1MulMulProb_CondGetS_0Prob_Get__Prod_MulProb_CondGet__Get_Sub__Prob_Cond",
+    "EqProb_JointGetS_SliceAdd_1MulMulProb_CondGet_0_Prob__Prod_MulProb_CondGet__Get_Sub__Prob_CondGetS",
+    "EqProb_JointGet_SliceAdd_1_MulMulProb_CondGetS_0Prob_Get__Prod_MulProb_CondGetS__Prob_Cond_Get",
+    "EqProb_JointGet_SliceAdd_1_MulMulProb_CondGet_0_Prob__Prod_Mul_Prob_CondGetS",
+    "EqProb_JointGetS_SliceAdd_1MulMulProb_CondGet_0_Prob__Prod_MulProb_CondGet__Get_Sub__Prob_Cond",
+    "EqProb_JointGet_SliceAdd_1_MulMulProb_CondGetS_0Prob_Get__Prod_MulProb_CondGet__Get_Sub__Prob_CondGetS",
+    "EqProb_JointGet_SliceAdd_1_MulMulProb_CondGet_0_Prob__Prod_MulProb_CondGetS__Prob_Cond_Get",
+    "EqProb_JointGet_SliceAdd_1_MulMulProb_CondGetS_0Prob_Get__Prod_MulProb_CondGet__Get_Sub__Prob_Cond",
+    "EqProb_JointGet_SliceAdd_1_MulMulProb_CondGet_0_Prob__Prod_MulProb_CondGet__Get_Sub__Prob_CondGetS",
+    "EqProb_JointGet_SliceAdd_1_MulMulProb_CondGet_0_Prob__Prod_MulProb_CondGet__Get_Sub__Prob_Cond"
+  ],
+  "dag": [
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "JointGetS"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          6
+        ]
+      },
+      {
+        "group": [
+          5,
+          2,
+          7
+        ]
+      },
+      {
+        "group": [
+          4,
+          8
+        ]
+      },
+      {
+        "group": [
+          3,
+          2,
+          9
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          10
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "MulProbS"
+      },
+      {
+        "group": [
+          13,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "group": [
+          17,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          16,
+          18,
+          18
+        ]
+      },
+      {
+        "group": [
+          13,
+          2,
+          19
+        ]
+      },
+      {
+        "group": [
+          15,
+          2,
+          20
+        ]
+      },
+      {
+        "group": [
+          12,
+          14,
+          21
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          11,
+          22
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "JointGetS"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          6
+        ]
+      },
+      {
+        "group": [
+          5,
+          2,
+          7
+        ]
+      },
+      {
+        "group": [
+          4,
+          8
+        ]
+      },
+      {
+        "group": [
+          3,
+          2,
+          9
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          10
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "MulProbS"
+      },
+      {
+        "group": [
+          13,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "token": "CondGetS"
+      },
+      {
+        "group": [
+          16,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          17
+        ]
+      },
+      {
+        "group": [
+          12,
+          18,
+          18
+        ]
+      },
+      {
+        "group": [
+          15,
+          2,
+          19
+        ]
+      },
+      {
+        "group": [
+          12,
+          14,
+          20
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          11,
+          21
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "JointGetS"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          6
+        ]
+      },
+      {
+        "group": [
+          5,
+          2,
+          7
+        ]
+      },
+      {
+        "group": [
+          4,
+          8
+        ]
+      },
+      {
+        "group": [
+          3,
+          2,
+          9
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          10
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "MulProbS"
+      },
+      {
+        "group": [
+          13,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "token": "CondGetS"
+      },
+      {
+        "group": [
+          16,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          17
+        ]
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "group": [
+          20,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          19,
+          21,
+          21
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          22
+        ]
+      },
+      {
+        "group": [
+          12,
+          18,
+          23
+        ]
+      },
+      {
+        "group": [
+          15,
+          2,
+          24
+        ]
+      },
+      {
+        "group": [
+          12,
+          14,
+          25
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          11,
+          26
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Joint"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          7
+        ]
+      },
+      {
+        "group": [
+          6,
+          2,
+          8
+        ]
+      },
+      {
+        "group": [
+          5,
+          9
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          10
+        ]
+      },
+      {
+        "group": [
+          3,
+          11,
+          11
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          12
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "MulProbS"
+      },
+      {
+        "group": [
+          15,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "group": [
+          4,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          18,
+          19,
+          19
+        ]
+      },
+      {
+        "group": [
+          15,
+          2,
+          20
+        ]
+      },
+      {
+        "group": [
+          17,
+          2,
+          21
+        ]
+      },
+      {
+        "group": [
+          14,
+          16,
+          22
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          13,
+          23
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "JointGetS"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          6
+        ]
+      },
+      {
+        "group": [
+          5,
+          2,
+          7
+        ]
+      },
+      {
+        "group": [
+          4,
+          8
+        ]
+      },
+      {
+        "group": [
+          3,
+          2,
+          9
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          10
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "MulProbS"
+      },
+      {
+        "group": [
+          13,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "group": [
+          17,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Sub"
+      },
+      {
+        "group": [
+          19,
+          2,
+          7
+        ]
+      },
+      {
+        "group": [
+          17,
+          2,
+          20
+        ]
+      },
+      {
+        "group": [
+          16,
+          18,
+          21
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          22
+        ]
+      },
+      {
+        "token": "CondGetS"
+      },
+      {
+        "group": [
+          24,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          25
+        ]
+      },
+      {
+        "group": [
+          12,
+          23,
+          26
+        ]
+      },
+      {
+        "group": [
+          15,
+          2,
+          27
+        ]
+      },
+      {
+        "group": [
+          12,
+          14,
+          28
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          11,
+          29
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "JointGetS"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          6
+        ]
+      },
+      {
+        "group": [
+          5,
+          2,
+          7
+        ]
+      },
+      {
+        "group": [
+          4,
+          8
+        ]
+      },
+      {
+        "group": [
+          3,
+          2,
+          9
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          10
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "CondGetS"
+      },
+      {
+        "token": "0"
+      },
+      {
+        "group": [
+          14
+        ]
+      },
+      {
+        "group": [
+          13,
+          2,
+          15
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          16
+        ]
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "group": [
+          18,
+          2,
+          15
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          19
+        ]
+      },
+      {
+        "group": [
+          12,
+          17,
+          20
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "token": "MulProbS"
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "group": [
+          18,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          24,
+          25,
+          25
+        ]
+      },
+      {
+        "group": [
+          23,
+          2,
+          26
+        ]
+      },
+      {
+        "group": [
+          22,
+          2,
+          27
+        ]
+      },
+      {
+        "group": [
+          12,
+          21,
+          28
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          11,
+          29
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Joint"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          7
+        ]
+      },
+      {
+        "group": [
+          6,
+          2,
+          8
+        ]
+      },
+      {
+        "group": [
+          5,
+          9
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          10
+        ]
+      },
+      {
+        "group": [
+          3,
+          11,
+          11
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          12
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "MulProbS"
+      },
+      {
+        "group": [
+          15,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "token": "CondGetS"
+      },
+      {
+        "group": [
+          18,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          19
+        ]
+      },
+      {
+        "group": [
+          14,
+          20,
+          20
+        ]
+      },
+      {
+        "group": [
+          17,
+          2,
+          21
+        ]
+      },
+      {
+        "group": [
+          14,
+          16,
+          22
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          13,
+          23
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "JointGetS"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          6
+        ]
+      },
+      {
+        "group": [
+          5,
+          2,
+          7
+        ]
+      },
+      {
+        "group": [
+          4,
+          8
+        ]
+      },
+      {
+        "group": [
+          3,
+          2,
+          9
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          10
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "MulProbS"
+      },
+      {
+        "group": [
+          13,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "group": [
+          17,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Sub"
+      },
+      {
+        "group": [
+          19,
+          2,
+          7
+        ]
+      },
+      {
+        "group": [
+          17,
+          2,
+          20
+        ]
+      },
+      {
+        "group": [
+          16,
+          18,
+          21
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          22
+        ]
+      },
+      {
+        "group": [
+          16,
+          18,
+          18
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          24
+        ]
+      },
+      {
+        "group": [
+          12,
+          23,
+          25
+        ]
+      },
+      {
+        "group": [
+          15,
+          2,
+          26
+        ]
+      },
+      {
+        "group": [
+          12,
+          14,
+          27
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          11,
+          28
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "JointGetS"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          6
+        ]
+      },
+      {
+        "group": [
+          5,
+          2,
+          7
+        ]
+      },
+      {
+        "group": [
+          4,
+          8
+        ]
+      },
+      {
+        "group": [
+          3,
+          2,
+          9
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          10
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "token": "0"
+      },
+      {
+        "group": [
+          15
+        ]
+      },
+      {
+        "group": [
+          14,
+          2,
+          16
+        ]
+      },
+      {
+        "group": [
+          13,
+          17,
+          17
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          18
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          17
+        ]
+      },
+      {
+        "group": [
+          12,
+          19,
+          20
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "token": "MulProbS"
+      },
+      {
+        "group": [
+          14,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          13,
+          24,
+          24
+        ]
+      },
+      {
+        "group": [
+          23,
+          2,
+          25
+        ]
+      },
+      {
+        "group": [
+          22,
+          2,
+          26
+        ]
+      },
+      {
+        "group": [
+          12,
+          21,
+          27
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          11,
+          28
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "JointGetS"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          6
+        ]
+      },
+      {
+        "group": [
+          5,
+          2,
+          7
+        ]
+      },
+      {
+        "group": [
+          4,
+          8
+        ]
+      },
+      {
+        "group": [
+          3,
+          2,
+          9
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          10
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "CondGetS"
+      },
+      {
+        "token": "0"
+      },
+      {
+        "group": [
+          14
+        ]
+      },
+      {
+        "group": [
+          13,
+          2,
+          15
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          16
+        ]
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "group": [
+          18,
+          2,
+          15
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          19
+        ]
+      },
+      {
+        "group": [
+          12,
+          17,
+          20
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "group": [
+          13,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          23
+        ]
+      },
+      {
+        "group": [
+          12,
+          24,
+          24
+        ]
+      },
+      {
+        "group": [
+          22,
+          2,
+          25
+        ]
+      },
+      {
+        "group": [
+          12,
+          21,
+          26
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          11,
+          27
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Joint"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          7
+        ]
+      },
+      {
+        "group": [
+          6,
+          2,
+          8
+        ]
+      },
+      {
+        "group": [
+          5,
+          9
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          10
+        ]
+      },
+      {
+        "group": [
+          3,
+          11,
+          11
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          12
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "MulProbS"
+      },
+      {
+        "group": [
+          15,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "token": "CondGetS"
+      },
+      {
+        "group": [
+          18,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          19
+        ]
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "group": [
+          4,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          21,
+          22,
+          22
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          23
+        ]
+      },
+      {
+        "group": [
+          14,
+          20,
+          24
+        ]
+      },
+      {
+        "group": [
+          17,
+          2,
+          25
+        ]
+      },
+      {
+        "group": [
+          14,
+          16,
+          26
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          13,
+          27
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "JointGetS"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          6
+        ]
+      },
+      {
+        "group": [
+          5,
+          2,
+          7
+        ]
+      },
+      {
+        "group": [
+          4,
+          8
+        ]
+      },
+      {
+        "group": [
+          3,
+          2,
+          9
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          10
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "CondGetS"
+      },
+      {
+        "token": "0"
+      },
+      {
+        "group": [
+          14
+        ]
+      },
+      {
+        "group": [
+          13,
+          2,
+          15
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          16
+        ]
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "group": [
+          18,
+          2,
+          15
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          19
+        ]
+      },
+      {
+        "group": [
+          12,
+          17,
+          20
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "group": [
+          13,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          23
+        ]
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "group": [
+          18,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          25,
+          26,
+          26
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          27
+        ]
+      },
+      {
+        "group": [
+          12,
+          24,
+          28
+        ]
+      },
+      {
+        "group": [
+          22,
+          2,
+          29
+        ]
+      },
+      {
+        "group": [
+          12,
+          21,
+          30
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          11,
+          31
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Joint"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          7
+        ]
+      },
+      {
+        "group": [
+          6,
+          2,
+          8
+        ]
+      },
+      {
+        "group": [
+          5,
+          9
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          10
+        ]
+      },
+      {
+        "group": [
+          3,
+          11,
+          11
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          12
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "MulProbS"
+      },
+      {
+        "group": [
+          15,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "group": [
+          4,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Sub"
+      },
+      {
+        "group": [
+          20,
+          2,
+          8
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          21
+        ]
+      },
+      {
+        "group": [
+          18,
+          19,
+          22
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          23
+        ]
+      },
+      {
+        "token": "CondGetS"
+      },
+      {
+        "group": [
+          25,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          26
+        ]
+      },
+      {
+        "group": [
+          14,
+          24,
+          27
+        ]
+      },
+      {
+        "group": [
+          17,
+          2,
+          28
+        ]
+      },
+      {
+        "group": [
+          14,
+          16,
+          29
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          13,
+          30
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "JointGetS"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          6
+        ]
+      },
+      {
+        "group": [
+          5,
+          2,
+          7
+        ]
+      },
+      {
+        "group": [
+          4,
+          8
+        ]
+      },
+      {
+        "group": [
+          3,
+          2,
+          9
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          10
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "token": "0"
+      },
+      {
+        "group": [
+          15
+        ]
+      },
+      {
+        "group": [
+          14,
+          2,
+          16
+        ]
+      },
+      {
+        "group": [
+          13,
+          17,
+          17
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          18
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          17
+        ]
+      },
+      {
+        "group": [
+          12,
+          19,
+          20
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "token": "CondGetS"
+      },
+      {
+        "group": [
+          23,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          24
+        ]
+      },
+      {
+        "group": [
+          12,
+          25,
+          25
+        ]
+      },
+      {
+        "group": [
+          22,
+          2,
+          26
+        ]
+      },
+      {
+        "group": [
+          12,
+          21,
+          27
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          11,
+          28
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Joint"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          7
+        ]
+      },
+      {
+        "group": [
+          6,
+          2,
+          8
+        ]
+      },
+      {
+        "group": [
+          5,
+          9
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          10
+        ]
+      },
+      {
+        "group": [
+          3,
+          11,
+          11
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          12
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "CondGetS"
+      },
+      {
+        "token": "0"
+      },
+      {
+        "group": [
+          16
+        ]
+      },
+      {
+        "group": [
+          15,
+          2,
+          17
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          18
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          17
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          20
+        ]
+      },
+      {
+        "group": [
+          14,
+          19,
+          21
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "token": "MulProbS"
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "group": [
+          4,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          25,
+          26,
+          26
+        ]
+      },
+      {
+        "group": [
+          24,
+          2,
+          27
+        ]
+      },
+      {
+        "group": [
+          23,
+          2,
+          28
+        ]
+      },
+      {
+        "group": [
+          14,
+          22,
+          29
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          13,
+          30
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "JointGetS"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          6
+        ]
+      },
+      {
+        "group": [
+          5,
+          2,
+          7
+        ]
+      },
+      {
+        "group": [
+          4,
+          8
+        ]
+      },
+      {
+        "group": [
+          3,
+          2,
+          9
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          10
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "CondGetS"
+      },
+      {
+        "token": "0"
+      },
+      {
+        "group": [
+          14
+        ]
+      },
+      {
+        "group": [
+          13,
+          2,
+          15
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          16
+        ]
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "group": [
+          18,
+          2,
+          15
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          19
+        ]
+      },
+      {
+        "group": [
+          12,
+          17,
+          20
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "group": [
+          18,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Sub"
+      },
+      {
+        "group": [
+          25,
+          2,
+          7
+        ]
+      },
+      {
+        "group": [
+          18,
+          2,
+          26
+        ]
+      },
+      {
+        "group": [
+          23,
+          24,
+          27
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          28
+        ]
+      },
+      {
+        "group": [
+          13,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          30
+        ]
+      },
+      {
+        "group": [
+          12,
+          29,
+          31
+        ]
+      },
+      {
+        "group": [
+          22,
+          2,
+          32
+        ]
+      },
+      {
+        "group": [
+          12,
+          21,
+          33
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          11,
+          34
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Joint"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          7
+        ]
+      },
+      {
+        "group": [
+          6,
+          2,
+          8
+        ]
+      },
+      {
+        "group": [
+          5,
+          9
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          10
+        ]
+      },
+      {
+        "group": [
+          3,
+          11,
+          11
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          12
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "MulProbS"
+      },
+      {
+        "group": [
+          15,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "group": [
+          4,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Sub"
+      },
+      {
+        "group": [
+          20,
+          2,
+          8
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          21
+        ]
+      },
+      {
+        "group": [
+          18,
+          19,
+          22
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          23
+        ]
+      },
+      {
+        "group": [
+          18,
+          19,
+          19
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          25
+        ]
+      },
+      {
+        "group": [
+          14,
+          24,
+          26
+        ]
+      },
+      {
+        "group": [
+          17,
+          2,
+          27
+        ]
+      },
+      {
+        "group": [
+          14,
+          16,
+          28
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          13,
+          29
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "JointGetS"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          6
+        ]
+      },
+      {
+        "group": [
+          5,
+          2,
+          7
+        ]
+      },
+      {
+        "group": [
+          4,
+          8
+        ]
+      },
+      {
+        "group": [
+          3,
+          2,
+          9
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          10
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "token": "0"
+      },
+      {
+        "group": [
+          15
+        ]
+      },
+      {
+        "group": [
+          14,
+          2,
+          16
+        ]
+      },
+      {
+        "group": [
+          13,
+          17,
+          17
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          18
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          17
+        ]
+      },
+      {
+        "group": [
+          12,
+          19,
+          20
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "token": "CondGetS"
+      },
+      {
+        "group": [
+          23,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          24
+        ]
+      },
+      {
+        "group": [
+          14,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          13,
+          26,
+          26
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          27
+        ]
+      },
+      {
+        "group": [
+          12,
+          25,
+          28
+        ]
+      },
+      {
+        "group": [
+          22,
+          2,
+          29
+        ]
+      },
+      {
+        "group": [
+          12,
+          21,
+          30
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          11,
+          31
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Joint"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          7
+        ]
+      },
+      {
+        "group": [
+          6,
+          2,
+          8
+        ]
+      },
+      {
+        "group": [
+          5,
+          9
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          10
+        ]
+      },
+      {
+        "group": [
+          3,
+          11,
+          11
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          12
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "token": "0"
+      },
+      {
+        "group": [
+          16
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          17
+        ]
+      },
+      {
+        "group": [
+          15,
+          18,
+          18
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          19
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          18
+        ]
+      },
+      {
+        "group": [
+          14,
+          20,
+          21
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "token": "MulProbS"
+      },
+      {
+        "group": [
+          4,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          15,
+          25,
+          25
+        ]
+      },
+      {
+        "group": [
+          24,
+          2,
+          26
+        ]
+      },
+      {
+        "group": [
+          23,
+          2,
+          27
+        ]
+      },
+      {
+        "group": [
+          14,
+          22,
+          28
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          13,
+          29
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Joint"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          7
+        ]
+      },
+      {
+        "group": [
+          6,
+          2,
+          8
+        ]
+      },
+      {
+        "group": [
+          5,
+          9
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          10
+        ]
+      },
+      {
+        "group": [
+          3,
+          11,
+          11
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          12
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "CondGetS"
+      },
+      {
+        "token": "0"
+      },
+      {
+        "group": [
+          16
+        ]
+      },
+      {
+        "group": [
+          15,
+          2,
+          17
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          18
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          17
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          20
+        ]
+      },
+      {
+        "group": [
+          14,
+          19,
+          21
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "group": [
+          15,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          24
+        ]
+      },
+      {
+        "group": [
+          14,
+          25,
+          25
+        ]
+      },
+      {
+        "group": [
+          23,
+          2,
+          26
+        ]
+      },
+      {
+        "group": [
+          14,
+          22,
+          27
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          13,
+          28
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "JointGetS"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          6
+        ]
+      },
+      {
+        "group": [
+          5,
+          2,
+          7
+        ]
+      },
+      {
+        "group": [
+          4,
+          8
+        ]
+      },
+      {
+        "group": [
+          3,
+          2,
+          9
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          10
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "CondGetS"
+      },
+      {
+        "token": "0"
+      },
+      {
+        "group": [
+          14
+        ]
+      },
+      {
+        "group": [
+          13,
+          2,
+          15
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          16
+        ]
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "group": [
+          18,
+          2,
+          15
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          19
+        ]
+      },
+      {
+        "group": [
+          12,
+          17,
+          20
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "group": [
+          18,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Sub"
+      },
+      {
+        "group": [
+          25,
+          2,
+          7
+        ]
+      },
+      {
+        "group": [
+          18,
+          2,
+          26
+        ]
+      },
+      {
+        "group": [
+          23,
+          24,
+          27
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          28
+        ]
+      },
+      {
+        "group": [
+          23,
+          24,
+          24
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          30
+        ]
+      },
+      {
+        "group": [
+          12,
+          29,
+          31
+        ]
+      },
+      {
+        "group": [
+          22,
+          2,
+          32
+        ]
+      },
+      {
+        "group": [
+          12,
+          21,
+          33
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          11,
+          34
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "JointGetS"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          6
+        ]
+      },
+      {
+        "group": [
+          5,
+          2,
+          7
+        ]
+      },
+      {
+        "group": [
+          4,
+          8
+        ]
+      },
+      {
+        "group": [
+          3,
+          2,
+          9
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          10
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "token": "0"
+      },
+      {
+        "group": [
+          15
+        ]
+      },
+      {
+        "group": [
+          14,
+          2,
+          16
+        ]
+      },
+      {
+        "group": [
+          13,
+          17,
+          17
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          18
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          17
+        ]
+      },
+      {
+        "group": [
+          12,
+          19,
+          20
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "group": [
+          14,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Sub"
+      },
+      {
+        "group": [
+          24,
+          2,
+          7
+        ]
+      },
+      {
+        "group": [
+          14,
+          2,
+          25
+        ]
+      },
+      {
+        "group": [
+          13,
+          23,
+          26
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          27
+        ]
+      },
+      {
+        "token": "CondGetS"
+      },
+      {
+        "group": [
+          29,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          30
+        ]
+      },
+      {
+        "group": [
+          12,
+          28,
+          31
+        ]
+      },
+      {
+        "group": [
+          22,
+          2,
+          32
+        ]
+      },
+      {
+        "group": [
+          12,
+          21,
+          33
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          11,
+          34
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Joint"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          7
+        ]
+      },
+      {
+        "group": [
+          6,
+          2,
+          8
+        ]
+      },
+      {
+        "group": [
+          5,
+          9
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          10
+        ]
+      },
+      {
+        "group": [
+          3,
+          11,
+          11
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          12
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "CondGetS"
+      },
+      {
+        "token": "0"
+      },
+      {
+        "group": [
+          16
+        ]
+      },
+      {
+        "group": [
+          15,
+          2,
+          17
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          18
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          17
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          20
+        ]
+      },
+      {
+        "group": [
+          14,
+          19,
+          21
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "group": [
+          15,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          24
+        ]
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "group": [
+          4,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          26,
+          27,
+          27
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          28
+        ]
+      },
+      {
+        "group": [
+          14,
+          25,
+          29
+        ]
+      },
+      {
+        "group": [
+          23,
+          2,
+          30
+        ]
+      },
+      {
+        "group": [
+          14,
+          22,
+          31
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          13,
+          32
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Joint"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          7
+        ]
+      },
+      {
+        "group": [
+          6,
+          2,
+          8
+        ]
+      },
+      {
+        "group": [
+          5,
+          9
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          10
+        ]
+      },
+      {
+        "group": [
+          3,
+          11,
+          11
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          12
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "token": "0"
+      },
+      {
+        "group": [
+          16
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          17
+        ]
+      },
+      {
+        "group": [
+          15,
+          18,
+          18
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          19
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          18
+        ]
+      },
+      {
+        "group": [
+          14,
+          20,
+          21
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "token": "CondGetS"
+      },
+      {
+        "group": [
+          24,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          25
+        ]
+      },
+      {
+        "group": [
+          14,
+          26,
+          26
+        ]
+      },
+      {
+        "group": [
+          23,
+          2,
+          27
+        ]
+      },
+      {
+        "group": [
+          14,
+          22,
+          28
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          13,
+          29
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "JointGetS"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          6
+        ]
+      },
+      {
+        "group": [
+          5,
+          2,
+          7
+        ]
+      },
+      {
+        "group": [
+          4,
+          8
+        ]
+      },
+      {
+        "group": [
+          3,
+          2,
+          9
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          10
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "token": "0"
+      },
+      {
+        "group": [
+          15
+        ]
+      },
+      {
+        "group": [
+          14,
+          2,
+          16
+        ]
+      },
+      {
+        "group": [
+          13,
+          17,
+          17
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          18
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          17
+        ]
+      },
+      {
+        "group": [
+          12,
+          19,
+          20
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "group": [
+          14,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Sub"
+      },
+      {
+        "group": [
+          24,
+          2,
+          7
+        ]
+      },
+      {
+        "group": [
+          14,
+          2,
+          25
+        ]
+      },
+      {
+        "group": [
+          13,
+          23,
+          26
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          27
+        ]
+      },
+      {
+        "group": [
+          13,
+          23,
+          23
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          29
+        ]
+      },
+      {
+        "group": [
+          12,
+          28,
+          30
+        ]
+      },
+      {
+        "group": [
+          22,
+          2,
+          31
+        ]
+      },
+      {
+        "group": [
+          12,
+          21,
+          32
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          11,
+          33
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Joint"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          7
+        ]
+      },
+      {
+        "group": [
+          6,
+          2,
+          8
+        ]
+      },
+      {
+        "group": [
+          5,
+          9
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          10
+        ]
+      },
+      {
+        "group": [
+          3,
+          11,
+          11
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          12
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "CondGetS"
+      },
+      {
+        "token": "0"
+      },
+      {
+        "group": [
+          16
+        ]
+      },
+      {
+        "group": [
+          15,
+          2,
+          17
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          18
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          17
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          20
+        ]
+      },
+      {
+        "group": [
+          14,
+          19,
+          21
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "group": [
+          4,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Sub"
+      },
+      {
+        "group": [
+          26,
+          2,
+          8
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          27
+        ]
+      },
+      {
+        "group": [
+          24,
+          25,
+          28
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          29
+        ]
+      },
+      {
+        "group": [
+          15,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          31
+        ]
+      },
+      {
+        "group": [
+          14,
+          30,
+          32
+        ]
+      },
+      {
+        "group": [
+          23,
+          2,
+          33
+        ]
+      },
+      {
+        "group": [
+          14,
+          22,
+          34
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          13,
+          35
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Joint"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          7
+        ]
+      },
+      {
+        "group": [
+          6,
+          2,
+          8
+        ]
+      },
+      {
+        "group": [
+          5,
+          9
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          10
+        ]
+      },
+      {
+        "group": [
+          3,
+          11,
+          11
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          12
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "token": "0"
+      },
+      {
+        "group": [
+          16
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          17
+        ]
+      },
+      {
+        "group": [
+          15,
+          18,
+          18
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          19
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          18
+        ]
+      },
+      {
+        "group": [
+          14,
+          20,
+          21
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "token": "CondGetS"
+      },
+      {
+        "group": [
+          24,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          25
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          15,
+          27,
+          27
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          28
+        ]
+      },
+      {
+        "group": [
+          14,
+          26,
+          29
+        ]
+      },
+      {
+        "group": [
+          23,
+          2,
+          30
+        ]
+      },
+      {
+        "group": [
+          14,
+          22,
+          31
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          13,
+          32
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Joint"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          7
+        ]
+      },
+      {
+        "group": [
+          6,
+          2,
+          8
+        ]
+      },
+      {
+        "group": [
+          5,
+          9
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          10
+        ]
+      },
+      {
+        "group": [
+          3,
+          11,
+          11
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          12
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "CondGetS"
+      },
+      {
+        "token": "0"
+      },
+      {
+        "group": [
+          16
+        ]
+      },
+      {
+        "group": [
+          15,
+          2,
+          17
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          18
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          17
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          20
+        ]
+      },
+      {
+        "group": [
+          14,
+          19,
+          21
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "group": [
+          4,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Sub"
+      },
+      {
+        "group": [
+          26,
+          2,
+          8
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          27
+        ]
+      },
+      {
+        "group": [
+          24,
+          25,
+          28
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          29
+        ]
+      },
+      {
+        "group": [
+          24,
+          25,
+          25
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          31
+        ]
+      },
+      {
+        "group": [
+          14,
+          30,
+          32
+        ]
+      },
+      {
+        "group": [
+          23,
+          2,
+          33
+        ]
+      },
+      {
+        "group": [
+          14,
+          22,
+          34
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          13,
+          35
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Joint"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          7
+        ]
+      },
+      {
+        "group": [
+          6,
+          2,
+          8
+        ]
+      },
+      {
+        "group": [
+          5,
+          9
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          10
+        ]
+      },
+      {
+        "group": [
+          3,
+          11,
+          11
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          12
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "token": "0"
+      },
+      {
+        "group": [
+          16
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          17
+        ]
+      },
+      {
+        "group": [
+          15,
+          18,
+          18
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          19
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          18
+        ]
+      },
+      {
+        "group": [
+          14,
+          20,
+          21
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "group": [
+          4,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Sub"
+      },
+      {
+        "group": [
+          25,
+          2,
+          8
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          26
+        ]
+      },
+      {
+        "group": [
+          15,
+          24,
+          27
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          28
+        ]
+      },
+      {
+        "token": "CondGetS"
+      },
+      {
+        "group": [
+          30,
+          2,
+          2
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          31
+        ]
+      },
+      {
+        "group": [
+          14,
+          29,
+          32
+        ]
+      },
+      {
+        "group": [
+          23,
+          2,
+          33
+        ]
+      },
+      {
+        "group": [
+          14,
+          22,
+          34
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          13,
+          35
+        ]
+      }
+    ],
+    [
+      {
+        "token": "Eq"
+      },
+      {
+        "token": "Prob"
+      },
+      {
+        "token": "_"
+      },
+      {
+        "token": "Joint"
+      },
+      {
+        "token": "Get"
+      },
+      {
+        "token": "Slice"
+      },
+      {
+        "token": "Add"
+      },
+      {
+        "token": "1"
+      },
+      {
+        "group": [
+          7
+        ]
+      },
+      {
+        "group": [
+          6,
+          2,
+          8
+        ]
+      },
+      {
+        "group": [
+          5,
+          9
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          10
+        ]
+      },
+      {
+        "group": [
+          3,
+          11,
+          11
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          12
+        ]
+      },
+      {
+        "token": "Mul"
+      },
+      {
+        "token": "Cond"
+      },
+      {
+        "token": "0"
+      },
+      {
+        "group": [
+          16
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          17
+        ]
+      },
+      {
+        "group": [
+          15,
+          18,
+          18
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          19
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          18
+        ]
+      },
+      {
+        "group": [
+          14,
+          20,
+          21
+        ]
+      },
+      {
+        "token": "Prod"
+      },
+      {
+        "group": [
+          4,
+          2,
+          2
+        ]
+      },
+      {
+        "token": "Sub"
+      },
+      {
+        "group": [
+          25,
+          2,
+          8
+        ]
+      },
+      {
+        "group": [
+          4,
+          2,
+          26
+        ]
+      },
+      {
+        "group": [
+          15,
+          24,
+          27
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          28
+        ]
+      },
+      {
+        "group": [
+          15,
+          24,
+          24
+        ]
+      },
+      {
+        "group": [
+          1,
+          2,
+          30
+        ]
+      },
+      {
+        "group": [
+          14,
+          29,
+          31
+        ]
+      },
+      {
+        "group": [
+          23,
+          2,
+          32
+        ]
+      },
+      {
+        "group": [
+          14,
+          22,
+          33
+        ]
+      },
+      {
+        "sequence": [
+          0,
+          13,
+          34
+        ]
+      }
+    ]
+  ],
+  "json": {
+    "Eq": [
+      {
+        "Prob": [
+          "$1",
+          {
+            "Joint": [
+              {
+                "Get": [
+                  "$2",
+                  {
+                    "Slice": [
+                      "",
+                      {
+                        "Add": [
+                          "$3",
+                          "1"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "Get": [
+                  "$4",
+                  {
+                    "Slice": [
+                      "",
+                      {
+                        "Add": [
+                          "$3",
+                          "1"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Mul": [
+          {
+            "Mul": [
+              {
+                "Prob": [
+                  "$1",
+                  {
+                    "Cond": [
+                      {
+                        "Get": [
+                          "$2",
+                          "0"
+                        ]
+                      },
+                      {
+                        "Get": [
+                          "$4",
+                          "0"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "Prob": [
+                  "$1",
+                  {
+                    "Get": [
+                      "$4",
+                      "0"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "Prod": [
+              {
+                "In": [
+                  "?0",
+                  {
+                    "Ico": [
+                      "1",
+                      {
+                        "Add": [
+                          "$3",
+                          "1"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "Mul": [
+                  {
+                    "Prob": [
+                      "$1",
+                      {
+                        "Cond": [
+                          {
+                            "Get": [
+                              "$4",
+                              "?0"
+                            ]
+                          },
+                          {
+                            "Get": [
+                              "$4",
+                              {
+                                "Sub": [
+                                  "?0",
+                                  "1"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "Prob": [
+                      "$1",
+                      {
+                        "Cond": [
+                          {
+                            "Get": [
+                              "$2",
+                              "?0"
+                            ]
+                          },
+                          {
+                            "Get": [
+                              "$4",
+                              "?0"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "fingerprint": "Eq(Prob($1)(Joint(Get($2)(Slice(Add($3)(1))))(Get($4)(Slice(Add($3)(1))))))(Mul(Mul(Prob($1)(Cond(Get($2)(0))(Get($4)(0))))(Prob($1)(Get($4)(0))))(Prod(In(?0)(Ico(1)(Add($3)(1))))(Mul(Prob($1)(Cond(Get($4)(?0))(Get($4)(Sub(?0)(1)))))(Prob($1)(Cond(Get($2)(?0))(Get($4)(?0)))))))"
+}

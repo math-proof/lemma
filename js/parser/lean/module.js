@@ -3,7 +3,7 @@
  *
  * Imply LaTeX, echo-proof tails, and `render2vue` live here with the class.
  * `strStmt` lives in `utility.js` because `base`, `args`, and `bigops` use it too.
- * PHP `echo2vue` chdirs four directories up, because `module.php` lives in `lean/`.
+ * Callers run with the repo root as the working directory.
  *
  * Base classes (the ones in `extends`) are imported from the modules that
  * define them; every other class is read from `Lean.classes` (`L.X`) at
@@ -81,7 +81,7 @@ function implyLetAlignLatex(imply, syntax) {
 /**
  * `:=` / `:= by` / `:= calc` is a right-margin `\tag*`, same as a given name (`\tag*{$hrec$}`).
  * A term-style proof has no `by`/`calc`, but the Lean source still ends in `:=`, so keep a bare `:=`.
- * PHP `module.php` appends `\tag*{ := by}` to `imply.latex`.
+ * A term-style proof still gets a right-margin `:=` tag.
  * @param {string} latex
  * @param {string} by
  */
@@ -89,7 +89,7 @@ function withImplyAssignLatex(latex, by) {
     if (latex == null || latex === '') return latex;
     const word = by === 'by' ? '{\\color{#00f}by}' : by;
     const assign = by ? ` := ${word}` : ' :=';
-    // Always right-margin \tag* (same as given names / PHP module.php).
+    // Always a right-margin \tag*, same as given names.
     // Do not switch wide single-line implies to inline \quad — Body wants
     // `:= by` aligned with h₀/h₁/… tags even when the formula is long.
     return latex + `\\tag*{${assign}}`;
@@ -190,7 +190,7 @@ function consumeEchoAssignProofTail(moduleArgs, startJ, indentText) {
     return { cmts, proofStr, endJ, proofIsTactic };
 }
 
-/** Normalize import path: trim, collapse space-around-dot to dot, then spaces to dots to match PHP. */
+/** Normalize an import path: trim, collapse space around dots, then turn remaining spaces into dots. */
 function normalizeImportStr(s) {
     return s.trim().replace(/\s*\.\s*/g, '.').replace(/\s+/g, '.');
 }
@@ -204,12 +204,12 @@ function normalizeTypeStr(s) {
         .replace(/\s+\]/g, ']');
 }
 
-/** PHP `preg_replace("/^  /m", "", …)` */
+/** Remove a two-space indent from each line. */
 function unindentTwo(s) {
     return s.replace(/^  /gm, '');
 }
 
-/** Normalize instImplicit to match PHP: "[NeZero (l : ℕ)]" not "[ NeZero ( l  ℕ)]". */
+/** Normalize instImplicit to `"[NeZero (l : ℕ)]"`, not `"[ NeZero ( l  ℕ)]"`. */
 function normalizeInstImplicit(s) {
     if (!s || !s.trim()) return s;
     return s
@@ -319,7 +319,7 @@ function looksLikeDataArrow(type, vars, typeVars) {
 }
 
 /**
- * PHP `escape_specials` (php/parser/lean.php ~9331–9341).
+ * Escape characters that are special in LaTeX.
  * @param {string} token
  */
 function escapeSpecials(token) {
@@ -333,7 +333,7 @@ function escapeSpecials(token) {
 }
 
 /**
- * PHP `latex_tag` (php/parser/lean.php ~9344–9352).
+ * Wrap a name as a right-margin LaTeX tag.
  * @param {string} tag
  */
 function latexTag(tag) {
@@ -344,7 +344,7 @@ function latexTag(tag) {
 }
 
 /**
- * PHP `std\setitem` via path segments (last segment is the value).
+ * Set a nested field. The last path segment is the value.
  * @param {Record<string, unknown>} data
  * @param {string[]} segs
  */
@@ -369,7 +369,7 @@ function setItemFromPath(data, segs) {
 }
 
 /**
- * PHP `LeanModule::array_push` (php/parser/lean.php ~4867–4877).
+ * Push one binding row onto a binder list.
  * @param {unknown[][]} vars
  * @param {import('../lean.js').Lean} lhs
  * @param {import('../lean.js').Lean} rhs

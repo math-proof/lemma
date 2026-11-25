@@ -79,7 +79,7 @@ const self = new Vue({
 				return;
 			}
 			var {name} = lemma;
-			var {type, instImplicit, strictImplicit, implicit, given, default: explicit, imply} = await form_post('php/request/mathlib.php', {name});
+			var {type, instImplicit, strictImplicit, implicit, given, default: explicit, imply} = await form_post('request/mathlib', {name});
 			if (!type || !imply) {
 	            var sql = `
 delete from
@@ -108,7 +108,7 @@ replace into
 				Object.assign(lemma, {type, instImplicit, strictImplicit, implicit, given, explicit, imply});
 			}
             console.log(sql);
-            var rowcount = await form_post('php/request/execute.php', {sql});
+            var rowcount = await form_post('request/execute', {sql});
             console.log("rowcount =", rowcount);
 		},
 	},

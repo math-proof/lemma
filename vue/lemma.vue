@@ -324,7 +324,7 @@ ${latex}
             delete code.insert;
             if (lean != null && code.lean != lean) {
                 code.lean = lean;
-                var data = await form_post('php/request/latex.php', {lean});
+                var data = await form_post('request/latex', {lean});
                 if (data) {
                     if (data.isArray) {
                         var [index, attr] = indices;

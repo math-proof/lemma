@@ -1,5 +1,5 @@
 /**
- * Port of php/search.php: MySQL (type / like / regex). `?docstring=on` ranks
+ * MySQL search (type / like / regex). `?docstring=on` ranks
  * axiom.docstring with InnoDB natural-language full text.
  * `?lean=<expression>` (or the search box's Lean checkbox) is an exact
  * subtree-match over lemma conclusions: shortlist via axiom.inverted, then
@@ -830,7 +830,7 @@ export async function buildSearchPayload(rawDict, projectUser) {
 }
 
 /**
- * True when `php/index.php` would load `php/search.php` instead of summary/lemma.
+ * True when the query should render the search page instead of a lemma.
  * @param {Record<string, unknown>} q
  * @param {string} [moduleRaw]
  */

@@ -1,5 +1,5 @@
 /**
- * Mirrors PHP `lean.php/website` → Node `/lean/website/` plus `website/md.php` (PATH_INFO).
+ * `/lean/website/` plus `website/md` (PATH_INFO).
  */
 import fs from 'fs/promises';
 import path from 'path';
@@ -110,9 +110,9 @@ export const HOME_COUNT_SCRIPT = `
 const count = document.querySelector('#count');
 const lines = document.querySelector('#lines');
 if (count)
-  count.textContent = await get('php/request/count.php');
+  count.textContent = await get('request/count');
 if (lines)
-  lines.textContent = await get('php/request/lines.php');
+  lines.textContent = await get('request/lines');
 `;
 
 /**
@@ -313,9 +313,9 @@ export function renderWebsiteIndex(req, res) {
 }
 
 /**
- * Mounted at `/lean/website/md.php`; `req.url` is PATH_INFO remainder (e.g. `/zh/home.md`).
+ * Mounted at `/lean/website/md`; `req.url` is PATH_INFO remainder (e.g. `/zh/home.md`).
  */
-export async function handleWebsiteMdPhp(req, res) {
+export async function handleWebsiteMd(req, res) {
   let pathInfo = req.url.split('?')[0];
   if (!pathInfo || pathInfo === '' || pathInfo === '/') {
     pathInfo = '/';
@@ -365,11 +365,11 @@ export async function handleWebsiteMdPhp(req, res) {
         await fs.access(mdSibling);
         continue;
       } catch {
-        /* list dir link like PHP */
+        /* list the directory */
       }
     }
     const nextRel = relDir ? `${relDir}/${name}` : name;
-    const href = `/lean/website/md.php/${nextRel}`;
+    const href = `/lean/website/md/${nextRel}`;
     parts.push(`<a href="${escapeHtml(href)}">${escapeHtml(name)}</a><br><br>`);
   }
   res.type('html').send(parts.join('\n'));

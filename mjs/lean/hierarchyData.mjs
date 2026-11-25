@@ -1,6 +1,5 @@
 /**
- * Callee/caller import graphs for `hierarchy.vue` — ports `php/utility.php` `select_hierarchy` +
- * `establish_hierarchy` and `php/std.php` `Graph::detect_cycle_traceback` traceback logic.
+ * Callee/caller import graphs for `hierarchy.vue`, including cycle tracebacks.
  */
 import { getMysqlPool } from './fetchLemmaMysql.mjs';
 import { commutativeImportAlias } from './moduleResolve.mjs';
@@ -56,7 +55,7 @@ async function selectHierarchyFromDb(module, reverse) {
 }
 
 /**
- * Adjacency list: node -> child modules (same shape as PHP `Graph::jsonSerialize()`).
+ * Adjacency list: node -> child modules.
  * @param {string} startNode
  * @param {boolean} reverse
  * @returns {Promise<Record<string, string[]>>}
@@ -94,7 +93,7 @@ export async function establishHierarchyGraph(startNode, reverse) {
 /**
  * @param {Record<string, string[]>} graph
  * @param {string} startKey
- * @param {string[]} parent mutated like PHP `visit_and_traceback` `$parent`
+ * @param {string[]} parent path mutated while walking
  */
 export function detectCycleTraceback(graph, startKey, parent) {
   const permanent = new Set();

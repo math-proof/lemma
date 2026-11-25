@@ -1,8 +1,8 @@
 /**
  * Match and tactic bar (`LeanBar`, `|`).
  *
- * PHP `is_indented` always returns true, PHP has no `insert_bar`, PHP
- * `insert_comma` tests `end($this->args)`, and PHP `split` uses the arrow's
+ * `is_indented` is always true. There is no `insert_bar`.
+ * `insert_comma` tests the last argument, and `split` uses the arrow's
  * level.
  *
  * Base classes (the ones in `extends`) are imported from the modules that

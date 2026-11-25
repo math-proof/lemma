@@ -28,7 +28,7 @@ export function render2vueFromSource(source, echo = false) {
 }
 
 /**
- * Port of `compile(…)->echo2vue($leanFile)` (php/request/echo.php + php/parser/lean.php ~4738–4852).
+ * `request/echo`: compile the source and return the render payload.
  * Requires `leanAbsPath` (absolute path to the `.lean` file) for `*.echo.lean` and `lake env lean`.
  *
  * Lint warnings (the AGENTS.md style rules, see `../lint/index.mjs`, e.g. `[open-section] forget to open Random since …`)

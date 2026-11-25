@@ -3,7 +3,7 @@
 The mechanically checkable style rules of `AGENTS.md`, reported as **warnings** (never errors) by the compiler:
 
 - `render2vue.mjs` `echo2vueFromSource` → `code.warning` (only when non-empty), so they show up in the
-  `php/request/echo.php` JSON and in `node mjs/run.mjs <file>` (stderr, `warning:LINE:COL: [rule-id] … (AGENTS.md: "…")`).
+  `request/echo` JSON and in `node mjs/run.mjs <file>` (stderr, `warning:LINE:COL: [rule-id] … (AGENTS.md: "…")`).
 - `node mjs/run.mjs --fix <file>` applies the fixable rules' fixes in place (currently `header-spacing` —
   the `module` header's leading blank run and the two-blank trailer of a module file — plus
   `paren-redundant-ascription` and `paren-redundant-arith`)
@@ -84,7 +84,7 @@ dependent expressions move up instead.
 
 `decl-keyword-dir` checks only the `Lemma/` half of the AGENTS.md rule ("never put a `theorem` in `Lemma/`", removed
 from AGENTS.md since the warning quotes it). `sympy/` files are never rendered or linted (`mjs/run.mjs` rejects paths
-outside `Lemma/`, the web `echo.php` route maps a module to `Lemma/<module>.lean`), so "never put a `lemma` in
+outside `Lemma/`, and `request/echo` maps a module to `Lemma/<module>.lean`), so "never put a `lemma` in
 `sympy/`" stays in AGENTS.md.
 
 `term-mode-exact` (text scan, lemmas only): the whole proof is a single `exact e` — `… := by exact e`, or `… := by` /

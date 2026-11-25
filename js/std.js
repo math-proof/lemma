@@ -239,7 +239,7 @@ function get(url, data) {
 function form_post(url, data) {
 	if (url.match(/^https?:\/\//)) {
 		data = {url, data};
-		url = 'php/request/post.php';
+		url = 'request/post';
 	}
 
 	return axios.post(url, Qs.stringify(data)).then(result => {
@@ -254,7 +254,7 @@ function json_post(url, data, header, stream) {
 	var method = 'post';
 	if (url.match(/^https?:\/\//)) {
 		data = {url, data};
-		url = 'php/request/post.php';
+		url = 'request/post';
 		data.header = header;
 		if (stream) {
 			var {id, signal, onmessage, onclose, onerror} = stream;
@@ -2216,14 +2216,11 @@ function resolveModuleUrl(url) {
 async function createApp(component, data, id) {
 	const Vue = window.Vue;
 	const pages = window.__vuePages;
-	if (!Vue || !pages || !pages[component])
+	const load = window.__loadVueComponent;
+	if (!Vue || typeof load !== 'function' || !pages || !pages[component])
 		throw new Error("Vue bundle is not loaded (dist/vue/pages.js): " + component);
-	window.__loadVueComponent = async function (name) {
-		const comp = pages[name];
-		if (!comp)
-			throw new Error("Unknown Vue component: " + name);
-		return { default: comp };
-	};
+	const loaded = await load(component);
+	const Comp = loaded.default;
 
 	id ||= 'root';
 	var div = document.createElement('div');
@@ -2235,7 +2232,6 @@ async function createApp(component, data, id) {
 	document.body.appendChild(div);
 
 	data ||= {};
-	const Comp = pages[component];
 	const $data = Vue.reactive(data);
 	const Root = {
 		setup(_, { expose }) {

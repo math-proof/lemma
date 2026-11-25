@@ -3,7 +3,7 @@
  *
  * Multiline blocks: proof scripts after `by`, and proposition text after `:`.
  * `leanStatementsPreferWordOverTactic` lives here because only `insert_tactic`
- * uses it. PHP keeps its shorter `echo`, `insert_newline`, and `latexFormat`.
+ * uses it.
  *
  * Base classes (the ones in `extends`) are imported from the modules that
  * define them; every other class is read from `Lean.classes` (`L.X`) at

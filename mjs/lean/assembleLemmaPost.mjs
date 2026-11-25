@@ -1,6 +1,6 @@
 /**
  * Build `.lean` file text from the POST body shape produced by `render.vue` / `lemma.vue`,
- * mirroring the save path in `php/lemma.php` (import filtering matches `lemma.php` try_pattern block).
+ * Import filtering keeps only names the proof body uses.
  */
 import { listLemmaTopLevelDirs } from './lemmaSections.mjs';
 import { filterImportsByLemmaCode } from './filterImportsByLemmaCode.mjs';
@@ -135,8 +135,7 @@ function extractProofLines(proof) {
   if (hasCalc) return { kind: 'calc', lines: calcArr.flatMap((s) => String(s).split('\n')) };
 
   /**
-   * PHP `lemma.php`: `$by = $proof['by'] ? … : ($proof['calc'] ? … : ''); if ($by) $proof = $proof[$by];`
-   * then `foreach ($proof as &$line)` — so a plain list (no `by` / `calc`) is still emitted under `-- proof`.
+   * A plain list (no `by` / `calc`) is still emitted under `-- proof`.
    * Vue `get_proof_list` uses `proof.by ?? proof.calc ?? proof` for that shape (e.g. `[{ lean: "…" }]`).
    */
   if (Array.isArray(o)) {
@@ -207,7 +206,7 @@ function buildLemmaBlock(L) {
     declspec = ' :';
   }
 
-  /** PHP: indent `imply` then `detect_lemma` (strips `Section.` when `open`); proof: detect on raw lines then indent. */
+  /** Indent `imply`, then detect imports (strips `Section.` when `open`); proof: detect on raw lines, then indent. */
   const implyRaw =
     L.imply == null
       ? ''
@@ -227,7 +226,7 @@ function buildLemmaBlock(L) {
   proofBody = proofBody.replace(/^\n+/, '').replace(/\n+$/, '');
   proofBody = proofBody.replace(/(?<=\n)\s+\n/g, '');
 
-  // PHP `lemma.php` uses `by`/`calc` only to unwrap nested lines; plain lists still print under `-- proof`.
+  // `by`/`calc` only unwrap nested lines; plain lists still print under `-- proof`.
   const proofSection = proofBody.trim() !== '' ? proofBody : '';
 
   return `${comment}${attribute}${accessibility}lemma ${name}${declspec}
@@ -238,7 +237,7 @@ ${proofSection}`;
 }
 
 /**
- * Same strings PHP pushes to `$lemmaCode` before `try_pattern` (heredoc with imply + proof per lemma).
+ * Imply and proof text for one lemma, used before import filtering.
  * @param {Record<string, unknown>[]} lemmaArr
  */
 function buildLemmaCodeForImportFilter(lemmaArr) {
@@ -289,7 +288,7 @@ export async function assembleLeanSourceFromPostBody(body) {
     }
   }
 
-  /** PHP `detect_lemma` on imply + proof lines before `array_filter` imports. */
+  /** Detect imports from imply and proof lines before filtering the import list. */
   const detectedImports = [];
   const detectedOpen = new Set(openSectionList);
   let importsForDetect = [...imports];
@@ -343,7 +342,7 @@ export async function assembleLeanSourceFromPostBody(body) {
   }
 
   /**
-   * Match `php/std.php` `Text::writelines`: `implode("\n", $leanCode)`.
+   * Join lines with `\n`.
    * Never push a preamble chunk that is only newlines (empty `preamble[*]` fields caused
    * extra blank lines before `@[` when joined with the `\n\n` lemma prefix).
    * @type {string[]}
@@ -392,7 +391,7 @@ export async function assembleLeanSourceFromPostBody(body) {
     .map((line) => line.replace(/\r/g, ''))
     .join('\n');
 
-  /** `php/lemma.php` compile → `$syntax` → `import_syntax` (e.g. `≃` → `Theorem.Logic.SEq`). */
+  /** Syntax keys add imports (e.g. `≃` → `Theorem.Logic.SEq`). */
   const mergedImports = await mergeSyntaxDrivenImports([...uniqImports], out);
   let finalImports = [...new Set(mergedImports)].sort();
   if (

@@ -33,7 +33,7 @@ const self = new Vue({
 
 	computed: {
 		deep() {
-			// Prefer createApp prop (PHP $_GET['deep'] / Node query.deep).
+			// Prefer the createApp prop (`?deep=`).
 			var p = this.$props && this.$props.deep;
 			if (p === true || p === 1 || p === '1' || p === 'true')
 				return true;

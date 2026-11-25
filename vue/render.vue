@@ -366,7 +366,7 @@ const self = new Vue({
 
         href_switch() {
 			var {protocol, host, pathname, search, hash} = location;
-            if (pathname.match(/\/lean\/(index\.php)?/)) {
+            if (pathname.match(/\/lean\//)) {
                 pathname = '/py/';
                 search = search.replace(/(?<=[.\/\\])(in|is)(?=[.\/\\])/g, m => m.capitalize());
                 // The py project has no lemma/theorem distinction: both routes are `?module=`.
@@ -377,7 +377,7 @@ const self = new Vue({
     },
 
     async mounted() {
-        form_post('php/request/sections.php').then(sections => {
+        form_post('request/sections').then(sections => {
             this.sections = sections;
         });
 
@@ -409,7 +409,7 @@ FROM
 where
     module = "${module}" and json_length(lemma) > 0`;
                         console.log(sql);
-                        var [{count}] = await form_post('php/request/execute.php', {sql, resultType: 1});
+                        var [{count}] = await form_post('request/execute', {sql, resultType: 1});
                     }
                     window.close();
                     break;
@@ -532,7 +532,7 @@ order by depth desc`);
 
         async piece_together(sql, axiom) {
             console.log(sql);
-            var topology = await form_post('php/request/execute.php', {sql, resultType: 1});
+            var topology = await form_post('request/execute', {sql, resultType: 1});
             for (var obj of topology) {
                 var {module, imports, lemma, open, preamble} = obj;
                 Object.assign(
@@ -817,7 +817,7 @@ FROM
     axiom.lemma
 where
     module = "${imp}"`;
-                    var data = await form_post('php/request/execute.php', {sql, resultType: 1});
+                    var data = await form_post('request/execute', {sql, resultType: 1});
                     if (data.length) {
                         var codeObject = data[0];
                         codeObject.imports = JSON.parse(codeObject.imports);
@@ -862,7 +862,7 @@ where
             if (parent && parent.split('.')[0] == pkg)
                 prequisite[pkg][parent].imports.push(module);
             prequisite[pkg][module] = { imports: [] };
-            var {code} = await form_post('php/request/fetch.php', {module});
+            var {code} = await form_post('request/fetch', {module});
             var m;
             if (functions) {
                 code = code.trim();
@@ -1208,7 +1208,7 @@ where
                     this.focus(cm, line, col, end, title);
                 } else if (col != null && col !== '' && !Number.isNaN(+col)) {
                     // determine the end of the code segment
-                    form_post('php/request/segment_detection.php', {lean: text.slice(col)}).then(data => {
+                    form_post('request/segment_detection', {lean: text.slice(col)}).then(data => {
                         var {lean} = data;
                         var m = lean.match(/(.*?) *-- .*/);
                         if (m)
@@ -1578,7 +1578,7 @@ where
         },
 
         async fetch_proof(module) {
-            var proofs = await form_post('php/request/proof.php', { module });
+            var proofs = await form_post('request/proof', { module });
             if (!proofs?.length)
                 return;
             // Given and imply have already painted. Fill proof on the next frame.
@@ -1628,7 +1628,7 @@ where
         },
 
         async echo(module){
-            var code = await form_post('php/request/echo.php', {module});
+            var code = await form_post('request/echo', {module});
             console.log(JSON.stringify(code, null, "\t"));
             var {imports, open, set_option, preamble, lemma, meta, date} = code;
             if (!meta || typeof meta !== 'object' || Array.isArray(meta))
@@ -1673,7 +1673,7 @@ insert into
         date = values(date)
 `;
             console.log(sql);
-            form_post('php/request/execute.php', {sql}).then(rowcount => {
+            form_post('request/execute', {sql}).then(rowcount => {
                 console.log("rowcount =", rowcount);
             });
             if (meta == null)
@@ -1682,7 +1682,7 @@ insert into
 
         // Separate from the lemma upsert: rewrite inverted postings and fingerprint trees.
         rebuild_fingerprint(module) {
-            form_post('php/request/rebuild_fingerprint.php', {module}).then(result => {
+            form_post('request/rebuild_fingerprint', {module}).then(result => {
                 console.log('rebuild_fingerprint', result);
             }).catch(err => {
                 console.error('[rebuild_fingerprint]', err);

@@ -189,7 +189,7 @@ export function pickLatestOpen(found, opens) {
 
 /**
  * Qualify `short` from `open` before any axiom.lemma regexp.
- * `disambiguate(rest, section)` is the filesystem lookup (disambiguate.php).
+ * `disambiguate(rest, section)` is the filesystem lookup.
  * A miss is null, never undefined.
  */
 export async function qualifyOpenedModule(short, opens, imports, disambiguate, isSection) {
@@ -265,7 +265,7 @@ export function codeMirrorMounted() {
 		}
 
 		async function disambiguate_module(module) {
-			var section = await form_post('php/request/disambiguate.php', {module});
+			var section = await form_post('request/disambiguate', {module});
 			if (!section)
 				return null;
 			return section + '.' + module;
@@ -279,7 +279,7 @@ from
   mathlib
 where 
   name ${op} "${module}"`;
-			var list = await form_post(`php/request/execute.php`, {sql});
+			var list = await form_post(`request/execute`, {sql});
 			return Array.isArray(list) && list.length > 0;
 		}
 
@@ -386,7 +386,7 @@ where
 				short,
 				ctx.opens,
 				ctx.imports,
-				(rest, section) => form_post('php/request/disambiguate.php', {
+				(rest, section) => form_post('request/disambiguate', {
 					module: rest,
 					section,
 				}),
@@ -408,7 +408,7 @@ from
 where 
 	module regexp "${regexp_mysql}"`;
 			console.log('sql =', sql);
-			var section = regexpSectionNames(await form_post(`php/request/execute.php`, {sql}));
+			var section = regexpSectionNames(await form_post(`request/execute`, {sql}));
 			if (!section.length)
 				return null;
 			if (section.length > 1) {
@@ -472,7 +472,7 @@ where
 				if (!m)
 					return null;
 				if (knownSection(m[1])) {
-					if (!await form_post('php/request/disambiguate.php', {module: m[2]})) {
+					if (!await form_post('request/disambiguate', {module: m[2]})) {
 						var inMathlib = false;
 						try {
 							inMathlib = await select_mathlib(module);
@@ -1110,7 +1110,7 @@ where name REGEXP '^[\\\\p{Script=Greek}a-zA-Z][0-9]$'`;
 
 						sql += "\nlimit 20";
 						console.log(sql);
-                		form_post(`php/request/execute.php`, {sql}).then(list => {
+                		form_post(`request/execute`, {sql}).then(list => {
                 			// Find the token at the cursor
 							if (!Array.isArray(list))
 								return accept(null);

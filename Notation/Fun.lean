@@ -2,7 +2,7 @@ module
 
 public import Structure.Data.List.Slice
 
-public section
+@[expose] public section
 
 open Lean
 

@@ -207,7 +207,6 @@ def test_table(id=None, Rank=None, offset=0):
                         assert False
             except Exception as e:
                 print('Rank', i + 1)
-                print(f"http://192.168.18.133:8000/label/query.php?id={id}")
                 import traceback
                 traceback.print_exc()
                 print(e)

@@ -1,6 +1,6 @@
 /**
  * When `Lemma/<module>.lean` is missing, rewrite dotted modules (of/is, eq swaps,
- * Not/comm, etc.) to match legacy `index.php` (lines 84–332) and return a canonical module for redirect.
+ * Not/comm, etc.) and return a canonical module for redirect.
  */
 import path from 'path';
 import fs from 'fs';
@@ -200,7 +200,7 @@ function arrayInsert(arr, index, value) {
 }
 
 /**
- * Dotted module from `parseInfixSegments` rows (matches PHP `tokens_to_module`).
+ * Dotted module from `parseInfixSegments` rows.
  * @param {(string | string[])[]} segment
  * @param {string | null} [section]
  */
@@ -212,7 +212,7 @@ export function tokensToModule(segment, section) {
 }
 
 /**
- * If `Lemma/<module>.lean` is missing, apply the same rewrites as legacy `index.php`.
+ * If `Lemma/<module>.lean` is missing, apply the dotted-module rewrites.
  * @param {string} moduleDot
  * @returns {string | null} canonical module to redirect to, or null if no rewrite applies
  */
@@ -228,7 +228,7 @@ export function resolveMissingModuleRedirect(moduleDot) {
   if (lastDot !== -1) {
     const parent = module.slice(0, lastDot);
     const lastToken = module.slice(lastDot + 1);
-    /** Lowercase suffix → private lemma anchor in parent `.lean` (PHP `?module=Foo#bar`). */
+    /** Lowercase suffix → private lemma anchor in the parent `.lean` (`?module=Foo#bar`). */
     if (/^[a-z]+$/.test(lastToken)) {
       if (existsSync(parent)) {
         return `${parent}#${lastToken}`;
@@ -308,7 +308,7 @@ export function resolveMissingModuleRedirect(moduleDot) {
                 if (segment[1]?.length === 1 && segment[1][0] === 'of') {
                   segment[1][0] = 'is';
                 }
-                // Same segment rewrite as the `!hit` branch below (PHP falls through to `tokens_to_module`).
+                // Same segment rewrite as the `!hit` branch below.
                 if (segment.length >= 4) arrayInsert(segment, 3, ['of']);
                 if (!existsSync(tokensToModule(segment, section))) {
                   [segment[0], segment[2]] = [segment[2], segment[0]];

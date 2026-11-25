@@ -1,5 +1,5 @@
 /**
- * PHP `php/new.php` mathlib branch: when there is no local `Lemma/…` file, build the
+ * When there is no local `Lemma/…` file, build the
  * `newTheorem` payload from one `mathlib` row (exact `name` = query module).
  */
 import { compile, LeanModule } from '../../js/parser/lean.js';

@@ -1,10 +1,11 @@
 /**
  * Lean lemma browser — pure Node.js (reads `.lean` files, JS compiler, EJS shell).
- * Optional MySQL cache: same idea as php/lemma.php (`.echo.lean` + `fetch_from_mysql`).
+ * Optional MySQL cache: when a `.echo.lean` file exists, load the lemma row from MySQL.
  */
 import express from 'express';
 import path from 'path';
 import fs from 'fs/promises';
+import zlib from 'node:zlib';
 import {
   REPO_ROOT,
   DECL_LIBRARY_FOLDERS,
@@ -26,7 +27,6 @@ import { jsonForScriptEmbed } from './lean/jsonForScriptEmbed.mjs';
 import { listLemmaTopLevelDirs } from './lean/lemmaSections.mjs';
 import { handleExecute } from './lean/execute.mjs';
 import { handleDisambiguate } from './lean/disambiguate.mjs';
-import { buildSummaryPayload } from './lean/summaryData.mjs';
 import { handleRecent } from './lean/recent.mjs';
 import {
   leanEchoPath,
@@ -54,8 +54,8 @@ import {
   detectCycleTraceback,
   buildHierarchyTraceback,
 } from './lean/hierarchyData.mjs';
-import { renderWebsiteIndex, handleWebsiteMdPhp, handleArxivMarkdown, handleMdListing, homeLandingHtml, homeLangFromAccept } from './lean/website.mjs';
-import { handleMathlibPhpRequest } from './lean/mathlibRequest.mjs';
+import { renderWebsiteIndex, handleWebsiteMd, handleArxivMarkdown, handleMdListing, homeLandingHtml, homeLangFromAccept } from './lean/website.mjs';
+import { handleMathlibRequest } from './lean/mathlibRequest.mjs';
 import { getRepoStatsCached } from './lean/lemmaRepoStats.mjs';
 import {
   searchLeanFilesRecursiveUnderFolder,
@@ -72,7 +72,7 @@ const PROJECT_USER =
 
 /**
  * `render2vue` / `echo2vue` still emit `error`; the `lemma` DB column and the
- * render/newTheorem Vue pages now use `meta.error` — same move as php/lemma.php.
+ * render/newTheorem Vue pages now use `meta.error`.
  * render.vue reads `meta.error` in its template, so embedded payloads must carry `meta`.
  */
 function normalizeCodeMeta(code) {
@@ -100,8 +100,58 @@ app.set('views', VIEWS);
 
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
-// Prevent browser caching of EJS-rendered HTML pages (static files override this via express.static)
-app.use((req, res, next) => { res.set('Cache-Control', 'no-store'); next(); });
+const STATIC_MAX_AGE = '1h';
+
+// HTML and JSON stay fresh. Scripts and styles keep an ETag and a short cache.
+app.use((req, res, next) => {
+  if (/\.(js|css|ico|png|jpe?g|gif|svg|woff2?|ttf|map|wasm)$/i.test(req.path)) return next();
+  res.set('Cache-Control', 'no-store');
+  next();
+});
+
+/** Gzip text responses. The host sends them uncompressed otherwise. */
+app.use((req, res, next) => {
+  const accept = String(req.headers['accept-encoding'] || '');
+  if (req.method === 'HEAD' || req.headers.range || !/\bgzip\b/i.test(accept)) return next();
+  const chunks = [];
+  const origEnd = res.end;
+  const origWrite = res.write;
+  res.write = function (chunk, enc, cb) {
+    if (typeof chunk === 'function') { cb = chunk; chunk = undefined; }
+    if (chunk != null)
+      chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk, typeof enc === 'string' ? enc : 'utf8'));
+    if (typeof enc === 'function') enc();
+    else if (typeof cb === 'function') cb();
+    return true;
+  };
+  res.end = function (chunk, enc, cb) {
+    if (typeof chunk === 'function') { cb = chunk; chunk = undefined; enc = undefined; }
+    else if (typeof enc === 'function') { cb = enc; enc = undefined; }
+    if (chunk != null)
+      chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk, typeof enc === 'string' ? enc : 'utf8'));
+    res.write = origWrite;
+    res.end = origEnd;
+    const body = Buffer.concat(chunks);
+    const type = String(res.getHeader('Content-Type') || '');
+    const compressible = /text|javascript|json|xml|svg|\+xml|wasm/.test(type);
+    if (!compressible || body.length < 1024 || res.statusCode === 204 || res.statusCode === 304 || res.getHeader('Content-Encoding'))
+      return origEnd.call(res, body, cb);
+    zlib.gzip(body, (err, gz) => {
+      if (err || gz.length >= body.length) return origEnd.call(res, body, cb);
+      res.setHeader('Content-Encoding', 'gzip');
+      res.removeHeader('Content-Length');
+      const vary = res.getHeader('Vary');
+      res.setHeader('Vary', vary ? `${vary}, Accept-Encoding` : 'Accept-Encoding');
+      return origEnd.call(res, gz, cb);
+    });
+  };
+  next();
+});
+
+/** Browsers request `/favicon.ico` at the host root, outside `/:userSegment/ico`. */
+app.get('/favicon.ico', (_req, res) => {
+  res.sendFile(path.join(REPO_ROOT, 'ico', 'favicon.ico'));
+});
 
 // katex is installed from npm (node_modules/katex). Serve that package only —
 // not the rest of node_modules — and keep pages that still request the vendored
@@ -110,7 +160,7 @@ const KATEX_PKG = path.join(REPO_ROOT, 'node_modules', 'katex');
 const katexFiles = express.static(KATEX_PKG, {
   index: false,
   fallthrough: false,
-  maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+  maxAge: STATIC_MAX_AGE,
 });
 app.use('/node_modules/katex', katexFiles);
 app.use('/lean/node_modules/katex', katexFiles);
@@ -131,7 +181,7 @@ const AXIOS_PKG = path.join(REPO_ROOT, 'node_modules', 'axios');
 const axiosFiles = express.static(AXIOS_PKG, {
   index: false,
   fallthrough: false,
-  maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+  maxAge: STATIC_MAX_AGE,
 });
 app.use('/node_modules/axios', axiosFiles);
 app.use('/lean/node_modules/axios', axiosFiles);
@@ -152,7 +202,7 @@ const CLIPBOARD_PKG = path.join(REPO_ROOT, 'node_modules', 'clipboard');
 const clipboardFiles = express.static(CLIPBOARD_PKG, {
   index: false,
   fallthrough: false,
-  maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+  maxAge: STATIC_MAX_AGE,
 });
 app.use('/node_modules/clipboard', clipboardFiles);
 app.use('/lean/node_modules/clipboard', clipboardFiles);
@@ -173,7 +223,7 @@ const FILE_SAVER_PKG = path.join(REPO_ROOT, 'node_modules', 'file-saver');
 const fileSaverFiles = express.static(FILE_SAVER_PKG, {
   index: false,
   fallthrough: false,
-  maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+  maxAge: STATIC_MAX_AGE,
 });
 app.use('/node_modules/file-saver', fileSaverFiles);
 app.use('/lean/node_modules/file-saver', fileSaverFiles);
@@ -195,7 +245,7 @@ function mountNpmPkg(name, unpkgMarker) {
   const files = express.static(pkgDir, {
     index: false,
     fallthrough: false,
-    maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+    maxAge: STATIC_MAX_AGE,
   });
   app.use('/node_modules/' + name, files);
   app.use('/lean/node_modules/' + name, files);
@@ -224,7 +274,7 @@ for (const scope of CM6_SCOPES) {
   const files = express.static(pkgPath, {
     index: false,
     fallthrough: false,
-    maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+    maxAge: STATIC_MAX_AGE,
   });
   app.use(`/node_modules/${scope}`, files);
   app.use(`/lean/node_modules/${scope}`, files);
@@ -235,7 +285,7 @@ for (const pkg of ['style-mod', 'crelt', 'w3c-keyname']) {
   const files = express.static(pkgPath, {
     index: false,
     fallthrough: false,
-    maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+    maxAge: STATIC_MAX_AGE,
   });
   app.use(`/node_modules/${pkg}`, files);
   app.use(`/lean/node_modules/${pkg}`, files);
@@ -331,81 +381,81 @@ app.get('/:userSegment/api/folder-search.json', ensureProjectUser, (req, res) =>
   }
 });
 
-/** Matches PHP `php/request/sections.php` (POST → JSON array of `Lemma/` child dir names). */
-app.post('/:userSegment/php/request/sections.php', ensureProjectUser, (_req, res) => {
+/** POST → JSON array of `Lemma/` child directory names. */
+app.post('/:userSegment/request/sections', ensureProjectUser, (_req, res) => {
   res.json(listLemmaTopLevelDirs());
 });
 
-/** Same contract as `php/request/execute.php` (`mysql\execute`); stub when `MYSQL_HOST` unset. */
-app.post('/:userSegment/php/request/execute.php', ensureProjectUser, (req, res) => {
+/** Same contract as `request/execute` (`mysql\execute`); stub when `MYSQL_HOST` unset. */
+app.post('/:userSegment/request/execute', ensureProjectUser, (req, res) => {
   handleExecute(req, res).catch((e) => {
     console.error('[execute]', e);
     res.status(500).type('text/plain').send('0');
   });
 });
 
-/** Same contract as `php/request/mathlib.php` (POST `name` → JSON from Lean `Name.toJson`). */
-app.post('/:userSegment/php/request/mathlib.php', ensureProjectUser, (req, res) => {
-  handleMathlibPhpRequest(req, res).catch((e) => {
-    console.error('[mathlib.php]', e);
+/** Same contract as `request/mathlib` (POST `name` → JSON from Lean `Name.toJson`). */
+app.post('/:userSegment/request/mathlib', ensureProjectUser, (req, res) => {
+  handleMathlibRequest(req, res).catch((e) => {
+    console.error('[mathlib]', e);
     res.status(500).json({ error: String(e?.message || e) });
   });
 });
 
-/** Same contract as `php/request/delete/lemma.php` (POST `package`, `lemma` → JSON `"deleted!"`). */
-app.post('/:userSegment/php/request/delete/lemma.php', ensureProjectUser, (req, res) => {
+/** Same contract as `request/delete/lemma` (POST `package`, `lemma` → JSON `"deleted!"`). */
+app.post('/:userSegment/request/delete/lemma', ensureProjectUser, (req, res) => {
   handleDeleteLemma(req, res).catch((e) => {
     console.error('[delete-lemma]', e);
     res.status(500).json({ error: String(e?.message || e) });
   });
 });
 
-/** Same contract as `php/request/delete/package.php` (POST `package`, `section` → JSON `"deleted!"`). */
-app.post('/:userSegment/php/request/delete/package.php', ensureProjectUser, (req, res) => {
+/** Same contract as `request/delete/package` (POST `package`, `section` → JSON `"deleted!"`). */
+app.post('/:userSegment/request/delete/package', ensureProjectUser, (req, res) => {
   handleDeletePackage(req, res).catch((e) => {
     console.error('[delete-package]', e);
     res.status(500).json({ error: String(e?.message || e) });
   });
 });
 
-/** Same contract as `php/request/rename.php` for POST `old` + `new` (dotted modules). */
-app.post('/:userSegment/php/request/rename.php', ensureProjectUser, (req, res) => {
+/** Same contract as `request/rename` for POST `old` + `new` (dotted modules). */
+app.post('/:userSegment/request/rename', ensureProjectUser, (req, res) => {
   handleRenameLemma(req, res).catch((e) => {
     console.error('[rename]', e);
     res.status(500).json({ error: String(e?.message || e) });
   });
 });
 
-/** Filesystem disambiguation (same idea as PHP `disambiguate.php`). */
-app.post('/:userSegment/php/request/disambiguate.php', ensureProjectUser, handleDisambiguate);
+/** Which top-level `Lemma/` folder contains this module. */
+app.post('/:userSegment/request/disambiguate', ensureProjectUser, handleDisambiguate);
 
-/** Recent modules (PHP `php/request/recent.php`); uses file mtimes. */
-app.get('/:userSegment/php/request/recent.php', ensureProjectUser, handleRecent);
+/** Recent modules by file mtime. */
+app.get('/:userSegment/request/recent', ensureProjectUser, handleRecent);
 
-/** Plain text, same as `php/request/count.php` (`select_count`). */
-app.get('/:userSegment/php/request/count.php', ensureProjectUser, async (_req, res) => {
+/** Plain text, same as `request/count` (`select_count`). */
+app.get('/:userSegment/request/count', ensureProjectUser, async (_req, res) => {
   try {
     const { theoremCount } = await getRepoStatsCached();
     res.type('text/plain; charset=utf-8').send(String(theoremCount));
   } catch (e) {
-    console.error('[count.php]', e);
+    console.error('[count]', e);
     res.status(500).type('text/plain').send('0');
   }
 });
 
-/** Plain text, same as `php/request/lines.php`. */
-app.get('/:userSegment/php/request/lines.php', ensureProjectUser, async (_req, res) => {
+/** Plain text, same as `request/lines`. */
+app.get('/:userSegment/request/lines', ensureProjectUser, async (_req, res) => {
   try {
     const { lineCount } = await getRepoStatsCached();
     res.type('text/plain; charset=utf-8').send(String(lineCount));
   } catch (e) {
-    console.error('[lines.php]', e);
+    console.error('[lines]', e);
     res.status(500).type('text/plain').send('0');
   }
 });
 
-/** Same contract as `php/request/segment_detection.php` (POST `lean` → JSON `{lean}`). */
-app.post('/:userSegment/php/request/segment_detection.php', ensureProjectUser, (req, res) => {
+/** Same contract as `request/segment_detection` (POST `lean` → JSON `{lean}`). */
+app.post('/:userSegment/request/segment_detection', ensureProjectUser, (req, res) => {
   const lean = req.body?.lean;
   if (typeof lean !== 'string') {
     res.status(400).json({ error: 'missing lean' });
@@ -417,11 +467,11 @@ app.post('/:userSegment/php/request/segment_detection.php', ensureProjectUser, (
       res.status(500).json({ error: 'compile() root must be LeanModule' });
       return;
     }
-    // If first arg is LeanCaret, remove it (matches PHP logic)
+    // Drop a leading caret so the module body starts at the first real token.
     if (code.args[0] instanceof LeanCaret) {
       code.args.shift();
     }
-    // Stringify and trim (PHP rtrim("$code"))
+    // Stringify and trim trailing whitespace.
     const result = String(code).replace(/\s+$/, '');
     res.json({ lean: result });
   } catch (e) {
@@ -431,15 +481,15 @@ app.post('/:userSegment/php/request/segment_detection.php', ensureProjectUser, (
 });
 
 /** Replace `axiom.inverted` and `axiom.fingerprint` for one module after echo. */
-app.post('/:userSegment/php/request/rebuild_fingerprint.php', ensureProjectUser, (req, res) => {
+app.post('/:userSegment/request/rebuild_fingerprint', ensureProjectUser, (req, res) => {
   handleRebuildFingerprint(req, res).catch((e) => {
     console.error('[rebuild_fingerprint]', e);
     res.status(500).json({ error: String(e?.message || e) });
   });
 });
 
-/** Same contract as `php/request/echo.php` (POST `module` → JSON `render` payload). */
-app.post('/:userSegment/php/request/proof.php', ensureProjectUser, async (req, res) => {
+/** Same contract as `request/echo` (POST `module` → JSON `render` payload). */
+app.post('/:userSegment/request/proof', ensureProjectUser, async (req, res) => {
   try {
     const module = String(req.body?.module || '').trim();
     if (!module) {
@@ -460,7 +510,7 @@ app.post('/:userSegment/php/request/proof.php', ensureProjectUser, async (req, r
   }
 });
 
-app.post('/:userSegment/php/request/echo.php', ensureProjectUser, async (req, res) => {
+app.post('/:userSegment/request/echo', ensureProjectUser, async (req, res) => {
   try {
     const {module} = req.body;
     if (!module || typeof module !== 'string') {
@@ -488,36 +538,29 @@ app.post('/:userSegment/php/request/echo.php', ensureProjectUser, async (req, re
 /** Top-level `ico/` (favicon etc.) served under `/:userSegment/ico`. */
 app.use('/:userSegment/ico', ensureProjectUser, express.static(path.join(REPO_ROOT, 'ico'), {
   fallthrough: true,
-  maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+  maxAge: STATIC_MAX_AGE,
 }));
 
 // Top-level `vue/` (single-file components) and its `../js/…` imports from the
 // SFCs resolve to `js/` via the parallel `/:userSegment/js` mount.
 app.use('/:userSegment/vue', ensureProjectUser, express.static(path.join(REPO_ROOT, 'vue'), {
   fallthrough: true,
-  maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+  maxAge: STATIC_MAX_AGE,
 }));
 app.use('/:userSegment/dist', ensureProjectUser, express.static(path.join(REPO_ROOT, 'dist'), {
   fallthrough: true,
-  maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+  maxAge: STATIC_MAX_AGE,
 }));
 app.use('/:userSegment/js', ensureProjectUser, express.static(path.join(REPO_ROOT, 'js'), {
   fallthrough: true,
-  maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+  maxAge: STATIC_MAX_AGE,
 }));
 
 // Top-level `css/` (stylesheets moved out of `static/`).
 app.use('/:userSegment/css', ensureProjectUser, express.static(path.join(REPO_ROOT, 'css'), {
   fallthrough: true,
-  maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+  maxAge: STATIC_MAX_AGE,
 }));
-
-async function renderSummaryPage(res, userSegment) {
-  const { state_count_pairs, repertoire } = await buildSummaryPayload();
-  const summaryJson = jsonForScriptEmbed({ state_count_pairs, repertoire });
-  res.set('Content-Type', 'text/html; charset=utf-8');
-  res.render('summary', { summaryJson, userSegment });
-}
 
 function renderPackageBrowserPage(res, module, userSegment) {
   const pkgDir = moduleToLemmaPackageDir(module);
@@ -542,9 +585,8 @@ function renderPackageBrowserPage(res, module, userSegment) {
 async function renderLemmaPage(res, module, userSegment) {
   module = stripDeclFolderPrefix(module);
   /**
-   * PHP `index.php`: `?module=Section...Name.` (trailing `.`) makes `$title` end with `/`,
-   * so `$leanFile` is never set and `package.php` runs — browse the folder, not `Name.lean`.
-   * Node `path.join` drops empty segments, so `Name.` wrongly mapped to `.../Name.lean`.
+   * A trailing dot (`Section.Name.`) browses the package folder.
+   * `path.join` drops empty segments, so `Name.` must not map to `Name.lean`.
    */
   const modTrim = module.trim();
   if (modTrim.endsWith('.')) {
@@ -573,7 +615,7 @@ async function renderLemmaPage(res, module, userSegment) {
   const abs = moduleToRepoLeanPath(module);
   const leanMissing = !abs || !fileExists(abs);
   if (leanMissing) {
-    /** Same as PHP `index.php`: folder `Lemma/<module path>/` → `php/package.php` + `axiomContents`. */
+    /** A `Lemma/<module path>/` folder is the package browser. */
     const relPkgMod = stripDeclFolderPrefix(module);
     const pkgDir = moduleToLemmaPackageDir(relPkgMod);
     if (pkgDir && dirExists(pkgDir)) {
@@ -713,7 +755,7 @@ function escapeHtml(s) {
 
 /**
  * Redirect to `?module=`; put `#suffix` in the URL fragment (not `%23` in the query value).
- * Matches PHP `header("location:?module=$module")` when `$module` contains `#`.
+ * Put `#suffix` in the URL fragment when the module contains `#`.
  */
 function redirectToModule(res, userSegment, module) {
   const seg = userSegment || PROJECT_USER;
@@ -734,7 +776,7 @@ function canonicalDeclParam(module) {
   return { param: match[1] === 'Lemma' ? 'lemma' : 'theorem', value: match[2] };
 }
 
-/** PHP `index.php` `is_top_level_folder`: an existing capitalised repo directory (`Lemma`, `Def`, …). */
+/** An existing capitalised repo directory (`Lemma`, `Def`, …). */
 function isTopLevelFolder(head) {
   return /^[A-Z][A-Za-z0-9]*$/.test(head) && dirExists(path.join(REPO_ROOT, head));
 }
@@ -762,16 +804,15 @@ function declQueryParam(folder) {
   return folder === 'Theorem' ? 'theorem' : 'lemma';
 }
 
-/** PHP `lean.php/website` → marketing/docs shell (`website/index.php`). */
 /** No trailing-slash redirect: some proxies strip `/` and would loop with `→ /:userSegment/website/`. */
 app.get(['/:userSegment/website', '/:userSegment/website/'], ensureProjectUser, renderWebsiteIndex);
-app.use('/:userSegment/website/md.php', ensureProjectUser, (req, res) => {
+app.use('/:userSegment/website/md', ensureProjectUser, (req, res) => {
   if (req.method !== 'GET') {
     res.status(405).type('text/plain').send('Method not allowed');
     return;
   }
-  handleWebsiteMdPhp(req, res).catch((e) => {
-    console.error('[website md.php]', e);
+  handleWebsiteMd(req, res).catch((e) => {
+    console.error('[website md]', e);
     res.status(500).type('html').send(
       `<!DOCTYPE html><meta charset="utf-8"><title>Error</title><p>${escapeHtml(String(e?.message || e))}</p>`
     );
@@ -796,16 +837,16 @@ app.use('/:userSegment/md', ensureProjectUser, (req, res, next) => {
 app.use('/:userSegment/md', ensureProjectUser, express.static(path.join(REPO_ROOT, 'md'), {
   index: false,
   redirect: false,
-  maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+  maxAge: STATIC_MAX_AGE,
 }));
 app.use('/:userSegment/website', ensureProjectUser, 
   express.static(path.join(REPO_ROOT, 'website'), {
   index: false,
   redirect: false,
-  maxAge: process.env.NODE_ENV === 'production' ? '1h' : 0,
+  maxAge: STATIC_MAX_AGE,
 }));
 
-/** Same idea as `php/search.php` + `index.php` (`?type=`, `?q=`, `?lean=`). */
+/** Search page language from `?lang=` or `Accept-Language`. */
 function searchPageLang(req) {
   const chosen = req?.query?.lang;
   if (typeof chosen === 'string' && chosen.trim() !== '') {
@@ -830,7 +871,12 @@ async function renderSearchPage(res, dict, userSegment, req) {
     if (process.env.NODE_ENV !== 'production') {
       res.set('Cache-Control', 'no-store');
     }
-    res.render('search', { searchJson, userSegment, countScript });
+    res.render('search', {
+      searchJson,
+      userSegment,
+      countScript,
+      loadKatex: payload.q != null && String(payload.q) !== '',
+    });
   } catch (err) {
     console.error('[search]', err);
     res.status(500).type('html').send(
@@ -849,7 +895,7 @@ function postFieldString(val) {
 /**
  * Lemma editor save (`render.vue` POST): write the existing file under `Lemma/` or `Theorem/`
  * (prefer Lemma, then Theorem), or create `Lemma/<module>.lean` when the file is new.
- * PHP uses `php/lemma.php` inside `index.php`; Node assembles text in `assembleLemmaPost.mjs`.
+ * Assembles the file text in `assembleLemmaPost.mjs`.
  */
 async function handleLemmaSavePost(res, userSegment, body) {
   let module = stripDeclFolderPrefix(postFieldString(body.module).replace(/\//g, '.'));
@@ -892,7 +938,7 @@ async function handleLemmaSavePost(res, userSegment, body) {
   res.redirect(302, `/${userSegment || PROJECT_USER}/?${declQueryParam(folder)}=${encodeURIComponent(module)}`);
 }
 
-/** POST body from `searchForm.vue` (PHP `index.php`); same logic as `/:userSegment/` POST. */
+/** Search form POST. Same handler as `/:userSegment/` POST. */
 async function handleLeanPostSearch(req, res) {
   const userSegment = req.params.userSegment || PROJECT_USER;
   const body = req.body && typeof req.body === 'object' ? req.body : {};
@@ -953,7 +999,7 @@ async function renderHierarchyPage(res, query, keyInput, userSegment) {
 }
 
 /**
- * PHP `index.php` default branch + `php/mathlib.php`: `?mathlib=name` → `mathlib.vue` with rows from `mathlib` table.
+ * `?mathlib=name` → `mathlib.vue` with rows from the `mathlib` table.
  */
 async function renderMathlibPage(res, name, userSegment, limit) {
   const lemma = await fetchMathlibLemmaPayloadsFromMysql(name, limit);
@@ -967,7 +1013,7 @@ async function renderMathlibPage(res, name, userSegment, limit) {
 }
 
 /**
- * PHP `php/new.php` + `index.php?new=`: edit shell for an existing `Lemma/<module>.lean` via `newTheorem.vue`.
+ * `?new=` edit shell for an existing `Lemma/<module>.lean` via `newTheorem.vue`.
  */
 async function renderNewTheoremPage(res, module, userSegment) {
   const abs = moduleToLeanPath(module);
@@ -990,7 +1036,7 @@ async function renderNewTheoremPage(res, module, userSegment) {
       res.status(404).type('html').send(
         `<!DOCTYPE html><meta charset="utf-8"><title>Not found</title>
         <p>No Lean file for <code>${escapeHtml(module)}</code> and no matching <code>mathlib</code> row (exact <code>name</code>).</p>
-        <p>Configure MySQL (<code>MYSQL_HOST</code>, …) and ensure a row exists, or add <code>Lemma/…</code>. The PHP <code>axiom</code> bootstrap path is not implemented on Node.</p>`
+        <p>Configure MySQL (<code>MYSQL_HOST</code>, …) and ensure a row exists, or add <code>Lemma/…</code>. Creating a lemma from an axiom row is not implemented here.</p>`
       );
       return;
     }
@@ -1157,7 +1203,7 @@ async function handleLeanGet(req, res) {
     return;
   }
 
-  /** PHP `index.php` + `php/mathlib.php`: `?mathlib=div_zero` (key may be present with empty value). */
+  /** `?mathlib=div_zero` (the key may be present with an empty value). */
   if (Object.prototype.hasOwnProperty.call(req.query, 'mathlib')) {
     const name = req.query.mathlib == null ? '' : String(req.query.mathlib).trim();
     const limRaw = req.query.limit;
@@ -1182,7 +1228,7 @@ async function handleLeanGet(req, res) {
   if (typeof raw !== 'string') {
     res.status(400).type('html').send(
       `<!DOCTYPE html><meta charset="utf-8"><title>lemma</title>
-      <p><code>module</code> must be a string (or omit it for the summary page).</p>`
+      <p><code>module</code> must be a string.</p>`
     );
     return;
   }
@@ -1191,7 +1237,7 @@ async function handleLeanGet(req, res) {
     await renderSearchPage(res, { q: '', mode: 'lean' }, userSeg, req);
     return;
   }
-  /** Same as `index.php`: absolute or Lemma-relative `.lean` path → dotted module + redirect. */
+  /** Absolute or Lemma-relative `.lean` path → dotted module + redirect. */
   if (module.endsWith('.lean')) {
     const canonical = leanPathToModule(module);
     if (!canonical) {
@@ -1219,7 +1265,7 @@ async function handleLeanGet(req, res) {
   /**
    * Legacy `?module=<Lemma-relative module>`: without a top-level prefix the module
    * resolves under `Lemma/`, so it is a lemma address — canonicalise it to `?lemma=`
-   * (same as `index.php`), e.g. `?module=Matrix.Grad_Softmax.…` → `?lemma=Matrix.Grad_Softmax.…`.
+   * e.g. `?module=Matrix.Grad_Softmax.…` → `?lemma=Matrix.Grad_Softmax.…`.
    */
   if (!isTopLevelFolder(module.split('.')[0])) {
     res.redirect(302, `/${userSeg}/?lemma=${encodeURIComponent(module)}`);
@@ -1236,13 +1282,7 @@ async function handleLeanGet(req, res) {
 
 app.get('/:userSegment', ensureProjectUser, handleLeanGet);
 app.get('/:userSegment/', ensureProjectUser, handleLeanGet);
-app.get('/:userSegment/index.php', ensureProjectUser, (req, res) => {
-  const orig = req.originalUrl || req.url;
-  const q = orig.includes('?') ? orig.slice(orig.indexOf('?')) : '';
-  res.redirect(302, `/${req.params.userSegment}/${q}`);
-});
-
-/** Search form POST (PHP `index.php` + `search.php` use POST when form submits). */
+/** Search form POST. */
 function handleLeanPostSearchRoute(req, res) {
   handleLeanPostSearch(req, res).catch((err) => {
     console.error('[lean post]', err);
@@ -1255,7 +1295,6 @@ function handleLeanPostSearchRoute(req, res) {
 
 app.post('/:userSegment', ensureProjectUser, handleLeanPostSearchRoute);
 app.post('/:userSegment/', ensureProjectUser, handleLeanPostSearchRoute);
-app.post('/:userSegment/index.php', ensureProjectUser, handleLeanPostSearchRoute);
 
 app.get('/', (req, res) => {
   const q = req.url.includes('?') ? req.url.slice(req.url.indexOf('?')) : '';
@@ -1269,7 +1308,7 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`  static:      /${PROJECT_USER}/static/`);
   console.log(`  compiler:    JS (render2vue.mjs)`);
   if (getMysqlConfig()) {
-    console.log('  mysql:       lemma from DB when row exists (.echo.lean gate like php/lemma.php)');
+    console.log('  mysql:       lemma from DB when a .echo.lean file exists');
   }
   getRepoStatsCached().catch((e) =>
     console.warn('[repo-stats warm]', e?.message || e)

@@ -1,6 +1,6 @@
 # Node server (`mjs/app.mjs`)
 
-## Run (no PHP / Apache)
+## Run
 
 ```bash
 npm install
@@ -17,7 +17,7 @@ Static assets: `/lean/static/...` (served from `./static`).
 
 - Resolves `module` → `Lemma/<path>.lean`.
 - Builds the `render` Vue payload via **`mjs/lean/compiler/index.mjs`** (JS `compile()` + `render2vue.mjs`; falls back to regex stub when parse fails).
-- Renders **`ejs/lemma.ejs`** (same script/CSS idea as `php/lemma.php`).
+- Renders **`ejs/lemma.ejs`**.
 
 See **`mjs/lean/compiler/README.md`** for details.
 

@@ -1,6 +1,6 @@
 ## Quick orientation
 
-This repo is a Lean 4 / mathlib-derived project that builds a large theorem library (under `Lemma/`) and a companion website (PHP + static assets) that visualizes Lean code with KaTeX. Key tools: `lean` / `elan`, `lake` (build tool), and standard shell/PowerShell scripts under `sh/`.
+This repo is a Lean 4 / mathlib-derived project that builds a large theorem library (under `Lemma/`) and a Node website that visualizes Lean code with KaTeX. Key tools: `lean` / `elan`, `lake` (build tool), and standard shell/PowerShell scripts under `sh/`.
 
 Keep changes small and local: many files are interdependent (imports are computed from file paths). Use the project's scripts to recompute imports and update downstream artifacts.
 
@@ -20,7 +20,7 @@ Keep changes small and local: many files are interdependent (imports are compute
 - `*.lean` vs `*.echo.lean` — the scripts and `sh/run.sh` intentionally skip `*.echo.lean` files. Prefer editing plain `.lean` files.
 - `lake-manifest.json`, `lakefile.toml`, `.lake/` — lake packages are pinned here (mathlib, aesop, Qq, etc.). Use `lake` commands to change/update.
 - `json/` — precomputed indices like `mathlib.jsonl`, `mathlib.tsv`, and other JSON used by the website. If you change export formats, update these.
-- `php/`, `website/`, and `static/` — web server code that renders search pages and KaTeX visualizations. `index.php`, `query.php`, and `Lemma/` static rendering interact with Lean-sourced data.
+- `mjs/`, `website/`, and `static/` — the Node server, docs site, and static assets. Search pages and KaTeX rendering read Lean-sourced data.
 - `sh/` — repository maintenance scripts (`run.sh`, `update.sh`, `utility.sh`, and Windows `.ps1` variants). Read them before automating changes.
 
 ## Naming and code conventions (explicit project rules)
@@ -38,10 +38,10 @@ Keep changes small and local: many files are interdependent (imports are compute
 ## Integration points & external deps
 - mathlib4 and other third-party lean packages are pinned in `lake-manifest.json` (do not change pinned revisions without coordinating updates). Use `sh/update.sh` to incrementally update dependencies.
 - The `sh/run.sh` script writes SQL to `sql/test.sql` and requires a running MySQL server (database `axiom`) if you want to populate the site's lemma table. Required env vars: `MYSQL_PWD` (and optional `MYSQL_PORT`). The script will attempt to create the DB/table if missing.
-- Frontend visualization depends on static assets in `static/` and PHP endpoints in `php/`. If you change Lean AST->HTML output, update these components and re-generate any JSON indices in `json/`.
+- Frontend visualization depends on static assets in `static/` and the Node routes under `request/`. If you change Lean AST->HTML output, update these components and re-generate any JSON indices in `json/`.
 
 ## Minimal checklist for common tasks
-- Make a small Lean change: edit `Lemma/.../*.lean` → run `lake build` → run `bash sh/run.sh` (or `.\sh\run.ps1`) to refresh DB/index → smoke test the web pages in `website/`/`php/`.
+- Make a small Lean change: edit `Lemma/.../*.lean` → run `lake build` → run `bash sh/run.sh` (or `.\sh\run.ps1`) to refresh DB/index → smoke test `http://127.0.0.1/lean/` and `website/`.
 - Add a new lemma file: ensure path matches module name (e.g. `Lemma/Tensor/NewLemma.lean` → module `Lemma.Tensor.NewLemma`) and follow naming conventions.
 
 ## Quick examples

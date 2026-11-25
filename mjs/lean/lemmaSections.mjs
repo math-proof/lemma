@@ -3,7 +3,7 @@ import path from 'path';
 import { REPO_ROOT } from './modulePath.mjs';
 
 /**
- * Same idea as `php/request/sections.php`: top-level folder names under `Lemma/`
+ * Same idea as `request/sections`: top-level folder names under `Lemma/`
  * (used by `render.vue` → `regexp_section`).
  */
 export function listLemmaTopLevelDirs() {

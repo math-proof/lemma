@@ -1,8 +1,7 @@
 /**
  * Interval notation `a..b` (`LeanUpto`).
  *
- * JS `sep` inserts a space when the right-hand side is still a caret; PHP `sep`
- * stays empty.
+ * `sep` inserts a space when the right-hand side is still a caret.
  *
  * Base classes (the ones in `extends`) are imported from the modules that
  * define them; every other class is read from `Lean.classes` (`L.X`) at

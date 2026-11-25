@@ -1,9 +1,8 @@
 /**
- * Best-effort Lean → `render.vue` props without the PHP `compile` / `render2vue` pipeline.
+ * Best-effort Lean → `render.vue` props from section comments, without a full compile.
  * Uses structure comments (`-- imply`, `-- proof`, `-- given`) and `lemma` headers.
- * Full KaTeX / tactic LaTeX (PHP `toLatex`) is not replicated; we emit a safe KaTeX
- * fallback so `v-latex.block` runs (same layout as PHP) instead of `imply.insert` +
- * CodeMirror-only for the imply section.
+ * Full tactic LaTeX is not replicated. A safe KaTeX fallback keeps `v-latex.block`
+ * instead of showing only the imply editor.
  */
 
 /** Escape a single line for use inside `\text{...}` in KaTeX. */
@@ -27,7 +26,7 @@ function lineIndent(line) {
 }
 
 /**
- * Best-effort label for a proof step (PHP uses these in `\tag*{…}` on the right).
+ * Best-effort label for a proof step, shown in `\tag*{…}` on the right.
  * Uses only the first line of a multi-line tactic.
  */
 export function extractProofStepTag(firstLine) {
@@ -44,9 +43,9 @@ export function extractProofStepTag(firstLine) {
 }
 
 /**
- * Monospace-style display of Lean source via KaTeX (not semantic math like PHP `toLatex`).
+ * Monospace-style display of Lean source via KaTeX, not semantic math.
  * Renders as a left-aligned `aligned` block so it matches the block layout of real LaTeX.
- * Optional `tag` (or auto-detect from first line) adds a right `\tag*{…}` like PHP.
+ * Optional `tag` (or auto-detect from the first line) adds a right `\tag*{…}`.
  */
 export function leanToFallbackLatex(lean, options = {}) {
   if (!lean || !String(lean).trim()) return '';
@@ -201,7 +200,7 @@ function extractFirstLemma(text) {
       ? {
           insert: false,
           lean: implyLean,
-          /** Match PHP `\\tag*{ := by}` on the last line of the `align` block. */
+          /** Right-margin `:= by` tag on the last line of the `align` block. */
           latex: leanToFallbackLatex(implyLean, { tag: ' := by' }),
         }
       : { insert: true, lean: implyLean, latex: '' };

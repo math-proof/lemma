@@ -1,6 +1,6 @@
 /**
- * Node port of `php/request/delete/package.php`: recursively remove `Lemma/<package>.<section>/`
- * and optional MySQL rows for that module prefix (PHP’s `delete_from_lemma` regex call is broken).
+ * Node port of `request/delete/package`: recursively remove `Lemma/<package>.<section>/`
+ * and optional MySQL rows for that module prefix.
  */
 import fs from 'fs/promises';
 import path from 'path';

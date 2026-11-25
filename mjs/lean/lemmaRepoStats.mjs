@@ -1,10 +1,10 @@
 /**
- * Mirrors `php/request/count.php` + `php/request/lines.php` for the website home labels.
+ * Mirrors `request/count` + `request/lines` for the website home labels.
  *
  * - Theorem count: `select count(*) from lemma where json_length(imports) > 0`
- *   (`php/utility.php` `select_count`), not a raw `.lean` file count.
+ *   rows in `lemma` with imports, not a raw `.lean` file count.
  * - Lines: non-empty lines in all `.lean` under the decl libraries and `Lemma/` except `*.echo.lean`
- *   (`php/request/lines.php` + `read_all_lean`).
+ *   (`request/lines` + `read_all_lean`).
  */
 import fs from 'fs/promises';
 import path from 'path';
@@ -45,7 +45,7 @@ async function collectLeanFilesNoEcho(absDir) {
   return out;
 }
 
-/** PHP `file(..., FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)` → non-empty line segments. */
+/** Non-empty lines of a file. */
 function countNonEmptyLinesBuf(buf) {
   if (buf.length === 0) return 0;
   const s = buf.toString('utf8');
@@ -72,7 +72,7 @@ async function getLeanNonEmptyLinesTotal() {
 }
 
 /**
- * Same as `php/utility.php` `select_count($user)` without type filter.
+ * `select count(*)` over `lemma` rows that have imports, with no type filter.
  */
 async function getTheoremCountMysql() {
   if (!getMysqlConfig()) return 0;

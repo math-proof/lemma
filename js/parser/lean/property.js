@@ -312,7 +312,7 @@ export class LeanProperty extends LeanBinary {
                 case 'log':
                 case 'arctan': {
                     // Namespace `Hyperreal.sin` / `Real.arctan` → `\sin` / `\tan^{-1}`.
-                    // Method `θ.sin` / composed `θ.arctan.sin` same commands (mirror PHP).
+                    // Method `θ.sin` and composed `θ.arctan.sin` use the same commands.
                     const cmd = rhs.text === 'arctan'
                         ? '\\tan^{-1}'
                         : `\\${rhs.text}`;

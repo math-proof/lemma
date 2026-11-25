@@ -1,21 +1,24 @@
 /**
  * Precompiled Vue pages. The browser loads this bundle instead of
  * compiling `.vue` files with vue3-sfc-loader.
+ * Each page is its own chunk. `createApp` loads the one the route asks for.
  */
 import * as Vue from "vue";
+// The search page is the landing route, so its chunk starts with this file.
+import "../vue/searchResult.vue";
 
-const modules = import.meta.glob("../vue/*.vue", { eager: true });
+const loaders = import.meta.glob("../vue/*.vue");
 const pages = {};
-for (const [file, mod] of Object.entries(modules)) {
+for (const [file, load] of Object.entries(loaders)) {
 	const name = file.slice(file.lastIndexOf("/") + 1, -4);
-	pages[name] = mod.default;
+	pages[name] = load;
 }
 
 window.Vue = Vue;
 window.__vuePages = pages;
 window.__loadVueComponent = async function (name) {
-	const comp = pages[name];
-	if (!comp)
+	const load = pages[name];
+	if (!load)
 		throw new Error("Unknown Vue component: " + name);
-	return { default: comp };
+	return load();
 };

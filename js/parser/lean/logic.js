@@ -225,6 +225,42 @@ export class Lean_land extends LeanLogic {
     }
 
     /**
+     * The `ℙ[…]` whose event this `∧` is, if the parent is one (the `(…)` that
+     * delimits the probability scope is transparent).
+     * @returns {object|null}
+     */
+    probEventParent() {
+        let p = this.parent;
+        while (p instanceof L.LeanParenthesis) p = p.parent;
+        return p instanceof L.Lean_Prob ? p : null;
+    }
+
+    /**
+     * Inside a `ℙ[…]` event the conjunction is a joint observation:
+     * `ℙ[π](x[:k] = «\sf{x}»[:k] ∧ y[:k] = «\sf{y}»[:k])` stores the joint
+     * random vector as `{"Joint": [«\sf{x}»[:k], «\sf{y}»[:k]]}` — only the
+     * right-hand sides of the conjoined equalities are fingerprinted.
+     * @param {{leaves: Map<string, number>, binders: string[]}} [ctx]
+     */
+    toJSON(ctx = { leaves: new Map() }) {
+        if (!this.probEventParent()) return super.toJSON(ctx);
+        const parts = [];
+        const push = (node) => {
+            let n = node;
+            while (n instanceof L.LeanParenthesis) n = n.arg;
+            if (n instanceof Lean_land) {
+                push(n.lhs);
+                push(n.rhs);
+                return;
+            }
+            parts.push((n instanceof L.LeanEq ? n.rhs : n).toJSON(ctx));
+        };
+        push(this.lhs);
+        push(this.rhs);
+        return { Joint: parts };
+    }
+
+    /**
      * Display latex: collapse connected plain-eq ∧-chains (py And._latex).
      * @param {object} [syntax]
      * @returns {string}

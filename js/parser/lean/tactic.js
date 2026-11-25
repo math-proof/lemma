@@ -508,7 +508,7 @@ export class LeanTactic extends LeanSyntax {
             this.replace(caret, new LeanSequentialTacticCombinator(caret, prevToken == '\n' ? caret.indent : this.indent, caret.level, prevToken == '\n', nextToken == '\n'));
         else {
             caret = new L.LeanCaret(this.indent, caret.level);
-            // PHP constructs with default `newline=false` (multiline semantics);
+            // Default `newline=false` (multiline).
             // promoted to a real indent by insert_newline when the rhs lands on a new line.
             this.push(new LeanSequentialTacticCombinator(caret, this.indent, caret.level, false, nextToken == '\n'));
         }
@@ -1278,7 +1278,7 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
             if (by_cases instanceof LeanTactic && by_cases.tacticName === 'by_cases' && by_cases.has_tactic_block_followed()) {
                 let sequential_tactic_combinator;
                 while ((sequential_tactic_combinator = arg.sequential_tactic_combinator) && sequential_tactic_combinator.arg.indent) arg = sequential_tactic_combinator;
-                // PHP passes newline=true (same-line): the echo boundary stays inline with the chain
+                // `newline=true` keeps the echo boundary on the same line as the chain
                 arg.push(new LeanSequentialTacticCombinator(echo, indent, level, false, false));
             } else {
                 echo.push(new LeanSequentialTacticCombinator(arg, indent, level, false, this.newlineBehind));
@@ -1329,7 +1329,7 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
     }
 
     sep() {
-        // PHP: arg is a tactic block, or a genuinely indented rhs of a multiline `<;>`
+        // The argument is a tactic block, or an indented right-hand side of a multiline `<;>`
         if (this.arg instanceof LeanTacticBlock) return '\n';
         if (this.newlineBehind && this.arg.indent > 0) return '\n';
         if (this.arg instanceof L.LeanCaret) return '\n'; // split head renders a trailing `<;>` hole

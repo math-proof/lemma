@@ -1,5 +1,5 @@
 /**
- * Mirrors `LeanParser::build` tokenization in `php/parser/lean.php`:
+ * Tokenize the way the Lean parser does:
  *   $this->tokens = array_map(fn($args) => $args[0][0], std\matchAll('/\w+|\W/u', $text));
  */
 export function tokenizeLeanSource(text) {

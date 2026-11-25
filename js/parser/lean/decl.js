@@ -1,7 +1,7 @@
 /**
  * Declarations and binders: `Lean_def`, `theorem` / `abbrev` / `lemma`,
  * `let` / `have` / `set` / `replace` / `show`. JS also has `where`, `class`,
- * `instance`, `macro`, and `syntax` in this cluster; PHP does not.
+ * `instance`, `macro`, and `syntax` live in this cluster.
  *
  * Base classes (the ones in `extends`) are imported from the modules that
  * define them; every other class is read from `Lean.classes` (`L.X`) at
