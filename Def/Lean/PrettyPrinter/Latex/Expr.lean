@@ -792,7 +792,7 @@ def Expr.latexFormat : Expr → String
         | `KroneckerDelta => "\\delta_{%s %s}"
         | `chiSquare
         | `Real.chiSquare =>
-          -- js/php: Real.chiSquare / chiSquare n -> \\mathcal{X}^{2}\\left(n\\right) (bare -> \\mathcal{X}^{2})
+          -- Real.chiSquare / chiSquare n -> \\mathcal{X}^{2}\\left(n\\right) (bare -> \\mathcal{X}^{2})
           match args with
           | [_] => "\\mathcal{X}^{2}\\left(%s\\right)"
           | [] => "\\mathcal{X}^{2}"
@@ -801,7 +801,7 @@ def Expr.latexFormat : Expr → String
               level.toColor ((arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix) && !arg.is_JointRandomSymbol)
             opStr ++ "\\ " ++ "\\ ".intercalate args
         | `ProbabilityTheory.gaussianReal =>
-          -- js/php: gaussianReal mu sigma -> \\mathcal{N}\\left(mu, sigma\\right) (bare -> \\mathcal{N})
+          -- gaussianReal mu sigma -> \\mathcal{N}\\left(mu, sigma\\right) (bare -> \\mathcal{N})
           match args with
           | [_, _] => "\\mathcal{N}\\left(%s, %s\\right)"
           | [] => "\\mathcal{N}"

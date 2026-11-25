@@ -302,8 +302,8 @@ export function renderWebsiteIndex(req, res) {
   const section = resolveWebsiteSection(req);
   const labels = websiteLabels(lang);
   // Relative `style.css` / `../js/…` / `../website/md/…` need a directory base.
-  // Without this, `/lean/website` (no trailing slash) resolves assets under `/lean/` and breaks;
-  // Apache on :8080 redirects to `/lean/website/`, but Express deliberately does not (proxy loops).
+  // Without this, `/lean/website` (no trailing slash) resolves assets under `/lean/` and breaks.
+  // Express does not redirect to a trailing slash, because some proxies strip `/` and would loop.
   const userSegment = req.params.userSegment || path.basename(REPO_ROOT);
   res.set('Content-Type', 'text/html; charset=utf-8');
   if (process.env.NODE_ENV !== 'production') {

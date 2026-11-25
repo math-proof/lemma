@@ -116,7 +116,7 @@ def List.cartesianProduct (shape : List ℕ) : List (List ℕ) :=
   itertools.product (shape.map List.range)
 
 /--
-Mimics JavaScript's [Array.splice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice) and PHP's [array_splice](https://www.php.net/manual/en/function.array-splice.php) functions.
+Mimics JavaScript's [Array.splice](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/splice).
 Removes `deleteCount` elements starting from `start` index and inserts `items` at that position.
 Returns the modified list.
 

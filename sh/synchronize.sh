@@ -7,6 +7,8 @@
 # 1. lemma mode (scoped upsert of axiom.lemma rows):
 #   bash sh/synchronize.sh Real.Eq_0.Lim.of.LtAbs.GtInftySup Lemma/Tensor/Eq/Foo/of/Bar.lean ...
 #   bash sh/synchronize.sh -n <modules...>     # dry run: only report what would change
+#   The bare names lemma, mathlib, fingerprint, inverted, docstring, and unicode are
+#   whole-table replaces, not module names.
 #   - modules: dotted names or Lemma/....lean paths (*.echo.lean is rejected)
 #   - only rows for the given modules are sent, as INSERT ... ON DUPLICATE KEY UPDATE
 #     keyed on module, inside one transaction.
@@ -21,6 +23,13 @@
 #   - both sides are fingerprinted (row count + BIT_XOR(CRC32(all columns))); equal fingerprints
 #     skip the push, mismatched fingerprints after the push fail with exit 1.
 #
+# 3. axiom mode (site tables the Node app reads):
+#   bash sh/synchronize.sh axiom
+#   bash sh/synchronize.sh axiom -n
+#   - tables: lemma, docstring, fingerprint, inverted, unicode, mathlib
+#   - CHECKSUM TABLE on both sides; a mismatch replaces those tables from a mysqldump.
+#   - a missing remote table is a mismatch, so the dump creates it.
+#
 # environment (never printed, never hardcoded):
 #   REMOTE_MYSQL_USER  ssh user and MySQL user on the remote host
 #   REMOTE_MYSQL_PWD   MySQL password of that user on the remote host
@@ -33,7 +42,7 @@
 set -u
 cd "$(dirname "$0")/.." || exit 1
 
-usage() { sed -n '2,36p' "$0" | sed 's/^# \{0,1\}//'; }
+usage() { sed -n '2,/^set -u$/p' "$0" | sed '$d' | sed 's/^# \{0,1\}//'; }
 
 DRY=0
 RAW=()
@@ -98,6 +107,23 @@ remote_mysql() {   # SQL on stdin, mysql flags as arguments
   } | ${SSH_CMD:-ssh} $SSH_OPTS "$R_USER@$R_HOST" bash -s
 }
 
+# gzipped SQL on stdin → remote mysql (credentials stay on the ssh stdin, never echoed)
+apply_dump() {
+  local pw remote_cmd
+  pw=$(printf '%s' "$R_PWD" | sed 's/[\\"]/\\&/g')
+  remote_cmd=$(cat <<EOF
+umask 077; cnf=\$(mktemp) || exit 1; trap 'rm -f "\$cnf"' EXIT
+printf '[client]\nuser=$R_USER\npassword="$pw"\nport=$R_PORT\ndefault-character-set=utf8mb4\n' > "\$cnf"
+M=/usr/local/mysql/bin/mysql; [ -x "\$M" ] || M=mysql
+set -o pipefail
+gunzip | "\$M" --defaults-extra-file="\$cnf" -D axiom
+EOF
+)
+  gzip -1 | ${SSH_CMD:-ssh} $SSH_OPTS "$R_USER@$R_HOST" "$remote_cmd"
+}
+
+dump_flags=(--single-transaction --no-tablespaces --set-gtid-purged=OFF --max_allowed_packet=8M --net_buffer_length=1M)
+
 # =========================================================================
 # mode: mathlib — whole-table push
 # =========================================================================
@@ -124,23 +150,8 @@ SQL
   if [ "$L_FP" == "$R_FP" ]; then echo "OK: already in sync"; exit 0; fi
   if [ $DRY -eq 1 ]; then echo "dry run: would push the whole table"; exit 0; fi
 
-  # stream dump: gzip locally → ssh stdin → gunzip → mysql remotely
-  # (the remote command builds its credentials file from argv-free text; the gzipped
-  #  dump is the only thing on stdin)
-  local pw remote_cmd
-  pw=$(printf '%s' "$R_PWD" | sed 's/[\\"]/\\&/g')
-  remote_cmd=$(cat <<EOF
-umask 077; cnf=\$(mktemp) || exit 1; trap 'rm -f "\$cnf"' EXIT
-printf '[client]\nuser=$R_USER\npassword="$pw"\nport=$R_PORT\ndefault-character-set=utf8mb4\n' > "\$cnf"
-M=/usr/local/mysql/bin/mysql; [ -x "\$M" ] || M=mysql
-set -o pipefail
-gunzip | "\$M" --defaults-extra-file="\$cnf" -D axiom
-EOF
-)
   # --max_allowed_packet=8M: keep multi-row INSERT packets well under the remote limit (16M)
-  local_dump --single-transaction --no-tablespaces --set-gtid-purged=OFF --max_allowed_packet=8M --net_buffer_length=1M \
-    | gzip -1 \
-    | ${SSH_CMD:-ssh} $SSH_OPTS "$R_USER@$R_HOST" "$remote_cmd" \
+  local_dump "${dump_flags[@]}" | apply_dump \
     || { echo "ERROR: remote apply failed" >&2; exit 1; }
 
   R_FP=$(fingerprint | remote_mysql -s -N -B | tail -1) || { echo "ERROR: remote verification query failed" >&2; exit 1; }
@@ -249,10 +260,79 @@ FROM lemma WHERE module IN ($in_list) ORDER BY module;"
   [ $bad -eq 0 ] && echo "OK: ${#MODULES[@]} row(s) synchronized" || { echo "FAILED" >&2; exit 1; }
 }
 
+# =========================================================================
+# mode: axiom — replace the tables the Node app reads
+# =========================================================================
+AXIOM_TABLES=(lemma docstring fingerprint inverted unicode mathlib)
+
+sync_axiom() {
+  if [ ${#RAW[@]} -ne 1 ]; then echo "ERROR: axiom mode takes no further arguments" >&2; exit 2; fi
+  axiom_fp() { echo "CHECKSUM TABLE ${AXIOM_TABLES[*]};"; }
+  echo "remote = $R_USER@$R_HOST (mysql port $R_PORT)"
+  echo "tables: ${AXIOM_TABLES[*]}"
+  L_FP=$(axiom_fp | local_mysql -N -B --raw | tr '\n' ';') || exit 1
+  echo "local  axiom: $L_FP"
+  if R_FP=$(axiom_fp | remote_mysql -s -N -B | tr '\n' ';'); then
+    echo "remote axiom: $R_FP"
+  else
+    R_FP="missing"
+    echo "remote axiom: missing (checksum failed or a table is absent)"
+  fi
+  if [ "$L_FP" == "$R_FP" ]; then echo "OK: already in sync"; exit 0; fi
+  if [ $DRY -eq 1 ]; then echo "dry run: would replace ${AXIOM_TABLES[*]}"; exit 0; fi
+  env -u MYSQL_PWD mysqldump --defaults-extra-file="$tmp/local.cnf" "${dump_flags[@]}" axiom "${AXIOM_TABLES[@]}" \
+    | apply_dump \
+    || { echo "ERROR: remote apply failed" >&2; exit 1; }
+  R_FP=$(axiom_fp | remote_mysql -s -N -B | tr '\n' ';') || { echo "ERROR: remote verification query failed" >&2; exit 1; }
+  echo "remote axiom after: $R_FP"
+  if [ "$L_FP" == "$R_FP" ]; then
+    echo "OK: axiom synchronized"
+  else
+    echo "FAILED: checksums differ after push" >&2; exit 1
+  fi
+}
+
+# One whole table. `lemma` here is the table, not a module name.
+sync_named_table() {
+  local table="${RAW[0]}"
+  if [ ${#RAW[@]} -ne 1 ]; then echo "ERROR: $table takes no further arguments" >&2; exit 2; fi
+  table_fp() { echo "CHECKSUM TABLE \`$table\`;"; }
+  echo "remote = $R_USER@$R_HOST (mysql port $R_PORT)"
+  L_FP=$(table_fp | local_mysql -N -B --raw | tr '\n' ';') || exit 1
+  echo "local  $table: $L_FP"
+  if R_FP=$(table_fp | remote_mysql -s -N -B | tr '\n' ';'); then
+    echo "remote $table: $R_FP"
+  else
+    R_FP="missing"
+    echo "remote $table: missing (checksum failed or the table is absent)"
+  fi
+  if [ "$L_FP" == "$R_FP" ]; then echo "OK: $table already in sync"; exit 0; fi
+  if [ $DRY -eq 1 ]; then echo "dry run: would replace $table"; exit 0; fi
+  env -u MYSQL_PWD mysqldump --defaults-extra-file="$tmp/local.cnf" "${dump_flags[@]}" axiom "$table" \
+    | apply_dump \
+    || { echo "ERROR: remote apply failed" >&2; exit 1; }
+  R_FP=$(table_fp | remote_mysql -s -N -B | tr '\n' ';') || { echo "ERROR: remote verification query failed" >&2; exit 1; }
+  echo "remote $table after: $R_FP"
+  if [ "$L_FP" == "$R_FP" ]; then
+    echo "OK: $table synchronized"
+  else
+    echo "FAILED: $table checksums differ after push" >&2; exit 1
+  fi
+}
+
 # ---- dispatch ------------------------------------------------------------
-if [ "${RAW[0]}" == "mathlib" ]; then
-  if [ ${#RAW[@]} -ne 1 ]; then echo "ERROR: mathlib mode takes no further arguments" >&2; exit 2; fi
-  sync_mathlib
-else
-  sync_lemma
-fi
+case "${RAW[0]}" in
+  mathlib)
+    if [ ${#RAW[@]} -ne 1 ]; then echo "ERROR: mathlib mode takes no further arguments" >&2; exit 2; fi
+    sync_mathlib
+    ;;
+  axiom)
+    sync_axiom
+    ;;
+  lemma|docstring|fingerprint|inverted|unicode)
+    sync_named_table
+    ;;
+  *)
+    sync_lemma
+    ;;
+esac

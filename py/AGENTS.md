@@ -2,7 +2,7 @@
 
 this is designed for `E:\github\py` or `~/github/py` project, ie: you're working under `E:\github\py` or `~/github/py`
 
-## rename 
+## Lemma rename
 - Rename a py lemma using `sh/rename.sh`.
 - Execute `ps1/run.ps1`, fixing errors if necessary. Do not modify the given, imply, or proof body. The result should be like:
 
@@ -13,3 +13,6 @@ this is designed for `E:\github\py` or `~/github/py` project, ie: you're working
 
 - Open the summary at http://localhost:8080/py/ and check that the unformalized list is empty. If it is not empty, some paths might have been neglected in a rename; repeat the previous steps.
 - `git add .`, commit, and push.
+
+## sync created date
+run /mnt/e/github/py/util/sync_created_dates.py in linux, not in windows to synchronize the data created.

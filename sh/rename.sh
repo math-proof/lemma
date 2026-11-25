@@ -163,19 +163,18 @@ remove_build_artifacts() {
 }
 
 
-# A lemma created in or before 2024 predates the py project workflow. Rename it,
-# then hand over to @py, who must follow py/AGENTS.md.
+# A lemma created before 2024-07-01 (pivot, exclusive) predates the py project
+# workflow. Rename it, then hand over to @py, who must follow py/AGENTS.md.
 warn_py_old_creation() {
   local file=$1
-  local created year
+  local created
   created=$(sed -n 's/^-- created on[[:space:]]*//p' "$file" | head -n 1)
-  year=${created%%-*}
-  case $year in
-    [0-9][0-9][0-9][0-9]) ;;
+  case $created in
+    [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]) ;;
     *) return 0 ;;
   esac
-  if [ "$year" -le 2024 ]; then
-    echo "warning: $file: -- created on $created is in or before 2024" >&2
+  if [[ "$created" < "2024-07-01" ]]; then
+    echo "warning: $file: -- created on $created is earlier than 2024-07-01" >&2
     echo "@py: follow py/AGENTS.md (ps1/run.ps1 -> http://localhost:8080/py/ -> commit and push)." >&2
   fi
 }

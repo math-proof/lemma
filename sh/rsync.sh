@@ -11,11 +11,15 @@ boolean_options=(
   "reverse"
   "delete"
   "diff"
+  "times"
+  "no-owner"
+  "dry-run"
 )
 kwargs_options=(
   "path"
   "host"
   "port"
+  "exclude"
 )
 source $(dirname $0)/parse_options.sh
 parse_args boolean_options kwargs_options "$@"
@@ -38,14 +42,24 @@ here is how to get the public key if you have the private key: ssh-keygen -y -f 
 EOF
   exit 1
 fi
-rsync="rsync -avzP --no-group --no-times"
-[ "$delete" ] && rsync+=" --delete"
-if [[ "$port" ]]; then
-  ssh="ssh -p $port"
-  export RSYNC_RSH="$ssh"
-else
-  ssh="ssh"
+rsync="rsync -avzP --no-group"
+# Default keeps the historical --no-times. Pass --times so later syncs can skip unchanged files.
+[ -z "${times:-}" ] && rsync+=" --no-times"
+[ "${no_owner:-}" ] && rsync+=" --no-owner"
+[ "${dry_run:-}" ] && rsync+=" --dry-run"
+[ "${delete:-}" ] && rsync+=" --delete"
+if [ -n "${exclude:-}" ]; then
+  IFS=',' read -ra _excludes <<< "$exclude"
+  for _exclude in "${_excludes[@]}"; do
+    [ -n "$_exclude" ] && rsync+=" --exclude=$_exclude"
+  done
 fi
+ssh="${SSH_CMD:-ssh}"
+[ -n "${SSH_OPTS:-}" ] && ssh="$ssh $SSH_OPTS"
+if [[ "${port:-}" ]]; then
+  ssh="$ssh -p $port"
+fi
+export RSYNC_RSH="$ssh"
 path=${path%/}
 if [[ "$path" == */* ]]; then 
   path_dir=${path%/*}
@@ -102,5 +116,9 @@ if [ "$diff" ]; then
   done
   # $rsync --exclude='* -> *' $exclude $from_path $to_path
 else
+  # Exclude patterns such as *.env must not expand in this shell.
+  set -f
+  # shellcheck disable=SC2086
   $rsync $from_path $to_path
+  set +f
 fi

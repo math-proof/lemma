@@ -7,8 +7,7 @@ open Lean
 
 
 /--
-mimic the PHP Array API
-[array_slice][https://www.php.net/manual/en/function.array-slice.php]
+Take `size` elements from `L` starting at `start`.
 -/
 def List.array_slice (L : List α) (start : Nat) (size : Nat) : List α :=
   (take size ∘ drop start) L
