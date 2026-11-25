@@ -43,5 +43,5 @@ def prove(Eq):
 
 if __name__ == '__main__':
     run()
-# created on 2026-09-23
+# created on 2024-02-27
 # based on Random.ExpectDot.eq.Dot_Expect

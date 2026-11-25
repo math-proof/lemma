@@ -1654,7 +1654,7 @@ Nat.Pow.of.Eq	2018-03-12
 Nat.Pow.eq.Ite.base	2020-02-29
 Nat.Pow.eq.Ite.negativeOne	2020-03-01
 Nat.Pow.eq.Mul.One	2021-12-19
-Nat.Pow.eq.Mul.of.Eq	2024-07-06
+Nat.Pow.eq.Mul.of.Eq	2024-06-30
 Nat.PowNeg1Mul_Add_1.eq.One	2020-02-29
 Nat.Pow_Ite.eq.Ite_PowS	2018-04-13
 Nat.Square.gt.Zero.of.Ne_0	2023-10-03
@@ -1760,7 +1760,7 @@ Random.Expect.limits.split.Slice.law_of_iterated_expectation	2023-03-31
 Random.Expect.ReducedSum.eq.ReducedSum.Expect	2023-04-10
 Random.Expect.Var.eq.Sub.Expect	2023-04-09
 Random.ExpectAdd.eq.AddExpectS	2023-03-24
-Random.ExpectCondDot.eq.Dot_ExpectCond	2026-09-23
+Random.ExpectCondDot.eq.Dot_ExpectCond	2024-02-27
 Random.ExpectConditionedGrad_LogProb.eq.Zero	2023-04-03
 Random.ExpectConditioned_Gt.eq.Add	2021-08-06
 Random.ExpectDot.eq.Dot_Expect	2023-04-07
@@ -1821,7 +1821,7 @@ Random.ProbCond.eq.DivMulProb_Prod_ProbCond.of.NeProbJoint__0.All_Indep	2024-06-
 Random.ProbCond_Joint.eq.DivProbSCond	2023-10-13
 Random.ProbEqAdd.eq.MulMulPow.PowSub1.SubAdd.Binom	2021-07-17
 Random.ProbGeAbs.le.DivExpectAbs.Markov_Inequality	2023-04-18
-Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM.mdp	2023-03-22
+Random.Prob_JointGetS_SliceAdd_1.eq.MulMulProbS__Prod_MulProbS_Cond_Get.of.IsDiscreteHMM.mdp	2023-03-22
 Random.ProbSlice.eq.Prod_ProbCond	2023-04-08
 Random.Prod_ProbCond.eq.ProbCond	2023-10-13
 Random.Prod_ProbCond.eq.ProbGetSlice	2023-04-08
