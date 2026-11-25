@@ -610,6 +610,7 @@ function leanModuleMergeProof(proof, echo, syntax = {}) {
         const {line} = echoNode;
         return Number.isInteger(line) ? null : line == null ? null : line;
     };
+    const echoStruct = (echoNode) => echoNode?.searchStruct ?? null;
     // A same-line `<;> echo ⊢` combinator (newlineBehind === false) is a goal
     // snapshot INSIDE one source line, e.g. `split_ifs <;> echo ⊢ <;> first | …`:
     // it must not become its own step nor print its marker text. The surrounding
@@ -627,7 +628,7 @@ function leanModuleMergeProof(proof, echo, syntax = {}) {
                     inlineLatex = echoLatex(echoNode);
                 nextSep = ' ';
             } else if (echoNode) {
-                code.push([last, inlineLatex !== undefined ? inlineLatex : echoLatex(echoNode), seps]);
+                code.push([last, inlineLatex !== undefined ? inlineLatex : echoLatex(echoNode), seps, echoStruct(echoNode)]);
                 last = [];
                 seps = [];
                 nextSep = '\n';
@@ -653,15 +654,17 @@ function leanModuleMergeProof(proof, echo, syntax = {}) {
         // colorbox overlays on calc source when Body expected no echo (e.g.
         // Hyperreal.All_EqMul_Deriv_Mul_Deriv… final T·u_xx calc).
         const finalLatex = inlineLatex !== undefined ? inlineLatex : null;
-        code.push([last, finalLatex, seps]);
+        code.push([last, finalLatex, seps, null]);
     }
 
-    return code.map(([stmts, latex, ss]) => {
+    return code.map(([stmts, latex, ss, struct]) => {
         let text = '';
         stmts.forEach((st, i) => {
             text += (i === 0 ? '' : (ss && ss[i] ? ss[i] : '\n')) + strStmt(st);
         });
-        return {lean: unindentTwo(text), latex};
+        const step = {lean: unindentTwo(text), latex};
+        if (struct != null) step.struct = struct;
+        return step;
     });
 }
 
@@ -1385,17 +1388,21 @@ export class LeanModule extends LeanStatements {
         }, null);
     }
 
-    decode(json, latex) {
-        const keys = Object.keys(json);
+    decode(json, latex, structs) {
+        const keys = Object.keys(json).filter((key) => key !== 'struct');
         if (!keys.length) return;
         const line = keys[0];
-        const latexFormat = json[line];
-        if (Object.prototype.hasOwnProperty.call(latex, line)) {
-            if (!Array.isArray(latex[line])) latex[line] = [latex[line]];
-            latex[line].push(latexFormat);
-        } else {
-            latex[line] = latexFormat;
-        }
+        const push = (bag, value) => {
+            if (value === undefined) return;
+            if (Object.prototype.hasOwnProperty.call(bag, line)) {
+                if (!Array.isArray(bag[line])) bag[line] = [bag[line]];
+                bag[line].push(value);
+            } else {
+                bag[line] = value;
+            }
+        };
+        push(latex, json[line]);
+        if (structs) push(structs, json.struct);
     }
 
     echo() {

@@ -81,17 +81,17 @@ private lemma main
         (∑ x ∈ X, (a x)²) + yv² - (S + yv)² / ((n : ℝ) + 1) := by
       have hden : ((X ∪ {y'}).card : ℝ) = (n : ℝ) + 1 := by
         rw [hcardI, Nat.cast_add, Nat.cast_one]
-      rw [← hcardI, Sum_SquareSub_DivSum.eq.Sub_DivSquareSum.fun, hsqI, hsumI, hden]
+      rw [← hcardI, Sum_SquareSub_DivSum.eq.Sub_DivSquareSum, hsqI, hsumI, hden]
     have hEY : ∑ y ∈ Y \ {y'}, (a y - (∑ y ∈ Y \ {y'}, a y) / ((m - 1 : ℕ) : ℝ))² =
         (∑ y ∈ Y, (a y)²) - yv² - (T - yv)² / ((m : ℝ) - 1) := by
       simp_rw [Finset.sdiff_singleton_eq_erase] at hsqE hsumE ⊢
       have hden : ((Y.erase y').card : ℝ) = (m : ℝ) - 1 := by
         rw [Finset.card_erase_of_mem h₁, Nat.cast_sub (by omega : 1 ≤ m), Nat.cast_one]
-      rw [← Finset.card_erase_of_mem h₁, Sum_SquareSub_DivSum.eq.Sub_DivSquareSum.fun, hsqE, hsumE, hden]
+      rw [← Finset.card_erase_of_mem h₁, Sum_SquareSub_DivSum.eq.Sub_DivSquareSum, hsqE, hsumE, hden]
     have hX : ∑ x ∈ X, (a x - S / n)² = (∑ x ∈ X, (a x)²) - S² / n := by
-      simpa [S, n] using Sum_SquareSub_DivSum.eq.Sub_DivSquareSum.fun
+      simpa [S, n] using Sum_SquareSub_DivSum.eq.Sub_DivSquareSum
     have hY : ∑ y ∈ Y, (a y - T / m)² = (∑ y ∈ Y, (a y)²) - T² / m := by
-      simpa [T, m] using Sum_SquareSub_DivSum.eq.Sub_DivSquareSum.fun
+      simpa [T, m] using Sum_SquareSub_DivSum.eq.Sub_DivSquareSum
     have hgoal :
       ((∑ x ∈ X, (a x)²) + yv² - (S + yv)² / ((n : ℝ) + 1) +
         ((∑ y ∈ Y, (a y)²) - yv² - (T - yv)² / ((m : ℝ) - 1))) -

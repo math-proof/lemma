@@ -295,5 +295,5 @@
       "1"
     ]
   },
-  "fingerprint": "Le(Abs(Ceil(Sub(Div(Mul(3)(Arg($1)))(Mul(2)($2)))(Div(1)(2)))))(1)"
+  "fingerprint": "|⌈3 * Arg($1) / (2 * $2) - 1 / 2⌉| ≤ 1"
 }

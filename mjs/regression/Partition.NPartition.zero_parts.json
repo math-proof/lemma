@@ -65,5 +65,5 @@
       }
     ]
   },
-  "fingerprint": "Eq(Parts(0))(Fun(?0)(0))"
+  "fingerprint": "Parts(0) = (?0 ↦ 0)"
 }

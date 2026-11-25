@@ -104,5 +104,5 @@
       }
     ]
   },
-  "fingerprint": "Eq($1)(Mul(Div($2)(Mul(2)($3)))(Sqrt(Div($4)($5))))"
+  "fingerprint": "$1 = $2 / (2 * $3) * √($4 / $5)"
 }

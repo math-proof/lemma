@@ -369,17 +369,20 @@ function sectionLatex(module, { section, latexId }, queryJson) {
 }
 
 /**
- * Proof LaTeX for one hit. The search index numbers proof steps by top-level
- * source statement, while the lemma page renders `lemma.proof.by[i]`, a flattened
- * echo list — the two indices drift, so `steps[latexId]` is a different step.
- * Instead, locate the matched formula and show the stored step that renders it;
- * when no stored step contains it (e.g. a `calc` line the page keeps as code
- * only), show the matched formula itself rather than an unrelated step.
+ * Proof LaTeX for one hit. Echo fingerprints share `proof.by` order with the
+ * page: `latex_id` is the step whose `expr.toLatex` was indexed, so that step
+ * is the formula to show. Older source-syntax fingerprints still number steps
+ * by the tactic text; those locate the matched node and the stored step that
+ * renders it.
  * @param {string[]} steps stored, colour/tag-stripped `proof.by[i].latex`
  */
 function proofLatex(module, { latexId }, queryJson, steps) {
+  const storedStep = () => {
+    const stored = steps[latexId];
+    return stored ? { latex: stored, highlighted: false, latexId } : { latex: null, highlighted: false };
+  };
   const abs = moduleToLeanPath(module);
-  if (abs == null || !fileExists(abs)) return { latex: null, highlighted: false };
+  if (abs == null || !fileExists(abs)) return storedStep();
   try {
     const items = sectionFormulaNodes(abs, 'proof', latexId);
     let matched = null;
@@ -387,7 +390,7 @@ function proofLatex(module, { latexId }, queryJson, steps) {
       matched = findMatchedNode(node, queryJson);
       if (matched) break;
     }
-    if (!matched) return { latex: null, highlighted: false };
+    if (!matched) return storedStep();
     const { sub } = matched;
     // Prefer the step the lemma page renders below the code (same formula).
     for (let i = 0; i < steps.length; i++) {
@@ -407,7 +410,7 @@ function proofLatex(module, { latexId }, queryJson, steps) {
     }
     return { latex: `\\htmlClass{lean-hit}{${sub}}`, highlighted: true };
   } catch {
-    return { latex: null, highlighted: false };
+    return storedStep();
   }
 }
 

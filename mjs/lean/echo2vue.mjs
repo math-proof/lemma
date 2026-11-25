@@ -379,6 +379,7 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
   const { rest: outputLines, reports: bareAxiomReports } = extractBareAxiomReports(rawLines);
 
   const latex = {};
+  const structs = {};
   const error = [];
 
   tree.set_line(1);
@@ -413,7 +414,7 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
       parsed = null;
     }
     if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
-      tree.decode(parsed, latex);
+      tree.decode(parsed, latex, structs);
       continue;
     }
     const m = jsonline.match(/^(.+\.lean):(\d+):(\d+): (\w+)(\([^()]+\))?: (.+)$/);
@@ -462,6 +463,8 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
           latex[key] = null;
         }
         node.line = latex[key];
+        if (Object.prototype.hasOwnProperty.call(structs, key))
+          node.searchStruct = structs[key];
       }
     }
   }

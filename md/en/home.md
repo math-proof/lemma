@@ -19,7 +19,7 @@ The library currently contains <label id=count>5000</label> proved theorems (<la
   - [catenary](../?module=Complex.Any_Eq_AddMul_CoshDivSub.of.All_EqDeriv_Mul_ExpMulIArctanDeriv.ContDiff_2.Differentiable)
 * [Set](../?module=Set) Set theory
 * [Finset](../?module=Finset) Finite set theory, e.g.:
-  - [k-means clustering](../?module=Finset.LtAddSumS_SquareSub_Div_Sum.of.LtAbsSSub_Div_Sum.NotIn.In.GtCard_0)
+  - [k-means clustering](../?module=Finset.LtAddSumS_SquareSub_DivSum.of.LtAbsSSub_DivSum.NotIn.In.GtCard_0)
 * [List](../?module=List) Finite list theorems
 * [Vector](../?module=Vector) One-dimensional vector theorems
 * [Matrix](../?module=Matrix) Matrix theory, e.g.:
@@ -27,7 +27,7 @@ The library currently contains <label id=count>5000</label> proved theorems (<la
   - [Cholesky decomposition](../?module=Matrix.Eq_Mul_Adjoint.of.All_Eq_Ite__Ite_Sqrt_0.All_Lt0Dot_MulVec.EqAdjoint), [PLU decomposition](../?module=Matrix.EqMul_T_1.IsLowerTriangular.IsUpperTriangular.EqMulS)
   - [kv_cache](../?module=Matrix.XEq_Append_MulSoftmaxDivMul_AppendTSGetSlice.of.All_XEq_MulSoftmaxAddDivMul_T)
 * [Tensor](../?module=Tensor) Formal tensor calculus, semantically equivalent to **torch.Tensor**, for formal verification of deep-learning algorithms, e.g.:
-  - [Rotary Position Embedding](../?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)
+  - [Rotary Position Embedding](../?module=Matrix.MulSoftmaxDivMulStack_MulGetS__T_SqrtAdd.eq.Stack_DivSumS)
 * [Random](../?module=Random) Probability theory and stochastic processes, e.g.:
   - [sum of independent Gaussians](../?module=Random.DistributedSum.of.All_Distributed_Gaussian.All_Indep), [𝒳²(n)](../?module=Random.Distributed_ChiSquared.of.All_Distributed_Gaussian.All_Indep), [Fisher](../?module=Random.Distributed_Fisher.of.All_And_Distributed_Gaussian.Gt_1.Gt_1), [weak law of large numbers](../?module=Random.Lim_ProbLtAbsSubDivSum.eq.One.of.All_EqVar.All_EqExpect.All_Indep.All_MemLp2.All_PSpace), [Cramér](../?module=Random.SatisfiesLDP_EmpiricalMeanLawPi.of.HasFiniteMGF.ForallBddAbove)
   - [naive Bayes document classification](../?module=Random.ArgMax_ProbCond.eq.ArgMax_Mul_Prod_ProbCond.of.NeProbJoint__0.All_CondIndep)

@@ -1,7 +1,7 @@
 /**
  * Convert the Lean `Expr.toJson` structural tree (the `struct` field emitted by
- * `Echo` under `LEAN_ECHO_SEARCH_JSON=1`) into the search fingerprint tree that
- * `conclusionSearchJson` / `toJSON({ leaves, binders })` produce.
+ * `Echo` next to `expr.toLatex` of the same expression) into the search
+ * fingerprint tree that `conclusionSearchJson` / `toJSON({ leaves, binders })` produce.
  *
  * Output shape matches `js/parser/lean/*` `toJSON`:
  *   - nodes: `{ Head: [children] }`
@@ -14,6 +14,8 @@
  *   - implicit coercions (`Fin.val`, `Nat.cast`, …) are erased
  *   - elaboration artefacts (`Slice.mk`, `GetElem.getElem`, `Prod.mk`,
  *     `True.intro`) are folded into their surface form (`Slice`, `Get`, tuple)
+ *   - `kind: "lemma"` is an axiom or theorem application, so the node is a proof
+ *     and is omitted. `⟨i, by tactic⟩ : Fin _` (`Subtype.mk` / `Fin.mk`) keeps `i` only
  * Unknown heads fall back to the capitalized last name segment so the result is
  * always a well-formed fingerprint tree.
  */
@@ -315,6 +317,21 @@ function eventPairs(rv, point, ctx) {
   return left.map((lhs, i) => node('Eq', [lhs, right[i] ?? '']));
 }
 
+/**
+ * `Expr.toJson` stores a method's arguments in Lean order, with `idx` the
+ * self parameter. `toLatex` prints `args.swap 0 idx`, receiver first
+ * (`d, a` at idx 1 → `a.natAdd d`). The fingerprint uses that printed order.
+ */
+function receiverFirst(args, idx) {
+  const copy = [...(args ?? [])];
+  const i = Number(idx);
+  if (!Number.isInteger(i) || i <= 0 || i >= copy.length) return copy;
+  const self = copy[i];
+  copy[i] = copy[0];
+  copy[0] = self;
+  return copy;
+}
+
 function method(struct, ctx) {
   const name = String(struct.name ?? '');
   const seg = lastSegment(name);
@@ -324,7 +341,7 @@ function method(struct, ctx) {
     return node('Prob', [measure, node('Cond', eventPairs(args[1], args[2], ctx))]);
   }
   const head = METHOD_HEAD[seg] ?? cap(seg);
-  return node(head, args.map((arg) => convert(arg, ctx)));
+  return node(head, receiverFirst(args, struct.idx).map((arg) => convert(arg, ctx)));
 }
 
 /** Notation the parser fingerprints structurally instead of by head:
@@ -355,10 +372,32 @@ function setNotation(struct, ctx) {
   return null;
 }
 
+/**
+ * `⟨i, by tactic⟩ : Fin _` elaborates as `Subtype.mk` or `Fin.mk`.
+ * The property argument is a proof and is not part of the formula.
+ */
+function finElement(struct) {
+  const name = String(struct?.name ?? struct?.op ?? '');
+  if (name !== 'Subtype.mk' && name !== 'Fin.mk') return undefined;
+  const args = struct.args ?? [];
+  return args.length ? args[0] : null;
+}
+
+/**
+ * `Name.is_Lemma`: the constant is an axiom or a theorem (`thmInfo` / `axiomInfo`).
+ * Applying it produces a proof, so the node is not part of the formula.
+ */
+function omittedProof(struct) {
+  return struct?.kind === 'lemma';
+}
+
 /** Single entry point: convert one `Expr.toJson` node. */
 export function convert(struct, ctx = { leaves: new Map(), binders: [] }) {
   if (struct == null) return '';
   if (typeof struct === 'string') return struct;
+  if (omittedProof(struct)) return '';
+  const element = finElement(struct);
+  if (element !== undefined) return element == null ? '' : convert(element, ctx);
   const notation = setNotation(struct, ctx);
   if (notation) return notation;
   const kind = struct.kind;

@@ -76,5 +76,5 @@
       }
     ]
   },
-  "fingerprint": "All(Colon(?0)($1))(Measurable(Get($2)(Slice(?0))))"
+  "fingerprint": "∀ ?0 : $1, Measurable($2[Slice(?0)])"
 }

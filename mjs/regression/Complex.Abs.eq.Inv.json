@@ -75,5 +75,5 @@
       }
     ]
   },
-  "fingerprint": "Eq(Norm(Inv($1)))(Inv(Norm($1)))"
+  "fingerprint": "‖$1⁻¹‖ = ‖$1‖⁻¹"
 }

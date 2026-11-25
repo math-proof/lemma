@@ -68,7 +68,7 @@ function readEcho(output, line) {
 /** Build the Echo tactic once per process; every probe needs it. */
 export async function buildEcho() {
   const cwd = REPO_ROOT;
-  const env = { ...get_lean_env(cwd), LEAN_ECHO_SEARCH_JSON: '1' };
+  const env = get_lean_env(cwd);
   const lake = get_lake_path();
   const build = await spawnLakeLean(lake, ['build', 'Syntax.Tactic.Echo'], { cwd, env });
   if (build.error) throw build.error;

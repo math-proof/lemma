@@ -230,6 +230,26 @@ function tokenRules(ctx, d, i, from) {
         if (colon && semi) ctx.warn('paren-by-semicolon', i + 1, m.index + 1, '`(by tac₁; tac₂ : T)`: the type-ascribed `by` term must be a single tactic, no `;`');
     });
 
+    // `(fun … => by ⏎ …)`: a lambda whose body is a multi-line tactic block (the `(by …)` sibling)
+    at(/\(\s*fun\b/g, (m) => {
+        const close = closerOf(P, i, m.index);
+        if (!close || close.line === i) return; // one line: the body is a one-liner
+        const inner = [
+            l.slice(m.index + 1),
+            ...P.code.slice(i + 1, close.line),
+            P.code[close.line].slice(0, close.col),
+        ].join('\n');
+        let arrow = -1;
+        walk(inner, (ch, j, depth) => {
+            if (depth !== 0) return;
+            if (ch === '↦' || (ch === '=' && inner[j + 1] === '>')) { arrow = j; return true; }
+        });
+        if (arrow < 0) return;
+        const after = inner.slice(arrow + (inner[arrow] === '↦' ? 1 : 2));
+        if (!/^\s*by\b/.test(after)) return; // the lambda body is not a `by` block
+        ctx.warn('paren-by-multiline', i + 1, m.index + 1, 'multi-line tactic block inside `(fun … => by …)`: prove it in a separate `have` and pass the name, or make the `by` body a one-liner');
+    });
+
     at(/(?<![\w.'])from\s+by\b/g, (m) => ctx.warn('from-by', i + 1, m.index + 1, '`show T from by tac` → `show T by tac` (or `show T from e`)'));
 
     // `by exact e` → `e` (when the `by` block is exactly `exact e`)

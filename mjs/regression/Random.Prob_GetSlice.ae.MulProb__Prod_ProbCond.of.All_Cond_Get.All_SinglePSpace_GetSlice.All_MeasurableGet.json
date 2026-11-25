@@ -237,5 +237,5 @@
       }
     ]
   },
-  "fingerprint": "Mul(Prob($1)(Get($2)(0)))(Prod(In(?0)(Range($3)))(Prob($1)(Cond(Get($2)(Add(?0)(1)))(Get($2)(?0)))))"
+  "fingerprint": "(ℙ[$1] $2[0]) * (∏ ?0 ∈ Range($3), ℙ[$1] ($2[?0 + 1] | $2[?0]))"
 }

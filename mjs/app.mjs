@@ -38,13 +38,16 @@ import {
   fetchMathlibRowByName,
   codeFromMysqlRow,
   ensureEmptyEchoFile,
+  getMysqlPool,
 } from './lean/fetchLemmaMysql.mjs';
+import { replaceLemmaRow, stripEchoStructs } from './lean/replaceLemmaRow.mjs';
 import { buildNewTheoremCodeFromMathlibRow } from './lean/newTheoremBootstrap.mjs';
 import { assembleLeanSourceFromPostBody } from './lean/assembleLemmaPost.mjs';
 import { handleDeleteLemma } from './lean/deleteLemma.mjs';
 import { handleDeletePackage } from './lean/deletePackage.mjs';
 import { handleRenameLemma } from './lean/renameLemma.mjs';
 import { handleRebuildFingerprint } from './lean/rebuildFingerprint.mjs';
+import { handleFingerprint } from './lean/fingerprintLookup.mjs';
 import { buildSearchPayload, leanGetWantsSearch } from './lean/buildSearchPayload.mjs';
 import {
   resolveMissingModuleRedirect,
@@ -489,6 +492,14 @@ app.post('/:userSegment/request/segment_detection', ensureProjectUser, (req, res
   }
 });
 
+/** String fingerprints for the LaTeX pictures of one module. */
+app.post('/:userSegment/request/fingerprint', ensureProjectUser, (req, res) => {
+  handleFingerprint(req, res).catch((e) => {
+    console.error('[fingerprint]', e);
+    res.status(500).json({ error: String(e?.message || e) });
+  });
+});
+
 /** Replace `axiom.inverted` and `axiom.fingerprint` for one module after echo. */
 app.post('/:userSegment/request/rebuild_fingerprint', ensureProjectUser, (req, res) => {
   handleRebuildFingerprint(req, res).catch((e) => {
@@ -536,6 +547,19 @@ app.post('/:userSegment/request/echo', ensureProjectUser, async (req, res) => {
       module,
       leanAbsPath: abs,
     });
+    // Proof fingerprints are the Echo `struct` trees. Write them here, with the
+    // lemma row, and strip `struct` before the page sees the payload.
+    const pool = getMysqlPool();
+    if (pool) {
+      const conn = await pool.getConnection();
+      try {
+        await replaceLemmaRow(conn, module, code, abs, Date.now());
+      } finally {
+        conn.release();
+      }
+    } else {
+      stripEchoStructs(code.lemma);
+    }
     code.user = PROJECT_USER;
     res.json(normalizeCodeMeta(code));
   } catch (e) {

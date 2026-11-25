@@ -37,7 +37,10 @@
             <div v-if=given v-for="given, i of given" @keydown=keydown_div @click.left.stop=click_select :index=i :class="class_given(i)" tabindex="1000">
                 <renderLean v-if=given.insert :text=given.lean :index="[index, 'given', i]"></renderLean>
                 <template v-else>
-                    <p v-latex.block=given.latex></p>
+                    <div class="latex-hover" @mouseenter="demandFingerprint('given', i)">
+                        <p v-latex.block=given.latex></p>
+                        <span v-if="fingerprintOf('given', i)" class="fingerprint">{{ fingerprintOf('given', i) }}</span>
+                    </div>
                     <input type=hidden :name="`lemma[${index}][given][${i}]`" :value=given.lean />
                 </template>
             </div>
@@ -50,7 +53,10 @@
         <div @keydown=keydown_div @click.left.stop=click_select :class=class_imply tabindex="1000">
             <renderLean v-if=imply.insert :text=imply.lean :index="[index, 'imply']"></renderLean>
             <template v-else>
-                <p v-latex.block=imply.latex></p>
+                <div class="latex-hover" @mouseenter="demandFingerprint('imply', 0)">
+                    <p v-latex.block=imply.latex></p>
+                    <span v-if="fingerprintOf('imply', 0)" class="fingerprint">{{ fingerprintOf('imply', 0) }}</span>
+                </div>
                 <input type=hidden :name="`lemma[${index}][imply]`" :value=imply.lean />
             </template>
         </div>
@@ -62,7 +68,10 @@
 
             <div v-for="(code, i) in get_proof_list(proof)" :key="`${refresh}-${index}-proof-${i}`" class="proof-step">
                 <renderLean :text=code.lean :index="get_index(index, i)"></renderLean>
-                <p v-if="proofLatex(code)" v-latex.block="proofLatex(code)"></p>
+                <div v-if="proofLatex(code)" class="latex-hover" @mouseenter="demandFingerprint('proof', i)">
+                    <p v-latex.block="proofLatex(code)"></p>
+                    <span v-if="fingerprintOf('proof', i)" class="fingerprint">{{ fingerprintOf('proof', i) }}</span>
+                </div>
             </div>
         </template>
     </div>
@@ -91,6 +100,7 @@ const self = new Vue({
           commentEditMode: false,
           commentTypesetKey: 0,
           accessibilities: ['public', 'protected', 'private', 'public nonrec', 'protected nonrec', 'private nonrec', 'noncomputable', 'private noncomputable', 'scoped', 'nonrec'],
+          fingerprintText: {},
       };
   },
 
@@ -307,6 +317,32 @@ ${latex}
 \\end{gather}`;
             }
             return latex;
+        },
+
+        /** Fingerprint string already fetched for this picture. Empty until hover. */
+        fingerprintOf(section, latexId) {
+            return this.fingerprintText[`${section}|${latexId}`] || '';
+        },
+
+        /** One row, when the pointer enters the picture. Not loaded at mount. */
+        demandFingerprint(section, latexId) {
+            const key = `${section}|${latexId}`;
+            if (Object.prototype.hasOwnProperty.call(this.fingerprintText, key)) return;
+            this.fingerprintText = { ...this.fingerprintText, [key]: '' };
+            form_post('request/fingerprint', {
+                module: this.module,
+                lemma_id: this.index,
+                section,
+                latex_id: latexId,
+            }).then(row => {
+                const text = typeof row?.fingerprint === 'string' ? row.fingerprint : '';
+                this.fingerprintText = { ...this.fingerprintText, [key]: text };
+            }).catch(err => {
+                console.error('[fingerprint]', err);
+                const next = { ...this.fingerprintText };
+                delete next[key];
+                this.fingerprintText = next;
+            });
         },
 
         /** Non-empty LaTeX for a proof step (array → gather). Falsy when missing. */
@@ -748,6 +784,8 @@ const {
   maybeDeleteAttributeToken,
   gather,
   proofLatex,
+  fingerprintOf,
+  demandFingerprint,
   click_select,
   keydown_div,
   keydown_input,
@@ -800,6 +838,34 @@ span.blue {
 
 .green {
     color: green;
+}
+
+.latex-hover {
+    position: relative;
+}
+
+.latex-hover .fingerprint {
+    display: none;
+    position: absolute;
+    z-index: 8;
+    left: 0;
+    top: calc(100% - 0.15em);
+    max-width: min(52em, 90vw);
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0.25em 0.55em;
+    border: 1px solid #ccc;
+    background: #fffef4;
+    color: #222;
+    font: 12px/1.45 Consolas, ui-monospace, monospace;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    user-select: text;
+    cursor: text;
+}
+
+.latex-hover:hover .fingerprint {
+    display: block;
 }
 
 pre.lemma-comment-text {

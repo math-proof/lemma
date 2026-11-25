@@ -508,5 +508,5 @@
       "$6"
     ]
   },
-  "fingerprint": "Mul(Softmax(Div(Mul(Stack(Lt(?0)($1))(Mul(Get($2)(?0))(Get($3)(?0))))(T(Stack(Lt(?0)($1))(Mul(Get($2)(?0))(Get($4)(?0))))))(Sqrt(Add($5)($5)))))($6)"
+  "fingerprint": "Softmax(([?0 < $1] $2[?0] * $3[?0]) * ([?0 < $1] $2[?0] * $4[?0])ᵀ / √($5 + $5)) * $6"
 }

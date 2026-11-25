@@ -1079,30 +1079,40 @@ export function signatureRules(ctx) {
             }
         }
 
-        // ---- given: an explicit binder that a later hypothesis mentions is an implicit above `-- given` ----
-        // Text fallback of the AST rule (`mentions`). Whole-word `hasWord`; a name rebound by ∀/∃/∑/∏/fun/λ
-        // in the hypothesis type does not count.
+        // ---- given: an explicit binder that a later binder (of any kind) mentions is an implicit above `-- given` ----
+        // Text fallback of the AST rule (`mentions`). Whole-word `freeMentions`; a name rebound by ∀/∃/∑/∏/fun/λ
+        // in the later binder's type does not count. A non-propositional dependent binder uses the "determined by"
+        // wording (showing the whole binder); a later proposition keeps "referenced by".
         if (given != null && !ctx.astCovered.has('given-implicit-dep')) {
-            const props = gg.filter((g) => propKind(g) === 'prop');
             for (const g of gg) {
                 if (g.kind !== 'explicit' || g.deflt != null || !g.names.length || propKind(g) === 'prop') continue;
                 if (propKind(g) == null && g.names.every((n) => /^_?h/.test(n))) continue;
-                const hits = g.names.map((n) => ({
-                    n,
-                    hyps: props.filter((p) => p.line > g.line && freeMentions(p.type, n)),
-                }));
+                const hits = g.names.map((n) => {
+                    const hyps = gg.filter((p) => p.line > g.line && p.type && freeMentions(p.type, n));
+                    const prop = hyps.filter((p) => propKind(p) === 'prop');
+                    const dep = hyps.filter((p) => propKind(p) !== 'prop');
+                    return { n, hyps, prop, dep };
+                });
                 const referenced = hits.filter((h) => h.hyps.length);
                 if (!referenced.length) continue;
                 const shown = `(${g.flat})`;
+                const hasDep = referenced.some((h) => h.dep.length);
+                const desc = (h) => {
+                    const parts = [];
+                    if (h.dep.length) parts.push(`determined by ${h.dep.map((p) => `\`(${p.flat})\``).join(', ')}`);
+                    const propNames = [...new Set(h.prop.flatMap((p) => p.names))];
+                    if (propNames.length) parts.push(`referenced by ${propNames.map((n) => `\`${n}\``).join(', ')}`);
+                    return parts.join(' and ');
+                };
                 if (referenced.length === g.names.length) {
-                    const hyps = [...new Set(referenced.flatMap((h) => h.hyps.flatMap((p) => p.names)))];
+                    const subject = hasDep ? referenced.map((h) => `\`${h.n}\``).join(', ') : `\`${shown}\``;
                     ctx.warn('given-implicit-dep', g.line + 1, g.col + 1,
-                        `\`${shown}\` is referenced by ${hyps.map((n) => `\`${n}\``).join(', ')}; it is not a given — change it to \`{${g.flat}}\` above \`-- given\``);
+                        `${subject} is ${referenced.map(desc).join('; ')}; it is not a given — change it to \`{${g.flat}}\` above \`-- given\``);
                 } else {
                     for (const h of referenced) {
-                        const hyps = [...new Set(h.hyps.flatMap((p) => p.names))];
+                        const subject = hasDep ? `\`${h.n}\`` : `\`${h.n}\` in \`${shown}\``;
                         ctx.warn('given-implicit-dep', g.line + 1, g.col + 1,
-                            `\`${h.n}\` in \`${shown}\` is referenced by ${hyps.map((n) => `\`${n}\``).join(', ')}; it is not a given — change \`${h.n}\` to \`{${h.n} : …}\` above \`-- given\``);
+                            `${subject} is ${desc(h)}; it is not a given — change \`${h.n}\` to \`{${h.n} : …}\` above \`-- given\``);
                     }
                 }
             }

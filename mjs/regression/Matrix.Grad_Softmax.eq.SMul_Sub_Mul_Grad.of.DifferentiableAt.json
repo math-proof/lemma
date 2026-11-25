@@ -96,5 +96,5 @@
       }
     ]
   },
-  "fingerprint": "SMul(Softmax(_))(Sub(Grad($1)(_))(Mul(Softmax(_))(Grad($1)(_))))"
+  "fingerprint": "Softmax(_) • ((∇[$1] _) - Softmax(_) * (∇[$1] _))"
 }

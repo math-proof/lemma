@@ -19,7 +19,7 @@
   - [悬链线](../?module=Complex.Any_Eq_AddMul_CoshDivSub.of.All_EqDeriv_Mul_ExpMulIArctanDeriv.ContDiff_2.Differentiable)
 * [Set](../?module=Set) 集合论
 * [Finset](../?module=Finset) 有限集合论，例：
-  - [k-means 聚类](../?module=Finset.LtAddSumS_SquareSub_Div_Sum.of.LtAbsSSub_Div_Sum.NotIn.In.GtCard_0)
+  - [k-means 聚类](../?module=Finset.LtAddSumS_SquareSub_DivSum.of.LtAbsSSub_DivSum.NotIn.In.GtCard_0)
 * [List](../?module=List) 列表理论
 * [Vector](../?module=Vector) 向量（一维张量）理论
 * [Matrix](../?module=Matrix) 矩阵理论，例：
@@ -27,7 +27,7 @@
   - [Cholesky 分解](../?module=Matrix.Eq_Mul_Adjoint.of.All_Eq_Ite__Ite_Sqrt_0.All_Lt0Dot_MulVec.EqAdjoint), [PLU 分解](../?module=Matrix.EqMul_T_1.IsLowerTriangular.IsUpperTriangular.EqMulS)
   - [kv_cache](../?module=Matrix.XEq_Append_MulSoftmaxDivMul_AppendTSGetSlice.of.All_XEq_MulSoftmaxAddDivMul_T)
 * [Tensor](../?module=Tensor) 形式化张量演算，语义上与 **torch.Tensor** 对齐，用于深度学习算法的形式化表述与验证，例：
-  - [旋转位置编码](../?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)
+  - [旋转位置编码](../?module=Matrix.MulSoftmaxDivMulStack_MulGetS__T_SqrtAdd.eq.Stack_DivSumS)
 * [Random](../?module=Random) 概率论与随机过程，例：
   - [独立高斯之和](../?module=Random.DistributedSum.of.All_Distributed_Gaussian.All_Indep)、[𝒳²(n)](../?module=Random.Distributed_ChiSquared.of.All_Distributed_Gaussian.All_Indep)、[Fisher](../?module=Random.Distributed_Fisher.of.All_And_Distributed_Gaussian.Gt_1.Gt_1)、[弱大数定律](../?module=Random.Lim_ProbLtAbsSubDivSum.eq.One.of.All_EqVar.All_EqExpect.All_Indep.All_MemLp2.All_PSpace)、[克拉默](../?module=Random.SatisfiesLDP_EmpiricalMeanLawPi.of.HasFiniteMGF.ForallBddAbove)
   - [朴素贝叶斯文档分类](../?module=Random.ArgMax_ProbCond.eq.ArgMax_Mul_Prod_ProbCond.of.NeProbJoint__0.All_CondIndep)

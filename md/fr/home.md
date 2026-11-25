@@ -19,7 +19,7 @@ La bibliothèque contient <label id=count>5000</label> théorèmes établis (<la
   - [chaînette](../?module=Complex.Any_Eq_AddMul_CoshDivSub.of.All_EqDeriv_Mul_ExpMulIArctanDeriv.ContDiff_2.Differentiable)
 * [Set](../?module=Set) Théorie des ensembles
 * [Finset](../?module=Finset) Ensembles finis, p. ex. :
-  - [clustering k-means](../?module=Finset.LtAddSumS_SquareSub_Div_Sum.of.LtAbsSSub_Div_Sum.NotIn.In.GtCard_0)
+  - [clustering k-means](../?module=Finset.LtAddSumS_SquareSub_DivSum.of.LtAbsSSub_DivSum.NotIn.In.GtCard_0)
 * [List](../?module=List) Théorie des listes
 * [Vector](../?module=Vector) Vecteurs (tenseurs unidimensionnels)
 * [Matrix](../?module=Matrix) Théorie des matrices, p. ex. :
@@ -27,7 +27,7 @@ La bibliothèque contient <label id=count>5000</label> théorèmes établis (<la
   - [décomposition de Cholesky](../?module=Matrix.Eq_Mul_Adjoint.of.All_Eq_Ite__Ite_Sqrt_0.All_Lt0Dot_MulVec.EqAdjoint), [décomposition PLU](../?module=Matrix.EqMul_T_1.IsLowerTriangular.IsUpperTriangular.EqMulS)
   - [kv_cache](../?module=Matrix.XEq_Append_MulSoftmaxDivMul_AppendTSGetSlice.of.All_XEq_MulSoftmaxAddDivMul_T)
 * [Tensor](../?module=Tensor) Calcul tensoriel formalisé, sémantiquement aligné sur **torch.Tensor**, pour la spécification et la vérification formelle d'algorithmes d'apprentissage profond, p. ex. :
-  - [Plongement positionnel rotatif](../?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul)
+  - [Plongement positionnel rotatif](../?module=Matrix.MulSoftmaxDivMulStack_MulGetS__T_SqrtAdd.eq.Stack_DivSumS)
 * [Random](../?module=Random) Probabilités et processus stochastiques, p. ex. :
   - [somme de gaussiennes indépendantes](../?module=Random.DistributedSum.of.All_Distributed_Gaussian.All_Indep), [𝒳²(n)](../?module=Random.Distributed_ChiSquared.of.All_Distributed_Gaussian.All_Indep), [Fisher](../?module=Random.Distributed_Fisher.of.All_And_Distributed_Gaussian.Gt_1.Gt_1), [loi faible des grands nombres](../?module=Random.Lim_ProbLtAbsSubDivSum.eq.One.of.All_EqVar.All_EqExpect.All_Indep.All_MemLp2.All_PSpace), [Cramér](../?module=Random.SatisfiesLDP_EmpiricalMeanLawPi.of.HasFiniteMGF.ForallBddAbove)
   - [classification de documents naïve bayésienne](../?module=Random.ArgMax_ProbCond.eq.ArgMax_Mul_Prod_ProbCond.of.NeProbJoint__0.All_CondIndep)

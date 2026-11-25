@@ -16,11 +16,8 @@ def logInfo (hypId : Name) (hypType : TacticM Lean.Expr) (goal : Bool := false) 
   let expr ← Expr.toExpr (← hypType) [] 0
   let latex := expr.latex_tagged hypId (if goal then "red" else "green")
   let line := ((← getFileMap).toPosition ((← getRef).getPos?.getD 0)).line
-  let fields := [(toString line, toJson latex)]
-  let fields ←
-    if goal && (← IO.getEnv "LEAN_ECHO_SEARCH_JSON") == some "1" then
-      pure (fields ++ [("struct", expr.toJson)])
-    else
-      pure fields
+  -- `struct` is `toJson` of the same `expr` that `toLatex` just printed.
+  -- The proof fingerprint is this tree, not the source syntax of the tactic.
+  let fields := [(toString line, toJson latex), ("struct", expr.toJson)]
   Lean.logInfo m!"{Json.compress (Json.mkObj fields)}"
 

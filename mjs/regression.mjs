@@ -20,10 +20,9 @@
  *      regex in fixture order.
  *   6. `dag` — check each indexed graph and compare the base DAG from JSON
  *      with the base DAG from the regex string.
- *   7. `fingerprint` — require `node.fingerprint` to equal the stored field.
- *      Free leaves are named by first appearance, so `√a + a²` is
- *      `Add(Sqrt($1))(Square($1))` while `√a + b²` is
- *      `Add(Sqrt($1))(Square($2))`. Bound variables of sums, products, and
+ *   7. `fingerprint` — require the infix rendering of `toJSON` to equal the
+ *      stored field. Free leaves are named by first appearance, so `√a + a²`
+ *      is `√$1 + $1²` while `√a + b²` is `√$1 + $2²`. Bound variables of sums, products, and
  *      quantifiers are De Bruijn `?0`, `?1`, … (`?0` is nearest); `ℙ[π]`,
  *      `∇[x]`, and `∂[x]` do not bind, but `∇[x = x₀]` and `∂[x = x₀]` do.
  *
@@ -38,6 +37,7 @@ import { fileURLToPath } from "url";
 import { compile } from "../js/parser/lean.js";
 import { strStmt } from "../js/parser/lean/utility.js";
 import { dag2suggession, json2dag, json2regex, json2plural, json2pathPatterns, regex2dag, suggestionMatches } from "../js/parser/lean/json2regex.js";
+import { infixFingerprint } from "./lean/infixFingerprint.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -219,14 +219,14 @@ for (const name of files) {
       problems.push(`json mismatch\n  got:  ${show(fresh)}\n  want: ${show(doc.json)}`);
     }
 
-    // Check 7: leaf-identity fingerprint. `toJSON` names a leaf on its first
-    // appearance, so `√a + a²` shares `$1` while `√a + b²` gets `$1`/`$2`.
+    // Check 7: leaf-identity fingerprint, printed infix. `toJSON` names a leaf
+    // on its first appearance, so `√a + a²` shares `$1` while `√a + b²` gets `$1`/`$2`.
     if (typeof doc.fingerprint !== "string" || doc.fingerprint === "") {
       problems.push("fingerprint is missing");
     } else {
       let fingerprint = null;
       try {
-        fingerprint = node.fingerprint;
+        fingerprint = infixFingerprint(node.toJSON({ leaves: new Map(), binders: [] }));
       } catch (e) {
         problems.push(`fingerprint error: ${e.message}`);
       }

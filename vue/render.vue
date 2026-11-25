@@ -1629,8 +1629,7 @@ where
 
         async echo(module){
             var code = await form_post('request/echo', {module});
-            console.log(JSON.stringify(code, null, "\t"));
-            var {imports, open, set_option, preamble, lemma, meta, date} = code;
+            var {lemma, meta} = code;
             if (!meta || typeof meta !== 'object' || Array.isArray(meta))
                 meta = {error: []};
             if (!Array.isArray(meta.error))
@@ -1644,49 +1643,6 @@ where
                     requestAnimationFrame(() => this.apply_location_hash());
                 });
             }
-            meta = meta.error.length ? {error: meta.error} : null;
-            var errorLiteral = meta == null ? null : JSON.stringify(meta).mysqlStr();
-            var key = module;
-            var sql = `
-insert into
-    axiom.lemma
-    (module, imports, open, set_option, preamble, lemma, meta, date) 
-    values (
-        "${key}",
-        ${JSON.stringify(imports).mysqlStr()},
-        ${JSON.stringify(open).mysqlStr()},
-        ${JSON.stringify(set_option).mysqlStr()},
-        ${JSON.stringify(preamble).mysqlStr()},
-        ${JSON.stringify(lemma).mysqlStr()},
-        ${errorLiteral == null ? 'NULL' : errorLiteral},
-        ${JSON.stringify(date).mysqlStr()}
-    )
-    on duplicate key update
-        imports = values(imports),
-        open = values(open),
-        set_option = values(set_option),
-        preamble = values(preamble),
-        lemma = values(lemma),
-        meta = ${errorLiteral == null
-            ? "JSON_REMOVE(COALESCE(meta, JSON_OBJECT()), '$.error')"
-            : `JSON_SET(COALESCE(meta, JSON_OBJECT()), '$.error', ${errorLiteral})`},
-        date = values(date)
-`;
-            console.log(sql);
-            form_post('request/execute', {sql}).then(rowcount => {
-                console.log("rowcount =", rowcount);
-            });
-            if (meta == null)
-                this.rebuild_fingerprint(key);
-        },
-
-        // Separate from the lemma upsert: rewrite inverted postings and fingerprint trees.
-        rebuild_fingerprint(module) {
-            form_post('request/rebuild_fingerprint', {module}).then(result => {
-                console.log('rebuild_fingerprint', result);
-            }).catch(err => {
-                console.error('[rebuild_fingerprint]', err);
-            });
         },
     },
     

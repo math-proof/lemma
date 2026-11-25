@@ -22,13 +22,7 @@ import {
   moduleToLeanPath,
   fileExists,
 } from './lean/modulePath.mjs';
-import { lemmaSearchDocuments } from './lemmaPath.mjs';
-import { writeLemmaIndex } from './leanInvertedIndex.mjs';
-import { peelDocstrings, replaceDocstrings } from './lean/fetchLemmaMysql.mjs';
-
-function jsonCol(v) {
-  return JSON.stringify(v ?? (Array.isArray(v) ? [] : {}));
-}
+import { replaceLemmaRow } from './lean/replaceLemmaRow.mjs';
 
 async function connectMysql() {
   const host = (process.env.MYSQL_HOST || '127.0.0.1').trim();
@@ -87,92 +81,6 @@ function resolveLeanFile(input) {
   const abs = moduleToLeanPath(raw);
   if (!abs) throw new Error(`bad module: ${raw}`);
   return { abs, module: raw };
-}
-
-async function replaceLemmaRow(conn, module, code, abs, startedAt) {
-  const errs = Array.isArray(code.error) ? code.error : [];
-  let fingerprint = null;
-  let documents = null;
-  try {
-    if (abs) {
-      const extracted = lemmaSearchDocuments(abs);
-      fingerprint = extracted.fingerprint;
-      documents = extracted.documents;
-    }
-  } catch {
-    fingerprint = null;
-    documents = null;
-  }
-  const meta = {};
-  if (errs.length) meta.error = errs;
-  const metaJson = Object.keys(meta).length ? JSON.stringify(meta) : null;
-  const peeled = peelDocstrings(code.lemma ?? []);
-
-  const fields = [
-    jsonCol(code.imports ?? []),
-    jsonCol(code.open ?? []),
-    jsonCol(code.set_option ?? []),
-    jsonCol(code.preamble ?? []),
-    jsonCol(peeled.lemmas),
-    metaJson,
-    jsonCol(code.date ?? {}),
-  ];
-
-  // UNIQUE `uq_lemma_module (module)` keeps `id` stable: UPDATE the existing
-  // row in place. INSERT only when the module is new, so inverted postings
-  // are not orphaned by a new AUTO_INCREMENT id. The row lock and the
-  // fingerprint/postings write share one transaction: a reader sees either
-  // the previous revision or the new one, never a half-applied state.
-  await conn.beginTransaction();
-  try {
-    const [existing] = await conn.query(
-      "SELECT id, JSON_EXTRACT(meta, '$.revision') AS revision FROM lemma WHERE module = ? FOR UPDATE",
-      [module],
-    );
-    let id;
-    if (existing.length) {
-      id = existing[0].id;
-      // An older job may acquire the lock after a newer build already won.
-      if (Number(existing[0].revision ?? 0) > Number(startedAt)) {
-        await conn.rollback();
-        return { id, stale: true };
-      }
-      await conn.query(
-        `UPDATE lemma
-         SET imports = CAST(? AS JSON),
-             \`open\` = CAST(? AS JSON),
-             set_option = CAST(? AS JSON),
-             preamble = CAST(? AS JSON),
-             lemma = CAST(? AS JSON),
-             meta = CAST(? AS JSON),
-             date = CAST(? AS JSON)
-         WHERE id = ?`,
-        [...fields, id],
-      );
-    } else {
-      const [result] = await conn.query(
-        `INSERT INTO lemma
-          (module, imports, \`open\`, set_option, preamble, lemma, meta, date)
-         VALUES (?, CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON), CAST(? AS JSON))`,
-        [module, ...fields],
-      );
-      id = result.insertId;
-    }
-
-    const { postings } = await writeLemmaIndex(conn, {
-      id,
-      module,
-      json: fingerprint,
-      documents,
-      startedAt,
-    });
-    await replaceDocstrings(conn, id, peeled.rows);
-    await conn.commit();
-    return { id, postings };
-  } catch (err) {
-    await conn.rollback();
-    throw err;
-  }
 }
 
 export async function runLeanFile(leanInput) {

@@ -325,9 +325,11 @@ function givenPropFirst(ctx, decl, bs = givenBinders(decl)) {
 }
 
 /**
- * An explicit binder under `-- given` whose names occur free in a later hypothesis is not a given:
- * it should be `{names : type}` above `-- given`. Propositions stay. A name rebound by `∀` / `∃` /
- * `∑` / `∏` / `fun` inside the hypothesis does not count (`mentions`).
+ * An explicit binder under `-- given` whose names occur free in a *later binder of any kind*
+ * (proposition, expression, instance, …) is not a given: it should be `{names : type}` above
+ * `-- given`. Propositions stay. A name rebound by `∀` / `∃` / `∑` / `∏` / `fun` inside the later
+ * binder's type does not count (`mentions`). A later proposition uses the "referenced by" wording;
+ * a non-propositional dependent binder uses "determined by `(i : Fin (d + d))`" (the whole binder).
  * Returns true when it warned.
  */
 function givenImplicitDep(ctx, decl, bs = givenBinders(decl)) {
@@ -338,23 +340,36 @@ function givenImplicitDep(ctx, decl, bs = givenBinders(decl)) {
         if (b.kind === 'prop' || !b.names.length || !b.type) continue;
         if (b.kind == null && b.names.every((n) => /^_?h/.test(n))) continue;
         if (String(b.node).includes(':=')) continue;
-        const hits = b.names.map((n) => ({
-            n,
-            hyps: bs.slice(a + 1).filter((p) => p.kind === 'prop' && p.type && mentions(p.type, n)),
-        }));
+        // any later binder whose type mentions `n` determines `n` (proposition or not); `mentions`
+        // ignores names rebound by ∀/∃/∑/∏/fun inside that type.
+        const hits = b.names.map((n) => {
+            const hyps = bs.slice(a + 1).filter((p) => p.type && mentions(p.type, n));
+            const prop = hyps.filter((p) => p.kind === 'prop');
+            const dep = hyps.filter((p) => p.kind !== 'prop');
+            return { n, hyps, prop, dep };
+        });
         const referenced = hits.filter((h) => h.hyps.length);
         if (!referenced.length) continue;
         const shown = quote(b.node, 80, 1);
+        const imp = shown.startsWith('(') && shown.endsWith(')') ? `{${shown.slice(1, -1)}}` : `{${b.names.join(' ')} : …}`;
+        // a non-propositional dependent binder determines the name; show the whole binder, not just its name.
+        const hasDep = referenced.some((h) => h.dep.length);
+        const desc = (h) => {
+            const parts = [];
+            if (h.dep.length) parts.push(`determined by ${h.dep.map((p) => `\`${quote(p.node, 80, 1)}\``).join(', ')}`);
+            const propNames = [...new Set(h.prop.flatMap((p) => p.names))];
+            if (propNames.length) parts.push(`referenced by ${propNames.map((n) => `\`${n}\``).join(', ')}`);
+            return parts.join(' and ');
+        };
         if (referenced.length === b.names.length) {
-            const hyps = [...new Set(referenced.flatMap((h) => h.hyps.flatMap((p) => p.names)))];
-            const imp = shown.startsWith('(') && shown.endsWith(')') ? `{${shown.slice(1, -1)}}` : `{${b.names.join(' ')} : …}`;
+            const subject = hasDep ? referenced.map((h) => `\`${h.n}\``).join(', ') : `\`${shown}\``;
             ctx.warnAst('given-implicit-dep', b.node,
-                `\`${shown}\` is referenced by ${hyps.map((n) => `\`${n}\``).join(', ')}; it is not a given — change it to \`${imp}\` above \`-- given\``);
+                `${subject} is ${referenced.map(desc).join('; ')}; it is not a given — change it to \`${imp}\` above \`-- given\``);
         } else {
             for (const h of referenced) {
-                const hyps = [...new Set(h.hyps.flatMap((p) => p.names))];
+                const subject = hasDep ? `\`${h.n}\`` : `\`${h.n}\` in \`${shown}\``;
                 ctx.warnAst('given-implicit-dep', b.node,
-                    `\`${h.n}\` in \`${shown}\` is referenced by ${hyps.map((n) => `\`${n}\``).join(', ')}; it is not a given — change \`${h.n}\` to \`{${h.n} : …}\` above \`-- given\``);
+                    `${subject} is ${desc(h)}; it is not a given — change \`${h.n}\` to \`{${h.n} : …}\` above \`-- given\``);
             }
         }
         warned = true;
@@ -1098,7 +1113,11 @@ function sumPatternBindings(value, type) {
 }
 
 /**
- * `Fin.ropeEven t` → `t.ropeEven` when `t` is a bare identifier whose declared type head is `Fin`.
+ * Generalized field notation: `Ns.f obj` → `obj.f` (`Fin.ropeEven t` → `t.ropeEven`), and for 3+
+ * explicit args `Ns.f a1 … ak obj` → `obj.f a1 … ak` (`Fin.castAdd d t` → `t.castAdd d`) when `obj`
+ * is the LAST bare-identifier arg whose declared type head is `Ns`, every earlier explicit arg is
+ * also a bare identifier, and none of them shares `Ns` as its type head (the receiver slot must be
+ * unambiguous — `Fin.h t u` with two `Fin` args is skipped).
  *
  * A scoped environment of local binders → type node is kept in source order (declaration binders,
  * `∑` / `∏` / `∀` / `∃` binder lists, `fun` parameters, typed `let` / `have`); the nearest binding
@@ -1115,19 +1134,45 @@ function dotNotation(ctx, decl) {
     const env = new Map();
 
     const checkApplication = (node, scope) => {
-        if (node.args?.length !== 2) return;
-        const [head, arg] = node.args;
-        // two-component dotted constant applied to a bare identifier
+        const args = node.args;
+        if (!args || args.length < 2) return;
+        const head = args[0];
+        // two-component dotted constant `Ns.f` applied to one or more explicit arguments
         if (!(head instanceof LeanProperty) || !(head.lhs instanceof LeanToken) || !(head.rhs instanceof LeanToken)) return;
-        if (!(arg instanceof LeanToken) || !arg.text || arg.text === '_') return;
         const ns = head.lhs.text;
         const field = head.rhs.text;
         if (!ns || !field) return;
-        const type = scope.get(arg.text);
-        if (type == null || typeHeadName(type) !== ns) return;
+
+        const bareToken = (a) => a instanceof LeanToken && a.text && a.text !== '_';
+
+        // 2-arg: `Ns.f x` — the sole explicit argument is the receiver (existing behaviour)
+        if (args.length === 2) {
+            const arg = args[1];
+            if (!bareToken(arg)) return;
+            const type = scope.get(arg.text);
+            if (type == null || typeHeadName(type) !== ns) return;
+            const shown = String(node).replace(/\s+/g, ' ').trim();
+            ctx.warnAst('dot-notation', node, `\`${shown}\` can be written \`${arg.text}.${field}\``, 1, null, shown, null, true);
+            return;
+        }
+
+        // 3+-arg: the receiver is the LAST explicit argument. Generalized field notation only rewrites
+        // when the receiver slot is unambiguous: every explicit argument must be a bare identifier (so
+        // its declared type head is statically known) and exactly one — the last — has type head `Ns`
+        // (`Fin.castAdd d t` → `t.castAdd d`; `Fin.h t u` is skipped because both `t` and `u` are `Fin`).
+        const rest = args.slice(1);
+        if (!rest.every(bareToken)) return;
+        const obj = rest[rest.length - 1];
+        const objType = scope.get(obj.text);
+        if (objType == null || typeHeadName(objType) !== ns) return;
+        for (const a of rest.slice(0, -1)) {
+            const ty = scope.get(a.text);
+            if (ty != null && typeHeadName(ty) === ns) return; // two `Ns`-typed explicit args: ambiguous
+        }
+        const front = rest.slice(0, -1).map((a) => String(a).replace(/\s+/g, ' ').trim());
         const shown = String(node).replace(/\s+/g, ' ').trim();
-        // `sequential`: the same reprint may occur earlier in the file (`Fin.ropeEven t` at 13 and 17)
-        ctx.warnAst('dot-notation', node, `\`${shown}\` can be written \`${arg.text}.${field}\``, 1, null, shown, null, true);
+        const rewritten = `${obj.text}.${field}${front.length ? ` ${front.join(' ')}` : ''}`;
+        ctx.warnAst('dot-notation', node, `\`${shown}\` can be written \`${rewritten}\``, 1, null, shown, null, true);
     };
 
     /** bindings a statement introduces for the statements after it (`let t : Fin d := …`) */
@@ -1326,6 +1371,8 @@ export function astRules(ctx, tree) {
     found.sort((a, b) => order.get(a.node) - order.get(b.node));
     // Identical reprints (`Fin.ropeEven t` at lines 13 and 17) need their own lines: the
     // n-th `sequential` finding with a given text lands on the n-th exact source occurrence.
+    // Search the comment-blanked source so a mention inside a `/-- … -/` doc string does not
+    // steal the line from the actual application (e.g. `Fin.castAdd d t` documented then used).
     const seqState = new Map();
     for (const f of found) {
         if (f.sequential) {
@@ -1335,8 +1382,8 @@ export function astRules(ctx, tree) {
             // same line still finds its own occurrence (`Fin.ropeEven t = Fin.ropeEven t`)
             const state = seqState.get(text) ?? { from: 0, offset: 0, lastLine: null };
             let line = null;
-            for (let i = state.from; i < ctx.P.raw.length; i++) {
-                const hay = collapse(ctx.P.raw[i]);
+            for (let i = state.from; i < ctx.P.code.length; i++) {
+                const hay = collapse(ctx.P.code[i]);
                 const at = hay.indexOf(key, i === state.from ? state.offset : 0);
                 if (at < 0) continue;
                 line = i + 1;
