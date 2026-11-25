@@ -68,7 +68,7 @@ def prove(Eq):
 
     Eq << Random.All_EqProb_Cond.All_EqProb_Cond.of.IndepJoint.apply(Eq[0])
 
-    Eq << Random.ProbJoint.eq.Mul_Prod_MulProbSCond.of.IsDiscreteHMM.mdp.apply(Eq[-1], Eq[-3], Eq[-2], Eq[1], T, t)
+    Eq << Random.Prob_JointGetS_SliceAdd_1.eq.MulMulProbS__Prod_MulProbS_Cond_Get.of.IsDiscreteHMM.mdp.apply(Eq[-1], Eq[-3], Eq[-2], Eq[1], T, t)
 
     Eq << Eq[-1].subs(Eq[2])
 

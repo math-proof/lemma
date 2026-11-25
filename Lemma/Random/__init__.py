@@ -66,7 +66,6 @@ from . import All_EqProbCondJoint
 from . import All_Imp_EqProbSCond
 from . import Indep_Joint
 from . import ProbCond_Joint
-from . import ProbJoint
 from . import All_Eq_AddLogSumExpAdd
 from . import All_Eq_Add_MaxAdd
 from . import Eq_Expect
@@ -103,3 +102,4 @@ from . import GradVkd
 from . import GradV
 from . import All_EqProb_Cond__DivProbS
 from . import Expect_DivSum_SquareSub_DivSum
+from . import Prob_JointGetS_SliceAdd_1
