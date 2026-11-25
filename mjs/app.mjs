@@ -26,6 +26,7 @@ import { compile, LeanModule, LeanCaret } from '../js/parser/lean.js';
 import { jsonForScriptEmbed } from './lean/jsonForScriptEmbed.mjs';
 import { listLemmaTopLevelDirs } from './lean/lemmaSections.mjs';
 import { handleExecute } from './lean/execute.mjs';
+import { handleUnicodeLatex } from './lean/unicodeLatex.mjs';
 import { handleDisambiguate } from './lean/disambiguate.mjs';
 import { handleRecent } from './lean/recent.mjs';
 import {
@@ -384,6 +385,14 @@ app.get('/:userSegment/api/folder-search.json', ensureProjectUser, (req, res) =>
 /** POST → JSON array of `Lemma/` child directory names. */
 app.post('/:userSegment/request/sections', ensureProjectUser, (_req, res) => {
   res.json(listLemmaTopLevelDirs());
+});
+
+/** Exact `unicode.latex` alias, e.g. `^2` → `²`. Used by the one-line search box. */
+app.get('/:userSegment/request/unicode', ensureProjectUser, (req, res) => {
+  handleUnicodeLatex(req, res).catch((e) => {
+    console.error('[unicode]', e);
+    res.json({ unicode: null });
+  });
 });
 
 /** Same contract as `request/execute` (`mysql\execute`); stub when `MYSQL_HOST` unset. */

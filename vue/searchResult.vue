@@ -291,7 +291,7 @@ function searchQuery(vm, offset, mode) {
 .search-slot {
 	flex: 1;
 	min-width: 0;
-	max-width: 634px;
+	max-width: 820px;
 }
 
 .results {

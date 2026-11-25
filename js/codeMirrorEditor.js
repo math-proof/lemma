@@ -1223,7 +1223,7 @@ where name REGEXP '^[\\\\p{Script=Greek}a-zA-Z][0-9]$'`;
         	if (line != null)
 				return this.editor.setCursor(line, col);
 			
-            var regex = eval(`/((?:    )*def ${this.hash})\\([^()]+\\):\\s*$/`);
+            var regex = new RegExp(`((?:    )*def ${this.hash})\\([^()]+\\):\\s*$`);
 
             var size = this.editor.lineCount();
             for (var index = 0; index < size; ++index) {

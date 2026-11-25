@@ -5,7 +5,7 @@
 				<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
 					<path d="M15.5 14h-.79l-.28-.27a6.471 6.471 0 0 0 1.48-4.24A6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.24-1.48l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
 				</svg>
-				<input v-focus tabindex=1 type=text spellcheck=false name=q :value=q :placeholder=placeholder @input=input>
+				<input v-focus tabindex=1 type=text spellcheck=false name=q :value=q :placeholder=placeholder title="a space commits the latex command" @input=input>
 				<button tabindex=1 class="submit" type=submit>Search</button>
 			</div>
 			<details class="options">
@@ -87,7 +87,7 @@ const self = new Vue({
 				return 'search a sentence, e.g. 悬链线';
 			if (this.mode == 'path')
 				return 'search a path token, e.g. Cosh';
-			return 'search formulas, e.g. a² + b²';
+			return 'type latex command: \\sqrt,\\sum,\\int,\\prod,\\McB,\\bbP,\\pi,\\in,\\ge,\\le,\\ne,\\subset,\\^2,\\^m';
 		},
 
 		action() {
@@ -97,7 +97,37 @@ const self = new Vue({
 
 	methods: {
 		input(event) {
-			this.setAttribute(event.target.name, event.target.value);
+			const el = event.target;
+			const value = el.value;
+			this.setAttribute(el.name, value);
+			if (el.name != 'q')
+				return;
+			const caret = el.selectionStart ?? value.length;
+			if (caret < 1 || value[caret - 1] != ' ')
+				return;
+			const head = value.slice(0, caret - 1);
+			const matched = head.match(/\\([^\s\\]+)$/);
+			if (!matched)
+				return;
+			const latex = matched[1];
+			const start = caret - 1 - matched[0].length;
+			const snapshot = value;
+			fetch(`request/unicode?latex=${encodeURIComponent(latex)}`)
+				.then((response) => response.ok ? response.json() : null)
+				.then((body) => {
+					const ch = body && body.unicode;
+					if (!ch || typeof ch != 'string')
+						return;
+					const input = this.$el?.querySelector('input[name=q]');
+					if (!input || input.value != snapshot)
+						return;
+					const next = snapshot.slice(0, start) + ch + snapshot.slice(caret);
+					const pos = start + ch.length;
+					this.setAttribute('q', next);
+					input.value = next;
+					input.setSelectionRange(pos, pos);
+				})
+				.catch(() => {});
 		},
 
 		change(event) {
