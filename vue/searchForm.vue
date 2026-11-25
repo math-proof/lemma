@@ -185,6 +185,20 @@ const self = new Vue({
 		},
 	},
 
+	mounted() {
+		this.onPointerDown = (event) => {
+			const options = this.$el?.querySelector('details.options');
+			if (!options?.open || options.contains(event.target))
+				return;
+			options.open = false;
+		};
+		document.addEventListener('pointerdown', this.onPointerDown);
+	},
+
+	unmounted() {
+		document.removeEventListener('pointerdown', this.onPointerDown);
+	},
+
 	directives: {
 		focus: {
 			mounted(el) {
