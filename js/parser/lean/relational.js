@@ -58,6 +58,9 @@ export class LeanRelational extends LeanBinaryBoolean {
     sep() {
         if (this.rhs instanceof L.LeanArgsNewLineSeparated || this.rhs instanceof L.LeanStatements)
             return '\n';
+        const lhsEnd = Lean.lastSourceLine(this.lhs);
+        const rhsLine = this.rhs?.line;
+        if (lhsEnd >= 0 && typeof rhsLine === 'number' && rhsLine > lhsEnd) return '\n';
         return ' ';
     }
 

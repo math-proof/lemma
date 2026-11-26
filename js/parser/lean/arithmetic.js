@@ -25,6 +25,9 @@ export class LeanArithmetic extends LeanBinary {
     }
 
     sep() {
+        const lhsEnd = Lean.lastSourceLine(this.lhs);
+        const rhsLine = this.rhs?.line;
+        if (lhsEnd >= 0 && typeof rhsLine === 'number' && rhsLine > lhsEnd) return '\n';
         return ' ';
     }
 

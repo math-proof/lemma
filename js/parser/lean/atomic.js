@@ -497,6 +497,9 @@ export class LeanDocString extends LeanBlockComment {
     }
 
     strFormat() {
+        // A one-line `/-- … -/` stays one line. A break in the body keeps the
+        // opening and closing delimiters on their own lines.
+        if (!this.text.includes('\n')) return `/--${this.text}-/`;
         return `/--\n${this.text}\n-/`;
     }
 }

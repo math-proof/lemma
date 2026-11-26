@@ -54,6 +54,20 @@ export class Lean extends IndentedNode {
      * `count` lines were inserted at `at` (or removed, when `count` is negative).
      * Nodes already built on that line or later move with the text.
      */
+    /** Greatest 1-based line stored on `node` or any node under it. */
+    static lastSourceLine(node) {
+        let max = -1;
+        const walk = (n) => {
+            if (!n || typeof n !== 'object') return;
+            if (typeof n.line === 'number' && n.line > max) max = n.line;
+            const args = n.args;
+            if (!args) return;
+            for (let i = 0; i < args.length; i++) walk(args[i]);
+        };
+        walk(node);
+        return max;
+    }
+
     static shiftLines(root, at, count) {
         if (!root || !count || typeof at !== 'number') return;
         const walk = (node) => {
