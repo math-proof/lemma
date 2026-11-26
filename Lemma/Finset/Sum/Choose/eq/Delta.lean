@@ -26,8 +26,10 @@ private lemma main
   simp_rw [Nat.add_sub_cancel_left]
   rw [show n + 1 - i = n - i + 1 by omega]
   have alt := Int.alternating_sum_range_choose (n := n - i)
-  calc ∑ k ∈ Finset.range (n - i + 1), (-1 : ℤ) ^ k * ((n.choose i * (n - i).choose k : ℕ) : ℤ)
-      = (n.choose i : ℤ) * ∑ k ∈ Finset.range (n - i + 1), (-1 : ℤ) ^ k * ((n - i).choose k : ℤ) := by
+  rw [← Nat.Iio_eq_range] at alt
+  rw [← Nat.Iio_eq_range]
+  calc ∑ k < (n - i + 1), (-1 : ℤ) ^ k * ((n.choose i * (n - i).choose k : ℕ) : ℤ)
+      = (n.choose i : ℤ) * ∑ k < (n - i + 1), (-1 : ℤ) ^ k * ((n - i).choose k : ℤ) := by
         rw [Finset.mul_sum]
         apply Finset.sum_congr rfl
         intro k _

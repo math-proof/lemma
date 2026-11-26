@@ -12,7 +12,7 @@ private lemma main
 -- imply
   (Matrix.of (Matrix.vecCons (fun j : Fin (n + 1) => x₂ ^ (j : ℕ))
       (fun (i : Fin n) (j : Fin (n + 1)) => (j : ℝ) ^ (i : ℕ) * x₁ ^ (j : ℕ)))).det =
-    x₁ ^ (n.choose 2) * (x₁ - x₂) ^ n * ∏ i ∈ Finset.range n, (i ! : ℝ) := by
+    x₁ ^ (n.choose 2) * (x₁ - x₂) ^ n * ∏ i < n, (i ! : ℝ) := by
 -- proof
   have hM : Matrix.of (Matrix.vecCons (fun j : Fin (n + 1) => x₂ ^ (j : ℕ))
       (fun (i : Fin n) (j : Fin (n + 1)) => (j : ℝ) ^ (i : ℕ) * x₁ ^ (j : ℕ))) =
@@ -20,7 +20,7 @@ private lemma main
     ext a j
     refine Fin.cases ?_ (fun a => ?_) a <;> simp
   rw [hM, DetOf.eq.MulPowSProdProd.of.Le (by omega), show (1 : ℕ).choose 2 = 0 by decide, show n + 1 - 1 = n by omega,
-    show ∏ i ∈ Finset.range 1, (i ! : ℝ) = 1 by norm_num [Finset.prod_range_succ]]
+    show ∏ i < 1, (i ! : ℝ) = 1 by norm_num [Nat.Iio_eq_range, Finset.prod_range_succ]]
   ring
 
 

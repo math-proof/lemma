@@ -13,7 +13,7 @@ private lemma main
   (Matrix.of (Matrix.vecCons (fun j : Fin (n + 3) => r ^ (j : ℕ)) (Matrix.vecCons (fun j : Fin (n + 3) => (j : ℝ) * r ^ (j : ℕ))
       (Matrix.vecCons (fun j : Fin (n + 3) => (j : ℝ) ^ 2 * r ^ (j : ℕ))
       (fun (i : Fin n) (j : Fin (n + 3)) => (j : ℝ) ^ (i : ℕ)))))).det =
-    2 * r ^ 3 * (1 - r) ^ (3 * n) * ∏ i ∈ Finset.range n, (i ! : ℝ) := by
+    2 * r ^ 3 * (1 - r) ^ (3 * n) * ∏ i < n, (i ! : ℝ) := by
 -- proof
   have hM : Matrix.of (Matrix.vecCons (fun j : Fin (n + 3) => r ^ (j : ℕ)) (Matrix.vecCons (fun j : Fin (n + 3) => (j : ℝ) * r ^ (j : ℕ))
       (Matrix.vecCons (fun j : Fin (n + 3) => (j : ℝ) ^ 2 * r ^ (j : ℕ))
@@ -23,7 +23,7 @@ private lemma main
     refine Fin.cases ?_ (fun a => Fin.cases ?_ (fun a => Fin.cases ?_ (fun a => ?_) a) a) a <;>
       simp [Nat.mod_eq_of_lt (show 2 < n + 3 by omega)]
   rw [hM, DetOf.eq.MulPowSProdProd.of.Le (by omega), show (3 : ℕ).choose 2 = 3 by decide, show n + 3 - 3 = n by omega,
-    show ∏ i ∈ Finset.range 3, (i ! : ℝ) = 2 by norm_num [Finset.prod_range_succ, Nat.factorial]]
+    show ∏ i < 3, (i ! : ℝ) = 2 by norm_num [Nat.Iio_eq_range, Finset.prod_range_succ, Nat.factorial]]
   ring
 
 

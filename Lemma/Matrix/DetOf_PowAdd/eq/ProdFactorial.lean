@@ -22,15 +22,16 @@ private lemma main
     Finset.prod_comm' (by intro x y; simp)
   rw [h, Matrix.det_vandermonde, hc]
   refine Finset.prod_congr rfl fun i _ => ?_
-  have e : ∀ m : ℕ, ∏ j ∈ Finset.range m, ((m : ℝ) - j) = (m ! : ℝ) := by
+  have e : ∀ m : ℕ, ∏ j < m, ((m : ℝ) - j) = (m ! : ℝ) := by
     intro m
+    rw [Nat.Iio_eq_range]
     rw [← Finset.prod_range_add_one_eq_factorial, Nat.cast_prod, ← Finset.prod_range_reflect (fun j => ((j + 1 : ℕ) : ℝ)) m]
     refine Finset.prod_congr rfl fun j hj => ?_
     have := Finset.mem_range.mp hj
     rw [Nat.cast_add, Nat.cast_sub (by omega), Nat.cast_sub (by omega)]
     push_cast
     ring
-  rw [← e, ← Nat.Iio_eq_range, ← Fin.map_valEmbedding_Iio, Finset.prod_map]
+  rw [← e, ← Fin.map_valEmbedding_Iio, Finset.prod_map]
   refine Finset.prod_congr rfl fun j _ => ?_
   simp
 

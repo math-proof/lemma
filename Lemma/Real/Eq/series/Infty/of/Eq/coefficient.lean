@@ -71,12 +71,13 @@ private lemma main
           simp [c]; ring
         rw [hce]
         exact (hsxA.tsum_sub hsxB).trans (by rw [heq x hxρ, sub_self])
-      have hsplit : (∑ i ∈ Finset.range k, c i * x ^ i) + ∑' j, c (j + k) * x ^ (j + k) =
-          ∑' n, c n * x ^ n := hsx.sum_add_tsum_nat_add k
-      have hr0 : ∑ i ∈ Finset.range k, c i * x ^ i = 0 := by
+      have hsplit : (∑ i < k, c i * x ^ i) + ∑' j, c (j + k) * x ^ (j + k) =
+          ∑' n, c n * x ^ n := by
+        simpa only [Nat.Iio_eq_range] using hsx.sum_add_tsum_nat_add k
+      have hr0 : ∑ i < k, c i * x ^ i = 0 := by
         rw [Finset.sum_eq_zero]
         intro i hi
-        rw [hprev i (Finset.mem_range.mp hi), zero_mul]
+        rw [hprev i (Finset.mem_Iio.mp hi), zero_mul]
       have hst : Summable (fun j => c (j + k) * x ^ j) := by
         apply (summable_mul_left_iff (pow_ne_zero k hx0)).mp
         rw [show (fun j : ℕ => x ^ k * (c (j + k) * x ^ j)) =

@@ -13,7 +13,7 @@ private lemma eq_one_of_pow_prime_eq_one {A : Type} [CommRing A] [IsDomain A] {n
     ext i j
     rw [RingHom.mapMatrix_apply]
     simpa [Matrix.one_apply, apply_ite (Ideal.Quotient.mk 𝔪), map_one, map_zero] using ((Ideal.Quotient.eq (I := 𝔪)).2 (hM i j))
-  set u : Matrix n n A := ∑ k ∈ Finset.range ℓ, M ^ k with hu
+  set u : Matrix n n A := (Finset.range ℓ).sum (fun k => M ^ k) with hu
   have hu0 : u * (M - 1) = 0 := by
     rw [hu, geom_sum_mul, hpow, sub_self]
   have hφu : φ u = (ℓ : A ⧸ 𝔪) • (1 : Matrix n n (A ⧸ 𝔪)) := by
@@ -116,4 +116,4 @@ private lemma main
 
 
 -- created on 2026-10-20
--- updated on 2026-11-13
+-- updated on 2026-11-26

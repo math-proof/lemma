@@ -7,16 +7,16 @@ private lemma main
   {n : ℕ}
   {x : ℕ → Finset α}
 -- given
-  (h : ((Finset.range n).biUnion x).card = ∑ i ∈ Finset.range n, (x i).card) :
+  (h : ((Finset.range n).biUnion x).card = ∑ i < n, (x i).card) :
 -- imply
-  ∀ i ∈ Finset.range n, ∀ j ∈ Finset.range i, x i ∩ x j = ∅ := by
+  ∀ i < n, ∀ j < i, x i ∩ x j = ∅ := by
 -- proof
   intro i hi j hj
-  rw [Finset.mem_range] at hi hj
   have hj' : j ∈ (Finset.range n).erase i :=
     Finset.mem_erase.mpr ⟨by omega, Finset.mem_range.mpr (by omega)⟩
-  have hs : ∑ k ∈ Finset.range n, (x k).card =
+  have hs : ∑ k < n, (x k).card =
       (x i).card + ((x j).card + ∑ k ∈ ((Finset.range n).erase i).erase j, (x k).card) := by
+    rw [Nat.Iio_eq_range]
     rw [← Finset.add_sum_erase _ _ (Finset.mem_range.mpr hi), ← Finset.add_sum_erase _ _ hj']
   have hu : (Finset.range n).biUnion x = x i ∪ x j ∪ (((Finset.range n).erase i).erase j).biUnion x := by
     ext a

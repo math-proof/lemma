@@ -59,7 +59,7 @@ private lemma exists_expansion
   (hQ0 : Q ≠ ⊥) (ht : t ∈ Q) (ht2 : t ∉ Q ^ 2)
   (hres : ∀ b : B, ∃ a : K, b - φ a ∈ Q) :
 -- imply
-    ∃ a : ℕ → K, b - ∑ i ∈ Finset.range k, φ (a i) * t ^ i ∈ Q ^ k := by
+    ∃ a : ℕ → K, b - ∑ i < k, φ (a i) * t ^ i ∈ Q ^ k := by
 -- proof
   induction k
   case zero =>
@@ -72,16 +72,20 @@ private lemma exists_expansion
     obtain ⟨b', rfl⟩ := Ideal.mem_span_singleton'.1 hu
     obtain ⟨c, hc⟩ := hres b'
     refine ⟨Function.update a k c, ?_⟩
+    simp only [Nat.Iio_eq_range]
     rw [Finset.sum_range_succ, Function.update_self]
-    have hsum : ∑ i ∈ Finset.range k, φ (Function.update a k c i) * t ^ i =
-        ∑ i ∈ Finset.range k, φ (a i) * t ^ i := by
+    have hsum : ∑ i < k, φ (Function.update a k c i) * t ^ i =
+        ∑ i < k, φ (a i) * t ^ i := by
+      simp only [Nat.Iio_eq_range]
       refine Finset.sum_congr rfl fun i hi => ?_
       rw [Function.update_of_ne (Finset.mem_range.1 hi).ne]
+    simp only [Nat.Iio_eq_range] at hsum
     rw [hsum]
-    have : b - (∑ i ∈ Finset.range k, φ (a i) * t ^ i + φ c * t ^ k) =
+    have : b - (∑ i < k, φ (a i) * t ^ i + φ c * t ^ k) =
         (b' - φ c) * t ^ k + w := by
-      have e : b - ∑ i ∈ Finset.range k, φ (a i) * t ^ i = b' * t ^ k + w := huw.symm
+      have e : b - ∑ i < k, φ (a i) * t ^ i = b' * t ^ k + w := huw.symm
       linear_combination e
+    simp only [Nat.Iio_eq_range] at this
     rw [this]
     refine Ideal.add_mem _ ?_ hw
     rw [pow_succ']
@@ -214,15 +218,15 @@ private lemma fibre_main
     let _ := hSprime' Q hQ
     obtain ⟨a, ha⟩ := exists_expansion Q (t Q) φ z (e Q) (hS0 Q hQ) (ht Q hQ) (ht2 Q hQ)
       (hres Q (hSmax Q hQ) (hIle Q hQ))
-    refine ⟨∑ i ∈ Finset.range (e Q), C (a i) * (X - C (cS Q)) ^ i, ?_⟩
-    have hev : (Polynomial.map C (∑ i ∈ Finset.range (e Q), C (a i) * (X - C (cS Q)) ^ i)).eval₂
-      (algebraMap K[X] B) y = ∑ i ∈ Finset.range (e Q), φ (a i) * (y - φ (cS Q)) ^ i := by
+    refine ⟨∑ i < (e Q), C (a i) * (X - C (cS Q)) ^ i, ?_⟩
+    have hev : (Polynomial.map C (∑ i < (e Q), C (a i) * (X - C (cS Q)) ^ i)).eval₂
+      (algebraMap K[X] B) y = ∑ i < (e Q), φ (a i) * (y - φ (cS Q)) ^ i := by
       rw [eval₂_map]
       simp only [eval₂_finsetSum, eval₂_mul, eval₂_C, eval₂_pow, eval₂_sub, eval₂_X]
       rfl
     rw [hev]
-    have hcong : (∑ i ∈ Finset.range (e Q), φ (a i) * t Q ^ i) -
-        ∑ i ∈ Finset.range (e Q), φ (a i) * (y - φ (cS Q)) ^ i ∈ Q ^ e Q := by
+    have hcong : (∑ i < (e Q), φ (a i) * t Q ^ i) -
+        ∑ i < (e Q), φ (a i) * (y - φ (cS Q)) ^ i ∈ Q ^ e Q := by
       rw [← Ideal.Quotient.eq]
       simp only [map_sum, map_mul, map_pow]
       refine Finset.sum_congr rfl fun i _ => ?_
@@ -230,10 +234,10 @@ private lemma fibre_main
       rw [Ideal.Quotient.eq]
       have : t Q - (y - φ (cS Q)) = -(y - (φ (cS Q) + t Q)) := by ring
       rw [this]; exact Submodule.neg_mem _ (hy Q hQ)
-    have : z - ∑ i ∈ Finset.range (e Q), φ (a i) * (y - φ (cS Q)) ^ i =
-        (z - ∑ i ∈ Finset.range (e Q), φ (a i) * t Q ^ i) +
-          ((∑ i ∈ Finset.range (e Q), φ (a i) * t Q ^ i) -
-            ∑ i ∈ Finset.range (e Q), φ (a i) * (y - φ (cS Q)) ^ i) := by ring
+    have : z - ∑ i < (e Q), φ (a i) * (y - φ (cS Q)) ^ i =
+        (z - ∑ i < (e Q), φ (a i) * t Q ^ i) +
+          ((∑ i < (e Q), φ (a i) * t Q ^ i) -
+            ∑ i < (e Q), φ (a i) * (y - φ (cS Q)) ^ i) := by ring
     rw [this]
     exact Ideal.add_mem _ ha hcong
   choose! qQ hqQ using hloc

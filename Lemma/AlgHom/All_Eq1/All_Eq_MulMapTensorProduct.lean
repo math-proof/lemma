@@ -34,10 +34,11 @@ scoped instance nontrivial_tensor : Nontrivial (L ⊗[K] F) :=
   (includeRight_injective' (K := K) (L := L) (F := F)).nontrivial
 
 private lemma list_prod_range_map {M : Type*} [CommMonoid M] (f : ℕ → M) (n : ℕ) :
-  ((List.range n).map f).prod = ∏ i ∈ Finset.range n, f i := by
+  ((List.range n).map f).prod = ∏ i < n, f i := by
   induction n with
   | zero => simp
   | succ n ih =>
+    simp only [Nat.Iio_eq_range] at ih ⊢
     rw [List.range_succ, List.map_append, List.prod_append, ih, Finset.prod_range_succ]
     simp
 
@@ -122,7 +123,7 @@ private lemma exists_one_tmul_eq_of_fixed (z : L ⊗[K] F) (hz : T F σ z = z) :
   obtain ⟨f, hf⟩ := himg w
   exact ⟨f, hf.trans hw⟩
 
-private lemma exists_units_of_norm_eq_one (x : L ⊗[K] F) (hx : ∏ i ∈ Finset.range (Module.finrank K L), Nat.iterate (⇑(T F σ)) i x = 1) : ∃ y : Units (L ⊗[K] F), x = T F σ (y : L ⊗[K] F) * ↑y⁻¹ := by
+private lemma exists_units_of_norm_eq_one (x : L ⊗[K] F) (hx : ∏ i < (Module.finrank K L), Nat.iterate (⇑(T F σ)) i x = 1) : ∃ y : Units (L ⊗[K] F), x = T F σ (y : L ⊗[K] F) * ↑y⁻¹ := by
   classical
   set n := Module.finrank K L with hn_def
   have hn : 0 < n := Module.finrank_pos
@@ -131,32 +132,32 @@ private lemma exists_units_of_norm_eq_one (x : L ⊗[K] F) (hx : ∏ i ∈ Finse
   have hsn : ∀ z, Nat.iterate (⇑s) n z = z := fun z => T_iterate_finrank σ hgen z
   have hxu : IsUnit x := by
     have h := hx
-    rw [hm, Finset.prod_range_succ'] at h
+    rw [hm, Nat.Iio_eq_range, Finset.prod_range_succ'] at h
     simp only [Function.iterate_zero, id_eq] at h
     exact IsUnit.of_mul_eq_one_right _ h
-  set a : ℕ → L ⊗[K] F := fun i => ∏ j ∈ Finset.range i, Nat.iterate (⇑s) j x with ha_def
+  set a : ℕ → L ⊗[K] F := fun i => ∏ j < i, Nat.iterate (⇑s) j x with ha_def
   have ha0 : a 0 = 1 := by simp [ha_def]
   have han : a n = 1 := hx
   have hasucc : ∀ i, a (i + 1) = x * s (a i) := by
     intro i
-    simp only [ha_def]
+    simp only [ha_def, Nat.Iio_eq_range]
     rw [Finset.prod_range_succ', map_prod]
     simp only [Function.iterate_zero, id_eq, Function.iterate_succ_apply']
     rw [mul_comm]
-  set Y : L ⊗[K] F → L ⊗[K] F := fun c => ∑ i ∈ Finset.range n, a i * Nat.iterate (⇑s) i c with hY_def
+  set Y : L ⊗[K] F → L ⊗[K] F := fun c => ∑ i < n, a i * Nat.iterate (⇑s) i c with hY_def
   have hY : ∀ c, x * s (Y c) = Y c := by
     intro c
-    have h1 : x * s (Y c) = ∑ i ∈ Finset.range n, a (i + 1) * Nat.iterate (⇑s) (i + 1) c := by
+    have h1 : x * s (Y c) = ∑ i < n, a (i + 1) * Nat.iterate (⇑s) (i + 1) c := by
       simp only [hY_def, map_sum, map_mul, Finset.mul_sum]
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [hasucc, Function.iterate_succ_apply']
       ring
-    have h2 : ∑ i ∈ Finset.range (n + 1), a i * Nat.iterate (⇑s) i c =
-        (∑ i ∈ Finset.range n, a (i + 1) * Nat.iterate (⇑s) (i + 1) c) + a 0 * Nat.iterate (⇑s) 0 c :=
-      Finset.sum_range_succ' _ _
-    have h3 : ∑ i ∈ Finset.range (n + 1), a i * Nat.iterate (⇑s) i c =
-        (∑ i ∈ Finset.range n, a i * Nat.iterate (⇑s) i c) + a n * Nat.iterate (⇑s) n c :=
-      Finset.sum_range_succ _ _
+    have h2 : ∑ i < (n + 1), a i * Nat.iterate (⇑s) i c =
+        (∑ i < n, a (i + 1) * Nat.iterate (⇑s) (i + 1) c) + a 0 * Nat.iterate (⇑s) 0 c :=
+      by simpa only [Nat.Iio_eq_range] using Finset.sum_range_succ' _ _
+    have h3 : ∑ i < (n + 1), a i * Nat.iterate (⇑s) i c =
+        (∑ i < n, a i * Nat.iterate (⇑s) i c) + a n * Nat.iterate (⇑s) n c :=
+      by simpa only [Nat.Iio_eq_range] using Finset.sum_range_succ _ _
     rw [h1]
     have h4 : a 0 * Nat.iterate (⇑s) 0 c = a n * Nat.iterate (⇑s) n c := by
       rw [ha0, han, hsn]; rfl
@@ -174,7 +175,7 @@ private lemma exists_units_of_norm_eq_one (x : L ⊗[K] F) (hx : ∏ i ∈ Finse
       (π.comp ((s ^ (i : ℕ)).toRingHom)).toMonoidHom
     have hχapply : ∀ (i : Fin n) (c : L ⊗[K] F), χ i c = π (Nat.iterate (⇑s) (i : ℕ) c) := by
       intro i c
-      simp only [χ, RingHom.toMonoidHom_eq_coe, MonoidHom.coe_coe, RingHom.coe_comp,
+      simp only [χ, RingHom.toMonoidHom_eq_coe, MonoidHom.coe_ofClass, RingHom.coe_comp,
         Function.comp_apply, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, AlgHom.coe_pow]
     have hχinj : Function.Injective χ := by
       intro i j hij
@@ -198,21 +199,21 @@ private lemma exists_units_of_norm_eq_one (x : L ⊗[K] F) (hx : ∏ i ∈ Finse
         Pi.zero_apply]
       rw [← Ideal.Quotient.eq_zero_iff_mem.mpr (hall c)]
       simp only [hY_def, map_sum, map_mul]
-      exact (Fin.sum_univ_eq_sum_range (fun i => π (a i) * π (Nat.iterate (⇑s) i c)) n)
+      simpa only [Nat.Iio_eq_range] using (Fin.sum_univ_eq_sum_range (fun i => π (a i) * π (Nat.iterate (⇑s) i c)) n)
     have h0 := hli (fun i => π (a i)) hcomb ⟨0, hn⟩
     simp only [ha0, map_one] at h0
     exact one_ne_zero h0
   obtain ⟨c₀, hc₀⟩ := hex
   set y := Y c₀ with hy_def
   have hyx : x * s y = y := hY c₀
-  set N : L ⊗[K] F → L ⊗[K] F := fun b => ∏ i ∈ Finset.range n, Nat.iterate (⇑s) i b with hN_def
+  set N : L ⊗[K] F → L ⊗[K] F := fun b => ∏ i < n, Nat.iterate (⇑s) i b with hN_def
   have hNfix : ∀ b, s (N b) = N b := by
     intro b
     have hlast : s (Nat.iterate (⇑s) m b) = b := by
       have := hsn b
       rwa [hm, Function.iterate_succ_apply'] at this
     simp only [hN_def, map_prod]
-    rw [hm, Finset.prod_range_succ, Finset.prod_range_succ', hlast]
+    rw [hm, Nat.Iio_eq_range, Finset.prod_range_succ, Finset.prod_range_succ', hlast]
     simp only [Function.iterate_zero, id_eq]
     congr 1
     refine Finset.prod_congr rfl fun i _ => ?_
@@ -223,7 +224,7 @@ private lemma exists_units_of_norm_eq_one (x : L ⊗[K] F) (hx : ∏ i ∈ Finse
       rwa [Ne, Ideal.span_singleton_eq_top]
     have hNy_mem : N y ∈ Ideal.span ({y} : Set (L ⊗[K] F)) := by
       simp only [hN_def]
-      rw [hm, Finset.prod_range_succ']
+      rw [hm, Nat.Iio_eq_range, Finset.prod_range_succ']
       simp only [Function.iterate_zero, id_eq]
       exact Ideal.mul_mem_left _ _ (Ideal.subset_span rfl)
     obtain ⟨f, hf⟩ := exists_one_tmul_eq_of_fixed σ hgen (N y) (hNfix y)

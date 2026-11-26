@@ -271,7 +271,7 @@ lemma natDegree_sum_C_X_pow_lt
 -- given
   (hm : 0 < m) :
 -- imply
-  (∑ j ∈ Finset.range m, C (c j) * X ^ j).natDegree < m :=
+  (∑ j < m, C (c j) * X ^ j).natDegree < m :=
 -- proof
   calc _ ≤ (Finset.range m).sup (fun j => (C (c j) * X ^ j).natDegree) :=
     natDegree_sum_le _ _

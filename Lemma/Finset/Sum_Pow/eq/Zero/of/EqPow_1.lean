@@ -15,14 +15,17 @@ private lemma main
   (hd : T ^ d = 1)
   (hdn : p * d ∣ n) :
 -- imply
-  ∑ i ∈ Finset.range n, T ^ i = 0 := by
+  ∑ i < n, T ^ i = 0 := by
 -- proof
   obtain ⟨c, rfl⟩ := hdn
-  have hblock : ∀ m : ℕ, ∑ i ∈ Finset.range (d * m), T ^ i = m • ∑ i ∈ Finset.range d, T ^ i := by
+  have hblock : ∀ m : ℕ, ∑ i < (d * m), T ^ i = m • ∑ i < d, T ^ i := by
     intro m
     induction m with
-    | zero => rw [mul_zero, Finset.sum_range_zero, zero_smul]
+    | zero =>
+      simp only [Nat.Iio_eq_range]
+      rw [mul_zero, Finset.sum_range_zero, zero_smul]
     | succ m ih =>
+      simp only [Nat.Iio_eq_range] at ih ⊢
       rw [mul_add, mul_one, Finset.sum_range_add, ih, add_smul, one_smul]
       congr 1
       refine Finset.sum_congr rfl fun i _ => ?_

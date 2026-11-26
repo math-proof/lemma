@@ -8,24 +8,26 @@ open Nat
 private lemma main
   {n : ℕ} :
 -- imply
-  n ‼ = ∏ i ∈ Finset.range ⌈(n : ℝ) / 2⌉₊, (n - 2 * i) := by
+  n ‼ = ∏ i < ⌈(n : ℝ) / 2⌉₊, (n - 2 * i) := by
 -- proof
-  have ev : ∀ m : ℕ, (2 * m) ‼ = ∏ i ∈ Finset.range m, (2 * m - 2 * i) := by
+  have ev : ∀ m : ℕ, (2 * m) ‼ = ∏ i < m, (2 * m - 2 * i) := by
     intro m
     induction m with
     | zero => rfl
     | succ m ih =>
+      simp only [Nat.Iio_eq_range] at ih ⊢
       rw [show 2 * (m + 1) = 2 * m + 2 by ring, Nat.doubleFactorial_add_two, ih, Finset.prod_range_succ']
       rw [mul_comm]
       congr 1
       · apply Finset.prod_congr rfl
         intro i _
         omega
-  have od : ∀ m : ℕ, (2 * m + 1) ‼ = ∏ i ∈ Finset.range (m + 1), (2 * m + 1 - 2 * i) := by
+  have od : ∀ m : ℕ, (2 * m + 1) ‼ = ∏ i < (m + 1), (2 * m + 1 - 2 * i) := by
     intro m
     induction m with
     | zero => rfl
     | succ m ih =>
+      simp only [Nat.Iio_eq_range] at ih ⊢
       rw [show 2 * (m + 1) + 1 = 2 * m + 1 + 2 by ring, Nat.doubleFactorial_add_two, ih, Finset.prod_range_succ' _ (m + 1)]
       rw [mul_comm]
       congr 1

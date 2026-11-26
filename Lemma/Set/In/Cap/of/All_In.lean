@@ -7,9 +7,9 @@ private lemma main
   {A : ℕ → Set α}
   {x : α}
 -- given
-  (h : ∀ k ∈ Finset.range n, x ∈ A k) :
+  (h : ∀ k < n, x ∈ A k) :
 -- imply
-  x ∈ ⋂ k ∈ Finset.range n, A k := by
+  x ∈ ⋂ k < n, A k := by
 -- proof
   simp only [Set.mem_iInter]
   exact h

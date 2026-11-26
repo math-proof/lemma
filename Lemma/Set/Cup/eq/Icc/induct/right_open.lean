@@ -5,13 +5,13 @@ import Initialize.Tactic.Attr.Basic
 private lemma main
   {n : ℕ} :
 -- imply
-  ⋃ k ∈ Finset.range n, Set.Ico (k : ℤ) ((k : ℤ) + 1) = Set.Ico (0 : ℤ) (n : ℤ) := by
+  ⋃ k < n, Set.Ico (k : ℤ) ((k : ℤ) + 1) = Set.Ico (0 : ℤ) (n : ℤ) := by
 -- proof
   induction n with
   | zero =>
     simp
   | succ n ih =>
-    rw [Finset.range_add_one, Finset.set_biUnion_insert, ih]
+    rw [Set.biUnion_lt_succ, ih]
     ext x
     simp only [Set.mem_union, Set.mem_Ico]
     omega

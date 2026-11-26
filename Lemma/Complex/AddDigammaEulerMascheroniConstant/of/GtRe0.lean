@@ -123,8 +123,9 @@ private lemma  T_add_one {x : ℝ} (hx : 0 < x) : T (x + 1) = T x + 1 / x := by
     linarith
   have hsum : HasSum (fun k : ℕ => b k - b (k + 1)) (1 / x) := by
     rw [hasSum_iff_tendsto_nat_of_nonneg hnn]
-    have e : (fun n : ℕ => ∑ i ∈ range n, (b i - b (i + 1))) = fun n => b 0 - b n :=
-      funext fun n => Finset.sum_range_sub' b n
+    simp only [← Nat.Iio_eq_range]
+    have e : (fun n : ℕ => ∑ i < n, (b i - b (i + 1))) = fun n => b 0 - b n :=
+      funext fun n => by simpa only [Nat.Iio_eq_range] using Finset.sum_range_sub' b n
     rw [e, ← hb0]
     have := (tendsto_const_nhds (x := b 0)).sub hbt
     simpa using this
@@ -136,15 +137,16 @@ private lemma  T_add_one {x : ℝ} (hx : 0 < x) : T (x + 1) = T x + 1 / x := by
     _ = ∑' k, rterm x k + ∑' k, (b k - b (k + 1)) := (summable_rterm hx).tsum_add hsum.summable
     _ = T x + 1 / x := by rw [hsum.tsum_eq]; rfl
 
-private lemma  T_add_nat {x : ℝ} (hx : 0 < x) (n : ℕ) : T (x + n) = T x + ∑ k ∈ range n, 1 / (x + k) := by
+private lemma  T_add_nat {x : ℝ} (hx : 0 < x) (n : ℕ) : T (x + n) = T x + ∑ k < n, 1 / (x + k) := by
   induction n with
   | zero => simp
   | succ n ih =>
     have hxn : 0 < x + n := by positivity
+    simp only [Nat.Iio_eq_range] at ih ⊢
     rw [Nat.cast_succ, ← add_assoc, T_add_one hxn, ih, Finset.sum_range_succ]
     ring
 
-private lemma  T_nat_succ (n : ℕ) : T ((n : ℝ) + 1) = ∑ k ∈ range n, 1 / ((k : ℝ) + 1) := by
+private lemma  T_nat_succ (n : ℕ) : T ((n : ℝ) + 1) = ∑ k < n, 1 / ((k : ℝ) + 1) := by
   have h := T_add_nat one_pos n
   rw [T_one, zero_add] at h
   rw [add_comm, h]
@@ -177,15 +179,16 @@ private lemma  ψ_one : ψ 1 = -Real.eulerMascheroniConstant := by
   rw [Function.comp_def, deriv.log (Real.differentiableAt_Gamma (ne_neg_nat one_pos)) (by positivity),
     Real.Gamma_one, div_one, Real.eulerMascheroniConstant_eq_neg_deriv, neg_neg]
 
-private lemma  ψ_add_nat {x : ℝ} (hx : 0 < x) (n : ℕ) : ψ (x + n) = ψ x + ∑ k ∈ range n, 1 / (x + k) := by
+private lemma  ψ_add_nat {x : ℝ} (hx : 0 < x) (n : ℕ) : ψ (x + n) = ψ x + ∑ k < n, 1 / (x + k) := by
   induction n with
   | zero => simp
   | succ n ih =>
     have hxn : 0 < x + n := by positivity
+    simp only [Nat.Iio_eq_range] at ih ⊢
     rw [Nat.cast_succ, ← add_assoc, ψ_add_one hxn, ih, Finset.sum_range_succ]
     ring
 
-private lemma  ψ_nat_succ (n : ℕ) : ψ ((n : ℝ) + 1) = -Real.eulerMascheroniConstant + ∑ k ∈ range n, 1 / ((k : ℝ) + 1) := by
+private lemma  ψ_nat_succ (n : ℕ) : ψ ((n : ℝ) + 1) = -Real.eulerMascheroniConstant + ∑ k < n, 1 / ((k : ℝ) + 1) := by
   have h := ψ_add_nat one_pos n
   rw [ψ_one] at h
   rw [add_comm, h]

@@ -7,19 +7,17 @@ private lemma main
   {x y : ℕ → α}
 -- given
   (h₀ : m < n)
-  (h₁ : ∀ i ∈ Finset.range n, x i = y i) :
+  (h₁ : ∀ i < n, x i = y i) :
 -- imply
-  ∀ i ∈ Finset.range m, x i = y i := by
+  ∀ i < m, x i = y i := by
 -- proof
   -- Introduce an arbitrary element `i` in the range up to `m`
   intro i hi
   -- Simplify the membership condition `hi` to `i < m`
-  simp at hi
   -- Use linear arithmetic to prove `i < n` from `i < m` and `m < n`
   have hi' : i < n := by linarith [h₀, hi]
   -- Apply the universal equality hypothesis `h₁` to `i` and the proof `i < n`
-  have h_Mem := In_Range.of.Lt hi'
-  exact h₁ i h_Mem
+  exact h₁ i hi'
 
 
 @[path]
@@ -28,9 +26,9 @@ private lemma is_constant
   {a : α}
 -- given
   (h₀ : m<n)
-  (h₁ : ∀ i ∈ Finset.range n, x i = a) :
+  (h₁ : ∀ i < n, x i = a) :
 -- imply
-  ∀ i ∈ Finset.range m, x i = a := by
+  ∀ i < m, x i = a := by
 -- proof
   let y := fun _ : ℕ => a
   have := main (y := y) h₀ h₁

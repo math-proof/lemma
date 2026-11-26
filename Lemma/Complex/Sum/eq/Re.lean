@@ -8,9 +8,10 @@ private lemma main
   {n : ℕ}
   {z : ℕ → ℂ} :
 -- imply
-  ∑ k ∈ Finset.range n, re (z k) = re (∑ k ∈ Finset.range n, z k) :=
+  ∑ k < n, re (z k) = re (∑ k < n, z k) := by
 -- proof
-  (Complex.re_sum _ _).symm
+  simpa only [Nat.Iio_eq_range] using (Complex.re_sum _ _).symm
 
 
 -- created on 2023-06-03
+-- updated on 2026-11-26

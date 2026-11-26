@@ -19,7 +19,7 @@ private lemma main
   (hA : ∀ n, Module.Finite k (A n)) (hQ : ∀ n, Module.Finite k (Q n))
   (M : ℕ) (hf0 : Function.Injective (f 0)) (hfM : Function.Injective (f M)) :
   -- imply
-  (∀ n, Module.Finite k (B n)) ∧ ∑ n ∈ Finset.range M, (-1 : ℤ) ^ n * (Module.finrank k (B n) : ℤ) = ∑ n ∈ Finset.range M, (-1 : ℤ) ^ n * (Module.finrank k (A n) : ℤ) + ∑ n ∈ Finset.range M, (-1 : ℤ) ^ n * (Module.finrank k (Q n) : ℤ) := by
+  (∀ n, Module.Finite k (B n)) ∧ ∑ n < M, (-1 : ℤ) ^ n * (Module.finrank k (B n) : ℤ) = ∑ n < M, (-1 : ℤ) ^ n * (Module.finrank k (A n) : ℤ) + ∑ n < M, (-1 : ℤ) ^ n * (Module.finrank k (Q n) : ℤ) := by
   -- proof
   have hB : ∀ n, Module.Finite k (B n) := by
     intro n
@@ -48,13 +48,14 @@ private lemma main
     have h4 : Module.finrank k (LinearMap.range (δ n)) = Module.finrank k (LinearMap.ker (f (n + 1))) := by
       rw [hδf n]
     omega
-  have tel : ∀ L : ℕ, ∑ n ∈ Finset.range L, (-1 : ℤ) ^ n * ((Module.finrank k (A n) : ℤ) - Module.finrank k (B n) + Module.finrank k (Q n)) = (Module.finrank k (LinearMap.ker (f 0)) : ℤ) - (-1 : ℤ) ^ L * Module.finrank k (LinearMap.ker (f L)) := by
+  have tel : ∀ L : ℕ, ∑ n < L, (-1 : ℤ) ^ n * ((Module.finrank k (A n) : ℤ) - Module.finrank k (B n) + Module.finrank k (Q n)) = (Module.finrank k (LinearMap.ker (f 0)) : ℤ) - (-1 : ℤ) ^ L * Module.finrank k (LinearMap.ker (f L)) := by
     intro L
     induction L
     ·
       simp
     ·
       rename_i L ih
+      try simp only [Nat.Iio_eq_range] at *
       rw [Finset.sum_range_succ, ih, key L, pow_succ]
       ring
   have hk0 : Module.finrank k (LinearMap.ker (f 0)) = 0 := by

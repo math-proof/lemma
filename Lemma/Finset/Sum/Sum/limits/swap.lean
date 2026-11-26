@@ -8,8 +8,8 @@ private lemma main
   (h : ℕ → ℝ)
   (g : ℕ → ℕ → ℝ) :
 -- imply
-  ∑ i ∈ Finset.range m, h i * ∑ j ∈ Finset.range n, g i j
-    = ∑ j ∈ Finset.range n, ∑ i ∈ Finset.range m, h i * g i j := by
+  (∑ i < m, h i * (∑ j < n, g i j))
+    = (∑ j < n, ∑ i < m, h i * g i j) := by
 -- proof
   simp_rw [Finset.mul_sum]
   exact Finset.sum_comm

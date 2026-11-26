@@ -8,11 +8,11 @@ private lemma main
   {x : ℤ}
   {A : ℕ → Set ℤ}
 -- given
-  (h : x ∉ ⋃ k ∈ Finset.range n, A k) :
+  (h : x ∉ ⋃ k < n, A k) :
 -- imply
   ∀ k < n, x ∉ A k := by
 -- proof
-  exact fun k hk hx => h (Set.mem_iUnion₂.mpr ⟨k, Finset.mem_range.mpr hk, hx⟩)
+  exact fun k hk hx => h (Set.mem_iUnion₂.mpr ⟨k, hk, hx⟩)
 
 
 -- created on 2020-09-09

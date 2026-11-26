@@ -7,7 +7,7 @@ private lemma main
   {n d : ℕ}
   {f : ℕ → ℝ → ℝ} :
 -- imply
-  Difference (fun x => ∑ i ∈ Finset.range n, f i x) d = fun x => ∑ i ∈ Finset.range n, Difference (f i) d x := by
+  Difference (fun x => ∑ i < n, f i x) d = fun x => ∑ i < n, Difference (f i) d x := by
 -- proof
   induction d with
   | zero =>

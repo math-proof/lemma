@@ -170,10 +170,10 @@ private lemma main
     rw [hf, hf]
     have h1 := htwist m b
     rw [h1, Matrix.mulVec_smul, Matrix.mulVec_mulVec, ← prodTwist_succ, pow_succ, mul_neg_one, neg_smul, neg_neg]
-  set y₀ : Fin d → S := ∑ m ∈ Finset.range M, f m with hy₀def
+  set y₀ : Fin d → S := ∑ m < M, f m with hy₀def
   have hy₀ : y₀ + D.mulVec (fun j => y₀ j ^ p) = b := by
     rw [hvec]
-    have hsum : ⇑σ ∘ y₀ = ∑ m ∈ Finset.range M, ⇑σ ∘ f m := by
+    have hsum : ⇑σ ∘ y₀ = ∑ m < M, ⇑σ ∘ f m := by
       funext j
       simp only [hy₀def, Function.comp_apply, Finset.sum_apply, map_sum]
     rw [hsum, ← Matrix.mulVecLin_apply, map_sum]
@@ -181,9 +181,10 @@ private lemma main
     rw [hy₀def, ← sub_eq_add_neg, ← Finset.sum_sub_distrib]
     have htel := Finset.sum_range_sub f M
     rw [hfM, hf0, zero_sub] at htel
-    have : ∑ m ∈ Finset.range M, (f m - f (m + 1)) = -∑ m ∈ Finset.range M, (f (m + 1) - f m) := by
+    have : ∑ m < M, (f m - f (m + 1)) = -∑ m < M, (f (m + 1) - f m) := by
       rw [← Finset.sum_neg_distrib]
       exact Finset.sum_congr rfl fun m _ => (neg_sub _ _).symm
+    try simp only [Nat.Iio_eq_range] at *
     rw [this, htel, neg_neg]
   refine ⟨y₀, hy₀, fun y hy => ?_⟩
   have hy' : y + D.mulVec (⇑σ ∘ y) = b := by

@@ -12,9 +12,9 @@ private lemma vandermonde_col_transform
   ((Matrix.of fun (i : Fin (m - d)) (j : Fin m) => ((j : ℝ) + δ) ^ (i : ℕ)) *
     (Matrix.of fun (i : Fin m) (j : Fin (m - d)) =>
       (-l) ^ ((d : ℤ) + (j : ℕ) - (i : ℕ)) * (if (j : ℕ) ≤ i then (d.choose ((i : ℕ) - j) : ℝ) else 0))).det =
-    (1 - l) ^ (d * (m - d)) * ∏ i ∈ Finset.range (m - d), (i ! : ℝ) :=
+    (1 - l) ^ (d * (m - d)) * ∏ i < (m - d), (i ! : ℝ) :=
 -- proof
-  DetMulOfPowAddOfPowNegChoose.eq.MulPowSub1Prod
+  by simpa only [Nat.Iio_eq_range] using DetMulOfPowAddOfPowNegChoose.eq.MulPowSub1Prod
 
 
 -- created on 2026-09-27

@@ -14,8 +14,9 @@ private lemma ordered_has_sum_iff
   (a : ℝ) :
 -- imply
   OrderedHasSum f a ↔
-    Filter.Tendsto (fun N => ∑ n ∈ Finset.range N, f n) Filter.atTop (nhds a) := by
+    Filter.Tendsto (fun N => ∑ n < N, f n) Filter.atTop (nhds a) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply Series.RiemannRearrangementWanted.orderedHasSum_iff f a
 
 /--
@@ -30,6 +31,7 @@ private lemma ordered_has_sum_tendsto_zero_is
 -- imply
   Filter.Tendsto f Filter.atTop (nhds 0) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply Series.RiemannRearrangementWanted.orderedHasSum_tendsto_zero f s h
 
 /--
@@ -45,6 +47,7 @@ private lemma riemann_rearrangement_is
 -- imply
   ∃ e : Equiv.Perm ℕ, OrderedHasSum (fun n => f (e n)) a := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply Series.RiemannRearrangementWanted.riemann_rearrangement f hf hfa a
 
 -- created on 2026-10-10

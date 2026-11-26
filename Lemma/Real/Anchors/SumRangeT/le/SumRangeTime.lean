@@ -12,11 +12,13 @@ private lemma main
   {anc : Anchors α}
   {m : ℕ} :
 -- imply
-  ∑ k ∈ range m, anc.T k ≤ ∑ k ∈ range (anc.t m), α k := by
+  ∑ k < m, anc.T k ≤ ∑ k < (anc.t m), α k := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   induction m with
   | zero => simp [(Real.Anchors.Time0.eq.Zero anc)]
   | succ m ih =>
+    try simp only [Nat.Iio_eq_range] at *
     have h := Real.Anchors.T.le.β (anc := anc) (n := m)
     unfold Anchors.β at h
     rw [sum_range_succ, range_eq_Ico, range_eq_Ico,

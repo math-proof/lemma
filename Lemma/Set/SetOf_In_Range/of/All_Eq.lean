@@ -7,10 +7,11 @@ private lemma main
   {n : ℕ}
   {f g : ℕ → α}
 -- given
-  (h : ∀ i ∈ range n, f i = g i) :
+  (h : ∀ i < n, f i = g i) :
 -- imply
   {f i | i ∈ range n} = {g i | i ∈ range n} := by
 -- proof
+  try simp only [← Finset.mem_range] at *
   apply Set.image_congr
   intro i hi
   apply h

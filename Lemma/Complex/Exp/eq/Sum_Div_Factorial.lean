@@ -12,10 +12,11 @@ private lemma maclaurin
 -- given
   (x : ℂ) :
 -- imply
-  exp x = lim[N → ∞] ∑ n ∈ range N, x ^ n / (n !) := by
+  exp x = lim[N → ∞] ∑ n < N, x ^ n / (n !) := by
 -- proof
   have h := (NormedSpace.expSeries_div_hasSum_exp x).tendsto_sum_nat
-  simpa [Exp.exp, Complex.exp_eq_exp_ℂ] using h.limUnder_eq.symm
+  simpa [Exp.exp, Complex.exp_eq_exp_ℂ, Nat.Iio_eq_range] using h.limUnder_eq.symm
 
 
 -- created on 2026-08-19
+-- updated on 2026-11-26

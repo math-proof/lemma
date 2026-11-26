@@ -6,8 +6,9 @@ open Nat
 private lemma main
   {n : ℕ} :
 -- imply
-  ∏ i ∈ Finset.range n, (n - i) = n ! := by
+  ∏ i < n, (n - i) = n ! := by
 -- proof
+  simp only [Nat.Iio_eq_range]
   rw [← Finset.prod_range_add_one_eq_factorial, ← Finset.prod_range_reflect (fun j => j + 1) n]
   refine Finset.prod_congr rfl fun i hi => ?_
   have := Finset.mem_range.mp hi
@@ -15,3 +16,4 @@ private lemma main
 
 
 -- created on 2022-01-15
+-- updated on 2026-11-26

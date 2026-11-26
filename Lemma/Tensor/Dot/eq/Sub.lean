@@ -11,6 +11,7 @@ private lemma main
 -- imply
   (A + B)⁻¹ * B = 1 - (A + B)⁻¹ * A := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   rw [eq_sub_iff_add_eq, ← Matrix.mul_add, add_comm B A, Matrix.nonsing_inv_mul _ h]
 
 
@@ -19,8 +20,9 @@ private lemma push
   {i j k : ℕ}
   {L H : ℕ → ℕ → ℝ} :
 -- imply
-  ∑ t ∈ Finset.range k, L i t * H j t = ∑ t ∈ Finset.range (k + 1), L i t * H j t - L i k * H j k := by
+  ∑ t < k, L i t * H j t = ∑ t < (k + 1), L i t * H j t - L i k * H j k := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   rw [Finset.sum_range_succ]
   ring
 

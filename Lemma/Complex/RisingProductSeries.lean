@@ -15,10 +15,10 @@ private lemma summable_neg_pow_mul_pow_div_prod_add_mul_eq
   (x : ℂ) :
 -- imply
   Summable (fun j : ℕ =>
-    (-b) ^ j * x ^ (j + 1) / ∏ r ∈ Finset.range (j + 1), (c + b * ((r + 1 : ℕ) : ℂ))) :=
+    (-b) ^ j * x ^ (j + 1) / ∏ r < j + 1, (c + b * ((r + 1 : ℕ) : ℂ))) := by
 -- proof
-  summable_neg_pow_mul_pow_div_prod_add_mul x hc
+  simpa only [Nat.Iio_eq_range] using summable_neg_pow_mul_pow_div_prod_add_mul x hc
 
 
 -- created on 2026-10-11
--- updated on 2026-11-22
+-- updated on 2026-11-26

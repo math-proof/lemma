@@ -9,8 +9,8 @@ private lemma main
   (f : ℕ → α)
   (g : ℕ → ℕ → α) :
 -- imply
-  ∑ i ∈ range m, ∑ j ∈ range n, f i * g i j =
-    ∑ j ∈ range n, ∑ i ∈ range m, f i * g i j := by
+  ∑ i < m, ∑ j < n, f i * g i j =
+    ∑ j < n, ∑ i < m, f i * g i j := by
 -- proof
   rw [Finset.sum_comm]
 

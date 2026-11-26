@@ -8,8 +8,9 @@ private lemma main
 -- given
   (h₀ : ∀ k, k < m → I k = 0) :
 -- imply
-  ∑ k ∈ Finset.range m, I k = 0 := by
+  ∑ k < m, I k = 0 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   refine Finset.sum_eq_zero ?_
   intro k hk
   exact h₀ k (Finset.mem_range.mp hk)

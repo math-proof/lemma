@@ -9,10 +9,11 @@ private lemma main
   {x : ℕ → α}
   {f : α → β}
 -- given
-  (h : ∀ i ∈ Finset.range n, y ≠ x i) :
+  (h : ∀ i < n, y ≠ x i) :
 -- imply
   ∑ t ∈ (Finset.range n).image x, f t = ∑ t ∈ (Finset.range n).image x ∪ {y}, f t - f y := by
 -- proof
+  try simp only [← Finset.mem_range] at *
   have hy : y ∉ (Finset.range n).image x := by
     simp only [Finset.mem_image, not_exists, not_and]
     intro i hi e
@@ -27,10 +28,11 @@ private lemma double_limits
   {a : ℕ → α}
   {f : α → β}
 -- given
-  (h : ∀ i ∈ Finset.range n, ∀ j ∈ Finset.range i, a i ≠ a j) :
+  (h : ∀ i < n, ∀ j < i, a i ≠ a j) :
 -- imply
-  ∑ x ∈ (Finset.range n).image a, f x = ∑ i ∈ Finset.range n, f (a i) := by
+  ∑ x ∈ (Finset.range n).image a, f x = ∑ i < n, f (a i) := by
 -- proof
+  try simp only [Nat.Iio_eq_range, ← Finset.mem_range] at *
   apply Finset.sum_image
   intro i hi j hj e
   simp only [Finset.coe_range, Set.mem_Iio] at hi hj

@@ -8,11 +8,11 @@ private lemma main
   {f g : ℕ → ℝ}
 -- given
   (h₀ : n > 0)
-  (h : ∀ i ∈ Finset.range n, f i > g i) :
+  (h : ∀ i < n, f i > g i) :
 -- imply
-  ∑ i ∈ Finset.range n, f i > ∑ i ∈ Finset.range n, g i := by
+  ∑ i < n, f i > ∑ i < n, g i := by
 -- proof
-  exact Finset.sum_lt_sum_of_nonempty ⟨0, Finset.mem_range.mpr h₀⟩ h
+  exact Finset.sum_lt_sum_of_nonempty ⟨0, by simpa using h₀⟩ (fun i hi => h i (by simpa using hi))
 
 
 -- created on 2019-01-22

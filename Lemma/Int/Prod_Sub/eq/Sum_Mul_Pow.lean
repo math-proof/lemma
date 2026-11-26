@@ -11,8 +11,9 @@ private lemma main
   (x : α)
   (t : Fin n → α) :
 -- imply
-  ∏ i : Fin n, (x - t i) = ∑ k ∈ range (n + 1), (-1) ^ k * (∑ s ∈ Finset.univ.powersetCard k, ∏ i ∈ s, t i) * x ^ (n - k) := by
+  ∏ i : Fin n, (x - t i) = ∑ k < n + 1, (-1) ^ k * (∑ s ∈ Finset.univ.powersetCard k, ∏ i ∈ s, t i) * x ^ (n - k) := by
 -- proof
+  simp only [Nat.Iio_eq_range]
   have hpoly := Multiset.prod_X_sub_X_eq_sum_esymm ((Finset.univ : Finset (Fin n)).val.map t)
   have hcard : Multiset.card ((Finset.univ : Finset (Fin n)).val.map t) = n := by
     simp
@@ -31,4 +32,4 @@ private lemma main
 
 
 -- created on 2018-11-15
--- updated on 2026-10-26
+-- updated on 2026-11-26

@@ -7,22 +7,23 @@ private lemma main
   (r : ℕ)
   (x : ℝ) :
 -- imply
-  ∑ n ∈ Finset.range (r + 1), (n : ℝ) * (r.choose n : ℝ) * x ^ n =
+  (∑ n < (r + 1), (n : ℝ) * (r.choose n : ℝ) * x ^ n) =
     (r : ℝ) * x * (1 + x) ^ (r - 1) := by
 -- proof
   cases r with
   | zero =>
-    simp
+    simp [Nat.Iio_eq_range]
   | succ r =>
-    rw [Finset.sum_range_succ']
+    rw [Nat.Iio_eq_range, Finset.sum_range_succ', ← Nat.Iio_eq_range]
     simp only [Nat.choose_zero_right, Nat.cast_zero, zero_mul, add_zero, Nat.add_sub_cancel]
-    have hpow : ∑ k ∈ Finset.range (r + 1), (r.choose k : ℝ) * x ^ k = (1 + x) ^ r := by
+    have hpow : (∑ k < (r + 1), (r.choose k : ℝ) * x ^ k) = (1 + x) ^ r := by
       rw [show (1 + x) ^ r = (x + 1) ^ r by ring, add_pow]
+      rw [Nat.Iio_eq_range]
       apply Finset.sum_congr rfl
       intro n hn
       simp [mul_comm]
     calc
-      _ = ∑ k ∈ Finset.range (r + 1), (r + 1 : ℝ) * (r.choose k : ℝ) * x ^ (k + 1) := by
+      _ = ∑ k < (r + 1), (r + 1 : ℝ) * (r.choose k : ℝ) * x ^ (k + 1) := by
         apply Finset.sum_congr rfl
         intro k hk
         have hnat : (k + 1) * (r + 1).choose (k + 1) = (r + 1) * r.choose k := by
@@ -30,7 +31,7 @@ private lemma main
           exact (Nat.add_one_mul_choose_eq r k).symm
         rw [show ((k + 1 : ℕ) : ℝ) * ((r + 1).choose (k + 1) : ℝ) =
           (r + 1 : ℝ) * (r.choose k : ℝ) by exact_mod_cast hnat]
-      _ = (r + 1 : ℝ) * x * ∑ k ∈ Finset.range (r + 1), (r.choose k : ℝ) * x ^ k := by
+      _ = (r + 1 : ℝ) * x * ∑ k < (r + 1), (r.choose k : ℝ) * x ^ k := by
         have hterm (k : ℕ) : (r + 1 : ℝ) * (r.choose k : ℝ) * x ^ (k + 1) = (r + 1 : ℝ) * x * ((r.choose k : ℝ) * x ^ k) := by
           rw [pow_succ]
           ring

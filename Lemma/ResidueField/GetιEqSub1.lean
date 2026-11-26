@@ -171,13 +171,15 @@ private lemma main
         rintro rfl
         rw [pow_zero] at hi
         exact hμ'.ne_one hq1 hi.symm
-      set g : A := ∑ j ∈ Finset.range i, (algebraMap (cyclInt q) A z) ^ j with hg
+      set g : A := ∑ j < i, (algebraMap (cyclInt q) A z) ^ j with hg
       have hgeom : ϖ * g = 1 - μ := by
         rw [hϖz, ← hi, hg]
         have := geom_sum_mul (algebraMap (cyclInt q) A z) i
+        try simp only [Nat.Iio_eq_range] at *
         linear_combination (-1 : A) * this
       have hgu : IsUnit g := by
         by_contra hng
+        try simp only [Nat.Iio_eq_range] at *
         have hgm : g ∈ IsLocalRing.maximalIdeal A := (IsLocalRing.mem_maximalIdeal _).mpr hng
         have hres : IsLocalRing.residue A g = (i : IsLocalRing.ResidueField A) := by
           rw [hg, map_sum]

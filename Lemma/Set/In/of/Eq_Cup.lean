@@ -19,7 +19,7 @@ private lemma main
   rw [h₂] at h₀
   have h₃ : X.card ≤ n := calc
     _ = ((Finset.range n).biUnion fun k ↦ ({b k} : Finset ℝ)).card := by rw [h₀]
-    _ ≤ ∑ k ∈ Finset.range n, ({b k} : Finset ℝ).card := Finset.card_biUnion_le
+    _ ≤ ∑ k < n, ({b k} : Finset ℝ).card := by rw [Nat.Iio_eq_range]; exact Finset.card_biUnion_le
     _ = n := by simp
   omega
 

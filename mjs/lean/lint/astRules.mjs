@@ -9,7 +9,7 @@ import '../../../js/py.js';
 import { compile, Lean, LeanModule } from '../../../js/parser/lean.js';
 
 /** rule ids implemented here; their text-scan versions only run when the AST is unavailable */
-export const AST_RULES = new Set(['have-inline-once', 'have-underscore', 'given-prop-first', 'given-prop-consecutive', 'given-implicit-dep', 'tactic-haveI', 'tactic-letI', 'calc-after-assign', 'decl-keyword-dir', 'public-section', 'paren-getelem', 'fin-index-val', 'paren-apparg', 'paren-redundant-type', 'paren-redundant-sum-sub', 'paren-redundant-pow', 'paren-redundant-arith', 'paren-redundant-ascription', 'prefer-unicode-type', 'prefer-unicode-pow', 'literal-left-comparison', 'dot-notation']);
+export const AST_RULES = new Set(['have-inline-once', 'have-underscore', 'given-prop-first', 'given-prop-consecutive', 'given-implicit-dep', 'tactic-haveI', 'tactic-letI', 'calc-after-assign', 'decl-keyword-dir', 'public-section', 'paren-getelem', 'fin-index-val', 'paren-apparg', 'paren-redundant-type', 'paren-redundant-sum-sub', 'paren-redundant-pow', 'paren-redundant-binder', 'paren-redundant-arith', 'paren-redundant-ascription', 'prefer-unicode-type', 'prefer-unicode-pow', 'range-binder', 'literal-left-comparison', 'dot-notation']);
 
 /**
  * Term forms whose parentheses are load-bearing inside an ascription: `(fun y => F y : T)`
@@ -714,6 +714,108 @@ function literalLeftComparison(ctx, node) {
 }
 
 /**
+ * `range-binder`: a `Finset.range` binder is written with the `<` binder, for big operators and for
+ * quantifiers:
+ *
+ *   ∑ i ∈ Finset.range n, f i  →  ∑ i < n, f i      (likewise `∏`, `⋃`, `⋂`, `⨆`, `⨅`)
+ *   ∀ i ∈ Finset.range n, P i  →  ∀ i < n, P i      (likewise `∃`, `∃!`)
+ *
+ * The `<` form is real notation on both sides: Mathlib's `processBigOpBinder`
+ * (`Mathlib/Algebra/BigOperators/Group/Finset/Defs.lean`) maps the big-operator `<` binder to
+ * `Finset.Iio n` (and `≤` to `Iic`, …), Lean core's `binderPred` notation
+ * (`Init/BinderPredicates.lean`) gives `∀ x < n, …` / `∃ x < n, …` their implication / conjunction
+ * form, and Mathlib's `∃!` notation (`Mathlib/Basic/ExistsUnique.lean`) supports any
+ * `binder_predicate`, so all of `∑` / `∏` / `⋃` / `⋂` / `⨆` / `⨅` / `∀` / `∃` / `∃!` are covered.
+ *
+ * WARNING ONLY, no `--fix`: the `<` form is only propositionally equal to the `Finset.range` form,
+ * never `rfl`, so a syntax-only rewrite changes the elaborated term and can break proofs:
+ * - big operator: `<` elaborates to `Finset.Iio n`, and `Nat.Iio_eq_range : Iio n = range n` is
+ *   propositional, so e.g. `rw [AddSumS]` on a lemma stated with `range` finds no occurrence after
+ *   the rewrite; converting needs `simp only [Nat.Iio_eq_range]` before the `rw`.
+ * - quantifier: `∀ x ∈ s` is membership form (an explicit `→`), `∀ x < n` is implication form; a
+ *   proof that feeds the hypothesis to a lemma expecting `∀ x ∈ s` (e.g. `Finset.sum_congr rfl h`)
+ *   needs a bridge such as `fun i hi => h i (by simpa using hi)`.
+ *
+ * Only a literal `Finset.range <arg>` binder set is matched (also the unqualified `range <arg>`): a
+ * set difference (`Finset.range n \ {i}`), `Ico` / `Iic` / `Ioi`, `Set.range`, and `Finset.range`
+ * used as a plain term are not flagged. `∑'` (tsum) and `∫` are excluded because their notation has
+ * no `<` binder, so the suggestion would not parse. Not an AGENTS.md rule (user request).
+ */
+const RANGE_BINDER_OPS = new Set(['∑', '∏', '⋃', '⋂', '⨆', '⨅', '∀', '∃', '∃!']);
+
+/** the argument of `Finset.range n` / `range n` (one parenthesis pair peeled), or null */
+function rangeBinderArgument(node) {
+    const { LeanParenthesis, LeanArgsSpaceSeparated, LeanProperty, LeanToken } = Lean.classes;
+    const peel = (n) => {
+        let x = n;
+        while (x instanceof LeanParenthesis) x = x.arg ?? x.args?.[0];
+        return x;
+    };
+    const app = peel(node);
+    if (!(app instanceof LeanArgsSpaceSeparated) || app.args.length !== 2) return null;
+    const head = peel(app.args[0]);
+    const isRange =
+        (head instanceof LeanToken && head.text === 'range') ||
+        (head instanceof LeanProperty &&
+            head.lhs instanceof LeanToken && head.lhs.text === 'Finset' &&
+            head.rhs instanceof LeanToken && head.rhs.text === 'range');
+    return isRange ? peel(app.args[1]) : null;
+}
+
+/** binder slots of a big operator / quantifier: `i ∈ s`, or a group `(i ∈ s) (j ∈ t)` */
+function* binderSlots(bound) {
+    const { LeanParenthesis, LeanBrace, LeanBracket, LeanArgsSpaceSeparated } = Lean.classes;
+    if (!bound) return;
+    if (bound instanceof LeanArgsSpaceSeparated) {
+        for (const part of bound.args) {
+            if (isTrivia(part)) continue;
+            yield* binderSlots(part);
+        }
+        return;
+    }
+    if (bound instanceof LeanParenthesis || bound instanceof LeanBrace || bound instanceof LeanBracket) {
+        yield* binderSlots(bound.arg ?? bound.args?.[0]);
+        return;
+    }
+    yield bound;
+}
+
+function rangeBinder(ctx, node) {
+    const { LeanBigOperator, Lean_in } = Lean.classes;
+    if (!(node instanceof LeanBigOperator)) return;
+    const op = node.operator;
+    if (!RANGE_BINDER_OPS.has(op)) return;
+    const hits = [];
+    for (const slot of binderSlots(node.bound)) {
+        if (!(slot instanceof Lean_in)) continue;
+        const arg = rangeBinderArgument(slot.rhs);
+        if (arg) hits.push({ slot, arg });
+    }
+    if (!hits.length) return;
+    // lean.js does not lex `"…"` as a string literal, so text inside a string parses as code (a
+    // `"∑ i ∈ Finset.range n, f i"` mention reaches the tree as a big operator whose reprint keeps
+    // the closing quote: `∑ i ∈ Finset.range n, f i "`). Such a reprint contains `"`; a real binder
+    // written by hand does not, so skip those parser artifacts. (Mentions in comments are comment
+    // nodes already, never big operators / quantifiers.)
+    if (String(node).includes('"')) return;
+    const norm = (s) => s.replace(/\s+/g, ' ').replace(/^\s+|\s+$/g, '');
+    const before = norm(String(node.bound));
+    let after = before;
+    for (const { slot, arg } of hits) {
+        const from = norm(String(slot));
+        const to = `${norm(String(slot.lhs))} < ${norm(String(arg))}`;
+        if (after.includes(from)) after = after.replace(from, to);
+    }
+    // quote just the operator + binder (not the whole body: the body may be formatted over several lines,
+    // and the truncated one-line reprint of the full statement is often not findable in the source).
+    // `sequential` finds the n-th identical spelling in the comment/string-blanked source: the tree is in
+    // source order, so a file with many equal `∑ k ∈ Finset.range (m + 1)` binders still gets correct lines.
+    ctx.warnAst('range-binder', node,
+        `\`${op} ${before}\` → \`${op} ${after}\`: a \`Finset.range\` binder is written with \`<\``,
+        1, null, `${op} ${before}`, null, true);
+}
+
+/**
  * `(h : (T))`: the type of an explicit binder is already a complete term; an outer parenthesis
  * pair around it is redundant against the binder's closing `)` (`(hMs : (sup[…] e < ∞))` →
  * `(hMs : sup[…] e < ∞)`). Keep ascriptions `(e : τ)`, tuples, and `·` sections. Not an AGENTS.md
@@ -901,6 +1003,48 @@ function sameShape(a, b) {
     if (ax.length !== ay.length) return false;
     for (let i = 0; i < ax.length; i++) if (!sameShape(ax[i], ay[i])) return false;
     return true;
+}
+
+/**
+ * `∀ (k : ℕ), p k` → `∀ k : ℕ, p k`, and likewise `∃ (k : ℕ), p k` → `∃ k : ℕ, p k`
+ * and `fun (k : ℕ) => k` → `fun k : ℕ => k`: a single explicitly typed binder needs no
+ * parentheses — `∀` / `∃` bind the annotation up to the comma, and `fun` up to `=>`.
+ * Only the single-binder form is rewritten: `∀ (x : α) (y : β), b` / `∃ (x : α) (y : β), p` /
+ * `fun (x : α) (y : β) => b` must keep their parens (dropping them changes the parse,
+ * `α y : β`), so a multi-binder `LeanArgsSpaceSeparated` is left alone.
+ * `∀ (x y : α), b` is one binder group and becomes `∀ x y : α, b`.
+ * Untyped binders and binders with `∈` are out of scope. Not an AGENTS.md rule (user request).
+ */
+function parenRedundantBinder(ctx, node) {
+    const { Lean_forall, Lean_exists, Lean_fun, LeanParenthesis, LeanColon, LeanToken, LeanArgsSpaceSeparated, LeanRightarrow } = Lean.classes;
+    let bound;
+    // `∀` / `∃` keep the binder in `bound`; a lambda keeps it on the left of its arrow
+    if (node instanceof Lean_forall || node instanceof Lean_exists) bound = node.bound;
+    else if (node instanceof Lean_fun) {
+        const arrow = node.arg;
+        if (!(arrow instanceof LeanRightarrow)) return;
+        bound = arrow.lhs;
+    } else return;
+    // exactly one binder, written `(names : type)`; several binder groups (`∀ (x : α) (y : β)`)
+    // are a LeanArgsSpaceSeparated and stay parenthesized
+    if (!(bound instanceof LeanParenthesis)) return;
+    const colon = bound.arg;
+    if (!(colon instanceof LeanColon)) return;
+    // binder names must be bare identifiers (`(x : α)` / `(x y : α)`); other shapes keep their parens
+    const names = colon.lhs instanceof LeanArgsSpaceSeparated ? colon.lhs.args : [colon.lhs];
+    if (!names.length || !names.every((n) => n instanceof LeanToken)) return;
+    if (typeof bound.latexParenRequired === 'function' && bound.latexParenRequired()) return;
+    const full = String(node).replace(/\s+$/, '');
+    const boundText = String(bound);
+    const at = full.indexOf(boundText);
+    // the reprint must show the binder verbatim, or the suggestion cannot be spelled exactly
+    if (at < 0) return;
+    const before = full.replace(/\s+/g, ' ').trim();
+    const after = (full.slice(0, at) + String(colon) + full.slice(at + boundText.length)).replace(/\s+/g, ' ').trim();
+    const show = (s) => (s.length > 80 ? `${s.slice(0, 77)}…` : s);
+    ctx.warnAst('paren-redundant-binder', node,
+        `\`${show(before)}\` → \`${show(after)}\`: redundant parentheses around a typed binder`,
+        2);
 }
 
 function parenRedundantArith(ctx, node) {
@@ -1362,10 +1506,12 @@ export function astRules(ctx, tree) {
             parenRedundantType(sink, node);
             parenRedundantSumSub(sink, node);
             parenRedundantPow(sink, node);
+            parenRedundantBinder(sink, node);
             parenRedundantArith(sink, node);
             parenRedundantAscription(sink, node);
             preferUnicodeType(sink, node);
             preferUnicodePow(sink, node);
+            rangeBinder(sink, node);
         }
     }
     found.sort((a, b) => order.get(a.node) - order.get(b.node));

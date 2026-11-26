@@ -9,9 +9,10 @@ private lemma main
   {x : ℝ}
   {f : ℕ → ℝ → ℂ} :
 -- imply
-  re (∑ k ∈ Finset.range n, f k x) = ∑ k ∈ Finset.range n, re (f k x) := by
+  re (∑ k < n, f k x) = ∑ k < n, re (f k x) := by
 -- proof
-  exact Complex.re_sum _ _
+  simpa only [Nat.Iio_eq_range] using Complex.re_sum _ _
 
 
 -- created on 2023-10-02
+-- updated on 2026-11-26

@@ -1,5 +1,6 @@
 import Initialize.Tactic.Attr.Basic
 import Lemma.Bool.All.of.All.limits.domain_defined.given
+open Bool
 
 
 @[path]
@@ -7,16 +8,14 @@ private lemma main
   {m n : ℕ}
   {p : ℕ → Prop}
 -- given
-  (h : ∀ i ∈ Finset.range m, p i) :
+  (h : ∀ i < m, p i) :
 -- imply
-  ∀ i ∈ Finset.range (min m n), p i := by
+  ∀ i < min m n, p i := by
 -- proof
   intro i hi
-  simp only [Finset.mem_range, lt_min_iff] at hi
-  exact h i (Finset.mem_range.mpr hi.1)
-
-
+  simp only [lt_min_iff] at hi
+  exact h i hi.1
 
 
 -- created on 2024-06-25
--- updated on 2026-11-24
+-- updated on 2026-11-26

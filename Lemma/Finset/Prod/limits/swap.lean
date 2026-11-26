@@ -8,8 +8,8 @@ private lemma main
   (f : ℕ → ℝ)
   (g : ℕ → ℕ → ℝ) :
 -- imply
-  ∏ i ∈ Finset.range m, ∏ j ∈ Finset.range n, (f i + g i j)
-    = ∏ j ∈ Finset.range n, ∏ i ∈ Finset.range m, (f i + g i j) :=
+  ∏ i < m, ∏ j < n, (f i + g i j)
+    = ∏ j < n, ∏ i < m, (f i + g i j) :=
 -- proof
   Finset.prod_comm
 

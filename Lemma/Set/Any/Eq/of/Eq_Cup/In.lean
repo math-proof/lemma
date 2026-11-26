@@ -12,8 +12,9 @@ private lemma main
   (h : X = (Finset.range X.card).image a)
   (hx : x ∈ X) :
 -- imply
-  ∃ i ∈ Finset.range X.card, a i = x := by
+  ∃ i < X.card, a i = x := by
 -- proof
+  try simp only [← Finset.mem_range] at *
   rw [h] at hx
   obtain ⟨i, hi, rfl⟩ := Finset.mem_image.mp hx
   exact ⟨i, hi, rfl⟩

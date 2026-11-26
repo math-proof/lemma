@@ -16,6 +16,7 @@ private lemma generalized_hypergeometric_coefficient_zero_eq
 -- imply
   generalizedHypergeometricCoefficient a b 0 = 1 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply MetaMathlibExt.GeneralizedHypergeometric.generalizedHypergeometricCoefficient_zero a b
 
 /--
@@ -30,6 +31,7 @@ private lemma generalized_hypergeometric_coefficient_empty_eq
 -- imply
   generalizedHypergeometricCoefficient (0 : Multiset K) 0 n = (n.factorial : K)⁻¹ := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply MetaMathlibExt.GeneralizedHypergeometric.generalizedHypergeometricCoefficient_empty n
 
 /--
@@ -47,6 +49,7 @@ private lemma generalized_hypergeometric_coefficient_cons_upper_eq
   generalizedHypergeometricCoefficient (Multiset.cons x a) b n =
     (ascPochhammer K n).eval x * generalizedHypergeometricCoefficient a b n := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply MetaMathlibExt.GeneralizedHypergeometric.generalizedHypergeometricCoefficient_cons_upper x a b n
 
 /--
@@ -64,6 +67,7 @@ private lemma generalized_hypergeometric_coefficient_cons_lower_eq
   generalizedHypergeometricCoefficient a (Multiset.cons x b) n =
     generalizedHypergeometricCoefficient a b n * ((ascPochhammer K n).eval x)⁻¹ := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply MetaMathlibExt.GeneralizedHypergeometric.generalizedHypergeometricCoefficient_cons_lower a b x n
 
 /--
@@ -82,6 +86,7 @@ private lemma generalized_hypergeometric_coefficient_cons_both_cancel_eq
   generalizedHypergeometricCoefficient (Multiset.cons x a) (Multiset.cons x b) n =
     generalizedHypergeometricCoefficient a b n := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply MetaMathlibExt.GeneralizedHypergeometric.generalizedHypergeometricCoefficient_cons_both_cancel x a b n hx
 
 /--
@@ -100,6 +105,7 @@ private lemma generalized_hypergeometric_coefficient_eq_zero_of_neg_coe_nat_mem_
 -- imply
   generalizedHypergeometricCoefficient a b n = 0 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply MetaMathlibExt.GeneralizedHypergeometric.generalizedHypergeometricCoefficient_eq_zero_of_neg_coe_nat_mem_lower a b hk hmem
 
 /--
@@ -118,6 +124,7 @@ private lemma generalized_hypergeometric_coefficient_eq_zero_of_zero_mem_lower_e
 -- imply
   generalizedHypergeometricCoefficient a b n = 0 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply MetaMathlibExt.GeneralizedHypergeometric.generalizedHypergeometricCoefficient_eq_zero_of_zero_mem_lower a b hn hmem
 
 /--
@@ -136,6 +143,7 @@ private lemma generalized_hypergeometric_coefficient_eq_zero_of_neg_coe_nat_mem_
 -- imply
   generalizedHypergeometricCoefficient a b n = 0 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply MetaMathlibExt.GeneralizedHypergeometric.generalizedHypergeometricCoefficient_eq_zero_of_neg_coe_nat_mem_upper a b hk hmem
 
 /--
@@ -152,6 +160,7 @@ private lemma generalized_hypergeometric_coefficient_two_one_eq
   generalizedHypergeometricCoefficient ({a, b} : Multiset K) {c} n =
     ordinaryHypergeometricCoefficient a b c n := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply MetaMathlibExt.GeneralizedHypergeometric.generalizedHypergeometricCoefficient_two_one a b c n
 
 /--
@@ -174,6 +183,7 @@ private lemma generalized_hypergeometric_series_apply_eq_eq
   generalizedHypergeometricSeries (A := A) a b n (fun _ => x) =
     generalizedHypergeometricCoefficient a b n • x ^ n := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply MetaMathlibExt.GeneralizedHypergeometric.generalizedHypergeometricSeries_apply_eq a b x n
 
 /--
@@ -195,6 +205,7 @@ private lemma generalized_hypergeometric_series_apply_zero_eq
   generalizedHypergeometricSeries (A := A) a b n (fun _ => (0 : A)) =
     Pi.single (M := fun _ => A) 0 1 n := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply MetaMathlibExt.GeneralizedHypergeometric.generalizedHypergeometricSeries_apply_zero a b n
 
 /--
@@ -215,6 +226,7 @@ private lemma generalized_hypergeometric_series_two_one_eq
   generalizedHypergeometricSeries (A := A) ({a, b} : Multiset K) {c} =
     ordinaryHypergeometricSeries A a b c := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply MetaMathlibExt.GeneralizedHypergeometric.generalizedHypergeometricSeries_two_one a b c
 
 /--
@@ -229,6 +241,7 @@ private lemma generalized_hypergeometric_value_eq_tsum_eq
   generalizedHypergeometricValue a b z =
     ∑' n : ℕ, generalizedHypergeometricCoefficient a b n * z ^ n := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply MetaMathlibExt.GeneralizedHypergeometric.generalizedHypergeometricValue_eq_tsum a b z
 
 /--
@@ -244,6 +257,7 @@ private lemma generalized_hypergeometric_value_has_sum_is
   HasSum (fun n : ℕ => generalizedHypergeometricCoefficient a b n * z ^ n)
     (generalizedHypergeometricValue a b z) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply MetaMathlibExt.GeneralizedHypergeometric.generalizedHypergeometricValue_hasSum hsum
 
 /--
@@ -260,6 +274,7 @@ private lemma lower_parameters_admissible_asc_pochhammer_ne_zero_is
 -- imply
   (ascPochhammer ℂ n).eval b ≠ 0 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply MetaMathlibExt.GeneralizedHypergeometric.lowerParametersAdmissible_ascPochhammer_ne_zero hadm hb n
 
 /--
@@ -275,6 +290,7 @@ private lemma lower_parameters_admissible_forall_mem_ne_zero_is
   ∀ n : ℕ,
     (ascPochhammer ℂ n).eval b ≠ 0 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply MetaMathlibExt.GeneralizedHypergeometric.lowerParametersAdmissible_forall_mem_ne_zero hadm
 
 /--
@@ -291,6 +307,7 @@ private lemma summable_hypergeometric_of_neg_coe_nat_mem_upper_is
 -- imply
   SummableHypergeometric a b z := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply MetaMathlibExt.GeneralizedHypergeometric.summableHypergeometric_of_neg_coe_nat_mem_upper hmem
 
 /--
@@ -306,8 +323,9 @@ private lemma generalized_hypergeometric_tsum_eq_finset_sum_eq
   (z : ℂ) :
 -- imply
   (∑' n : ℕ, generalizedHypergeometricCoefficient a b n * z ^ n) =
-    ∑ n ∈ Finset.range (N + 1), generalizedHypergeometricCoefficient a b n * z ^ n := by
+    ∑ n < (N + 1), generalizedHypergeometricCoefficient a b n * z ^ n := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply MetaMathlibExt.GeneralizedHypergeometric.generalizedHypergeometric_tsum_eq_finset_sum hmem
 
 /--
@@ -323,8 +341,9 @@ private lemma generalized_hypergeometric_value_terminating_eq_finset_sum_eq
   (z : ℂ) :
 -- imply
   generalizedHypergeometricValue a b z =
-    ∑ n ∈ Finset.range (N + 1), generalizedHypergeometricCoefficient a b n * z ^ n := by
+    ∑ n < (N + 1), generalizedHypergeometricCoefficient a b n * z ^ n := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply MetaMathlibExt.GeneralizedHypergeometric.generalizedHypergeometricValue_terminating_eq_finset_sum hmem
 
 

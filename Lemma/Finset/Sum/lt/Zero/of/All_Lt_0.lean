@@ -10,10 +10,11 @@ private lemma main
   (h₀ : n > 0)
   (h : ∀ i < n, f i < 0) :
 -- imply
-  ∑ i ∈ Finset.range n, f i < 0 := by
+  ∑ i < n, f i < 0 := by
 -- proof
-  have := Finset.sum_lt_sum_of_nonempty (Finset.nonempty_range_iff.mpr (by omega))
-    (fun i hi => h i (Finset.mem_range.mp hi) : ∀ i ∈ Finset.range n, f i < (fun _ => (0 : ℝ)) i)
+  simp only [Nat.Iio_eq_range]
+  have := Finset.sum_lt_sum_of_nonempty (Finset.nonempty_range_iff.mpr h₀.ne')
+    (fun i hi => h i (by simpa using hi))
   simpa using this
 
 

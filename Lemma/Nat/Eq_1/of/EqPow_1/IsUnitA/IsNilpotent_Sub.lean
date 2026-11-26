@@ -17,24 +17,24 @@ private lemma main
 -- imply
   u = 1 := by
 -- proof
-  have hs : (∑ i ∈ Finset.range m, u ^ i) * (u - 1) = 0 := by
-    rw [geom_sum_mul, h, sub_self]
+  have hs : (∑ i < m, u ^ i) * (u - 1) = 0 := by
+    rw [Nat.Iio_eq_range, geom_sum_mul, h, sub_self]
 
-  have hdecomp : (∑ i ∈ Finset.range m, u ^ i) =
-      (m : A) + ∑ i ∈ Finset.range m, (u ^ i - 1) := by
-    rw [Finset.sum_sub_distrib, Finset.sum_const, Finset.card_range, nsmul_eq_mul, mul_one]
+  have hdecomp : (∑ i < m, u ^ i) =
+      (m : A) + ∑ i < m, (u ^ i - 1) := by
+    rw [Nat.Iio_eq_range, Finset.sum_sub_distrib, Finset.sum_const, Finset.card_range, nsmul_eq_mul, mul_one]
     abel
   have hnil_i : ∀ i : ℕ, IsNilpotent (u ^ i - 1) := fun i => by
-    have hgeom : u ^ i - 1 = (∑ j ∈ Finset.range i, u ^ j) * (u - 1) := (geom_sum_mul u i).symm
+    have hgeom : u ^ i - 1 = (∑ j < i, u ^ j) * (u - 1) := by simpa only [Nat.Iio_eq_range] using (geom_sum_mul u i).symm
     rw [hgeom]
     refine Commute.isNilpotent_mul_left ?_ hu
     exact Commute.sum_left _ _ _ fun j _ =>
       ((Commute.refl u).pow_left j).sub_right (Commute.one_right _)
-  have hnil_sum : IsNilpotent (∑ i ∈ Finset.range m, (u ^ i - 1)) :=
+  have hnil_sum : IsNilpotent (∑ i < m, (u ^ i - 1)) :=
     Commute.isNilpotent_sum (fun i _ => hnil_i i) fun i j _ _ =>
       (((Commute.refl u).pow_pow i j).sub_left (Commute.one_left _)).sub_right
         (Commute.one_right _)
-  have hunit : IsUnit (∑ i ∈ Finset.range m, u ^ i) := by
+  have hunit : IsUnit (∑ i < m, u ^ i) := by
     rw [hdecomp]
     exact hnil_sum.isUnit_add_left_of_commute hm (Commute.sum_left _ _ _ fun i _ =>
       (Nat.cast_commute m _).symm)

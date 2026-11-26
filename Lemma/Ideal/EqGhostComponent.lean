@@ -12,8 +12,9 @@ variable {R : Type*} [CommRing R] {p : ℕ} [hp : Fact p.Prime]
 private lemma ghost_eq_sum
   (k : ℕ) (x : WittVector p R) :
   WittVector.ghostComponent k x =
-    ∑ i ∈ Finset.range (k + 1), (p : R) ^ i * x.coeff i ^ p ^ (k - i) := by
+    ∑ i < (k + 1), (p : R) ^ i * x.coeff i ^ p ^ (k - i) := by
   rw [WittVector.ghostComponent_apply, aeval_wittPolynomial]
+  simp only [Nat.Iio_eq_range]
 private lemma pow_sub_pow_mem
   {a b : R} (h : a - b ∈ Ideal.span {(p : R)}) (m : ℕ) :
   a ^ p ^ m - b ^ p ^ m ∈ Ideal.span {(p : R) ^ (m + 1)} := by
@@ -23,19 +24,20 @@ private lemma pow_sub_pow_mem
 private lemma ghost_succ_eq
   (k : ℕ) (x : WittVector p R) :
   WittVector.ghostComponent (k + 1) x =
-    ∑ i ∈ Finset.range (k + 1), (p : R) ^ i * x.coeff i ^ p ^ (k + 1 - i) +
+    ∑ i < (k + 1), (p : R) ^ i * x.coeff i ^ p ^ (k + 1 - i) +
       (p : R) ^ (k + 1) * x.coeff (k + 1) := by
-  rw [ghost_eq_sum, Finset.sum_range_succ, Nat.sub_self, pow_zero, pow_one]
+  rw [ghost_eq_sum]
+  simp only [Nat.Iio_eq_range]
+  rw [Finset.sum_range_succ, Nat.sub_self, pow_zero, pow_one]
 private lemma ghost_succ_sub_mem
   (σ : R →+* R) (hσ : ∀ a : R, σ a - a ^ p ∈ Ideal.span {(p : R)})
   (x : WittVector p R) (k : ℕ) :
   WittVector.ghostComponent (k + 1) x - σ (WittVector.ghostComponent k x) ∈
     Ideal.span {(p : R) ^ (k + 1)} := by
-  have hterm : ∀ i ∈ Finset.range (k + 1),
+  have hterm : ∀ i < (k + 1),
       (p : R) ^ i * x.coeff i ^ p ^ (k + 1 - i) - σ ((p : R) ^ i * x.coeff i ^ p ^ (k - i)) ∈
         Ideal.span {(p : R) ^ (k + 1)} := by
     intro i hi
-    rw [Finset.mem_range] at hi
     rw [map_mul, map_pow, map_natCast, map_pow, ← mul_sub,
       show k + 1 - i = k - i + 1 by omega, pow_succ' (p : ℕ) (k - i), pow_mul]
     have hsub : x.coeff i ^ p - σ (x.coeff i) ∈ Ideal.span {(p : R)} := by
@@ -50,7 +52,7 @@ private lemma ghost_succ_sub_mem
     rw [hpk]
     refine mul_dvd_mul_left _ hd
   rw [ghost_succ_eq, ghost_eq_sum, map_sum, add_sub_right_comm, ← Finset.sum_sub_distrib]
-  refine Ideal.add_mem _ (Ideal.sum_mem _ hterm)
+  refine Ideal.add_mem _ (Ideal.sum_mem _ (fun i hi => hterm i (by simpa using hi)))
     (Ideal.mul_mem_right _ _ (Ideal.mem_span_singleton_self _))
 private lemma exists_ghost_eq
   (σ : R →+* R) (hσ : ∀ a : R, σ a - a ^ p ∈ Ideal.span {(p : R)})
@@ -62,7 +64,7 @@ private lemma exists_ghost_eq
   ·
     rename_i n ih
     obtain ⟨x, hx⟩ := ih (fun k hk => hg k (by omega))
-    have hdef : g n - ∑ i ∈ Finset.range n, (p : R) ^ i * x.coeff i ^ p ^ (n - i) ∈
+    have hdef : g n - ∑ i < n, (p : R) ^ i * x.coeff i ^ p ^ (n - i) ∈
       Ideal.span {(p : R) ^ n} := by
       cases n
       · simp
@@ -71,7 +73,7 @@ private lemma exists_ghost_eq
         have h1 := hg k (by omega)
         have h3 := ghost_succ_sub_mem σ hσ x k
         rw [hx k (by omega)] at h3
-        have key : g (k + 1) - ∑ i ∈ Finset.range (k + 1), (p : R) ^ i * x.coeff i ^ p ^ (k + 1 - i) =
+        have key : g (k + 1) - ∑ i < (k + 1), (p : R) ^ i * x.coeff i ^ p ^ (k + 1 - i) =
             (g (k + 1) - σ (g k)) - (WittVector.ghostComponent (k + 1) x - σ (g k)) +
               (p : R) ^ (k + 1) * x.coeff (k + 1) := by
           rw [ghost_succ_eq]
@@ -84,22 +86,24 @@ private lemma exists_ghost_eq
     if hkn : k < n then
       rw [← hx k hkn, ghost_eq_sum, ghost_eq_sum]
       refine Finset.sum_congr rfl fun i hi => ?_
-      rw [Finset.mem_range] at hi
+      rw [Finset.mem_Iio] at hi
       simp only [WittVector.coeff_mk]
       rw [ite_eq_right (show i ≠ n by omega)]
     else
       have hkn' : k = n := by omega
-      rw [hkn', ghost_eq_sum, Finset.sum_range_succ, Nat.sub_self, pow_zero, pow_one]
+      rw [hkn', ghost_eq_sum, Nat.Iio_eq_range, Finset.sum_range_succ, Nat.sub_self, pow_zero, pow_one]
       simp only [WittVector.coeff_mk, ite_true]
-      have hS : ∑ i ∈ Finset.range n, (p : R) ^ i * (if i = n then c else x.coeff i) ^ p ^ (n - i) =
-          ∑ i ∈ Finset.range n, (p : R) ^ i * x.coeff i ^ p ^ (n - i) :=
+      have hS : ∑ i < n, (p : R) ^ i * (if i = n then c else x.coeff i) ^ p ^ (n - i) =
+          ∑ i < n, (p : R) ^ i * x.coeff i ^ p ^ (n - i) :=
         Finset.sum_congr rfl fun i hi => by
           have hine : i ≠ n := by
             intro h
-            rw [Finset.mem_range] at hi
+            rw [Finset.mem_Iio] at hi
             omega
           rw [ite_eq_right hine]
+      simp only [Nat.Iio_eq_range] at hS
       rw [hS, mul_comm ((p : R) ^ n) c, hc]
+      simp only [Nat.Iio_eq_range]
       ring
 /--
 [WittVector_exists_forall_ghostComponent_eq_of_sub_frobeniusLift_mem](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_WittVector_exists_forall_ghostComponent_eq_of_sub_frobeniusLift_mem.lean)

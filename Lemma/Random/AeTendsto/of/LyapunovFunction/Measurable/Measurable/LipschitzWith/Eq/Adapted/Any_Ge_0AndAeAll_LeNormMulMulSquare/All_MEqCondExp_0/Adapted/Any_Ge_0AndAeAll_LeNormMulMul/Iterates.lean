@@ -104,8 +104,9 @@ private lemma main
     · exact fun n => hint (n + n₀)
     · exact fun n => ae_of_all _ fun ω => h₁₀.nonneg _
     · exact fun n => mul_pos hB₁ (hα _)
-    · refine ((tendsto_atTop_add_const_right atTop (-∑ k ∈ range n₀, α k) ((tendsto_add_atTop_iff_nat n₀).2 (RobbinsMonro.sum (α := α)))).const_mul_atTop hB₁).congr fun n => ?_
+    · refine ((tendsto_atTop_add_const_right atTop (-∑ k < n₀, α k) ((tendsto_add_atTop_iff_nat n₀).2 (RobbinsMonro.sum (α := α)))).const_mul_atTop hB₁).congr fun n => ?_
       rw [← mul_sum, add_comm n n₀, sum_range_add]
+      simp only [← Nat.Iio_eq_range]
       simp only [add_comm n₀]
       ring
     · simpa [mul_pow] using ((summable_nat_add_iff n₀).2 (RobbinsMonro.sqsum (α := α))).mul_left (B₁ ^ 2)

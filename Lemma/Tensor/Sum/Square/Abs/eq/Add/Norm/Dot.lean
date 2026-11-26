@@ -9,9 +9,9 @@ private lemma main
   {ξ : ℕ → ℂ}
   {L : ℕ → ℕ → ℂ} :
 -- imply
-  (√(∑ c ∈ Finset.range k, ‖∑ r ∈ Finset.Ico k t, ξ r * ~(L r c) + ~(L t c)‖ ^ 2))² =
-    (√(∑ c ∈ Finset.range k, ‖∑ r ∈ Finset.Ico k t, ξ r * ~(L r c)‖ ^ 2))² + (√(∑ c ∈ Finset.range k, ‖L t c‖ ^ 2))² +
-      2 * (∑ c ∈ Finset.range k, (∑ r ∈ Finset.Ico k t, ξ r * ~(L r c)) * L t c).re := by
+  (√(∑ c < k, ‖∑ r ∈ Finset.Ico k t, ξ r * ~(L r c) + ~(L t c)‖ ^ 2))² =
+    (√(∑ c < k, ‖∑ r ∈ Finset.Ico k t, ξ r * ~(L r c)‖ ^ 2))² + (√(∑ c < k, ‖L t c‖ ^ 2))² +
+      2 * (∑ c < k, (∑ r ∈ Finset.Ico k t, ξ r * ~(L r c)) * L t c).re := by
 -- proof
   have e : ∀ (s : Finset ℕ) (f : ℕ → ℂ), (√(∑ i ∈ s, ‖f i‖ ^ 2))² = ∑ i ∈ s, ‖f i‖ ^ 2 :=
     fun _ _ => Real.sq_sqrt (Finset.sum_nonneg fun _ _ => sq_nonneg _)
@@ -28,9 +28,9 @@ private lemma recursive
 -- given
   (h : k < t) :
 -- imply
-  (√(∑ c ∈ Finset.range k, ‖∑ r ∈ Finset.Ico k t, ξ r * ~(L r c) + ~(L t c)‖ ^ 2))² =
-    ‖ξ k‖ ^ 2 * (√(∑ c ∈ Finset.range k, ‖L k c‖ ^ 2))² + (√(∑ c ∈ Finset.range k, ‖∑ r ∈ Finset.Ico (k + 1) t, ξ r * ~(L r c) + ~(L t c)‖ ^ 2))² +
-      2 * ((∑ c ∈ Finset.range k, (∑ r ∈ Finset.Ico (k + 1) t, ξ r * ~(L r c) + ~(L t c)) * L k c) * ~(ξ k)).re := by
+  (√(∑ c < k, ‖∑ r ∈ Finset.Ico k t, ξ r * ~(L r c) + ~(L t c)‖ ^ 2))² =
+    ‖ξ k‖ ^ 2 * (√(∑ c < k, ‖L k c‖ ^ 2))² + (√(∑ c < k, ‖∑ r ∈ Finset.Ico (k + 1) t, ξ r * ~(L r c) + ~(L t c)‖ ^ 2))² +
+      2 * ((∑ c < k, (∑ r ∈ Finset.Ico (k + 1) t, ξ r * ~(L r c) + ~(L t c)) * L k c) * ~(ξ k)).re := by
 -- proof
   have e : ∀ (s : Finset ℕ) (f : ℕ → ℂ), (√(∑ i ∈ s, ‖f i‖ ^ 2))² = ∑ i ∈ s, ‖f i‖ ^ 2 :=
     fun _ _ => Real.sq_sqrt (Finset.sum_nonneg fun _ _ => sq_nonneg _)
@@ -47,9 +47,9 @@ private lemma recursive_real
 -- given
   (h : k < t) :
 -- imply
-  (√(∑ c ∈ Finset.range k, |∑ r ∈ Finset.Ico k t, ξ r * L r c + L t c| ^ 2))² =
-    |ξ k| ^ 2 * (√(∑ c ∈ Finset.range k, |L k c| ^ 2))² + (√(∑ c ∈ Finset.range k, |∑ r ∈ Finset.Ico (k + 1) t, ξ r * L r c + L t c| ^ 2))² +
-      2 * (∑ c ∈ Finset.range k, (∑ r ∈ Finset.Ico (k + 1) t, ξ r * L r c + L t c) * L k c) * ξ k := by
+  (√(∑ c < k, |∑ r ∈ Finset.Ico k t, ξ r * L r c + L t c| ^ 2))² =
+    |ξ k| ^ 2 * (√(∑ c < k, |L k c| ^ 2))² + (√(∑ c < k, |∑ r ∈ Finset.Ico (k + 1) t, ξ r * L r c + L t c| ^ 2))² +
+      2 * (∑ c < k, (∑ r ∈ Finset.Ico (k + 1) t, ξ r * L r c + L t c) * L k c) * ξ k := by
 -- proof
   have e : ∀ (s : Finset ℕ) (f : ℕ → ℝ), (√(∑ i ∈ s, |f i| ^ 2))² = ∑ i ∈ s, |f i| ^ 2 :=
     fun _ _ => Real.sq_sqrt (Finset.sum_nonneg fun _ _ => sq_nonneg _)

@@ -9,7 +9,7 @@ private lemma main
   {k M : ℕ}
   {j i1 i2 : ℕ}
 -- given
-  (h₀ : ∑ i ∈ Finset.range k, (w i).card = M)
+  (h₀ : ∑ i < k, (w i).card = M)
   (h₁ : (Finset.range k).biUnion w = Finset.range M)
   (hi1 : i1 < k)
   (hi2 : i2 < k)
@@ -22,7 +22,8 @@ private lemma main
   have m1 : i1 ∈ Finset.range k := Finset.mem_range.mpr hi1
   have m2 : i2 ∈ (Finset.range k).erase i1 := Finset.mem_erase.mpr ⟨Ne.symm hne, Finset.mem_range.mpr hi2⟩
   set rest := ((Finset.range k).erase i1).erase i2
-  have hsum : ∑ i ∈ Finset.range k, (w i).card = (w i1).card + ((w i2).card + ∑ i ∈ rest, (w i).card) := by
+  have hsum : ∑ i < k, (w i).card = (w i1).card + ((w i2).card + ∑ i ∈ rest, (w i).card) := by
+    try simp only [Nat.Iio_eq_range] at *
     rw [← Finset.add_sum_erase _ _ m1, ← Finset.add_sum_erase _ _ m2]
   have hsub : (Finset.range k).biUnion w ⊆ (w i1 ∪ w i2) ∪ rest.biUnion w := by
     intro y hy

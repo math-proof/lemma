@@ -38,7 +38,7 @@ private lemma main
   (n : ℕ) :
 -- imply
   let S :=
-    ∑ t ∈ Finset.range n,
+    ∑ t < n,
       γ ^ t • ∫ ω, (M.rkd R (s t ω) (a t ω) +
           γ * ∫ y, M.V0 R θ γ y ∂(M.trans (s t ω, a t ω))) •
         fderiv ℝ (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ ∂(M θ)
@@ -59,6 +59,7 @@ private lemma main
     have hstep :=
       Integral_Fderiv_Vkd.eq.Add_SMul_Integral_SMul_FderivLog.of.All_Eq_Joint.All_EqWithDensity
         (M := M) h₀ h₁ hπ h₂ h₃ hBdd hIntg hφ hMs R n
+    try simp only [Nat.Iio_eq_range] at *
     rw [ih, Finset.sum_range_succ, hstep, smul_add, add_assoc]
     congr 1
     rw [smul_smul]

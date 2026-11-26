@@ -6,8 +6,9 @@ private lemma main
   {x y : ℤ}
   {n : ℕ} :
 -- imply
-  (x + y) ^ n = ∑ k ∈ Finset.range (n + 1), (n.choose k : ℤ) * x ^ k * y ^ (n - k) := by
+  (x + y) ^ n = ∑ k < (n + 1), (n.choose k : ℤ) * x ^ k * y ^ (n - k) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   rw [add_pow]
   exact Finset.sum_congr rfl fun k _ => by ring
 

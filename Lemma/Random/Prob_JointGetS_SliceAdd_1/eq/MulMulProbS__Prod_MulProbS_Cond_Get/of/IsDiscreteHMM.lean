@@ -66,7 +66,7 @@ private lemma mdp
     SinglePSpace.of.All_Measurable.All_Measurable hs ha
   ℙ[π](s[:t + 1] = «\sf{s}»[:t + 1] ∧ a[:t] = «\sf{a}»[:t]) =
     ℙ[π](s[0] = «\sf{s}»[0]) *
-      ∏ i ∈ Finset.range t,
+      ∏ i < t,
         ℙ[π](a[i] = «\sf{a}»[i] | s[i] = «\sf{s}»[i]) * ℙ[π](s[i + 1] = «\sf{s}»[i + 1] | s[i] = «\sf{s}»[i] ∧ a[i] = «\sf{a}»[i]) := by
 -- proof
   intro _ _ _ _
@@ -77,6 +77,7 @@ private lemma mdp
   | zero =>
     simpa using h₀
   | succ t ih =>
+    try simp only [Nat.Iio_eq_range] at *
     rw [Finset.prod_range_succ]
     apply (h₁ t).trans
     simp only [fun_getElem]

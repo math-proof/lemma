@@ -7,9 +7,9 @@ private lemma main
   {x : ℕ → Set α}
   {A : Set α}
 -- given
-  (h : (⋃ i ∈ Finset.range n, x i) ⊆ A) :
+  (h : (⋃ i < n, x i) ⊆ A) :
 -- imply
-  ∀ i ∈ Finset.range n, x i ⊆ A :=
+  ∀ i < n, x i ⊆ A :=
 -- proof
   fun i hi _ hy => h (Set.mem_iUnion₂.mpr ⟨i, hi, hy⟩)
 

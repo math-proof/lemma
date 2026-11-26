@@ -19,32 +19,33 @@ private lemma ramanujan_part1_ch9_entry2_is
 -- imply
   Summable (chapter9Entry2ConstantTerm r a) ∧
     ((Even r ∧
-        (∀ k ∈ Finset.range (r / 2),
+        (∀ k < (r / 2),
           Summable (chapter9Entry2ConstantTerm (r - 2 * k) a)) ∧
         Filter.Tendsto
           (fun N : ℕ =>
-            ∑ k ∈ Finset.range N, chapter9Entry2CosineTerm r a x k)
+            ∑ k < N, chapter9Entry2CosineTerm r a x k)
           Filter.atTop
           (nhds
-            ((∑ k ∈ Finset.range (r / 2),
+            ((∑ k < (r / 2),
                 (-1 : ℝ) ^ k * chapter9Entry2Constant (r - 2 * k) a *
                   x ^ (2 * k) / ((2 * k).factorial : ℝ)) +
               (-1 : ℝ) ^ (r / 2) * Real.pi * x ^ (r - 1) /
                 (2 * ((r - 1).factorial : ℝ))))) ∨
       (Odd r ∧
-        (∀ k ∈ Finset.range ((r - 1) / 2),
+        (∀ k < ((r - 1) / 2),
           Summable (chapter9Entry2ConstantTerm (r - 1 - 2 * k) a)) ∧
         Filter.Tendsto
           (fun N : ℕ =>
-            ∑ k ∈ Finset.range N, chapter9Entry2SineTerm r a x k)
+            ∑ k < N, chapter9Entry2SineTerm r a x k)
           Filter.atTop
           (nhds
-            ((∑ k ∈ Finset.range ((r - 1) / 2),
+            ((∑ k < ((r - 1) / 2),
                 (-1 : ℝ) ^ k * chapter9Entry2Constant (r - 1 - 2 * k) a *
                   x ^ (2 * k + 1) / ((2 * k + 1).factorial : ℝ)) +
               (-1 : ℝ) ^ ((r - 1) / 2) * Real.pi * x ^ (r - 1) /
                 (2 * ((r - 1).factorial : ℝ)))))) := by
 -- proof
+  try simp only [Nat.Iio_eq_range, ← Finset.mem_range] at *
   apply Ramanujan.Part1Ch9.Entry2.ramanujan_part1_ch9_entry2 r a x hr ha hxLower hxUpper
 
 -- created on 2026-10-10

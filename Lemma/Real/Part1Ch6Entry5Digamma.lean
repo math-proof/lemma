@@ -15,6 +15,7 @@ private lemma summable_chapter6_section13_example_c_term_eq
 -- imply
   Summable (chapter6Section13ExampleCTerm x) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply Ramanujan.Part1Ch6.Entry5Digamma.summable_chapter6Section13ExampleCTerm x hx
 
 /--
@@ -27,6 +28,7 @@ private lemma chapter6_section13_example_c_term_zero_eq
 -- imply
   chapter6Section13ExampleCTerm x 0 = 1 / (x + 1) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply Ramanujan.Part1Ch6.Entry5Digamma.chapter6Section13ExampleCTerm_zero x
 
 /--
@@ -41,6 +43,7 @@ private lemma chapter6_section13_example_c_term_succ_eq
   chapter6Section13ExampleCTerm x (j + 1) =
     (-1 / (x + 1)) * chapter6Section13ExampleCTerm (x + 1) j := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply Ramanujan.Part1Ch6.Entry5Digamma.chapter6Section13ExampleCTerm_succ x j
 
 /--
@@ -55,6 +58,7 @@ private lemma chapter6_section13_example_c_sum_eq_eq
   chapter6Section13ExampleCSum x =
     1 / (x + 1) - chapter6Section13ExampleCSum (x + 1) / (x + 1) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply Ramanujan.Part1Ch6.Entry5Digamma.chapter6Section13ExampleCSum_eq x hx
 
 /--
@@ -67,9 +71,10 @@ private lemma is_big_o_chapter6_section13_example_c_sum_sub_sum_bell_eq
 -- imply
   Asymptotics.IsBigO Filter.atTop
     (fun x : ℝ => chapter6Section13ExampleCSum x -
-      ∑ j ∈ Finset.range N, (-1 : ℝ) ^ j * ((j + 1).bell : ℝ) / x ^ (j + 1))
+      ∑ j < N, (-1 : ℝ) ^ j * ((j + 1).bell : ℝ) / x ^ (j + 1))
     (fun x : ℝ => 1 / x ^ (N + 1)) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply Ramanujan.Part1Ch6.Entry5Digamma.isBigO_chapter6Section13ExampleCSum_sub_sum_bell N
 
 /--
@@ -83,9 +88,10 @@ private lemma ramanujan_part1_ch6_entry5_digamma_eq :
     ∀ N : ℕ,
       Asymptotics.IsBigO Filter.atTop
         (fun x : ℝ => chapter6Section13ExampleCSum x -
-          ∑ j ∈ Finset.range N, (-1 : ℝ) ^ j * ((j + 1).bell : ℝ) / x ^ (j + 1))
+          ∑ j < N, (-1 : ℝ) ^ j * ((j + 1).bell : ℝ) / x ^ (j + 1))
         (fun x : ℝ => 1 / x ^ (N + 1)) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply Ramanujan.Part1Ch6.Entry5Digamma.ramanujan_part1_ch6_entry5_digamma
 
 -- created on 2026-10-10

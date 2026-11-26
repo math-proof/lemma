@@ -22,6 +22,7 @@ private lemma sum_reindex_le_card_smul_eq
 -- imply
   ∑ a ∈ S, g (φ a) ≤ (C : ℝ) * ∑ b ∈ T, g b := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.OSSS.sum_reindex_le_card_smul S φ g hg T himg C hfib
 
 /--
@@ -35,8 +36,9 @@ private lemma sum_translate_le_eq
   (hr : r ≤ n)
   (hg : ∀ j, 0 ≤ g j) :
 -- imply
-  ∑ k ∈ Finset.Icc 1 n, g ((k : ℤ) - (r : ℤ)).natAbs ≤ 2 * ∑ j ∈ Finset.range (n + 1), g j := by
+  ∑ k ∈ Finset.Icc 1 n, g ((k : ℤ) - (r : ℤ)).natAbs ≤ 2 * ∑ j < (n + 1), g j := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.OSSS.sum_translate_le n r hr g hg
 
 /--
@@ -51,8 +53,9 @@ private lemma sum_translate_le_range_eq
   (hrn : r ≤ n)
   (hg : ∀ j, 0 ≤ g j) :
 -- imply
-  ∑ k ∈ Finset.Icc 1 n, g ((k : ℤ) - (r : ℤ)).natAbs ≤ 2 * ∑ j ∈ Finset.range n, g j := by
+  ∑ k ∈ Finset.Icc 1 n, g ((k : ℤ) - (r : ℤ)).natAbs ≤ 2 * ∑ j < n, g j := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.OSSS.sum_translate_le_range n r hr1 hrn g hg
 
 /--
@@ -69,6 +72,7 @@ private lemma sum_le_two_mul_sup'_eq
 -- imply
   2 * S u ≤ 2 * Λ.sup' hne S := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.OSSS.sum_le_two_mul_sup' Λ hne S u hu
 
 /--
@@ -88,8 +92,9 @@ private lemma revealment_sum_bound_eq
   (hu : u ∈ Λ)
   (hcomp : ∀ k, q k ≤ μ u ((k : ℤ) - (r : ℤ)).natAbs) :
 -- imply
-  ∑ k ∈ Finset.Icc 1 n, q k ≤ 2 * Λ.sup' hne (fun x => ∑ j ∈ Finset.range (n + 1), μ x j) := by
+  ∑ k ∈ Finset.Icc 1 n, q k ≤ 2 * Λ.sup' hne (fun x => ∑ j < (n + 1), μ x j) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.OSSS.revealment_sum_bound Λ hne μ hμ n r hr u hu q hcomp
 
 /--
@@ -110,8 +115,9 @@ private lemma revealment_sum_bound_range_eq
   (hu : u ∈ Λ)
   (hcomp : ∀ k, q k ≤ μ u ((k : ℤ) - (r : ℤ)).natAbs) :
 -- imply
-  ∑ k ∈ Finset.Icc 1 n, q k ≤ 2 * Λ.sup' hne (fun x => ∑ j ∈ Finset.range n, μ x j) := by
+  ∑ k ∈ Finset.Icc 1 n, q k ≤ 2 * Λ.sup' hne (fun x => ∑ j < n, μ x j) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.OSSS.revealment_sum_bound_range Λ hne μ hμ n r hr1 hrn u hu q hcomp
 
 /--
@@ -134,8 +140,9 @@ private lemma revealment_family_sum_le_eq
   (hcompu : ∀ k, qu k ≤ μ u ((k : ℤ) - (ru : ℤ)).natAbs)
   (hcompv : ∀ k, qv k ≤ μ v ((k : ℤ) - (rv : ℤ)).natAbs) :
 -- imply
-  ∑ k ∈ Finset.Icc 1 n, (qu k + qv k) ≤ 4 * Λ.sup' hne (fun x => ∑ j ∈ Finset.range (n + 1), μ x j) := by
+  ∑ k ∈ Finset.Icc 1 n, (qu k + qv k) ≤ 4 * Λ.sup' hne (fun x => ∑ j < (n + 1), μ x j) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.OSSS.revealment_family_sum_le Λ hne μ hμ n ru rv hru hrv u v hu hv qu qv hcompu hcompv
 
 

@@ -96,9 +96,10 @@ private lemma main
     norm_cast
   obtain ⟨w, hw⟩ := hu_assoc.symm
   obtain ⟨m, -, hζm⟩ := hζ.eq_pow_of_pow_eq_one (ξ := σ ζ) (by rw [← map_pow, hζ.pow_eq_one, map_one])
-  set G : A := ∑ i ∈ Finset.range m, ζ ^ i with hG
+  set G : A := ∑ i < m, ζ ^ i with hG
   have hσu : σ u = G * u := by
     rw [hu, map_sub, map_one, ← hζm, hG]
+    simp only [Nat.Iio_eq_range]
     apply (geom_sum_mul ζ m).symm
   have hσu' : σ u = α ^ (q + 1) * (σ (w : A) * (w⁻¹ : Units A)) * u := by
     have h1 : σ u = α ^ (q + 1) * π ^ (q + 1) * σ (w : A) := by

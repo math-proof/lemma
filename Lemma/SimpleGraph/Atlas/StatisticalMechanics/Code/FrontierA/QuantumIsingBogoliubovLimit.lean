@@ -14,6 +14,7 @@ private lemma quantumIsing_radicand_nonneg_eq
 -- imply
   0 ≤ 1 + 4 * h ^ 2 + 4 * h * Real.cos k := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.quantumIsing_radicand_nonneg h k
 
 /--
@@ -26,6 +27,7 @@ private lemma continuous_quantumIsingDispersion_eq
 -- imply
   Continuous (quantumIsingDispersion h) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.continuous_quantumIsingDispersion h
 
 /--
@@ -38,6 +40,7 @@ private lemma continuous_quantumIsingModeLog_eq
 -- imply
   Continuous (quantumIsingModeLog beta h) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.continuous_quantumIsingModeLog beta h
 
 /--
@@ -50,6 +53,7 @@ private lemma periodic_quantumIsingDispersion_eq
 -- imply
   Function.Periodic (quantumIsingDispersion h) (2 * Real.pi) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.periodic_quantumIsingDispersion h
 
 /--
@@ -62,6 +66,7 @@ private lemma periodic_quantumIsingModeLog_eq
 -- imply
   Function.Periodic (quantumIsingModeLog beta h) (2 * Real.pi) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.periodic_quantumIsingModeLog beta h
 
 /--
@@ -74,6 +79,7 @@ private lemma quantumIsingDispersion_neg_eq_shift_eq
 -- imply
   quantumIsingDispersion (-h) k = quantumIsingDispersion h (k + Real.pi) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.quantumIsingDispersion_neg_eq_shift h k
 
 /--
@@ -86,6 +92,7 @@ private lemma quantumIsingModeLog_neg_eq_shift_eq
 -- imply
   quantumIsingModeLog beta (-h) k = quantumIsingModeLog beta h (k + Real.pi) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.quantumIsingModeLog_neg_eq_shift beta h k
 
 /--
@@ -98,6 +105,7 @@ private lemma integral_quantumIsingModeLog_shift_eq
 -- imply
   (∫ k in (0 : ℝ)..(2 * Real.pi), quantumIsingModeLog beta h k) = ∫ k in (-Real.pi)..Real.pi, quantumIsingModeLog beta h k := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.integral_quantumIsingModeLog_shift beta h
 
 /--
@@ -110,6 +118,7 @@ private lemma integral_quantumIsingModeLog_neg_eq
 -- imply
   (∫ k in (-Real.pi)..Real.pi, quantumIsingModeLog beta (-h) k) = ∫ k in (-Real.pi)..Real.pi, quantumIsingModeLog beta h k := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.integral_quantumIsingModeLog_neg beta h
 
 /--
@@ -122,6 +131,7 @@ private lemma quantumIsingFreeEnergyValue_neg_eq
 -- imply
   quantumIsingFreeEnergyValue beta (-h) = quantumIsingFreeEnergyValue beta h := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.quantumIsingFreeEnergyValue_neg beta h
 
 /--
@@ -132,8 +142,9 @@ private lemma quantumIsingModeLog_average_tendsto_eq
 -- given
   (beta h : ℝ) :
 -- imply
-  Filter.Tendsto (fun L : ℕ => (1 / (L : ℝ)) * ∑ j ∈ Finset.range L, quantumIsingModeLog beta h (2 * Real.pi * j / L)) Filter.atTop (nhds ((1 / (2 * Real.pi)) * ∫ k in (-Real.pi)..Real.pi, quantumIsingModeLog beta h k)) := by
+  Filter.Tendsto (fun L : ℕ => (1 / (L : ℝ)) * ∑ j < L, quantumIsingModeLog beta h (2 * Real.pi * j / L)) Filter.atTop (nhds ((1 / (2 * Real.pi)) * ∫ k in (-Real.pi)..Real.pi, quantumIsingModeLog beta h k)) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.quantumIsingModeLog_average_tendsto beta h
 
 /--
@@ -146,6 +157,7 @@ private lemma quantumIsingBogoliubovFreeEnergy_tendsto_eq
 -- imply
   Filter.Tendsto (quantumIsingBogoliubovFreeEnergy beta h) Filter.atTop (nhds (quantumIsingFreeEnergyValue beta h)) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.quantumIsingBogoliubovFreeEnergy_tendsto beta h
 
 

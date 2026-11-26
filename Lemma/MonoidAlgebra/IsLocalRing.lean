@@ -63,9 +63,10 @@ private lemma isUnit_one_add_of_mem_augIdeal {𝒪 : Type u} [CommRing 𝒪] [Is
   have hiN : (-i) ^ N ∈ (maximalIdeal 𝒪).map (algebraMap 𝒪 (MonoidAlgebra 𝒪 G)) := by
     rw [neg_pow]
     apply Ideal.mul_mem_left _ _ (hN (Ideal.pow_mem_pow hi N))
-  have hgeom : (1 + i) * ∑ j ∈ Finset.range N, (-i) ^ j = 1 + -(-i) ^ N := by
+  have hgeom : (1 + i) * ∑ j < N, (-i) ^ j = 1 + -(-i) ^ N := by
     have := mul_neg_geom_sum (-i) N
     rw [sub_neg_eq_add] at this
+    try simp only [Nat.Iio_eq_range] at *
     rw [this, sub_eq_add_neg]
   apply isUnit_of_mul_isUnit_left
   rw [hgeom]

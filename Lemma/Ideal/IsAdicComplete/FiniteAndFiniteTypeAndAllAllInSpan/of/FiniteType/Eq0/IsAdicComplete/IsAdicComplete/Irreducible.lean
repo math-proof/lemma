@@ -83,7 +83,7 @@ private lemma isNoetherianRing_of_isAdicComplete_of_quotient
     let sq : ℕ → ↥P := fun k => Nat.iterate nx k ⟨p, hp⟩
     have sq_zero : sq 0 = ⟨p, hp⟩ := rfl
     have sq_succ : ∀ k, sq (k + 1) = nx (sq k) := fun k => Function.iterate_succ_apply' nx k _
-    let A : ↥S → ℕ → R := fun i k => ∑ j ∈ Finset.range k, ϖ ^ j * cf (sq j) i
+    let A : ↥S → ℕ → R := fun i k => ∑ j < k, ϖ ^ j * cf (sq j) i
     have hinv : ∀ k, p = (∑ i, A i k * g i) + ϖ ^ k * (sq k).1 := by
       intro k
       induction k with
@@ -91,7 +91,7 @@ private lemma isNoetherianRing_of_isAdicComplete_of_quotient
       | succ k ih =>
         have h := hnx (sq k)
         have e1 : ∑ i, A i (k + 1) * g i = ∑ i, A i k * g i + ∑ i, ϖ ^ k * cf (sq k) i * g i := by
-          simp only [A, Finset.sum_range_succ, add_mul, Finset.sum_add_distrib]
+          simp only [A, Nat.Iio_eq_range, Finset.sum_range_succ, add_mul, Finset.sum_add_distrib]
         have e2 : ∑ i, ϖ ^ k * cf (sq k) i * g i = ϖ ^ k * ∑ i, cf (sq k) i * g i := by
           rw [Finset.mul_sum]; simp only [mul_assoc]
         rw [ih, e1, e2, sq_succ, h, pow_succ]
@@ -100,7 +100,7 @@ private lemma isNoetherianRing_of_isAdicComplete_of_quotient
       intro i m n hmn
       rw [SModEq.sub_mem, hpow]
       have : A i m - A i n = -(∑ j ∈ Finset.Ico m n, ϖ ^ j * cf (sq j) i) := by
-        simp only [A]
+        simp only [A, Nat.Iio_eq_range]
         rw [← Finset.sum_range_add_sum_Ico _ hmn]; ring
       rw [this]
       refine Submodule.neg_mem _ (Submodule.sum_mem _ fun j hj => ?_)
@@ -171,7 +171,7 @@ private lemma exists_repr_of_forall_exists_repr_add_mul
   let sq : ℕ → R := fun k => Nat.iterate nx k r
   have sq_zero : sq 0 = r := rfl
   have sq_succ : ∀ k, sq (k + 1) = nx (sq k) := fun k => Function.iterate_succ_apply' nx k _
-  let S : Fin d → ℕ → R := fun j k => ∑ i ∈ Finset.range k, ϖ ^ i * cf (sq i) j
+  let S : Fin d → ℕ → R := fun j k => ∑ i < k, ϖ ^ i * cf (sq i) j
   have hSA : ∀ j k, S j k ∈ A := fun j k =>
     A.sum_mem fun i _ => A.mul_mem (A.pow_mem hϖA i) (hcf (sq i) j)
   have hinv : ∀ k, r = (∑ j, S j k * μ j) + ϖ ^ k * sq k := by
@@ -181,7 +181,7 @@ private lemma exists_repr_of_forall_exists_repr_add_mul
     | succ k ih =>
       have h := hnx (sq k)
       have e1 : ∑ j, S j (k + 1) * μ j = ∑ j, S j k * μ j + ∑ j, ϖ ^ k * cf (sq k) j * μ j := by
-        simp only [S, Finset.sum_range_succ, add_mul, Finset.sum_add_distrib]
+        simp only [S, Nat.Iio_eq_range, Finset.sum_range_succ, add_mul, Finset.sum_add_distrib]
       have e2 : ∑ j, ϖ ^ k * cf (sq k) j * μ j = ϖ ^ k * ∑ j, cf (sq k) j * μ j := by
         rw [Finset.mul_sum]; simp only [mul_assoc]
       rw [e1, e2, sq_succ, pow_succ]
@@ -191,7 +191,7 @@ private lemma exists_repr_of_forall_exists_repr_add_mul
     intro j m n hmn
     rw [smodR]
     have : S j m - S j n = -(∑ i ∈ Finset.Ico m n, ϖ ^ i * cf (sq i) j) := by
-      simp only [S]; rw [← Finset.sum_range_add_sum_Ico _ hmn]; ring
+      simp only [S, Nat.Iio_eq_range]; rw [← Finset.sum_range_add_sum_Ico _ hmn]; ring
     rw [this]
     refine Submodule.neg_mem _ (Submodule.sum_mem _ fun i hi => ?_)
     exact Ideal.mul_mem_right _ _ (Ideal.pow_le_pow_right (Finset.mem_Ico.1 hi).1 (hϖn i))

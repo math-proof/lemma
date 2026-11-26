@@ -35,8 +35,8 @@ private lemma main
   have : PSpace π (Expectation.asRV x) := by
     simpa [Expectation.asRV_process] using
       PSpace_Path.of.All_PSpace (X := x) fun t => h₁ t
-  𝔼[x: π]((∑ k ∈ range n, (x[k] - (∑ i ∈ range n, x[i]) / (n : ℝ))²) / ((n : ℝ) - 1)) =
-    𝔼[x: π]((∑ k ∈ range n, (x[k] - μ)²) / (n : ℝ)) := by
+  𝔼[x: π]((∑ k < n, (x[k] - (∑ i < n, x[i]) / (n : ℝ))²) / ((n : ℝ) - 1)) =
+    𝔼[x: π]((∑ k < n, (x[k] - μ)²) / (n : ℝ)) := by
 -- proof
   intro hpath
   have hE : ∀ i : ℕ, ∫ ω, (x[i] ω) ∂π = μ := fun i => by
@@ -56,22 +56,22 @@ private lemma main
     rw [← hv, hvar i]
   have hinterg : ∀ i : ℕ, Integrable (fun ω => (x[i] ω - μ)²) π := fun i =>
     ((h₂ i).sub (memLp_const μ)).integrable_sq
-  have hsumμ : ∫ ω, ∑ k ∈ range n, (x[k] ω - μ)² ∂π = n * σ² := by
+  have hsumμ : ∫ ω, ∑ k < n, (x[k] ω - μ)² ∂π = n * σ² := by
     rw [integral_finsetSum _ fun i _ => hinterg i,
-      sum_congr rfl fun i _ => hsq i, sum_const, card_range, nsmul_eq_mul]
+      sum_congr rfl fun i _ => hsq i, sum_const, Nat.Iio_eq_range, card_range, nsmul_eq_mul]
   have hfR :
     AEStronglyMeasurable
-      (fun p : ℕ → ℝ => (∑ k ∈ range n, (p k - μ)²) / (n : ℝ))
+      (fun p : ℕ → ℝ => (∑ k < n, (p k - μ)²) / (n : ℝ))
       (π.map (Expectation.asRV x)) := by
     refine Continuous.aestronglyMeasurable ?_
     fun_prop
   have hR :
-    𝔼[x: π]((∑ k ∈ range n, (x[k] - μ)²) / (n : ℝ)) = σ² := by
+    𝔼[x: π]((∑ k < n, (x[k] - μ)²) / (n : ℝ)) = σ² := by
     change Expectation.ofRV π (Expectation.asRV x)
-      (fun integ => (∑ k ∈ range n, (integ k - μ)²) / (n : ℝ)) = σ²
+      (fun integ => (∑ k < n, (integ k - μ)²) / (n : ℝ)) = σ²
     rw [OfRV.eq.Integral.of.AEStronglyMeasurable_Map hfR]
-    have hfun : (fun ω => (∑ k ∈ range n, (Expectation.asRV x ω k - μ)²) / (n : ℝ)) =
-      fun ω => (∑ k ∈ range n, (x[k] ω - μ)²) / (n : ℝ) := by
+    have hfun : (fun ω => (∑ k < n, (Expectation.asRV x ω k - μ)²) / (n : ℝ)) =
+      fun ω => (∑ k < n, (x[k] ω - μ)²) / (n : ℝ) := by
       simp [getElem_nat_apply]
     rw [hfun]
     rw [integral_div, hsumμ]
@@ -93,46 +93,47 @@ private lemma main
       have hproj : x[i] ⟂ᵢ[π] (fun ω => x[:i] ω ⟨j, hgt⟩) :=
         (h₃ i).comp measurable_id (measurable_pi_apply _)
       simpa [hx] using hproj
-  let avg : Ω → ℝ := fun ω => (∑ i ∈ range n, x[i] ω) / (n : ℝ)
+  let avg : Ω → ℝ := fun ω => (∑ i < n, x[i] ω) / (n : ℝ)
   have hmem_avg : MemLp avg 2 π := by
     simpa [avg, Finset.sum_apply, div_eq_inv_mul] using
-      (memLp_finsetSum' (range n) fun i _ => h₂ i).const_mul (n : ℝ)⁻¹
+      (memLp_finsetSum' (Finset.Iio n) fun i _ => h₂ i).const_mul (n : ℝ)⁻¹
   have hmean : π[avg] = μ := by
     rw [integral_div, integral_finsetSum _ fun i _ => (h₂ i).integrable one_le_two,
-      sum_congr rfl fun i _ => hE i, sum_const, card_range, nsmul_eq_mul]
+      sum_congr rfl fun i _ => hE i, sum_const, Nat.Iio_eq_range, card_range, nsmul_eq_mul]
     field_simp [hn0]
   have hvar_avg : variance avg π = σ² / (n : ℝ) := by
-    rw [show avg = fun ω => (n : ℝ)⁻¹ * ∑ i ∈ range n, x[i] ω by
+    rw [show avg = fun ω => (n : ℝ)⁻¹ * ∑ i < n, x[i] ω by
       ext ω
       simp [avg, div_eq_inv_mul]]
     rw [variance_const_mul,
-      show (fun ω => ∑ i ∈ range n, x[i] ω) = ∑ i ∈ range n, x[i] from
-        funext fun ω => (Finset.sum_apply ω (range n) (fun i => x[i])).symm,
+      show (fun ω => ∑ i < n, x[i] ω) = ∑ i < n, x[i] from
+        funext fun ω => (Finset.sum_apply ω (Finset.Iio n) (fun i => x[i])).symm,
       IndepFun.variance_sum (fun i _ => h₂ i) (fun i _ j _ hij => hpair i j hij),
-      sum_congr rfl fun i _ => hvar i, sum_const, card_range, nsmul_eq_mul]
+      sum_congr rfl fun i _ => hvar i, sum_const, Nat.Iio_eq_range, card_range, nsmul_eq_mul]
     field_simp [hn0]
   have havg_sq : ∫ ω, (avg ω - μ)² ∂π = σ² / (n : ℝ) := by
     have hv := variance_eq_integral hmem_avg.aemeasurable
     rw [hmean] at hv
     rw [← hv, hvar_avg]
   have hpoint : ∀ ω,
-      ∑ k ∈ range n, (x[k] ω - avg ω)² =
-        ∑ k ∈ range n, (x[k] ω - μ)² - (n : ℝ) * (avg ω - μ)² := by
+      ∑ k < n, (x[k] ω - avg ω)² =
+        ∑ k < n, (x[k] ω - μ)² - (n : ℝ) * (avg ω - μ)² := by
     intro ω
-    have hsum : ∑ k ∈ range n, (x[k] ω - μ) = (n : ℝ) * (avg ω - μ) := by
-      simp [avg, sum_sub_distrib, sum_const, card_range, nsmul_eq_mul]
+    have hsum : ∑ k < n, (x[k] ω - μ) = (n : ℝ) * (avg ω - μ) := by
+      simp [avg, sum_sub_distrib, sum_const, Nat.Iio_eq_range, card_range, nsmul_eq_mul]
       field_simp [hn0]
     have hexp : ∀ k : ℕ, (x[k] ω - avg ω)² =
         (x[k] ω - μ)² - 2 * (avg ω - μ) * (x[k] ω - μ) + (avg ω - μ)² := by
       intro k
       ring
     simp_rw [hexp]
-    rw [sum_add_distrib, sum_sub_distrib, sum_const, card_range, nsmul_eq_mul,
+    rw [Nat.Iio_eq_range] at hsum
+    rw [sum_add_distrib, sum_sub_distrib, sum_const, Nat.Iio_eq_range, card_range, nsmul_eq_mul,
       ← mul_sum, hsum]
     ring
   have hinterg_avg : Integrable (fun ω => (avg ω - μ)²) π :=
     (hmem_avg.sub (memLp_const μ)).integrable_sq
-  have hsum_dev : ∫ ω, ∑ k ∈ range n, (x[k] ω - avg ω)² ∂π = (n - 1 : ℝ) * σ² := by
+  have hsum_dev : ∫ ω, ∑ k < n, (x[k] ω - avg ω)² ∂π = (n - 1 : ℝ) * σ² := by
     simp_rw [hpoint]
     rw [integral_sub, hsumμ, integral_const_mul, havg_sq]
     ·
@@ -142,21 +143,21 @@ private lemma main
   have hfL :
     AEStronglyMeasurable
       (fun p : ℕ → ℝ =>
-        (∑ k ∈ range n, (p k - (∑ i ∈ range n, p i) / (n : ℝ))²) / ((n : ℝ) - 1))
+        (∑ k < n, (p k - (∑ i < n, p i) / (n : ℝ))²) / ((n : ℝ) - 1))
       (π.map (Expectation.asRV x)) := by
     refine Continuous.aestronglyMeasurable ?_
     fun_prop
   have hL :
-    𝔼[x: π]((∑ k ∈ range n, (x[k] - (∑ i ∈ range n, x[i]) / (n : ℝ))²) / ((n : ℝ) - 1)) =
+    𝔼[x: π]((∑ k < n, (x[k] - (∑ i < n, x[i]) / (n : ℝ))²) / ((n : ℝ) - 1)) =
       σ² := by
     change Expectation.ofRV π (Expectation.asRV x)
-      (fun integ => (∑ k ∈ range n,
-        (integ k - (∑ i ∈ range n, integ i) / (n : ℝ))²) / ((n : ℝ) - 1)) = σ²
+      (fun integ => (∑ k < n,
+        (integ k - (∑ i < n, integ i) / (n : ℝ))²) / ((n : ℝ) - 1)) = σ²
     rw [OfRV.eq.Integral.of.AEStronglyMeasurable_Map hfL]
-    have hfun : (fun ω => (∑ k ∈ range n,
-        (Expectation.asRV x ω k - (∑ i ∈ range n, Expectation.asRV x ω i) / (n : ℝ))²) /
+    have hfun : (fun ω => (∑ k < n,
+        (Expectation.asRV x ω k - (∑ i < n, Expectation.asRV x ω i) / (n : ℝ))²) /
           ((n : ℝ) - 1)) =
-      fun ω => (∑ k ∈ range n, (x[k] ω - avg ω)²) / ((n : ℝ) - 1) := by
+      fun ω => (∑ k < n, (x[k] ω - avg ω)²) / ((n : ℝ) - 1) := by
       simp [getElem_nat_apply, avg]
     rw [hfun]
     rw [integral_div, hsum_dev]

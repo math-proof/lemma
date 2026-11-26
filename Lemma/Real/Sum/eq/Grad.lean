@@ -8,9 +8,9 @@ private lemma main
   {f : ℕ → ℝ → ℝ}
   {x : ℝ}
 -- given
-  (h : ∀ k ∈ Finset.range n, DifferentiableAt ℝ (f k) x) :
+  (h : ∀ k < n, DifferentiableAt ℝ (f k) x) :
 -- imply
-  ∑ k ∈ Finset.range n, deriv (f k) x = deriv (fun x => ∑ k ∈ Finset.range n, f k x) x := by
+  ∑ k < n, deriv (f k) x = deriv (fun x => ∑ k < n, f k x) x := by
 -- proof
   exact (Grad.eq.Sum h).symm
 

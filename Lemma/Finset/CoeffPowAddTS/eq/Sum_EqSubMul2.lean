@@ -12,16 +12,17 @@ private lemma main
   {m : ℤ} :
 -- imply
   ((LaurentPolynomial.T 1 + LaurentPolynomial.T (-1)) ^ k : LaurentPolynomial R).coeff m =
-      ∑ i ∈ Finset.range (k + 1), if (2 * (i : ℤ) - k = m) then ((k.choose i : ℕ) : R) else 0 := by
+      ∑ i < (k + 1), if (2 * (i : ℤ) - k = m) then ((k.choose i : ℕ) : R) else 0 := by
 -- proof
   classical
   have hcomm : Commute (LaurentPolynomial.T 1 : LaurentPolynomial R) (LaurentPolynomial.T (-1)) :=
     Commute.all _ _
-  have hterm : ∀ i ∈ Finset.range (k + 1),
+  have hterm : ∀ i < (k + 1),
       ((LaurentPolynomial.T 1 : LaurentPolynomial R) ^ i * LaurentPolynomial.T (-1) ^ (k - i) *
           (k.choose i : LaurentPolynomial R)) =
         AddMonoidAlgebra.single (2 * (i : ℤ) - k) ((k.choose i : ℕ) : R) := by
     intro i hi
+    try simp only [← Finset.mem_range] at *
     have hik : i ≤ k := Nat.lt_succ_iff.mp (Finset.mem_range.mp hi)
     rw [LaurentPolynomial.T_pow, LaurentPolynomial.T_pow, ← LaurentPolynomial.T_add]
     have hexp : (i : ℤ) * 1 + ((k - i : ℕ) : ℤ) * (-1) = 2 * (i : ℤ) - k := by
@@ -31,7 +32,8 @@ private lemma main
     rw [LaurentPolynomial.single_eq_C_mul_T]
     exact mul_comm _ _
   have hsum : ((LaurentPolynomial.T 1 + LaurentPolynomial.T (-1)) ^ k : LaurentPolynomial R) =
-      ∑ i ∈ Finset.range (k + 1), AddMonoidAlgebra.single (2 * (i : ℤ) - k) ((k.choose i : ℕ) : R) := by
+      ∑ i < (k + 1), AddMonoidAlgebra.single (2 * (i : ℤ) - k) ((k.choose i : ℕ) : R) := by
+    try simp only [Nat.Iio_eq_range, ← Finset.mem_range] at *
     rw [hcomm.add_pow]
     exact Finset.sum_congr rfl hterm
   rw [hsum, AddMonoidAlgebra.coeff_sum, Finsupp.finsetSum_apply]

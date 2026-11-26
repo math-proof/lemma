@@ -7,9 +7,9 @@ private lemma main
   {x : ℕ → Set α}
   {A : Set α}
 -- given
-  (h : ∀ i ∈ Finset.range n, x i ⊆ A) :
+  (h : ∀ i < n, x i ⊆ A) :
 -- imply
-  (⋃ i ∈ Finset.range n, x i) ⊆ A := by
+  (⋃ i < n, x i) ⊆ A := by
 -- proof
   intro z hz
   obtain ⟨i, hi, hzi⟩ := Set.mem_iUnion₂.mp hz

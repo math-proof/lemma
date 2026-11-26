@@ -9,8 +9,9 @@ private lemma main
 -- given
   (h : t ∈ Finset.range m) :
 -- imply
-  ∑ j ∈ Finset.range m, y j = (∑ j ∈ (Finset.range m).erase t, y j) + y t := by
+  ∑ j < m, y j = (∑ j ∈ (Finset.range m).erase t, y j) + y t := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   exact (Finset.sum_erase_add _ _ h).symm
 
 

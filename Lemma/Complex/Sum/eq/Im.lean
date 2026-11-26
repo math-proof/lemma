@@ -8,9 +8,10 @@ private lemma main
   {n : ℕ}
   {z : ℕ → ℂ} :
 -- imply
-  ∑ k ∈ Finset.range n, im (z k) = im (∑ k ∈ Finset.range n, z k) := by
+  ∑ k < n, im (z k) = im (∑ k < n, z k) := by
 -- proof
-  exact (Complex.im_sum _ _).symm
+  simpa only [Nat.Iio_eq_range] using (Complex.im_sum _ _).symm
 
 
 -- created on 2023-06-03
+-- updated on 2026-11-26

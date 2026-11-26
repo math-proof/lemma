@@ -39,33 +39,34 @@ private lemma jl_eq_one_of_pow
     rw [← map_one (algebraMap ℂ E), ← map_nsmul, nsmul_eq_mul, mul_one]
   have hms : ((m : ℂ))⁻¹ • ((m : ℕ) • (1 : E)) = 1 := by
     rw [hcast, Algebra.smul_def, ← map_mul, inv_mul_cancel₀ hmC, map_one]
-  have hdecomp : 1 - (m : ℂ)⁻¹ • (∑ k ∈ Finset.range m, c ^ k) = (m : ℂ)⁻¹ • (∑ k ∈ Finset.range m, (1 - c ^ k)) := by
+  have hdecomp : 1 - (m : ℂ)⁻¹ • (∑ k < m, c ^ k) = (m : ℂ)⁻¹ • (∑ k < m, (1 - c ^ k)) := by
     rw [Finset.sum_sub_distrib]
-    simp only [Finset.sum_const, Finset.card_range]
+    simp only [Finset.sum_const, Nat.Iio_eq_range, Finset.card_range]
     rw [smul_sub, hms]
-  have hSnorm : ‖∑ k ∈ Finset.range m, (1 - c ^ k)‖ < (m : ℝ) := by
-    calc ‖∑ k ∈ Finset.range m, (1 - c ^ k)‖ ≤ ∑ k ∈ Finset.range m, ‖1 - c ^ k‖ := norm_sum_le _ _
-      _ < ∑ k ∈ Finset.range m, (1 : ℝ) := by
+  have hSnorm : ‖∑ k < m, (1 - c ^ k)‖ < (m : ℝ) := by
+    calc ‖∑ k < m, (1 - c ^ k)‖ ≤ ∑ k < m, ‖1 - c ^ k‖ := norm_sum_le _ _
+      _ < ∑ k < m, (1 : ℝ) := by
+        simp only [Nat.Iio_eq_range]
         apply Finset.sum_lt_sum_of_nonempty ⟨0, Finset.mem_range.mpr hm⟩
         intro k hk
         rw [Finset.mem_range] at hk
         rw [norm_sub_rev]
         exact hclose k hk
       _ = (m : ℝ) := by
-        rw [Finset.sum_const, Finset.card_range, nsmul_eq_mul, mul_one]
-  have hnorm : ‖1 - (m : ℂ)⁻¹ • (∑ k ∈ Finset.range m, c ^ k)‖ < 1 := by
+        rw [Finset.sum_const, Nat.Iio_eq_range, Finset.card_range, nsmul_eq_mul, mul_one]
+  have hnorm : ‖1 - (m : ℂ)⁻¹ • (∑ k < m, c ^ k)‖ < 1 := by
     rw [hdecomp, norm_smul]
     have h1 : ‖((m : ℂ))⁻¹‖ = ((m : ℝ))⁻¹ := by
       rw [norm_inv, Complex.norm_natCast]
     rw [h1]
-    calc ((m : ℝ))⁻¹ * ‖∑ k ∈ Finset.range m, (1 - c ^ k)‖ < ((m : ℝ))⁻¹ * (m : ℝ) :=
+    calc ((m : ℝ))⁻¹ * ‖∑ k < m, (1 - c ^ k)‖ < ((m : ℝ))⁻¹ * (m : ℝ) :=
         mul_lt_mul_of_pos_left hSnorm (inv_pos.mpr (Nat.cast_pos.mpr hm))
       _ = 1 := inv_mul_cancel₀ hmR
-  set P : E := (m : ℂ)⁻¹ • (∑ k ∈ Finset.range m, c ^ k) with hP
+  set P : E := (m : ℂ)⁻¹ • (∑ k < m, c ^ k) with hP
   have hU : ((Units.oneSub (1 - P) hnorm : E)) = P := by
     rw [Units.val_oneSub, sub_sub_cancel]
   have hPmul : P * (c - 1) = 0 := by
-    rw [hP, smul_mul_assoc, geom_sum_mul, hpow, sub_self, smul_zero]
+    rw [hP, smul_mul_assoc, Nat.Iio_eq_range, geom_sum_mul, hpow, sub_self, smul_zero]
   have hzero : (Units.oneSub (1 - P) hnorm : E) * (c - 1) = 0 := by
     rwa [hU]
   have hc : c - 1 = 0 :=

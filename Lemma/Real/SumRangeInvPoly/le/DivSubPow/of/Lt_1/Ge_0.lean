@@ -13,8 +13,9 @@ private lemma main
   (h₀ : 0 ≤ ν)
   (h₁ : ν < 1) :
 -- imply
-  ∑ k ∈ range a, inv_poly ν 2 k ≤ (((a : ℝ) + 1) ^ (1 - ν) - 1) / (1 - ν) := by
+  ∑ k < a, inv_poly ν 2 k ≤ (((a : ℝ) + 1) ^ (1 - ν) - 1) / (1 - ν) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   have hf : AntitoneOn (fun x : ℝ => (x + 1) ^ (-ν)) (Set.Icc 0 (0 + a)) := by
     intro x hx y hy hxy
     exact rpow_le_rpow_of_nonpos (by linarith [hx.1]) (by linarith) (by linarith)

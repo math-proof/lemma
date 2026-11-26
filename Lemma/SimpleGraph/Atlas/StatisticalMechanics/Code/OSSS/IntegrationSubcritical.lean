@@ -18,6 +18,7 @@ private lemma isc_gronwall_lower_eq
 -- imply
   Real.exp (lam * (b - a)) * f a ≤ f b := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.OSSS.IntegrationSubcritical.isc_gronwall_lower a b lam hab f f' hd hineq
 
 /--
@@ -35,6 +36,7 @@ private lemma isc_gronwall_decay_eq
 -- imply
   f a ≤ M * Real.exp (-(lam * (b - a))) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.OSSS.IntegrationSubcritical.isc_gronwall_decay a b lam M hab f f' hd hineq hfb
 
 /--
@@ -49,6 +51,7 @@ private lemma isc_summable_stretched_exp_eq
 -- imply
   Summable (fun n : ℕ => Real.exp (-(δ * (n : ℝ) ^ α))) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.OSSS.IntegrationSubcritical.isc_summable_stretched_exp α δ hα hδ
 
 /--
@@ -66,8 +69,9 @@ private lemma isc_partial_sum_le_eq
   (hbsum : Summable b)
   (hgb : ∀ k, N ≤ k → g k ≤ b k) :
 -- imply
-  ∑ k ∈ Finset.range n, g k ≤ (N : ℝ) * M + ∑' k, b k := by
+  ∑ k < n, g k ≤ (N : ℝ) * M + ∑' k, b k := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.OSSS.IntegrationSubcritical.isc_partial_sum_le g b M N n hgM hMnn hbnn hbsum hgb
 
 /--
@@ -85,6 +89,7 @@ private lemma isc_rate_weaken_eq
 -- imply
   ((n : ℝ) / Q) * fnx ≤ fp := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.OSSS.IntegrationSubcritical.isc_rate_weaken n Sig fp fnx Q hSig hSigle hfnn hdi
 
 

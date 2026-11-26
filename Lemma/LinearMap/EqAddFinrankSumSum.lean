@@ -8,22 +8,27 @@ set_option backward.isDefEq.respectTransparency false
 
 universe u
 
-private lemma telescope (n : ℕ) (κ r d h : ℕ → ℤ) (h0 : ℤ) (hd : ∀ i, d i = κ i + r i) (hh : ∀ i, h i = κ (i + 1) - r i) (hh0 : h0 = κ 0) (hrn : r n = 0) : h0 + ∑ i ∈ Finset.range n, (-1 : ℤ) ^ (i + 1) * h i = ∑ i ∈ Finset.range (n + 1), (-1 : ℤ) ^ i * d i := by
+private lemma telescope (n : ℕ) (κ r d h : ℕ → ℤ) (h0 : ℤ) (hd : ∀ i, d i = κ i + r i) (hh : ∀ i, h i = κ (i + 1) - r i) (hh0 : h0 = κ 0) (hrn : r n = 0) : h0 + ∑ i < n, (-1 : ℤ) ^ (i + 1) * h i = ∑ i < (n + 1), (-1 : ℤ) ^ i * d i := by
 -- proof
+  simp only [Nat.Iio_eq_range]
   rw [Finset.sum_range_succ']
-  have key : ∑ i ∈ Finset.range n, ((-1 : ℤ) ^ (i + 1) * r (i + 1) + (-1 : ℤ) ^ (i + 1) * r i) =
+  have key : ∑ i < n, ((-1 : ℤ) ^ (i + 1) * r (i + 1) + (-1 : ℤ) ^ (i + 1) * r i) =
       (-1) ^ n * r n - (-1) ^ 0 * r 0 := by
+    simp only [Nat.Iio_eq_range]
     rw [← Finset.sum_range_sub (fun i => (-1 : ℤ) ^ i * r i) n]
     refine Finset.sum_congr rfl fun i _ => ?_
     ring
-  have e1 : ∑ i ∈ Finset.range n, (-1 : ℤ) ^ (i + 1) * h i =
-      ∑ i ∈ Finset.range n, ((-1 : ℤ) ^ (i + 1) * κ (i + 1) - (-1 : ℤ) ^ (i + 1) * r i) :=
+  have e1 : ∑ i < n, (-1 : ℤ) ^ (i + 1) * h i =
+      ∑ i < n, ((-1 : ℤ) ^ (i + 1) * κ (i + 1) - (-1 : ℤ) ^ (i + 1) * r i) :=
     Finset.sum_congr rfl fun i _ => by rw [hh]; ring
-  have e2 : ∑ i ∈ Finset.range n, (-1 : ℤ) ^ (i + 1) * d (i + 1) =
-      ∑ i ∈ Finset.range n, ((-1 : ℤ) ^ (i + 1) * κ (i + 1) + (-1 : ℤ) ^ (i + 1) * r (i + 1)) :=
+  simp only [Nat.Iio_eq_range] at e1
+  have e2 : ∑ i < n, (-1 : ℤ) ^ (i + 1) * d (i + 1) =
+      ∑ i < n, ((-1 : ℤ) ^ (i + 1) * κ (i + 1) + (-1 : ℤ) ^ (i + 1) * r (i + 1)) :=
     Finset.sum_congr rfl fun i _ => by rw [hd]; ring
+  simp only [Nat.Iio_eq_range] at e2
   rw [e1, e2, Finset.sum_sub_distrib, Finset.sum_add_distrib, hh0, hd 0]
   rw [Finset.sum_add_distrib, hrn] at key
+  simp only [Nat.Iio_eq_range] at key
   linear_combination (-1 : ℤ) * key
 /--
 [Module_finrank_add_alternatingSum_finrank_eq_of_finite_complex](https://github.com/anthropics/fermats-last-theorem/blob/main/P2M/Sol/S_Module_finrank_add_alternatingSum_finrank_eq_of_finite_complex.lean)
@@ -41,7 +46,7 @@ private lemma main
   (hπker : ∀ i, LinearMap.ker (π i) =
     (LinearMap.range (δ i)).comap (LinearMap.ker (δ (i + 1))).subtype) :
   -- imply
-  (Module.finrank k H0 : ℤ) + ∑ i ∈ Finset.range n, (-1 : ℤ) ^ (i + 1) * (Module.finrank k (H i) : ℤ) = ∑ i ∈ Finset.range (n + 1), (-1 : ℤ) ^ i * (Module.finrank k (K i) : ℤ) := by
+  (Module.finrank k H0 : ℤ) + ∑ i < n, (-1 : ℤ) ^ (i + 1) * (Module.finrank k (H i) : ℤ) = ∑ i < (n + 1), (-1 : ℤ) ^ i * (Module.finrank k (K i) : ℤ) := by
   -- proof
   have hle : ∀ i, LinearMap.range (δ i) ≤ LinearMap.ker (δ (i + 1)) := by
     intro i x hx

@@ -77,11 +77,11 @@ private lemma main
       rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff]
       intro hu
       exact (IsLocalRing.mem_maximalIdeal _).mp hrr₀ ((isUnit_map_iff (algebraMap R B) _).mp hu)
-    have hgeom : IsUnit (∑ i ∈ Finset.range e, ζ ^ i) := by
+    have hgeom : IsUnit (∑ i < e, ζ ^ i) := by
       by_contra hnu
-      have hm : (∑ i ∈ Finset.range e, ζ ^ i) ∈ maximalIdeal B := (IsLocalRing.mem_maximalIdeal _).mpr hnu
-      have hdiff : (∑ i ∈ Finset.range e, ζ ^ i) - (e : B) ∈ maximalIdeal B := by
-        rw [show (e : B) = ∑ i ∈ Finset.range e, (1 : B) by simp, ← Finset.sum_sub_distrib]
+      have hm : (∑ i < e, ζ ^ i) ∈ maximalIdeal B := (IsLocalRing.mem_maximalIdeal _).mpr hnu
+      have hdiff : (∑ i < e, ζ ^ i) - (e : B) ∈ maximalIdeal B := by
+        rw [show (e : B) = ∑ i < e, (1 : B) by simp, ← Finset.sum_sub_distrib]
         refine Ideal.sum_mem _ fun i _ => ?_
         obtain ⟨c, hc⟩ := sub_dvd_pow_sub_pow ζ 1 i
         rw [one_pow] at hc
@@ -92,7 +92,7 @@ private lemma main
         have := Ideal.sub_mem _ hm hdiff; rwa [sub_sub_cancel] at this
       exact (IsLocalRing.mem_maximalIdeal _).mp this heB
     have hζ : ζ = 1 := by
-      have : (ζ - 1) * ∑ i ∈ Finset.range e, ζ ^ i = 0 := by rw [mul_geom_sum, hζe, sub_self]
+      have : (ζ - 1) * ∑ i < e, ζ ^ i = 0 := by rw [Nat.Iio_eq_range, mul_geom_sum, hζe, sub_self]
       rw [← sub_eq_zero]
       apply (hgeom.mul_left_eq_zero).mp this
     refine ⟨r, ?_⟩

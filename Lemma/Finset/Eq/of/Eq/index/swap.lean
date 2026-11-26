@@ -31,7 +31,7 @@ private lemma main
   have hinj : Set.InjOn x ↑(Finset.range n) := Finset.card_image_iff.mp hc
   rw [← hxa, ← hxb]
   rw [EqIndexGet.of.Lt.InjOnRange x n hinj ha, EqIndexGet.of.Lt.InjOnRange x n hinj hb]
-  have hswap_lt : ∀ k ∈ Finset.range n, Equiv.swap a b k ∈ Finset.range n := by
+  have hswap_lt : ∀ k < n, Equiv.swap a b k ∈ Finset.range n := by
     intro k hk
     obtain rfl | hka := eq_or_ne k a
     ·
@@ -44,9 +44,11 @@ private lemma main
         exact Finset.mem_range.mpr ha
       ·
         rw [Equiv.swap_apply_of_ne_of_ne hka hkb]
+        try simp only [← Finset.mem_range] at *
         exact hk
   have hinj_y : Set.InjOn (fun k ↦ x (Equiv.swap a b k)) ↑(Finset.range n) := by
     intro k1 hk1 k2 hk2 hxy
+    try simp only [← Finset.mem_range] at *
     exact (Equiv.swap a b).injective
       (hinj (Finset.mem_coe.mpr (hswap_lt k1 hk1)) (Finset.mem_coe.mpr (hswap_lt k2 hk2)) hxy)
   have hyb : x a = (fun k ↦ x (Equiv.swap a b k)) b := by

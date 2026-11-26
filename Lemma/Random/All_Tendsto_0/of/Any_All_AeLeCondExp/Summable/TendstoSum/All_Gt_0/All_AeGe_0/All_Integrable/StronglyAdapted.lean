@@ -19,7 +19,7 @@ private lemma main
   (h₁ : ∀ n, Integrable (f n) μ)
   (h₂ : ∀ n, 0 ≤ᵐ[μ] f n)
   (h₃ : ∀ n, 0 < T n)
-  (h₄ : Tendsto (fun n => ∑ k ∈ range n, T k) atTop atTop)
+  (h₄ : Tendsto (fun n => ∑ k < n, T k) atTop atTop)
   (h₅ : Summable fun n => T n ^ 2)
   (h₆ : ∃ C ≥ 0, ∀ n, μ[f (n + 1) | ℱ n] ≤ᵐ[μ] fun ω => (1 - T n) * f n ω + C * T n ^ 2) :
 -- imply
@@ -54,9 +54,12 @@ private lemma main
       have := integral_mono_ae ((hint i).add ((h₁ i).const_mul (T i))) integrable_condExp (hstep i)
       rw [integral_condExp (ℱ.le i), integral_add' (hint i) ((h₁ i).const_mul (T i))] at this
       linarith
+    rw [← Nat.Iio_eq_range]
     calc
-      _ ≤ ∑ i ∈ range n, (∫ ω, W (i + 1) ω ∂μ - ∫ ω, W i ω ∂μ) := sum_le_sum fun i _ => hle i
-      _ = ∫ ω, W n ω ∂μ - ∫ ω, W 0 ω ∂μ := sum_range_sub (fun i => ∫ ω, W i ω ∂μ) n
+      _ ≤ ∑ i < n, (∫ ω, W (i + 1) ω ∂μ - ∫ ω, W i ω ∂μ) := sum_le_sum fun i _ => hle i
+      _ = ∫ ω, W n ω ∂μ - ∫ ω, W 0 ω ∂μ := by
+          rw [Nat.Iio_eq_range]
+          exact sum_range_sub (fun i => ∫ ω, W i ω ∂μ) n
       _ ≤ _ := by linarith [integral_nonpos_of_ae (hnonpos n)]
   filter_upwards [All_Summable.of.Summable_Integral.All_AeGe_0.All_Integrable (fun n => (h₁ n).const_mul (T n)) (fun n => (h₂ n).mono fun ω hω => mul_nonneg (h₃ n).le hω) hsum, hconv, ae_all_iff.2 h₂] with ω hs ⟨c, hc⟩ hnn
   rwa [Eq_0.of.Tendsto.Summable_Mul.All_Ge_0.TendstoSum.All_Gt_0 h₃ h₄ hnn hs hc] at hc

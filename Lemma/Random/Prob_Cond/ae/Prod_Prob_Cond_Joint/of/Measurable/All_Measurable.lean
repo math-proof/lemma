@@ -159,13 +159,14 @@ private lemma main
     ∀ k : ℕ, SinglePSpace π (s[k], fun ω => (s[:k] : Ω → Fin k → 𝒮) ω, Z) :=
     SinglePSpace_Get_GetSlice_prod hPZ
   ℙ[π](s[:n] | Z) =ᵐ[π]
-    ∏ k ∈ Finset.range n, ℙ[π](s[k] | s[:k], Z) := by
+    ∏ k < n, ℙ[π](s[k] | s[:k], Z) := by
 -- proof
   intro _ hPstep
   have hslice : ∀ k : ℕ, Measurable s[:k] :=
     All_MeasurableGetSlice.of.All_MeasurableGet hs
   induction n with
   | zero =>
+    try simp only [Nat.Iio_eq_range] at *
     simp only [Finset.range_zero, Finset.prod_empty]
     have := hPZ 0
     have ⟨_, _, hρ⟩ := (hPZ 0).exists_distribution
@@ -412,6 +413,7 @@ private lemma main
           congrArg (fun x => a * x) (mul_assoc c⁻¹ b a⁻¹)
         _ = a * c⁻¹ * (b * a⁻¹) :=
           (mul_assoc a c⁻¹ (b * a⁻¹)).symm
+    try simp only [Nat.Iio_eq_range] at *
     filter_upwards [hprod, ih] with ω h₁ h₂
     rw [Finset.prod_range_succ]
     simp only [Pi.mul_apply] at h₁ h₂ ⊢

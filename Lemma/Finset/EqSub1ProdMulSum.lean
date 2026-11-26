@@ -33,20 +33,22 @@ private lemma iterate_eq
   -- given
   (h : s x = lam * x + u) :
   -- imply
-  Nat.iterate (⇑s) n x = (∏ i ∈ Finset.range n, Nat.iterate (⇑s) i lam) * x +
-    ∑ j ∈ Finset.range n, (∏ i ∈ Finset.Ico (j + 1) n, Nat.iterate (⇑s) i lam) * Nat.iterate (⇑s) j u := by
+  Nat.iterate (⇑s) n x = (∏ i < n, Nat.iterate (⇑s) i lam) * x +
+    ∑ j < n, (∏ i ∈ Finset.Ico (j + 1) n, Nat.iterate (⇑s) i lam) * Nat.iterate (⇑s) j u := by
   -- proof
   induction n with
   | zero => simp
   | succ n ih =>
-    have key : ∑ j ∈ Finset.range n, Nat.iterate (⇑s) n lam *
+    have key : ∑ j < n, Nat.iterate (⇑s) n lam *
         ((∏ i ∈ Finset.Ico (j + 1) n, Nat.iterate (⇑s) i lam) * Nat.iterate (⇑s) j u) =
-      ∑ j ∈ Finset.range n, (∏ i ∈ Finset.Ico (j + 1) (n + 1), Nat.iterate (⇑s) i lam) *
+      ∑ j < n, (∏ i ∈ Finset.Ico (j + 1) (n + 1), Nat.iterate (⇑s) i lam) *
         Nat.iterate (⇑s) j u := by
       refine Finset.sum_congr rfl (fun j hj => ?_)
+      try simp only [Nat.Iio_eq_range] at *
       have hj' : j + 1 ≤ n := Finset.mem_range.mp hj
       rw [Finset.prod_Ico_succ_top hj']
       ring
+    try simp only [Nat.Iio_eq_range] at *
     rw [Function.iterate_succ_apply, h, iterate_add, iterate_mul, ih, Finset.prod_range_succ,
       Finset.sum_range_succ, Finset.Ico_self, Finset.prod_empty, one_mul, mul_add, Finset.mul_sum, key]
     ring
@@ -64,8 +66,8 @@ private lemma main
   (hs : ∀ r : R, Nat.iterate (⇑s) ℓ r = r)
   (h : s x = lam * x + u) :
   -- imply
-  (1 - ∏ i ∈ Finset.range ℓ, Nat.iterate (⇑s) i lam) * x =
-    ∑ j ∈ Finset.range ℓ, (∏ i ∈ Finset.Ico (j + 1) ℓ, Nat.iterate (⇑s) i lam) * Nat.iterate (⇑s) j u := by
+  (1 - ∏ i < ℓ, Nat.iterate (⇑s) i lam) * x =
+    ∑ j < ℓ, (∏ i ∈ Finset.Ico (j + 1) ℓ, Nat.iterate (⇑s) i lam) * Nat.iterate (⇑s) j u := by
   -- proof
   have key := iterate_eq s x lam u ℓ h
   rw [hs] at key

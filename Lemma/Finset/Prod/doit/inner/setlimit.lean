@@ -7,8 +7,8 @@ private lemma main
   {m : ℕ}
   (x : ℕ → ℕ → ℝ) :
 -- imply
-  ∏ i ∈ Finset.range m, ∏ j ∈ ({0, 1, 2, 3} : Finset ℕ), x i j
-    = ∏ i ∈ Finset.range m, (x i 0 * x i 1 * x i 2 * x i 3) := by
+  ∏ i < m, ∏ j ∈ ({0, 1, 2, 3} : Finset ℕ), x i j
+    = ∏ i < m, (x i 0 * x i 1 * x i 2 * x i 3) := by
 -- proof
   refine Finset.prod_congr rfl ?_
   intro i _

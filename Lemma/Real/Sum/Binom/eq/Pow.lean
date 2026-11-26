@@ -7,8 +7,9 @@ private lemma main
   (r : ℕ)
   (x : ℝ) :
 -- imply
-  ∑ n ∈ Finset.range (r + 1), (r.choose n : ℝ) * x ^ n = (1 + x) ^ r := by
+  ∑ n < (r + 1), (r.choose n : ℝ) * x ^ n = (1 + x) ^ r := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   rw [show (1 + x) ^ r = (x + 1) ^ r by ring, add_pow]
   apply Finset.sum_congr rfl
   intro n hn

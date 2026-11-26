@@ -8,7 +8,7 @@ private lemma main
   {n : ℕ}
   {x : ℝ} :
 -- imply
-  (descPochhammer ℝ n).eval x = ∑ k ∈ Finset.range (n + 1), x ^ k * (Nat.stirlingFirst n k : ℝ) * (-1) ^ (n - k) := by
+  (descPochhammer ℝ n).eval x = ∑ k < (n + 1), x ^ k * (Nat.stirlingFirst n k : ℝ) * (-1) ^ (n - k) := by
 -- proof
   exact Finset.EvalDescPochhammer.eq.Sum_MulMulPowStirlingFirstPowNeg1Sub x n
 

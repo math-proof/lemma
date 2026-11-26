@@ -60,9 +60,9 @@ private lemma main
   let r : (n : ℕ) → Subtype fun y : M => y ∈ (I ^ n • ⊤ : Submodule A M) := fun n => Nat.rec (motive := fun n => Subtype fun y : M => y ∈ (I ^ n • ⊤ : Submodule A M)) ⟨x, by simp⟩ (fun n y => ⟨y.1 - φ (c n y.1 y.2), hcy n y.1 y.2⟩) n
   let a : ℕ → Fin k → A := fun n => c n (r n).1 (r n).2
   have haI : ∀ n i, a n i ∈ I ^ n := fun n i => hcI n (r n).1 (r n).2 i
-  let S : ℕ → Fin k → A := fun n i => ∑ t ∈ Finset.range n, a t i
+  let S : ℕ → Fin k → A := fun n i => ∑ t < n, a t i
   have hS0 : S 0 = 0 := funext fun i => by simp [S]
-  have hSsucc : ∀ n, S (n + 1) = S n + a n := fun n => funext fun i => by simp [S, Finset.sum_range_succ]
+  have hSsucc : ∀ n, S (n + 1) = S n + a n := fun n => funext fun i => by simp [S]
   have hr0 : (r 0).1 = x := rfl
   have hrsucc : ∀ n, (r (n + 1)).1 = (r n).1 - φ (a n) := fun n => rfl
   have hr : ∀ n, (r n).1 = x - φ (S n) := by

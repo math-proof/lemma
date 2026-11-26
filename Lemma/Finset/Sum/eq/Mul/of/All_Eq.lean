@@ -14,6 +14,7 @@ private lemma main
 -- imply
   ∑ i ∈ s, x i = s.card * a := by
 -- proof
+  try simp only [Nat.Iio_eq_range, ← Finset.mem_range] at *
   have := Sum.eq.SMulCard.of.All_Eq h
   simp_all
 
@@ -25,10 +26,11 @@ private lemma range
   {a : α}
   {n : ℕ}
 -- given
-  (h : ∀ i ∈ range n, x i = a) :
+  (h : ∀ i < n, x i = a) :
 -- imply
-  ∑ i ∈ range n, x i = n * a := by
+  ∑ i < n, x i = n * a := by
 -- proof
+  try simp only [Nat.Iio_eq_range, ← Finset.mem_range] at *
   simp [main h]
 
 

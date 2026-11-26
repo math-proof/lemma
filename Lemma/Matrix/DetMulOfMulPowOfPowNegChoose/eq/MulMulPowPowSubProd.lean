@@ -17,7 +17,7 @@ private lemma main
   (([i < m - d][j < m] x ^ (j : ℕ) * ((j : ℝ) + δ) ^ (i : ℕ)) *
     ([i < m][j < m - d]
       (-l) ^ ((d : ℤ) + (j : ℕ) - (i : ℕ)) * (if (j : ℕ) ≤ i then (d.choose ((i : ℕ) - j) : ℝ) else 0))).det =
-    x ^ ((m - d).choose 2) * (x - l) ^ (d * (m - d)) * ∏ i ∈ Finset.range (m - d), (i ! : ℝ) := by
+    x ^ ((m - d).choose 2) * (x - l) ^ (d * (m - d)) * ∏ i < (m - d), (i ! : ℝ) := by
 -- proof
   rw [MulOfMulPowOfPowNegChoose.eq.MulOfChooseSumOf, Matrix.det_mul, Det.eq.Prod.of.All_All_Eq_0]
   ·
@@ -30,10 +30,12 @@ private lemma main
       Fin.prod_univ_eq_prod_range (fun i => (i ! : ℝ)) (m - d)]
     simp only [Matrix.of_apply, Nat.choose_self, Nat.cast_one, one_mul, sub_self, zpow_zero, mul_one]
     rw [Finset.prod_const, Finset.card_univ, Fintype.card_fin, pow_mul]
-    have e : ∑ h ∈ Finset.range (d + 1), (d.choose h : ℝ) * (-l) ^ (d - h) * x ^ h = (x - l) ^ d := by
+    have e : ∑ h < (d + 1), (d.choose h : ℝ) * (-l) ^ (d - h) * x ^ h = (x - l) ^ d := by
       rw [sub_eq_add_neg, add_pow]
+      simp only [Nat.Iio_eq_range]
       refine Finset.sum_congr rfl fun h _ => ?_
       ring
+    simp only [← Nat.Iio_eq_range]
     rw [e]
     ring
   ·

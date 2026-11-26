@@ -8,10 +8,11 @@ private lemma main
   {n : ℕ}
   {x : ℕ → ℝ}
 -- given
-  (h₀ : ∀ i ∈ range n, x i ≥ 1) :
+  (h₀ : ∀ i < n, x i ≥ 1) :
 -- imply
-  ∀ i ∈ range n, (x i) ^ (1 / (i + 2) : ℝ) ≤ √(x i) := by
+  ∀ i < n, (x i) ^ (1 / (i + 2) : ℝ) ≤ √(x i) := by
 -- proof
+  try simp only [← Finset.mem_range] at *
   have : ∀ (t : ℝ) (i : ℕ), t ≥ 1 → (t ^ (1 / (i + 2) : ℝ) ≤ √t) := by
     intro t i h
     apply Root_Add_2.le.Sqrt.of.Ge_1 h

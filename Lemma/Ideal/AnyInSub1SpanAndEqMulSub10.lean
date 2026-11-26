@@ -48,17 +48,19 @@ private lemma main
       rw [pow_succ, hz, hu1]
       ring
   choose z hz using hz
-  have hy : (∑ i ∈ Finset.range q, u ^ i) = (q : T) + P * ∑ i ∈ Finset.range q, z i := calc
-    _ = ∑ i ∈ Finset.range q, (1 + P * z i) :=
+  have hy : (∑ i < q, u ^ i) = (q : T) + P * ∑ i < q, z i := calc
+    _ = ∑ i < q, (1 + P * z i) :=
       Finset.sum_congr rfl (fun i _ => hz i)
-    _ = (q : T) + P * ∑ i ∈ Finset.range q, z i := by
+    _ = (q : T) + P * ∑ i < q, z i := by
+      simp only [Nat.Iio_eq_range]
       rw [Finset.sum_add_distrib, Finset.sum_const, Finset.card_range, Finset.mul_sum]
       simp
-  set y := ∑ i ∈ Finset.range q, z i with hydef
-  have hgeom : (∑ i ∈ Finset.range q, u ^ i) * (u - 1) = 0 := by
+  set y := ∑ i < q, z i with hydef
+  have hgeom : (∑ i < q, u ^ i) * (u - 1) = 0 := by
+    simp only [Nat.Iio_eq_range]
     rw [geom_sum_mul, hu, sub_self]
   have hmain : t * ((m : T) + (p : T) * y) = 0 := by
-    have e1 : (∑ i ∈ Finset.range q, u ^ i) * (u - 1) =
+    have e1 : (∑ i < q, u ^ i) * (u - 1) =
         (p : T) ^ (2 * k + 1) * (t * ((m : T) + (p : T) * y)) := by
       rw [hy, ← ht, hqT, hP]
       ring

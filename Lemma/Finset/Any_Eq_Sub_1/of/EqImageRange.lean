@@ -9,7 +9,7 @@ private lemma main
 -- given
   (h : (Finset.range n).image p = Finset.range n) :
 -- imply
-  ∃ i ∈ Finset.range n, p i = n - 1 := by
+  ∃ i < n, p i = n - 1 := by
 -- proof
   have hmem : n - 1 ∈ (Finset.range n).image p := by
     rw [h]

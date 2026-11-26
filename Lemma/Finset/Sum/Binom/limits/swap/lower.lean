@@ -24,8 +24,9 @@ private lemma main
     simp only [Finset.mem_Ico] at hk
     exact hk.2
   have hinner : ∑ j ∈ Finset.Ico k n, ((i + j - k).choose i : ℝ) =
-    ∑ t ∈ Finset.range (n - k), ((i + t).choose i : ℝ) := by
+    ∑ t < (n - k), ((i + t).choose i : ℝ) := by
     rw [Finset.sum_Ico_eq_sum_range]
+    try simp only [Nat.Iio_eq_range] at *
     refine Finset.sum_congr rfl ?_
     intro t ht
     simp only [Finset.mem_range] at ht
@@ -36,6 +37,7 @@ private lemma main
   have hcast := congrArg (Nat.cast : ℕ → ℝ) hs
   rw [show n - k - 1 + i + 1 = n - k + i by omega] at hcast
   rw [show n - k = n - k - 1 + 1 by omega]
+  try simp only [Nat.Iio_eq_range] at *
   rw [show n - k - 1 + 1 + i = n - k + i by omega]
   simpa [Nat.add_comm, Nat.cast_sum] using hcast
 

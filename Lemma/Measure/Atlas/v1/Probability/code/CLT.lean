@@ -24,8 +24,9 @@ lemma central_limit_theorem
   (hindep : iIndepFun (m := fun _ => inferInstance) X P)
   (hident : ∀ i, IdentDistrib (X i) (X 0) P P) :
 -- imply
-  ConvergesInDistributionRV (fun n ω => (σ * Real.sqrt n)⁻¹ * (∑ k ∈ Finset.range n, X k ω - ↑n * μ)) P stdNormalMeasure := by
+  ConvergesInDistributionRV (fun n ω => (σ * Real.sqrt n)⁻¹ * (∑ k < n, X k ω - ↑n * μ)) P stdNormalMeasure := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   set X' : ℕ → Ω → ℝ := fun k ω => (X k ω - μ) / σ
   have hindep' : iIndepFun (m := fun _ => inferInstance) X' P :=
     hindep.comp (fun _ x => (x - μ) / σ) (fun _ => by fun_prop)

@@ -7,8 +7,8 @@ private lemma main
   {n : ℕ}
   {f g : ℕ → α} :
 -- imply
-  ∏ k ∈ Finset.range n, (f k / g k) =
-    (∏ k ∈ Finset.range n, f k) / ∏ k ∈ Finset.range n, g k :=
+  ∏ k < n, (f k / g k) =
+    (∏ k < n, f k) / ∏ k < n, g k :=
 -- proof
   Finset.prod_div_distrib _ _
 

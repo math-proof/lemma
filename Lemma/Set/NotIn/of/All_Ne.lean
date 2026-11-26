@@ -5,10 +5,11 @@ import Initialize.Tactic.Attr.Basic
 private lemma main
   {n j : ℕ}
 -- given
-  (h : ∀ i ∈ Finset.range n, i ≠ j) :
+  (h : ∀ i < n, i ≠ j) :
 -- imply
   j ∉ Finset.range n := by
 -- proof
+  try simp only [← Finset.mem_range] at *
   exact fun hj ↦ h j hj rfl
 
 

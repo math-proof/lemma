@@ -7,13 +7,14 @@ private lemma main
   {n : ℕ}
   {x : ℕ → ℂ}
 -- given
-  (h : ∀ i ∈ Finset.range n, x i ∈ Set.range Complex.ofReal) :
+  (h : ∀ i < n, x i ∈ Set.range Complex.ofReal) :
 -- imply
-  ∑ i ∈ Finset.range n, x i ∈ Set.range Complex.ofReal := by
+  ∑ i < n, x i ∈ Set.range Complex.ofReal := by
 -- proof
-  refine ⟨∑ i ∈ Finset.range n, (x i).re, ?_⟩
+  refine ⟨∑ i < n, (x i).re, ?_⟩
   push_cast
   refine Finset.sum_congr rfl fun i hi => ?_
+  try simp only [Nat.Iio_eq_range, ← Finset.mem_range] at *
   obtain ⟨r, hr⟩ := h i hi
   rw [← hr, Complex.ofReal_re]
 

@@ -14,7 +14,7 @@ private lemma main
   {x : α}
   {A : ℕ → Set α} :
 -- imply
-  x ∉ ⋃ k ∈ Finset.range n, A k ↔ ∀ k ∈ Finset.range n, x ∉ A k := by
+  x ∉ ⋃ k < n, A k ↔ ∀ k < n, x ∉ A k := by
 -- proof
   constructor
   ·

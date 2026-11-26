@@ -19,7 +19,7 @@ private lemma main
   choose n hn hpos using h₁
   let N : ℕ := Finset.univ.sup (fun ij : S × S => n ij.1 ij.2) + 1
   have hN : 0 < N := Nat.succ_pos _
-  let B : Matrix S S ℝ := ∑ k ∈ Finset.range N, A ^ k
+  let B : Matrix S S ℝ := ∑ k < N, A ^ k
   have hAn : ∀ k i j, 0 ≤ (A ^ k) i j := fun k => Matrix.pow_apply_nonneg h₀ k
   have hB : ∀ i j, 0 < B i j := by
     intro i j
@@ -27,6 +27,7 @@ private lemma main
       apply Nat.lt_succ_of_le (Finset.le_sup (f := fun ij : S × S => n ij.1 ij.2) (Finset.mem_univ (i, j)))
     simp only [B, Matrix.sum_apply]
     apply lt_of_lt_of_le (hpos i j)
+    try simp only [Nat.Iio_eq_range] at *
     apply Finset.single_le_sum (f := fun k => (A ^ k) i j) (fun k _ => hAn k i j) (Finset.mem_range.2 hlt)
   have hBA : A * B = B * A := by
     simp only [B, Finset.mul_sum, Finset.sum_mul, ← pow_succ, ← pow_succ']
@@ -168,9 +169,10 @@ private lemma main
     | zero => simp
     | succ k ih =>
       rw [pow_succ', ← Matrix.mulVec_mulVec, ih, Matrix.mulVec_smul, hyeq, smul_smul, pow_succ]
-  have hBy : B *ᵥ y = (∑ k ∈ Finset.range N, ρ ^ k) • y := by
+  have hBy : B *ᵥ y = (∑ k < N, ρ ^ k) • y := by
     simp only [B, Matrix.sum_mulVec, hpow, Finset.sum_smul]
-  have hc : 0 < ∑ k ∈ Finset.range N, ρ ^ k := by
+  have hc : 0 < ∑ k < N, ρ ^ k := by
+    try simp only [Nat.Iio_eq_range] at *
     apply lt_of_lt_of_le one_pos
     simpa using Finset.single_le_sum (f := fun k => ρ ^ k) (fun k _ => pow_nonneg hρ k) (Finset.mem_range.2 hN)
   have hypos : ∀ i, 0 < y i := by

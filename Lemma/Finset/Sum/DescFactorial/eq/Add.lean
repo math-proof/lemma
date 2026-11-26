@@ -8,17 +8,19 @@ private lemma telescope
 -- given
   (h : i > 0) :
 -- imply
-  ∑ k ∈ Finset.range n, FallingFactorial (k : ℝ) (-(i : ℤ) - 1) = (1 / (Nat.factorial i : ℝ) - FallingFactorial (n : ℝ) (-(i : ℤ))) / i := by
+  ∑ k < n, FallingFactorial (k : ℝ) (-(i : ℤ) - 1) = (1 / (Nat.factorial i : ℝ) - FallingFactorial (n : ℝ) (-(i : ℤ))) / i := by
 -- proof
-  have key : ∀ n : ℕ, ∑ k ∈ Finset.range n, 1 / (ascPochhammer ℝ (i + 1)).eval ((k : ℝ) + 1) =
+  have key : ∀ n : ℕ, ∑ k < n, 1 / (ascPochhammer ℝ (i + 1)).eval ((k : ℝ) + 1) =
       (1 / (Nat.factorial i : ℝ) - 1 / (ascPochhammer ℝ i).eval ((n : ℝ) + 1)) / i := by
     have hi : (i : ℝ) ≠ 0 := by exact_mod_cast (show i ≠ 0 by omega)
     intro n
     induction n with
     | zero =>
+      try simp only [Nat.Iio_eq_range] at *
       rw [Finset.sum_range_zero, Nat.cast_zero, zero_add, ascPochhammer_eval_one]
       ring
     | succ n ih =>
+      try simp only [Nat.Iio_eq_range] at *
       rw [Finset.sum_range_succ, ih]
       have ha : 0 < (ascPochhammer ℝ i).eval ((n : ℝ) + 1) := ascPochhammer_pos _ _ (by positivity)
       have hb : 0 < (ascPochhammer ℝ i).eval ((n : ℝ) + 1 + 1) := ascPochhammer_pos _ _ (by positivity)

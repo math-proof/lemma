@@ -14,6 +14,7 @@ private lemma treeGF_one_eq
 -- imply
   treeGF b p 1 = 1 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.treeGF_one b p
 
 /--
@@ -26,6 +27,7 @@ private lemma treeGF_continuous_eq
 -- imply
   Continuous (treeGF b p) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.treeGF_continuous b p
 
 /--
@@ -36,8 +38,9 @@ private lemma treeGF_eq_pgf_eq
   {b : ℕ}
   {p s : ℝ} :
 -- imply
-  treeGF b p s = ∑ k ∈ range (b + 1), binomialOffspringPMF b p k * s ^ k := by
+  treeGF b p s = ∑ k < (b + 1), binomialOffspringPMF b p k * s ^ k := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.treeGF_eq_pgf b p s
 
 /--
@@ -48,8 +51,9 @@ private lemma binomialOffspringPMF_sum_eq
   {b : ℕ}
   {p : ℝ} :
 -- imply
-  ∑ k ∈ range (b + 1), binomialOffspringPMF b p k = 1 := by
+  ∑ k < (b + 1), binomialOffspringPMF b p k = 1 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.binomialOffspringPMF_sum b p
 
 /--
@@ -62,6 +66,7 @@ private lemma treeGF_hasDerivAt_eq
 -- imply
   HasDerivAt (treeGF b p) ((b : ℝ) * (1 - p + p * s) ^ (b - 1) * p) s := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.treeGF_hasDerivAt b p s
 
 /--
@@ -74,6 +79,7 @@ private lemma treeGF_hasDerivAt_one_eq
 -- imply
   HasDerivAt (treeGF b p) ((b : ℝ) * p) 1 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.treeGF_hasDerivAt_one b p
 
 /--
@@ -86,6 +92,7 @@ private lemma treeMean_eq_deriv_eq
 -- imply
   treeMean b p = deriv (treeGF b p) 1 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.treeMean_eq_deriv b p
 
 /--
@@ -98,6 +105,7 @@ private lemma one_mem_fixedSet_eq
 -- imply
   (1 : ℝ) ∈ fixedSet b p := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.one_mem_fixedSet b p
 
 /--
@@ -110,6 +118,7 @@ private lemma fixedSet_nonempty_eq
 -- imply
   (fixedSet b p).Nonempty := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.fixedSet_nonempty b p
 
 /--
@@ -122,6 +131,7 @@ private lemma fixedSet_bddBelow_eq
 -- imply
   BddBelow (fixedSet b p) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.fixedSet_bddBelow b p
 
 /--
@@ -134,6 +144,7 @@ private lemma fixedSet_isClosed_eq
 -- imply
   IsClosed (fixedSet b p) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.fixedSet_isClosed b p
 
 /--
@@ -146,6 +157,7 @@ private lemma extinctionProb_mem_eq
 -- imply
   extinctionProb b p ∈ fixedSet b p := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.extinctionProb_mem b p
 
 /--
@@ -158,6 +170,7 @@ private lemma extinctionProb_isFixed_eq
 -- imply
   treeGF b p (extinctionProb b p) = extinctionProb b p := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.extinctionProb_isFixed b p
 
 /--
@@ -170,6 +183,7 @@ private lemma extinctionProb_mem_Icc_eq
 -- imply
   extinctionProb b p ∈ Icc (0 : ℝ) 1 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.extinctionProb_mem_Icc b p
 
 /--
@@ -182,6 +196,7 @@ private lemma extinctionProb_nonneg_eq
 -- imply
   0 ≤ extinctionProb b p := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.extinctionProb_nonneg b p
 
 /--
@@ -194,6 +209,7 @@ private lemma extinctionProb_le_one_eq
 -- imply
   extinctionProb b p ≤ 1 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.extinctionProb_le_one b p
 
 /--
@@ -206,6 +222,7 @@ private lemma survivalProb_nonneg_eq
 -- imply
   0 ≤ survivalProb b p := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.survivalProb_nonneg b p
 
 /--
@@ -218,6 +235,7 @@ private lemma survivalProb_pos_iff_eq
 -- imply
   0 < survivalProb b p ↔ extinctionProb b p < 1 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.survivalProb_pos_iff b p
 
 /--
@@ -232,6 +250,7 @@ private lemma treeGF_zero_nonneg_eq
 -- imply
   0 ≤ treeGF b p 0 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.treeGF_zero_nonneg b hp1
 
 /--
@@ -247,6 +266,7 @@ private lemma supercritical_fixed_eq
 -- imply
   ∃ q ∈ Ico (0 : ℝ) 1, treeGF b p q = q := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.supercritical_fixed b hp1 hmean
 
 /--
@@ -265,6 +285,7 @@ private lemma subcritical_no_fixed_eq
 -- imply
   s < treeGF b p s := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.subcritical_no_fixed b hp0 hp1 hmean hs0 hs1
 
 /--
@@ -281,6 +302,7 @@ private lemma survivalProb_eq_zero_of_subcritical_eq
 -- imply
   survivalProb b p = 0 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.survivalProb_eq_zero_of_subcritical b hp0 hp1 hmean
 
 /--
@@ -296,6 +318,7 @@ private lemma survivalProb_pos_of_supercritical_eq
 -- imply
   0 < survivalProb b p := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.survivalProb_pos_of_supercritical b hp1 hmean
 
 /--
@@ -307,6 +330,7 @@ private lemma survivalProb_zero_eq_zero_eq
 -- imply
   survivalProb b 0 = 0 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.survivalProb_zero_eq_zero b
 
 /--
@@ -320,6 +344,7 @@ private lemma treePc_eq_eq
 -- imply
   treePc b = 1 / (b : ℝ) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.treePc_eq b hb
 
 /--
@@ -336,6 +361,7 @@ private lemma survivalProb_pos_of_gt_treePc_eq
 -- imply
   0 < survivalProb b p := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.survivalProb_pos_of_gt_treePc b hb hp1 hlt
 
 /--
@@ -352,6 +378,7 @@ private lemma survivalProb_eq_zero_of_lt_treePc_eq
 -- imply
   survivalProb b p = 0 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Percolation.survivalProb_eq_zero_of_lt_treePc b hb hp0 hlt
 
 

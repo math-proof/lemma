@@ -27,15 +27,16 @@ private lemma main
   ·
     intro h
     choose b hb using fun k : ℕ => hsurj n (PowerSeries.X ^ k)
-    set a'' : A := ∑ k ∈ Finset.range n, algebraMap R A (PowerSeries.coeff k (θ a)) * b k with ha''
+    set a'' : A := ∑ k < n, algebraMap R A (PowerSeries.coeff k (θ a)) * b k with ha''
     have hmem : a'' ∈ 𝔪.map (algebraMap R A) := by
       refine Ideal.sum_mem _ fun k hk => ?_
+      try simp only [Nat.Iio_eq_range] at *
       apply Ideal.mul_mem_right _ _ (Ideal.mem_map_of_mem _ (h k (Finset.mem_range.mp hk)))
     have hlow : ∀ k : ℕ, k < n → PowerSeries.coeff k (θ (a - a'')) = 0 := by
       intro k hk
       rw [map_sub, map_sub, ha'', map_sum, map_sum]
       simp only [map_mul, hC, PowerSeries.coeff_C_mul]
-      have : ∀ j ∈ Finset.range n, PowerSeries.coeff k (θ a) * 0 = 0 := fun _ _ => mul_zero _
+      have : ∀ j < n, PowerSeries.coeff k (θ a) * 0 = 0 := fun _ _ => mul_zero _
       rw [Finset.sum_eq_single k]
       ·
         rw [hb k k hk, PowerSeries.coeff_X_pow, ite_eq_left rfl, mul_one, sub_self]
@@ -43,6 +44,7 @@ private lemma main
         intro j hj hjk
         rw [hb j k hk, PowerSeries.coeff_X_pow, ite_eq_right (Ne.symm hjk), mul_zero]
       ·
+        try simp only [Nat.Iio_eq_range] at *
         intro hk'
         apply absurd (Finset.mem_range.mpr hk) hk'
     have hIn : a - a'' ∈ I ^ n := (hfil n _).mp hlow

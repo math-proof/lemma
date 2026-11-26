@@ -11,8 +11,9 @@ private lemma main
   (hk : k ∈ Finset.range n)
   (h : x ∈ A k) :
 -- imply
-  ∃ i ∈ Finset.range n, x ∈ A i := by
+  ∃ i < n, x ∈ A i := by
 -- proof
+  try simp only [← Finset.mem_range] at *
   exact ⟨k, hk, h⟩
 
 

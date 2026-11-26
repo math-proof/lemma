@@ -17,7 +17,7 @@ private lemma main
     ([i < m][j < n] x ^ (i : ℕ) * ((i : ℝ) + δ) ^ (j : ℕ)) =
     ([i < m - d][j < n] ((i : ℝ) + δ) ^ (j : ℕ) * x ^ (i : ℕ)) *
     ([i < n][j < n] (((j : ℕ).choose i : ℝ) *
-      ∑ h ∈ Finset.range (d + 1), (d.choose h : ℝ) * (-l) ^ (d - h) * x ^ h * (h : ℝ) ^ ((j : ℤ) - (i : ℕ)))) := by
+      ∑ h < (d + 1), (d.choose h : ℝ) * (-l) ^ (d - h) * x ^ h * (h : ℝ) ^ ((j : ℤ) - (i : ℕ)))) := by
 -- proof
   have := congrArg Matrix.transpose (MulOfMulPowOfPowNegChoose.eq.MulOfChooseSumOf (n := n) (m := m) (d := d) (x := x) (δ := δ) (l := l))
   rw [Matrix.transpose_mul, Matrix.transpose_mul] at this
@@ -25,4 +25,4 @@ private lemma main
 
 
 -- created on 2026-10-07
--- updated on 2026-10-27
+-- updated on 2026-11-26

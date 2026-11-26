@@ -10,8 +10,9 @@ private lemma main
   (h₀ : n > 0)
   (h : ∀ i, f i > g i) :
 -- imply
-  ∑ i ∈ Finset.range n, f i > ∑ i ∈ Finset.range n, g i := by
+  ∑ i < n, f i > ∑ i < n, g i := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   exact Finset.sum_lt_sum_of_nonempty ⟨0, Finset.mem_range.mpr h₀⟩ fun i _ => h i
 
 

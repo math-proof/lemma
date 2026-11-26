@@ -8,8 +8,8 @@ private lemma main
   (f : ℤ → ℕ)
   (x : ℤ → ℕ → ℝ) :
 -- imply
-  ∑ i ∈ ({a} : Finset ℤ), ∑ j ∈ Finset.range (f i), x i j
-    = ∑ j ∈ Finset.range (f a), x a j := by
+  ∑ i ∈ ({a} : Finset ℤ), ∑ j < (f i), x i j
+    = ∑ j < (f a), x a j := by
 -- proof
   simp
 

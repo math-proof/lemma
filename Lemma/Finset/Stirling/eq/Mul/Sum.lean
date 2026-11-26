@@ -9,14 +9,14 @@ open Nat
 private lemma main
   {n k : ℕ} :
 -- imply
-  (Stirling n k : ℝ) = (∑ i ∈ Finset.range (k + 1), (-1 : ℝ) ^ (k - i) * (k.choose i : ℝ) * (i : ℝ) ^ n) / (k ! : ℝ) := by
+  (Stirling n k : ℝ) = (∑ i < (k + 1), (-1 : ℝ) ^ (k - i) * (k.choose i : ℝ) * (i : ℝ) ^ n) / (k ! : ℝ) := by
 -- proof
-  obtain ⟨T, hT⟩ : ∃ T : ℕ → ℕ → ℝ, T = fun m k => ∑ i ∈ Finset.range (k + 1), (-1 : ℝ) ^ (k - i) * (k.choose i : ℝ) * (i : ℝ) ^ m :=
+  obtain ⟨T, hT⟩ : ∃ T : ℕ → ℕ → ℝ, T = fun (m : ℕ) (k : ℕ) => ∑ i < (k + 1), (-1 : ℝ) ^ (k - i) * (k.choose i : ℝ) * (i : ℝ) ^ m :=
     ⟨_, rfl⟩
-  have hA : ∀ m k, ∑ j ∈ Finset.range (k + 1), (-1 : ℝ) ^ (k - j) * (k.choose j : ℝ) * ((j : ℝ) + 1) ^ m = T m k + T m (k + 1) := by
+  have hA : ∀ (m : ℕ) (k : ℕ), ∑ j < (k + 1), (-1 : ℝ) ^ (k - j) * (k.choose j : ℝ) * ((j : ℝ) + 1) ^ m = T m k + T m (k + 1) := by
     intro m k
-    have h₁ : T m (k + 1) = ∑ j ∈ Finset.range (k + 1), ((-1 : ℝ) ^ (k - j) * (k.choose j : ℝ) * ((j : ℝ) + 1) ^ m + (-1 : ℝ) ^ (k - j) * (k.choose (j + 1) : ℝ) * ((j : ℝ) + 1) ^ m) + (-1 : ℝ) ^ (k + 1) * (0 : ℝ) ^ m := by
-      simp only [hT]
+    have h₁ : T m (k + 1) = ∑ j < (k + 1), ((-1 : ℝ) ^ (k - j) * (k.choose j : ℝ) * ((j : ℝ) + 1) ^ m + (-1 : ℝ) ^ (k - j) * (k.choose (j + 1) : ℝ) * ((j : ℝ) + 1) ^ m) + (-1 : ℝ) ^ (k + 1) * (0 : ℝ) ^ m := by
+      simp only [hT, Nat.Iio_eq_range]
       rw [Finset.sum_range_succ']
       congr 1
       ·
@@ -26,8 +26,8 @@ private lemma main
         ring
       ·
         simp
-    have h₂ : T m k = ∑ j ∈ Finset.range k, (-1 : ℝ) ^ (k - (j + 1)) * (k.choose (j + 1) : ℝ) * ((j : ℝ) + 1) ^ m + (-1 : ℝ) ^ k * (0 : ℝ) ^ m := by
-      simp only [hT]
+    have h₂ : T m k = ∑ j < k, (-1 : ℝ) ^ (k - (j + 1)) * (k.choose (j + 1) : ℝ) * ((j : ℝ) + 1) ^ m + (-1 : ℝ) ^ k * (0 : ℝ) ^ m := by
+      simp only [hT, Nat.Iio_eq_range]
       rw [Finset.sum_range_succ']
       congr 1
       ·
@@ -36,7 +36,8 @@ private lemma main
         ring
       ·
         simp
-    have h₃ : ∑ j ∈ Finset.range (k + 1), (-1 : ℝ) ^ (k - j) * (k.choose (j + 1) : ℝ) * ((j : ℝ) + 1) ^ m = -∑ j ∈ Finset.range k, (-1 : ℝ) ^ (k - (j + 1)) * (k.choose (j + 1) : ℝ) * ((j : ℝ) + 1) ^ m := by
+    have h₃ : ∑ j < (k + 1), (-1 : ℝ) ^ (k - j) * (k.choose (j + 1) : ℝ) * ((j : ℝ) + 1) ^ m = -∑ j < k, (-1 : ℝ) ^ (k - (j + 1)) * (k.choose (j + 1) : ℝ) * ((j : ℝ) + 1) ^ m := by
+      simp only [Nat.Iio_eq_range]
       rw [Finset.sum_range_succ, Nat.choose_succ_self, Nat.cast_zero, mul_zero, zero_mul, add_zero, ← Finset.sum_neg_distrib]
       refine Finset.sum_congr rfl fun j hj => ?_
       have hj := Finset.mem_range.mp hj
@@ -54,7 +55,7 @@ private lemma main
         simp [hT, Stirling, Nat.stirlingSecond_zero]
       | succ k =>
         have h := hA 0 k
-        have h₀ : T 0 k = ∑ j ∈ Finset.range (k + 1), (-1 : ℝ) ^ (k - j) * (k.choose j : ℝ) := by
+        have h₀ : T 0 k = ∑ j < (k + 1), (-1 : ℝ) ^ (k - j) * (k.choose j : ℝ) := by
           simp only [hT, pow_zero, mul_one]
         simp only [pow_zero, mul_one] at h
         rw [h₀] at h
@@ -67,8 +68,8 @@ private lemma main
       | zero =>
         simp [hT, Stirling, Nat.stirlingSecond_succ_zero]
       | succ k =>
-        have e : T (m + 1) (k + 1) = ((k : ℝ) + 1) * ∑ j ∈ Finset.range (k + 1), (-1 : ℝ) ^ (k - j) * (k.choose j : ℝ) * ((j : ℝ) + 1) ^ m := by
-          simp only [hT]
+        have e : T (m + 1) (k + 1) = ((k : ℝ) + 1) * ∑ j < (k + 1), (-1 : ℝ) ^ (k - j) * (k.choose j : ℝ) * ((j : ℝ) + 1) ^ m := by
+          simp only [hT, Nat.Iio_eq_range]
           rw [Finset.sum_range_succ', Finset.mul_sum]
           simp only [Nat.cast_zero, zero_pow (Nat.succ_ne_zero m), mul_zero, add_zero]
           refine Finset.sum_congr rfl fun j _ => ?_

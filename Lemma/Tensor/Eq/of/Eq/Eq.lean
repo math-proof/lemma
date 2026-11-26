@@ -36,27 +36,32 @@ private lemma exponential_moving_average
   (h₀ : v 0 = 0)
   (h₁ : ∀ t > 0, v t = β * v (t - 1) + (1 - β) * θ t) :
 -- imply
-  v n = θ 0 * (1 - β ^ n) + ∑ t ∈ Finset.range n, (1 - β ^ (n - t)) * (θ (t + 1) - θ t) := by
+  v n = θ 0 * (1 - β ^ n) + ∑ t < n, (1 - β ^ (n - t)) * (θ (t + 1) - θ t) := by
 -- proof
-  have key : ∀ n, v n = θ n - θ 0 * β ^ n - ∑ t ∈ Finset.range n, β ^ (n - t) * (θ (t + 1) - θ t) := by
+  have key : ∀ n, v n = θ n - θ 0 * β ^ n - ∑ t < n, β ^ (n - t) * (θ (t + 1) - θ t) := by
     intro n
     induction n with
     | zero =>
       simp [h₀]
     | succ n ih =>
-      have hs : ∑ t ∈ Finset.range n, β ^ (n + 1 - t) * (θ (t + 1) - θ t) = β * ∑ t ∈ Finset.range n, β ^ (n - t) * (θ (t + 1) - θ t) := by
+      have hs : ∑ t < n, β ^ (n + 1 - t) * (θ (t + 1) - θ t) = β * ∑ t < n, β ^ (n - t) * (θ (t + 1) - θ t) := by
         rw [Finset.mul_sum]
         refine Finset.sum_congr rfl fun t ht => ?_
-        have ht := Finset.mem_range.mp ht
+        have ht := Finset.mem_Iio.mp ht
         rw [show n + 1 - t = n - t + 1 by omega, pow_succ]
         ring
-      rw [h₁ (n + 1) (by omega), Nat.add_sub_cancel, ih, Finset.sum_range_succ, hs, show n + 1 - n = 1 by omega]
+      have hsucc : ∀ g : ℕ → ℝ, ∑ t < n + 1, g t = (∑ t < n, g t) + g n := by
+        intro g
+        simp only [Nat.Iio_eq_range, Finset.sum_range_succ]
+      rw [h₁ (n + 1) (by omega), Nat.add_sub_cancel, ih, hsucc, hs, show n + 1 - n = 1 by omega]
       ring
-  have hd : ∑ t ∈ Finset.range n, (1 - β ^ (n - t)) * (θ (t + 1) - θ t) = ∑ t ∈ Finset.range n, (θ (t + 1) - θ t) - ∑ t ∈ Finset.range n, β ^ (n - t) * (θ (t + 1) - θ t) := by
+  have hd : ∑ t < n, (1 - β ^ (n - t)) * (θ (t + 1) - θ t) = ∑ t < n, (θ (t + 1) - θ t) - ∑ t < n, β ^ (n - t) * (θ (t + 1) - θ t) := by
     rw [← Finset.sum_sub_distrib]
     refine Finset.sum_congr rfl fun t _ => ?_
     ring
-  rw [key n, hd, Finset.sum_range_sub θ n]
+  have hsub : ∑ t < n, (θ (t + 1) - θ t) = θ n - θ 0 := by
+    simp only [Nat.Iio_eq_range, Finset.sum_range_sub]
+  rw [key n, hd, hsub]
   ring
 
 @[path]

@@ -7,10 +7,11 @@ private lemma main
   {n : ℕ}
   {f g : ℕ → ℝ}
 -- given
-  (h : ∀ i ∈ Finset.range n, f i ≤ g i) :
+  (h : ∀ i < n, f i ≤ g i) :
 -- imply
-  ∑ i ∈ Finset.range n, f i ≤ ∑ i ∈ Finset.range n, g i := by
+  ∑ i < n, f i ≤ ∑ i < n, g i := by
 -- proof
+  try simp only [Nat.Iio_eq_range, ← Finset.mem_range] at *
   exact Finset.sum_le_sum h
 
 

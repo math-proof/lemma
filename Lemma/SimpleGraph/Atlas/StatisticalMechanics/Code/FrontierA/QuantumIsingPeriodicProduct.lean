@@ -14,8 +14,9 @@ private lemma prod_one_sub_quantumIsingPeriodicRoot_eq
 -- given
   (hn : n ≠ 0) :
 -- imply
-  (∏ j ∈ Finset.range n, (1 - z * quantumIsingPeriodicRoot n j)) = 1 - z ^ n := by
+  (∏ j < n, (1 - z * quantumIsingPeriodicRoot n j)) = 1 - z ^ n := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.prod_one_sub_quantumIsingPeriodicRoot n hn z
 
 /--
@@ -29,8 +30,9 @@ private lemma prod_sub_cos_quantumIsingPeriodicAngle_eq
   (hn : n ≠ 0)
   (hr : 0 < r) :
 -- imply
-  (∏ j ∈ Finset.range n, ((r + r⁻¹) / 2 - Real.cos (quantumIsingPeriodicAngle n j))) = (r / 2) ^ n * (1 - r⁻¹ ^ n) ^ 2 := by
+  (∏ j < n, ((r + r⁻¹) / 2 - Real.cos (quantumIsingPeriodicAngle n j))) = (r / 2) ^ n * (1 - r⁻¹ ^ n) ^ 2 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.prod_sub_cos_quantumIsingPeriodicAngle n hn r hr
 
 /--
@@ -44,8 +46,9 @@ private lemma prod_sub_cos_periodic_le_antiperiodic_eq
   (hn : n ≠ 0)
   (hr : 1 ≤ r) :
 -- imply
-  (∏ j ∈ Finset.range n, ((r + r⁻¹) / 2 - Real.cos (quantumIsingPeriodicAngle n j))) ≤ ∏ j ∈ Finset.range n, ((r + r⁻¹) / 2 - Real.cos (quantumIsingAntiperiodicAngle n j)) := by
+  (∏ j < n, ((r + r⁻¹) / 2 - Real.cos (quantumIsingPeriodicAngle n j))) ≤ ∏ j < n, ((r + r⁻¹) / 2 - Real.cos (quantumIsingAntiperiodicAngle n j)) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.prod_sub_cos_periodic_le_antiperiodic n hn r hr
 
 

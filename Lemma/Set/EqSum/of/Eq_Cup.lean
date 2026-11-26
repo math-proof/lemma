@@ -14,8 +14,9 @@ private lemma main
   (h₀ : (Finset.range n).biUnion (fun i => ({a i} : Finset α)) = X)
   (h₁ : ∀ i < n, ∀ j < n, i ≠ j → a i ≠ a j) :
 -- imply
-  ∑ x ∈ X, f x = ∑ i ∈ Finset.range n, f (a i) := by
+  ∑ x ∈ X, f x = ∑ i < n, f (a i) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   rw [← h₀, Finset.sum_biUnion]
   ·
     simp

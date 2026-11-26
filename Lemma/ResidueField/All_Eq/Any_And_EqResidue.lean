@@ -9,10 +9,12 @@ set_option backward.isDefEq.respectTransparency false
 private lemma eq_one_of_pow_eq_one_of_residue_eq_one
   {R : Type*} [CommRing R] [IsLocalRing R] {m : ℕ}
   (hm : (m : ResidueField R) ≠ 0) {ζ : R} (hζ : ζ ^ m = 1) (h1 : residue R ζ = 1) : ζ = 1 := by
-  have hgeom : (∑ i ∈ Finset.range m, ζ ^ i) * (ζ - 1) = 0 := by
+  have hgeom : (∑ i < m, ζ ^ i) * (ζ - 1) = 0 := by
+    try simp only [Nat.Iio_eq_range] at *
     rw [geom_sum_mul, hζ, sub_self]
-  have hunit : IsUnit (∑ i ∈ Finset.range m, ζ ^ i) := by
+  have hunit : IsUnit (∑ i < m, ζ ^ i) := by
     rw [← residue_ne_zero_iff_isUnit, map_sum]
+    try simp only [Nat.Iio_eq_range] at *
     simp only [map_pow, h1, one_pow, Finset.sum_const, Finset.card_range, nsmul_eq_mul, mul_one]
     refine hm
   have := hunit.mul_left_cancel (hgeom.trans (mul_zero _).symm)

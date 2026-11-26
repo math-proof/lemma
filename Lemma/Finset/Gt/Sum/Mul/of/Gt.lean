@@ -10,7 +10,7 @@ private lemma main
   (h₀ : n > 0)
   (h : ∀ i, f i > g i) :
 -- imply
-  ∑ i ∈ Finset.range (n + 1), n * f i > ∑ i ∈ Finset.range (n + 1), n * g i := by
+  ∑ i < (n + 1), n * f i > ∑ i < (n + 1), n * g i := by
 -- proof
   have hn : (0 : ℝ) < n := by exact_mod_cast h₀
   exact Finset.sum_lt_sum_of_nonempty ⟨0, by simp⟩ fun i _ => mul_lt_mul_of_pos_left (h i) hn

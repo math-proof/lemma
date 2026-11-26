@@ -11,14 +11,14 @@ private lemma main
   {w w' : ℕ → Finset ℕ}
   {x : ℕ → EuclideanSpace ℝ (Fin d)}
 -- given
-  (h₀ : ∑ i ∈ Finset.range k, (w i).card = M)
+  (h₀ : ∑ i < k, (w i).card = M)
   (h₁ : (Finset.range k).biUnion w = Finset.range M)
   (h₂ : ∀ i, w' i = (Finset.range M).filter fun j =>
     ((min⁻¹[i' : Fin k] ‖x j - (((w i').card : ℝ)⁻¹ • ∑ j' ∈ w i', x j')‖ : Fin k) : ℕ) = i) :
 -- imply
-  ∑ i ∈ Finset.range k, ∑ j ∈ w' i,
+  ∑ i < k, ∑ j ∈ w' i,
       ‖x j - (((w' i).card : ℝ)⁻¹ • ∑ j' ∈ w' i, x j')‖ ^ 2 ≤
-    ∑ i ∈ Finset.range k, ∑ j ∈ w i,
+    ∑ i < k, ∑ j ∈ w i,
       ‖x j - (((w i).card : ℝ)⁻¹ • ∑ j' ∈ w i, x j')‖ ^ 2 := by
 -- proof
   have hmean : ∀ (s : Finset ℕ) (c : EuclideanSpace ℝ (Fin d)),
@@ -68,26 +68,28 @@ private lemma main
   set F : ℕ → ℝ := fun j =>
       ‖x j - (((w (A j : ℕ)).card : ℝ)⁻¹ • ∑ j' ∈ w (A j : ℕ), x j')‖ ^ 2 with hF
   calc _ ≤
-      ∑ i ∈ Finset.range k, ∑ j ∈ w' i,
+      ∑ i < k, ∑ j ∈ w' i,
         ‖x j - (((w i).card : ℝ)⁻¹ • ∑ j' ∈ w i, x j')‖ ^ 2 :=
         Finset.sum_le_sum fun i _ => hmean (w' i) _
-    _ = ∑ i ∈ Finset.range k,
+    _ = ∑ i < k,
           ∑ j ∈ (Finset.range M).filter (fun j => (A j : ℕ) = i), F j := by
         refine Finset.sum_congr rfl fun i _ => ?_
         rw [h₂ i]
         refine Finset.sum_congr rfl fun j hj => ?_
         rw [hF]
         simp only [(Finset.mem_filter.mp hj).2]
-    _ = ∑ j ∈ Finset.range M, F j :=
-        Finset.sum_fiberwise_of_maps_to
-          (fun j _ => Finset.mem_range.mpr (A j).isLt) F
-    _ = ∑ i ∈ Finset.range k, ∑ j ∈ w i, F j := by
+    _ = ∑ j < M, F j := by
+        simpa only [Nat.Iio_eq_range] using
+          Finset.sum_fiberwise_of_maps_to
+            (fun j _ => Finset.mem_range.mpr (A j).isLt) F
+    _ = ∑ i < k, ∑ j ∈ w i, F j := by
+        simp only [Nat.Iio_eq_range]
         rw [← h₁, Finset.sum_biUnion hdisj]
     _ ≤ _ := by
         refine Finset.sum_le_sum fun i hi =>
           Finset.sum_le_sum fun j _ => ?_
         exact pow_le_pow_left₀ (norm_nonneg _)
-          (hmin j ⟨i, Finset.mem_range.mp hi⟩) 2
+          (hmin j ⟨i, Finset.mem_Iio.mp hi⟩) 2
 
 
 -- created on 2020-12-26

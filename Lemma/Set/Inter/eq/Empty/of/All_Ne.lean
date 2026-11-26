@@ -7,9 +7,9 @@ private lemma main
   {y : α}
   {x : ℕ → α}
 -- given
-  (h : ∀ i ∈ Finset.range n, x i ≠ y) :
+  (h : ∀ i < n, x i ≠ y) :
 -- imply
-  {y} ∩ (⋃ i ∈ Finset.range n, {x i}) = ∅ := by
+  {y} ∩ (⋃ i < n, {x i}) = ∅ := by
 -- proof
   refine Set.singleton_inter_eq_empty.mpr fun hy => ?_
   obtain ⟨i, hi, hyi⟩ := Set.mem_iUnion₂.mp hy

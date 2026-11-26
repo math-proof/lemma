@@ -8,9 +8,10 @@ private lemma main
   {n : ℕ}
   {x : ℝ} :
 -- imply
-  ∑ k ∈ Finset.range (n + 1), x ^ k * (Nat.stirlingFirst n k : ℝ) = (ascPochhammer ℝ n).eval x := by
+  ∑ k < (n + 1), x ^ k * (Nat.stirlingFirst n k : ℝ) = (ascPochhammer ℝ n).eval x := by
 -- proof
   exact (Finset.EvalAscPochhammer.eq.Sum_MulPowStirlingFirst x n).symm
 
 
 -- created on 2023-08-26
+-- updated on 2026-11-26

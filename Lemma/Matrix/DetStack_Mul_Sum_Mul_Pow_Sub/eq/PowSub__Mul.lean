@@ -17,7 +17,7 @@ private lemma main
 -- imply
   ([i < n][j < n]
       ((i : ℕ).choose j : α) *
-        ∑ h ∈ Finset.range (d + 1),
+        ∑ h < (d + 1),
           (d.choose h : α) * (-l) ^ (d - h) * x ^ h *
             (h : α) ^ (i - j : ℤ)).det =
     (x - l) ^ (n * d) := by
@@ -27,7 +27,7 @@ private lemma main
     rw [Nat.choose_eq_zero_of_lt (show (i : ℕ) < j from hij), Nat.cast_zero, zero_mul])]
   simp only [Matrix.ofFun_apply, Nat.choose_self, Nat.cast_one, one_mul]
   have hdiag : ∀ i : Fin n,
-      ∑ h ∈ Finset.range (d + 1),
+      ∑ h < (d + 1),
           (d.choose h : α) * (-l) ^ (d - h) * x ^ h *
             (h : α) ^ (i - i : ℤ) =
         (x - l) ^ d := by
@@ -37,6 +37,7 @@ private lemma main
       simp
     simp only [hexp, mul_one]
     rw [sub_eq_add_neg, add_pow]
+    simp only [Nat.Iio_eq_range]
     refine Finset.sum_congr rfl fun h _ => ?_
     ring
   simp only [hdiag]

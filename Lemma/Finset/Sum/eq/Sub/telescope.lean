@@ -15,12 +15,13 @@ private lemma main
   set d : ℕ := (n + 1 - i).toNat with hd
   have hdi : (i + d : ℤ) = n + 1 := by omega
   have hsum :
-      ∑ j ∈ Finset.range d, (x (i + (j + 1)) - x (i + j)) =
+      ∑ j < d, (x (i + (j + 1)) - x (i + j)) =
         x (i + d) - x i := by
     induction d with
     | zero =>
       simp
     | succ d ih =>
+      try simp only [Nat.Iio_eq_range] at *
       rw [Finset.sum_range_succ, ih]
       simp
   rw [Int.Ico_eq_finset_map i (n + 1), Finset.sum_map]
@@ -28,6 +29,7 @@ private lemma main
     addLeftEmbedding_apply]
   have hr : (n + 1 - i).toNat = d := by omega
   rw [hr, show n + 1 = i + d from hdi.symm]
+  try simp only [Nat.Iio_eq_range] at *
   convert hsum using 3
   ring_nf
 

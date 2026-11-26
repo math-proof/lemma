@@ -19,7 +19,7 @@ private lemma main
   (hab : a ∉ maximalIdeal W ∨ b ∉ maximalIdeal W)
   (hdir : a ^ q * b - a * b ^ q ∈ maximalIdeal W) :
   -- imply
-  IsUnit (∑ i ∈ Finset.range (q + 1), a ^ ((q - 1) * i) * b ^ ((q - 1) * (q - i))) := by
+  IsUnit (∑ i < (q + 1), a ^ ((q - 1) * i) * b ^ ((q - 1) * (q - i))) := by
   -- proof
   classical
   have hq2 : 2 ≤ q := (Fact.out : q.Prime).two_le
@@ -41,7 +41,7 @@ private lemma main
       obtain h | h := hab
       · apply Or.inl fun h0 => h (Iff.mpr (hπmem a) h0)
       · apply Or.inr fun h0 => h (Iff.mpr (hπmem b) h0)
-    have hsum : (∑ i ∈ Finset.range (q + 1), π a ^ ((q - 1) * i) * π b ^ ((q - 1) * (q - i))) = ∑ i ∈ Finset.range (q + 1), (π a ^ (q - 1)) ^ i * (π b ^ (q - 1)) ^ (q - i) := by
+    have hsum : (∑ i < (q + 1), π a ^ ((q - 1) * i) * π b ^ ((q - 1) * (q - i))) = ∑ i < (q + 1), (π a ^ (q - 1)) ^ i * (π b ^ (q - 1)) ^ (q - i) := by
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [← pow_mul, ← pow_mul]
     rw [hsum]
@@ -62,7 +62,7 @@ private lemma main
           apply zero_pow (by omega)
         rw [Finset.sum_eq_single_of_mem q (by simp) (fun j hj hjq => by
           have hjq' : q - j ≠ 0 := by
-            have : j < q + 1 := Iff.mp Finset.mem_range hj
+            have : j < q + 1 := by simpa using hj
             omega
           rw [hβ0, zero_pow hjq', mul_zero])]
         simp only [Nat.sub_self, pow_zero, mul_one]
@@ -87,13 +87,14 @@ private lemma main
             · apply absurd h3 hA
             · apply absurd h3 hB
           · apply Iff.mp sub_eq_zero h2
-        have hterm : ∀ i ∈ Finset.range (q + 1), α ^ i * β ^ (q - i) = α ^ q := by
+        have hterm : ∀ i < (q + 1), α ^ i * β ^ (q - i) = α ^ q := by
           intro i hi
-          have : i ≤ q := Iff.mp Nat.lt_succ_iff (Iff.mp Finset.mem_range hi)
+          have : i ≤ q := Iff.mp Nat.lt_succ_iff hi
           rw [← hαβ, ← pow_add]
           congr 1
           omega
-        rw [Finset.sum_congr rfl hterm, Finset.sum_const, Finset.card_range, nsmul_eq_mul]
+        simp only [Nat.Iio_eq_range]
+        rw [Finset.sum_congr rfl (fun i hi => hterm i (by simpa using hi)), Finset.sum_const, Finset.card_range, nsmul_eq_mul]
         have : ((q + 1 : ℕ) : k) = 1 := by
           push_cast
           rw [hqk, zero_add]

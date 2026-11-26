@@ -42,13 +42,14 @@ private lemma main
   refine Integrable.of_bound ?_ ((1 - γ)⁻¹ * |R|) ?_
   ·
     refine aestronglyMeasurable_of_tendsto_ae atTop
-      (f := fun n ω => ∑ k ∈ range n, γ ^ k * (ω (t + k)).1) (fun n => ?_) ?_
+      (f := fun n ω => ∑ k < n, γ ^ k * (ω (t + k)).1) (fun n => ?_) ?_
     ·
       apply (measurable_fun_sum _ fun k _ =>
         (measurable_fst.comp (measurable_pi_apply (t + k))).const_mul (γ ^ k)).aestronglyMeasurable
     ·
       apply hsum.mono
       intro ω h
+      try simp only [Nat.Iio_eq_range] at *
       apply h.1.tendsto_sum_nat
   ·
     apply hsum.mono

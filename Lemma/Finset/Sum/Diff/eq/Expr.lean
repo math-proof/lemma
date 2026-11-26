@@ -9,8 +9,9 @@ private lemma main
   {f : ℝ → ℝ}
   {x : ℝ} :
 -- imply
-  ∑ k ∈ Finset.range (n + 1), (n.choose k : ℝ) * (fwdDiff 1)^[k] f x = f (x + n) := by
+  ∑ k < (n + 1), (n.choose k : ℝ) * (fwdDiff 1)^[k] f x = f (x + n) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   have e := shift_eq_sum_fwdDiff_iter (1 : ℝ) f n x
   rw [nsmul_eq_mul, mul_one] at e
   rw [e]

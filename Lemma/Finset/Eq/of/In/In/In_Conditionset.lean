@@ -17,8 +17,8 @@ private lemma main
   i1 = i2 := by
 -- proof
   set w : ℕ → Finset ℕ := fun i => if h : i < k then x ⟨i, h⟩ else ∅ with hw
-  have h₀ : ∑ i ∈ Finset.range k, (w i).card = n := by
-    rw [← hx.2.1, ← Fin.sum_univ_eq_sum_range (fun i => (w i).card)]
+  have h₀ : ∑ i < k, (w i).card = n := by
+    rw [← hx.2.1, Nat.Iio_eq_range, ← Fin.sum_univ_eq_sum_range (fun i => (w i).card)]
     simp [hw]
   have h₁ : (Finset.range k).biUnion w = Finset.range n := by
     rw [← hx.1]
@@ -31,7 +31,7 @@ private lemma main
     ·
       rintro ⟨i, ha⟩
       exact ⟨i, i.isLt, by simpa [hw, i.isLt] using ha⟩
-  exact Fin.ext (Eq.of.In.In.Lt.Lt.EqBiUnion.EqSum_Card h₀ h₁ i1.isLt i2.isLt (by simpa [hw] using h1) (by simpa [hw] using h2))
+  exact Fin.ext (Eq.of.In.In.Lt.Lt.EqBiUnion.EqSum_Card (by simpa only [Nat.Iio_eq_range] using h₀) h₁ i1.isLt i2.isLt (by simpa [hw] using h1) (by simpa [hw] using h2))
 
 
 -- created on 2026-10-07

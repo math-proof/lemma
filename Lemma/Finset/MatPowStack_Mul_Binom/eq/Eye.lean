@@ -14,17 +14,17 @@ private lemma main
     intro n i h
     obtain ⟨d, rfl⟩ : ∃ d, n = i + d := ⟨n - i, by omega⟩
     rw [Finset.sum_Ico_eq_sum_range, show i + d + 1 - i = d + 1 by omega]
-    have e : ∀ j ∈ Finset.range (d + 1), ((i + d).choose (i + j) : ℤ) * (-1) ^ (i + j - i) * ((i + j).choose i : ℤ) =
+    have e : ∀ j < (d + 1), ((i + d).choose (i + j) : ℤ) * (-1) ^ (i + j - i) * ((i + j).choose i : ℤ) =
         ((i + d).choose i : ℤ) * ((-1) ^ j * (d.choose j : ℤ)) := by
       intro j hj
-      have hj' := Finset.mem_range.mp hj
+      have hj' := hj
       have hc : (i + d).choose (i + j) * (i + j).choose i = (i + d).choose i * d.choose j := by
         rw [Nat.choose_mul (by omega), Nat.add_sub_cancel_left, Nat.add_sub_cancel_left]
       have hc' : ((i + d).choose (i + j) : ℤ) * ((i + j).choose i : ℤ) = ((i + d).choose i : ℤ) * (d.choose j : ℤ) := by
         exact_mod_cast hc
       rw [Nat.add_sub_cancel_left]
       linear_combination (-1 : ℤ) ^ j * hc'
-    rw [Finset.sum_congr rfl e, ← Finset.mul_sum, Int.alternating_sum_range_choose]
+    rw [Finset.sum_congr rfl (fun j hj => e j (by simpa using hj)), ← Finset.mul_sum, Int.alternating_sum_range_choose]
     by_cases hd : d = 0
     · subst hd
       simp

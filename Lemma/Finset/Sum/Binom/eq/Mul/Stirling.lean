@@ -6,10 +6,11 @@ open Finset Nat
 private lemma main
   {n k : ℕ} :
 -- imply
-  ∑ i ∈ Finset.range (k + 1), (-1 : ℝ) ^ (k - i) * (k.choose i : ℝ) * (i : ℝ) ^ n = (k ! : ℝ) * (Stirling n k : ℝ) := by
+  ∑ i < (k + 1), (-1 : ℝ) ^ (k - i) * (k.choose i : ℝ) * (i : ℝ) ^ n = (k ! : ℝ) * (Stirling n k : ℝ) := by
 -- proof
   rw [Stirling.eq.Mul.Sum]
   field_simp
 
 
 -- created on 2022-01-18
+-- updated on 2026-11-26

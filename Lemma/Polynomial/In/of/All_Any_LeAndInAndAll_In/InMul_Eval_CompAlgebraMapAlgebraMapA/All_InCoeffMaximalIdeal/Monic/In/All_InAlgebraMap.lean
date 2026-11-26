@@ -40,12 +40,13 @@ private lemma main
       refine (map_eq_zero_iff _ (IsFractionRing.injective ↥A L)).mp h1
     have hsum := Polynomial.eval_eq_sum_range (p := P) c
     rw [Finset.sum_range_succ, hP.coeff_natDegree, one_mul, hPc0] at hsum
+    rw [← Nat.Iio_eq_range] at hsum
     have hpow : c ^ P.natDegree ∈ maximalIdeal ↥A := by
-      have : c ^ P.natDegree = -∑ i ∈ Finset.range P.natDegree, P.coeff i * c ^ i := by
+      have : c ^ P.natDegree = -∑ i < P.natDegree, P.coeff i * c ^ i := by
         linear_combination -hsum
       rw [this]
       exact Submodule.neg_mem _ (Ideal.sum_mem _ fun i hi =>
-        Ideal.mul_mem_right _ _ (hPc i (Finset.mem_range.mp hi)))
+        Ideal.mul_mem_right _ _ (hPc i (by simpa using hi)))
     refine Ideal.IsPrime.mem_of_pow_mem inferInstance _ hpow
   have heval : Polynomial.eval₂ ι T P = (PL.roots.map fun r => T - algebraMap L F r).prod := by
     rw [Polynomial.eval₂_eq_eval_map]

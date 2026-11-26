@@ -7,7 +7,7 @@ private lemma main
   {n : ℕ}
   {f : ℕ → ℝ} :
 -- imply
-  ∑ k ∈ Finset.range n, f k ≤ ∑ k ∈ Finset.range n, |f k| := by
+  ∑ k < n, f k ≤ ∑ k < n, |f k| := by
 -- proof
   exact Finset.sum_le_sum fun k _ => le_abs_self (f k)
 

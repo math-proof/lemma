@@ -12,15 +12,18 @@ private lemma telescope
 -- imply
   ∑ k ∈ Finset.Icc 1 n, 1 / (ascPochhammer ℝ (i + 1)).eval (k : ℝ) = (1 / (Nat.factorial i : ℝ) - 1 / (ascPochhammer ℝ i).eval ((n : ℝ) + 1)) / i := by
 -- proof
-  have key : ∀ n : ℕ, ∑ k ∈ Finset.range n, 1 / (ascPochhammer ℝ (i + 1)).eval ((k : ℝ) + 1) =
+  try simp only [Nat.Iio_eq_range] at *
+  have key : ∀ n : ℕ, ∑ k < n, 1 / (ascPochhammer ℝ (i + 1)).eval ((k : ℝ) + 1) =
       (1 / (Nat.factorial i : ℝ) - 1 / (ascPochhammer ℝ i).eval ((n : ℝ) + 1)) / i := by
     have hi : (i : ℝ) ≠ 0 := by exact_mod_cast (show i ≠ 0 by omega)
     intro n
     induction n with
     | zero =>
+      try simp only [Nat.Iio_eq_range] at *
       rw [Finset.sum_range_zero, Nat.cast_zero, zero_add, ascPochhammer_eval_one]
       ring
     | succ n ih =>
+      try simp only [Nat.Iio_eq_range] at *
       rw [Finset.sum_range_succ, ih]
       have ha : 0 < (ascPochhammer ℝ i).eval ((n : ℝ) + 1) := ascPochhammer_pos _ _ (by positivity)
       have hb : 0 < (ascPochhammer ℝ i).eval ((n : ℝ) + 1 + 1) := ascPochhammer_pos _ _ (by positivity)
@@ -34,11 +37,12 @@ private lemma telescope
       field_simp
       linear_combination (-(Nat.factorial i : ℝ)) * e2.symm.trans e1
   have conv : ∀ m : ℕ, ∑ k ∈ Finset.Icc 1 m, 1 / (ascPochhammer ℝ (i + 1)).eval (k : ℝ) =
-      ∑ k ∈ Finset.range m, 1 / (ascPochhammer ℝ (i + 1)).eval ((k + 1 : ℕ) : ℝ) := by
+      ∑ k < m, 1 / (ascPochhammer ℝ (i + 1)).eval ((k + 1 : ℕ) : ℝ) := by
     intro m
     induction m with
     | zero => simp
     | succ m ih =>
+      try simp only [Nat.Iio_eq_range] at *
       rw [Finset.sum_Icc_succ_top (by omega), ih, Finset.sum_range_succ]
   rw [conv n]
   simp only [Nat.cast_add, Nat.cast_one]

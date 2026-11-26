@@ -44,7 +44,7 @@ private lemma main
             x[k] ^ ((t : ℕ) - (i - ∑ j ∈ Finset.Iio k, d[j]))
         else 0).det =
       ∏ k : Fin r, ((∏ j ∈ Finset.Iio k, (x k - x j) ^ (d k * d j)) *
-        (∏ j ∈ Finset.range (d k), (Nat.factorial j : ℂ))) from hmain]
+        (∏ j < (d k), (Nat.factorial j : ℂ))) from hmain]
   refine prod_ne_zero_iff.mpr ?_
   intro k _
   apply mul_ne_zero

@@ -54,7 +54,7 @@ theorem qBinomial_product_formula (q : k) : ∀ (n m : ℕ), m ≤ n →
     qBinomial q n m * qFactorial q m = qFallingFact q n m := by
   intro n m
   induction n, m using qBinomial.induct with
-  | case1 n => intro _; simp [qFactorial, qFallingFact]
+  | case1 n => intro _; simp [qBinomial, qFactorial, qFallingFact]
   | case2 n => intro h; omega
   | case3 n m ih_m1 ih_m =>
     intro hle
@@ -230,6 +230,7 @@ theorem q_comm_power (q : k) (n : ℕ) (hn : 1 < n) (hq : IsPrimitiveRoot q n)
     simp only [Finset.mem_range] at hm
     rw [qBinomial_vanish q n hn hq (m + 1) (by omega) (by omega), map_zero, zero_mul]
   rw [hmid]
-  simp [qBinomial_self, add_comm]
+  simp [qBinomial_self, qBinomial, map_one, one_mul]
+  abel
 
 end QComm

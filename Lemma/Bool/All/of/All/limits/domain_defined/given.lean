@@ -1,5 +1,6 @@
 import Initialize.Tactic.Attr.Basic
 import Lemma.Bool.All.of.All.limits.invert
+open Bool
 
 
 @[path]
@@ -8,14 +9,12 @@ private lemma main
   {p : ℕ → Prop}
 -- given
   (h₀ : m ≤ n)
-  (h₁ : ∀ i ∈ Finset.range (min m n), p i) :
+  (h₁ : ∀ i < min m n, p i) :
 -- imply
-  ∀ i ∈ Finset.range m, p i := by
+  ∀ i < m, p i := by
 -- proof
   rwa [min_eq_left h₀] at h₁
 
 
-
-
 -- created on 2024-06-25
--- updated on 2026-11-24
+-- updated on 2026-11-26

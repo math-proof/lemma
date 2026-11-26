@@ -37,9 +37,10 @@ private lemma exists_lt_valuation_eq
   have hsum : ∑ i ∈ p.support, t i = 0 := by
     have h := hpg
     rw [Polynomial.aeval_eq_sum_range] at h
-    have h' : ∑ i ∈ Finset.range (p.natDegree + 1), t i = ∑ i ∈ p.support, t i := by
+    have h' : ∑ i < (p.natDegree + 1), t i = ∑ i ∈ p.support, t i := by
       symm
       refine Finset.sum_subset (fun i hi => ?_) (fun i _ hi => ?_)
+      try simp only [Nat.Iio_eq_range] at *
       · refine Finset.mem_range_succ_iff.mpr (Polynomial.le_natDegree_of_mem_supp i hi)
       ·
         have h0 : p.coeff i = 0 := by
@@ -47,6 +48,7 @@ private lemma exists_lt_valuation_eq
           refine hi
         simp [ht, h0]
     rw [← h']
+    try simp only [Nat.Iio_eq_range] at *
     simp [Algebra.smul_def] at h
     refine h
   have hsupp : p.support.Nonempty := Polynomial.support_nonempty.mpr hp

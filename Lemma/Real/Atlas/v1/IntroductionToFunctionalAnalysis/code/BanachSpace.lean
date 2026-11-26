@@ -28,9 +28,11 @@ lemma cauchySeq_of_summable_norm
 -- given
   (hv : Summable fun n => ‖v n‖) :
 -- imply
-  CauchySeq fun m => ∑ i ∈ Finset.range m, v i :=
+  CauchySeq fun m => ∑ i < m, v i :=
 -- proof
-  cauchySeq_range_of_norm_bounded (hv.hasSum.tendsto_sum_nat.cauchySeq) (fun _ => le_rfl)
+  Eq.mpr (congrArg CauchySeq (funext fun m =>
+    congrArg (fun s => Finset.sum s v) (Nat.Iio_eq_range m)))
+    (cauchySeq_range_of_norm_bounded (hv.hasSum.tendsto_sum_nat.cauchySeq) (fun _ => le_rfl))
 
 
 -- created on 2026-10-23

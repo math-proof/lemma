@@ -9,8 +9,9 @@ private lemma shift
 -- given
   (h : 0 < k) :
 -- imply
-  ∑ t ∈ Finset.range k, L i t * H j t = ∑ t ∈ Finset.Ico 1 k, L i t * H j t + L i 0 * H j 0 := by
+  ∑ t < k, L i t * H j t = ∑ t ∈ Finset.Ico 1 k, L i t * H j t + L i 0 * H j 0 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   rw [Finset.range_eq_Ico, Finset.sum_eq_sum_Ico_succ_bot h, add_comm]
 
 

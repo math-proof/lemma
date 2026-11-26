@@ -93,8 +93,9 @@ private lemma sum_sq_eq_zero_iff
   [Field F] [Field K] [Algebra F K] [IsAlgClosed K] [CharZero K]
   (c : AlgEquiv F K K) (hc : c * c = 1) (hc1 : c ≠ 1) (x : ℕ → K) (m : ℕ)
   (hx : ∀ j < m, c (x j) = x j) :
-  (∃ z : K, c z = z ∧ ∑ j ∈ Finset.range m, x j ^ 2 = z ^ 2) ∧
-    (∑ j ∈ Finset.range m, x j ^ 2 = 0 → ∀ j < m, x j = 0) := by
+  (∃ z : K, c z = z ∧ ∑ j < m, x j ^ 2 = z ^ 2) ∧
+    (∑ j < m, x j ^ 2 = 0 → ∀ j < m, x j = 0) := by
+  simp only [Nat.Iio_eq_range]
   induction m with
   | zero => exact ⟨⟨0, by simp, by simp⟩, fun _ j hj => absurd hj (Nat.not_lt_zero j)⟩
   | succ m ih =>
@@ -124,11 +125,13 @@ private lemma eq_one_of_pow_odd_eq_one
     rw [hu, ← pow_mul, Nat.div_mul_cancel (even_iff_two_dvd.mp hd.add_one), pow_succ, hrd,
       one_mul]
   have hcu : ∀ j, c (u ^ j) = u ^ j := fun j => by rw [map_pow, hu, map_pow, hr]
-  have hgeom : ∑ j ∈ Finset.range d, (u ^ j) ^ 2 = 0 := by
-    have : ∑ j ∈ Finset.range d, r ^ j = 0 := by
-      rw [geom_sum_eq hr1, hrd, sub_self, zero_div]
-    rw [← this]
-    exact Finset.sum_congr rfl fun j _ => by rw [← pow_mul, mul_comm, pow_mul, hur]
+  have hgeom : ∑ j < d, (u ^ j) ^ 2 = 0 := by
+    have h : (Finset.range d).sum (fun j => (u ^ j) ^ 2) = 0 := by
+      have : (Finset.range d).sum (fun j => r ^ j) = 0 := by
+        rw [geom_sum_eq hr1, hrd, sub_self, zero_div]
+      rw [← this]
+      exact Finset.sum_congr rfl fun j _ => by rw [← pow_mul, mul_comm, pow_mul, hur]
+    simpa only [Nat.Iio_eq_range] using h
   have h0 := (sum_sq_eq_zero_iff c hc hc1 (fun j => u ^ j) d fun j _ => hcu j).2 hgeom 0 hd.pos
   simp at h0
 

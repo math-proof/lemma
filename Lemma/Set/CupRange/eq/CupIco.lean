@@ -8,7 +8,7 @@ private lemma main
   (n : ℕ)
   (f : ℕ → Set α) :
 -- imply
-  ⋃ k ∈ range n, f k = ⋃ k ∈ Ico (0 : ℤ) (n : ℤ), f k.toNat := by
+  ⋃ k < n, f k = ⋃ k ∈ Ico (0 : ℤ) (n : ℤ), f k.toNat := by
 -- proof
   ext x
   simp [Set.mem_iUnion, Set.mem_Ico]

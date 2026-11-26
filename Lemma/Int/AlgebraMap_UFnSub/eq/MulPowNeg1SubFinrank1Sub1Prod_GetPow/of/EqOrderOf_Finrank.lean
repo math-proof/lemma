@@ -24,7 +24,7 @@ noncomputable def cf
   [Algebra F E]
   [FiniteDimensional F E]
   (σ : E ≃ₐ[F] E)
-  (c : E) (i : ℕ) : E := ∏ j ∈ Finset.range i, (σ.symm ^ (j + 1)) c
+  (c : E) (i : ℕ) : E := ∏ j < i, (σ.symm ^ (j + 1)) c
 
 private lemma T_apply
   {F E : Type}
@@ -53,6 +53,7 @@ private lemma cf_succ
   (σ : E ≃ₐ[F] E)
   (c : E) (i : ℕ) : cf σ c (i + 1) = σ.symm c * σ.symm (cf σ c i) := by
   unfold cf
+  simp only [Nat.Iio_eq_range]
   rw [Finset.prod_range_succ', zero_add, pow_one, map_prod, mul_comm]
   congr 1
   refine Finset.prod_congr rfl fun j _ => ?_
@@ -164,8 +165,9 @@ private lemma prod_pow_eq_norm
     (σ : E ≃ₐ[F] E)
     (hσ : orderOf σ = finrank F E)
     (c : E) :
-    ∏ i ∈ Finset.range (finrank F E), (σ ^ i) c = algebraMap F E (Algebra.norm F c) := by
+    ∏ i < finrank F E, (σ ^ i) c = algebraMap F E (Algebra.norm F c) := by
   classical
+  simp only [Nat.Iio_eq_range]
   have := isGalois σ hσ
   rw [Algebra.norm_eq_prod_automorphisms, ← image_pow_range_eq_univ σ hσ, Finset.prod_image]
   intro i hi j hj hij
@@ -179,8 +181,9 @@ private lemma cf_finrank
   [FiniteDimensional F E]
   (σ : E ≃ₐ[F] E)
   (hσ : orderOf σ = finrank F E)
-  (c : E) : cf σ c (finrank F E) = ∏ i ∈ Finset.range (finrank F E), (σ ^ i) c := by
+  (c : E) : cf σ c (finrank F E) = ∏ i < finrank F E, (σ ^ i) c := by
   unfold cf
+  simp only [Nat.Iio_eq_range]
   rw [← Finset.prod_range_reflect (fun i => (σ ^ i) c) (finrank F E)]
   refine Finset.prod_congr rfl fun j hj => ?_
   rw [Finset.mem_range] at hj
@@ -334,7 +337,7 @@ private lemma det_sub_smul_eq
     (hσ : orderOf σ = finrank F E)
     (c : E) :
     algebraMap F E (LinearMap.det ((σ : E →ₐ[F] E).toLinearMap - c • (LinearMap.id : E →ₗ[F] E))) =
-      (-1) ^ (finrank F E - 1) * (1 - ∏ i ∈ Finset.range (finrank F E), (σ ^ i) c) := by
+      (-1) ^ (finrank F E - 1) * (1 - ∏ i < finrank F E, (σ ^ i) c) := by
   rw [sub_smul_eq_comp, LinearMap.det_comp, det_sigma σ hσ, det_one_sub_T σ hσ, prod_pow_eq_norm σ hσ,
     map_mul, map_pow, map_neg, map_one, map_sub, map_one]
   have hn0 : 0 < finrank F E := finrank_pos
@@ -351,7 +354,7 @@ private lemma main
 -- imply
   algebraMap F E (LinearMap.det ((σ : E →ₐ[F] E).toLinearMap - c • (LinearMap.id : E →ₗ[F] E))) =
       (-1) ^ (Module.finrank F E - 1) *
-        (1 - ∏ i ∈ Finset.range (Module.finrank F E), (σ ^ i) c) :=
+        (1 - ∏ i < Module.finrank F E, (σ ^ i) c) :=
 -- proof
   det_sub_smul_eq σ hσ c
 

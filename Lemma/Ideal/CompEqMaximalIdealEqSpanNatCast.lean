@@ -60,18 +60,19 @@ private lemma main
       intro x
       obtain ⟨y, z, rfl⟩ := hdecomp x
       rw [map_add, map_add, map_mul, map_mul, map_pow, map_pow, map_natCast, map_natCast]
-      have hS : (∑ i ∈ Finset.range q, (f y) ^ i * (g y) ^ (q - 1 - i)) ∈ 𝔪 := by
+      have hS : (∑ i < q, (f y) ^ i * (g y) ^ (q - 1 - i)) ∈ 𝔪 := by
         rw [h𝔪, ← Ideal.Quotient.eq_zero_iff_mem, map_sum]
         have hfy : Ideal.Quotient.mk (maximalIdeal T) (f y) = Ideal.Quotient.mk (maximalIdeal T) (g y) := (Ideal.Quotient.eq).mpr (hbase y)
         simp_rw [map_mul, map_pow, hfy, ← pow_add]
-        have : ∀ i ∈ Finset.range q, (Ideal.Quotient.mk (maximalIdeal T) (g y)) ^ (i + (q - 1 - i)) = (Ideal.Quotient.mk (maximalIdeal T) (g y)) ^ (q - 1) := by
+        have : ∀ i < q, (Ideal.Quotient.mk (maximalIdeal T) (g y)) ^ (i + (q - 1 - i)) = (Ideal.Quotient.mk (maximalIdeal T) (g y)) ^ (q - 1) := by
           intro i hi
           congr 1
-          have := Finset.mem_range.mp hi
           omega
-        rw [Finset.sum_congr rfl this, Finset.sum_const, Finset.card_range, nsmul_eq_mul, show ((q : ℕ) : T ⧸ maximalIdeal T) = 0 from (Ideal.Quotient.eq_zero_iff_mem).mpr hqT, zero_mul]
+        simp only [Nat.Iio_eq_range]
+        rw [Finset.sum_congr rfl (fun x hx => this x (by simpa using hx)), Finset.sum_const, Finset.card_range, nsmul_eq_mul, show ((q : ℕ) : T ⧸ maximalIdeal T) = 0 from (Ideal.Quotient.eq_zero_iff_mem).mpr hqT, zero_mul]
       have hpow : (f y) ^ q - (g y) ^ q ∈ 𝔪 ^ (n + 1 + 1) := by
         rw [← Commute.geom_sum₂_mul (Commute.all _ _), pow_succ']
+        simp only [Nat.Iio_eq_range] at hS
         apply Ideal.mul_mem_mul hS (ih y)
       have hqz : ((q : ℕ) : T) * f z - ((q : ℕ) : T) * g z ∈ 𝔪 ^ (n + 1 + 1) := by
         rw [← mul_sub, pow_succ']

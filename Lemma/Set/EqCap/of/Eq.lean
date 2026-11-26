@@ -8,10 +8,10 @@ private lemma main
 -- given
   (h : ∀ i < n, f i = g i) :
 -- imply
-  (⋂ i ∈ Finset.range n, f i) = ⋂ i ∈ Finset.range n, g i := by
+  (⋂ i < n, f i) = ⋂ i < n, g i := by
 -- proof
   ext x
-  simp only [Set.mem_iInter, Finset.mem_range]
+  simp only [Set.mem_iInter]
   constructor
   ·
     intro hx i hi

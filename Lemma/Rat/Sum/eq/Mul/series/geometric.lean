@@ -7,7 +7,7 @@ private lemma main
   {r : ℝ}
   {n : ℕ}
   -- imply
-  : ∑ k ∈ Finset.range n, r ^ k = if r = 1 then (n : ℝ) else (1 - r ^ n) / (1 - r) := by
+  : ∑ k < n, r ^ k = if r = 1 then (n : ℝ) else (1 - r ^ n) / (1 - r) := by
   -- proof
   by_cases hr : r = 1
   · rw [ite_eq_left hr]
@@ -18,7 +18,8 @@ private lemma main
       intro h
       apply hr
       linarith
-    have h1 : ∑ k ∈ Finset.range n, r ^ k = (r ^ n - 1) / (r - 1) := by
+    have h1 : ∑ k < n, r ^ k = (r ^ n - 1) / (r - 1) := by
+      try simp only [Nat.Iio_eq_range] at *
       exact geom_sum_eq hr n
     rw [h1]
     have h2 : (1 - r) ≠ 0 := by

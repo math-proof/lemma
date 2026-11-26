@@ -8,9 +8,9 @@ private lemma main
   {x : ℤ}
   {A : ℕ → Set ℤ}
 -- given
-  (h : x ∈ ⋃ k ∈ Finset.range n, A k) :
+  (h : x ∈ ⋃ k < n, A k) :
 -- imply
-  ∃ k ∈ Finset.range n, x ∈ A k := by
+  ∃ k < n, x ∈ A k := by
 -- proof
   obtain ⟨k, hk, hx⟩ := Set.mem_iUnion₂.mp h
   exact ⟨k, hk, hx⟩

@@ -41,8 +41,8 @@ private lemma finite
   (hMs : sup[y, u] ‖fderiv ℝ (fun θ' => Real.log (M.π θ' y u)) θ‖ < ∞)
   (n : ℕ) :
   ∫ x, fderiv ℝ (fun θ => M.V0 R θ γ x) θ ∂((M θ).map (s 0)) =
-    ∑ t ∈ Finset.range n, γ ^ t • ∫ ω, (M.rkd R (s t ω) (a t ω) + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (s t ω, a t ω))) •
-        fderiv ℝ (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ ∂(M θ) +
+    (∑ t < n, γ ^ t • ∫ ω, (M.rkd R (s t ω) (a t ω) + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (s t ω, a t ω))) •
+        fderiv ℝ (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ ∂(M θ)) +
       γ ^ n • ∫ x, fderiv ℝ (fun θ => M.V0 R θ γ x) θ ∂((M θ).map (s n)) := by
   induction n with
   | zero =>
@@ -52,19 +52,19 @@ private lemma finite
       Integral_Fderiv_Vkd.eq.Add_SMul_Integral_SMul_FderivLog.of.All_Eq_Joint.All_EqWithDensity
         (M := M) h₀ h₁ hπ h₂ h₃ hBdd hIntg hφ hMs R n
     calc
-      _ = ∑ t ∈ Finset.range n, γ ^ t • ∫ ω, (M.rkd R (s t ω) (a t ω) + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (s t ω, a t ω))) •
-            fderiv ℝ (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ ∂(M θ) +
+      _ = (∑ t < n, γ ^ t • ∫ ω, (M.rkd R (s t ω) (a t ω) + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (s t ω, a t ω))) •
+            fderiv ℝ (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ ∂(M θ)) +
           γ ^ n • ∫ x, fderiv ℝ (fun θ => M.V0 R θ γ x) θ ∂((M θ).map (s n)) := ih
-      _ = ∑ t ∈ Finset.range n, γ ^ t • ∫ ω, (M.rkd R (s t ω) (a t ω) + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (s t ω, a t ω))) •
-            fderiv ℝ (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ ∂(M θ) +
+      _ = (∑ t < n, γ ^ t • ∫ ω, (M.rkd R (s t ω) (a t ω) + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (s t ω, a t ω))) •
+            fderiv ℝ (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ ∂(M θ)) +
           γ ^ n • (∫ ω, (M.rkd R (s n ω) (a n ω) + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (s n ω, a n ω))) •
             fderiv ℝ (fun θ' => Real.log (M.π θ' (s n ω) (a n ω))) θ ∂(M θ) +
             γ • ∫ x, fderiv ℝ (fun θ => M.V0 R θ γ x) θ ∂((M θ).map (s (n + 1)))) := by
         rw [hstep]
-      _ = ∑ t ∈ Finset.range (n + 1), γ ^ t • ∫ ω, (M.rkd R (s t ω) (a t ω) + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (s t ω, a t ω))) •
-            fderiv ℝ (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ ∂(M θ) +
+      _ = (∑ t < (n + 1), γ ^ t • ∫ ω, (M.rkd R (s t ω) (a t ω) + γ * ∫ y, M.V0 R θ γ y ∂(M.trans (s t ω, a t ω))) •
+            fderiv ℝ (fun θ' => Real.log (M.π θ' (s t ω) (a t ω))) θ ∂(M θ)) +
           γ ^ (n + 1) • ∫ x, fderiv ℝ (fun θ => M.V0 R θ γ x) θ ∂((M θ).map (s (n + 1))) := by
-        simp only [Finset.sum_range_succ, smul_add, smul_smul, pow_succ]
+        simp only [Nat.Iio_eq_range, Finset.sum_range_succ, smul_add, smul_smul, pow_succ]
         abel
 
 /--
@@ -157,7 +157,7 @@ private lemma main
   refine tendsto_nhds_unique
     (tendsto_const_nhds.congr fun n => ?_)
     ((hsum.hasSum.tendsto_sum_nat.add hrem).trans (by rw [add_zero]))
-  rw [hinit.symm, hfin n, add_comm]
+  rw [hinit.symm, hfin n, Nat.Iio_eq_range, add_comm]
 
 
 -- created on 2026-10-20

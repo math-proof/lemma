@@ -29,14 +29,15 @@ private lemma walk_eq_zero_of_lt
 private lemma telescope
   {q : ℤ}
   {A : ℕ → ℤ} :
-  ∀ n : ℕ, (q + 1) * A 0 + ∑ r ∈ Finset.range (n + 1), (A r + q * A (r + 1)) * (q ^ (r + 1) - q ^ r) = 2 * q * (A 0 + ∑ r ∈ Finset.range n, A (r + 1) * (q ^ (r + 1) - q ^ r)) + q * A (n + 1) * (q ^ (n + 1) - q ^ n) := by
+  ∀ n : ℕ, (q + 1) * A 0 + ∑ r < (n + 1), (A r + q * A (r + 1)) * (q ^ (r + 1) - q ^ r) = 2 * q * (A 0 + ∑ r < n, A (r + 1) * (q ^ (r + 1) - q ^ r)) + q * A (n + 1) * (q ^ (n + 1) - q ^ n) := by
   intro n
   induction n
   ·
-    simp
+    simp [Nat.Iio_eq_range]
     ring
   ·
     rename_i n ih
+    simp only [Nat.Iio_eq_range] at ih ⊢
     rw [Finset.sum_range_succ, ← add_assoc, ih, Finset.sum_range_succ]
     ring
 
@@ -44,7 +45,7 @@ private lemma sum_shift_split
   {q : ℤ}
   {B C : ℕ → ℤ}
   {μ : ℕ} :
-  ∑ r ∈ Finset.range μ, (B r + q * C r) * (q ^ (r + 1) - q ^ r) = ∑ r ∈ Finset.range μ, B r * (q ^ (r + 1) - q ^ r) + q * ∑ r ∈ Finset.range μ, C r * (q ^ (r + 1) - q ^ r) := by
+  ∑ r < μ, (B r + q * C r) * (q ^ (r + 1) - q ^ r) = ∑ r < μ, B r * (q ^ (r + 1) - q ^ r) + q * ∑ r < μ, C r * (q ^ (r + 1) - q ^ r) := by
   rw [Finset.mul_sum, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun r _ => ?_
   ring
@@ -58,7 +59,7 @@ private lemma helper_main
   (hroot : ∀ k : ℕ, W (k + 1) 0 = (q + 1) * W k 1)
   (hstep : ∀ k d : ℕ, W (k + 1) (d + 1) = W k d + q * W k (d + 2)) :
   -- imply
-  ∀ k : ℕ, ∀ d μ : ℕ, d + 2 * μ = k → (W k d : ℤ) + ∑ r ∈ Finset.range μ, (W k (d + 2 * (r + 1)) : ℤ) * ((q : ℤ) ^ (r + 1) - (q : ℤ) ^ r) = ((k.choose μ : ℕ) : ℤ) * (q : ℤ) ^ μ := by
+  ∀ k : ℕ, ∀ d μ : ℕ, d + 2 * μ = k → (W k d : ℤ) + ∑ r < μ, (W k (d + 2 * (r + 1)) : ℤ) * ((q : ℤ) ^ (r + 1) - (q : ℤ) ^ r) = ((k.choose μ : ℕ) : ℤ) * (q : ℤ) ^ μ := by
   -- proof
   have hvan := walk_eq_zero_of_lt h0s hstep
   intro k
@@ -118,14 +119,15 @@ private lemma helper_main
       else
         obtain ⟨μ', rfl⟩ := Nat.exists_eq_succ_of_ne_zero hμ0
         have hB := ih (d' + 2) μ' (by omega)
+        simp only [Nat.Iio_eq_range] at hA hB ⊢
         rw [Finset.sum_range_succ (fun r => (W k (d' + 2 + 2 * (r + 1)) : ℤ) * ((q : ℤ) ^ (r + 1) - (q : ℤ) ^ r)), hvan k (d' + 2 + 2 * (μ' + 1)) (by omega)]
         have hre : ∀ r : ℕ, d' + 2 + 2 * (r + 1) = d' + 2 * (r + 1) + 2 := fun r => by ring
-        have : (W k d' : ℤ) + (q : ℤ) * W k (d' + 2) + (∑ r ∈ Finset.range (μ' + 1), (W k (d' + 2 * (r + 1)) : ℤ) * ((q : ℤ) ^ (r + 1) - (q : ℤ) ^ r) + (q : ℤ) * (∑ r ∈ Finset.range μ', (W k (d' + 2 + 2 * (r + 1)) : ℤ) * ((q : ℤ) ^ (r + 1) - (q : ℤ) ^ r) + ((0 : ℕ) : ℤ) * ((q : ℤ) ^ (μ' + 1) - (q : ℤ) ^ μ'))) = ((W k d' : ℤ) + ∑ r ∈ Finset.range (μ' + 1), (W k (d' + 2 * (r + 1)) : ℤ) * ((q : ℤ) ^ (r + 1) - (q : ℤ) ^ r)) + (q : ℤ) * ((W k (d' + 2) : ℤ) + ∑ r ∈ Finset.range μ', (W k (d' + 2 + 2 * (r + 1)) : ℤ) * ((q : ℤ) ^ (r + 1) - (q : ℤ) ^ r)) := by
+        have : (W k d' : ℤ) + (q : ℤ) * W k (d' + 2) + (∑ r < (μ' + 1), (W k (d' + 2 * (r + 1)) : ℤ) * ((q : ℤ) ^ (r + 1) - (q : ℤ) ^ r) + (q : ℤ) * (∑ r < μ', (W k (d' + 2 + 2 * (r + 1)) : ℤ) * ((q : ℤ) ^ (r + 1) - (q : ℤ) ^ r) + ((0 : ℕ) : ℤ) * ((q : ℤ) ^ (μ' + 1) - (q : ℤ) ^ μ'))) = ((W k d' : ℤ) + ∑ r < (μ' + 1), (W k (d' + 2 * (r + 1)) : ℤ) * ((q : ℤ) ^ (r + 1) - (q : ℤ) ^ r)) + (q : ℤ) * ((W k (d' + 2) : ℤ) + ∑ r < μ', (W k (d' + 2 + 2 * (r + 1)) : ℤ) * ((q : ℤ) ^ (r + 1) - (q : ℤ) ^ r)) := by
           push_cast
           ring
+        simp only [Nat.Iio_eq_range] at this
         rw [this, hA, hB, Nat.choose_succ_succ']
         push_cast
-        rw [Nat.succ_eq_add_one, Nat.add_comm 1 μ']
         simp only [pow_succ]
         ring
 
@@ -143,7 +145,7 @@ private lemma main
   (hroot : ∀ k : ℕ, W (k + 1) 0 = (q + 1) * W k 1)
   (hstep : ∀ k d : ℕ, W (k + 1) (d + 1) = W k d + q * W k (d + 2)) :
   -- imply
-  (W (d + 2 * μ) d : ℤ) + ∑ r ∈ Finset.range μ, (W (d + 2 * μ) (d + 2 * (r + 1)) : ℤ) * ((q : ℤ) ^ (r + 1) - (q : ℤ) ^ r) = (((d + 2 * μ).choose μ : ℕ) : ℤ) * (q : ℤ) ^ μ := by
+  (W (d + 2 * μ) d : ℤ) + ∑ r < μ, (W (d + 2 * μ) (d + 2 * (r + 1)) : ℤ) * ((q : ℤ) ^ (r + 1) - (q : ℤ) ^ r) = (((d + 2 * μ).choose μ : ℕ) : ℤ) * (q : ℤ) ^ μ := by
   -- proof
   apply helper_main h00 h0s hroot hstep (d + 2 * μ) d μ rfl
 

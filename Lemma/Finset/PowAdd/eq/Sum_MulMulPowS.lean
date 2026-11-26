@@ -9,9 +9,9 @@ private lemma main
 -- given
   (n : ℕ) :
 -- imply
-  (x + y) ^ n = ∑ k ∈ range (n + 1), x ^ k * y ^ (n - k) * n.choose k :=
+  (x + y) ^ n = ∑ k < (n + 1), x ^ k * y ^ (n - k) * n.choose k :=
 -- proof
-  add_pow x y n
+  (Nat.Iio_eq_range (n + 1)).symm ▸ add_pow x y n
 
 
 -- created on 2018-08-17

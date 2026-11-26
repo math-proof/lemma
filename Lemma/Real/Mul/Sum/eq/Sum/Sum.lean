@@ -11,8 +11,9 @@ private lemma main
   (h₀ : Summable fun n => ‖A n * x ^ n‖)
   (h₁ : Summable fun n => ‖B n * x ^ n‖) :
 -- imply
-  (∑' n, A n * x ^ n) * (∑' n, B n * x ^ n) = ∑' n, (∑ k ∈ Finset.range (n + 1), A (n - k) * B k) * x ^ n := by
+  (∑' n, A n * x ^ n) * (∑' n, B n * x ^ n) = ∑' n, (∑ k < (n + 1), A (n - k) * B k) * x ^ n := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   rw [tsum_mul_tsum_eq_tsum_sum_range_of_summable_norm h₀ h₁]
   congr 1
   funext n

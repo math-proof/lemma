@@ -138,11 +138,11 @@ private lemma _root_.ValuationSubring.exists_valuation_pow_eq_pow
   obtain ⟨P, hP0, hPx⟩ := halg
   set N := P.natDegree with hN
   let t : ℕ → K := fun i => (P.coeff i : K) * x ^ i
-  have hsum : ∑ i ∈ Finset.range (N + 1), t i = 0 := by
+  have hsum : ∑ i < (N + 1), t i = 0 := by
     have this := hPx
     rw [Polynomial.aeval_eq_sum_range] at this
     simp [Algebra.smul_def, eq_ratCast] at this
-    refine this
+    simpa only [Nat.Iio_eq_range] using this
   have htN : t N ≠ 0 := by
     simp only [t, ne_eq, mul_eq_zero, not_or]
     refine ⟨by exact_mod_cast (Polynomial.leadingCoeff_ne_zero.mpr hP0), pow_ne_zero _ hx0⟩
@@ -153,13 +153,14 @@ private lemma _root_.ValuationSubring.exists_valuation_pow_eq_pow
     have := hjmax N (Finset.self_mem_range_succ N)
     rw [h0] at this
     refine htN ((Valuation.zero_iff v).mp (le_antisymm this zero_le))
-  obtain ⟨i, his, hij, hvi⟩ : ∃ i ∈ Finset.range (N + 1), i ≠ j ∧ v (t i) = v (t j) := by
+  obtain ⟨i, his, hij, hvi⟩ : ∃ i < (N + 1), i ≠ j ∧ v (t i) = v (t j) := by
     by_contra hnone
     push Not at hnone
     have hlt : ∀ i ∈ Finset.range (N + 1) \ {j}, v (t i) < v (t j) := by
       intro i hi
       rw [Finset.mem_sdiff, Finset.mem_singleton] at hi
-      refine lt_of_le_of_ne (hjmax i hi.1) (hnone i hi.1 hi.2)
+      refine lt_of_le_of_ne (hjmax i hi.1) (hnone i (Finset.mem_range.mp hi.1) hi.2)
+    rw [Nat.Iio_eq_range] at hsum
     have := Valuation.map_sum_eq_of_lt v hjs hlt
     rw [hsum, map_zero] at this
     refine hvj0 this.symm

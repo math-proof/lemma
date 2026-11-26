@@ -21,9 +21,9 @@ private lemma main
   (h₁ : ∀ y ∈ Set.Ioo a b, deriv^[2] f y < 0)
   (h₂ : ∀ i : ℕ, x[i] ∈ Set.Icc a b)
   (h₃ : ∀ i : ℕ, 0 ≤ w[i])
-  (h₄ : ∑ i ∈ Finset.range n, w[i] = 1) :
+  (h₄ : ∑ i < n, w[i] = 1) :
 -- imply
-  ∑ i ∈ Finset.range n, w[i] * f x[i] ≤ f (∑ i ∈ Finset.range n, w[i] * x[i]) := by
+  ∑ i < n, w[i] * f x[i] ≤ f (∑ i < n, w[i] * x[i]) := by
 -- proof
   simpa [smul_eq_mul] using
     (strictConcaveOn_of_deriv2_neg (convex_Icc a b) h₀ fun y hy => by

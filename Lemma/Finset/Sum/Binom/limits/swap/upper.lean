@@ -23,22 +23,24 @@ private lemma main
   rw [Finset.sum_Ico_eq_sum_range]
   have hlen : k + 1 - h = k - h + 1 := by omega
   rw [hlen]
-  have hterm : ∀ t ∈ Finset.range (k - h + 1),
+  have hterm : ∀ t < (k - h + 1),
       ((i + k - (h + t)).choose i : ℝ) = ((i + ((k - h) - t)).choose i : ℝ) := by
     intro t ht
-    simp only [Finset.mem_range] at ht
     have hle : h + t ≤ k := by omega
     rw [Nat.add_sub_assoc hle, Nat.sub_add_eq]
-  have hcong : ∑ t ∈ Finset.range (k - h + 1), ((i + k - (h + t)).choose i : ℝ) =
-    ∑ t ∈ Finset.range (k - h + 1), ((i + ((k - h) - t)).choose i : ℝ) := by
+  have hcong : ∑ t < (k - h + 1), ((i + k - (h + t)).choose i : ℝ) =
+    ∑ t < (k - h + 1), ((i + ((k - h) - t)).choose i : ℝ) := by
     refine Finset.sum_congr rfl ?_
     intro t ht
-    exact hterm t ht
+    exact hterm t (by simpa using ht)
+  simp only [Nat.Iio_eq_range] at hcong
   rw [hcong]
   have href := Finset.sum_range_reflect (fun s => ((i + s).choose i : ℝ)) (k - h + 1)
-  have : ∑ t ∈ Finset.range (k - h + 1), ((i + ((k - h) - t)).choose i : ℝ) =
-    ∑ t ∈ Finset.range (k - h + 1), ((i + t).choose i : ℝ) := by
+  have : ∑ t < (k - h + 1), ((i + ((k - h) - t)).choose i : ℝ) =
+    ∑ t < (k - h + 1), ((i + t).choose i : ℝ) := by
+    simp only [Nat.Iio_eq_range]
     simpa using href
+  simp only [Nat.Iio_eq_range] at this
   rw [this]
   have hs := Nat.sum_range_add_choose (k - h) i
   have hcast := congrArg (Nat.cast : ℕ → ℝ) hs

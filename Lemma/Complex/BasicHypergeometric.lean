@@ -17,6 +17,7 @@ private lemma basic_hypergeometric_coefficient_zero_eq
 -- imply
   basicHypergeometricCoefficient a b q 0 = 1 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply MetaMathlibExt.BasicHypergeometric.basicHypergeometricCoefficient_zero a b q
 
 /--
@@ -34,6 +35,7 @@ private lemma coeff_basic_hypergeometric_series_eq
   PowerSeries.coeff n (basicHypergeometricSeries a b q) =
     basicHypergeometricCoefficient a b q n := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply MetaMathlibExt.BasicHypergeometric.coeff_basicHypergeometricSeries a b q n
 
 /--
@@ -49,10 +51,11 @@ private lemma basic_hypergeometric_coefficient_phi_succ_eq
   (n : ℕ) :
 -- imply
   basicHypergeometricCoefficient a b q n =
-    (∏ i, ∏ j ∈ Finset.range n, (1 - a i * q ^ j)) /
-      ((∏ j ∈ Finset.range n, (1 - q ^ (j + 1))) *
-        ∏ i, ∏ j ∈ Finset.range n, (1 - b i * q ^ j)) := by
+    (∏ i, ∏ j < n, (1 - a i * q ^ j)) /
+      ((∏ j < n, (1 - q ^ (j + 1))) *
+        ∏ i, ∏ j < n, (1 - b i * q ^ j)) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply MetaMathlibExt.BasicHypergeometric.basicHypergeometricCoefficient_phi_succ s a b q n
 
 -- created on 2026-10-10

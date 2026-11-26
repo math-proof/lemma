@@ -8,10 +8,10 @@ private lemma main
   (n : ℕ)
   (f : ℕ → Set α) :
 -- imply
-  ⋃ k ∈ range n, f k = ⋃ k : Fin n, f k := by
+  ⋃ k < n, f k = ⋃ k : Fin n, f k := by
 -- proof
   ext x
-  simp [Set.mem_iUnion, Finset.mem_range]
+  simp [Set.mem_iUnion]
   constructor
   ·
     rintro ⟨k, hk, hx⟩

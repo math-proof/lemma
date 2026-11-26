@@ -7,8 +7,9 @@ private lemma main
 -- given
   (h₀ : n ≠ 0) :
 -- imply
-  ∑ k ∈ Finset.range (n + 1), (-1) ^ (n - k) * (Nat.choose n k : ℤ) = 0 := by
+  ∑ k < (n + 1), (-1) ^ (n - k) * (Nat.choose n k : ℤ) = 0 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   have h := add_pow (1 : ℤ) (-1) n
   have hzero : ((1 : ℤ) + -1) ^ n = 0 := by
     simp [h₀]

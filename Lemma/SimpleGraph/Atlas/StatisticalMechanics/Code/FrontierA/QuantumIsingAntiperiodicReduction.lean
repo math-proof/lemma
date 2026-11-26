@@ -15,6 +15,7 @@ private lemma quantumIsingSpectralRoot_gt_one_eq
 -- imply
   1 < quantumIsingSpectralRoot a := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.quantumIsingSpectralRoot_gt_one ha
 
 /--
@@ -28,6 +29,7 @@ private lemma quantumIsingSpectralRoot_inv_eq
 -- imply
   (quantumIsingSpectralRoot a)⁻¹ = a - Real.sqrt (a ^ 2 - 1) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.quantumIsingSpectralRoot_inv ha
 
 /--
@@ -41,6 +43,7 @@ private lemma quantumIsingSpectralRoot_add_inv_eq
 -- imply
   (quantumIsingSpectralRoot a + (quantumIsingSpectralRoot a)⁻¹) / 2 = a := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.quantumIsingSpectralRoot_add_inv ha
 
 /--
@@ -52,6 +55,7 @@ private lemma log_quantumIsingSpectralRoot_eq
 -- imply
   Real.log (quantumIsingSpectralRoot a) = Real.arcosh a := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.log_quantumIsingSpectralRoot a
 
 /--
@@ -65,8 +69,9 @@ private lemma sum_log_spectralParameter_sub_cos_antiperiodic_eq
   (hn : n ≠ 0)
   (ha : 1 < a) :
 -- imply
-  (∑ j ∈ Finset.range n, Real.log (a - Real.cos (quantumIsingAntiperiodicAngle n j))) = -(n : Real) * Real.log 2 + (n : Real) * Real.arcosh a + 2 * Real.log (1 + (quantumIsingSpectralRoot a)⁻¹ ^ n) := by
+  (∑ j < n, Real.log (a - Real.cos (quantumIsingAntiperiodicAngle n j))) = -(n : Real) * Real.log 2 + (n : Real) * Real.arcosh a + 2 * Real.log (1 + (quantumIsingSpectralRoot a)⁻¹ ^ n) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.sum_log_spectralParameter_sub_cos_antiperiodic n hn a ha
 
 /--
@@ -80,8 +85,9 @@ private lemma sum_log_quantumIsingTrotterReducedParameter_sub_cos_eq
   (hn : n ≠ 0)
   (ha : 1 < quantumIsingTrotterReducedParameter beta h n k) :
 -- imply
-  (∑ j ∈ Finset.range n, Real.log (quantumIsingTrotterReducedParameter beta h n k - Real.cos (quantumIsingAntiperiodicAngle n j))) = -(n : Real) * Real.log 2 + (n : Real) * Real.arcosh (quantumIsingTrotterReducedParameter beta h n k) + 2 * Real.log (1 + (quantumIsingSpectralRoot (quantumIsingTrotterReducedParameter beta h n k))⁻¹ ^ n) := by
+  (∑ j < n, Real.log (quantumIsingTrotterReducedParameter beta h n k - Real.cos (quantumIsingAntiperiodicAngle n j))) = -(n : Real) * Real.log 2 + (n : Real) * Real.arcosh (quantumIsingTrotterReducedParameter beta h n k) + 2 * Real.log (1 + (quantumIsingSpectralRoot (quantumIsingTrotterReducedParameter beta h n k))⁻¹ ^ n) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.sum_log_quantumIsingTrotterReducedParameter_sub_cos beta h k n hn ha
 
 

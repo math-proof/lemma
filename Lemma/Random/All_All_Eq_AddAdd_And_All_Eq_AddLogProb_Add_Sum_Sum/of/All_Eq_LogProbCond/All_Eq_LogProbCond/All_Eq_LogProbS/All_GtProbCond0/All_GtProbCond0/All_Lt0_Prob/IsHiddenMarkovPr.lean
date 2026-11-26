@@ -28,8 +28,9 @@ private lemma main
   (h₆ : ∀ i a b, G a b = (ℙ[π]((y (i + 1)) = a | (y i) = b) : ℝ).log) :
 -- imply
   ∀ ys : ℕ → Y, (∀ t, s (t + 1) ys = G (ys (t + 1)) (ys t) + s t ys + e (t + 1) (ys (t + 1))) ∧
-    ∀ t, s t ys = (ℙ[π]((y 0) = ys 0) : ℝ).log + ∑ i ∈ Finset.Ico 1 (t + 1), G (ys i) (ys (i - 1)) + ∑ i ∈ Finset.range (t + 1), e i (ys i) := by
+    ∀ t, s t ys = (ℙ[π]((y 0) = ys 0) : ℝ).log + ∑ i ∈ Finset.Ico 1 (t + 1), G (ys i) (ys (i - 1)) + ∑ i < (t + 1), e i (ys i) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   intro ys
   obtain ⟨P, hPdef⟩ : ∃ P : ℕ → (ℕ → Y) → ℝ, ∀ t ys, P t ys = (ℙ[π](x[:t + 1] = xo[:t + 1] ∧ y[:t + 1] = ys[:t + 1]) : ℝ) := ⟨fun t ys => (ℙ[π](x[:t + 1] = xo[:t + 1] ∧ y[:t + 1] = ys[:t + 1]) : ℝ), fun _ _ => rfl⟩
   have h₀ := Random.IsHiddenMarkovFac.of.All_Eq.IsHiddenMarkovPr h₀ hPdef
@@ -38,9 +39,11 @@ private lemma main
     intro t
     induction t with
     | zero =>
+      try simp only [] at *
       rw [(h₀ ys).1]
       exact mul_pos (h₃ _ _) (h₁ _)
     | succ t ih =>
+      try simp only [] at *
       rw [(h₀ ys).2 t]
       exact mul_pos ih (mul_pos (h₂ t _ _) (h₃ _ _))
   have hrec : ∀ t, s (t + 1) ys = G (ys (t + 1)) (ys t) + s t ys + e (t + 1) (ys (t + 1)) := by
@@ -51,10 +54,12 @@ private lemma main
   refine ⟨hrec, fun t => ?_⟩
   induction t with
   | zero =>
+    try simp only [] at *
     rw [h₄, (h₀ ys).1, Real.log_mul (h₃ _ _).ne' (h₁ _).ne']
     simp only [zero_add, Finset.Ico_self, Finset.sum_empty, Finset.sum_range_one, h₅]
     ring
   | succ t ih =>
+    try simp only [] at *
     rw [hrec t, ih, Finset.sum_Ico_succ_top (by omega : 1 ≤ t + 1), Finset.sum_range_succ _ (t + 1), Nat.add_sub_cancel]
     ring
 

@@ -9,8 +9,9 @@ private lemma main
   (n : ℕ)
   (f : ℕ → α) :
 -- imply
-  ∑ k ∈ range n, f k = ∑ k : Fin n, f k := by
+  ∑ k < n, f k = ∑ k : Fin n, f k := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply Finset.sum_range
 
 

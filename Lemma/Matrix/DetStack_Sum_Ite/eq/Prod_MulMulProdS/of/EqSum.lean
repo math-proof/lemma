@@ -83,7 +83,7 @@ private lemma main
         0).det =
     ∏ i : Fin n,
       (∏ j ∈ Finset.Iio i, (x[i] - x[j]) ^ (d[i] * d[j])) *
-        (∏ j ∈ Finset.range d[i], (j ! : R)) *
+        (∏ j < d[i], (j ! : R)) *
         x[i] ^ d[i].choose 2 := by
 -- proof
   change
@@ -96,15 +96,15 @@ private lemma main
           0).det =
       ∏ i : Fin n,
         (∏ j ∈ Finset.Iio i, (x i - x j) ^ (d i * d j)) *
-          (∏ j ∈ Finset.range (d i), (j ! : R)) *
+          (∏ j < (d i), (j ! : R)) *
           x i ^ (d i).choose 2
   have hprod :
     (∏ i : Fin n,
       (∏ j ∈ Finset.Iio i, (x i - x j) ^ (d i * d j)) *
-        (∏ j ∈ Finset.range (d i), (j ! : R)) *
+        (∏ j < (d i), (j ! : R)) *
         x i ^ (d i).choose 2) =
       (∏ i : Fin n, ∏ j ∈ Finset.Iio i, (x i - x j) ^ (d i * d j)) *
-        (∏ i : Fin n, ∏ j ∈ Finset.range (d i), (j ! : R)) *
+        (∏ i : Fin n, ∏ j < (d i), (j ! : R)) *
         (∏ i : Fin n, x i ^ (d i).choose 2) := by
     simp [mul_assoc, Finset.prod_mul_distrib]
   rw [hprod]
@@ -356,7 +356,7 @@ private lemma main
       set C : ∀ k : Fin n, Matrix (Fin (d' k)) (Fin (d' k)) R := fun k =>
         [i < d' k][j < d' k]
           ((i : ℕ).choose j : R) *
-            ∑ h ∈ Finset.range (d0 + 1),
+            ∑ h < (d0 + 1),
               (d0.choose h : R) * (-x0) ^ (d0 - h) * x' k ^ h *
                 (h : R) ^ (i - j : ℤ) with hC
       set As : ∀ k : Fin n, Matrix (Fin (d' k)) (Fin (m - d0)) R := fun k =>
@@ -495,7 +495,7 @@ private lemma main
       M_rest.det =
         (∏ ℓ : Fin n, ∏ k ∈ Finset.Iio ℓ,
             (x' ℓ - x' k) ^ (d' ℓ * d' k)) *
-          (∏ k : Fin n, ∏ i ∈ Finset.range (d' k), (i ! : R)) *
+          (∏ k : Fin n, ∏ i < (d' k), (i ! : R)) *
           (∏ k : Fin n, x' k ^ (d' k).choose 2) := by
       have hih := ih (x := x') (d := d') hsum'
       have hshape :

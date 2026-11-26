@@ -9,8 +9,9 @@ private lemma main
 -- given
   (h : ((Finset.range n).image x).card = n) :
 -- imply
-  ∀ i ∈ Finset.range n, ∀ j ∈ Finset.range i, x i ≠ x j := by
+  ∀ i < n, ∀ j < i, x i ≠ x j := by
 -- proof
+  try simp only [← Finset.mem_range] at *
   intro i hi j hj e
   rw [Finset.mem_range] at hi hj
   have hinj : Set.InjOn x (Finset.range n) := by

@@ -8,11 +8,12 @@ private lemma main
   {x : ℕ → ℝ}
   {a : ℝ}
 -- given
-  (h₀ : ∑ i ∈ Finset.range n, x i = a)
-  (h₁ : ∀ i ∈ Finset.range n, x i ≥ 0) :
+  (h₀ : ∑ i < n, x i = a)
+  (h₁ : ∀ i < n, x i ≥ 0) :
 -- imply
-  ∀ i ∈ Finset.range n, x i ≤ a := by
+  ∀ i < n, x i ≤ a := by
 -- proof
+  try simp only [Nat.Iio_eq_range, ← Finset.mem_range] at *
   intro i hi
   rw [← h₀]
   exact Finset.single_le_sum h₁ hi

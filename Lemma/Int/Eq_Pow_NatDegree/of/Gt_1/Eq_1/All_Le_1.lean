@@ -22,13 +22,13 @@ private lemma main
   have hl' : v (f.coeff f.natDegree) = 1 := hl
   have htop : v (f.coeff f.natDegree * x ^ f.natDegree) = v x ^ f.natDegree := by
     rw [map_mul, map_pow, hl', one_mul]
-  have hlower : v (∑ i ∈ Finset.range f.natDegree, f.coeff i * x ^ i)
-      < v x ^ f.natDegree := by
+  have hlower : v ((Finset.range f.natDegree).sum (fun i => f.coeff i * x ^ i)) < v x ^ f.natDegree := by
     refine v.map_sum_lt (pow_ne_zero _ hx0) ?_
     intro i hi
     rw [Finset.mem_range] at hi
     rw [map_mul, map_pow]
-    calc v (f.coeff i) * v x ^ i ≤ 1 * v x ^ i := mul_le_mul' (hc i) le_rfl
+    calc
+      _ ≤ 1 * v x ^ i := mul_le_mul' (hc i) le_rfl
       _ = v x ^ i := one_mul _
       _ < v x ^ f.natDegree := pow_lt_pow_right₀ hx hi
   rw [Polynomial.eval_eq_sum_range, Finset.sum_range_succ,
@@ -36,3 +36,4 @@ private lemma main
 
 
 -- created on 2026-10-05
+-- updated on 2026-11-26

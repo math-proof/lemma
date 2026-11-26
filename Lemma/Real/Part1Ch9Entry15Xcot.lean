@@ -17,14 +17,15 @@ private lemma ramanujan_part1_ch9_entry15_xcot_eq
         MeasureTheory.volume (Real.pi / 4) y) ∧
     ∀ x : ℝ, 0 < x → x < Real.pi / 2 →
       (2 : ℝ) ^ n * chapter9CotPrimitive n (Real.pi / 2 - x) =
-        (∑ k ∈ Finset.range (n + 1),
+        (∑ k < (n + 1),
           (-1 : ℝ) ^ k * (n.choose k : ℝ) * Real.pi ^ (n - k) *
             (chapter9CotPrimitive k (2 * x) -
               (2 : ℝ) ^ k * chapter9CotPrimitive k x)) -
-        ∑ k ∈ Finset.range (n + 1),
+        ∑ k < (n + 1),
           (-1 : ℝ) ^ k * (n.choose k : ℝ) * Real.pi ^ (n - k) *
             chapter9CotPrimitive k (Real.pi / 2) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply Ramanujan.Part1Ch9.Entry15Xcot.ramanujan_part1_ch9_entry15_xcot n
 
 -- created on 2026-10-10

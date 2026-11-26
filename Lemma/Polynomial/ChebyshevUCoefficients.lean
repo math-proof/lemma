@@ -15,11 +15,12 @@ private lemma chebyshevU_coeff_eq_binomial_sum_eq
   (Polynomial.Chebyshev.U ℤ (n : ℤ)).coeff k =
     if n % 2 = k % 2 then
       (-1 : ℤ) ^ ((n - k) / 2) *
-        ∑ i ∈ Finset.range (k + 1),
+        ∑ i < (k + 1),
           ((Nat.choose ((n + k) / 2) i : ℕ) : ℤ) *
             ((Nat.choose ((n + k) / 2 - i) ((n - k) / 2) : ℕ) : ℤ)
     else 0 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply chebyshevU_coeff_eq_binomial_sum
   exact hk
 

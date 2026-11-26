@@ -565,8 +565,8 @@ lemma maxBT_eq (k : ℕ) : 2 * maxBT k + 1 = 3 ^ (k + 1) := by
   | zero => norm_num
   | succ n ih =>
     rw [sum_range_succ, mul_add]
-    calc 2 * ∑ x ∈ range (n + 1), 3 ^ x + 2 * 3 ^ (n + 1) + 1
-        = (2 * ∑ x ∈ range (n + 1), 3 ^ x + 1) + 2 * 3 ^ (n + 1) := by ring
+    calc 2 * ∑ x < (n + 1), 3 ^ x + 2 * 3 ^ (n + 1) + 1
+        = (2 * ∑ x < (n + 1), 3 ^ x + 1) + 2 * 3 ^ (n + 1) := by ring
       _ = 3 ^ (n + 1) + 2 * 3 ^ (n + 1) := by rw [ih]
       _ = 3 * 3 ^ (n + 1) := by ring
       _ = 3 ^ (n + 1 + 1) := by ring_nf
@@ -583,7 +583,7 @@ lemma card_Icc_symm_maxBT (k : ℕ) : (Icc_symm (maxBT k)).card = 3 ^ (k + 1) :=
 
 /-- Helper for the bounds: sum of 3^i over Fin (k+1) equals sum over range (k+1). -/
 lemma sum_pow_three_Fin_eq_range (k : ℕ) :
-    (∑ i : Fin (k + 1), (3 : ℤ) ^ (i : ℕ)) = ∑ i ∈ range (k + 1), (3 : ℤ) ^ i :=
+    (∑ i : Fin (k + 1), (3 : ℤ) ^ (i : ℕ)) = ∑ i < (k + 1), (3 : ℤ) ^ i :=
   Fin.sum_univ_eq_sum_range (fun i => (3 : ℤ) ^ i) (k + 1)
 
 /-- The value of any k-bounded representation is in `[-M_k, M_k]`. -/
@@ -812,7 +812,7 @@ lemma balancedTernary_exists (n : ℤ) : Nonempty (BalancedTernaryRep n) := by
       unfold maxBT
       have h1 : n.natAbs < 3 ^ n.natAbs :=
         Nat.lt_two_pow_self.trans_le (Nat.pow_le_pow_left (by norm_num : 2 ≤ 3) n.natAbs)
-      have h2 : (3 : ℕ) ^ n.natAbs ≤ ∑ i ∈ range (n.natAbs + 1), 3 ^ i := by
+      have h2 : (3 : ℕ) ^ n.natAbs ≤ ∑ i < (n.natAbs + 1), 3 ^ i := by
         apply single_le_sum (fun i _ => Nat.zero_le _)
         exact mem_range.mpr (Nat.lt_succ_self _)
       omega
@@ -843,12 +843,12 @@ lemma balancedTernary_exists (n : ℤ) : Nonempty (BalancedTernaryRep n) := by
   exact ⟨⟨digits, hdigits_range, hsum_eq⟩⟩
 
 /-- Key lemma: 2 * ∑_{i<k} 3^i < 3^k. -/
-lemma two_sum_lt_pow_three (k : ℕ) : 2 * ∑ i ∈ range k, (3 : ℤ) ^ i < 3 ^ k := by
+lemma two_sum_lt_pow_three (k : ℕ) : 2 * ∑ i < k, (3 : ℤ) ^ i < 3 ^ k := by
   induction k with
   | zero => simp
   | succ n ih =>
     rw [sum_range_succ, mul_add, pow_succ]
-    have h : 2 * ∑ x ∈ range n, (3 : ℤ) ^ x < 3 ^ n := ih
+    have h : 2 * ∑ x < n, (3 : ℤ) ^ x < 3 ^ n := ih
     nlinarith [pow_nonneg (by norm_num : (0 : ℤ) ≤ 3) n]
 
 /-- The sum over a superset equals the sum over the support (for finitely supported functions). -/
@@ -940,7 +940,7 @@ lemma btDigits_sum_unique (f g : ℕ →₀ ℤ)
     simp only [mem_range]
     omega
   have hbound : |∑ i ∈ (S.filter (· ≤ k)).erase k, (f i - g i) * (3 : ℤ) ^ i| ≤ 
-                2 * ∑ i ∈ range k, (3 : ℤ) ^ i := by
+                2 * ∑ i < k, (3 : ℤ) ^ i := by
     calc |∑ i ∈ (S.filter (· ≤ k)).erase k, (f i - g i) * (3 : ℤ) ^ i|
         ≤ ∑ i ∈ (S.filter (· ≤ k)).erase k, |(f i - g i) * (3 : ℤ) ^ i| := abs_sum_le_sum_abs _ _
       _ = ∑ i ∈ (S.filter (· ≤ k)).erase k, |f i - g i| * (3 : ℤ) ^ i := by
@@ -952,12 +952,12 @@ lemma btDigits_sum_unique (f g : ℕ →₀ ℤ)
           have h := btDigits_diff_abs_le_two (hf i) (hg i)
           have h3pos : (0 : ℤ) < 3 ^ i := pow_pos (by norm_num) i
           nlinarith
-      _ ≤ ∑ i ∈ range k, 2 * (3 : ℤ) ^ i := by
+      _ ≤ ∑ i < k, 2 * (3 : ℤ) ^ i := by
           apply sum_le_sum_of_subset_of_nonneg herase_subset
           intro i _ _
           have h3pos : (0 : ℤ) < 3 ^ i := pow_pos (by norm_num) i
           linarith
-      _ = 2 * ∑ i ∈ range k, (3 : ℤ) ^ i := by rw [mul_sum]
+      _ = 2 * ∑ i < k, (3 : ℤ) ^ i := by rw [mul_sum]
   have hk_eq : (f k - g k) * (3 : ℤ) ^ k = 
                -∑ i ∈ (S.filter (· ≤ k)).erase k, (f i - g i) * (3 : ℤ) ^ i := by
     linarith
@@ -971,7 +971,7 @@ lemma btDigits_sum_unique (f g : ℕ →₀ ℤ)
     nlinarith
   have hupper : |∑ i ∈ (S.filter (· ≤ k)).erase k, (f i - g i) * (3 : ℤ) ^ i| < (3 : ℤ) ^ k := by
     calc |∑ i ∈ (S.filter (· ≤ k)).erase k, (f i - g i) * (3 : ℤ) ^ i|
-        ≤ 2 * ∑ i ∈ range k, (3 : ℤ) ^ i := hbound
+        ≤ 2 * ∑ i < k, (3 : ℤ) ^ i := hbound
       _ < (3 : ℤ) ^ k := two_sum_lt_pow_three k
   rw [habs_eq] at hlower
   linarith
@@ -1765,7 +1765,7 @@ private lemma pv_sum_pow_three_Fin_eq_range
 -- given
   (k : ℕ) :
 -- imply
-  (∑ i : Fin (k + 1), (3 : ℤ) ^ (i : ℕ)) = ∑ i ∈ Finset.range (k + 1), (3 : ℤ) ^ i := by
+  (∑ i : Fin (k + 1), (3 : ℤ) ^ (i : ℕ)) = ∑ i < (k + 1), (3 : ℤ) ^ i := by
 -- proof
   apply AlgebraicCombinatorics.FPS.Laurent.sum_pow_three_Fin_eq_range k
 
@@ -1870,7 +1870,7 @@ private lemma pv_two_sum_lt_pow_three
 -- given
   (k : ℕ) :
 -- imply
-  2 * ∑ i ∈ Finset.range k, (3 : ℤ) ^ i < 3 ^ k := by
+  2 * ∑ i < k, (3 : ℤ) ^ i < 3 ^ k := by
 -- proof
   apply AlgebraicCombinatorics.FPS.Laurent.two_sum_lt_pow_three k
 

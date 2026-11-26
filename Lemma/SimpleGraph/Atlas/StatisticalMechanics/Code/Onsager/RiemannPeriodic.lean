@@ -14,8 +14,9 @@ private lemma ons_riemann_periodic_eq
   (hf : Continuous f)
   (hper : Function.Periodic f (2 * Real.pi)) :
 -- imply
-  Filter.Tendsto (fun n : ℕ => (2 * Real.pi / n) * ∑ k ∈ Finset.range n, f (2 * Real.pi * k / n)) Filter.atTop (nhds (∫ x in (0)..(2 * Real.pi), f x)) := by
+  Filter.Tendsto (fun n : ℕ => (2 * Real.pi / n) * ∑ k < n, f (2 * Real.pi * k / n)) Filter.atTop (nhds (∫ x in (0)..(2 * Real.pi), f x)) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Onsager.ons_riemann_periodic f hf hper
 
 

@@ -73,13 +73,14 @@ private lemma helper_main
   have hK : IsCompact (S ×ˢ Set.Icc (-R) R) := hS.prod isCompact_Icc
   have hb : ∀ n : ℕ, ∃ Cn : ℝ, ∀ p ∈ S ×ˢ Set.Icc (-R) R, ‖dU G n p‖ ≤ Cn := fun n => hK.exists_bound_of_continuousOn ((contDiff_dU hΨ n).continuous.continuousOn)
   choose Cn hCn using hb
-  refine ⟨∑ n ∈ Finset.range (N + 1), |Cn n|, Finset.sum_nonneg fun n _ => abs_nonneg _, ?_⟩
+  refine ⟨∑ n < (N + 1), |Cn n|, Finset.sum_nonneg fun n _ => abs_nonneg _, ?_⟩
   intro a ha u hu n hn
   have hmem : ((a, u) : E × ℝ) ∈ S ×ˢ Set.Icc (-R) R := ⟨ha, hu⟩
   have h1 : ‖iteratedDeriv n (Ψ a) u‖ ≤ |Cn n| := by
     rw [show Ψ a = fun u => G (a, u) from rfl, iteratedDeriv_slice hΨ n a u]
     apply (hCn n _ hmem).trans (le_abs_self _)
   refine h1.trans ?_
+  try simp only [Nat.Iio_eq_range] at *
   apply Finset.single_le_sum (f := fun n => |Cn n|) (fun n _ => abs_nonneg _) (Finset.mem_range.mpr (Nat.lt_succ_of_le hn))
 
 /--

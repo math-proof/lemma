@@ -23,9 +23,10 @@ private lemma eval₂_bernoulli_shift_eq (n : ℕ) (x : ℂ) :
 @[path]
 private lemma eval₂_bernoulli_expand_eq (n : ℕ) (x : ℂ) :
   (Polynomial.bernoulli n).eval₂ (algebraMap ℚ ℂ) x =
-    ∑ k ∈ Finset.range (n + 1),
-      ((n.choose k : ℕ) : ℂ) * ((bernoulli k : ℚ) : ℂ) * x ^ (n - k) :=
-  eval₂_bernoulli_expand n x
+    ∑ k < (n + 1),
+      ((n.choose k : ℕ) : ℂ) * ((bernoulli k : ℚ) : ℂ) * x ^ (n - k) := by
+  rw [Nat.Iio_eq_range]
+  exact eval₂_bernoulli_expand n x
 
 
 /--
@@ -49,11 +50,12 @@ private lemma ramanujan_part1_ch7_entry8_eq
 -- imply
   ((Polynomial.bernoulli (r + 1)).eval₂ (algebraMap ℚ ℂ) (x + 1) -
     (Polynomial.bernoulli (r + 1)).eval₂ (algebraMap ℚ ℂ) 1) / (r + 1 : ℂ) =
-  (∑ k ∈ Finset.range (r + 1),
+  (∑ k < (r + 1),
       ((r + 1).choose k : ℂ) * (bernoulli k : ℂ) * x ^ (r + 1 - k)) /
-      (r + 1 : ℂ) + x ^ r :=
+      (r + 1 : ℂ) + x ^ r := by
 -- proof
-  ramanujan_part1_ch7_entry8 r hr x
+  rw [Nat.Iio_eq_range]
+  exact ramanujan_part1_ch7_entry8 r hr x
 
 
 -- created on 2026-10-10

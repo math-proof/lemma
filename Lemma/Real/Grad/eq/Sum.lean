@@ -9,10 +9,11 @@ private lemma main
   {f : ℕ → ℝ → ℝ}
   {x : ℝ}
 -- given
-  (h : ∀ k ∈ Finset.range n, DifferentiableAt ℝ (f k) x) :
+  (h : ∀ k < n, DifferentiableAt ℝ (f k) x) :
 -- imply
-  deriv (fun x => ∑ k ∈ Finset.range n, f k x) x = ∑ k ∈ Finset.range n, deriv (f k) x := by
+  deriv (fun x => ∑ k < n, f k x) x = ∑ k < n, deriv (f k) x := by
 -- proof
+  try simp only [Nat.Iio_eq_range, ← Finset.mem_range] at *
   exact deriv_fun_sum h
 
 

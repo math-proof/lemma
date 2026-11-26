@@ -15,6 +15,7 @@ lemma uniform_convergence_iff
 -- imply
   TendstoUniformlyOn f g atTop S ↔ ∀ ε > 0, ∃ M : ℕ, ∀ n ≥ M, ∀ x ∈ S, |f n x - g x| < ε := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   rw [Metric.tendstoUniformlyOn_iff]
   constructor
   · intro h ε hε
@@ -37,8 +38,9 @@ lemma weierstrass_m_test
   (hM : ∀ j, ∀ x ∈ S, |f j x| ≤ M j)
   (hMsum : Summable M) :
 -- imply
-  (∀ x ∈ S, Summable (fun j => f j x)) ∧ TendstoUniformlyOn (fun n x => ∑ j ∈ Finset.range n, f j x) (fun x => ∑' j, f j x) Filter.atTop S := by
+  (∀ x ∈ S, Summable (fun j => f j x)) ∧ TendstoUniformlyOn (fun n x => ∑ j < n, f j x) (fun x => ∑' j, f j x) Filter.atTop S := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   have hfu : ∀ n, ∀ x ∈ S, ‖f n x‖ ≤ M n := by
     intro n x hx
     rw [Real.norm_eq_abs]

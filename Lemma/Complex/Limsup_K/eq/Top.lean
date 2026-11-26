@@ -11,9 +11,10 @@ open Filter Complex Finset
 private lemma main
   {z: ℕ → Circle} :
 -- imply
-  atTop.limsup (fun k:ℕ ↦ atTop.limsup (fun n:ℕ ↦ (‖∑ j ∈ range n, ((z j)^k:ℂ)‖:EReal) )) = ⊤ :=
+  atTop.limsup (fun k:ℕ ↦ atTop.limsup (fun n:ℕ ↦ (‖∑ j < n, ((z j)^k:ℂ)‖:EReal) )) = ⊤ := by
 -- proof
-  Erdos_987 z
+  simpa only [Nat.Iio_eq_range] using Erdos_987 z
 
 
 -- created on 2026-10-22
+-- updated on 2026-11-26

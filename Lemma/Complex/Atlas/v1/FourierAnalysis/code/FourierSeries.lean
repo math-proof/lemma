@@ -83,10 +83,10 @@ private lemma IsTrigPolynomial_iff
 -- imply
   IsTrigPolynomial p ↔
     ∃ (N : ℕ) (a b : ℕ → ℝ),
-      ∀ x, p x = ∑ n ∈ Finset.range (N + 1),
-        (a n * cos (n * x) + b n * sin (n * x)) :=
+      ∀ x, p x = ∑ n < (N + 1),
+        (a n * cos (n * x) + b n * sin (n * x)) := by
 -- proof
-  Iff.rfl
+  simp only [IsTrigPolynomial, Nat.Iio_eq_range]
 
 
 -- created on 2026-10-23

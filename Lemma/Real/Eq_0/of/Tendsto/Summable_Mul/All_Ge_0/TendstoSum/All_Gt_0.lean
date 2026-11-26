@@ -10,13 +10,14 @@ private lemma main
   {c : ℝ}
 -- given
   (h₀ : ∀ n, 0 < T n)
-  (h₁ : Tendsto (fun n => ∑ k ∈ range n, T k) atTop atTop)
+  (h₁ : Tendsto (fun n => ∑ k < n, T k) atTop atTop)
   (h₂ : ∀ n, 0 ≤ x n)
   (h₃ : Summable fun n => T n * x n)
   (h₄ : Tendsto x atTop (𝓝 c)) :
 -- imply
   c = 0 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   have hc : 0 ≤ c := ge_of_tendsto' h₄ h₂
   refine hc.antisymm' (not_lt.1 fun hpos => ?_)
   obtain ⟨N, hN⟩ := eventually_atTop.1 (h₄.eventually (lt_mem_nhds (half_lt_self hpos)))

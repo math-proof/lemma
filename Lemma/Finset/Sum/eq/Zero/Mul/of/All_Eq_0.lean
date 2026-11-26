@@ -10,8 +10,9 @@ private lemma main
 -- given
   (h : ∀ i < n, f i = 0) :
 -- imply
-  ∑ i ∈ Finset.range n, f i * w i = 0 := by
+  ∑ i < n, f i * w i = 0 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   exact Finset.sum_eq_zero (fun i hi => by rw [h i (Finset.mem_range.mp hi), zero_mul])
 
 

@@ -11,7 +11,7 @@ private lemma main
 -- given
   (h : ∀ i, f i ≥ 0) :
 -- imply
-  ∏ i ∈ Finset.range n, f i ^ a = (∏ i ∈ Finset.range n, f i) ^ a := by
+  ∏ i < n, f i ^ a = (∏ i < n, f i) ^ a := by
 -- proof
   exact Real.finsetProd_rpow _ _ (fun i _ => h i) a
 

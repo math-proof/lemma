@@ -9,8 +9,9 @@ private lemma main
   {g : ℕ → ℕ → α} :
 -- imply
   ∑ p ∈ Finset.range n ×ˢ Finset.range n, f p.2 * g p.1 p.2 =
-    ∑ i ∈ Finset.range n, ∑ j ∈ Finset.range n, f j * g i j := by
+    ∑ i < n, ∑ j < n, f j * g i j := by
 -- proof
+  simp only [Nat.Iio_eq_range]
   apply Finset.sum_product
 
 

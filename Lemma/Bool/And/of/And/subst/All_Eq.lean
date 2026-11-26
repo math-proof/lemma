@@ -7,13 +7,15 @@ private lemma given
   {n : ℕ}
   {S : Set ℤ}
 -- given
-  (h₀ : ∀ i ∈ Finset.range n, a i = b i)
-  (h₁ : ∑ i ∈ Finset.range n, b i ∈ S) :
+  (h₀ : ∀ i < n, a i = b i)
+  (h₁ : ∑ i < n, b i ∈ S) :
 -- imply
-  (∀ i ∈ Finset.range n, a i = b i) ∧ ∑ i ∈ Finset.range n, a i ∈ S := by
+  (∀ i < n, a i = b i) ∧ ∑ i < n, a i ∈ S := by
 -- proof
   refine ⟨h₀, ?_⟩
-  rwa [Finset.sum_congr rfl h₀]
+  have hsum : ∑ i < n, a i = ∑ i < n, b i := Finset.sum_congr rfl (fun i hi => h₀ i (by simpa using hi))
+  simpa only [hsum] using h₁
 
 
 -- created on 2019-05-02
+-- updated on 2026-11-26

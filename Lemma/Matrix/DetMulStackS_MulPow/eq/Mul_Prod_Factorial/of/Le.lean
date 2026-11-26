@@ -18,8 +18,9 @@ private lemma main
 -- imply
   (([i < d][j < m] (x ^ (j : ℕ) * ((j : R) + δ) ^ (i : ℕ))) *
     ([k < m][j < d] ((-x) ^ (j - k : ℤ) * ((j : ℕ).choose k : R)))).det =
-    x ^ (d.choose 2) * ∏ i ∈ Finset.range d, (i ! : R) := by
+    x ^ (d.choose 2) * ∏ i < d, (i ! : R) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   have hmul (i j : Fin d) :=
     GetMulOfOfPowNegChoose.eq.MulPowFwdDiff.of.Le (x := x) (δ := δ) h i j
   rw [Det.eq.Prod.of.All_All_Eq_0]

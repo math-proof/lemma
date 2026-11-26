@@ -8,9 +8,9 @@ private lemma main
   {A : ℕ → Set α}
   {x : α}
 -- given
-  (h : x ∈ ⋂ k ∈ Finset.range n, A k) :
+  (h : x ∈ ⋂ k < n, A k) :
 -- imply
-  ∀ k ∈ Finset.range n, x ∈ A k :=
+  ∀ k < n, x ∈ A k :=
 -- proof
   fun k hk => Set.mem_iInter₂.mp h k hk
 

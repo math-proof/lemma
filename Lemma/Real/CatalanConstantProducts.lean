@@ -19,11 +19,12 @@ private lemma catalan_constant_product_formulas_is
       (1 - 2 / (2 * (n : ℝ) + 1)) ^ ((n : ℤ) * (-1 : ℤ) ^ n))
     Filter.atTop (nhds (Real.exp (2 * G / Real.pi + 1 / 2)))) ∧
   Filter.Tendsto (fun m : ℕ =>
-      ((∏ k ∈ Finset.range m, (4 * (k : ℝ) + 3) ^ (4 * k + 3)) /
-        (∏ k ∈ Finset.range m, (4 * (k : ℝ) + 1) ^ (4 * k + 1))) ^ 2 *
+      ((∏ k < m, (4 * (k : ℝ) + 3) ^ (4 * k + 3)) /
+        (∏ k < m, (4 * (k : ℝ) + 1) ^ (4 * k + 1))) ^ 2 *
       (4 * (m : ℝ) + 3) ^ (2 * m + 1) / (4 * (m : ℝ) + 1) ^ (6 * m + 1))
     Filter.atTop (nhds (Real.exp (4 * G / Real.pi))) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply MetaMathlibExt.catalan_constant_product_formulas G hG
 
 

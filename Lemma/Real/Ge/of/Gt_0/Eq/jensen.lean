@@ -14,11 +14,11 @@ private lemma main
 -- given
   (h₀ : ContinuousOn f (Set.Ioo a b))
   (h₁ : ∀ x ∈ Set.Ioo a b, 0 < deriv^[2] f x)
-  (h₂ : ∑ i ∈ Finset.range n, w i = 1)
+  (h₂ : ∑ i < n, w i = 1)
   (h₃ : ∀ i, 0 ≤ w i)
   (h₄ : ∀ i, x i ∈ Set.Ioo a b) :
 -- imply
-  ∑ i ∈ Finset.range n, w i * f (x i) ≥ f (∑ i ∈ Finset.range n, w i * x i) := by
+  ∑ i < n, w i * f (x i) ≥ f (∑ i < n, w i * x i) := by
 -- proof
   exact Real.Imp.of.Gt_0.jensen h₀ h₁ h₃ h₄ h₂
 

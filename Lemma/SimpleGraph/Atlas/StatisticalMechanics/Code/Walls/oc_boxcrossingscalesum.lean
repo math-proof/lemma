@@ -35,9 +35,9 @@ private lemma oc_sum_translate_le_eq
   (hr : r ≤ n)
   (hg : ∀ j, 0 ≤ g j) :
 -- imply
-  ∑ k ∈ Finset.Icc 1 n, g ((k : ℤ) - (r : ℤ)).natAbs ≤ 2 * ∑ j ∈ Finset.range (n + 1), g j := by
+  ∑ k ∈ Finset.Icc 1 n, g ((k : ℤ) - (r : ℤ)).natAbs ≤ 2 * ∑ j < (n + 1), g j := by
 -- proof
-  apply StatMech.Walls.oc_sum_translate_le n r hr g hg
+  simpa only [Nat.Iio_eq_range] using StatMech.Walls.oc_sum_translate_le n r hr g hg
 
 /--
 [oc_two_mul_le_two_mul_sup'](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/oc_boxcrossingscalesum.lean)
@@ -72,9 +72,9 @@ private lemma oc_revealment_sum_bound_eq
   (hu : u ∈ Λ)
   (hcomp : ∀ k, q k ≤ μ u ((k : ℤ) - (r : ℤ)).natAbs) :
 -- imply
-  ∑ k ∈ Finset.Icc 1 n, q k ≤ 2 * Λ.sup' hne (fun x => ∑ j ∈ Finset.range (n + 1), μ x j) := by
+  ∑ k ∈ Finset.Icc 1 n, q k ≤ 2 * Λ.sup' hne (fun x => ∑ j < (n + 1), μ x j) := by
 -- proof
-  apply StatMech.Walls.oc_revealment_sum_bound Λ hne μ hμ n r hr u hu q hcomp
+  simpa only [Nat.Iio_eq_range] using StatMech.Walls.oc_revealment_sum_bound Λ hne μ hμ n r hr u hu q hcomp
 
 /--
 [oc_box_crossing_scale_sum](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/oc_boxcrossingscalesum.lean)
@@ -96,9 +96,9 @@ private lemma oc_box_crossing_scale_sum_eq
   (hcompu : ∀ k, qu k ≤ μ u ((k : ℤ) - (ru : ℤ)).natAbs)
   (hcompv : ∀ k, qv k ≤ μ v ((k : ℤ) - (rv : ℤ)).natAbs) :
 -- imply
-  ∑ k ∈ Finset.Icc 1 n, (qu k + qv k) ≤ 4 * Λ.sup' hne (fun x => ∑ j ∈ Finset.range (n + 1), μ x j) := by
+  ∑ k ∈ Finset.Icc 1 n, (qu k + qv k) ≤ 4 * Λ.sup' hne (fun x => ∑ j < (n + 1), μ x j) := by
 -- proof
-  apply StatMech.Walls.oc_box_crossing_scale_sum Λ hne μ hμ n ru rv hru hrv u v hu hv qu qv hcompu hcompv
+  simpa only [Nat.Iio_eq_range] using StatMech.Walls.oc_box_crossing_scale_sum Λ hne μ hμ n ru rv hru hrv u v hu hv qu qv hcompu hcompv
 
 /--
 [oc_eq_revealment_family_sum_le](https://github.com/facebookresearch/atlas-lean/blob/main/Atlas/StatisticalMechanics/Code/Walls/oc_boxcrossingscalesum.lean)

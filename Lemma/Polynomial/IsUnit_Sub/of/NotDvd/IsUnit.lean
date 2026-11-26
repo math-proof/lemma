@@ -38,11 +38,13 @@ private lemma one_sub_dvd_of_isPrimitiveRoot
     Finset.mem_erase.mpr ⟨hω1, (mem_nthRootsFinset hd (1 : R)).mpr hω.pow_eq_one⟩
 
   have hsplit : (X - C (1 : R)) * ∏ μ ∈ (nthRootsFinset d (1 : R)).erase 1, (X - C μ) =
-      (X - C 1) * ∑ i ∈ Finset.range d, X ^ i := by
+      (X - C 1) * ∑ i < d, X ^ i := by
+    try simp only [Nat.Iio_eq_range] at *
     rw [Finset.mul_prod_erase _ (fun μ => X - C μ) h1mem, ← hprod, C_1, mul_comm, geom_sum_mul]
   have hX1 : (X - C (1 : R)) ≠ 0 := X_sub_C_ne_zero 1
   have hq := mul_left_cancel₀ hX1 hsplit
 
+  try simp only [Nat.Iio_eq_range] at *
   have hev := congrArg (eval (1 : R)) hq
   rw [eval_prod, eval_geom_sum] at hev
   simp only [eval_sub, eval_X, eval_C, one_pow, Finset.sum_const, Finset.card_range] at hev

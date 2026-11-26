@@ -14,7 +14,7 @@ private lemma main
 -- imply
   (∫ x in a..b, f x) =
     (b - a) * limUnder atTop (fun n : ℕ =>
-      (∑ k ∈ range n, f (a + (b - a) * (k : ℝ) / n)) / n) := by
+      (∑ k < n, f (a + (b - a) * (k : ℝ) / n)) / n) := by
 -- proof
   apply Integral.eq.Mul.Lim.Riemann.of.Lt h₀ h₁
 

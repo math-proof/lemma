@@ -12,8 +12,13 @@ private lemma main
   (h₀ : ν ≤ 1)
   (h₁ : 1 ≤ n₀) :
 -- imply
-  Tendsto (fun n => ∑ k ∈ range n, ((k : ℝ) + n₀) ^ (-ν)) atTop atTop := by
+  Tendsto (fun n : ℕ => ∑ k < n, ((k : ℝ) + n₀) ^ (-ν)) atTop atTop := by
 -- proof
+  have key : (fun n : ℕ => ∑ k < n, ((k : ℝ) + n₀) ^ (-ν)) =
+      (fun n : ℕ => Finset.sum (Finset.range n) fun k => ((k : ℝ) + n₀) ^ (-ν)) := by
+    funext n
+    rw [Nat.Iio_eq_range]
+  rw [key]
   have hn₀ : (1 : ℝ) ≤ n₀ := by exact_mod_cast h₁
   refine tendsto_atTop_mono (fun n => ?_) (tendsto_sum_range_one_div_nat_succ_atTop.const_mul_atTop (inv_pos.2 (by linarith : (0 : ℝ) < n₀)))
   rw [mul_sum]

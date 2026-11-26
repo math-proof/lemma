@@ -8,8 +8,9 @@ private lemma main
   {f : ℝ → ℝ}
   {x : ℝ} :
 -- imply
-  Difference f n x = ∑ k ∈ Finset.range (n + 1), (-1) ^ (n - k) * (n.choose k : ℝ) * f (x + k) := by
+  Difference f n x = ∑ k < (n + 1), (-1) ^ (n - k) * (n.choose k : ℝ) * f (x + k) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   unfold Difference
   rw [fwdDiff_iter_eq_sum_shift]
   refine Finset.sum_congr rfl fun k _ => ?_

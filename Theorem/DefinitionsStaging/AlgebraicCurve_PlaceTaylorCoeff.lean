@@ -1,6 +1,6 @@
 module
 public import Mathlib
-public import Lemma.Definitions.Def_AlgebraicCurve_PlaceEvaluation
+public import Def.AlgebraicCurve_PlaceEvaluation
 public import Def.AlgebraicCurve_PlaceTaylorCoeff
 set_option autoImplicit false
 
@@ -15,14 +15,11 @@ variable {K F : Type*} [Field K] [Field F] [Algebra K F]
 
 namespace Place
 
-theorem taylorRem_zero : taylorRem v t f 0 = f := rfl
+variable (v : Place K F) (t f : F)
 
 theorem taylorRem_succ (r : ℕ) :
     taylorRem v t f (r + 1)
       = (taylorRem v t f r - algebraMap K F (v.evalAt (taylorRem v t f r))) * t⁻¹ := rfl
-
-@[simp]
-theorem taylorCoeff_zero : taylorCoeff v t 0 f = v.evalAt f := rfl
 
 theorem taylorCoeff_eq (r : ℕ) : taylorCoeff v t r f = v.evalAt (taylorRem v t f r) := rfl
 
@@ -53,11 +50,6 @@ end Place
 theorem jetMatrix_apply {M : ℕ} (P : Fin M → Place K F) (t : Fin M → F) (e : Fin M → ℕ)
     (f : Fin M → F) (i j : Fin M) :
     jetMatrix P t e f i j = (P i).taylorCoeff (t i) (e i) (f j) := rfl
-
-@[simp]
-theorem jetMatrix_order_zero {M : ℕ} (P : Fin M → Place K F) (t : Fin M → F)
-    (f : Fin M → F) :
-    jetMatrix P t (fun _ => 0) f = Matrix.of fun i j => (P i).evalAt (f j) := rfl
 
 open Classical in
 

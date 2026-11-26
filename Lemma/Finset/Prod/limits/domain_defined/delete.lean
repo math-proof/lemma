@@ -10,8 +10,8 @@ private lemma main
   {f : Fin k → ℕ}
   {h : ℤ → ℕ → α} :
 -- imply
-  ∏ i ∈ Finset.univ.filter (fun i : Fin k => (i : ℕ) < k), ∏ j ∈ Finset.range (f i), h (x i) j
-    = ∏ i, ∏ j ∈ Finset.range (f i), h (x i) j := by
+  ∏ i ∈ Finset.univ.filter (fun i : Fin k => (i : ℕ) < k), ∏ j < (f i), h (x i) j
+    = ∏ i, ∏ j < (f i), h (x i) j := by
 -- proof
   rw [Finset.filter_true_of_mem]
   intro i _

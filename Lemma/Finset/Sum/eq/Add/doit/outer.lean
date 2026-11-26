@@ -6,8 +6,9 @@ import Initialize.Tactic.Attr.Basic
 private lemma main
   (x : ℕ → ℝ) :
 -- imply
-  ∑ i ∈ Finset.range 5, x i = x 0 + x 1 + x 2 + x 3 + x 4 := by
+  ∑ i < 5, x i = x 0 + x 1 + x 2 + x 3 + x 4 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   simp [Finset.sum_range_succ, add_assoc]
 
 

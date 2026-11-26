@@ -18,26 +18,27 @@ private lemma ramanujan_part1_ch9_entry1_logratio_is
 -- imply
   Summable (chapter9Entry1ConstantTerm r a) ∧
     ((Odd r ∧
-        (∀ k ∈ Finset.range ((r - 1) / 2 + 1),
+        (∀ k < ((r - 1) / 2 + 1),
           Summable (chapter9Entry1ConstantTerm (r - 2 * k) a)) ∧
         Filter.Tendsto
           (fun N : ℕ =>
-            ∑ k ∈ Finset.range N, chapter9Entry1CosineTerm r a x k)
+            ∑ k < N, chapter9Entry1CosineTerm r a x k)
           Filter.atTop
-          (nhds (∑ k ∈ Finset.range ((r - 1) / 2 + 1),
+          (nhds (∑ k < ((r - 1) / 2 + 1),
             (-1 : ℝ) ^ k * chapter9Entry1Constant (r - 2 * k) a *
               x ^ (2 * k) / ((2 * k).factorial : ℝ)))) ∨
       (Even r ∧
-        (∀ k ∈ Finset.range (r / 2),
+        (∀ k < (r / 2),
           Summable (chapter9Entry1ConstantTerm (r - 2 * k - 1) a)) ∧
         Filter.Tendsto
           (fun N : ℕ =>
-            ∑ k ∈ Finset.range N, chapter9Entry1SineTerm r a x k)
+            ∑ k < N, chapter9Entry1SineTerm r a x k)
           Filter.atTop
-          (nhds (∑ k ∈ Finset.range (r / 2),
+          (nhds (∑ k < (r / 2),
             (-1 : ℝ) ^ k * chapter9Entry1Constant (r - 2 * k - 1) a *
               x ^ (2 * k + 1) / ((2 * k + 1).factorial : ℝ))))) := by
 -- proof
+  simp only [Nat.Iio_eq_range, ← Finset.mem_range]
   apply Ramanujan.Part1Ch9.Entry1Logratio.ramanujan_part1_ch9_entry1_logratio r a x hr ha hx
 
 -- created on 2026-10-10

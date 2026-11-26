@@ -7,10 +7,11 @@ private lemma main
   {t : ℕ}
   {A L : ℕ → ℕ → ℂ}
 -- given
-  (h : ∀ i < t, L t i = (A t i - ∑ k ∈ Finset.range i, L t k * ~(L i k)) / L i i ∧ L i i ∈ Complex.ofReal '' Set.Ioi 0 ∧ ∀ j < i, L i j ∈ (Set.univ : Set ℂ)) :
+  (h : ∀ i < t, L t i = (A t i - ∑ k < i, L t k * ~(L i k)) / L i i ∧ L i i ∈ Complex.ofReal '' Set.Ioi 0 ∧ ∀ j < i, L i j ∈ (Set.univ : Set ℂ)) :
 -- imply
-  ∀ j < t, L t j ∈ (Set.univ : Set ℂ) ∧ A t j = ∑ k ∈ Finset.range (j + 1), L t k * ~(L j k) := by
+  ∀ j < t, L t j ∈ (Set.univ : Set ℂ) ∧ A t j = ∑ k < (j + 1), L t k * ~(L j k) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   intro j hj
   obtain ⟨h₁, ⟨r, hr, hL⟩, -⟩ := h j hj
   refine ⟨Set.mem_univ _, ?_⟩
@@ -26,10 +27,11 @@ private lemma real
   {t : ℕ}
   {A L : ℕ → ℕ → ℝ}
 -- given
-  (h : ∀ i < t, L t i = (A t i - ∑ k ∈ Finset.range i, L t k * L i k) / L i i ∧ L i i ∈ Set.Ioi 0 ∧ ∀ j < i, L i j ∈ (Set.univ : Set ℝ)) :
+  (h : ∀ i < t, L t i = (A t i - ∑ k < i, L t k * L i k) / L i i ∧ L i i ∈ Set.Ioi 0 ∧ ∀ j < i, L i j ∈ (Set.univ : Set ℝ)) :
 -- imply
-  ∀ j < t, L t j ∈ (Set.univ : Set ℝ) ∧ A t j = ∑ k ∈ Finset.range (j + 1), L t k * L j k := by
+  ∀ j < t, L t j ∈ (Set.univ : Set ℝ) ∧ A t j = ∑ k < (j + 1), L t k * L j k := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   intro j hj
   obtain ⟨h₁, hL, -⟩ := h j hj
   refine ⟨Set.mem_univ _, ?_⟩

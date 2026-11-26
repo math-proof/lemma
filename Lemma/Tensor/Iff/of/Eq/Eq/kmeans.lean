@@ -9,14 +9,14 @@ private lemma main
   {w : ℕ → Finset ℕ}
   {i j : ℕ}
 -- given
-  (h₀ : ∑ i ∈ Finset.range k, (w i).card = M)
+  (h₀ : ∑ i < k, (w i).card = M)
   (h₁ : (Finset.range k).biUnion w = Finset.range M) :
 -- imply
   (j ∈ w i ∧ i < k) ↔
-    (i = ∑ i' ∈ Finset.range k, i' * (if j ∈ w i' then 1 else 0) ∧ j < M) := by
+    (i = ∑ i' < k, i' * (if j ∈ w i' then 1 else 0) ∧ j < M) := by
 -- proof
   have hsum : ∀ i0, i0 < k → j ∈ w i0 →
-      ∑ i' ∈ Finset.range k, i' * (if j ∈ w i' then 1 else 0) = i0 := by
+      ∑ i' < k, i' * (if j ∈ w i' then 1 else 0) = i0 := by
     intro i0 hi0 hj
     rw [Finset.sum_eq_single i0]
     · simp [hj]
@@ -24,10 +24,10 @@ private lemma main
       intro b hb hne
       rw [ite_eq_right (fun hb' =>
         hne (Eq.of.In.In.Lt.Lt.EqBiUnion.EqSum_Card
-          h₀ h₁ (Finset.mem_range.mp hb) hi0 hb' hj)), mul_zero]
+          h₀ h₁ (Finset.mem_Iio.mp hb) hi0 hb' hj)), mul_zero]
     ·
       intro h
-      exact absurd (Finset.mem_range.mpr hi0) h
+      exact absurd (Finset.mem_Iio.mpr hi0) h
   constructor
   ·
     rintro ⟨hj, hi⟩

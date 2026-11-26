@@ -11,8 +11,9 @@ private lemma main
 -- given
   (h : Summable s) :
 -- imply
-  lim[n → ∞] ∑ k ∈ Finset.range n, s k = ∑' k, s k := by
+  lim[n → ∞] ∑ k < n, s k = ∑' k, s k := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   exact h.hasSum.tendsto_sum_nat
 
 

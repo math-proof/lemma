@@ -19,6 +19,7 @@ private lemma stabilizes_to_unique_prime_eq
 -- imply
   limit1 = limit2 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply Seq.stabilizesTo_unique' ha hb
 
 /--
@@ -35,6 +36,7 @@ private lemma exists_xn_equiv_k_is
 -- imply
   ∃ K : ℕ, ∀ i ≥ K, XnEquiv n (f i) lf := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply PowerSeries.exists_xnEquiv_K hf n
 
 /--
@@ -51,6 +53,7 @@ private lemma exists_xn_equiv_l_is
 -- imply
   ∃ L : ℕ, ∀ i ≥ L, XnEquiv n (g i) lg := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply PowerSeries.exists_xnEquiv_L hg n
 
 /--
@@ -68,6 +71,7 @@ private lemma exists_xn_equiv_both_is
 -- imply
   ∃ P : ℕ, ∀ i ≥ P, XnEquiv n (f i) lf ∧ XnEquiv n (g i) lg := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply PowerSeries.exists_xnEquiv_both hf hg n
 
 /--
@@ -84,6 +88,7 @@ private lemma coeff_stabilizes_to_add_prime_is
 -- imply
   CoeffStabilizesTo (fun i => f i + g i) (lf + lg) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply PowerSeries.coeffStabilizesTo_add' hf hg
 
 /--
@@ -100,6 +105,7 @@ private lemma coeff_stabilizes_to_mul_prime_is
 -- imply
   CoeffStabilizesTo (fun i => f i * g i) (lf * lg) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply PowerSeries.coeffStabilizesTo_mul' hf hg
 
 /--
@@ -112,8 +118,9 @@ private lemma coeff_stabilizes_to_partial_sum_prime_is
   {f : ℕ → PowerSeries K}
   (hf : IsSummable f) :
 -- imply
-  CoeffStabilizesTo (fun i => ∑ j ∈ Finset.range (i + 1), f j) (tsum' f hf) := by
+  CoeffStabilizesTo (fun i => ∑ j < (i + 1), f j) (tsum' f hf) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply PowerSeries.coeffStabilizesTo_partial_sum' hf
 
 /--
@@ -126,8 +133,9 @@ private lemma coeff_stabilizes_to_partial_prod_prime_is
   {f : ℕ → PowerSeries K}
   (hf : IsMultipliable f) :
 -- imply
-  CoeffStabilizesTo (fun i => ∏ j ∈ Finset.range (i + 1), f j) (tprod' f hf) := by
+  CoeffStabilizesTo (fun i => ∏ j < (i + 1), f j) (tprod' f hf) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply PowerSeries.coeffStabilizesTo_partial_prod' hf
 
 /--
@@ -139,10 +147,11 @@ private lemma is_summable_of_coeff_stabilizes_to_partial_sum_prime_is
 -- given
   {f : ℕ → PowerSeries K}
   {limit : PowerSeries K}
-  (h : CoeffStabilizesTo (fun i => ∑ j ∈ Finset.range (i + 1), f j) limit) :
+  (h : CoeffStabilizesTo (fun i => ∑ j < (i + 1), f j) limit) :
 -- imply
   IsSummable f := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply PowerSeries.isSummable_of_coeffStabilizesTo_partial_sum' h
 
 /--
@@ -155,10 +164,11 @@ private lemma tsum_prime_eq_of_coeff_stabilizes_to_partial_sum_prime_eq
   {f : ℕ → PowerSeries K}
   (hsum : IsSummable f)
   {limit : PowerSeries K}
-  (h : CoeffStabilizesTo (fun i => ∑ j ∈ Finset.range (i + 1), f j) limit) :
+  (h : CoeffStabilizesTo (fun i => ∑ j < (i + 1), f j) limit) :
 -- imply
   tsum' f hsum = limit := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply PowerSeries.tsum'_eq_of_coeffStabilizesTo_partial_sum' h hsum
 
 /--
@@ -171,10 +181,11 @@ private lemma is_multipliable_of_coeff_stabilizes_to_partial_prod_prime_is
   {f : ℕ → PowerSeries K}
   (hconst : ∀ i, constantCoeff (f i) = 1)
   {limit : PowerSeries K}
-  (h : CoeffStabilizesTo (fun i => ∏ j ∈ Finset.range (i + 1), f j) limit) :
+  (h : CoeffStabilizesTo (fun i => ∏ j < (i + 1), f j) limit) :
 -- imply
   IsMultipliable f := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply PowerSeries.isMultipliable_of_coeffStabilizesTo_partial_prod' h hconst
 
 /--
@@ -187,10 +198,11 @@ private lemma tprod_prime_eq_of_coeff_stabilizes_to_partial_prod_prime_eq
   {f : ℕ → PowerSeries K}
   (hmult : IsMultipliable f)
   {limit : PowerSeries K}
-  (h : CoeffStabilizesTo (fun i => ∏ j ∈ Finset.range (i + 1), f j) limit) :
+  (h : CoeffStabilizesTo (fun i => ∏ j < (i + 1), f j) limit) :
 -- imply
   tprod' f hmult = limit := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply PowerSeries.tprod'_eq_of_coeffStabilizesTo_partial_prod' h hmult
 
 

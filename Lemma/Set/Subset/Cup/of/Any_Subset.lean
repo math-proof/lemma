@@ -8,9 +8,9 @@ private lemma main
   {A : Set α}
   {g : ℕ → Set α}
 -- given
-  (h : ∃ i ∈ Finset.range n, A ⊆ g i) :
+  (h : ∃ i < n, A ⊆ g i) :
 -- imply
-  A ⊆ ⋃ i ∈ Finset.range n, g i := by
+  A ⊆ ⋃ i < n, g i := by
 -- proof
   obtain ⟨i, hi, hsi⟩ := h
   intro y hy

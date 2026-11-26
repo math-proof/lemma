@@ -25,20 +25,21 @@ private lemma main
   {m n : ℕ}
   {x : ℕ → ℕ → R} :
 -- imply
-  ∑ i ∈ Finset.range m, ∑ j ∈ Finset.range n, (x[i][j] - (∑ i ∈ Finset.range m, ∑ j ∈ Finset.range n, x[i][j]) / (m * n)) ^ 2 =
-      n * ∑ i ∈ Finset.range m, ((∑ j ∈ Finset.range n, x[i][j]) / n - (∑ i ∈ Finset.range m, ∑ j ∈ Finset.range n, x[i][j]) / (m * n)) ^ 2 +
-        ∑ i ∈ Finset.range m, ∑ j ∈ Finset.range n, (x[i][j] - (∑ j ∈ Finset.range n, x[i][j]) / n) ^ 2 := by
+  ∑ i < m, ∑ j < n, (x[i][j] - (∑ i < m, ∑ j < n, x[i][j]) / (m * n)) ^ 2 =
+      n * ∑ i < m, ((∑ j < n, x[i][j]) / n - (∑ i < m, ∑ j < n, x[i][j]) / (m * n)) ^ 2 +
+        ∑ i < m, ∑ j < n, (x[i][j] - (∑ j < n, x[i][j]) / n) ^ 2 := by
 -- proof
   obtain hn | hn := eq_or_ne (n : R) 0
   · -- `(n : R) = 0`: means vanish by `div_zero`; `SB = 0`; `ST = SW`
     simp [hn, mul_zero, div_zero]
   · -- `(n : R) ≠ 0`
-    have row : ∀ (y : ℕ → R) (c : R), ∑ j ∈ Finset.range n, (y[j] - c) ^ 2 =
-        n * ((∑ j ∈ Finset.range n, y[j]) / n - c) ^ 2 + ∑ j ∈ Finset.range n, (y[j] - (∑ j ∈ Finset.range n, y[j]) / n) ^ 2 := by
+    have row : ∀ (y : ℕ → R) (c : R), ∑ j < n, (y[j] - c) ^ 2 =
+        n * ((∑ j < n, y[j]) / n - c) ^ 2 + ∑ j < n, (y[j] - (∑ j < n, y[j]) / n) ^ 2 := by
       intro y c
-      have key : ∀ d : R, ∑ j ∈ Finset.range n, (y[j] - d) ^ 2 = ∑ j ∈ Finset.range n, y[j] ^ 2 - 2 * d * ∑ j ∈ Finset.range n, y[j] + n * d ^ 2 := by
+      have key : ∀ d : R, ∑ j < n, (y[j] - d) ^ 2 = ∑ j < n, y[j] ^ 2 - 2 * d * ∑ j < n, y[j] + n * d ^ 2 := by
         intro d
         have e : ∀ j : ℕ, (y[j] - d) ^ 2 = y[j] ^ 2 - 2 * d * y[j] + d ^ 2 := fun j => by ring
+        simp only [Nat.Iio_eq_range]
         rw [Finset.sum_congr rfl (fun j _ => e j), Finset.sum_add_distrib, Finset.sum_sub_distrib, ← Finset.mul_sum,
           Finset.sum_const, Finset.card_range, nsmul_eq_mul]
       rw [key c, key]

@@ -19,19 +19,23 @@ private lemma main
   {n : ℕ}
 -- given
   (h₀ : C[0] = 1)
-  (h₁ : ∀ n, C[n + 1] = ∑ k ∈ Finset.range (n + 1), C[k] * C[n - k]) :
+  (h₁ : ∀ n, C[n + 1] = ∑ k < (n + 1), C[k] * C[n - k]) :
 -- imply
   (C[n] : ℚ) = ((2 * n).choose n : ℚ) / (n + 1) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   have hc : ∀ m, C[m] = catalan m := by
     intro m
     induction m using Nat.strong_induction_on with
     | _ m ih =>
+      try simp only [Nat.Iio_eq_range] at *
       cases m with
       | zero =>
+        try simp only [Nat.Iio_eq_range] at *
         rw [h₀, catalan_zero]
         rfl
       | succ k =>
+        try simp only [Nat.Iio_eq_range] at *
         rw [h₁, catalan_succ, ← Finset.sum_range (fun i => catalan i * catalan (k - i))]
         push_cast
         apply Finset.sum_congr rfl

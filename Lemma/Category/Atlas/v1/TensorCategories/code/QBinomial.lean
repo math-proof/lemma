@@ -209,9 +209,10 @@ private lemma q_binomial_expansion_eq
 -- given
   (hcomm : b * a = algebraMap k A q * (a * b)) :
 -- imply
-  ∀ n : ℕ, (a + b) ^ n = ∑ m ∈ Finset.range (n + 1), algebraMap k A (qBinomial q n m) * (a ^ (n - m) * b ^ m) := by
+  ∀ n : ℕ, (a + b) ^ n = ∑ m < (n + 1), algebraMap k A (qBinomial q n m) * (a ^ (n - m) * b ^ m) := by
 -- proof
-  apply q_binomial_expansion q a b hcomm
+  intro n
+  simpa [Nat.Iio_eq_range] using q_binomial_expansion q a b hcomm n
 
 /--
 [q_comm_power](https://github.com/facebookresearch/atlas-lean/blob/main/v1/Atlas/TensorCategories/code/QBinomial.lean)
@@ -235,3 +236,4 @@ private lemma q_comm_power_eq
 
 
 -- created on 2026-10-23
+-- updated on 2026-11-26

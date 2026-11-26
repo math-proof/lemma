@@ -127,12 +127,17 @@ export const RULES = {
     'prefer-unicode-pow': null,
     // not an AGENTS.md rule (user request): `2 ≤ n` → `n ≥ 2` (variable before the operator)
     'literal-left-comparison': null,
+    // not an AGENTS.md rule (user request): a `Finset.range` binder (big operator or `∀`/`∃`) is written with `<`
+    'range-binder': null,
     // not an AGENTS.md rule (user request): `Fin.ropeEven t` → `t.ropeEven` when `t : Fin _`
     'dot-notation': null,
     // not an AGENTS.md rule (user request via Matrix/Body): `a - (∑ …)` -> drop parens around ∑/∏ RHS of `-`
     'paren-redundant-sum-sub': null,
     // not an AGENTS.md rule (user request via Random / @js): `((sub) ^ 2)` -> drop outer parens around pow
     'paren-redundant-pow': null,
+    // not an AGENTS.md rule (user request via Random / @js): `∀ (k : ℕ), b` / `∃ (k : ℕ), p` / `fun (k : ℕ) => b`
+    // -> drop the parens (single typed binder only)
+    'paren-redundant-binder': null,
     // not an AGENTS.md rule (user request via Hyperreal / Body): needless arith operand parens
     'paren-redundant-arith': null,
     // not an AGENTS.md rule (user request via Real / Softmax): `((e) : T)` -> `(e : T)`

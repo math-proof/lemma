@@ -131,10 +131,11 @@ private lemma isUnit_one_sub_of_counit_eq_zero
       _ = 1 := by
         rw [h3]
         rfl
-  have hgeo : (1 - y) * ∑ i ∈ Finset.range (p ^ N), y ^ i = 1 - z := by
+  have hgeo : (1 - y) * ∑ i < (p ^ N), y ^ i = 1 - z := by
     have h := geom_sum_mul y (p ^ N)
-    have h2 : (1 - y) * ∑ i ∈ Finset.range (p ^ N), y ^ i =
-        -((∑ i ∈ Finset.range (p ^ N), y ^ i) * (y - 1)) := by ring
+    have h2 : (1 - y) * ∑ i < (p ^ N), y ^ i =
+        -((∑ i < (p ^ N), y ^ i) * (y - 1)) := by ring
+    try simp only [Nat.Iio_eq_range] at *
     rw [h2, h, hzdef]
     ring
   refine isUnit_of_mul_isUnit_left (hgeo ▸ h1z)

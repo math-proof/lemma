@@ -139,8 +139,9 @@ private lemma  exists_mvPolynomial_totalDegree_le
     rw [map_zero]
     obtain ⟨p, hp, hpf⟩ := hf (∑ i, c i • e i) 0
     set q : Polynomial R :=
-      ∑ j ∈ range (N + 1), Polynomial.C (eval (fun i => (c i : R)) (homogeneousComponent j P)) *
+      ∑ j < (N + 1), Polynomial.C (eval (fun i => (c i : R)) (homogeneousComponent j P)) *
         Polynomial.X ^ j with hq
+    simp only [Nat.Iio_eq_range] at hq
     have hqp : q = p := by
       apply Polynomial.eq_of_infinite_eval_eq
       refine Set.Infinite.mono (s := Set.range (Int.cast : ℤ → R)) ?_
@@ -162,10 +163,10 @@ private lemma  exists_mvPolynomial_totalDegree_le
       rw [Finset.sum_ite_eq, ite_eq_left (Finset.mem_range.mpr (Nat.lt_succ_of_le hkN))]
     have hcp : p.coeff k = 0 := Polynomial.coeff_eq_zero_of_natDegree_lt (lt_of_le_of_lt hp hdk)
     rw [← hcq, hqp, hcp]
-  refine ⟨∑ k ∈ range (d + 1), homogeneousComponent k P, ?_, fun c => ?_⟩
+  refine ⟨∑ k < (d + 1), homogeneousComponent k P, ?_, fun c => ?_⟩
   · refine (totalDegree_finsetSum _ _).trans (Finset.sup_le fun k hk => ?_)
     exact (homogeneousComponent_isHomogeneous k P).totalDegree_le.trans
-      (Nat.lt_succ_iff.mp (Finset.mem_range.mp hk))
+      (Nat.lt_succ_iff.mp (Finset.mem_Iio.mp hk))
   · rw [← hP c]
     conv_rhs => rw [← sum_homogeneousComponent P]
     rw [map_sum, map_sum]
@@ -179,22 +180,27 @@ private lemma  exists_mvPolynomial_totalDegree_le
         rcases hk with hk | hk
         · rw [hcomp k hk, map_zero]
         · rw [homogeneousComponent_eq_zero k P hk, map_zero]
-    have hL : ∑ k ∈ range (d + 1), eval (fun i => (c i : R)) (homogeneousComponent k P) =
-        ∑ k ∈ range (min d N + 1), eval (fun i => (c i : R)) (homogeneousComponent k P) := by
+    have hL : ∑ k < (d + 1), eval (fun i => (c i : R)) (homogeneousComponent k P) =
+        ∑ k < (min d N + 1), eval (fun i => (c i : R)) (homogeneousComponent k P) := by
+      simp only [Nat.Iio_eq_range]
       rw [eq_comm]
       apply Finset.sum_subset (Finset.range_subset_range.mpr (by omega))
       intro k hk hk'
       rw [Finset.mem_range] at hk hk'
       rw [key, ite_eq_right]
       omega
-    have hR : ∑ k ∈ range (N + 1), eval (fun i => (c i : R)) (homogeneousComponent k P) =
-        ∑ k ∈ range (min d N + 1), eval (fun i => (c i : R)) (homogeneousComponent k P) := by
+    simp only [Nat.Iio_eq_range] at hL
+    have hR : ∑ k < (N + 1), eval (fun i => (c i : R)) (homogeneousComponent k P) =
+        ∑ k < (min d N + 1), eval (fun i => (c i : R)) (homogeneousComponent k P) := by
+      simp only [Nat.Iio_eq_range]
       rw [eq_comm]
       apply Finset.sum_subset (Finset.range_subset_range.mpr (by omega))
       intro k hk hk'
       rw [Finset.mem_range] at hk hk'
       rw [key, ite_eq_right]
       omega
+    simp only [Nat.Iio_eq_range] at hR
+    simp only [Nat.Iio_eq_range]
     rw [hL, hR]
 
 private lemma  exists_mvPolynomial_totalDegree_le_of_linePoly

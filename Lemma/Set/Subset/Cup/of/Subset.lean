@@ -9,7 +9,7 @@ private lemma both
 -- given
   (h : ∀ i, f i ⊆ g i) :
 -- imply
-  ⋃ i ∈ Finset.range n, f i ⊆ ⋃ i ∈ Finset.range n, g i := by
+  ⋃ i < n, f i ⊆ ⋃ i < n, g i := by
 -- proof
   exact Set.iUnion₂_mono fun i _ => h i
 
@@ -22,7 +22,7 @@ private lemma lhs
 -- given
   (h : ∀ i, x i ⊆ A) :
 -- imply
-  ⋃ i ∈ Finset.range m, x i ⊆ A := by
+  ⋃ i < m, x i ⊆ A := by
 -- proof
   exact Set.iUnion₂_subset fun i _ => h i
 

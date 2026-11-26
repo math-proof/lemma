@@ -13,13 +13,13 @@ private lemma main
 -- imply
   (∫ x in a..b, f x) =
     (b - a) * limUnder atTop (fun n : ℕ =>
-      (∑ k ∈ range n, f (a + (b - a) * (k : ℝ) / n)) / n) := by
+      (∑ k < n, f (a + (b - a) * (k : ℝ) / n)) / n) := by
 -- proof
   let δ : ℝ := b - a
   have hδ : 0 < δ := sub_pos.2 h₀
   have huc : UniformContinuousOn f (Icc a b) :=
     isCompact_Icc.uniformContinuousOn_of_continuous h₁
-  let s : ℕ → ℝ := fun n => (∑ k ∈ range n, f (a + δ * (k : ℝ) / n)) / n
+  let s : ℕ → ℝ := fun n => (∑ k < n, f (a + δ * (k : ℝ) / n)) / n
   have hT : Tendsto s atTop (nhds ((∫ x in a..b, f x) / δ)) := by
     rw [Metric.tendsto_atTop]
     intro ε hε
@@ -73,7 +73,8 @@ private lemma main
       · linarith
       · linarith
     have hsumI :
-      ∑ k ∈ range n, ∫ x in p k..p (k + 1), f x = ∫ x in a..b, f x := by
+      ∑ k < n, ∫ x in p k..p (k + 1), f x = ∫ x in a..b, f x := by
+      try simp only [Nat.Iio_eq_range] at *
       rw [sum_integral_adjacent_intervals]
       · rw [hp0, hpn]
       ·
@@ -111,7 +112,7 @@ private lemma main
       have hlt := hdist x hxI (p k) hpk hclose
       simpa [dist_eq_norm, Real.norm_eq_abs, abs_sub_comm] using hlt.le
     have hinterr : |(∫ x in a..b, f x) - δ * s n| ≤ δ * ε / 2 := by
-      have hconst : δ * s n = ∑ k ∈ range n, ∫ x in p k..p (k + 1), f (p k) := by
+      have hconst : δ * s n = ∑ k < n, ∫ x in p k..p (k + 1), f (p k) := by
         simp only [s, mul_div_assoc']
         rw [Finset.mul_sum, Finset.sum_div]
         refine Finset.sum_congr rfl ?_
@@ -121,7 +122,7 @@ private lemma main
         ring
       have hsplit :
         (∫ x in a..b, f x) - δ * s n =
-          ∑ k ∈ range n, ∫ x in p k..p (k + 1), f x - f (p k) := by
+          ∑ k < n, ∫ x in p k..p (k + 1), f x - f (p k) := by
         rw [← hsumI, hconst, ← Finset.sum_sub_distrib]
         refine Finset.sum_congr rfl ?_
         intro k hk
@@ -129,19 +130,21 @@ private lemma main
         apply intervalIntegral.integral_sub
         ·
           apply ContinuousOn.intervalIntegrable
+          try simp only [Nat.Iio_eq_range] at *
           apply h₁.mono
           apply hsub k (Finset.mem_range.1 hk)
         · apply intervalIntegrable_const
       rw [hsplit]
       have hle :
-        |∑ k ∈ range n, ∫ x in p k..p (k + 1), f x - f (p k)| ≤
-          ∑ k ∈ range n, (ε / 2) * (δ / n) := by
+        |∑ k < n, ∫ x in p k..p (k + 1), f x - f (p k)| ≤
+          ∑ k < n, (ε / 2) * (δ / n) := by
         refine (Finset.abs_sum_le_sum_abs _ _).trans ?_
+        try simp only [Nat.Iio_eq_range] at *
         apply Finset.sum_le_sum
         intro k hk
         simpa using herr k (Finset.mem_range.1 hk)
-      have hconstsum : ∑ k ∈ range n, (ε / 2) * (δ / n) = δ * ε / 2 := by
-        simp [Finset.sum_const, Finset.card_range]
+      have hconstsum : ∑ k < n, (ε / 2) * (δ / n) = δ * ε / 2 := by
+        simp [Finset.sum_const]
         field_simp
       rw [hconstsum] at hle
       nlinarith

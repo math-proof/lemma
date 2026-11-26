@@ -8,9 +8,7 @@ import Lemma.Random.Var.eq.Integral
 import Lemma.Random.Expect.eq.Integral
 import Lemma.Random.All_Indep.of.All_Indep_GetSlice
 import Theorem.Probability.JointRv.AsRV
-import Initialize.Tactic.Attr.Basic
-import Instance.Data.Nat.Fun
-open MeasureTheory ProbabilityTheory Finset Filter Fun Random
+open MeasureTheory ProbabilityTheory Finset Filter Random
 
 
 /--
@@ -24,45 +22,45 @@ private lemma main
   {x : ℕ → Ω → ℝ}
   {μ σ : ℝ} {ε : ℝ⁺}
 -- given
-  (h₀ : ∀ (k : ℕ), PSpace π x[k])
-  (h₁ : ∀ (k : ℕ), MemLp x[k] 2 π)
-  (h₂ : ∀ (k : ℕ), x[k] ⟂ᵢ[π] x[:k])
-  (h₃ : ∀ (k : ℕ), 𝔼[x[k]: π](x[k]) = μ)
-  (h₄ : ∀ (k : ℕ), 𝕍𝕒𝕣[x[k]: π](x[k]) = σ²) :
+  (h₀ : ∀ k : ℕ, PSpace π x[k])
+  (h₁ : ∀ k : ℕ, MemLp x[k] 2 π)
+  (h₂ : ∀ k : ℕ, x[k] ⟂ᵢ[π] x[:k])
+  (h₃ : ∀ k : ℕ, 𝔼[x[k]: π](x[k]) = μ)
+  (h₄ : ∀ k : ℕ, 𝕍𝕒𝕣[x[k]: π](x[k]) = σ²) :
 -- imply
-  lim[n → ∞] ℙ[π]{|(∑ i ∈ range n, x[i]) / (n : ℝ) - μ| < ε} = 1 := by
+  lim[(n : ℕ) → ∞] ℙ[π]{|(∑ i < n, x[i]) / (n : ℝ) - μ| < ε} = 1 := by
 -- proof
-  have hvar₀ : ∀ (i : ℕ), variance x[i] π = σ² := fun i => by
+  have hvar₀ : ∀ i : ℕ, variance x[i] π = σ² := fun i => by
     have := h₀ i
     rw [variance_eq_integral (PSpace.aemeasurable (x := x[i])), ← Var.eq.Integral]
     apply h₄ i
-  have h₃' : ∀ (i : ℕ), π[x[i]] = μ := fun i => by
+  have h₃' : ∀ i : ℕ, π[x[i]] = μ := fun i => by
     have := h₀ i
     simpa [← Expect.eq.Integral, Expectation.asRV_function] using h₃ i
   have hpair : ∀ (i j : ℕ) (_ : i ≠ j), x[i] ⟂ᵢ[π] x[j] := All_Indep.of.All_Indep_GetSlice h₂
-  let avg : ℕ → Ω → ℝ := fun n ω => (n : ℝ)⁻¹ * ∑ i ∈ range n, x[i] ω
+  let avg : ℕ → Ω → ℝ := fun n ω => (n : ℝ)⁻¹ * ∑ i < n, x[i] ω
   have hmem : ∀ n, MemLp (avg n) 2 π := fun n => by
-    simpa [avg, Finset.sum_apply] using
+    simpa [avg, Nat.Iio_eq_range, Finset.sum_apply] using
       (memLp_finsetSum' (range n) fun i _ => h₁ i).const_mul (n : ℝ)⁻¹
   have hmean : ∀ n ≠ 0, π[avg n] = μ := by
     intro n hn
     have hn0 : (n : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr hn
     rw [integral_const_mul, integral_finsetSum _ fun i _ => (h₁ i).integrable one_le_two,
-      Finset.sum_congr rfl fun i _ => h₃' i, Finset.sum_const, Finset.card_range, nsmul_eq_mul]
+      Finset.sum_congr rfl fun i _ => h₃' i, Finset.sum_const, Nat.Iio_eq_range, Finset.card_range, nsmul_eq_mul]
     field_simp [hn0]
   have hvar : ∀ n ≠ 0, variance (avg n) π = σ² / (n : ℝ) := by
     intro n hn
     have hn0 : (n : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr hn
     rw [variance_const_mul,
-      show (fun ω => ∑ i ∈ range n, x[i] ω) = ∑ i ∈ range n, x[i] from
-        funext fun ω => (Finset.sum_apply ω (range n) (fun i => x[i])).symm,
+      show (fun ω => ∑ i < n, x[i] ω) = ∑ i < n, x[i] from
+        funext fun ω => (Finset.sum_apply ω (Finset.Iio n) (fun i => x[i])).symm,
       IndepFun.variance_sum (fun i _ => h₁ i) (fun i _ j _ hij => hpair i j hij),
-      Finset.sum_congr rfl fun i _ => hvar₀ i, Finset.sum_const, Finset.card_range, nsmul_eq_mul]
+      Finset.sum_congr rfl fun i _ => hvar₀ i, Finset.sum_const, Nat.Iio_eq_range, Finset.card_range, nsmul_eq_mul]
     field_simp [hn0]
   have htail : Tendsto (fun n => π.real {ω | ε ≤ |avg n ω - μ|}) atTop (nhds 0) := by
     refine tendsto_of_tendsto_of_tendsto_of_le_of_le'
       (g := fun _ : ℕ => (0 : ℝ))
-      (h := fun n => (σ² * ((ε : ℝ)²)⁻¹) * (n : ℝ)⁻¹)
+      (h := fun n => σ² * ((ε : ℝ)²)⁻¹ * (n : ℝ)⁻¹)
       tendsto_const_nhds ?_ ?_ ?_
     ·
       simpa [mul_zero] using
@@ -83,12 +81,12 @@ private lemma main
       simp
     rw [hset, measureReal_compl₀ hs]
     simp [measureReal_def, measure_univ]
-  have hdiv : ∀ n, {ω | |(∑ i ∈ range n, (fun k => x k ω)[i]) / (n : ℝ) - μ| < ε} =
+  have hdiv : ∀ n : ℕ, {ω | |(∑ i < n, (fun k => x k ω)[i]) / (n : ℝ) - μ| < ε} =
       {ω | |avg n ω - μ| < ε} := by
     intro n
     ext ω
     simp [avg, div_eq_mul_inv, mul_comm]
-  have hgoal : (fun n => π.real {ω | |(∑ i ∈ range n, (fun k => x k ω)[i]) / (n : ℝ) - μ| < ε}) =
+  have hgoal : (fun n : ℕ => π.real {ω | |(∑ i < n, (fun k => x k ω)[i]) / (n : ℝ) - μ| < ε}) =
       fun n => 1 - π.real {ω | ε ≤ |avg n ω - μ|} := by
     funext n
     rw [hdiv n, hcompl n]
@@ -97,4 +95,4 @@ private lemma main
 
 
 -- created on 2023-04-18
--- updated on 2026-11-23
+-- updated on 2026-11-26

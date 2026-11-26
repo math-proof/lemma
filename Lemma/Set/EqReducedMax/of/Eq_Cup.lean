@@ -8,14 +8,14 @@ private lemma main
   {n : ℕ}
   {a b : ℕ → ℝ}
 -- given
-  (h : ⋃ i ∈ Finset.range n, ({a i} : Set ℝ) = ⋃ i ∈ Finset.range n, ({b i} : Set ℝ)) :
+  (h : ⋃ i < n, ({a i} : Set ℝ) = ⋃ i < n, ({b i} : Set ℝ)) :
 -- imply
   Maxima Set.univ (fun i : Fin n => a i) = Maxima Set.univ (fun i : Fin n => b i) := by
 -- proof
-  have e : ∀ c : ℕ → ℝ, (fun i : Fin n => c i) '' Set.univ = ⋃ i ∈ Finset.range n, ({c i} : Set ℝ) := by
+  have e : ∀ c : ℕ → ℝ, (fun i : Fin n => c i) '' Set.univ = ⋃ i < n, ({c i} : Set ℝ) := by
     intro c
     ext y
-    simp only [Set.image_univ, Set.mem_range, Set.mem_iUnion, Set.mem_singleton_iff, Finset.mem_range, exists_prop]
+    simp only [Set.image_univ, Set.mem_range, Set.mem_iUnion, Set.mem_singleton_iff, exists_prop]
     constructor
     ·
       rintro ⟨i, rfl⟩

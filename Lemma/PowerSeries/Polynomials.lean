@@ -308,8 +308,9 @@ lemma eval_eq_finsum (f : K[X]) (a : A) :
 /-- Alternative formulation: f[a] = Σ_{n=0}^{deg f} f_n · a^n.
 This shows that the sum can be taken up to the degree. -/
 lemma eval_eq_sum_range (f : K[X]) (a : A) :
-    f⦃a⦄ = ∑ n ∈ Finset.range (f.natDegree + 1), algebraMap K A (f.coeff n) * a ^ n := by
+    f⦃a⦄ = ∑ n < (f.natDegree + 1), algebraMap K A (f.coeff n) * a ^ n := by
   rw [polyEval, aeval_def, eval₂_eq_sum_range]
+  simp only [Nat.Iio_eq_range]
 
 
 /-- (f + g)[a] = f[a] + g[a].
@@ -1126,7 +1127,7 @@ private lemma eval_eq_sum_range_eq
   (f : Polynomial K)
   (a : A) :
 -- imply
-  FPS.polyEval f a = ∑ n ∈ Finset.range (f.natDegree + 1), algebraMap K A (f.coeff n) * a ^ n := by
+  FPS.polyEval f a = ∑ n < (f.natDegree + 1), algebraMap K A (f.coeff n) * a ^ n := by
 -- proof
   apply FPS.eval_eq_sum_range f a
 

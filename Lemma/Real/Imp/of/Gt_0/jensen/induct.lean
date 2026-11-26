@@ -19,9 +19,10 @@ private lemma main
   (h₁ : ∀ x ∈ Set.Ioo a b, 0 < deriv^[2] f x)
   (h₂ : ∀ i, x i ∈ Set.Ioo a b) :
 -- imply
-  (∑ i ∈ Finset.range n, w i = 1 ∧ ∀ i ∈ Finset.range n, 0 ≤ w i) →
-    ∑ i ∈ Finset.range n, w i * f (x i) ≥ f (∑ i ∈ Finset.range n, w i * x i) := by
+  (∑ i < n, w i = 1 ∧ ∀ i < n, 0 ≤ w i) →
+    ∑ i < n, w i * f (x i) ≥ f (∑ i < n, w i * x i) := by
 -- proof
+  try simp only [Nat.Iio_eq_range, ← Finset.mem_range] at *
   rintro ⟨h₃, h₄⟩
   have h := (strictConvexOn_of_deriv2_pos' (convex_Ioo a b) h₀ h₁).convexOn.map_sum_le h₄ h₃ fun i _ => h₂ i
   simpa [smul_eq_mul] using h

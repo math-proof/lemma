@@ -11,7 +11,7 @@ private lemma kmeans_w_quote
   {x : ℕ → EuclideanSpace ℝ (Fin d)}
   {i j : ℕ}
 -- given
-  (_ : ∑ i ∈ Finset.range k, (w i).card = M)
+  (_ : ∑ i < k, (w i).card = M)
   (_ : (Finset.range k).biUnion w = Finset.range M)
   (h₂ : ∀ i, w' i = (Finset.range M).filter fun j => ((min⁻¹[i' : Fin k] ‖x j - (((w i').card : ℝ)⁻¹ • ∑ j' ∈ w i', x j')‖ : Fin k) : ℕ) = i) :
 -- imply

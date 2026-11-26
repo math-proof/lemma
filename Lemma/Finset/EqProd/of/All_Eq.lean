@@ -7,11 +7,11 @@ private lemma main
   {n : ℕ}
   {f g : ℕ → α}
 -- given
-  (h : ∀ i ∈ Finset.range n, f i = g i) :
+  (h : ∀ i < n, f i = g i) :
 -- imply
-  ∏ i ∈ Finset.range n, f i = ∏ i ∈ Finset.range n, g i :=
+  ∏ i < n, f i = ∏ i < n, g i :=
 -- proof
-  Finset.prod_congr rfl h
+  Finset.prod_congr rfl (fun i hi => h i (by simpa using hi))
 
 
 -- created on 2019-01-10

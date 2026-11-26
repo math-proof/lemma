@@ -24,7 +24,7 @@ private lemma helper_main
   (hgδ : ∀ i, Function.Exact (g i) (δ i))
   (hδf : ∀ i, Function.Exact (δ i) (f (i + 1)))
   (N : ℕ) (hN : Subsingleton (A N)) :
-  ∑ i ∈ Finset.range N, (-1 : ℤ) ^ i *
+  ∑ i < N, (-1 : ℤ) ^ i *
       ((finrank k (A i) : ℤ) - finrank k (B i) + finrank k (C i)) = 0 := by
   set a : ℕ → ℕ := fun i => finrank k (LinearMap.range (f i)) with ha
   set b : ℕ → ℕ := fun i => finrank k (LinearMap.range (g i)) with hb
@@ -56,6 +56,7 @@ private lemma helper_main
     rw [pow_succ]
     ring
   simp_rw [hterm, htel]
+  try simp only [Nat.Iio_eq_range] at *
   rw [Finset.sum_range_sub' (fun i => (-1 : ℤ) ^ i * t i) N, ht0, mul_zero, zero_sub, neg_eq_zero]
   cases N with
   | zero => rw [ht0, mul_zero]
@@ -84,7 +85,7 @@ private lemma main
   (hδf : ∀ i, Function.Exact (δ i) (f (i + 1)))
   (hN : Subsingleton (A N)) :
 -- imply
-  ∑ i ∈ Finset.range N, (-1 : ℤ) ^ i *
+  ∑ i < N, (-1 : ℤ) ^ i *
         ((Module.finrank k (A i) : ℤ) - Module.finrank k (B i) + Module.finrank k (C i)) = 0 :=
 -- proof
   helper_main A B C f g δ hf0 hfg hgδ hδf N hN

@@ -25,7 +25,7 @@ private lemma main
   rw [Polynomial.eval_eq_sum_range]
   obtain ⟨j, -, hj⟩ := hv.finset_image_add_of_nonempty (fun i => p.coeff i * z ^ i)
     (s := Finset.range (p.natDegree + 1)) Finset.nonempty_range_add_one
-  calc v (∑ i ∈ Finset.range (p.natDegree + 1), p.coeff i * z ^ i)
+  calc v ((Finset.range (p.natDegree + 1)).sum (fun i => p.coeff i * z ^ i))
       ≤ v (p.coeff j * z ^ j) := hj
     _ = v (p.coeff j) * v z ^ j := by rw [map_mul, map_pow]
     _ ≤ v (p.coeff j) * c ^ j := by gcongr
@@ -33,3 +33,4 @@ private lemma main
 
 
 -- created on 2026-10-05
+-- updated on 2026-11-26

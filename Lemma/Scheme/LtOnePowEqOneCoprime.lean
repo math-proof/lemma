@@ -50,12 +50,13 @@ private lemma main
     apply hne
     have : σ ζ * ζ⁻¹ * ζ = 1 * ζ := by rw [← hωdef, h]
     rwa [inv_mul_cancel_right₀ hζ0, one_mul] at this
-  have hgeom : ∑ i ∈ Finset.range m, ω ^ i = 0 := by
+  have hgeom : ∑ i < m, ω ^ i = 0 := by
+    rw [Nat.Iio_eq_range]
     have h := mul_neg_geom_sum ω m
     rw [hω, sub_self] at h
     apply (mul_eq_zero.mp h).resolve_left (sub_ne_zero.mpr (Ne.symm hω_ne))
-  have hsum : (m : PadicAlgCl p) = ∑ i ∈ Finset.range m, (1 - ω ^ i) := by
-    rw [Finset.sum_sub_distrib, hgeom, sub_zero, Finset.sum_const, Finset.card_range, nsmul_eq_mul, mul_one]
+  have hsum : (m : PadicAlgCl p) = ∑ i < m, (1 - ω ^ i) := by
+    rw [Finset.sum_sub_distrib, hgeom, sub_zero, Finset.sum_const, Nat.Iio_eq_range, Finset.card_range, nsmul_eq_mul, mul_one]
   have hle : ‖(m : PadicAlgCl p)‖ ≤ ‖1 - ω‖ := by
     rw [hsum]
     apply IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (norm_nonneg _) fun i _ => hi i

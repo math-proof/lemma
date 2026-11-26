@@ -8,7 +8,7 @@ private lemma absorb
   {x : ℤ}
   {f : ℕ → ℤ} :
 -- imply
-  -(∑ k ∈ Finset.range n, f k) * x = -∑ k ∈ Finset.range n, f k * x := by
+  -(∑ k < n, f k) * x = -∑ k < n, f k * x := by
 -- proof
   rw [neg_mul, Finset.sum_mul]
 

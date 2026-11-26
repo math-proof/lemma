@@ -7,9 +7,9 @@ private lemma main
   {n : ℕ}
   {x : ℕ → ℂ}
 -- given
-  (_h : ∀ i ∈ Finset.range n, x i ∈ (Set.univ : Set ℂ)) :
+  (_h : ∀ i < n, x i ∈ (Set.univ : Set ℂ)) :
 -- imply
-  ∑ i ∈ Finset.range n, x i ∈ (Set.univ : Set ℂ) := by
+  ∑ i < n, x i ∈ (Set.univ : Set ℂ) := by
 -- proof
   exact Set.mem_univ _
 

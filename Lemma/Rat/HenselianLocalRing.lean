@@ -30,12 +30,12 @@ private lemma mem_of_isRoot_map
   have hroot : (f.map A.subtype).eval r = 0 := hr
   rw [eval_map, eval₂_eq_sum_range, Finset.sum_range_succ, Monic.coeff_natDegree hf] at hroot
   simp only [map_one, one_mul] at hroot
-  have key : (1 : L) = - ∑ i ∈ Finset.range n, A.subtype (f.coeff i) * (r⁻¹) ^ (n - i) := by
+  have key : (1 : L) = - ∑ i < n, A.subtype (f.coeff i) * (r⁻¹) ^ (n - i) := by
     have h1 : r ^ n * (r⁻¹) ^ n = 1 := by rw [← mul_pow, mul_inv_cancel₀ hr0, one_pow]
-    have h2 : ∀ i ∈ Finset.range n, A.subtype (f.coeff i) * r ^ i * (r⁻¹) ^ n =
+    have h2 : ∀ i < n, A.subtype (f.coeff i) * r ^ i * (r⁻¹) ^ n =
         A.subtype (f.coeff i) * (r⁻¹) ^ (n - i) := by
       intro i hi
-      have hi' : i ≤ n := (Finset.mem_range.mp hi).le
+      have hi' : i ≤ n := hi.le
       rw [mul_assoc]
       congr 1
       have e : (r⁻¹) ^ n = (r⁻¹) ^ i * (r⁻¹) ^ (n - i) := by
@@ -43,12 +43,13 @@ private lemma mem_of_isRoot_map
       rw [e, ← mul_assoc, ← mul_pow, mul_inv_cancel₀ hr0, one_pow, one_mul]
     have h3 := congrArg (fun x => x * (r⁻¹) ^ n) hroot
     simp only [add_mul, zero_mul, Finset.sum_mul] at h3
-    rw [h1, Finset.sum_congr rfl h2] at h3
+    rw [h1, Finset.sum_congr rfl (fun i hi => h2 i (Finset.mem_range.mp hi))] at h3
+    rw [Nat.Iio_eq_range]
     linear_combination h3
-  set y : A := - ∑ i ∈ Finset.range n, f.coeff i * (⟨r⁻¹, hinv⟩ : A) ^ (n - i) with hy
+  set y : A := - ∑ i < n, f.coeff i * (⟨r⁻¹, hinv⟩ : A) ^ (n - i) with hy
   have hy𝔪 : y ∈ maximalIdeal A := by
     refine (Ideal.neg_mem_iff _).mpr (Ideal.sum_mem _ fun i hi => ?_)
-    have hni : 0 < n - i := Nat.sub_pos_of_lt (Finset.mem_range.mp hi)
+    have hni : 0 < n - i := Nat.sub_pos_of_lt (Finset.mem_Iio.mp hi)
     refine Ideal.mul_mem_left _ _ (Ideal.pow_mem_of_mem _ hinv𝔪 _ hni)
   have hy1 : y = 1 := by
     apply Subtype.ext

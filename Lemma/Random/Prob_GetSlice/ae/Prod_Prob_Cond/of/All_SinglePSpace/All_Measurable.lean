@@ -38,7 +38,7 @@ private lemma main
     All_MeasurableGetSlice.of.All_MeasurableGet hs
   have : ∀ (k : ℕ), SinglePSpace π (s[k], s[:k]) :=
     All_SinglePSpace_Joint.of.All_SinglePSpace_GetSlice hP
-  ℙ[π](s[:n]) =ᵐ[π] ∏ k ∈ Finset.range n, ℙ[π](s[k] | s[:k]) := by
+  ℙ[π](s[:n]) =ᵐ[π] ∏ k < n, ℙ[π](s[k] | s[:k]) := by
 -- proof
   have hPstep : ∀ (k : ℕ), SinglePSpace π (s[k], s[:k]) :=
     All_SinglePSpace_Joint.of.All_SinglePSpace_GetSlice hP
@@ -56,7 +56,7 @@ private lemma main
         (SinglePSpace.of.SinglePSpace (hPstep k))
   have hutil :
     ℙ[π](s[:n] | Z) =ᵐ[π]
-      ∏ k ∈ Finset.range n, ℙ[π](s[k] | s[:k], Z) :=
+      ∏ k < n, ℙ[π](s[k] | s[:k], Z) :=
     @Prob_Cond.ae.Prod_Prob_Cond_Joint.of.Measurable.All_Measurable
       Ω 𝒮 (Fin 0 → 𝒮) _ _ ReferenceMeasure.piFin π _ s Z hs hZ hPZ' n
   have hleft : ℙ[π](s[:n] | Z) =ᵐ[π] ℙ[π](s[:n]) :=
@@ -65,14 +65,14 @@ private lemma main
     ℙ[π](s[k] | s[:k], Z) =ᵐ[π] ℙ[π](s[k] | s[:k]) :=
     Prob_Cond_Joint.ae.Prob_Cond.of.SinglePSpace (hPstep' k)
   have hprod (n : ℕ) :
-    (∏ k ∈ Finset.range n, ℙ[π](s[k] | s[:k], Z)) =ᵐ[π]
-      (∏ k ∈ Finset.range n, ℙ[π](s[k] | s[:k])) := by
+    (∏ k < n, ℙ[π](s[k] | s[:k], Z)) =ᵐ[π]
+      (∏ k < n, ℙ[π](s[k] | s[:k])) := by
     induction n with
     | zero =>
       simp
     | succ m ih =>
       filter_upwards [ih, hstep m] with ω h₁ h₂
-      simp only [Finset.prod_range_succ, Pi.mul_apply] at h₁ h₂ ⊢
+      simp only [Nat.Iio_eq_range, Finset.prod_range_succ, Pi.mul_apply] at h₁ h₂ ⊢
       rw [h₁, h₂]
   filter_upwards [hutil, hleft, hprod n] with ω h₁ h₂ h₃
   exact h₂.symm.trans (h₁.trans h₃)

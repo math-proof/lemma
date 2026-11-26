@@ -7,8 +7,9 @@ private lemma gauss_summation
 -- given
   (n : ℕ) :
 -- imply
-  ∑ i ∈ range n, i = n * (n - 1) / 2 := by
+  ∑ i < n, i = n * (n - 1) / 2 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply Finset.sum_range_id
 
 

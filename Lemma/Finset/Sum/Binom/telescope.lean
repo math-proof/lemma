@@ -8,14 +8,15 @@ private lemma main
   {x : ℝ}
   (f : ℝ → ℝ) :
 -- imply
-  ∑ k ∈ Finset.range (n + 1), (-1 : ℝ) ^ (n - k) * (n.choose k : ℝ) * (f (x + k + 1) - f (x + k)) =
-    ∑ k ∈ Finset.range (n + 2), (-1 : ℝ) ^ (n + 1 - k) * ((n + 1).choose k : ℝ) * f (x + k) := by
+  ∑ k < (n + 1), (-1 : ℝ) ^ (n - k) * (n.choose k : ℝ) * (f (x + k + 1) - f (x + k)) =
+    ∑ k < (n + 2), (-1 : ℝ) ^ (n + 1 - k) * ((n + 1).choose k : ℝ) * f (x + k) := by
 -- proof
   have hsum : ∀ m y,
       (fwdDiff (1 : ℝ))^[m] f y =
-        ∑ k ∈ Finset.range (m + 1), (-1 : ℝ) ^ (m - k) * (m.choose k : ℝ) * f (y + k) := by
+        ∑ k < (m + 1), (-1 : ℝ) ^ (m - k) * (m.choose k : ℝ) * f (y + k) := by
     intro m y
     rw [fwdDiff_iter_eq_sum_shift (1 : ℝ) f m y]
+    try simp only [Nat.Iio_eq_range] at *
     refine Finset.sum_congr rfl ?_
     intro k _
     simp [zsmul_eq_mul, nsmul_eq_mul]
@@ -23,9 +24,9 @@ private lemma main
       (fwdDiff (1 : ℝ))^[n] f (x + 1) - (fwdDiff (1 : ℝ))^[n] f x := by
     rw [Function.iterate_succ_apply']
     simp [fwdDiff]
-  have hdiff : ∑ k ∈ Finset.range (n + 1), (-1 : ℝ) ^ (n - k) * (n.choose k : ℝ) * (f (x + k + 1) - f (x + k)) =
-      ∑ k ∈ Finset.range (n + 1), (-1 : ℝ) ^ (n - k) * (n.choose k : ℝ) * f (x + 1 + k) -
-        ∑ k ∈ Finset.range (n + 1), (-1 : ℝ) ^ (n - k) * (n.choose k : ℝ) * f (x + k) := by
+  have hdiff : ∑ k < (n + 1), (-1 : ℝ) ^ (n - k) * (n.choose k : ℝ) * (f (x + k + 1) - f (x + k)) =
+      ∑ k < (n + 1), (-1 : ℝ) ^ (n - k) * (n.choose k : ℝ) * f (x + 1 + k) -
+        ∑ k < (n + 1), (-1 : ℝ) ^ (n - k) * (n.choose k : ℝ) * f (x + k) := by
     rw [← Finset.sum_sub_distrib]
     refine Finset.sum_congr rfl ?_
     intro k _

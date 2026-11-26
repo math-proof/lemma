@@ -13,6 +13,7 @@ private lemma triangularIsingHighTempSymbol_mul_cosh_sq_eq
 -- imply
   triangularIsingHighTempSymbol J1 J2 J3 k1 k2 * (Real.cosh J1 ^ 2 * Real.cosh J2 ^ 2 * Real.cosh J3 ^ 2) = triangularIsingSymbol J1 J2 J3 k1 k2 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.triangularIsingHighTempSymbol_mul_cosh_sq J1 J2 J3 k1 k2
 
 /--
@@ -24,6 +25,7 @@ private lemma continuous_triangularIsingSymbol_eq
 -- imply
   Continuous fun p : ℝ × ℝ => triangularIsingSymbol J1 J2 J3 p.1 p.2 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.continuous_triangularIsingSymbol J1 J2 J3
 
 /--
@@ -35,6 +37,7 @@ private lemma periodic_triangularIsingSymbol_left_eq
 -- imply
   Function.Periodic (fun k1 => triangularIsingSymbol J1 J2 J3 k1 k2) (2 * Real.pi) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.periodic_triangularIsingSymbol_left J1 J2 J3 k2
 
 /--
@@ -46,6 +49,7 @@ private lemma periodic_triangularIsingSymbol_right_eq
 -- imply
   Function.Periodic (fun k2 => triangularIsingSymbol J1 J2 J3 k1 k2) (2 * Real.pi) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.periodic_triangularIsingSymbol_right J1 J2 J3 k1
 
 /--
@@ -59,6 +63,7 @@ private lemma continuous_log_triangularIsingSymbol_of_pos_eq
 -- imply
   Continuous fun p : ℝ × ℝ => Real.log (triangularIsingSymbol J1 J2 J3 p.1 p.2) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.continuous_log_triangularIsingSymbol_of_pos J1 J2 J3 hpos
 
 /--
@@ -70,6 +75,7 @@ private lemma periodic_log_triangularIsingSymbol_left_eq
 -- imply
   Function.Periodic (fun k1 => Real.log (triangularIsingSymbol J1 J2 J3 k1 k2)) (2 * Real.pi) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.periodic_log_triangularIsingSymbol_left J1 J2 J3 k2
 
 /--
@@ -81,6 +87,7 @@ private lemma periodic_log_triangularIsingSymbol_right_eq
 -- imply
   Function.Periodic (fun k2 => Real.log (triangularIsingSymbol J1 J2 J3 k1 k2)) (2 * Real.pi) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.periodic_log_triangularIsingSymbol_right J1 J2 J3 k1
 
 /--
@@ -92,6 +99,7 @@ private lemma integral_log_triangularIsingSymbol_right_shift_eq
 -- imply
   (∫ k2 in (0 : ℝ)..(2 * Real.pi), Real.log (triangularIsingSymbol J1 J2 J3 k1 k2)) = ∫ k2 in (-Real.pi)..Real.pi, Real.log (triangularIsingSymbol J1 J2 J3 k1 k2) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.integral_log_triangularIsingSymbol_right_shift J1 J2 J3 k1
 
 /--
@@ -103,6 +111,7 @@ private lemma integral_log_triangularIsingSymbol_square_shift_eq
 -- imply
   (∫ k1 in (0 : ℝ)..(2 * Real.pi), ∫ k2 in (0 : ℝ)..(2 * Real.pi), Real.log (triangularIsingSymbol J1 J2 J3 k1 k2)) = ∫ k1 in (-Real.pi)..Real.pi, ∫ k2 in (-Real.pi)..Real.pi, Real.log (triangularIsingSymbol J1 J2 J3 k1 k2) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.integral_log_triangularIsingSymbol_square_shift J1 J2 J3
 
 /--
@@ -114,8 +123,9 @@ private lemma triangularIsingSymbol_riemann_tendsto_of_pos_eq
 -- given
   (hpos : ∀ k1 k2, 0 < triangularIsingSymbol J1 J2 J3 k1 k2) :
 -- imply
-  Filter.Tendsto (fun L : ℕ => (2 * Real.pi / L) ^ 2 * ∑ i ∈ Finset.range L, ∑ j ∈ Finset.range L, Real.log (triangularIsingSymbol J1 J2 J3 (2 * Real.pi * i / L) (2 * Real.pi * j / L))) Filter.atTop (nhds (∫ k1 in (0 : ℝ)..(2 * Real.pi), ∫ k2 in (0 : ℝ)..(2 * Real.pi), Real.log (triangularIsingSymbol J1 J2 J3 k1 k2))) := by
+  Filter.Tendsto (fun L : ℕ => (2 * Real.pi / L) ^ 2 * ∑ i < L, ∑ j < L, Real.log (triangularIsingSymbol J1 J2 J3 (2 * Real.pi * i / L) (2 * Real.pi * j / L))) Filter.atTop (nhds (∫ k1 in (0 : ℝ)..(2 * Real.pi), ∫ k2 in (0 : ℝ)..(2 * Real.pi), Real.log (triangularIsingSymbol J1 J2 J3 k1 k2))) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.triangularIsingSymbol_riemann_tendsto_of_pos J1 J2 J3 hpos
 
 /--
@@ -127,8 +137,9 @@ private lemma triangularIsingSymbol_riemann_tendsto_symmetric_of_pos_eq
 -- given
   (hpos : ∀ k1 k2, 0 < triangularIsingSymbol J1 J2 J3 k1 k2) :
 -- imply
-  Filter.Tendsto (fun L : ℕ => (2 * Real.pi / L) ^ 2 * ∑ i ∈ Finset.range L, ∑ j ∈ Finset.range L, Real.log (triangularIsingSymbol J1 J2 J3 (2 * Real.pi * i / L) (2 * Real.pi * j / L))) Filter.atTop (nhds (∫ k1 in (-Real.pi)..Real.pi, ∫ k2 in (-Real.pi)..Real.pi, Real.log (triangularIsingSymbol J1 J2 J3 k1 k2))) := by
+  Filter.Tendsto (fun L : ℕ => (2 * Real.pi / L) ^ 2 * ∑ i < L, ∑ j < L, Real.log (triangularIsingSymbol J1 J2 J3 (2 * Real.pi * i / L) (2 * Real.pi * j / L))) Filter.atTop (nhds (∫ k1 in (-Real.pi)..Real.pi, ∫ k2 in (-Real.pi)..Real.pi, Real.log (triangularIsingSymbol J1 J2 J3 k1 k2))) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.FrontierA.triangularIsingSymbol_riemann_tendsto_symmetric_of_pos J1 J2 J3 hpos
 
 

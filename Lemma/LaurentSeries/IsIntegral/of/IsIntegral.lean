@@ -54,11 +54,12 @@ private lemma main
       (AlgHom.mem_range _).mp ((Algebra.adjoin_singleton_eq_range_aeval L J).le (P.coeff i).2)
     choose p hp using hrep
     let a : ℕ → LaurentSeries k := fun i => Pr ((P.coeff i : _) : LaurentSeries L)
-    have ha_eq : ∀ i, a i = ∑ m ∈ Finset.range ((p i).natDegree + 1),
+    have ha_eq : ∀ i, a i = ∑ m < ((p i).natDegree + 1),
         algebraMap k (LaurentSeries k) (π ((p i).coeff m)) * j ^ m := by
       intro i
       show Pr _ = _
       rw [← hp i, Polynomial.aeval_def, Polynomial.eval₂_eq_sum_range, map_sum]
+      simp only [Nat.Iio_eq_range]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [show J ^ m = coeffMap σ (j ^ m) from (map_pow _ _ _).symm, hPr_mul]
     have ha_mem : ∀ i, a i ∈ Algebra.adjoin k ({j} : Set (LaurentSeries k)) := by
@@ -70,6 +71,7 @@ private lemma main
       intro i
       rw [ha_eq, ← hp i, Polynomial.aeval_def, Polynomial.eval₂_eq_sum_range, Finset.sum_mul,
         map_sum, Finset.sum_mul]
+      simp only [Nat.Iio_eq_range]
       refine Finset.sum_congr rfl fun m _ => ?_
       rw [mul_assoc, mul_assoc,
         show J ^ m * X ^ i = coeffMap σ (j ^ m * x ^ i) by rw [map_mul, map_pow, map_pow],
@@ -81,11 +83,12 @@ private lemma main
         rw [map_one, map_one, one_mul, show P.coeff n = 1 from hPm.coeff_natDegree]
         rfl
       rw [h1, hPr_mul, show π 1 = 1 by simpa using hπσ 1, map_one, one_mul]
-    have hrel : ∑ i ∈ Finset.range (n + 1), a i * x ^ i = 0 := by
+    have hrel : ∑ i < (n + 1), a i * x ^ i = 0 := by
       have h0 : Pr (Polynomial.eval₂ (algebraMap _ (LaurentSeries L)) X P) = 0 := by
         rw [hPev, map_zero]
       rw [Polynomial.eval₂_eq_sum_range, map_sum] at h0
       rw [← h0]
+      simp only [Nat.Iio_eq_range]
       exact Finset.sum_congr rfl fun i _ => (ha_mul i).symm
     let A : Subalgebra k (LaurentSeries k) := Algebra.adjoin k ({j} : Set (LaurentSeries k))
     let b : Fin n → A := fun i => ⟨a i, ha_mem i⟩
@@ -94,6 +97,7 @@ private lemma main
     refine ⟨Polynomial.X ^ n + Q, Polynomial.monic_X_pow_add (Polynomial.degree_sum_fin_lt b), ?_⟩
     rw [Polynomial.eval₂_add, Polynomial.eval₂_X_pow, Polynomial.eval₂_finsetSum]
     simp only [Polynomial.eval₂_mul, Polynomial.eval₂_C, Polynomial.eval₂_X_pow]
+    simp only [Nat.Iio_eq_range] at hrel
     rw [Finset.sum_range_succ, ha_top, one_mul] at hrel
     rw [← hrel, add_comm, Finset.sum_range]
     rfl

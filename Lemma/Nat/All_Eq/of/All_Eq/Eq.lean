@@ -7,11 +7,12 @@ private lemma main
   {x y : ℕ → α}
 -- given
   (h₀ : x n = y n)
-  (h₁ : ∀ i ∈ Finset.range n, x i = y i) :
+  (h₁ : ∀ i < n, x i = y i) :
 -- imply
-  ∀ i ∈ Finset.range (n + 1), x i = y i := by
+  ∀ i < (n + 1), x i = y i := by
 -- proof
   intro i hi
+  try simp only [← Finset.mem_range] at *
   obtain h | h := In_Range.ou.Eq.of.In_Range hi <;>
     simp_all
 
@@ -22,9 +23,9 @@ private lemma is_constant
   {a : α}
 -- given
   (h₀ : x n = a)
-  (h₁ : ∀ i ∈ Finset.range n, x i = a) :
+  (h₁ : ∀ i < n, x i = a) :
 -- imply
-  ∀ i ∈ Finset.range (n + 1), x i = a := by
+  ∀ i < (n + 1), x i = a := by
 -- proof
   let y := fun _ : ℕ => a
   have := main (y := y) h₀ h₁

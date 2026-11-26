@@ -9,8 +9,9 @@ private lemma main
   {m d : ℕ}
   {M : ℕ → α} :
 -- imply
-  ∏ n ∈ Finset.range m, M n = ∏ n ∈ Finset.Ico d (m + d), M (n - d) := by
+  ∏ n < m, M n = ∏ n ∈ Finset.Ico d (m + d), M (n - d) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   rw [Finset.prod_Ico_eq_prod_range, Nat.add_sub_cancel]
   refine Finset.prod_congr rfl ?_
   intro n _

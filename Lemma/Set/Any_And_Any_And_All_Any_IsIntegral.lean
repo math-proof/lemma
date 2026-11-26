@@ -241,7 +241,7 @@ private lemma noether_integral_clear
       apply hrange _
     refine exists_mul_eq_of_mem_adjoin (R := R) (K := K) (L := L) (S := Set.range z) hj
   choose r hr0 a haA ha using hcoef
-  let τ : R := ∏ j ∈ Finset.range P₂.natDegree, r j
+  let τ : R := ∏ j < P₂.natDegree, r j
   have hτ0 : τ ≠ 0 := Finset.prod_ne_zero_iff.mpr fun j _ => hr0 j
   refine ⟨τ, hτ0, ?_⟩
   let P₃ : L[X] := P₂.scaleRoots (algebraMap R L τ)
@@ -256,7 +256,7 @@ private lemma noether_integral_clear
     simp only [P₃, Polynomial.coeff_scaleRoots]
     if hj : j < P₂.natDegree then
       obtain ⟨k, hk⟩ : ∃ k, P₂.natDegree - j = k + 1 := ⟨P₂.natDegree - j - 1, by omega⟩
-      have hdvd : r j ∣ τ := Finset.dvd_prod_of_mem _ (Finset.mem_range.mpr hj)
+      have hdvd : r j ∣ τ := Finset.dvd_prod_of_mem _ (Finset.mem_Iio.mpr hj)
       obtain ⟨τ', hτ'⟩ := hdvd
       refine ⟨⟨algebraMap R C (τ' * τ ^ k) * a j,
         mul_mem (Subalgebra.algebraMap_mem _ _) (haA j)⟩, ?_⟩

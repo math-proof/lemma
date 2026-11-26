@@ -10,8 +10,9 @@ private lemma main
 -- given
   (h₀ : ∀ i < n, ∀ j < n, i ≠ j → x i ∩ x j = ∅) :
 -- imply
-  (Finset.biUnion (Finset.range n) x).card = ∑ i ∈ Finset.range n, (x i).card := by
+  (Finset.biUnion (Finset.range n) x).card = ∑ i < n, (x i).card := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply Finset.card_biUnion
   intro i hi j hj hne
   exact Finset.disjoint_iff_inter_eq_empty.mpr

@@ -7,10 +7,11 @@ private lemma main
   {n : ℕ}
   {x xb : ℕ → ℝ}
 -- given
-  (h : ∀ n, xb n = (∑ k ∈ Finset.range n, x k) / n) :
+  (h : ∀ n, xb n = (∑ k < n, x k) / n) :
 -- imply
   x n - xb (n + 1) = n * (x n - xb n) / (n + 1) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   rw [h (n + 1), h n, Finset.sum_range_succ]
   rcases Nat.eq_zero_or_pos n with rfl | hn
   · simp

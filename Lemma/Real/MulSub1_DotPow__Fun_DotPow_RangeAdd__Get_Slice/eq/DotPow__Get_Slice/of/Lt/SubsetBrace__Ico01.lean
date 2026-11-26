@@ -12,8 +12,8 @@ open Finset
 /--
 Generalized advantage estimation (Schulman et al., arXiv 1506.02438, Eq. (16)):
 for bounded temporal-difference residuals δ and γ, ℓ ∈ [0, 1), the exponentially weighted average
-(1 - ℓ) * ∑' k, ℓ ^ k * ∑ i ∈ range (k + 1), γ ^ i * δ[t + i] of the k-step advantage estimates
-(∑ i ∈ range (k + 1), γ ^ i * δ[t + i] is the (k + 1)-step estimate) equals the closed form
+(1 - ℓ) * ∑' k, ℓ ^ k * ∑ i < (k + 1), γ ^ i * δ[t + i] of the k-step advantage estimates
+(∑ i < (k + 1), γ ^ i * δ[t + i] is the (k + 1)-step estimate) equals the closed form
 (γ * ℓ) ** ⬝ᵥ δ[t:] = ∑' i, (γ * ℓ) ^ i * δ[t + i].
 This connects the weighted average of k-step estimates with the closed form A[t] used in
 generalized_advantage_estimate of the policy gradient.
@@ -46,8 +46,9 @@ private lemma main
     simpa [norm_pow, Real.norm_of_nonneg hℓ0] using summable_geometric_of_lt_one hℓ0 hℓ1
   have key := tsum_mul_tsum_eq_tsum_sum_antidiagonal_of_summable_norm hf hg
   have e1 : ∀ k, ∑ ij ∈ antidiagonal k, (γ * ℓ) ^ ij.1 * δ[t + ij.1] * ℓ ^ ij.2 =
-      ℓ ^ k * ∑ i ∈ range (k + 1), γ ^ i * δ[t + i] := by
+      ℓ ^ k * ∑ i < (k + 1), γ ^ i * δ[t + i] := by
     intro k
+    simp only [Nat.Iio_eq_range]
     rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i hi => ?_
     have hik : i ≤ k := Nat.lt_succ_iff.mp (Finset.mem_range.mp hi)
@@ -58,7 +59,8 @@ private lemma main
   rw [tsum_geometric_of_lt_one hℓ0 hℓ1] at key
   have hL :
     (ℓ ^ (id : ℕ → ℕ)) ⬝ᵥ (fun k ↦ (γ ^ range (k + 1)) ⬝ᵥ δ[t:]) =
-      ∑' k, ℓ ^ k * ∑ i ∈ range (k + 1), γ ^ i * δ[t + i] := by
+      ∑' k, ℓ ^ k * ∑ i < (k + 1), γ ^ i * δ[t + i] := by
+    simp only [Nat.Iio_eq_range]
     simp_rw [FinsetPow.dot_eq]
     simp [Dot.dot, Function.hPow_apply, Function.getSliceFrom_apply]
   have hR :

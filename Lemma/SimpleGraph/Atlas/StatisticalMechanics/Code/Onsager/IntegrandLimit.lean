@@ -17,6 +17,7 @@ private lemma ons_gInt_pos_of_ne_betaC_eq
 -- imply
   0 < ons_gInt β k₁ k₂ := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Onsager.ons_gInt_pos_of_ne_betaC β hβ hcrit k₁ k₂
 
 /--
@@ -31,6 +32,7 @@ private lemma continuous_log_ons_gInt_eq
 -- imply
   Continuous (fun p : ℝ × ℝ => Real.log (ons_gInt β p.1 p.2)) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Onsager.continuous_log_ons_gInt β hβ hcrit
 
 /--
@@ -42,6 +44,7 @@ private lemma periodic_log_ons_gInt_left_eq
 -- imply
   Function.Periodic (fun k₁ => Real.log (ons_gInt β k₁ k₂)) (2 * Real.pi) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Onsager.periodic_log_ons_gInt_left β k₂
 
 /--
@@ -53,6 +56,7 @@ private lemma periodic_log_ons_gInt_right_eq
 -- imply
   Function.Periodic (fun k₂ => Real.log (ons_gInt β k₁ k₂)) (2 * Real.pi) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Onsager.periodic_log_ons_gInt_right β k₁
 
 /--
@@ -64,6 +68,7 @@ private lemma integral_log_ons_gInt_right_shift_eq
 -- imply
   (∫ k₂ in (0 : ℝ)..(2 * Real.pi), Real.log (ons_gInt β k₁ k₂)) = ∫ k₂ in (-Real.pi)..Real.pi, Real.log (ons_gInt β k₁ k₂) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Onsager.integral_log_ons_gInt_right_shift β k₁
 
 /--
@@ -75,6 +80,7 @@ private lemma integral_log_ons_gInt_square_shift_eq
 -- imply
   (∫ k₁ in (0 : ℝ)..(2 * Real.pi), ∫ k₂ in (0 : ℝ)..(2 * Real.pi), Real.log (ons_gInt β k₁ k₂)) = ∫ k₁ in (-Real.pi)..Real.pi, ∫ k₂ in (-Real.pi)..Real.pi, Real.log (ons_gInt β k₁ k₂) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Onsager.integral_log_ons_gInt_square_shift β
 
 /--
@@ -87,8 +93,9 @@ private lemma ons_log_gInt_riemann_tendsto_eq
   (hβ : 0 ≤ β)
   (hcrit : β ≠ ons_betaC) :
 -- imply
-  Filter.Tendsto (fun n : ℕ => (2 * Real.pi / n) ^ 2 * ∑ i ∈ Finset.range n, ∑ j ∈ Finset.range n, Real.log (ons_gInt β (2 * Real.pi * i / n) (2 * Real.pi * j / n))) Filter.atTop (nhds (∫ k₁ in (0 : ℝ)..(2 * Real.pi), ∫ k₂ in (0 : ℝ)..(2 * Real.pi), Real.log (ons_gInt β k₁ k₂))) := by
+  Filter.Tendsto (fun n : ℕ => (2 * Real.pi / n) ^ 2 * ∑ i < n, ∑ j < n, Real.log (ons_gInt β (2 * Real.pi * i / n) (2 * Real.pi * j / n))) Filter.atTop (nhds (∫ k₁ in (0 : ℝ)..(2 * Real.pi), ∫ k₂ in (0 : ℝ)..(2 * Real.pi), Real.log (ons_gInt β k₁ k₂))) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Onsager.ons_log_gInt_riemann_tendsto β hβ hcrit
 
 /--
@@ -101,8 +108,9 @@ private lemma ons_log_gInt_density_tendsto_eq
   (hβ : 0 ≤ β)
   (hcrit : β ≠ ons_betaC) :
 -- imply
-  Filter.Tendsto (fun n : ℕ => (1 / (2 * (n : ℝ) ^ 2)) * ∑ i ∈ Finset.range n, ∑ j ∈ Finset.range n, Real.log (ons_gInt β (2 * Real.pi * i / n) (2 * Real.pi * j / n))) Filter.atTop (nhds (ons_freeEnergyIntegral β)) := by
+  Filter.Tendsto (fun n : ℕ => (1 / (2 * (n : ℝ) ^ 2)) * ∑ i < n, ∑ j < n, Real.log (ons_gInt β (2 * Real.pi * i / n) (2 * Real.pi * j / n))) Filter.atTop (nhds (ons_freeEnergyIntegral β)) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Onsager.ons_log_gInt_density_tendsto β hβ hcrit
 
 /--
@@ -114,6 +122,7 @@ private lemma ons_symbolDispersion_eq_eq
 -- imply
   ons_symbolDispersion β k₁ k₂ = ons_gInt β k₁ k₂ / Real.cosh β ^ 4 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Onsager.ons_symbolDispersion_eq β k₁ k₂
 
 /--
@@ -129,6 +138,7 @@ private lemma ons_symbolDispersion_pos_eq
 -- imply
   0 < ons_symbolDispersion β k₁ k₂ := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Onsager.ons_symbolDispersion_pos β hβ hcrit k₁ k₂
 
 /--
@@ -144,6 +154,7 @@ private lemma log_ons_symbolDispersion_eq
 -- imply
   Real.log (ons_symbolDispersion β k₁ k₂) = Real.log (ons_gInt β k₁ k₂) - 4 * Real.log (Real.cosh β) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Onsager.log_ons_symbolDispersion β hβ hcrit k₁ k₂
 
 /--
@@ -156,8 +167,9 @@ private lemma ons_symbolDispersion_density_tendsto_eq
   (hβ : 0 ≤ β)
   (hcrit : β ≠ ons_betaC) :
 -- imply
-  Filter.Tendsto (fun n : ℕ => (1 / (2 * (n : ℝ) ^ 2)) * ∑ i ∈ Finset.range n, ∑ j ∈ Finset.range n, Real.log (ons_symbolDispersion β (2 * Real.pi * i / n) (2 * Real.pi * j / n))) Filter.atTop (nhds (ons_freeEnergyIntegral β - 2 * Real.log (Real.cosh β))) := by
+  Filter.Tendsto (fun n : ℕ => (1 / (2 * (n : ℝ) ^ 2)) * ∑ i < n, ∑ j < n, Real.log (ons_symbolDispersion β (2 * Real.pi * i / n) (2 * Real.pi * j / n))) Filter.atTop (nhds (ons_freeEnergyIntegral β - 2 * Real.log (Real.cosh β))) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Onsager.ons_symbolDispersion_density_tendsto β hβ hcrit
 
 /--
@@ -173,8 +185,9 @@ private lemma ons_log_gInt_density_shift_tendsto_eq
   (hs : s ∈ Set.Icc (0 : ℝ) 1)
   (ht : t ∈ Set.Icc (0 : ℝ) 1) :
 -- imply
-  Filter.Tendsto (fun n : ℕ => (1 / (2 * (n : ℝ) ^ 2)) * ∑ i ∈ Finset.range n, ∑ j ∈ Finset.range n, Real.log (ons_gInt β (2 * Real.pi * (i + s) / n) (2 * Real.pi * (j + t) / n))) Filter.atTop (nhds (ons_freeEnergyIntegral β)) := by
+  Filter.Tendsto (fun n : ℕ => (1 / (2 * (n : ℝ) ^ 2)) * ∑ i < n, ∑ j < n, Real.log (ons_gInt β (2 * Real.pi * (i + s) / n) (2 * Real.pi * (j + t) / n))) Filter.atTop (nhds (ons_freeEnergyIntegral β)) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Onsager.ons_log_gInt_density_shift_tendsto β hβ hcrit s t hs ht
 
 /--
@@ -190,8 +203,9 @@ private lemma ons_symbolDispersion_density_shift_tendsto_eq
   (hs : s ∈ Set.Icc (0 : ℝ) 1)
   (ht : t ∈ Set.Icc (0 : ℝ) 1) :
 -- imply
-  Filter.Tendsto (fun n : ℕ => (1 / (2 * (n : ℝ) ^ 2)) * ∑ i ∈ Finset.range n, ∑ j ∈ Finset.range n, Real.log (ons_symbolDispersion β (2 * Real.pi * (i + s) / n) (2 * Real.pi * (j + t) / n))) Filter.atTop (nhds (ons_freeEnergyIntegral β - 2 * Real.log (Real.cosh β))) := by
+  Filter.Tendsto (fun n : ℕ => (1 / (2 * (n : ℝ) ^ 2)) * ∑ i < n, ∑ j < n, Real.log (ons_symbolDispersion β (2 * Real.pi * (i + s) / n) (2 * Real.pi * (j + t) / n))) Filter.atTop (nhds (ons_freeEnergyIntegral β - 2 * Real.log (Real.cosh β))) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Onsager.ons_symbolDispersion_density_shift_tendsto β hβ hcrit s t hs ht
 
 

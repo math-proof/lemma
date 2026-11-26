@@ -10,8 +10,9 @@ private lemma main
   (h₀ : ∀ i j, j > i → L i j = 0)
   (h₁ : i < n) :
 -- imply
-  ∑ k ∈ Finset.range n, L i k * ~(L j k) = ∑ k ∈ Finset.range (min i j + 1), L i k * ~(L j k) := by
+  ∑ k < n, L i k * ~(L j k) = ∑ k < (min i j + 1), L i k * ~(L j k) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   rw [← Finset.sum_range_add_sum_Ico _ (show min i j + 1 ≤ n by omega)]
   have h₂ : ∑ k ∈ Finset.Ico (min i j + 1) n, L i k * ~(L j k) = 0 := by
     refine Finset.sum_eq_zero fun k hk => ?_

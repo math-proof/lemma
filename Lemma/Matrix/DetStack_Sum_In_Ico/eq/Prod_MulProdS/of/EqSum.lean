@@ -33,13 +33,13 @@ private lemma falling_det_mul_Q
       else 0).det *
     (∏ k : Fin r, x k ^ (d k).choose 2) =
   (∏ k : Fin r, ∏ j ∈ Finset.Iio k, (x k - x j) ^ (d k * d j)) *
-    (∏ k : Fin r, ∏ j ∈ Finset.range (d k), (Nat.factorial j : ℂ)) *
+    (∏ k : Fin r, ∏ j < (d k), (Nat.factorial j : ℂ)) *
     (∏ k : Fin r, x k ^ (d k).choose 2) := by
 -- proof
   classical
   let Q : ℂ := ∏ k : Fin r, x k ^ (d k).choose 2
   let Vand : ℂ := ∏ k : Fin r, ∏ j ∈ Finset.Iio k, (x k - x j) ^ (d k * d j)
-  let Fact : ℂ := ∏ k : Fin r, ∏ j ∈ Finset.range (d k), (Nat.factorial j)
+  let Fact : ℂ := ∏ k : Fin r, ∏ j < (d k), (Nat.factorial j)
   let off (k : Fin r) : ℕ := ∑ j ∈ Finset.Iio k, d j
   let slot (p : Σ k : Fin r, Fin (d k)) : Fin n :=
     ⟨off p.1 + p.2.val, by
@@ -282,24 +282,24 @@ private lemma falling_det_mul_Q
                   Nat.stirlingSecond ei a.val * (t : ℕ).descFactorial a.val *
                     x k ^ (t : ℕ)
                 else 0) =
-              ∑ j ∈ Finset.range (ei + 1),
+              ∑ j < (ei + 1),
                 Nat.stirlingSecond ei j * (t : ℕ).descFactorial j *
                   x k ^ (t : ℕ) := by
           rw [← Finset.sum_filter]
           refine Finset.sum_bij'
             (fun a ha => a.val)
             (fun j hj => (⟨j, by
-              have hj' : j < ei + 1 := Finset.mem_range.mp hj
+              have hj' : j < ei + 1 := Finset.mem_Iio.mp hj
               omega⟩ : Fin (d k)))
             ?_ ?_ ?_ ?_ ?_
           ·
             intro a ha
             simp only [Finset.mem_filter, Finset.mem_univ, true_and] at ha
-            exact Finset.mem_range.mpr (Nat.lt_succ_of_le ha)
+            exact Finset.mem_Iio.mpr (Nat.lt_succ_of_le ha)
           ·
             intro j hj
             simp only [Finset.mem_filter, Finset.mem_univ, true_and]
-            exact Nat.le_of_lt_succ (Finset.mem_range.mp hj)
+            exact Nat.le_of_lt_succ (Finset.mem_Iio.mp hj)
           ·
             intro a ha
             apply Fin.ext
@@ -312,16 +312,16 @@ private lemma falling_det_mul_Q
             rfl
         rw [hrange]
         have hst : ((t : ℕ) : ℂ) ^ ei =
-            ∑ j ∈ Finset.range (ei + 1),
+            ∑ j < (ei + 1),
               Nat.stirlingSecond ei j * (t : ℕ).descFactorial j := by
-          simpa [Nat.cast_sum, Nat.cast_mul, Nat.cast_pow] using
+          simpa [Nat.Iio_eq_range, Nat.cast_sum, Nat.cast_mul, Nat.cast_pow] using
             congrArg (Nat.cast : ℕ → ℂ)
               (Nat.pow_eq_sum_stirlingSecond_mul_descFactorial (t : ℕ) ei)
         have hpull :
-          ∑ j ∈ Finset.range (ei + 1),
+          ∑ j < (ei + 1),
                 Nat.stirlingSecond ei j * (t : ℕ).descFactorial j * x k ^ (t : ℕ) =
               x k ^ (t : ℕ) *
-                ∑ j ∈ Finset.range (ei + 1),
+                ∑ j < (ei + 1),
                   Nat.stirlingSecond ei j * (t : ℕ).descFactorial j := by
           simp_rw [← Nat.cast_mul]
           rw [← Finset.sum_mul, ← Nat.cast_sum, mul_comm]
@@ -381,7 +381,7 @@ private lemma falling_det_mul_Q
     (∏ i : Fin r,
         (∏ j ∈ Finset.Iio i, (x i - x j) ^
           (d i * d j)) *
-        (∏ j ∈ Finset.range (d i), (Nat.factorial j : ℂ)) *
+        (∏ j < (d i), (Nat.factorial j : ℂ)) *
         x i ^ (d i).choose 2) =
       Vand * Fact * Q := by
     simp only [Vand, Fact, Q]
@@ -423,13 +423,13 @@ private lemma main
           x k ^ ((t : ℕ) - (i - ∑ j ∈ Finset.Iio k, d j))
       else 0).det =
   ∏ k : Fin r, ((∏ j ∈ Finset.Iio k, (x k - x j) ^ (d k * d j)) *
-    (∏ j ∈ Finset.range (d k), (Nat.factorial j : ℂ))) := by
+    (∏ j < (d k), (Nat.factorial j : ℂ))) := by
 -- proof
   classical
   let subst (a : ℂ) : ℂ[X] := if a = 0 then X else C a
   let Vand : ℂ[X] :=
     ∏ i : Fin r, ∏ j ∈ Finset.Iio i, (subst (x i : ℂ) - subst (x j : ℂ)) ^ (d i * d j)
-  let Fact : ℂ := ∏ i : Fin r, ∏ j ∈ Finset.range (d i), (Nat.factorial j)
+  let Fact : ℂ := ∏ i : Fin r, ∏ j < (d i), (Nat.factorial j)
   let Qp : ℂ[X] := ∏ i : Fin r, subst (x i : ℂ) ^ (d i).choose 2
   let Mp : Matrix (Fin n) (Fin n) ℂ[X] :=
     [t < n][i < n]

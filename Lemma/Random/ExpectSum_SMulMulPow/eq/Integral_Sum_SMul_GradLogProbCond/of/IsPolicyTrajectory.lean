@@ -44,18 +44,19 @@ private lemma main
     PSpace_Path.of.All_PSpace fun t => ⟨(h₀.measurable_s t).aemeasurable⟩
   have : PSpace (M θ) (AsPathRV.path a) :=
     PSpace_Path.of.All_PSpace fun t => ⟨(h₀.measurable_a t).aemeasurable⟩
-  𝔼[s, a : M θ](∑ t ∈ Finset.range n,
+  𝔼[s, a : M θ](∑ t < n,
       (γ ^ t * Q t (s t) (a t)) • ∇[θ] (ℙ[M θ](a[t] | s[t]) : ℝ).log) =
-    ∫ ω, (∑ t ∈ Finset.range n,
+    ∫ ω, (∑ t < n,
       (γ ^ t * Q t (s t ω) (a t ω)) •
         ∇[θ] (ℙ[M θ]((a t) = (a t ω) | (s t) = (s t ω)) : ℝ).log) ∂(M θ) := by
 -- proof
   intro _ _ _ _
   apply OfRV.eq.Integral.of.AEStronglyMeasurable_Map
     (f := fun p : (ℕ → 𝒮) × (ℕ → 𝒜) ↦
-      ∑ t ∈ Finset.range n,
+      ∑ t < n,
         (γ ^ t * Q t (p.1 t) (p.2 t)) •
           ∇[θ] (ℙ[M θ]((a t) = p.2 t | (s t) = p.1 t) : ℝ).log)
+  try simp only [Nat.Iio_eq_range] at *
   refine (Finset.stronglyMeasurable_fun_sum (Finset.range n) fun t _ => ?_).aestronglyMeasurable
   apply StronglyMeasurable.comp_measurable
     (f := fun q : 𝒮 × 𝒜 ↦

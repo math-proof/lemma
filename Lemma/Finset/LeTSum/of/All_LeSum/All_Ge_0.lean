@@ -12,11 +12,11 @@ private lemma main
   {M : EReal}
 -- given
   (h_nn : ∀ n, 0 ≤ f n)
-  (h : ∀ N : ℕ, ∑ n ∈ Finset.range N, f n ≤ M) :
+  (h : ∀ N : ℕ, ∑ n < N, f n ≤ M) :
 -- imply
   ∑' n, f n ≤ M :=
 -- proof
-  EReal.tsum_le_of_sum_range_le_of_nonneg h_nn h
+  EReal.tsum_le_of_sum_range_le_of_nonneg h_nn (fun N => (Nat.Iio_eq_range N) ▸ h N)
 
 
 -- created on 2026-10-20

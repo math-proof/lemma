@@ -9,28 +9,32 @@ private lemma main
   {n : ℕ}
   {x : ℝ} :
 -- imply
-  ∑ k ∈ Finset.range (n + 1), (ascPochhammer ℝ k).eval x * (Nat.stirlingSecond n k : ℝ) * (-1) ^ (n - k) = x ^ n := by
+  ∑ k < (n + 1), (ascPochhammer ℝ k).eval x * (Nat.stirlingSecond n k : ℝ) * (-1) ^ (n - k) = x ^ n := by
 -- proof
-  have key : ∀ (x : ℝ) (n : ℕ), ∑ k ∈ Finset.range (n + 1), (descPochhammer ℝ k).eval x * (Nat.stirlingSecond n k : ℝ) = x ^ n := by
+  have key : ∀ (x : ℝ) (n : ℕ), ∑ k < (n + 1), (descPochhammer ℝ k).eval x * (Nat.stirlingSecond n k : ℝ) = x ^ n := by
     intro x n
     induction n with
-    | zero => simp
+    | zero =>
+      simp only [Nat.Iio_eq_range]
+      simp
     | succ n ih =>
       have hD : ∀ k : ℕ, (descPochhammer ℝ k).eval x * x = (descPochhammer ℝ (k + 1)).eval x + k * (descPochhammer ℝ k).eval x := by
         intro k
         rw [descPochhammer_succ_eval]
         ring
-      have A : ∑ k ∈ Finset.range (n + 1 + 1), (descPochhammer ℝ k).eval x * (Nat.stirlingSecond (n + 1) k : ℝ) =
-          ∑ j ∈ Finset.range (n + 1), (descPochhammer ℝ (j + 1)).eval x * (Nat.stirlingSecond n j : ℝ) +
-          ∑ j ∈ Finset.range (n + 1), ((j : ℝ) + 1) * (descPochhammer ℝ (j + 1)).eval x * (Nat.stirlingSecond n (j + 1) : ℝ) := by
+      have A : ∑ k < (n + 1 + 1), (descPochhammer ℝ k).eval x * (Nat.stirlingSecond (n + 1) k : ℝ) =
+          ∑ j < (n + 1), (descPochhammer ℝ (j + 1)).eval x * (Nat.stirlingSecond n j : ℝ) +
+          ∑ j < (n + 1), ((j : ℝ) + 1) * (descPochhammer ℝ (j + 1)).eval x * (Nat.stirlingSecond n (j + 1) : ℝ) := by
+        simp only [Nat.Iio_eq_range]
         rw [Finset.sum_range_succ', Nat.stirlingSecond_succ_zero, Nat.cast_zero, mul_zero, add_zero, ← Finset.sum_add_distrib]
         apply Finset.sum_congr rfl
         intro j _
         rw [Nat.stirlingSecond_succ_succ]
         push_cast
         ring
-      have B : ∑ j ∈ Finset.range (n + 1), ((j : ℝ) + 1) * (descPochhammer ℝ (j + 1)).eval x * (Nat.stirlingSecond n (j + 1) : ℝ) =
-          ∑ k ∈ Finset.range (n + 1), (k : ℝ) * (descPochhammer ℝ k).eval x * (Nat.stirlingSecond n k : ℝ) := by
+      have B : ∑ j < (n + 1), ((j : ℝ) + 1) * (descPochhammer ℝ (j + 1)).eval x * (Nat.stirlingSecond n (j + 1) : ℝ) =
+          ∑ k < (n + 1), (k : ℝ) * (descPochhammer ℝ k).eval x * (Nat.stirlingSecond n k : ℝ) := by
+        simp only [Nat.Iio_eq_range]
         rw [Finset.sum_range_succ, Nat.stirlingSecond_eq_zero_of_lt (Nat.lt_succ_self n), Nat.cast_zero, mul_zero, add_zero,
           Finset.sum_range_succ']
         simp
@@ -42,7 +46,7 @@ private lemma main
   rw [show x ^ n = (-1) ^ n * (-x) ^ n by rw [← mul_pow]; ring, ← e, Finset.mul_sum]
   apply Finset.sum_congr rfl
   intro k hk
-  have hk' := Finset.mem_range.mp hk
+  have hk' : k ≤ n := by simpa using hk
   have ha := ascPochhammer_eval_neg_eq_descPochhammer ℝ (-x) k
   rw [neg_neg] at ha
   have hp : (-1 : ℝ) ^ n = (-1) ^ k * (-1) ^ (n - k) := by

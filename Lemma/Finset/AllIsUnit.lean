@@ -25,9 +25,9 @@ private lemma main
   (hq₁ : (q : W₁) ∈ maximalIdeal W₁)
   (ρ : W₁ →+* W₂) (hρ : ∀ x ∈ maximalIdeal W₁, ρ x ∈ maximalIdeal W₂)
   (e₀ : ℕ) (c : ℕ → W₁)
-  (hunit : ∀ a b : W₁, (a ∉ maximalIdeal W₁ ∨ b ∉ maximalIdeal W₁) → a ^ q * b - a * b ^ q ∈ maximalIdeal W₁ → IsUnit (∑ i ∈ Finset.range (e₀ + 1), c i * a ^ i * b ^ (e₀ - i))) :
+  (hunit : ∀ a b : W₁, (a ∉ maximalIdeal W₁ ∨ b ∉ maximalIdeal W₁) → a ^ q * b - a * b ^ q ∈ maximalIdeal W₁ → IsUnit (∑ i < (e₀ + 1), c i * a ^ i * b ^ (e₀ - i))) :
   -- imply
-  ∀ a b : W₂, (a ∉ maximalIdeal W₂ ∨ b ∉ maximalIdeal W₂) → a ^ q * b - a * b ^ q ∈ maximalIdeal W₂ → IsUnit (∑ i ∈ Finset.range (e₀ + 1), ρ (c i) * a ^ i * b ^ (e₀ - i)) := by
+  ∀ a b : W₂, (a ∉ maximalIdeal W₂ ∨ b ∉ maximalIdeal W₂) → a ^ q * b - a * b ^ q ∈ maximalIdeal W₂ → IsUnit (∑ i < (e₀ + 1), ρ (c i) * a ^ i * b ^ (e₀ - i)) := by
   -- proof
   classical
   have hqp : q.Prime := Fact.out
@@ -38,7 +38,7 @@ private lemma main
   have hρunit : ∀ x : W₁, IsUnit x → residue W₂ (ρ x) ≠ 0 := fun x hx => (residue_ne_zero_iff_isUnit _).mpr (hx.map ρ)
   intro a b hab hdir
   rw [← residue_ne_zero_iff_isUnit, map_sum]
-  simp [map_mul, map_pow]
+  simp only [map_mul, map_pow]
   set r := residue W₂ with hr
   have hdir' : r a ^ q * r b = r a * r b ^ q := by
     rw [← sub_eq_zero, ← map_pow, ← map_pow, ← map_mul, ← map_mul, ← map_sub, hr, residue_eq_zero_iff]
@@ -63,10 +63,10 @@ private lemma main
       have := (maximalIdeal W₁).neg_mem (intCast_pow_sub_intCast_mem q hq₁ n)
       rwa [neg_sub] at this
     have hF := hunit 1 (n : W₁) (Or.inl hone) hdir1
-    have key : ∑ i ∈ Finset.range (e₀ + 1), r (ρ (c i)) * r a ^ i * r b ^ (e₀ - i) = r a ^ e₀ * r (ρ (∑ i ∈ Finset.range (e₀ + 1), c i * 1 ^ i * (n : W₁) ^ (e₀ - i))) := by
+    have key : ∑ i < (e₀ + 1), r (ρ (c i)) * r a ^ i * r b ^ (e₀ - i) = r a ^ e₀ * r (ρ (∑ i < (e₀ + 1), c i * 1 ^ i * (n : W₁) ^ (e₀ - i))) := by
       rw [map_sum, map_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun i hi => ?_
-      have hi' : i ≤ e₀ := Nat.lt_succ_iff.mp (Finset.mem_range.mp hi)
+      have hi' : i ≤ e₀ := Nat.lt_succ_iff.mp (Finset.mem_Iio.mp hi)
       simp [map_mul, map_pow, map_intCast, one_pow, mul_one, hb', mul_pow]
       rw [← hn]
       have : r a ^ i * (r a) ^ (e₀ - i) = r a ^ e₀ := by
@@ -94,10 +94,10 @@ private lemma main
       rw [one_pow, mul_one, mul_one]
       apply intCast_pow_sub_intCast_mem q hq₁ m
     have hF := hunit (m : W₁) 1 (Or.inr hone) hdirm
-    have key : ∑ i ∈ Finset.range (e₀ + 1), r (ρ (c i)) * r a ^ i * r b ^ (e₀ - i) = r b ^ e₀ * r (ρ (∑ i ∈ Finset.range (e₀ + 1), c i * (m : W₁) ^ i * 1 ^ (e₀ - i))) := by
+    have key : ∑ i < (e₀ + 1), r (ρ (c i)) * r a ^ i * r b ^ (e₀ - i) = r b ^ e₀ * r (ρ (∑ i < (e₀ + 1), c i * (m : W₁) ^ i * 1 ^ (e₀ - i))) := by
       rw [map_sum, map_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun i hi => ?_
-      have hi' : i ≤ e₀ := Nat.lt_succ_iff.mp (Finset.mem_range.mp hi)
+      have hi' : i ≤ e₀ := Nat.lt_succ_iff.mp (Finset.mem_Iio.mp hi)
       simp [map_mul, map_pow, map_intCast, one_pow, mul_one, ha', mul_pow]
       rw [← hm]
       have : r b ^ i * (r b) ^ (e₀ - i) = r b ^ e₀ := by

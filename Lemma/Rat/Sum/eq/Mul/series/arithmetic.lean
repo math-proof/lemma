@@ -6,11 +6,13 @@ import Initialize.Tactic.Attr.Basic
 private lemma main
   {n : ℕ}
   -- imply
-  : ∑ k ∈ Finset.range n, (k : ℝ) = (n : ℝ) * ((n : ℝ) - 1) / 2 := by
+  : ∑ k < n, (k : ℝ) = (n : ℝ) * ((n : ℝ) - 1) / 2 := by
   -- proof
+  try simp only [Nat.Iio_eq_range] at *
   induction n with
   | zero => norm_num
   | succ n ih =>
+    try simp only [Nat.Iio_eq_range] at *
     rw [Finset.sum_range_succ, ih]
     simp [Nat.cast_add, Nat.cast_one]
     ring

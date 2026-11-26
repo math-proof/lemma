@@ -31,18 +31,17 @@ private lemma main
         · rw [ite_eq_left (by omega), Nat.choose_eq_zero_of_lt (by omega), Nat.cast_zero, mul_zero, mul_zero]
   rw [← Finset.sum_subset (s₁ := Finset.Ico (j : ℕ) (j + d + 1)) (by intro k hk; simp at hk ⊢; omega) hzero]
   rw [Finset.sum_Ico_eq_sum_range, show (j : ℕ) + d + 1 - j = d + 1 by omega]
-  have key : ∀ t ∈ Finset.range (d + 1), x ^ ((j : ℕ) + t) * ((((j : ℕ) + t : ℕ) : R) + δ) ^ (i : ℕ) *
+  have key : ∀ t < (d + 1), x ^ ((j : ℕ) + t) * ((((j : ℕ) + t : ℕ) : R) + δ) ^ (i : ℕ) *
       ((-x) ^ ((d : ℤ) + (j : ℕ) - (((j : ℕ) + t : ℕ) : ℤ)) * (if (j : ℕ) ≤ (j : ℕ) + t then (d.choose ((j : ℕ) + t - j) : R) else 0)) =
       x ^ ((j : ℕ) + d) * (((-1 : ℤ) ^ (d - t) * ((d.choose t : ℕ) : ℤ)) • (fun r : R => r ^ (i : ℕ)) (((j : R) + δ) + t • (1 : R))) := by
     intro t ht
-    have ht := Finset.mem_range.mp ht
     rw [ite_eq_left (by omega), Nat.add_sub_cancel_left,
       show ((d : ℤ) + ((j : ℕ) : ℤ) - (((j : ℕ) + t : ℕ) : ℤ)) = ((d - t : ℕ) : ℤ) by push_cast [Nat.cast_sub (by omega : t ≤ d)]; ring,
       zpow_natCast, neg_pow, show x ^ ((j : ℕ) + d) = x ^ ((j : ℕ) + t) * x ^ (d - t) by rw [← pow_add]; congr 1; omega,
       zsmul_eq_mul, nsmul_eq_mul]
     push_cast
     ring
-  rw [Finset.sum_congr rfl key, ← Finset.mul_sum,
+  rw [Finset.sum_congr rfl (fun t ht => key t (by simpa using ht)), ← Finset.mul_sum,
     ← fwdDiff_iter_eq_sum_shift (h := (1 : R)) (fun r : R => r ^ (i : ℕ)) d ((j : R) + δ),
     fwdDiff_iter_pow_eq_zero_of_lt (by omega : (i : ℕ) < d), Pi.zero_apply, mul_zero]
 

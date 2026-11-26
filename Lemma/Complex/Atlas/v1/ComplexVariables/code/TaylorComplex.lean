@@ -13,11 +13,12 @@ lemma dslope_expansion_identity
   {a z : ℂ}
   {n : ℕ} :
 -- imply
-  f z = ∑ k ∈ range n, (Function.swap dslope a)^[k] f a * (z - a) ^ k + (Function.swap dslope a)^[n] f z * (z - a) ^ n := by
+  f z = ∑ k < n, (Function.swap dslope a)^[k] f a * (z - a) ^ k + (Function.swap dslope a)^[n] f z * (z - a) ^ n := by
 -- proof
   induction n with
   | zero => simp
   | succ n ih =>
+    simp only [Nat.Iio_eq_range] at ih ⊢
     rw [sum_range_succ, Function.iterate_succ', Function.comp_apply]
     set g := (Function.swap dslope a)^[n] f
     have key : (z - a) • dslope g a z = g z - g a := sub_smul_dslope g a z
@@ -98,6 +99,7 @@ lemma taylor_complex
   refine ⟨(Function.swap dslope a)^[n] f,
     iterate_dslope_differentiableOn hΩ ha hf, fun z _ => ?_⟩
   rw [dslope_expansion_identity (f := f) (a := a) (z := z) (n := n)]
+  simp only [Nat.Iio_eq_range]
   congr 1
   simp only [complexTaylorPoly]
   congr 1; ext k; congr 1

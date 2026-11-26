@@ -175,18 +175,18 @@ private lemma main
       rw [← huv]
       refine Ideal.add_mem _ (Ideal.mul_mem_left _ _ hp) (Ideal.mul_mem_left _ _ hℓmem)
     refine (IsLocalRing.maximalIdeal.isMaximal ↥A).ne_top (Ideal.eq_top_of_isUnit_mem _ this isUnit_one)
-  let T : L →ₗ[K] L := ∑ i ∈ Finset.range ℓ, (σ ^ i).toLinearMap
-  have hT : ∀ x : L, T x = ∑ i ∈ Finset.range ℓ, (σ ^ i) x := by
+  let T : L →ₗ[K] L := ∑ i < ℓ, (σ ^ i).toLinearMap
+  have hT : ∀ x : L, T x = ∑ i < ℓ, (σ ^ i) x := by
     intro x
     simp [T]
   have hTunit : ∀ x : L, ∃ u : ↥A, IsUnit u ∧ T x = (u : L) * x := by
     intro x
     choose m hm hmx using fun i => hmove i x
-    have hsum : ∑ i ∈ Finset.range ℓ, m i ∈ IsLocalRing.maximalIdeal ↥A := Ideal.sum_mem _ fun i _ => hm i
-    refine ⟨(ℓ : ↥A) + ∑ i ∈ Finset.range ℓ, m i, ?_, ?_⟩
+    have hsum : ∑ i < ℓ, m i ∈ IsLocalRing.maximalIdeal ↥A := Ideal.sum_mem _ fun i _ => hm i
+    refine ⟨(ℓ : ↥A) + ∑ i < ℓ, m i, ?_, ?_⟩
     ·
       by_contra hnu
-      have hmem : (ℓ : ↥A) + ∑ i ∈ Finset.range ℓ, m i ∈ IsLocalRing.maximalIdeal ↥A :=
+      have hmem : (ℓ : ↥A) + ∑ i < ℓ, m i ∈ IsLocalRing.maximalIdeal ↥A :=
         (IsLocalRing.mem_maximalIdeal _).mpr hnu
       have : ((ℓ : ℕ) : ↥A) ∈ IsLocalRing.maximalIdeal ↥A := by
         have := Ideal.sub_mem _ hmem hsum
@@ -195,10 +195,10 @@ private lemma main
       refine (IsLocalRing.mem_maximalIdeal _).mp this hℓunit
     ·
       rw [hT]
-      have : ∀ i ∈ Finset.range ℓ, (σ ^ i) x = x + (m i : L) * x := fun i _ => by
+      have : ∀ i < ℓ, (σ ^ i) x = x + (m i : L) * x := fun i _ => by
         rw [← hmx i]
         ring
-      rw [Finset.sum_congr rfl this, Finset.sum_add_distrib, Finset.sum_const, Finset.card_range, ← Finset.sum_mul]
+      rw [Finset.sum_congr rfl (fun i hi => this i (Finset.mem_Iio.mp hi)), Finset.sum_add_distrib, Finset.sum_const, Nat.card_Iio, ← Finset.sum_mul]
       push_cast
       ring
   have hTinj : Function.Injective T := by
@@ -219,15 +219,15 @@ private lemma main
   have hσT : ∀ x : L, σ (T x) = T x := by
     intro x
     rw [hT, map_sum]
-    have h1 : ∑ i ∈ Finset.range ℓ, σ ((σ ^ i) x) = ∑ i ∈ Finset.range ℓ, (σ ^ (i + 1)) x := by
+    have h1 : ∑ i < ℓ, σ ((σ ^ i) x) = ∑ i < ℓ, (σ ^ (i + 1)) x := by
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [pow_succ']
       rfl
     rw [h1]
-    have h2 : ∑ i ∈ Finset.range (ℓ + 1), (σ ^ i) x = ∑ i ∈ Finset.range ℓ, (σ ^ i) x + (σ ^ ℓ) x :=
-      Finset.sum_range_succ _ _
-    have h3 : ∑ i ∈ Finset.range (ℓ + 1), (σ ^ i) x = ∑ i ∈ Finset.range ℓ, (σ ^ (i + 1)) x + (σ ^ 0) x :=
-      Finset.sum_range_succ' _ _
+    have h2 : ∑ i < (ℓ + 1), (σ ^ i) x = ∑ i < ℓ, (σ ^ i) x + (σ ^ ℓ) x := by
+      simpa only [Nat.Iio_eq_range] using Finset.sum_range_succ (fun i => (σ ^ i) x) ℓ
+    have h3 : ∑ i < (ℓ + 1), (σ ^ i) x = ∑ i < ℓ, (σ ^ (i + 1)) x + (σ ^ 0) x := by
+      simpa only [Nat.Iio_eq_range] using Finset.sum_range_succ' (fun i => (σ ^ i) x) ℓ
     have key := h3.symm.trans h2
     rw [pow_zero, hσℓ] at key
     refine add_right_cancel key

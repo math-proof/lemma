@@ -9,6 +9,7 @@ private lemma main
 -- imply
   ∑ i, (x i + y i) = ∑ i, x i + ∑ i, y i := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   exact Finset.sum_add_distrib
 
 
@@ -18,6 +19,7 @@ private lemma doit
 -- imply
   ∑ i : Fin 3, x i = x 0 + x 1 + x 2 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   exact Fin.sum_univ_three _
 
 
@@ -26,8 +28,9 @@ private lemma pop
   {n : ℕ}
   {x : ℕ → ℝ} :
 -- imply
-  ∑ i ∈ Finset.range (n + 1), x i = ∑ i ∈ Finset.range n, x i + x n := by
+  ∑ i < (n + 1), x i = ∑ i < n, x i + x n := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   exact Finset.sum_range_succ _ _
 
 
@@ -36,8 +39,9 @@ private lemma shift
   {n : ℕ}
   {x : ℕ → ℝ} :
 -- imply
-  ∑ i ∈ Finset.range (n + 1), x i = ∑ i ∈ Finset.range n, x (i + 1) + x 0 := by
+  ∑ i < (n + 1), x i = ∑ i < n, x (i + 1) + x 0 := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   exact Finset.sum_range_succ' _ _
 
 

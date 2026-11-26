@@ -8,7 +8,7 @@ private lemma main
   {n : ℕ}
   {x : ℝ} :
 -- imply
-  ∑ k ∈ Finset.range (n + 1), (n.choose k : ℝ) * x ^ k * k = n * (x + 1) ^ (n - 1) * x := by
+  ∑ k < (n + 1), (n.choose k : ℝ) * x ^ k * k = n * (x + 1) ^ (n - 1) * x := by
 -- proof
   have hd : ∀ k r : ℕ, ((k.descFactorial (r + 1) : ℕ) : ℝ) = ((k : ℝ) - r) * (k.descFactorial r : ℕ) := by
     intro k r
@@ -18,13 +18,12 @@ private lemma main
       ring
     · rw [(Nat.descFactorial_eq_zero_iff_lt).mpr h]
       simp
-  have hS : ∀ r : ℕ, r ≤ n → ∑ k ∈ Finset.range (n + 1), (n.choose k : ℝ) * (k.descFactorial r : ℕ) * x ^ k =
+  have hS : ∀ r : ℕ, r ≤ n → ∑ k < (n + 1), (n.choose k : ℝ) * (k.descFactorial r : ℕ) * x ^ k =
       (n.descFactorial r : ℕ) * x ^ r * (x + 1) ^ (n - r) := by
     intro r hr
-    have e : ∀ k ∈ Finset.range (n + 1), (n.choose k : ℝ) * (k.descFactorial r : ℕ) * x ^ k =
+    have e : ∀ k < (n + 1), (n.choose k : ℝ) * (k.descFactorial r : ℕ) * x ^ k =
         if r ≤ k then (r.factorial : ℝ) * n.choose r * ((n - r).choose (k - r)) * x ^ k else 0 := by
       intro k hk
-      rw [Finset.mem_range] at hk
       split_ifs with h
       · rw [Nat.descFactorial_eq_factorial_mul_choose]
         have := Nat.choose_mul (n := n) (k := k) (s := r) h
@@ -33,21 +32,22 @@ private lemma main
         linear_combination (r.factorial : ℝ) * x ^ k * h'
       · rw [(Nat.descFactorial_eq_zero_iff_lt).mpr (by omega)]
         simp
-    have hset : (Finset.range (n + 1)).filter (fun k => r ≤ k) = Finset.Ico r (n + 1) := by
+    have hset : (Finset.Iio (n + 1)).filter (fun k => r ≤ k) = Finset.Ico r (n + 1) := by
       ext k
-      simp only [Finset.mem_filter, Finset.mem_range, Finset.mem_Ico]
+      simp only [Finset.mem_filter, Finset.mem_Iio, Finset.mem_Ico]
       omega
-    rw [Finset.sum_congr rfl e, ← Finset.sum_filter, hset, Finset.sum_Ico_eq_sum_range,
+    rw [Finset.sum_congr rfl (fun x hx => e x (by simpa using hx)), ← Finset.sum_filter, hset, Finset.sum_Ico_eq_sum_range,
       show n + 1 - r = (n - r) + 1 by omega, add_pow, Finset.mul_sum, Nat.descFactorial_eq_factorial_mul_choose]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [Nat.add_sub_cancel_left, pow_add, one_pow]
     push_cast
     ring
   rcases Nat.eq_zero_or_pos n with rfl | hn
-  · simp
+  · rw [Nat.Iio_eq_range]
+    simp
   have h1 := hS 1 hn
   rw [hd n 0, Nat.descFactorial_zero] at h1
-  calc _ = ∑ k ∈ Finset.range (n + 1), (n.choose k : ℝ) * (k.descFactorial 1 : ℕ) * x ^ k :=
+  calc _ = ∑ k < (n + 1), (n.choose k : ℝ) * (k.descFactorial 1 : ℕ) * x ^ k :=
         Finset.sum_congr rfl fun k _ => by rw [hd k 0, Nat.descFactorial_zero]; push_cast; ring
     _ = _ := by rw [h1]; push_cast; ring
 
@@ -59,7 +59,7 @@ private lemma deux
 -- given
   (h : 2 ≤ n) :
 -- imply
-  ∑ k ∈ Finset.range (n + 1), (n.choose k : ℝ) * (k : ℝ) ^ 2 * x ^ k = n * x * (n * x + 1) * (x + 1) ^ (n - 2) := by
+  ∑ k < (n + 1), (n.choose k : ℝ) * (k : ℝ) ^ 2 * x ^ k = n * x * (n * x + 1) * (x + 1) ^ (n - 2) := by
 -- proof
   have hd : ∀ k r : ℕ, ((k.descFactorial (r + 1) : ℕ) : ℝ) = ((k : ℝ) - r) * (k.descFactorial r : ℕ) := by
     intro k r
@@ -69,13 +69,12 @@ private lemma deux
       ring
     · rw [(Nat.descFactorial_eq_zero_iff_lt).mpr h]
       simp
-  have hS : ∀ r : ℕ, r ≤ n → ∑ k ∈ Finset.range (n + 1), (n.choose k : ℝ) * (k.descFactorial r : ℕ) * x ^ k =
+  have hS : ∀ r : ℕ, r ≤ n → ∑ k < (n + 1), (n.choose k : ℝ) * (k.descFactorial r : ℕ) * x ^ k =
       (n.descFactorial r : ℕ) * x ^ r * (x + 1) ^ (n - r) := by
     intro r hr
-    have e : ∀ k ∈ Finset.range (n + 1), (n.choose k : ℝ) * (k.descFactorial r : ℕ) * x ^ k =
+    have e : ∀ k < (n + 1), (n.choose k : ℝ) * (k.descFactorial r : ℕ) * x ^ k =
         if r ≤ k then (r.factorial : ℝ) * n.choose r * ((n - r).choose (k - r)) * x ^ k else 0 := by
       intro k hk
-      rw [Finset.mem_range] at hk
       split_ifs with h
       · rw [Nat.descFactorial_eq_factorial_mul_choose]
         have := Nat.choose_mul (n := n) (k := k) (s := r) h
@@ -84,20 +83,20 @@ private lemma deux
         linear_combination (r.factorial : ℝ) * x ^ k * h'
       · rw [(Nat.descFactorial_eq_zero_iff_lt).mpr (by omega)]
         simp
-    have hset : (Finset.range (n + 1)).filter (fun k => r ≤ k) = Finset.Ico r (n + 1) := by
+    have hset : (Finset.Iio (n + 1)).filter (fun k => r ≤ k) = Finset.Ico r (n + 1) := by
       ext k
-      simp only [Finset.mem_filter, Finset.mem_range, Finset.mem_Ico]
+      simp only [Finset.mem_filter, Finset.mem_Iio, Finset.mem_Ico]
       omega
-    rw [Finset.sum_congr rfl e, ← Finset.sum_filter, hset, Finset.sum_Ico_eq_sum_range,
+    rw [Finset.sum_congr rfl (fun x hx => e x (by simpa using hx)), ← Finset.sum_filter, hset, Finset.sum_Ico_eq_sum_range,
       show n + 1 - r = (n - r) + 1 by omega, add_pow, Finset.mul_sum, Nat.descFactorial_eq_factorial_mul_choose]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [Nat.add_sub_cancel_left, pow_add, one_pow]
     push_cast
     ring
   obtain ⟨m, rfl⟩ : ∃ m, n = m + 2 := ⟨n - 2, by omega⟩
-  calc _ = ∑ k ∈ Finset.range (m + 2 + 1), (1 * (((m + 2).choose k : ℝ) * (k.descFactorial 2 : ℕ) * x ^ k) + 1 * (((m + 2).choose k : ℝ) * (k.descFactorial 1 : ℕ) * x ^ k)) :=
+  calc _ = ∑ k < (m + 2 + 1), (1 * (((m + 2).choose k : ℝ) * (k.descFactorial 2 : ℕ) * x ^ k) + 1 * (((m + 2).choose k : ℝ) * (k.descFactorial 1 : ℕ) * x ^ k)) :=
         Finset.sum_congr rfl fun k _ => by rw [hd k 1, hd k 0, Nat.descFactorial_zero]; push_cast; ring
-    _ = 1 * ∑ k ∈ Finset.range (m + 2 + 1), (((m + 2).choose k : ℝ) * (k.descFactorial 2 : ℕ) * x ^ k) + 1 * ∑ k ∈ Finset.range (m + 2 + 1), (((m + 2).choose k : ℝ) * (k.descFactorial 1 : ℕ) * x ^ k) := by
+    _ = 1 * ∑ k < (m + 2 + 1), (((m + 2).choose k : ℝ) * (k.descFactorial 2 : ℕ) * x ^ k) + 1 * ∑ k < (m + 2 + 1), (((m + 2).choose k : ℝ) * (k.descFactorial 1 : ℕ) * x ^ k) := by
         simp only [Finset.sum_add_distrib, ← Finset.mul_sum]
     _ = _ := by
         rw [hS 2 (by omega), hS 1 (by omega)]
@@ -115,7 +114,7 @@ private lemma trois
 -- given
   (h : 3 ≤ n) :
 -- imply
-  ∑ k ∈ Finset.range (n + 1), (n.choose k : ℝ) * (k : ℝ) ^ 3 * x ^ k = (ascPochhammer ℝ 3).eval ((n : ℝ) * x) * (x + 1) ^ (n - 3) - n * x * (x + 1) ^ (n - 2) := by
+  ∑ k < (n + 1), (n.choose k : ℝ) * (k : ℝ) ^ 3 * x ^ k = (ascPochhammer ℝ 3).eval ((n : ℝ) * x) * (x + 1) ^ (n - 3) - n * x * (x + 1) ^ (n - 2) := by
 -- proof
   have hd : ∀ k r : ℕ, ((k.descFactorial (r + 1) : ℕ) : ℝ) = ((k : ℝ) - r) * (k.descFactorial r : ℕ) := by
     intro k r
@@ -125,13 +124,12 @@ private lemma trois
       ring
     · rw [(Nat.descFactorial_eq_zero_iff_lt).mpr h]
       simp
-  have hS : ∀ r : ℕ, r ≤ n → ∑ k ∈ Finset.range (n + 1), (n.choose k : ℝ) * (k.descFactorial r : ℕ) * x ^ k =
+  have hS : ∀ r : ℕ, r ≤ n → ∑ k < (n + 1), (n.choose k : ℝ) * (k.descFactorial r : ℕ) * x ^ k =
       (n.descFactorial r : ℕ) * x ^ r * (x + 1) ^ (n - r) := by
     intro r hr
-    have e : ∀ k ∈ Finset.range (n + 1), (n.choose k : ℝ) * (k.descFactorial r : ℕ) * x ^ k =
+    have e : ∀ k < (n + 1), (n.choose k : ℝ) * (k.descFactorial r : ℕ) * x ^ k =
         if r ≤ k then (r.factorial : ℝ) * n.choose r * ((n - r).choose (k - r)) * x ^ k else 0 := by
       intro k hk
-      rw [Finset.mem_range] at hk
       split_ifs with h
       · rw [Nat.descFactorial_eq_factorial_mul_choose]
         have := Nat.choose_mul (n := n) (k := k) (s := r) h
@@ -140,20 +138,20 @@ private lemma trois
         linear_combination (r.factorial : ℝ) * x ^ k * h'
       · rw [(Nat.descFactorial_eq_zero_iff_lt).mpr (by omega)]
         simp
-    have hset : (Finset.range (n + 1)).filter (fun k => r ≤ k) = Finset.Ico r (n + 1) := by
+    have hset : (Finset.Iio (n + 1)).filter (fun k => r ≤ k) = Finset.Ico r (n + 1) := by
       ext k
-      simp only [Finset.mem_filter, Finset.mem_range, Finset.mem_Ico]
+      simp only [Finset.mem_filter, Finset.mem_Iio, Finset.mem_Ico]
       omega
-    rw [Finset.sum_congr rfl e, ← Finset.sum_filter, hset, Finset.sum_Ico_eq_sum_range,
+    rw [Finset.sum_congr rfl (fun x hx => e x (by simpa using hx)), ← Finset.sum_filter, hset, Finset.sum_Ico_eq_sum_range,
       show n + 1 - r = (n - r) + 1 by omega, add_pow, Finset.mul_sum, Nat.descFactorial_eq_factorial_mul_choose]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [Nat.add_sub_cancel_left, pow_add, one_pow]
     push_cast
     ring
   obtain ⟨m, rfl⟩ : ∃ m, n = m + 3 := ⟨n - 3, by omega⟩
-  calc _ = ∑ k ∈ Finset.range (m + 3 + 1), (1 * (((m + 3).choose k : ℝ) * (k.descFactorial 3 : ℕ) * x ^ k) + 3 * (((m + 3).choose k : ℝ) * (k.descFactorial 2 : ℕ) * x ^ k) + 1 * (((m + 3).choose k : ℝ) * (k.descFactorial 1 : ℕ) * x ^ k)) :=
+  calc _ = ∑ k < (m + 3 + 1), (1 * (((m + 3).choose k : ℝ) * (k.descFactorial 3 : ℕ) * x ^ k) + 3 * (((m + 3).choose k : ℝ) * (k.descFactorial 2 : ℕ) * x ^ k) + 1 * (((m + 3).choose k : ℝ) * (k.descFactorial 1 : ℕ) * x ^ k)) :=
         Finset.sum_congr rfl fun k _ => by rw [hd k 2, hd k 1, hd k 0, Nat.descFactorial_zero]; push_cast; ring
-    _ = 1 * ∑ k ∈ Finset.range (m + 3 + 1), (((m + 3).choose k : ℝ) * (k.descFactorial 3 : ℕ) * x ^ k) + 3 * ∑ k ∈ Finset.range (m + 3 + 1), (((m + 3).choose k : ℝ) * (k.descFactorial 2 : ℕ) * x ^ k) + 1 * ∑ k ∈ Finset.range (m + 3 + 1), (((m + 3).choose k : ℝ) * (k.descFactorial 1 : ℕ) * x ^ k) := by
+    _ = 1 * ∑ k < (m + 3 + 1), (((m + 3).choose k : ℝ) * (k.descFactorial 3 : ℕ) * x ^ k) + 3 * ∑ k < (m + 3 + 1), (((m + 3).choose k : ℝ) * (k.descFactorial 2 : ℕ) * x ^ k) + 1 * ∑ k < (m + 3 + 1), (((m + 3).choose k : ℝ) * (k.descFactorial 1 : ℕ) * x ^ k) := by
         simp only [Finset.sum_add_distrib, ← Finset.mul_sum]
     _ = _ := by
         rw [hS 3 (by omega), hS 2 (by omega), hS 1 (by omega)]
@@ -172,7 +170,7 @@ private lemma quatre
 -- given
   (h : 4 ≤ n) :
 -- imply
-  ∑ k ∈ Finset.range (n + 1), (n.choose k : ℝ) * (k : ℝ) ^ 4 * x ^ k = (ascPochhammer ℝ 4).eval ((n : ℝ) * x) * (x + 1) ^ (n - 4) - n * x * ((4 * n - 1) * x + 5) * (x + 1) ^ (n - 3) := by
+  ∑ k < (n + 1), (n.choose k : ℝ) * (k : ℝ) ^ 4 * x ^ k = (ascPochhammer ℝ 4).eval ((n : ℝ) * x) * (x + 1) ^ (n - 4) - n * x * ((4 * n - 1) * x + 5) * (x + 1) ^ (n - 3) := by
 -- proof
   have hd : ∀ k r : ℕ, ((k.descFactorial (r + 1) : ℕ) : ℝ) = ((k : ℝ) - r) * (k.descFactorial r : ℕ) := by
     intro k r
@@ -182,13 +180,12 @@ private lemma quatre
       ring
     · rw [(Nat.descFactorial_eq_zero_iff_lt).mpr h]
       simp
-  have hS : ∀ r : ℕ, r ≤ n → ∑ k ∈ Finset.range (n + 1), (n.choose k : ℝ) * (k.descFactorial r : ℕ) * x ^ k =
+  have hS : ∀ r : ℕ, r ≤ n → ∑ k < (n + 1), (n.choose k : ℝ) * (k.descFactorial r : ℕ) * x ^ k =
       (n.descFactorial r : ℕ) * x ^ r * (x + 1) ^ (n - r) := by
     intro r hr
-    have e : ∀ k ∈ Finset.range (n + 1), (n.choose k : ℝ) * (k.descFactorial r : ℕ) * x ^ k =
+    have e : ∀ k < (n + 1), (n.choose k : ℝ) * (k.descFactorial r : ℕ) * x ^ k =
         if r ≤ k then (r.factorial : ℝ) * n.choose r * ((n - r).choose (k - r)) * x ^ k else 0 := by
       intro k hk
-      rw [Finset.mem_range] at hk
       split_ifs with h
       · rw [Nat.descFactorial_eq_factorial_mul_choose]
         have := Nat.choose_mul (n := n) (k := k) (s := r) h
@@ -197,20 +194,20 @@ private lemma quatre
         linear_combination (r.factorial : ℝ) * x ^ k * h'
       · rw [(Nat.descFactorial_eq_zero_iff_lt).mpr (by omega)]
         simp
-    have hset : (Finset.range (n + 1)).filter (fun k => r ≤ k) = Finset.Ico r (n + 1) := by
+    have hset : (Finset.Iio (n + 1)).filter (fun k => r ≤ k) = Finset.Ico r (n + 1) := by
       ext k
-      simp only [Finset.mem_filter, Finset.mem_range, Finset.mem_Ico]
+      simp only [Finset.mem_filter, Finset.mem_Iio, Finset.mem_Ico]
       omega
-    rw [Finset.sum_congr rfl e, ← Finset.sum_filter, hset, Finset.sum_Ico_eq_sum_range,
+    rw [Finset.sum_congr rfl (fun x hx => e x (by simpa using hx)), ← Finset.sum_filter, hset, Finset.sum_Ico_eq_sum_range,
       show n + 1 - r = (n - r) + 1 by omega, add_pow, Finset.mul_sum, Nat.descFactorial_eq_factorial_mul_choose]
     refine Finset.sum_congr rfl fun m _ => ?_
     rw [Nat.add_sub_cancel_left, pow_add, one_pow]
     push_cast
     ring
   obtain ⟨m, rfl⟩ : ∃ m, n = m + 4 := ⟨n - 4, by omega⟩
-  calc _ = ∑ k ∈ Finset.range (m + 4 + 1), (1 * (((m + 4).choose k : ℝ) * (k.descFactorial 4 : ℕ) * x ^ k) + 6 * (((m + 4).choose k : ℝ) * (k.descFactorial 3 : ℕ) * x ^ k) + 7 * (((m + 4).choose k : ℝ) * (k.descFactorial 2 : ℕ) * x ^ k) + 1 * (((m + 4).choose k : ℝ) * (k.descFactorial 1 : ℕ) * x ^ k)) :=
+  calc _ = ∑ k < (m + 4 + 1), (1 * (((m + 4).choose k : ℝ) * (k.descFactorial 4 : ℕ) * x ^ k) + 6 * (((m + 4).choose k : ℝ) * (k.descFactorial 3 : ℕ) * x ^ k) + 7 * (((m + 4).choose k : ℝ) * (k.descFactorial 2 : ℕ) * x ^ k) + 1 * (((m + 4).choose k : ℝ) * (k.descFactorial 1 : ℕ) * x ^ k)) :=
         Finset.sum_congr rfl fun k _ => by rw [hd k 3, hd k 2, hd k 1, hd k 0, Nat.descFactorial_zero]; push_cast; ring
-    _ = 1 * ∑ k ∈ Finset.range (m + 4 + 1), (((m + 4).choose k : ℝ) * (k.descFactorial 4 : ℕ) * x ^ k) + 6 * ∑ k ∈ Finset.range (m + 4 + 1), (((m + 4).choose k : ℝ) * (k.descFactorial 3 : ℕ) * x ^ k) + 7 * ∑ k ∈ Finset.range (m + 4 + 1), (((m + 4).choose k : ℝ) * (k.descFactorial 2 : ℕ) * x ^ k) + 1 * ∑ k ∈ Finset.range (m + 4 + 1), (((m + 4).choose k : ℝ) * (k.descFactorial 1 : ℕ) * x ^ k) := by
+    _ = 1 * ∑ k < (m + 4 + 1), (((m + 4).choose k : ℝ) * (k.descFactorial 4 : ℕ) * x ^ k) + 6 * ∑ k < (m + 4 + 1), (((m + 4).choose k : ℝ) * (k.descFactorial 3 : ℕ) * x ^ k) + 7 * ∑ k < (m + 4 + 1), (((m + 4).choose k : ℝ) * (k.descFactorial 2 : ℕ) * x ^ k) + 1 * ∑ k < (m + 4 + 1), (((m + 4).choose k : ℝ) * (k.descFactorial 1 : ℕ) * x ^ k) := by
         simp only [Finset.sum_add_distrib, ← Finset.mul_sum]
     _ = _ := by
         rw [hS 4 (by omega), hS 3 (by omega), hS 2 (by omega), hS 1 (by omega)]

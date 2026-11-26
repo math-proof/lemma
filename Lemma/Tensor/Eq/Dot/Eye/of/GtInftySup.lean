@@ -9,8 +9,9 @@ private lemma main
 -- given
   (h₀ : |lam| < 1) :
 -- imply
-  ∑ k ∈ Finset.range n, lam ^ k = (lam ^ n - 1) / (lam - 1) := by
+  ∑ k < n, lam ^ k = (lam ^ n - 1) / (lam - 1) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   have hne : lam ≠ 1 := by
     intro h
     simp [h] at h₀

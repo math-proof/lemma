@@ -18,8 +18,8 @@ private lemma main
   (h₂ : ∀ i, 0 ≤ w i)
   (h₃ : ∀ i, x i ∈ Set.Ioo a b) :
 -- imply
-  (∑ i ∈ Finset.range n, w i = 1) →
-    ∑ i ∈ Finset.range n, w i * f (x i) ≥ f (∑ i ∈ Finset.range n, w i * x i) := by
+  (∑ i < n, w i = 1) →
+    ∑ i < n, w i * f (x i) ≥ f (∑ i < n, w i * x i) := by
 -- proof
   intro h₄
   exact Real.Imp.of.Gt_0.jensen.induct h₀ h₁ h₃ ⟨h₄, fun i _ => h₂ i⟩

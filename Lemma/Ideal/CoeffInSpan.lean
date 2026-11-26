@@ -23,7 +23,7 @@ private lemma pow_le_pow_pow
 private lemma helper_main
   (hp : (p : S) ∈ nonZeroDivisors S) (hred : IsReduced (S ⧸ Ideal.span {(p : S)})) :
   ∀ (N : ℕ) (z : ℕ → S),
-    (∑ j ∈ Finset.range N, (p : S) ^ j * z j ^ p ^ (N - 1 - j)) ∈ Ideal.span {(p : S) ^ N} →
+    (∑ j < N, (p : S) ^ j * z j ^ p ^ (N - 1 - j)) ∈ Ideal.span {(p : S) ^ N} →
     ∀ j, j < N → z j ∈ Ideal.span {(p : S)} := by
   intro N
   induction N
@@ -34,15 +34,17 @@ private lemma helper_main
     rename_i N ih
     intro z hz j hj
     have h0 : z 0 ∈ Ideal.span {(p : S)} := by
-      have hsum : (∑ j ∈ Finset.range (N + 1), (p : S) ^ j * z j ^ p ^ (N + 1 - 1 - j)) ∈ Ideal.span {(p : S)} := by
+      have hsum : (∑ j < (N + 1), (p : S) ^ j * z j ^ p ^ (N + 1 - 1 - j)) ∈ Ideal.span {(p : S)} := by
         refine Ideal.span_singleton_le_span_singleton.2 ⟨(p : S) ^ N, by ring⟩ hz
+      try simp only [Nat.Iio_eq_range] at *
       rw [Finset.sum_range_succ'] at hsum
-      have hrest : (∑ j ∈ Finset.range N, (p : S) ^ (j + 1) * z (j + 1) ^ p ^ (N + 1 - 1 - (j + 1))) ∈
+      have hrest : (∑ j < N, (p : S) ^ (j + 1) * z (j + 1) ^ p ^ (N + 1 - 1 - (j + 1))) ∈
         Ideal.span {(p : S)} := by
         refine Ideal.sum_mem _ fun j _ => ?_
         rw [pow_succ', mul_assoc]
         refine Ideal.mul_mem_right _ _ (Ideal.mem_span_singleton_self _)
       have this := Ideal.sub_mem _ hsum hrest
+      try simp only [Nat.Iio_eq_range] at *
       rw [add_sub_cancel_left, pow_zero, one_mul] at this
       if hN : p ^ (N + 1 - 1 - 0) = 0 then
         refine absurd hN (pow_ne_zero _ (Nat.Prime.ne_zero Fact.out))
@@ -61,13 +63,14 @@ private lemma helper_main
         simp only [Nat.add_sub_cancel, Nat.sub_zero]
         refine Ideal.mul_mem_left _ _ (Ideal.span_singleton_le_span_singleton.2 ?_ (Ideal.mem_span_singleton_self _))
         refine pow_dvd_pow _ (Nat.lt_pow_self (Nat.Prime.one_lt Fact.out))
-      have hrest : (∑ j ∈ Finset.range N, (p : S) ^ (j + 1) * z (j + 1) ^ p ^ (N + 1 - 1 - (j + 1))) ∈
+      have hrest : (∑ j < N, (p : S) ^ (j + 1) * z (j + 1) ^ p ^ (N + 1 - 1 - (j + 1))) ∈
         Ideal.span {(p : S) ^ (N + 1)} := by
+        try simp only [Nat.Iio_eq_range] at *
         have this := Ideal.sub_mem _ hz hz0
         rw [Finset.sum_range_succ', add_sub_cancel_right] at this
         refine this
-      have hfac : (∑ j ∈ Finset.range N, (p : S) ^ (j + 1) * z (j + 1) ^ p ^ (N + 1 - 1 - (j + 1))) =
-          (p : S) * ∑ j ∈ Finset.range N, (p : S) ^ j * z (j + 1) ^ p ^ (N - 1 - j) := by
+      have hfac : (∑ j < N, (p : S) ^ (j + 1) * z (j + 1) ^ p ^ (N + 1 - 1 - (j + 1))) =
+          (p : S) * ∑ j < N, (p : S) ^ j * z (j + 1) ^ p ^ (N - 1 - j) := by
         rw [Finset.mul_sum]
         refine Finset.sum_congr rfl fun j hj => ?_
         have : N + 1 - 1 - (j + 1) = N - 1 - j := by
@@ -75,11 +78,11 @@ private lemma helper_main
         rw [this, pow_succ']
         ring
       rw [hfac] at hrest
-      have hrest' : (∑ j ∈ Finset.range N, (p : S) ^ j * z (j + 1) ^ p ^ (N - 1 - j)) ∈ Ideal.span {(p : S) ^ N} := by
+      have hrest' : (∑ j < N, (p : S) ^ j * z (j + 1) ^ p ^ (N - 1 - j)) ∈ Ideal.span {(p : S) ^ N} := by
         obtain ⟨s, hs⟩ := Ideal.mem_span_singleton'.1 hrest
         refine Ideal.mem_span_singleton'.2 ⟨s, ?_⟩
         have : (p : S) * (s * (p : S) ^ N) =
-            (p : S) * ∑ j ∈ Finset.range N, (p : S) ^ j * z (j + 1) ^ p ^ (N - 1 - j) := by
+            (p : S) * ∑ j < N, (p : S) ^ j * z (j + 1) ^ p ^ (N - 1 - j) := by
           rw [← hs]
           ring
         refine (mul_cancel_left_mem_nonZeroDivisors hp).1 this
@@ -111,6 +114,7 @@ private lemma main
       omega
     refine helper_main p hp hred N (fun j => z.coeff j) ?_ j hj
     have h := hz
+    try simp only [Nat.Iio_eq_range] at *
     rw [WittVector.ghostComponent_apply, wittPolynomial_eq_sum_C_mul_X_pow, map_sum, hN] at h
     simp only [map_mul, map_pow, MvPolynomial.aeval_X, map_natCast] at h
     refine h

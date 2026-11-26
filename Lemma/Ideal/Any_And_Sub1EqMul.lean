@@ -32,9 +32,10 @@ private lemma main
     obtain ⟨i, -, rfl⟩ := hζ.eq_pow_of_pow_eq_one hμ'.pow_eq_one
     obtain ⟨j, -, hj⟩ := hμ'.eq_pow_of_pow_eq_one hζ.pow_eq_one
     apply associated_of_dvd_dvd
-    · exact ⟨∑ k ∈ Finset.range i, ζ ^ k, (mul_neg_geom_sum ζ i).symm⟩
+    · exact ⟨∑ k < i, ζ ^ k, by simpa only [Nat.Iio_eq_range] using (mul_neg_geom_sum ζ i).symm⟩
     ·
-      refine ⟨∑ k ∈ Finset.range j, (ζ ^ i) ^ k, ?_⟩
+      refine ⟨∑ k < j, (ζ ^ i) ^ k, ?_⟩
+      simp only [Nat.Iio_eq_range]
       rw [mul_neg_geom_sum, hj]
   have hprod : ∏ μ ∈ primitiveRoots q A, (1 - μ) = (q : A) := by
     have h := congrArg (Polynomial.eval (1 : A)) (Polynomial.cyclotomic_eq_prod_X_sub_primitiveRoots hζ)

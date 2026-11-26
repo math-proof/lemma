@@ -16,6 +16,7 @@ private lemma continuous_intervalIntegral_right_eq
 -- imply
   Continuous (fun x => ∫ y in a..b, f x y) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Onsager.continuous_intervalIntegral_right f hf a b
 
 /--
@@ -28,8 +29,9 @@ private lemma ons_riemann_periodic_two_eq
   (hf : Continuous (Function.uncurry f))
   (hper : ∀ y, Function.Periodic (fun x => f x y) (2 * Real.pi)) :
 -- imply
-  Filter.Tendsto (fun n : ℕ => (2 * Real.pi / n) ^ 2 * ∑ i ∈ Finset.range n, ∑ j ∈ Finset.range n, f (2 * Real.pi * i / n) (2 * Real.pi * j / n)) Filter.atTop (nhds (∫ x in (0)..(2 * Real.pi), ∫ y in (0)..(2 * Real.pi), f x y)) := by
+  Filter.Tendsto (fun n : ℕ => (2 * Real.pi / n) ^ 2 * ∑ i < n, ∑ j < n, f (2 * Real.pi * i / n) (2 * Real.pi * j / n)) Filter.atTop (nhds (∫ x in (0)..(2 * Real.pi), ∫ y in (0)..(2 * Real.pi), f x y)) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Onsager.ons_riemann_periodic_two f hf hper
 
 /--
@@ -45,8 +47,9 @@ private lemma ons_riemann_periodic_two_shift_eq
   (hs : s ∈ Set.Icc (0 : ℝ) 1)
   (ht : t ∈ Set.Icc (0 : ℝ) 1) :
 -- imply
-  Filter.Tendsto (fun n : ℕ => (2 * Real.pi / n) ^ 2 * ∑ i ∈ Finset.range n, ∑ j ∈ Finset.range n, f (2 * Real.pi * (i + s) / n) (2 * Real.pi * (j + t) / n)) Filter.atTop (nhds (∫ x in (0)..(2 * Real.pi), ∫ y in (0)..(2 * Real.pi), f x y)) := by
+  Filter.Tendsto (fun n : ℕ => (2 * Real.pi / n) ^ 2 * ∑ i < n, ∑ j < n, f (2 * Real.pi * (i + s) / n) (2 * Real.pi * (j + t) / n)) Filter.atTop (nhds (∫ x in (0)..(2 * Real.pi), ∫ y in (0)..(2 * Real.pi), f x y)) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   apply StatMech.Onsager.ons_riemann_periodic_two_shift f hf hper s t hs ht
 
 

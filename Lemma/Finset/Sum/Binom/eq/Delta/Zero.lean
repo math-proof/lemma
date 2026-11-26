@@ -6,8 +6,9 @@ open Nat
 private lemma main
   {n : ℕ} :
 -- imply
-  ∑ k ∈ Finset.range (n + 1), (n.choose k : ℤ) * (-1) ^ k = (KroneckerDelta n 0 : ℤ) := by
+  ∑ k < (n + 1), (n.choose k : ℤ) * (-1) ^ k = (KroneckerDelta n 0 : ℤ) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   rw [Delta.eq.Ite]
   push_cast
   rw [← Int.alternating_sum_range_choose]

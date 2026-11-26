@@ -9,7 +9,7 @@ private lemma main
 -- given
   (h : ∀ i, f i ≤ g i) :
 -- imply
-  ∑ i ∈ Finset.range n, f i ≤ ∑ i ∈ Finset.range n, g i := by
+  ∑ i < n, f i ≤ ∑ i < n, g i := by
 -- proof
   exact Finset.sum_le_sum fun i _ => h i
 

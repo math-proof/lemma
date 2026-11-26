@@ -15,8 +15,9 @@ private lemma main
   (hX : Finset.image a (Finset.range n) = X)
   (hcard : X.card = n) :
 -- imply
-  ∑ x ∈ X, f x = ∑ i ∈ Finset.range n, f (a i) := by
+  ∑ x ∈ X, f x = ∑ i < n, f (a i) := by
 -- proof
+  try simp only [Nat.Iio_eq_range] at *
   have hinj : Set.InjOn a (Finset.range n : Set ℕ) := by
     rw [← Finset.card_image_iff, hX, hcard, Finset.card_range]
   rw [← hX, Finset.sum_image hinj]

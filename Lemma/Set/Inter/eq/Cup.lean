@@ -8,7 +8,7 @@ private lemma main
   {x : Set α}
   {n : ℕ} :
 -- imply
-  (⋃ k ∈ Finset.range n, f k) ∩ x = ⋃ k ∈ Finset.range n, f k ∩ x := by
+  (⋃ k < n, f k) ∩ x = ⋃ k < n, f k ∩ x := by
 -- proof
   ext y
   simp only [Set.mem_inter_iff, Set.mem_iUnion]
