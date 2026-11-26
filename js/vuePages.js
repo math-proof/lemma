@@ -1,6 +1,6 @@
 /**
  * Precompiled Vue pages. The browser loads this bundle instead of
- * compiling `.vue` files with vue3-sfc-loader.
+ * compiling `.vue` files in the browser.
  * Each page is its own chunk. `createApp` loads the one the route asks for.
  */
 import * as Vue from "vue";

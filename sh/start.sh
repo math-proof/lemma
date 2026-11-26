@@ -2,6 +2,13 @@
 set -eu
 cd "$(dirname "$0")/.."
 
+# Non-interactive boots (Windows logon) do not read .bashrc, where Node is added to PATH.
+for d in "$HOME"/.local/node-v*/bin; do
+  if [ -x "$d/node" ]; then
+    export PATH="$d:$PATH"
+  fi
+done
+
 # Optional MySQL (see mjs/lean/fetchLemmaMysql.mjs, mjs/app.mjs):
 
 # Multi-processing: default 4 workers; set LEAN_NUM_THREADS=max, 4, 1, etc.
@@ -40,12 +47,8 @@ else
 fi
 run_pm2 save
 
-# pm2 startup targets systemd/launchd etc. On Git Bash / MSYS it fails ("Init system not found").
-case "$(uname -s 2>/dev/null)" in
-  MINGW*|MSYS*|CYGWIN*|*_NT-*)
-    echo "Skipping pm2 startup (Windows-like host). Use Task Scheduler or run this script after login."
-    ;;
-  *)
-    run_pm2 startup
-    ;;
-esac
+# A systemd unit only runs when systemd is pid 1. This WSL distro boots with /init,
+# so the Windows logon task in sh/boot.sh is what starts the server after a reboot.
+if [ "$(ps -p 1 -o comm= 2>/dev/null || true)" = systemd ]; then
+  run_pm2 startup || true
+fi

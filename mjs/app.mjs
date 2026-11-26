@@ -242,7 +242,7 @@ app.use((req, res, next) => {
   return fileSaverFiles(req, res, next);
 });
 
-// qs, vue, vue3-sfc-loader, lz-string, prismjs, highlight.js, marked: npm packages only.
+// qs, vue, lz-string, prismjs, highlight.js, marked: npm packages only.
 // Relative page URLs are requested under /lean/node_modules/… as well as /node_modules/….
 function mountNpmPkg(name, unpkgMarker) {
   const pkgDir = path.join(REPO_ROOT, 'node_modules', name);
@@ -265,7 +265,6 @@ function mountNpmPkg(name, unpkgMarker) {
 }
 mountNpmPkg('qs', '/unpkg.com/qs@6.10.2/');
 mountNpmPkg('vue', '/unpkg.com/vue@3.5.13/');
-mountNpmPkg('vue3-sfc-loader', '/unpkg.com/vue3-sfc-loader@0.9.5/');
 mountNpmPkg('lz-string', '/unpkg.com/lz-string@1.5.0/');
 mountNpmPkg('prismjs', '/unpkg.com/prismjs@1.30.0/');
 mountNpmPkg('highlight.js', '/unpkg.com/highlight.js/8.8.0/');

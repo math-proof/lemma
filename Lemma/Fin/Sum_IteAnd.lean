@@ -5,10 +5,11 @@ import Mathlib
 /-- Commuting the conjunction inside `sum`-over-`Fin` with a conditional term. -/
 @[path]
 private lemma main
+  {α : Type*} [AddCommMonoid α]
   {d : ℕ}
   {p q : Fin d → Prop} [DecidablePred p] [DecidablePred q]
 -- given
-  (f : Fin d → ℝ) :
+  (f : Fin d → α) :
 -- imply
   (∑ t : Fin d, if p t ∧ q t then f t else 0) =
     ∑ t : Fin d, if q t ∧ p t then f t else 0 := by
