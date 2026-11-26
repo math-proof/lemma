@@ -1,8 +1,9 @@
 /**
  * AST-based lint rules on the lean.js parse tree (`js/parser/lean.js`).
  *
- * The tree has no source positions, so these warnings quote the offending statement (`String(node)`, the tree's own
- * reprint of the code) in `stmt`; `line` is filled in when the quoted first line can be found in the source.
+ * The tree stamps a 1-based `line` on every node (`js/parser/lean.js`) but has no columns, so these warnings
+ * quote the offending statement (`String(node)`, the tree's own reprint) in `stmt` and report `node.line`.
+ * A text search (`locate`) remains only as a fallback for synthetic quotes / `paren-redundant-arith`.
  * A parse failure disables the AST rules silently and the text-scan fallbacks run instead (see `AST_RULES`).
  */
 import '../../../js/py.js';
@@ -1430,15 +1431,12 @@ function declKeywordDir(ctx, decl) {
     const head = (lines.find((l) => /(^|\s)theorem\b/.test(l)) ?? lines[0]).trim();
     const name = declName(decl) ?? /(?:^|\s)theorem\s+([^\s:({[⦃]+)/.exec(head)?.[1];
     const stmt = head.length > 120 ? `${head.slice(0, 120)}…` : head;
-    // located on its own (not with the shared forward cursor): a mis-parsed `@[…]` can nest one declaration in the
-    // next, so tree order need not be source order; repeated heads take the next unused matching line
+    // `compile` stamps the declaration with its 1-based source line. `Lean_def.firstToken`
+    // skips a leading `@[…]` attribute, so this is the `theorem` keyword/name line.
     ctx.declHeadLines ??= new Set();
-    const first = locate(ctx.P.raw, stmt, 0);
-    let line = first;
-    while (line != null && ctx.declHeadLines.has(line)) line = locate(ctx.P.raw, stmt, line);
-    // every matching source line already reported: the parser produced this declaration twice (mis-nesting)
-    if (first != null && line == null) return;
-    if (line != null) ctx.declHeadLines.add(line);
+    const line = decl.line ?? locate(ctx.P.raw, stmt, 0);
+    if (line == null || ctx.declHeadLines.has(line)) return;
+    ctx.declHeadLines.add(line);
     ctx.warn('decl-keyword-dir', line, null, `\`theorem${name ? ` ${name}` : ''}\` in \`Lemma/\`: declare it with \`lemma\``, { stmt });
 }
 
@@ -1523,6 +1521,13 @@ export function astRules(ctx, tree) {
     for (const f of found) {
         if (f.sequential) {
             const text = f.quoteAs ?? quote(f.node, 120, 1);
+            // `compile` stamps the node with its source line; the text search below is only
+            // needed for a synthetic quote with no source node.
+            if (f.node?.line != null) {
+                ctx.astCursor = f.node.line - 1;
+                ctx.warn(f.rule, f.node.line, null, f.msg, { stmt: text });
+                continue;
+            }
             const key = collapse(text.split('\n')[0]);
             // resume at the character offset just past the previous hit, so a repeated reprint on the
             // same line still finds its own occurrence (`Fin.ropeEven t = Fin.ropeEven t`)

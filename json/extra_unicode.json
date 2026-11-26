@@ -128,11 +128,5 @@
     "unicode{xff39}": "Ｙ",
     "unicode{xff5a}": "ｚ",
     "unicode{xff3a}": "Ｚ",
-    "_beta": "ᵦ",
-    "_gamma": "ᵧ",
-    "^delta": "ᵟ",
-    "varepsilon": "ϵ",
-    "_rho": "ᵨ",
-    "_phi": "ᵩ",
-    "_chi": "ᵪ"
+    "varepsilon": "ϵ"
 }

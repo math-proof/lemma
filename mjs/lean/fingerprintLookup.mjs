@@ -5,8 +5,8 @@
 import { getMysqlPool } from './fetchLemmaMysql.mjs';
 import { parseFingerprint } from '../leanInvertedIndex.mjs';
 import { infixFingerprint } from './infixFingerprint.mjs';
+import { isValidModuleName } from './modulePath.mjs';
 
-const MODULE_RE = /^[A-Za-z_][A-Za-z0-9_.]*$/;
 const SECTIONS = new Set(['given', 'imply', 'proof']);
 
 export async function handleFingerprint(req, res) {
@@ -14,7 +14,7 @@ export async function handleFingerprint(req, res) {
   const section = String(req.body?.section ?? '');
   const lemmaId = Number(req.body?.lemma_id);
   const latexId = Number(req.body?.latex_id);
-  if (!MODULE_RE.test(module) || !SECTIONS.has(section) || !Number.isInteger(lemmaId) || lemmaId < 0 || !Number.isInteger(latexId) || latexId < 0) {
+  if (!isValidModuleName(module) || !SECTIONS.has(section) || !Number.isInteger(lemmaId) || lemmaId < 0 || !Number.isInteger(latexId) || latexId < 0) {
     res.status(400).json({ error: 'missing fingerprint key' });
     return;
   }

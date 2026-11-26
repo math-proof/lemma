@@ -3,6 +3,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { splitTop } from './scan.mjs';
 
 /**
  * Top-level `import` / `open` / `namespace` commands of a Lean file.
@@ -589,6 +590,83 @@ export function openHiding(ctx) {
 }
 
 /**
+ * `path-private`: in a file that does not begin with `module` (a plain `import …` file), every
+ * `lemma` / `theorem` tagged `@[path]` must be `private`. A file that begins with `module` publishes
+ * through `public` / `private` visibility instead, so it is skipped.
+ *
+ * The attribute and the declaration keyword are usually on separate lines (`@[path]` then
+ * `private lemma main`), the attribute may share its bracket list with others (`@[path, comm]`) or
+ * span several lines, and the declaration may be preceded by `private` or `public`. So this reads
+ * the whole `@[… ]` block(s) and then the declaration instead of matching a single line.
+ */
+export function pathPrivate(ctx) {
+    if (ctx.file && /\.echo\.lean$/.test(ctx.file)) return;
+    const { raw, code } = ctx.P;
+    if (/^module\b/.test(raw[0] ?? '')) return;
+    for (let i = 0; i < code.length; i++) {
+        if (!/^@\[/.test(code[i])) continue;
+        // collect the run of `@[… ]` blocks (skipping blank / blanked-comment lines) that precede the declaration
+        const attrs = [];
+        let line = i;
+        let col = 0;
+        let ok = true;
+        for (;;) {
+            while (col < code[line].length && /\s/.test(code[line][col])) col++;
+            if (col >= code[line].length) {
+                let next = line + 1;
+                while (next < code.length && /^\s*$/.test(code[next])) next++;
+                if (next >= code.length) { ok = false; break; }
+                line = next;
+                col = 0;
+                continue;
+            }
+            if (!code[line].startsWith('@[', col)) break;
+            const block = attrBlock(code, line, col);
+            if (!block) { ok = false; break; }
+            attrs.push(block.text);
+            line = block.endLine;
+            col = block.endCol + 1;
+        }
+        if (!ok) continue;
+        const decl = /^((?:(?:private|public|protected|noncomputable|unsafe|partial|nonrec)\s+)*)(lemma|theorem)\b\s*([^\s:({[⦃]*)/.exec(code[line].slice(col));
+        if (!decl) continue;
+        if (!attrs.some((t) => splitTop(t, ',').some((a) => a.trim() === 'path'))) continue;
+        if (/\bprivate\b/.test(decl[1])) continue;
+        const name = decl[3];
+        ctx.warn(
+            'path-private',
+            line + 1,
+            col + 1,
+            `\`@[path]\` ${decl[2]}${name ? ` \`${name}\`` : ''} in a file that does not begin with \`module\` must be \`private\``,
+        );
+    }
+}
+
+/** The `@[… ]` list starting at (line, col) of `code`; `text` is the inner content (no `@[` / `]`). */
+function attrBlock(code, line, col) {
+    let depth = 0;
+    let text = '';
+    for (let j = line; j < code.length; j++) {
+        const l = code[j];
+        for (let k = j === line ? col : 0; k < l.length; k++) {
+            const ch = l[k];
+            if (ch === '[') {
+                depth++;
+                text += ch;
+            } else if (ch === ']') {
+                depth--;
+                if (depth === 0) return { text: text.slice(2), endLine: j, endCol: k };
+                text += ch;
+            } else {
+                text += ch;
+            }
+        }
+        text += '\n';
+    }
+    return null;
+}
+
+/**
  * `lemma-namespace`: on Lemma/ files, ban top-level `namespace` / `section` / `variable(s)` / `universe`.
  * Comments/strings are blanked by prepare, so `-- namespace …` is clean. Non-Lemma files skip.
  */
@@ -611,5 +689,66 @@ export function lemmaNamespace(ctx) {
             1,
             `\`${shown}\`: ${kind} within Lemma is not allowed`,
         );
+    }
+}
+
+/**
+ * `lemma-main-name`: every Lemma file with top-level `lemma`/`theorem` declarations must have
+ * at least one declaration named `main`. Helper/support lemmas in the same file keep their
+ * descriptive names. Files that already declare a `main` are not warned. Module-prefixed
+ * (`module X …`) files are skipped — they don't use the one-file-one-lemma pattern.
+ */
+export function lemmaMainName(ctx) {
+    if (!ctx.isLemmaFile) return;
+    if (ctx.file && /\.echo\.lean$/.test(ctx.file)) return;
+    const { raw } = ctx.P;
+    if (/^module\b/.test(raw[0] ?? '')) return;
+    const topLemmas = ctx.decls.filter((d) => d.kind === 'lemma' || d.kind === 'theorem');
+    if (topLemmas.length === 0) return;
+    if (topLemmas.some((d) => d.name === 'main')) return;
+    // Suggest renaming the first lemma/theorem to `main` (the canonical "primary" one).
+    const first = topLemmas[0];
+    ctx.warn(
+        'lemma-main-name',
+        first.line + 1,
+        1,
+        `Lemma files must have a primary declaration named \`main\` (currently the first is \`${first.name}\`)`,
+    );
+}
+
+/**
+ * `path-eq-self`: when the file's canonical module contains an `eq` segment whose
+ * surrounding tokens are identical — `X.eq.X` — the `.eq.X` suffix carries no
+ * information and should be collapsed to just `X`. Runs on the already-derived
+ * module path (after stripping Lemma/Theorem folder prefixes).
+ */
+export function pathEqSelf(ctx) {
+    if (!ctx.isLemmaFile) return;
+    if (ctx.file && /\.echo\.lean$/.test(ctx.file)) return;
+    if (/^module\b/.test((ctx.P.raw[0] ?? ''))) return; // module-prefixed files skip
+    const { file } = ctx;
+    // File paths under Lemma/ are repo-relative from the `Lemma/` folder.
+    // `Lemma/Real/Sum_IteAnd/eq/Sum_IteAnd.lean` → `Real.Sum_IteAnd.eq.Sum_IteAnd`.
+    const abs = typeof file === 'string' && file.endsWith('.lean') ? file : null;
+    if (!abs) return;
+    const m = abs.replace(/\\/g, '/').match(/^(?:Lemma|Theorem)\/(.+)\.lean$/);
+    if (!m) return;
+    const parts = m[1].split('/');
+    // Build module path from parts; the last part is the lemma name.
+    const modulePath = parts.join('.');
+    // Detect `.eq.X` where preceding segment is also `X`.
+    for (let i = 0; i + 2 < parts.length; i++) {
+        if (parts[i + 1] === 'eq' && parts[i + 2] === parts[i]) {
+            // Find the declaration line to attach the warning to — the first lemma/theorem.
+            const first = ctx.decls.find((d) => d.kind === 'lemma' || d.kind === 'theorem');
+            const target = first ? first.line + 1 : 1;
+            ctx.warn(
+                'path-eq-self',
+                target,
+                1,
+                `Collapse redundant \`.eq.${parts[i]}\`: path \`${modulePath}\` should be \`${parts.slice(0, i + 1).join('.')}\``,
+            );
+            return; // one warning per file is enough
+        }
     }
 }

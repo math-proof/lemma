@@ -320,11 +320,11 @@ function highlightNormalized(stored, sub) {
  * `\htmlClass{lean-hit}{…}` when the query matches a proper child. Returns
  * `{ latex: null }` when the module has no readable source.
  */
-function latexForModule(module, queryJson) {
+function latexForModule(module, queryJson, lemmaId) {
   const abs = moduleToLeanPath(module);
   if (abs == null || !fileExists(abs)) return { latex: null };
   try {
-    const node = conclusionNodeOf(abs);
+    const node = conclusionNodeOf(abs, undefined, { lemmaId });
     const whole = nodeLatex(node);
     if (!whole) return { latex: null };
     const matched = findMatchedLatex(node, queryJson, whole);
@@ -345,11 +345,11 @@ function latexForModule(module, queryJson) {
  * LaTeX of the section formula that matched (given / proof), instead of the
  * conclusion, with the matched sub-structure highlighted when possible.
  */
-function sectionLatex(module, { section, latexId }, queryJson) {
+function sectionLatex(module, { section, latexId, lemmaId }, queryJson) {
   const abs = moduleToLeanPath(module);
   if (abs == null || !fileExists(abs)) return { latex: null };
   try {
-    const items = sectionFormulaNodes(abs, section, latexId);
+    const items = sectionFormulaNodes(abs, section, latexId, lemmaId);
     for (const { node } of items) {
       const whole = nodeLatex(node);
       if (!whole) continue;
@@ -376,7 +376,7 @@ function sectionLatex(module, { section, latexId }, queryJson) {
  * renders it.
  * @param {string[]} steps stored, colour/tag-stripped `proof.by[i].latex`
  */
-function proofLatex(module, { latexId }, queryJson, steps) {
+function proofLatex(module, { latexId, lemmaId }, queryJson, steps) {
   const storedStep = () => {
     const stored = steps[latexId];
     return stored ? { latex: stored, highlighted: false, latexId } : { latex: null, highlighted: false };
@@ -384,7 +384,7 @@ function proofLatex(module, { latexId }, queryJson, steps) {
   const abs = moduleToLeanPath(module);
   if (abs == null || !fileExists(abs)) return storedStep();
   try {
-    const items = sectionFormulaNodes(abs, 'proof', latexId);
+    const items = sectionFormulaNodes(abs, 'proof', latexId, lemmaId);
     let matched = null;
     for (const { node } of items) {
       matched = findMatchedNode(node, queryJson);
@@ -731,7 +731,7 @@ export async function buildSearchPayload(rawDict, projectUser) {
           }
           return { ...base, ...sectionLatex(hit.module, hit, hitJson) };
         }
-        return { ...base, ...latexForModule(hit.module, hitJson) };
+        return { ...base, ...latexForModule(hit.module, hitJson, hit.lemmaId) };
       };
       exact = await Promise.all(result.exact.map((hit) => enrich({ ...hit, match: 'exact' })));
       similar = await Promise.all(result.similar.map((hit) => enrich({ ...hit, match: 'similar' })));

@@ -1,8 +1,8 @@
 /**
  * Shared scanning helpers for the lemma linter (`./index.mjs`).
  *
- * The lean.js parse tree (`js/parser/lean.js`) carries no source positions (no line / column on any node),
- * so the rules work on the source text with comments and string literals blanked out (line / column preserved)
+ * The lean.js parse tree (`js/parser/lean.js`) stamps a 1-based `line` on every node but carries no columns,
+ * so the text rules work on the source text with comments and string literals blanked out (line / column preserved)
  * plus a bracket-aware scanner; that is enough for the layout rules and the token-level tactic rules.
  */
 

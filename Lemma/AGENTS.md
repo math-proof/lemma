@@ -33,10 +33,10 @@ Applies to every `lemma` / `theorem` source in this repository. Agents under `Le
       - convert raw lemma module/path names to markdown links by heuristic, write lemma module path in the form of a link: `[lemma latex formula or natural language name](?module=Module.Path)`.
       - use `\(...\)` for inline math and `\[...\]` for display math. The renderer does not support `$...$` or `$$...$$`. For example, write `\((X_r, Y_r)\)` for an inline ordered pair.
       - don't paste lean code in docstring.
-  - before the `given` section, omit auto-bound implicits
-  - explicit binders `(…)` (hypotheses and given-section expressions) sit under `-- given`; type binders `{…}` / `⦃…⦄` and instance binders `[…]` stay above it
-  - never `(h : … := by infer_instance)` or any `(h : T := by tactic)`
-  - within the `given` section: propositions come first, expressions come next, unless otherwise specified
+  - implicit & explicit assumptions, if assumptions are modified, please update the lemma's callers:
+    - before the `given` section, omit auto-bound implicits
+    - explicit binders `(…)` (hypotheses and given-section expressions) sit under `-- given`; type binders `{…}` / `⦃…⦄` and instance binders `[…]` stay above it
+    - within the `given` section: propositions come first, expressions come next, unless otherwise specified
   - within the `proof` section, tactics convention:
     - prefer `apply` instead of `exact`, perhaps by creating some holes
     - inline `have` without introducing `show` if it is referenced only once

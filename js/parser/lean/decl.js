@@ -82,6 +82,20 @@ export class Lean_def extends LeanArgs {
         if (v) v.parent = this;
     }
 
+    /**
+     * The declaration starts at its keyword/name, not at a leading `@[…]` attribute
+     * (the attribute is `args[0]`). This is the line lint reports for a declaration.
+     */
+    firstToken() {
+        const attr = this.attribute;
+        for (const arg of this.args) {
+            if (!arg || arg === attr) continue;
+            const token = arg.firstToken?.();
+            if (token) return token;
+        }
+        return null;
+    }
+
     strArgs() {
         const [attr, assignment] = this.args;
         if (attr == null) return [assignment];

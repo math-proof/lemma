@@ -81,8 +81,14 @@ const OP_HEAD = {
   abs: 'Abs',
   sqrt: 'Sqrt',
   factorial: 'Factorial',
-  transpose: 'Transpose',
-  adjoint: 'Adjoint',
+  transpose: 'T',
+  adjoint: 'Adj',
+};
+
+/** Property name last segment -> JS head (for `.transpose`, `.adjoint`). */
+const PROPERTY_HEAD = {
+  transpose: 'T',
+  adjoint: 'Adj',
 };
 
 const lastSegment = (name) => String(name ?? '').split('.').pop() || '';
@@ -261,14 +267,28 @@ function special(struct, ctx) {
   const op = String(struct.op ?? '');
   const args = struct.args ?? [];
   // Plain space-separated application: multi-letter heads keep the
-  // capitalised name (`range x` → `Range(x)`); single letters are variables
+  // capitalised name (`range x` → `Range x`); single letters are variables
   // and stay anonymous (`r x` → `_`), like `LeanArgsSpaceSeparated.toJSON`.
+  // When the head is itself a compound expression (e.g.
+  // `(Matrix.rotaryOn u v θ).transpose i j`), convert it fully and return a
+  // plain array `[head, ...rest]` so it renders as juxtaposition without
+  // inventing a fake head name like "Anonymous".
   if (op === '[anonymous]') {
     const head = args[0];
     if (!head) return '';
     const name = String(head.name ?? head.op ?? '');
     if (isVariableHead(name)) return '_';
-    return node(cap(lastSegment(name) || 'Anonymous'), args.slice(1).map((arg) => convert(arg, ctx)));
+    const restConverted = args.slice(1).map((arg) => convert(arg, ctx)).filter((x) => x !== '');
+    const hasOwnArgs = Array.isArray(head.args) && head.args.length > 0;
+    const isCompoundKind = ['property', 'method', 'special', 'forall', 'operator', 'function'].includes(head.kind);
+    // Simple head: node(name, rest) — matches source parser.
+    if (!hasOwnArgs && !isCompoundKind) {
+      return name ? node(cap(lastSegment(name)), restConverted) : '';
+    }
+    // Compound head: fully convert it and juxtapose with rest as a plain array.
+    const headConverted = convert(head, ctx);
+    if (headConverted === '' || restConverted.length === 0) return headConverted;
+    return [headConverted, ...restConverted];
   }
   if (op === 'Prod.mk') return args.map((arg) => convert(arg, ctx));
   if (op === 'Slice.mk') {
@@ -442,8 +462,11 @@ export function convert(struct, ctx = { leaves: new Map(), binders: [] }) {
       return special(struct, ctx);
     case 'method':
       return method(struct, ctx);
-    case 'property':
-      return node(cap(lastSegment(struct.name)), (struct.args ?? []).map((arg) => convert(arg, ctx)));
+    case 'property': {
+      const seg = lastSegment(struct.name);
+      const head = PROPERTY_HEAD[seg] ?? cap(seg);
+      return node(head, (struct.args ?? []).map((arg) => convert(arg, ctx)));
+    }
     case 'operatorname':
     case 'function':
     case 'typeclass':

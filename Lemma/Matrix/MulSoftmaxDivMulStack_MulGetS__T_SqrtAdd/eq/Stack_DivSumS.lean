@@ -19,28 +19,14 @@ import Lemma.Fin.InjectiveRopeOdd
 import Lemma.Matrix.InvRotary'.eq.TRotary'
 import Lemma.Matrix.InvRotaryOn.eq.TRotaryOn.of.All_EqSum__Add.All_Any_In_Brace.All_Ne.Injective.Injective
 import Lemma.Matrix.MulSoftmaxDivMulStack_MulGetS__T_SqrtAdd.eq.StackAnd__DivSumSFin.of.Eq_1.All_Eq_Inv.All_EqDotS_Mul
+import Lemma.Matrix.Rotary'Neg.eq.TRotary'
 import Lemma.Matrix.MulT_RotaryOn.eq.RotaryOn__Sub.of.All_EqSum__Add.All_OrAnyS_Eq.All_Ne.Injective.Injective
 import Lemma.Fin.Sum.eq.AddSumS
+import Lemma.Real.Sum_IteAnd.eq.Sum_IteAnd
 open Fin Matrix Real
 open scoped Matrix
 set_option maxHeartbeats 800000
 
-
-private lemma sum_if_and_comm
-  {d : ℕ}
-  {p q : Fin d → Prop} [DecidablePred p] [DecidablePred q]
--- given
-  (f : Fin d → ℝ) :
--- imply
-  (∑ t : Fin d, if p t ∧ q t then f t else 0) =
-    ∑ t : Fin d, if q t ∧ p t then f t else 0 := by
--- proof
-  refine Finset.sum_congr rfl fun t _ => ?_
-  if h : p t ∧ q t then
-    rw [ite_eq_left h, ite_eq_left h.symm]
-  else
-    have h' : ¬ (q t ∧ p t) := fun hc => h hc.symm
-    rw [ite_eq_right h, ite_eq_right h']
 
 private lemma sum_half
   {d : ℕ}
@@ -85,10 +71,10 @@ private lemma rotaryOn_neg
       (∑ t : Fin d, if j = v t ∧ i = v t then Real.cos (θ t) else 0) := by
     simp only [Matrix.transpose_apply, Matrix.rotaryOn, Matrix.of_apply, Finset.sum_add_distrib]
   rw [hL, hR]
-  rw [sum_if_and_comm (p := fun t => i = u t) (q := fun t => j = u t) (f := fun t => Real.cos (θ t))]
-  rw [sum_if_and_comm (p := fun t => i = u t) (q := fun t => j = v t) (f := fun t => Real.sin (θ t))]
-  rw [sum_if_and_comm (p := fun t => i = v t) (q := fun t => j = u t) (f := fun t => -Real.sin (θ t))]
-  rw [sum_if_and_comm (p := fun t => i = v t) (q := fun t => j = v t) (f := fun t => Real.cos (θ t))]
+  rw [Sum_IteAnd.eq.Sum_IteAnd (p := fun t => i = u t) (q := fun t => j = u t) (f := fun t => Real.cos (θ t))]
+  rw [Sum_IteAnd.eq.Sum_IteAnd (p := fun t => i = u t) (q := fun t => j = v t) (f := fun t => Real.sin (θ t))]
+  rw [Sum_IteAnd.eq.Sum_IteAnd (p := fun t => i = v t) (q := fun t => j = u t) (f := fun t => -Real.sin (θ t))]
+  rw [Sum_IteAnd.eq.Sum_IteAnd (p := fun t => i = v t) (q := fun t => j = v t) (f := fun t => Real.cos (θ t))]
   ring
 
 private lemma dot_of
@@ -164,15 +150,6 @@ private lemma rotary'_dot
     dot_of (InjectiveRopeEven d) (InjectiveRopeOdd d) (RopeEven.ne.RopeOdd d)
       (Any_In_BraceRopeEven__RopeOdd d) Sum.eq.AddSumS α β q k
 
-private lemma rotary'_neg
-  {d : ℕ}
--- given
-  (φ : Fin d → ℝ) :
--- imply
-  Matrix.rotary' (-φ) = (Matrix.rotary' φ)ᵀ := by
--- proof
-  simpa [Matrix.rotary'] using rotaryOn_neg (u := stepEven) (v := stepOdd) φ
-
 /--
 Rotary attention collapses to relative angles when each frequency row is linear in the token index.
 
@@ -220,7 +197,7 @@ private lemma interleave
           (R[i] *ᵥ Q[i] ⬝ᵥ R[k] *ᵥ K[k] / √(d + d : ℝ)).exp := by
 -- proof
   apply MulSoftmaxDivMulStack_MulGetS__T_SqrtAdd.eq.StackAnd__DivSumSFin.of.Eq_1.All_Eq_Inv.All_EqDotS_Mul
-    rotary'_dot (fun φ => (rotary'_neg φ).trans (InvRotary'.eq.TRotary' φ).symm) EqRotary'01 Q K V
+    rotary'_dot (fun φ => (Rotary'Neg.eq.TRotary' φ).trans (InvRotary'.eq.TRotary' φ).symm) EqRotary'01 Q K V
 
 
 -- created on 2023-06-09

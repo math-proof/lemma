@@ -15,8 +15,8 @@
  * imply conjunction at `latex_id` 0 (preserving exact conclusion search) plus
  * every given/proof formula. `axiom.lemma.meta` no longer holds a fingerprint.
  *
- * By default `Lemma/Random`, `Lemma/Complex`, `Lemma/Vector`, and
- * `Lemma/Tensor` are indexed:
+ * By default `Lemma/Random`, `Lemma/Complex`, `Lemma/Vector`,
+ * `Lemma/Tensor`, and `Lemma/Matrix` are indexed:
  *
  *   node mjs/leanInvertedIndex.mjs
  *   node mjs/leanInvertedIndex.mjs --section Tensor
@@ -43,7 +43,7 @@ import { matchesSubtree } from "./leanSubtreeMatch.mjs";
 import { binderQueryVariants, powerQueryVariants } from "./lean/queryExpansion.mjs";
 
 const LEMMA_ROOT = path.join(REPO_ROOT, "Lemma");
-export const INDEXED_SECTIONS = ["Random", "Complex", "Vector", "Tensor"];
+export const INDEXED_SECTIONS = ["Random", "Complex", "Vector", "Tensor", "Matrix"];
 const INSERT_CHUNK = 500;
 const ID_CHUNK = 500;
 
@@ -234,7 +234,7 @@ export function collectConclusions({ files, filter = null } = {}) {
     if (filter && !rel.includes(filter)) continue;
     let extracted;
     try {
-      extracted = lemmaSearchDocuments(abs);
+      extracted = lemmaSearchDocuments(abs, undefined, { allLemmas: true, omitProof: true });
     } catch (error) {
       skipped++;
       failures.push({ path: rel, message: String(error?.message ?? error).split("\n")[0] });
@@ -260,7 +260,7 @@ async function collectStoredConclusions(pool, { id, module }) {
       given: Array.isArray(lemma.given) ? lemma.given.map((given) => given?.lean ?? given) : lemma.given,
     })),
   });
-  const extracted = lemmaSearchDocuments(`${module}.lean`, undefined, { source });
+  const extracted = lemmaSearchDocuments(`${module}.lean`, undefined, { source, allLemmas: true, omitProof: true });
   return searchEntries(module, extracted);
 }
 
@@ -307,8 +307,11 @@ function fingerprintRowsFor(id, json, documents = null, lemmaId = null) {
   const rows = new Map();
   rows.set(`${declarationId}|imply|0`, [id, declarationId, "imply", 0, JSON.stringify(json)]);
   for (const document of documents ?? []) {
-    if (document.section === "imply" || document.json == null) continue;
+    if (document.json == null) continue;
     const rowLemmaId = document.lemmaId ?? declarationId;
+    // The selected declaration's whole conclusion is already stored as `json`;
+    // imply documents of every other declaration are written from their parts.
+    if (document.section === "imply" && rowLemmaId === declarationId) continue;
     const section = document.section;
     const latexId = document.latexId ?? 0;
     rows.set(
@@ -320,9 +323,18 @@ function fingerprintRowsFor(id, json, documents = null, lemmaId = null) {
 }
 
 /** Replace one lemma's fingerprint trees; the caller owns the transaction. */
-async function replaceFingerprints(conn, id, json, documents = null, lemmaId = null) {
-  await conn.query("DELETE FROM fingerprint WHERE id = ?", [id]);
-  const rows = fingerprintRowsFor(id, json, documents, lemmaId);
+async function replaceFingerprints(conn, id, json, documents = null, lemmaId = null, preserveProof = false) {
+  // `proof` trees are the Echo goals (`expr.toJson` paired with `expr.toLatex`
+  // in the page). Source parsing only sees the tactic text, so a source rebuild
+  // must leave the Echo-written proof rows alone.
+  await conn.query(
+    preserveProof
+      ? "DELETE FROM fingerprint WHERE id = ? AND section <> 'proof'"
+      : "DELETE FROM fingerprint WHERE id = ?",
+    [id],
+  );
+  const rows = fingerprintRowsFor(id, json, documents, lemmaId)
+    .filter((row) => !preserveProof || row[2] !== "proof");
   for (let i = 0; i < rows.length; i += INSERT_CHUNK) {
     await conn.query(
       "INSERT INTO fingerprint (id, lemma_id, section, latex_id, fingerprint) VALUES ?",
@@ -364,7 +376,7 @@ export async function uploadFingerprints(pool, entries) {
   }
 }
 
-/** True when `module` belongs to an inverted-index section (Random, Complex, Vector, or Tensor). */
+/** True when `module` belongs to an inverted-index section (Random, Complex, Vector, Tensor, or Matrix). */
 export function isIndexedSection(module) {
   const head = String(module ?? "").split(".")[0];
   return INDEXED_SECTIONS.includes(head);
@@ -394,17 +406,28 @@ function invertedRowsFor(id, heads, edges = new Map(), location = {}) {
  * The caller must hold a transaction and the lemma row lock if readers must
  * never observe the empty intermediate state.
  */
-export async function replaceInvertedPostings(pool, id, heads, edges = new Map(), location = {}) {
-  await pool.query("DELETE FROM inverted WHERE id = ?", [id]);
+export async function replaceInvertedPostings(pool, id, heads, edges = new Map(), location = {}, preserveProof = false) {
+  await pool.query(
+    preserveProof
+      ? "DELETE FROM inverted WHERE id = ? AND section <> 'proof'"
+      : "DELETE FROM inverted WHERE id = ?",
+    [id],
+  );
   const rows = invertedRowsFor(id, heads, edges, location);
   if (rows.length === 0) return { postings: 0 };
   await pool.query("INSERT INTO inverted (name, id, lemma_id, section, latex_id, count) VALUES ?", [rows]);
   return { postings: rows.length };
 }
 
-async function replaceInvertedDocuments(conn, id, documents) {
-  await conn.query("DELETE FROM inverted WHERE id = ?", [id]);
-  const rows = documents.flatMap((document) => invertedRowsFor(
+async function replaceInvertedDocuments(conn, id, documents, preserveProof = false) {
+  await conn.query(
+    preserveProof
+      ? "DELETE FROM inverted WHERE id = ? AND section <> 'proof'"
+      : "DELETE FROM inverted WHERE id = ?",
+    [id],
+  );
+  const source = preserveProof ? documents.filter((document) => document.section !== "proof") : documents;
+  const rows = source.flatMap((document) => invertedRowsFor(
     id,
     countHeads(document.json),
     countEdges(document.json),
@@ -442,21 +465,21 @@ async function inTransaction(pool, fn) {
  * `startedAt` (ms, job start) is stored as `meta.revision`: an older job that
  * acquires the lock last must see a higher stored revision and discard itself.
  */
-export async function writeLemmaIndex(conn, { id, module, json, documents = null, startedAt = null, location = {} }) {
+export async function writeLemmaIndex(conn, { id, module, json, documents = null, startedAt = null, location = {}, preserveProof = false }) {
   if (startedAt != null) {
     await conn.query(
       "UPDATE lemma SET meta = JSON_SET(COALESCE(meta, JSON_OBJECT()), '$.revision', ?) WHERE id = ?",
       [startedAt, id],
     );
   }
-  const fingerprints = await replaceFingerprints(conn, id, json, documents, location.lemmaId ?? null);
+  const fingerprints = await replaceFingerprints(conn, id, json, documents, location.lemmaId ?? null, preserveProof);
   const indexed = isIndexedSection(module) && json != null;
   if (documents != null) {
-    return { ...(await replaceInvertedDocuments(conn, id, indexed ? documents : [])), fingerprints };
+    return { ...(await replaceInvertedDocuments(conn, id, indexed ? documents : [], preserveProof)), fingerprints };
   }
   const heads = indexed ? countHeads(json) : new Map();
   const edges = indexed ? countEdges(json) : new Map();
-  return { ...(await replaceInvertedPostings(conn, id, heads, edges, location)), fingerprints };
+  return { ...(await replaceInvertedPostings(conn, id, heads, edges, location, preserveProof)), fingerprints };
 }
 
 /**
@@ -464,7 +487,7 @@ export async function writeLemmaIndex(conn, { id, module, json, documents = null
  * newer build (higher stored revision) already won, then replace fingerprint
  * and postings atomically. Retrying the same accepted revision is idempotent.
  */
-export async function refreshInvertedForLemma(pool, { id, module, json, documents = null, startedAt = null, location = {} }) {
+export async function refreshInvertedForLemma(pool, { id, module, json, documents = null, startedAt = null, location = {}, preserveProof = false }) {
   return inTransaction(pool, async (conn) => {
     const [rows] = await conn.query(
       "SELECT JSON_EXTRACT(meta, '$.revision') AS revision FROM lemma WHERE id = ? FOR UPDATE",
@@ -474,7 +497,7 @@ export async function refreshInvertedForLemma(pool, { id, module, json, document
     if (startedAt != null && Number(rows[0].revision ?? 0) > Number(startedAt)) {
       return { postings: 0, stale: true };
     }
-    return writeLemmaIndex(conn, { id, module, json, documents, startedAt, location });
+    return writeLemmaIndex(conn, { id, module, json, documents, startedAt, location, preserveProof });
   });
 }
 
@@ -529,7 +552,7 @@ export async function deleteLemmaRowsAndInverted(pool, { modules, prefix } = {})
 export async function refreshInvertedForModule(pool, module) {
   const abs = moduleToRepoLeanPath(module);
   if (!abs) throw new Error(`No Lean source for module=${module}`);
-  const { fingerprint, documents } = lemmaSearchDocuments(abs);
+  const { fingerprint, documents } = lemmaSearchDocuments(abs, undefined, { allLemmas: true, omitProof: true });
   return inTransaction(pool, async (conn) => {
     const [rows] = await conn.query(
       "SELECT id, module FROM lemma WHERE module = ? FOR UPDATE",
@@ -542,6 +565,7 @@ export async function refreshInvertedForModule(pool, module) {
       module: row.module,
       json: fingerprint,
       documents,
+      preserveProof: true,
     });
     return { updated: 1, id: row.id, postings: result.postings };
   });
@@ -552,7 +576,7 @@ export async function refreshInvertedForModule(pool, module) {
  * documents in ONE transaction, so a live reader never sees new postings with
  * old fingerprints (or the reverse) during a section rebuild. `id` is `lemma.id`.
  */
-export async function uploadIndex(pool, entries) {
+export async function uploadIndex(pool, entries, { preserveProof = false } = {}) {
   const idOf = await mapModulesToIds(pool, entries.map((e) => e.module));
   const withId = [];
   let missing = 0;
@@ -576,16 +600,22 @@ export async function uploadIndex(pool, entries) {
   try {
     await conn.beginTransaction();
     for (const [id, group] of byId) {
-      await replaceFingerprints(conn, id, group.json, group.documents);
+      await replaceFingerprints(conn, id, group.json, group.documents, null, preserveProof);
     }
     for (let i = 0; i < ids.length; i += ID_CHUNK) {
-      await conn.query("DELETE FROM inverted WHERE id IN (?)", [ids.slice(i, i + ID_CHUNK)]);
+      await conn.query(
+        preserveProof
+          ? "DELETE FROM inverted WHERE id IN (?) AND section <> 'proof'"
+          : "DELETE FROM inverted WHERE id IN (?)",
+        [ids.slice(i, i + ID_CHUNK)],
+      );
     }
-    for (let i = 0; i < rows.length; i += INSERT_CHUNK) {
-      await conn.query("INSERT INTO inverted (name, id, lemma_id, section, latex_id, count) VALUES ?", [rows.slice(i, i + INSERT_CHUNK)]);
+    const inserted = preserveProof ? rows.filter((row) => row[3] !== "proof") : rows;
+    for (let i = 0; i < inserted.length; i += INSERT_CHUNK) {
+      await conn.query("INSERT INTO inverted (name, id, lemma_id, section, latex_id, count) VALUES ?", [inserted.slice(i, i + INSERT_CHUNK)]);
     }
     await conn.commit();
-    return { uploaded: withId.length, missing, postings: rows.length, stored: byId.size };
+    return { uploaded: withId.length, missing, postings: inserted.length, stored: byId.size };
   } catch (err) {
     await conn.rollback();
     throw err;
@@ -623,7 +653,7 @@ async function loadFingerprintsByIds(pool, ids, sections = ["imply"]) {
     // The imply section is stored per flattened conjunct; latex_id 0 holds the
     // whole conjunction, which is the only tree exact search should compare.
     const [rows] = await pool.query(
-      "SELECT f.id, l.module, f.fingerprint, f.section, f.lemma_id, f.latex_id " +
+      "SELECT f.id, l.module, l.lemma, f.fingerprint, f.section, f.lemma_id, f.latex_id " +
         "FROM fingerprint f JOIN lemma l ON l.id = f.id " +
         "WHERE f.id IN (?) AND f.section IN (?) " +
         "AND (f.section <> 'imply' OR f.latex_id = 0)",
@@ -673,9 +703,19 @@ async function searchParsedQuery(query, { limit = 100, offset = 0, db, sections 
     if (json == null) continue;
     if (matchesSubtree(query.json, json) && !seen.has(row.id)) {
       seen.add(row.id);
+      // Extract the lemma name (e.g. "sum_if_and_comm", "rotaryOn_neg", "main")
+      // so search results show which sub-lemma matched, not just section.
+      let lemmaName = null;
+      if (row.lemma != null) {
+        try {
+          const parsed = typeof row.lemma === 'string' ? JSON.parse(row.lemma) : row.lemma;
+          lemmaName = parsed?.[row.lemma_id]?.name ?? null;
+        } catch {}
+      }
       hits.push({
         id: row.id,
         module: row.module,
+        lemmaName,
         len: Buffer.byteLength(fingerprintFormat(json)),
         section: row.section,
         lemmaId: row.lemma_id,
@@ -795,7 +835,7 @@ export async function searchLeanSimilar(expr, { limit = 100, offset = 0, pool = 
 function usage() {
   console.error(`usage: node mjs/leanInvertedIndex.mjs [options]
 
-  --section <name>     index only this lemma section (default: Random, Complex, Vector, Tensor)
+  --section <name>     index only this lemma section (default: Random, Complex, Vector, Tensor, Matrix)
   --existing-ids       rebuild every id already present in axiom.inverted
   --chunk-size <n>     files per child process (default: 250, 0 = one process)
   --store-fingerprint  write axiom.fingerprint only (do not rebuild inverted)
@@ -950,7 +990,7 @@ async function runIndex(opts) {
   try {
     const { entries, skipped, failures, targetIds, child } = await collectSection({ ...opts, db: pool });
     if (child) return;
-    const { uploaded, missing, postings, stored } = await uploadIndex(pool, entries);
+    const { uploaded, missing, postings, stored } = await uploadIndex(pool, entries, { preserveProof: true });
     console.log(
       `uploaded ${uploaded} documents, ${postings} postings to axiom.inverted ` +
         `and fingerprints for ${stored} lemma(s) on axiom.fingerprint ` +

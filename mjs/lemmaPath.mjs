@@ -22,6 +22,7 @@ import {
   conclusionNode,
   reassociateDotProduct,
 } from "./lemmaSection.mjs";
+import { collapseEqSelf } from "./lean/modulePath.mjs";
 
 function isPropHyp(typeNode) {
   if (!typeNode) return false;
@@ -518,7 +519,9 @@ export function suggestExpressionPath(filePath, lemmaName, options = {}) {
   const path = fitModulePath(section, implyParts, givenParts);
   const imply = implyParts.map(implyToken).join(".");
   const givenText = givenParts.map((part) => part.token).join(".");
-  return { section, imply, givens: givenText, path, implyParts, givenParts };
+  // Collapse redundant `… .X.eq.X …` suffixes (e.g. Real.Sum_IteAnd.eq.Sum_IteAnd → Real.Sum_IteAnd).
+  const collapsedPath = collapseEqSelf(path);
+  return { section, imply, givens: givenText, path: collapsedPath, implyParts, givenParts };
 }
 
 /**
@@ -658,22 +661,10 @@ function appendProofMath(node, ctx, out, onNode = null) {
 }
 
 /**
- * Extract every searchable formula from the selected declaration. The whole
- * imply tree remains the metadata fingerprint used by exact conclusion search;
- * postings point at individual given / imply-conjunct / proof-step formulas.
- *
- * @returns {{ lemmaId: number, fingerprint: object, documents: {json: object|object[], lemmaId: number, section: 'given'|'imply'|'proof', latexId: number}[] }}
+ * Given / imply-conjunct / proof-step documents of one declaration.
+ * Throws when the declaration has no parseable signature.
  */
-export function lemmaSearchDocuments(filePath, lemmaName, options = {}) {
-  const abs = options.file ? path.resolve(options.file) : path.resolve(filePath);
-  const source = options.source != null
-    ? String(options.source).replace(/\r\n/g, "\n")
-    : fs.readFileSync(abs, "utf8").replace(/\r\n/g, "\n");
-  const ast = compileLemmaSource(source);
-  const { lemma, index } = selectLemma(ast, lemmaName);
-  if (!lemma) throw new Error("No Lean_lemma found");
-  const lemmaId = Math.max(0, index);
-  if (options.location && typeof options.location === "object") options.location.lemmaId = lemmaId;
+function documentsForLemma(lemma, lemmaId, withProof = true) {
   const sig = extractSignature(lemma);
   if (!sig) throw new Error("Could not find lemma signature");
   const conclusion = conclusionNode(sig.colon);
@@ -691,12 +682,50 @@ export function lemmaSearchDocuments(filePath, lemmaName, options = {}) {
     documents.push({ json: node.toJSON(searchContext()), lemmaId, section: "imply", latexId });
   });
 
-  proofStepsOf(lemma).forEach((step, latexId) => {
-    const json = [];
-    const ctx = searchContext();
-    for (const node of step) appendProofMath(node, ctx, json);
-    documents.push({ json, lemmaId, section: "proof", latexId });
-  });
+  if (withProof) {
+    proofStepsOf(lemma).forEach((step, latexId) => {
+      const json = [];
+      const ctx = searchContext();
+      for (const node of step) appendProofMath(node, ctx, json);
+      documents.push({ json, lemmaId, section: "proof", latexId });
+    });
+  }
+
+  return { conclusion, documents };
+}
+
+/**
+ * Extract every searchable formula from the selected declaration. The whole
+ * imply tree remains the metadata fingerprint used by exact conclusion search;
+ * postings point at individual given / imply-conjunct / proof-step formulas.
+ *
+ * `options.allLemmas` also collects the same sections for every other
+ * declaration in the file (private helpers included), so the lemma page can
+ * answer hover requests for their conclusions and proof steps.
+ *
+ * @returns {{ lemmaId: number, fingerprint: object, documents: {json: object|object[], lemmaId: number, section: 'given'|'imply'|'proof', latexId: number}[] }}
+ */
+export function lemmaSearchDocuments(filePath, lemmaName, options = {}) {
+  const abs = options.file ? path.resolve(options.file) : path.resolve(filePath);
+  const source = options.source != null
+    ? String(options.source).replace(/\r\n/g, "\n")
+    : fs.readFileSync(abs, "utf8").replace(/\r\n/g, "\n");
+  const ast = compileLemmaSource(source);
+  const { lemma, index } = selectLemma(ast, lemmaName);
+  if (!lemma) throw new Error("No Lean_lemma found");
+  const lemmaId = Math.max(0, index);
+  if (options.location && typeof options.location === "object") options.location.lemmaId = lemmaId;
+  const { conclusion, documents } = documentsForLemma(lemma, lemmaId, !options.omitProof);
+  if (options.allLemmas) {
+    extractLemmas(ast).forEach((other, otherId) => {
+      if (otherId === lemmaId) return;
+      try {
+        documents.push(...documentsForLemma(other, otherId, !options.omitProof).documents);
+      } catch {
+        // a sub-declaration without a parseable signature contributes nothing
+      }
+    });
+  }
 
   return { lemmaId, fingerprint: conclusion.toJSON(searchContext()), documents };
 }
@@ -706,9 +735,9 @@ export function lemmaSearchDocuments(filePath, lemmaName, options = {}) {
  * `lemmaSearchDocuments`. Used by search results to render the formula that
  * actually matched instead of the conclusion.
  */
-export function sectionFormulaNodes(filePath, section, latexId) {
+export function sectionFormulaNodes(filePath, section, latexId, lemmaId) {
   const ast = compile(fs.readFileSync(filePath, "utf8"));
-  const { lemma } = selectLemma(ast);
+  const { lemma } = selectLemma(ast, undefined, lemmaId);
   const sig = extractSignature(lemma);
   if (!sig) return [];
   const nodeItem = (node) => {

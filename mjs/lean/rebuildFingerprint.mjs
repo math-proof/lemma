@@ -4,16 +4,17 @@
  * Same write as `node mjs/leanInvertedIndex.mjs --refresh-module`.
  *
  * The lemma page does not call this after Echo. `request/echo` already stored
- * the proof fingerprints from `expr.toJson`, and a source rebuild would replace them.
+ * the proof fingerprints from `expr.toJson` (paired with the `expr.toLatex`
+ * pictures), and a source rebuild cannot reproduce those goals — so it keeps
+ * the existing `proof` rows instead of replacing them.
  */
 import { getMysqlPool } from './fetchLemmaMysql.mjs';
 import { refreshInvertedForModule } from '../leanInvertedIndex.mjs';
-
-const MODULE_RE = /^[A-Za-z_][A-Za-z0-9_.]*$/;
+import { isValidModuleName } from './modulePath.mjs';
 
 export async function handleRebuildFingerprint(req, res) {
   const module = String(req.body?.module ?? '').trim();
-  if (!MODULE_RE.test(module)) {
+  if (!isValidModuleName(module)) {
     res.status(400).json({ error: 'missing module' });
     return;
   }

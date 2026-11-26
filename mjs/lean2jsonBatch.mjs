@@ -106,7 +106,7 @@ async function checkOne(pool, lean, row) {
   }
 
   // Stale row: replace its fingerprint and all section postings incrementally.
-  const { documents } = lemmaSearchDocuments(result.path);
+  const { documents } = lemmaSearchDocuments(result.path, undefined, { allLemmas: true, omitProof: true });
   const rebuild = await refreshInvertedForLemma(pool, {
     id: row.id,
     module: row.module,
@@ -114,6 +114,7 @@ async function checkOne(pool, lean, row) {
     documents,
     startedAt: Date.now(),
     location: result.location,
+    preserveProof: true,
   });
   if (rebuild.stale || rebuild.missing) {
     return { module: row.module, at, status: 'error', message: 'rebuild skipped: ' + JSON.stringify(rebuild), ...views };

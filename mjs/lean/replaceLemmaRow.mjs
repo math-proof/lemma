@@ -79,7 +79,7 @@ export async function replaceLemmaRow(conn, module, code, abs, startedAt) {
   let documents = null;
   try {
     if (abs) {
-      const extracted = lemmaSearchDocuments(abs);
+      const extracted = lemmaSearchDocuments(abs, undefined, { allLemmas: true, omitProof: true });
       fingerprint = extracted.fingerprint;
       documents = extracted.documents;
     }
@@ -92,9 +92,10 @@ export async function replaceLemmaRow(conn, module, code, abs, startedAt) {
   const metaJson = Object.keys(meta).length ? JSON.stringify(meta) : null;
   const peeled = peelDocstrings(code.lemma ?? []);
   const echoProof = proofDocumentsFromEcho(peeled.lemmas);
-  if (echoProof) {
-    documents = (documents ?? []).filter((doc) => doc.section !== 'proof').concat(echoProof);
-  }
+  // Proof trees are the Echo goals: `expr.toLatex` (the picture) and
+  // `expr.toJson` (the fingerprint) come from the same `struct`, so only Echo
+  // may write this section. Without an Echo payload, keep the stored rows.
+  if (echoProof) documents = (documents ?? []).concat(echoProof);
   stripEchoStructs(peeled.lemmas);
 
   const fields = [
@@ -154,6 +155,7 @@ export async function replaceLemmaRow(conn, module, code, abs, startedAt) {
       json: fingerprint,
       documents,
       startedAt,
+      preserveProof: !echoProof,
     });
     await replaceDocstrings(conn, id, peeled.rows);
     await conn.commit();

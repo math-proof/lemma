@@ -6,14 +6,15 @@
  * Warnings never change a lemma's status, `mjs/run.mjs`'s exit code, or the database row (`render2vue.mjs` puts them
  * in `code.warning`, which is not saved).
  *
- * Every rule runs on the comment / string-blanked source (see `scan.mjs`: the lean.js tree has no source positions).
+ * Text rules run on the comment / string-blanked source (see `scan.mjs`); AST rules use the 1-based
+ * `node.line` stamped by `compile` (`js/parser/lean.js`).
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { listLemmaTopLevelDirs } from '../lemmaSections.mjs';
 import { prepare, findDecls } from './scan.mjs';
-import { scanImportsAndOpens, headerSpacing, maxHeartbeats, openSection, openDuplicate, openMerge, openPrefix, openHiding, attrDocstring, dates, declKeywordDirText, blankSublemmas, lemmaNamespace } from './headerRules.mjs';
+import { scanImportsAndOpens, headerSpacing, maxHeartbeats, openSection, openDuplicate, openMerge, openPrefix, openHiding, attrDocstring, dates, declKeywordDirText, blankSublemmas, lemmaNamespace, pathPrivate, lemmaMainName, pathEqSelf } from './headerRules.mjs';
 import { signatureRules } from './signatureRules.mjs';
 import { indentRules, proofRules, underscoreNameRule } from './proofRules.mjs';
 import { attrRules } from './attrRules.mjs';
@@ -52,6 +53,7 @@ const Q = {
     comm: 'For `LHS.eq.RHS` tagged with `@[comm]`, prefer the generated commutative lemma `RHS.eq.LHS` over `simp [← LHS.eq.RHS]` or `rw [LHS.eq.RHS.symm]`.',
     declDir: 'Never put a `theorem` in `Lemma/`.', // removed from AGENTS.md: this warning checks it
     docstring: 'Run `python py/docstring.py <leanFile>` if necessary. It\'ll generate the attribute docstring table if the lemma uses attributes other than `@[path]`.',
+    pathPrivate: 'in a file that does not begin with `module`, every `@[path]` declaration must be `private`; module files use `public` / `private` visibility instead',
 };
 
 /** rule id → AGENTS.md quote */
@@ -181,6 +183,9 @@ export const RULES = {
     'attr-comm': Q.comm,
     'attr-docstring': Q.docstring,
     'decl-keyword-dir': Q.declDir,
+    'path-private': Q.pathPrivate,
+    'lemma-main-name': 'Lemma convention: the primary/top-level declaration must be named `main` (helpers keep their descriptive names)',
+    'path-eq-self': 'Path convention: collapse redundant `.eq.X` when the surrounding segments are identical (`X.eq.X` → `X`)',
 };
 
 /** rules switched off by default (too noisy on the corpus; see the calibration notes in the README) */
@@ -223,7 +228,13 @@ export function lintLean(source, opts = {}) {
             // another node with the same text as the previous finding: it is further down
             const last = ctx.astLast;
             const from = last && last.node !== node && last.stmt === stmt && last.line != null ? last.line : ctx.astCursor;
-            const line = locate(P.raw, stmt, from, follow ? quote(follow, 120, 1) : null);
+            // `compile` stamps every node with its 1-based source line; text search is only
+            // the fallback for a synthetic quote (`quoteAs`) that has no source node.
+            // `paren-redundant-arith` keeps the text search: its pretty-printed `stmt` can
+            // differ from the source, and a reprint that cannot be found is not a safe fix.
+            const line = rule === 'paren-redundant-arith'
+                ? locate(P.raw, stmt, from, follow ? quote(follow, 120, 1) : null)
+                : node.line ?? locate(P.raw, stmt, from, follow ? quote(follow, 120, 1) : null);
             // A reprint that cannot be found in the source is not a safe drop suggestion.
             // `paren-redundant-arith` previously warned on pretty-printed `((∑ …) - (∑ …))`
             // with no line, while the source needed those grouping parens inside `|… + …|`.
@@ -253,7 +264,7 @@ export function lintLean(source, opts = {}) {
     // `decl-keyword-dir`: trust the tree only when it sees the same lemma/theorem declarations as the text scan
     if (tree && countLemmaTheoremNodes(tree) !== ctx.decls.filter((d) => d.kind === 'lemma' || d.kind === 'theorem').length)
         ctx.astCovered.delete('decl-keyword-dir');
-    const steps = [headerSpacing, maxHeartbeats, openSection, openDuplicate, openMerge, openPrefix, openHiding, declKeywordDirText, attrDocstring, dates, blankSublemmas, lemmaNamespace, signatureRules, indentRules, proofRules, underscoreNameRule, attrRules];
+    const steps = [headerSpacing, maxHeartbeats, openSection, openDuplicate, openMerge, openPrefix, openHiding, declKeywordDirText, pathPrivate, attrDocstring, dates, blankSublemmas, lemmaNamespace, lemmaMainName, pathEqSelf, signatureRules, indentRules, proofRules, underscoreNameRule, attrRules];
     for (const step of steps) {
         try {
             step(ctx);

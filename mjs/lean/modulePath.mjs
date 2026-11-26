@@ -84,6 +84,41 @@ export function titleFromModule(module) {
 /** Repo folders that are not Lean namespaces and must not appear on page/DB module keys. */
 export const DECL_LIBRARY_FOLDERS = ['Lemma', 'Theorem'];
 
+// Lean declaration names may contain primes (`Matrix.Rotary'`), Greek letters,
+// digits, and `_`; this is the full Unicode-aware module-name regex.
+const MODULE_RE = /^[\p{L}_][\p{L}\p{N}_.'!?]*$/u;
+
+/** True iff `s` is a syntactically valid Lean module path. */
+export function isValidModuleName(s) {
+  return typeof s === 'string' && MODULE_RE.test(s);
+}
+
+/**
+ * Collapse a redundant `… .X.eq.X …` pattern. When both sides around `.eq.`
+ * are textually the same token — e.g. `Real.Sum_IteAnd.eq.Sum_IteAnd` — the
+ * `.eq.X` suffix carries no information and is dropped, yielding `Real.Sum_IteAnd`.
+ * Runs repeatedly from left to right so a pattern like `X.eq.X.eq.X` → `X.eq.X`
+ * → `X` also collapses fully. Segments of three or more tokens around `eq` are
+ * untouched (`Foo.eq.Bar`, `Foo.Bar.eq.Baz` stay as-is).
+ */
+export function collapseEqSelf(module) {
+  if (typeof module !== 'string' || !module) return module;
+  const parts = module.split('.');
+  let changed = true;
+  while (changed) {
+    changed = false;
+    // Walk from left to right: find `.eq.X` where the segment *before* `eq` is `X`.
+    for (let i = 0; i + 2 < parts.length; i++) {
+      if (parts[i + 1] === 'eq' && parts[i + 2] === parts[i]) {
+        parts.splice(i + 1, 2); // drop `.eq.X`
+        changed = true;
+        break;
+      }
+    }
+  }
+  return parts.join('.');
+}
+
 /**
  * `Lemma.Random.X` / `Theorem.Random.X` → `Random.X`. Any other module is unchanged.
  */
@@ -113,7 +148,7 @@ export function leanFilePathToModule(absPath, repoRoot = REPO_ROOT) {
   parts[parts.length - 1] = last.slice(0, -'.lean'.length);
   if (parts.length >= 2 && DECL_LIBRARY_FOLDERS.includes(parts[0])) parts.shift();
   if (parts.length === 0) return null;
-  return parts.join('.');
+  return collapseEqSelf(parts.join('.'));
 }
 
 /**

@@ -6,8 +6,9 @@
 		<div v-if="data.snippet" class="snippet">{{data.snippet}}</div>
 		<div v-if="data.latex" class="formula" v-katex="data.latex"></div>
 		<div v-if="data.match" class="meta">
-			<span v-if="data.section" class="section">{{data.section}}</span>
-			{{data.section ? '· ' : ''}}{{data.match}} match
+			<span v-if="data.lemmaName" class="lemma">{{data.lemmaName}}</span>
+			{{data.lemmaName ? ' · ' : ''}}<span v-if="data.section" class="section">{{data.section}}</span>
+			{{(data.lemmaName || data.section) ? ' · ' : ''}}{{data.match}} match
 		</div>
 	</template>
 	<span v-else-if="mode == 'span'">
@@ -268,6 +269,16 @@ const { mode, module, href, keydown_a, blur, keydown } = self.globals;
 	margin-top: 4px;
 	font: 12px Arial, sans-serif;
 	color: #70757a;
+}
+
+.meta .lemma {
+	display: inline-block;
+	padding: 0 6px;
+	margin-right: 2px;
+	border-radius: 8px;
+	background: #fce8e6;
+	color: #c5221f;
+	font-weight: 600;
 }
 
 .meta .section {

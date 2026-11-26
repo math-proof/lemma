@@ -160,7 +160,7 @@ async function main() {
   for (const w of warnings) {
     const loc = w.line != null ? `:${w.line}${w.col != null ? `:${w.col}` : ''}` : '';
     console.warn(`warning${loc}: ${w.info}`);
-    // AST rules quote the offending statement (the parse tree has no positions; search for it by text)
+    // AST rules quote the offending statement; `w.line` is the node's 1-based source line
     if (w.stmt) console.warn(w.stmt.split('\n').map((l) => `    > ${l}`).join('\n'));
   }
   if (warnings.length) {

@@ -49,6 +49,14 @@ const BINDER = {
   Integral: '∫',
 };
 
+/**
+ * Numeric binders stop before `=` (`∑ i, f i = 0` parses as `(∑ i, f i) = 0`,
+ * verified with Lean), so they need no parentheses next to a comparison. The
+ * logical binders keep precedence 10: `∃ x, P x ∧ Q` swallows the `∧`.
+ */
+const NUMERIC_BINDER_PREC = 60;
+const NUMERIC_BINDERS = new Set(['Sum', 'Prod', 'Integral']);
+
 /** `‖x‖`, `|x|`, `⌈x⌉`, `{a, b}`, and a joint `(a, b)`. The delimiters group the inside. */
 const DELIM = {
   Norm: ['‖', '‖'],
@@ -78,7 +86,21 @@ const INDEXED = {
 
 const CALL = 90;
 const ATOM = 100;
-const POST = 85;
+const POST = 95;
+
+const SUBSCRIPT = '₀₁₂₃₄₅₆₇₈₉';
+
+/**
+ * Display form of a stored variable leaf: `$n` (free, numbered by first
+ * appearance) → `fₙ`, `?n` (De Bruijn bound) → `bₙ`. Anonymous leaves (`_`)
+ * and numerals are unchanged.
+ */
+function leafText(text) {
+  const match = /^([$?])(\d+)$/.exec(text);
+  if (!match) return text;
+  const digits = [...match[2]].map((digit) => SUBSCRIPT[Number(digit)]).join('');
+  return (match[1] === '?' ? 'b' : 'f') + digits;
+}
 
 function side(child, prec, which, assoc) {
   if (child.prec > prec) return child.text;
@@ -112,7 +134,8 @@ function stackText(rawChildren) {
 }
 
 function postfix(arg, op, prec = POST) {
-  const text = arg.prec < prec ? `(${arg.text})` : arg.text;
+  // Parenthesise an application argument: `(RotaryOn f g)ᵀ`, not `RotaryOn f gᵀ`.
+  const text = arg.prec <= CALL ? `(${arg.text})` : arg.text;
   return { text: text + op, prec };
 }
 
@@ -137,10 +160,20 @@ export function infixFingerprint(json) {
 
 function infix(json) {
   if (json == null || json === '') return { text: '', prec: ATOM };
-  if (typeof json === 'string') return { text: json, prec: ATOM };
+  if (typeof json === 'string') return { text: leafText(json), prec: ATOM };
   if (Array.isArray(json)) {
+    // Plain array = juxtaposition of one expression applied to args
+    // (e.g. `(Matrix.rotaryOn u v θ).transpose i j`). First element is the
+    // head expression, rest are arguments — all space-separated.
     const parts = json.map(infix).filter((part) => part.text);
-    return { text: parts.map((part) => part.text).join('\n'), prec: 0 };
+    if (parts.length > 1) {
+      return {
+        text: parts.map((part) => (part.prec < CALL ? `(${part.text})` : part.text)).join(' '),
+        prec: CALL,
+      };
+    }
+    if (parts.length === 1) return parts[0];
+    return { text: '', prec: 0 };
   }
   const head = Object.keys(json)[0];
   const rawChildren = Array.isArray(json[head]) ? json[head] : [json[head]];
@@ -175,11 +208,24 @@ function infix(json) {
     const [dom, ...rest] = children;
     return { text: `${dom.text} ↦ ${rest.map((part) => part.text).join(', ')}`, prec: 10 };
   }
+  if (head === 'Ite' && children.length >= 2) {
+    const [cond, thenPart, elsePart] = children;
+    const body = elsePart
+      ? `if ${cond.text} then ${thenPart.text} else ${elsePart.text}`
+      : `if ${cond.text} then ${thenPart.text}`;
+    return { text: `(${body})`, prec: ATOM };
+  }
   const binder = BINDER[head];
+  const binderPrec = NUMERIC_BINDERS.has(head) ? NUMERIC_BINDER_PREC : 10;
   if (binder && children.length >= 2) {
     const [dom, ...rest] = children;
-    return { text: `${binder} ${dom.text}, ${rest.map((part) => part.text).join(', ')}`, prec: 10 };
+    return { text: `${binder} ${dom.text}, ${rest.map((part) => part.text).join(', ')}`, prec: binderPrec };
   }
-  if (binder && children.length === 1) return { text: `${binder} ${children[0].text}`, prec: 10 };
-  return { text: `${head}(${children.map((part) => part.text).join(', ')})`, prec: CALL };
+  if (binder && children.length === 1) return { text: `${binder} ${children[0].text}`, prec: binderPrec };
+  // Everything else is plain application: Lean juxtaposition, with parentheses
+  // around any argument looser than an application (`Fin f₁`, `Icc a b`).
+  const args = children
+    .map((part) => (part.prec < CALL ? `(${part.text})` : part.text))
+    .join(' ');
+  return { text: args ? `${head} ${args}` : head, prec: CALL };
 }

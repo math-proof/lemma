@@ -44,6 +44,13 @@ export class Lean extends IndentedNode {
     static classes = Object.create(null);
 
     /**
+     * 1-based source line of the token currently being parsed, maintained by `LeanParser`.
+     * Used to stamp freshly built nodes with their original source line (see `line`).
+     * @type {number | null}
+     */
+    static currentLine = null;
+
+    /**
      * Register `cls` (default: the class it is called on) under `cls.name`.
      * Use as `static { this.register(); }` in every subclass.
      * @template {Function} T
@@ -60,6 +67,9 @@ export class Lean extends IndentedNode {
     constructor(indent, level, parent = null) {
         super(indent, parent);
         this.level = level;
+        // Fallback for nodes with no leaf token (`LeanCaret`, empty containers): the
+        // source line that was being parsed when the node was built.
+        if (Lean.currentLine != null) this._birthLine = Lean.currentLine;
     }
 
     clone() {
@@ -73,12 +83,39 @@ export class Lean extends IndentedNode {
         return this.parent ? this.parent.root : null;
     }
 
+    /** First leaf `LeanToken` in document order, or null. */
+    firstToken() {
+        const Token = Lean.classes.LeanToken;
+        if (Token && this instanceof Token) return this;
+        for (const arg of this.args || []) {
+            const token = arg?.firstToken?.();
+            if (token) return token;
+        }
+        return null;
+    }
+
+    /**
+     * 1-based source line. `set_line` (echo) wins when it has assigned a line;
+     * otherwise the line of the first leaf token, falling back to the line the
+     * node was built on. Undefined only for synthetic nodes created outside `build`.
+     */
     get line() {
-        return this.kwargs.line;
+        if (this.kwargs.line != null) return this.kwargs.line;
+        const token = this.firstToken();
+        return token?.kwargs.line ?? this._birthLine;
     }
 
     set line(v) {
         this.kwargs.line = v;
+    }
+
+    /**
+     * Zero-based source line (0 is the first line), for CodeMirror `{line, ch}` and
+     * `source.split('\n')[i]` indexing. `line` stays 1-based for Lean diagnostics.
+     */
+    get line0() {
+        const line = this.line;
+        return line == null ? line : line - 1;
     }
 
     get stack_priority() {
@@ -1148,6 +1185,7 @@ export class Lean extends IndentedNode {
                 return this.push_arithmetic(token);
             case '/':
                 if (tokens[self.start_idx + 1] === '-') {
+                    const commentLine = self.tokenLine?.[self.start_idx] ?? Lean.currentLine;
                     self.start_idx++;
                     let docstring = false;
                     if (tokens[self.start_idx + 1] === '-') {
@@ -1166,7 +1204,7 @@ export class Lean extends IndentedNode {
                     comment = comment.replace(/(?<=\n) +$/g, '');
                     comment = comment.replace(/^\n+|\n+$/g, '');
                     if (tokens[self.start_idx + 1] === '\n') self.start_idx++;
-                    return this.push_block_comment(comment, docstring);
+                    return this.push_block_comment(comment, docstring, commentLine);
                 }
                 if (tokens[self.start_idx + 1] === '/') {
                     self.start_idx++;
@@ -1828,7 +1866,7 @@ export class Lean extends IndentedNode {
         return parent.push_binary(Ctor, skipBraceShortcut);
     }
 
-    push_block_comment(comment, docstring) {
+    push_block_comment(comment, docstring, _commentLine = null) {
         throw new Error(`push_block_comment is unexpected for ${this.constructor.name}`);
     }
 

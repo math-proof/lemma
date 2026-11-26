@@ -187,8 +187,19 @@ export class LeanParser extends AbstractParser {
     constructor() {
         super(null);
         this.tokens = [];
-        this.start_idx = 0;
+        this.tokenLine = null;
+        this._start_idx = 0;
         this.root = null;
+    }
+
+    get start_idx() {
+        return this._start_idx;
+    }
+
+    /** Move the cursor and publish its 1-based source line to newly built nodes. */
+    set start_idx(i) {
+        this._start_idx = i;
+        Lean.currentLine = this.tokenLine?.[i] ?? null;
     }
 
     toString() {
@@ -205,15 +216,24 @@ export class LeanParser extends AbstractParser {
         this.tokens = Array.from(text.matchAll(/\w+|\W/gu), (m) => m[0]);
         const { tokens } = this;
         const length = tokens.length;
+        // `\n` is a token of its own, so the token line is available before parsing.
+        this.tokenLine = new Int32Array(length);
+        let line = 1;
+        for (let i = 0; i < length; i++) {
+            this.tokenLine[i] = line;
+            if (tokens[i] === '\n') line++;
+        }
         this.start_idx = 0;
         for (; this.start_idx < length; ++this.start_idx) {
             this.parse(tokens[this.start_idx], this);
             if (!this.caret) break;
         }
+        Lean.currentLine = null;
         return this.root;
     }
 
     init() {
+        Lean.currentLine = null;
         const caret = new L.LeanCaret(0, 0);
         this.caret = caret;
         this.root = new L.LeanModule([caret], 0, 0);

@@ -17,7 +17,7 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 
 ## Inter-agent communication
 - Inter-agent communication should forward necessary context to avoid misunderstanding.
-- Grok, Cursor, and Codex deliver every message themselves. The programmer is not a courier: do not print a paste prompt, a fenced copy block, or ask anyone to copy text between chats.
+- Grok and Codex deliver every message themselves. The programmer is not a courier: do not print a paste prompt, a fenced copy block, or ask anyone to copy text between chats.
 
 ### Instruction (A → B)
 A hands a one-shot task to B. Triggered when the user says "send this issue / problem / bug / job / task to **@AgentName**" (or "send to AgentName"), or when A's work must change B's folder.
@@ -25,9 +25,6 @@ A hands a one-shot task to B. Triggered when the user says "send this issue / pr
 - Prompt shape: open with
   `Assignee: AgentName (scope). Follow AGENTS.md; …`
   then `## Goal`, repro/paths/errors, constraints.
-- Deliver that prompt on the direct channel:
-  - **Cursor:** use the Task tool. Resume B when this chat already holds B's subagent id. Otherwise launch a subagent for B's folder and pass the prompt as its task. A transcript UUID, or a path under `agent-transcripts/`, is a chat log, not a subagent id — launch or resume the live subagent, and do not write into the log.
-  - **Grok and Codex:** address `@AgentName` on the same direct channel (Remote Control worker on `main`). Launch a Cursor cloud agent only when the user demands it.
 - Then tell the user, in one short line, who has the task. Link the worker `[<scope> / AgentName](<subagent-id>)` with the id the channel returned.
 - If delivery fails, report the error. Do not fall back to a paste block.
 

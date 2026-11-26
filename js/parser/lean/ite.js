@@ -53,6 +53,18 @@ export class LeanIte extends LeanArgs {
         if (!LeanIte.is_oneliner(v)) this.not_inline();
     }
 
+    /**
+     * `if p then a else b` → `{Ite: [p, a, b]}`. The generic `LeanArgs`
+     * serializer would emit a bare `[p, a, b]` array, losing the head — so an
+     * `if` inside a `∑` scope looked like a conjunction. `if h : p` keeps the
+     * proposition (the `LeanColon` wrapper holds the name in `lhs`).
+     */
+    toJSON(ctx = { leaves: new Map() }) {
+        const part = (node) => (node == null ? null : node.toJSON(ctx));
+        const cond = this.if instanceof L.LeanColon ? this.if.rhs : this.if;
+        return { Ite: [part(cond), part(this.then), part(this.else)] };
+    }
+
     echo() {
         const [$if, then, $else] = this.args;
         let token = null;

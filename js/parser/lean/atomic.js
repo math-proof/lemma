@@ -49,10 +49,12 @@ export class LeanCaret extends Lean {
         return this;
     }
 
-    push_block_comment(comment, docstring) {
+    push_block_comment(comment, docstring, commentLine = null) {
         const parent = this.parent;
         const Cls = docstring ? LeanDocString : LeanBlockComment;
-        parent.replace(this, new Cls(comment, this.indent, this.level));
+        const node = new Cls(comment, this.indent, this.level);
+        if (commentLine != null) node.line = commentLine;
+        parent.replace(this, node);
         parent.push(this);
         return this;
     }
@@ -175,6 +177,9 @@ export class LeanToken extends Lean {
     constructor(text, indent, level, parent = null) {
         super(indent, level, parent);
         this.text = text;
+        // Leaf tokens are created while the parser is at their token, so this is
+        // the exact 1-based source line. `set_line` may overwrite it for echo.
+        if (Lean.currentLine != null) this.line = Lean.currentLine;
     }
 
     clone() {
