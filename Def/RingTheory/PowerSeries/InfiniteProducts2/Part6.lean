@@ -5,7 +5,7 @@ open scoped Polynomial
 open Finset PowerSeries
 
 
-public section
+@[expose] public section
 
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.

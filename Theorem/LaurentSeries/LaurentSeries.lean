@@ -3,6 +3,7 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.RingTheory.LaurentSeries.Part11
+public meta import Inductive.RingTheory.LaurentSeries
 
 public section
 

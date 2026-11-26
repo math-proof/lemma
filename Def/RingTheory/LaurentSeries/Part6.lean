@@ -6,7 +6,7 @@ public import Instance.RingTheory.LaurentSeries.Part2
 open scoped LaurentPolynomial
 
 
-public section
+@[expose] public section
 
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.

@@ -10,7 +10,7 @@ private lemma main
 -- imply
   (Matrix.of (Matrix.vecCons (fun j : Fin (n + 1) => x₂ ^ (j : ℕ))
       (fun (i : Fin n) (j : Fin (n + 1)) => (j : ℝ) ^ (i : ℕ) * x₁ ^ (j : ℕ)))).det =
-    x₁ ^ (n.choose 2) * (x₁ - x₂) ^ n * ∏ i ∈ Finset.range n, (Nat.factorial i : ℝ) :=
+    x₁ ^ (n.choose 2) * (x₁ - x₂) ^ n * ∏ i < n, (Nat.factorial i : ℝ) :=
 -- proof
   DetOfVecCons_FunPow.eq.MulMulPowSProd
 

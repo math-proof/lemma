@@ -6,7 +6,7 @@ public import Theorem.RingTheory.LaurentSeries.Part4
 open scoped LaurentPolynomial
 
 
-public section
+@[expose] public section
 
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.

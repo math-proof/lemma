@@ -9,7 +9,7 @@ open scoped LaurentPolynomial Polynomial
 open LaurentPolynomial HahnSeries
 
 
-public section
+@[expose] public section
 
 /-
 Copyright (c) Meta Platforms, Inc. and affiliates.

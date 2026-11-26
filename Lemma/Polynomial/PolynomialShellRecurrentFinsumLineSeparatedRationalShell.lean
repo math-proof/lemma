@@ -30,12 +30,12 @@ private lemma sh_mem_of_stable
     refine hW _ ih
 private noncomputable def SR (x : ℤ → ℂ) : Prop :=
   ∃ (N : ℤ) (E : Polynomial ℂ) (M : ℕ), E.eval 0 ≠ 0 ∧ (∀ m : ℤ, m < N → x m = 0) ∧
-    (∀ m : ℕ, M ≤ m → ∑ i < (E.natDegree + 1), E.coeff i * x (N + (m : ℤ) - (i : ℤ)) = 0)
+    (∀ m : ℕ, M ≤ m → ∑ i ∈ Finset.range (E.natDegree + 1), E.coeff i * x (N + (m : ℤ) - (i : ℤ)) = 0)
 private noncomputable def seqAt (x : ℤ → ℂ) (N : ℤ) : ℕ → ℂ := fun m => x (N + m)
 @[simp] private lemma seqAt_apply (x : ℤ → ℂ) (N : ℤ) (m : ℕ) : seqAt x N m = x (N + m) := rfl
 private lemma shiftFinite_of_rec
   (x : ℤ → ℂ) (N : ℤ) (E : Polynomial ℂ) (M : ℕ) (hE : E.eval 0 ≠ 0)
-    (hrec : ∀ m : ℕ, M ≤ m → ∑ i < (E.natDegree + 1), E.coeff i * x (N + (m : ℤ) - (i : ℤ)) = 0) :
+    (hrec : ∀ m : ℕ, M ≤ m → ∑ i ∈ Finset.range (E.natDegree + 1), E.coeff i * x (N + (m : ℤ) - (i : ℤ)) = 0) :
     ShiftFinite (seqAt x N) := by
   classical
   set s := seqAt x N with hs
@@ -49,7 +49,6 @@ private lemma shiftFinite_of_rec
     have hkd : d ≤ k := le_trans (le_max_right _ _) hk
     funext n
     have h := hrec (k + n) (le_trans hkM (Nat.le_add_right _ _))
-    simp only [Nat.Iio_eq_range] at h
     rw [Finset.range_eq_Ico, Finset.sum_eq_sum_Ico_succ_bot (Nat.succ_pos _)] at h
     simp only [Pi.neg_apply, Pi.smul_apply, Finset.sum_apply, sh_apply, smul_eq_mul]
     have e0 : x (N + ((k + n : ℕ) : ℤ) - ((0 : ℕ) : ℤ)) = s (n + k) := by
@@ -118,9 +117,8 @@ private lemma sr_of_shiftFinite
     rw [← Polynomial.coeff_zero_eq_eval_zero, Polynomial.coeff_zero_reverse, hmonic.leadingCoeff]; refine one_ne_zero
   refine ⟨N, E, K + r, hE0, hN, fun m hm => ?_⟩
   have hdeg : E.natDegree ≤ r := by rw [hr]; refine Polynomial.reverse_natDegree_le p
-  have hsum : ∑ i < (E.natDegree + 1), E.coeff i * x (N + (m : ℤ) - (i : ℤ)) =
-      ∑ i < (r + 1), E.coeff i * x (N + (m : ℤ) - (i : ℤ)) := by
-    simp only [Nat.Iio_eq_range]
+  have hsum : ∑ i ∈ Finset.range (E.natDegree + 1), E.coeff i * x (N + (m : ℤ) - (i : ℤ)) =
+      ∑ i ∈ Finset.range (r + 1), E.coeff i * x (N + (m : ℤ) - (i : ℤ)) := by
     apply Finset.sum_subset (Finset.range_mono (by omega))
     intro i hi hi'
     rw [Polynomial.coeff_eq_zero_of_natDegree_lt, zero_mul]
@@ -129,16 +127,15 @@ private lemma sr_of_shiftFinite
   obtain ⟨k, hk⟩ : ∃ k, m = k + r := ⟨m - r, by omega⟩
   subst hk
   have hk : K ≤ k := by omega
-  have e1 : ∀ i < (r + 1), E.coeff i * x (N + ((k + r : ℕ) : ℤ) - (i : ℤ)) =
+  have e1 : ∀ i ∈ Finset.range (r + 1), E.coeff i * x (N + ((k + r : ℕ) : ℤ) - (i : ℤ)) =
       p.coeff (r - i) * seqAt x N (k + (r - i)) := by
     intro i hi
-    have hi' : i ≤ r := Nat.lt_succ_iff.mp hi
+    have hi' : i ≤ r := Nat.lt_succ_iff.1 (Finset.mem_range.1 hi)
     rw [Polynomial.coeff_reverse, Polynomial.revAt_le (by rw [← hr]; refine hi'), seqAt_apply]
     congr 2; push_cast; omega
-  rw [Finset.sum_congr rfl (fun i hi => e1 i (Finset.mem_Iio.mp hi))]
+  rw [Finset.sum_congr rfl e1]
   have hrefl := Finset.sum_range_reflect (fun j => p.coeff j * seqAt x N (k + j)) (r + 1)
   simp only [Nat.add_sub_cancel] at hrefl
-  simp only [Nat.Iio_eq_range]
   rw [hrefl]
   have hw : sh k (seqAt x N) ∈ W := hK k hk
   have h0 := congrArg (fun (w : W) => (w : ℕ → ℂ) 0) (show Polynomial.aeval T p ⟨_, hw⟩ = 0 by rw [hp, LinearMap.zero_apply])
@@ -249,13 +246,13 @@ private lemma shiftFinite_dil {s : ℕ → ℂ} (hs : ShiftFinite s) (e : ℕ) (
     refine (Nat.le_div_iff_mul_le he).2 (by rw [mul_comm]; refine hk)
 private noncomputable def convR
   (v : ℕ → ℂ) : (ℕ → ℂ) →ₗ[ℂ] (ℕ → ℂ) where
-  toFun f := fun m => ∑ i < (m + 1), f i * v (m - i)
+  toFun f := fun m => ∑ i ∈ Finset.range (m + 1), f i * v (m - i)
   map_add' f g := by funext m; simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib]
   map_smul' c f := by funext m; simp only [Pi.smul_apply, smul_eq_mul, RingHom.id_apply, Finset.mul_sum, mul_assoc]
-@[simp] private lemma convR_apply (v f : ℕ → ℂ) (m : ℕ) : convR v f m = ∑ i < (m + 1), f i * v (m - i) := rfl
+@[simp] private lemma convR_apply (v f : ℕ → ℂ) (m : ℕ) : convR v f m = ∑ i ∈ Finset.range (m + 1), f i * v (m - i) := rfl
 private lemma sh_one_convR (v f : ℕ → ℂ) : sh 1 (convR v f) = f 0 • sh 1 v + convR v (sh 1 f) := by
   funext m
-  simp only [sh_apply, convR_apply, Pi.add_apply, Pi.smul_apply, smul_eq_mul, Nat.Iio_eq_range]
+  simp only [sh_apply, convR_apply, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
   rw [Finset.sum_range_succ', add_comm]
   simp only [Nat.sub_zero, Nat.add_sub_add_right, zero_add]
 private lemma shiftFinite_convR {u v : ℕ → ℂ} (hu : ShiftFinite u) (hv : ShiftFinite v) : ShiftFinite (convR v u) := by
@@ -400,7 +397,7 @@ private lemma shiftFinite_seqAt_any {x : ℤ → ℂ} (hx : SR x) (N : ℤ) : Sh
     rw [e]
     refine shiftFinite_sh (hs N₀ le_rfl) _
 private noncomputable def boxLine (e₁ e₂ : ℕ) (w : ℕ → ℕ → ℂ) (m : ℕ) : ℂ :=
-  ∑ j < (m + 1), ∑ l < (m + 1), if e₁ * j + e₂ * l = m then w j l else 0
+  ∑ j ∈ Finset.range (m + 1), ∑ l ∈ Finset.range (m + 1), if e₁ * j + e₂ * l = m then w j l else 0
 private lemma finsum_line_eq_boxLine
   (w : ℤ × ℤ → ℂ) (N₁ N₂ : ℤ) (hw : ∀ n : ℤ × ℤ, (n.1 < N₁ ∨ n.2 < N₂) → w n = 0)
     (e₁ e₂ : ℕ) (he₁ : 0 < e₁) (he₂ : 0 < e₂) (m : ℕ) :
@@ -445,7 +442,6 @@ private lemma finsum_line_eq_boxLine
   rw [hB, Finset.sum_image (fun p _ q _ h => by
     simp only [Prod.ext_iff] at h; refine Prod.ext (by exact_mod_cast (add_left_cancel h.1)) (by exact_mod_cast (add_left_cancel h.2)))]
   rw [boxLine, ← Finset.sum_product']
-  simp only [Nat.Iio_eq_range]
   refine Finset.sum_congr rfl fun p hp => ?_
   simp only [F]
   have : ((e₁ : ℤ) * (N₁ + (p.1 : ℤ)) + (e₂ : ℤ) * (N₂ + (p.2 : ℤ)) = N + (m : ℤ)) ↔ (e₁ * p.1 + e₂ * p.2 = m) := by
@@ -466,29 +462,27 @@ private lemma boxLine_sum
   {ι : Type} (e₁ e₂ : ℕ) (s : Finset ι) (w : ι → ℕ → ℕ → ℂ) (m : ℕ) :
     boxLine e₁ e₂ (fun j l => ∑ k ∈ s, w k j l) m = ∑ k ∈ s, boxLine e₁ e₂ (w k) m := by
   simp only [boxLine]
-  have e1 : (∑ j < (m + 1), ∑ l < (m + 1),
+  have e1 : (∑ j ∈ Finset.range (m + 1), ∑ l ∈ Finset.range (m + 1),
       (if e₁ * j + e₂ * l = m then ∑ k ∈ s, w k j l else 0)) =
-      ∑ j < (m + 1), ∑ l < (m + 1), ∑ k ∈ s, (if e₁ * j + e₂ * l = m then w k j l else 0) := by
+      ∑ j ∈ Finset.range (m + 1), ∑ l ∈ Finset.range (m + 1), ∑ k ∈ s, (if e₁ * j + e₂ * l = m then w k j l else 0) := by
     refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun l _ => ?_
     split_ifs <;> simp
   rw [e1]
-  have e2 : ∀ j < (m + 1), (∑ l < (m + 1), ∑ k ∈ s, (if e₁ * j + e₂ * l = m then w k j l else 0)) =
-      ∑ k ∈ s, ∑ l < (m + 1), (if e₁ * j + e₂ * l = m then w k j l else 0) :=
+  have e2 : ∀ j ∈ Finset.range (m + 1), (∑ l ∈ Finset.range (m + 1), ∑ k ∈ s, (if e₁ * j + e₂ * l = m then w k j l else 0)) =
+      ∑ k ∈ s, ∑ l ∈ Finset.range (m + 1), (if e₁ * j + e₂ * l = m then w k j l else 0) :=
     fun j _ => Finset.sum_comm
-  simp only [Nat.Iio_eq_range] at e2 ⊢
-  rw [Finset.sum_congr rfl (fun j hj => e2 j (Finset.mem_range.mp hj)), Finset.sum_comm]
+  rw [Finset.sum_congr rfl e2, Finset.sum_comm]
 private lemma boxLine_mul
   (e₁ e₂ : ℕ) (he₁ : 0 < e₁) (he₂ : 0 < e₂) (p q : ℕ → ℂ) (m : ℕ) :
     boxLine e₁ e₂ (fun j l => p j * q l) m = convR (dil e₂ 0 q) (dil e₁ 0 p) m := by
   classical
   rw [boxLine, ← Finset.sum_product', convR_apply]
-  have hrhs : ∀ i < (m + 1), dil e₁ 0 p i * dil e₂ 0 q (m - i) =
+  have hrhs : ∀ i ∈ Finset.range (m + 1), dil e₁ 0 p i * dil e₂ 0 q (m - i) =
       if e₁ ∣ i ∧ e₂ ∣ (m - i) then p (i / e₁) * q ((m - i) / e₂) else 0 := by
     intro i hi
     simp only [dil_apply, add_zero]
     split_ifs <;> simp_all
-  simp only [Nat.Iio_eq_range] at hrhs ⊢
-  rw [Finset.sum_congr rfl (fun i hi => hrhs i (Finset.mem_range.mp hi)), ← Finset.sum_filter, Finset.sum_ite, Finset.sum_const_zero, add_zero]
+  rw [Finset.sum_congr rfl hrhs, ← Finset.sum_filter, Finset.sum_ite, Finset.sum_const_zero, add_zero]
   symm
   refine Finset.sum_nbij' (fun i => (i / e₁, (m - i) / e₂)) (fun jl => e₁ * jl.1) ?_ ?_ ?_ ?_ ?_
   ·
@@ -529,7 +523,7 @@ private lemma boxLine_mul
     rfl
 private noncomputable def solSpace
   (D : Polynomial ℂ) (K : ℕ) : Submodule ℂ (ℕ → ℂ) where
-  carrier := {s | ∀ m, K ≤ m → ∑ i < (D.natDegree + 1), D.coeff i * s (m - i) = 0}
+  carrier := {s | ∀ m, K ≤ m → ∑ i ∈ Finset.range (D.natDegree + 1), D.coeff i * s (m - i) = 0}
   add_mem' := by
     intro s r hs hr m hm
     simp only [Pi.add_apply, mul_add, Finset.sum_add_distrib, hs m hm, hr m hm, add_zero]
@@ -549,7 +543,6 @@ private lemma solSpace_eq_zero
     refine h0 m hm
   else
     have h := hs m (not_lt.1 hm)
-    simp only [Nat.Iio_eq_range] at h
     rw [Finset.range_eq_Ico, Finset.sum_eq_sum_Ico_succ_bot (Nat.succ_pos _)] at h
     have hrest : ∑ i ∈ Finset.Ico 1 (D.natDegree + 1), D.coeff i * s (m - i) = 0 := by
       refine Finset.sum_eq_zero fun i hi => ?_
@@ -604,14 +597,14 @@ private lemma shiftFinite_of_mem_solSpace
   have h := hs m hm
   rw [← h]
   refine Finset.sum_congr rfl fun i hi => ?_
-  have hi' : i ≤ m := le_trans (Nat.lt_succ_iff.mp (Finset.mem_Iio.mp hi)) (le_trans hK hm)
+  have hi' : i ≤ m := le_trans (Nat.lt_succ_iff.1 (Finset.mem_range.1 hi)) (le_trans hK hm)
   congr 1
   simp only [x, zero_add]
   rw [ite_eq_left (by omega)]
   congr 1; omega
 private lemma eq_zero_of_rec_all
   (g : ℤ → ℂ) (N : ℤ) (hN : ∀ m : ℤ, m < N → g m = 0) (D : Polynomial ℂ) (hD : D.eval 0 ≠ 0)
-    (hrec : ∀ m : ℕ, ∑ i < (D.natDegree + 1), D.coeff i * g (N + (m : ℤ) - (i : ℤ)) = 0) :
+    (hrec : ∀ m : ℕ, ∑ i ∈ Finset.range (D.natDegree + 1), D.coeff i * g (N + (m : ℤ) - (i : ℤ)) = 0) :
     ∀ m : ℤ, g m = 0 := by
   have hD0 : D.coeff 0 ≠ 0 := by rwa [Polynomial.coeff_zero_eq_eval_zero]
   have key : ∀ m : ℕ, g (N + m) = 0 := by
@@ -619,7 +612,6 @@ private lemma eq_zero_of_rec_all
     induction m using Nat.strong_induction_on
     rename_i m ih
     have h := hrec m
-    simp only [Nat.Iio_eq_range] at h
     rw [Finset.range_eq_Ico, Finset.sum_eq_sum_Ico_succ_bot (Nat.succ_pos _)] at h
     have hrest : ∑ i ∈ Finset.Ico 1 (D.natDegree + 1), D.coeff i * g (N + (m : ℤ) - (i : ℤ)) = 0 := by
       refine Finset.sum_eq_zero fun i hi => ?_
@@ -642,11 +634,11 @@ private lemma row_rec
   (A : ℤ × ℤ → ℂ) (N₁ : ℤ) (D₁ D₂ : Polynomial ℂ) (M : ℕ) (hD₁ : D₁.eval 0 ≠ 0)
     (hsupp : ∀ n : ℤ × ℤ, (n.1 < N₁ ∨ n.2 < N₁) → A n = 0)
     (hrec : ∀ m₁ m₂ : ℕ, (M ≤ m₁ ∨ M ≤ m₂) →
-        ∑ i < (D₁.natDegree + 1), ∑ l < (D₂.natDegree + 1),
+        ∑ i ∈ Finset.range (D₁.natDegree + 1), ∑ l ∈ Finset.range (D₂.natDegree + 1),
           D₁.coeff i * D₂.coeff l * A (N₁ + (m₁ : ℤ) - (i : ℤ), N₁ + (m₂ : ℤ) - (l : ℤ)) = 0)
     (z : ℤ) (m₂ : ℕ) (hm₂ : M ≤ m₂) :
-    ∑ l < (D₂.natDegree + 1), D₂.coeff l * A (z, N₁ + (m₂ : ℤ) - (l : ℤ)) = 0 := by
-  let g : ℤ → ℂ := fun z => ∑ l < (D₂.natDegree + 1), D₂.coeff l * A (z, N₁ + (m₂ : ℤ) - (l : ℤ))
+    ∑ l ∈ Finset.range (D₂.natDegree + 1), D₂.coeff l * A (z, N₁ + (m₂ : ℤ) - (l : ℤ)) = 0 := by
+  let g : ℤ → ℂ := fun z => ∑ l ∈ Finset.range (D₂.natDegree + 1), D₂.coeff l * A (z, N₁ + (m₂ : ℤ) - (l : ℤ))
   have hg : ∀ m : ℤ, g m = 0 := by
     refine eq_zero_of_rec_all g N₁ (fun m hm => ?_) D₁ hD₁ (fun m₁ => ?_)
     ·
@@ -661,11 +653,11 @@ private lemma col_rec
   (A : ℤ × ℤ → ℂ) (N₁ : ℤ) (D₁ D₂ : Polynomial ℂ) (M : ℕ) (hD₂ : D₂.eval 0 ≠ 0)
     (hsupp : ∀ n : ℤ × ℤ, (n.1 < N₁ ∨ n.2 < N₁) → A n = 0)
     (hrec : ∀ m₁ m₂ : ℕ, (M ≤ m₁ ∨ M ≤ m₂) →
-        ∑ i < (D₁.natDegree + 1), ∑ l < (D₂.natDegree + 1),
+        ∑ i ∈ Finset.range (D₁.natDegree + 1), ∑ l ∈ Finset.range (D₂.natDegree + 1),
           D₁.coeff i * D₂.coeff l * A (N₁ + (m₁ : ℤ) - (i : ℤ), N₁ + (m₂ : ℤ) - (l : ℤ)) = 0)
     (z : ℤ) (m₁ : ℕ) (hm₁ : M ≤ m₁) :
-    ∑ i < (D₁.natDegree + 1), D₁.coeff i * A (N₁ + (m₁ : ℤ) - (i : ℤ), z) = 0 := by
-  let g : ℤ → ℂ := fun z => ∑ i < (D₁.natDegree + 1), D₁.coeff i * A (N₁ + (m₁ : ℤ) - (i : ℤ), z)
+    ∑ i ∈ Finset.range (D₁.natDegree + 1), D₁.coeff i * A (N₁ + (m₁ : ℤ) - (i : ℤ), z) = 0 := by
+  let g : ℤ → ℂ := fun z => ∑ i ∈ Finset.range (D₁.natDegree + 1), D₁.coeff i * A (N₁ + (m₁ : ℤ) - (i : ℤ), z)
   have hg : ∀ m : ℤ, g m = 0 := by
     refine eq_zero_of_rec_all g N₁ (fun m hm => ?_) D₂ hD₂ (fun m₂ => ?_)
     ·
@@ -687,16 +679,16 @@ private lemma main
     (hA : ∃ (N₁ : ℤ) (D₁ D₂ : Polynomial ℂ) (M : ℕ), D₁.eval 0 ≠ 0 ∧ D₂.eval 0 ≠ 0 ∧
       (∀ n : ℤ × ℤ, (n.1 < N₁ ∨ n.2 < N₁) → A n = 0) ∧
       (∀ m₁ m₂ : ℕ, (M ≤ m₁ ∨ M ≤ m₂) →
-        ∑ i < (D₁.natDegree + 1), ∑ l < (D₂.natDegree + 1),
+        ∑ i ∈ Finset.range (D₁.natDegree + 1), ∑ l ∈ Finset.range (D₂.natDegree + 1),
           D₁.coeff i * D₂.coeff l * A (N₁ + (m₁ : ℤ) - (i : ℤ), N₁ + (m₂ : ℤ) - (l : ℤ)) = 0))
     (hb : ∃ (N₂ : ℤ) (E : Polynomial ℂ) (M' : ℕ), E.eval 0 ≠ 0 ∧
       (∀ m : ℤ, m < N₂ → b m = 0) ∧
       (∀ m : ℕ, M' ≤ m →
-        ∑ i < (E.natDegree + 1), E.coeff i * b (N₂ + (m : ℤ) - (i : ℤ)) = 0)) :
+        ∑ i ∈ Finset.range (E.natDegree + 1), E.coeff i * b (N₂ + (m : ℤ) - (i : ℤ)) = 0)) :
     -- imply
     (∃ (N : ℤ) (E : Polynomial ℂ) (M : ℕ), E.eval 0 ≠ 0 ∧ (∀ m : ℤ, m < N → (fun t : ℤ => finsum fun n : ℤ × ℤ =>
         if (e₁ : ℤ) * n.1 + (e₂ : ℤ) * n.2 = t then A n * b n.1 * α ^ n.1 * β ^ n.2 else 0) m = 0) ∧
-      (∀ m : ℕ, M ≤ m → ∑ i < (E.natDegree + 1), E.coeff i * (fun t : ℤ => finsum fun n : ℤ × ℤ =>
+      (∀ m : ℕ, M ≤ m → ∑ i ∈ Finset.range (E.natDegree + 1), E.coeff i * (fun t : ℤ => finsum fun n : ℤ × ℤ =>
         if (e₁ : ℤ) * n.1 + (e₂ : ℤ) * n.2 = t then A n * b n.1 * α ^ n.1 * β ^ n.2 else 0) (N + (m : ℤ) - (i : ℤ)) = 0)) := by
   -- proof
   classical
@@ -713,8 +705,8 @@ private lemma main
     have h := row_rec A N₁ D₁ D₂ M hD₁ hsupp hrec (N₁ + j) m (le_trans (le_max_left _ _) hm)
     rw [← h]
     refine Finset.sum_congr rfl fun l hl => ?_
-    have hl' : l ≤ m := le_trans (Nat.lt_succ_iff.mp (Finset.mem_Iio.mp hl)) (le_trans (le_max_right _ _) hm)
-    congr 2; push_cast [Nat.cast_sub hl']; ring_nf
+    have hl' : l ≤ m := le_trans (Nat.lt_succ_iff.1 (Finset.mem_range.1 hl)) (le_trans (le_max_right _ _) hm)
+    congr 2; push_cast [Nat.cast_sub hl']; ring
   have hdec : ∀ j l : ℕ, A (N₁ + j, N₁ + l) = ∑ k : Fin K, A (N₁ + j, N₁ + ((k : ℕ) : ℤ)) * σ k l := by
     intro j l
     have := hcoord _ (hrow j)

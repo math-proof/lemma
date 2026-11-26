@@ -12,7 +12,7 @@ private lemma vandermonde
   (_h : n > 0) :
 -- imply
   (Matrix.of (Matrix.vecCons (fun j : Fin (n + 1) => r ^ (j : ℕ)) (fun (i : Fin n) (j : Fin (n + 1)) => (j : ℝ) ^ (i : ℕ)))).det =
-    (1 - r) ^ n * ∏ i ∈ Finset.range n, (i ! : ℝ) := by
+    (1 - r) ^ n * ∏ i < n, (i ! : ℝ) := by
 -- proof
   exact DetOfVecCons_FunPow.eq.MulPowSub1Prod
 

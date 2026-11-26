@@ -157,9 +157,9 @@ noncomputable instance instFintypeSizeBounded (n : ℕ) :
   let φ : { μ : NPartition N // μ.size ≤ n } → T := fun ⟨μ, hμ⟩ =>
     ⟨μ, fun i => le_trans (parts_le_size μ i) hμ⟩
   have hφ : Function.Injective φ := by
-    intro ⟨μ₁, _⟩ ⟨μ₂, _⟩ heq
+    intro a b heq
     apply Subtype.ext
-    exact Subtype.mk.inj (by simpa [φ] using heq)
+    simpa [φ] using congrArg (Subtype.val : T → NPartition N) heq
   exact Fintype.ofInjective φ hφ
 
 /-- The set of N-partitions with exact size n is finite.
