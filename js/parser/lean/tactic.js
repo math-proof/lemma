@@ -688,18 +688,6 @@ export class LeanTactic extends LeanSyntax {
         return func + parts.join('');
     }
 
-    set_line(line) {
-        this.line = line;
-        let lineNo = line;
-        for (const arg of this.args) {
-            if (arg == null) continue;
-            if (arg instanceof L.LeanCaret);
-            else if (arg instanceof LeanSequentialTacticCombinator && arg.newlineBefore) lineNo++;
-            else if (arg instanceof L.LeanArgsNewLineSeparated) lineNo++;
-            lineNo = arg.set_line(lineNo);
-        }
-        return lineNo;
-    }
 }
 
 export class LeanBy extends LeanUnary {
@@ -783,13 +771,6 @@ export class LeanBy extends LeanUnary {
         return ' ';
     }
 
-    set_line(line) {
-        this.line = line;
-        let lineNo = line;
-        if (this.arg instanceof L.LeanStatements) lineNo++;
-        return this.arg.set_line(lineNo);
-    }
-
     strFormat() {
         const s = this.sep();
         return `by${s}%s`;
@@ -835,12 +816,6 @@ export class LeanFrom extends LeanUnary {
     }
     echo() {
         this.arg.echo();
-    }
-    set_line(line) {
-        this.line = line;
-        let lineNo = line;
-        if (this.arg instanceof L.LeanStatements) lineNo++;
-        return this.arg.set_line(lineNo);
     }
     get operator() {
         return 'from';
@@ -948,13 +923,6 @@ export class LeanCalc extends LeanUnary {
 
     get stack_priority() {
         return L.LeanAssign.input_priority - 1;
-    }
-
-    set_line(line) {
-        this.line = line;
-        let lineNo = line;
-        if (this.arg instanceof L.LeanArgsNewLineSeparated) lineNo++;
-        return this.arg.set_line(lineNo);
     }
 
     echo() {
@@ -1091,12 +1059,6 @@ export class LeanUsing extends LeanUnary {
         this.arg.echo();
     }
 
-    set_line(line) {
-        this.line = line;
-        let lineNo = line;
-        if (this.arg instanceof L.LeanStatements) lineNo++;
-        return this.arg.set_line(lineNo);
-    }
 }
 
 export class LeanAt extends LeanUnary {
@@ -1145,12 +1107,6 @@ export class LeanAt extends LeanUnary {
         return `${this.operator}${s}%s`;
     }
 
-    set_line(line) {
-        this.line = line;
-        let lineNo = line;
-        if (this.arg instanceof L.LeanStatements) lineNo++;
-        return this.arg.set_line(lineNo);
-    }
 }
 
 export class LeanIn extends LeanUnary {
@@ -1195,12 +1151,6 @@ export class LeanIn extends LeanUnary {
     get command() {
         return 'in';
     }
-    set_line(line) {
-        this.line = line;
-        let lineNo = line;
-        if (this.arg instanceof L.LeanStatements) lineNo++;
-        return this.arg.set_line(lineNo);
-    }
 }
 
 export class LeanGeneralizing extends LeanUnary {
@@ -1241,12 +1191,6 @@ export class LeanGeneralizing extends LeanUnary {
     }
     get command() {
         return 'generalizing';
-    }
-    set_line(line) {
-        this.line = line;
-        let lineNo = line;
-        if (this.arg instanceof L.LeanStatements) lineNo++;
-        return this.arg.set_line(lineNo);
     }
 }
 
@@ -1334,12 +1278,6 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
         if (this.newlineBehind && this.arg.indent > 0) return '\n';
         if (this.arg instanceof L.LeanCaret) return '\n'; // split head renders a trailing `<;>` hole
         return ' ';
-    }
-
-    set_line(line) {
-        this.line = line;
-        if (this.newlineBehind && (this.arg instanceof LeanTacticBlock || this.arg.indent >= this.indent)) line++;
-        return this.arg.set_line(line);
     }
 
     /**
@@ -1696,11 +1634,6 @@ export class LeanTacticBlock extends LeanUnary {
         return [this];
     }
 
-    set_line(line) {
-        this.line = line;
-        if (this.arg instanceof L.LeanStatements) line++;
-        return this.arg.set_line(line);
-    }
 }
 
 export class LeanWith extends LeanArgs {
@@ -1852,15 +1785,6 @@ export class LeanWith extends LeanArgs {
             return $new;
         }
         throw new Error(`LeanWith.insert_comma: unexpected for ${this.constructor.name}`);
-    }
-
-    set_line(line) {
-        this.line = line;
-        if (this.sep() === '\n') line++;
-        for (const arg of this.args) {
-            line = arg.set_line(line) + 1;
-        }
-        return line - 1;
     }
 
     tokens_bar_separated() {

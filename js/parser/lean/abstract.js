@@ -123,14 +123,6 @@ export class LeanArgs extends Lean {
         return regexpProductCols(cols).map((list) => head + list.join(''));
     }
 
-    set_line(line) {
-        this.line = line;
-        for (const arg of this.args) {
-            if (arg != null) line = arg.set_line(line);
-        }
-        return line;
-    }
-
     /**
      * @returns {Lean[]}
      */
@@ -268,14 +260,6 @@ export class LeanBinary extends LeanArgs {
 
     sep() {
         return this.rhs instanceof L.LeanStatements ? '\n' : ' ';
-    }
-
-    set_line(line) {
-        this.line = line;
-        line = this.lhs.set_line(line);
-        const s = this.sep();
-        if (s && s[0] === '\n') line++;
-        return this.rhs.set_line(line);
     }
 
     insert_newline(caret, newline_count, indent, next) {

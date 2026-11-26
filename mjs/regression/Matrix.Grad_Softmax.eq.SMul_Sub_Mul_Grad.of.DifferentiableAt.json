@@ -96,5 +96,5 @@
       }
     ]
   },
-  "fingerprint": "Softmax(_) • ((∇[$1] _) - Softmax(_) * (∇[$1] _))"
+  "fingerprint": "Softmax _ • ((∇[f₁] _) - Softmax _ * (∇[f₁] _))"
 }

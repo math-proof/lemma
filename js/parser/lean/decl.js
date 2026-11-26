@@ -130,14 +130,6 @@ export class Lean_def extends LeanArgs {
         return false;
     }
 
-    set_line(line) {
-        this.line = line;
-        let lineNo = line;
-        const attr = this.attribute;
-        if (attr) lineNo = attr.set_line(lineNo) + 1;
-        return this.assignment.set_line(lineNo);
-    }
-
     relocate_last_comment() {
         const assignment = this.assignment;
         if (assignment instanceof L.LeanAssign) assignment.relocate_last_comment();
@@ -196,14 +188,14 @@ export class Lean_lemma extends Lean_def {
                         // try echo ⊢
                         if (token) {
                             const {indent, level} = statement;
-                            statement.push(
-                                new L.LeanTactic(
-                                    'try',
-                                    new L.LeanTactic('echo', token, indent, level),
-                                    indent,
-                                    level,
-                                ),
-                            );
+                            const last = statement.args[statement.args.length - 1];
+                            const at = (typeof last?.line === 'number' ? last.line : 0) + (last ? Math.max(1, String(last).split('\n').length) : 1);
+                            const echo = new L.LeanTactic('echo', token, indent, level);
+                            const attempt = new L.LeanTactic('try', echo, indent, level);
+                            Lean.shiftLines(this.root, at, 1);
+                            attempt.line = at;
+                            echo.line = at;
+                            statement.push(attempt);
                         }
                         break;
                     }
@@ -663,7 +655,6 @@ export class Lean_show extends LeanSyntax {
         const token = new L.LeanToken('⊢', this.indent, this.level);
         return [1, this, new L.LeanTactic('echo', token, this.indent, this.level)];
     }
-
 
     toJSON() {
         return {

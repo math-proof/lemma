@@ -8,7 +8,6 @@
  * call time, so the import graph follows the inheritance tree.
  */
 import {
-    LeanMultipleLine,
     leanEvalPrefix,
     leanVarsGetitem,
     strStmt,
@@ -1375,7 +1374,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
     }
 }
 
-export class LeanArgsNewLineSeparated extends LeanMultipleLine(LeanArgs) {
+export class LeanArgsNewLineSeparated extends LeanArgs {
     static { this.register(); }
 
     get stack_priority() {
@@ -1834,7 +1833,7 @@ export class LeanArgsSemicolonSeparated extends LeanArgs {
     }
 }
 
-export class LeanArgsCommaNewLineSeparated extends LeanMultipleLine(LeanArgs) {
+export class LeanArgsCommaNewLineSeparated extends LeanArgs {
     static { this.register(); }
 
     get stack_priority() {

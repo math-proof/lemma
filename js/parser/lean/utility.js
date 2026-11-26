@@ -183,22 +183,6 @@ export function findInnermostOpenLeanAbsAncestor(from, caret) {
 }
 
 /**
- * @template {typeof LeanArgs} T
- * @param {T} Base
- */
-export function LeanMultipleLine(Base) {
-    return class extends Base {
-        set_line(line) {
-            this.line = line;
-            for (const arg of this.args) {
-                line = arg.set_line(line) + 1;
-            }
-            return line - 1;
-        }
-    };
-}
-
-/**
  * @template {typeof Lean} T
  * @param {T} Base
  */

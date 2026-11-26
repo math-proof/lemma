@@ -96,5 +96,5 @@
       }
     ]
   },
-  "fingerprint": "∑ ?0 ∈ Divisors(?0) ∧ ?0 ∈ [1, $1], ?0 * PartitionCount($1 - ?1)"
+  "fingerprint": "∑ b₀ ∈ Divisors b₀ ∧ b₀ ∈ [1, f₁], b₀ * PartitionCount (f₁ - b₁)"
 }

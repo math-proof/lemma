@@ -9,11 +9,42 @@
  * define them; every other class is read from `Lean.classes` (`L.X`) at
  * call time, so the import graph follows the inheritance tree.
  */
-import { LeanMultipleLine, leanIsInfixContinue } from './utility.js';
+import { leanIsInfixContinue } from './utility.js';
 import { LeanArgs } from './abstract.js';
 import { Lean } from './base.js';
 
 const L = Lean.classes;
+
+function printedSpan(node) {
+    const text = String(node ?? '');
+    return text === '' ? 1 : text.split('\n').length;
+}
+
+/**
+ * New echo tactics are built onto their own lines. `line` is the line of that
+ * new node; nodes already built at or after it move down.
+ */
+function placeInsertedLines(stmt, index, removedCount, inserted) {
+    const old = stmt.args.slice(index, index + removedCount);
+    const replaced = new Set(old);
+    const root = stmt.root;
+    if (!root) return;
+    let at = null;
+    for (const node of inserted) {
+        if (node == null) continue;
+        if (replaced.has(node)) {
+            const line = node.line;
+            at = (typeof line === 'number' ? line : (at ?? 1)) + printedSpan(node);
+            continue;
+        }
+        if (at == null) at = typeof old[0]?.line === 'number' ? old[0].line : 1;
+        Lean.shiftLines(root, at, 1);
+        node.line = at;
+        const inner = node.args?.[0];
+        if (inner && inner.tacticName === 'echo') inner.line = at;
+        at += 1;
+    }
+}
 
 /**
  * Multiline `LeanStatements` is used both for proof scripts (`by …`) and for proposition/type text after `:`.
@@ -45,7 +76,7 @@ function leanStatementsPreferWordOverTactic(stmts) {
 
 
 
-export class LeanStatements extends LeanMultipleLine(LeanArgs) {
+export class LeanStatements extends LeanArgs {
     static { this.register(); }
 
     /**
@@ -135,6 +166,17 @@ export class LeanStatements extends LeanMultipleLine(LeanArgs) {
         return [String(args[0]).replace(/^ +/, ''), ...args.slice(1)];
     }
 
+    unshift(arg) {
+        if (arg instanceof L.LeanTactic && arg.tacticName === 'echo') {
+            const at = typeof this.args[0]?.line === 'number'
+                ? this.args[0].line
+                : (typeof this.line === 'number' ? this.line : 1);
+            Lean.shiftLines(this.root, at, 1);
+            arg.line = at;
+        }
+        return super.unshift(arg);
+    }
+
     echo() {
         const {args} = this;
         let count = args.length;
@@ -177,10 +219,23 @@ export class LeanStatements extends LeanMultipleLine(LeanArgs) {
                         trailingEchoes.unshift(result.pop());
                     }
                 }
+                placeInsertedLines(this, index, length, result);
                 const increment = result.indexOf(args[index]);
                 args.splice(index, length, ...result);
                 if (trailingEchoes.length) {
-                    args.splice(index + result.length + barRun, 0, ...trailingEchoes);
+                    const atIndex = index + result.length + barRun;
+                    const at = typeof args[atIndex]?.line === 'number'
+                        ? args[atIndex].line
+                        : (args[atIndex - 1]?.line ?? 0) + 1;
+                    Lean.shiftLines(this.root, at, trailingEchoes.length);
+                    let line = at;
+                    for (const echo of trailingEchoes) {
+                        echo.line = line;
+                        const inner = echo.args?.[0];
+                        if (inner && inner.tacticName === 'echo') inner.line = line;
+                        line += 1;
+                    }
+                    args.splice(atIndex, 0, ...trailingEchoes);
                 }
                 index += increment;
             }
@@ -199,6 +254,7 @@ export class LeanStatements extends LeanMultipleLine(LeanArgs) {
                     }
                 }
                 for (const echo of result) echo.parent = this;
+                placeInsertedLines(this, index, length, result);
                 args.splice(index, length, ...result);
             } else if (tactic.tacticName === 'case') {
                 const arrow = tactic.arrow;
@@ -246,6 +302,8 @@ export class LeanStatements extends LeanMultipleLine(LeanArgs) {
         }
         for (let k = 0; k < newline_count; ++k) {
             caret = new L.LeanCaret(indent, caret.level);
+            // The `\n` token is the line it ends. The caret is the following line.
+            if (Lean.currentLine != null) caret.line = Lean.currentLine + 1 + k;
             this.push(caret);
         }
         return caret;

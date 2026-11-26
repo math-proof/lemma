@@ -51,6 +51,22 @@ export class Lean extends IndentedNode {
     static currentLine = null;
 
     /**
+     * `count` lines were inserted at `at` (or removed, when `count` is negative).
+     * Nodes already built on that line or later move with the text.
+     */
+    static shiftLines(root, at, count) {
+        if (!root || !count || typeof at !== 'number') return;
+        const walk = (node) => {
+            if (!node || typeof node !== 'object') return;
+            if (typeof node.line === 'number' && node.line >= at) node.line += count;
+            const args = node.args;
+            if (!args) return;
+            for (let i = 0; i < args.length; i++) walk(args[i]);
+        };
+        walk(root);
+    }
+
+    /**
      * Register `cls` (default: the class it is called on) under `cls.name`.
      * Use as `static { this.register(); }` in every subclass.
      * @template {Function} T
@@ -95,9 +111,9 @@ export class Lean extends IndentedNode {
     }
 
     /**
-     * 1-based source line. `set_line` (echo) wins when it has assigned a line;
-     * otherwise the line of the first leaf token, falling back to the line the
-     * node was built on. Undefined only for synthetic nodes created outside `build`.
+     * 1-based line, set when the node is built: an explicit `line`, otherwise the
+     * first leaf token's line, otherwise the line current at construction.
+     * Undefined only for synthetic nodes created outside `build`.
      */
     get line() {
         if (this.kwargs.line != null) return this.kwargs.line;
@@ -2027,11 +2043,6 @@ export class Lean extends IndentedNode {
     }
 
     relocate_last_comment() {}
-
-    set_line(line) {
-        this.line = line;
-        return line;
-    }
 
     split(_syntax) {
         return [this];

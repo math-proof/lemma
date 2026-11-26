@@ -20,11 +20,11 @@
  *      regex in fixture order.
  *   6. `dag` — check each indexed graph and compare the base DAG from JSON
  *      with the base DAG from the regex string.
- *   7. `fingerprint` — require the infix rendering of `toJSON` to equal the
- *      stored field. Free leaves are named by first appearance, so `√a + a²`
- *      is `√$1 + $1²` while `√a + b²` is `√$1 + $2²`. Bound variables of sums, products, and
- *      quantifiers are De Bruijn `?0`, `?1`, … (`?0` is nearest); `ℙ[π]`,
- *      `∇[x]`, and `∂[x]` do not bind, but `∇[x = x₀]` and `∂[x = x₀]` do.
+ *   7. `fingerprint` — require the display infix rendering of `toJSON` to equal
+ *      the stored field. Free leaves are named by first appearance, so `√a + a²`
+ *      is `√f₁ + f₁²` while `√a + b²` is `√f₁ + f₂²`. Bound variables of sums,
+ *      products, and quantifiers are De Bruijn `b₀`, `b₁`, … (`b₀` is nearest);
+ *      `ℙ[π]`, `∇[x]`, and `∂[x]` do not bind, but `∇[x = x₀]` and `∂[x = x₀]` do.
  *
  * The runner never writes to the fixtures; regenerating them is a separate,
  * deliberate step.
@@ -219,8 +219,9 @@ for (const name of files) {
       problems.push(`json mismatch\n  got:  ${show(fresh)}\n  want: ${show(doc.json)}`);
     }
 
-    // Check 7: leaf-identity fingerprint, printed infix. `toJSON` names a leaf
-    // on its first appearance, so `√a + a²` shares `$1` while `√a + b²` gets `$1`/`$2`.
+    // Check 7: leaf-identity fingerprint, printed infix in display form.
+    // `toJSON` names a leaf on its first appearance, so `√a + a²` shares `f₁`
+    // while `√a + b²` gets `f₁`/`f₂`. Bound variables print as `b₀`, `b₁`, ….
     if (typeof doc.fingerprint !== "string" || doc.fingerprint === "") {
       problems.push("fingerprint is missing");
     } else {

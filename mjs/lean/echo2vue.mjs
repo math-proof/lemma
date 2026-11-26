@@ -9,7 +9,7 @@ import { exec, spawn } from 'child_process';
 import { promisify } from 'util';
 import { REPO_ROOT } from './modulePath.mjs';
 import { leanEchoPath } from './fetchLemmaMysql.mjs';
-import { LeanModule, LeanTactic, LeanToken } from '../../js/parser/lean.js';
+import { Lean, LeanModule, LeanTactic, LeanToken } from '../../js/parser/lean.js';
 import { completeAxiomMessage, extractBareAxiomReports, splitAxiomReports } from './lint/axiomRules.mjs';
 
 const execAsync = promisify(exec);
@@ -286,8 +286,10 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
   // Echo the same declarations as a plain file: drop the header and the `public` modifiers.
   const [header] = tree.args;
   if (header instanceof LeanToken && header.text === 'module') {
+    const headerLine = header.line ?? 1;
     tree.kwargs.moduleFile = true;
     tree.args.shift();
+    Lean.shiftLines(tree, headerLine + 1, -1);
     for (const stmt of tree.args) {
       if (isLeanImport(stmt)) stmt.kwargs.accessibility = undefined;
     }
@@ -382,7 +384,6 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
   const structs = {};
   const error = [];
 
-  tree.set_line(1);
   const modArgs = tree.args;
   const end = modArgs[modArgs.length - 1];
   const expectedLines = (codeStr.match(/\n/g) || []).length + 1;

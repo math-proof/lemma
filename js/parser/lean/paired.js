@@ -189,16 +189,6 @@ export class LeanPairedGroup extends Closable(LeanUnary) {
         if (this.parent) return this.parent.push_right(funcName);
     }
 
-    set_line(line) {
-        this.line = line;
-        const arg = this.arg;
-        const hasNewline = arg instanceof L.LeanStatements;
-        if (hasNewline) line++;
-        line = arg.set_line(line);
-        if (hasNewline) line++;
-        return line;
-    }
-
     strFormat(format) {
         format = format || this.argFormat();
         const {operator} = this;
@@ -1269,14 +1259,6 @@ export class LeanBrace extends LeanPairedGroup {
             p instanceof L.LeanArgsCommaSeparated ||
             p instanceof LeanPairedGroup
         );
-    }
-
-    set_line(line) {
-        if (!this.inline) return super.set_line(line);
-        // `{ first⏎ … }`: the body starts on the `{` line and the `}` closes the last field's line
-        this.line = line;
-        line = this.arg.set_line(line);
-        return this.closeIndent !== undefined && this.is_closed ? line + 1 : line;
     }
 
     strFormat(format) {

@@ -1447,6 +1447,8 @@ export class LeanModule extends LeanStatements {
         const node = new L.Lean_import(this.create_property(module), 0, 0);
         const first = this.args[0];
         if (!(first instanceof L.LeanToken && first.text === 'module')) {
+            Lean.shiftLines(this, 1, 1);
+            node.line = 1;
             this.args.unshift(node);
             return;
         }
@@ -1455,6 +1457,9 @@ export class LeanModule extends LeanStatements {
         node.kwargs.accessibility = 'public';
         let index = 1;
         if (this.args[index] instanceof L.LeanCaret) index++;
+        const at = this.args[index]?.line ?? (index + 1);
+        Lean.shiftLines(this, at, 1);
+        node.line = at;
         this.args.splice(index, 0, node);
     }
 

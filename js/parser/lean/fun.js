@@ -201,22 +201,6 @@ export class Lean_fun extends LeanArgs {
         return caret;
     }
 
-    /**
-     * `fun` occupies its own line; each block arm starts on a new line. Inline arms
-     * share the `fun` line, so this mirrors `strFormat` exactly for the line count.
-     */
-    set_line(line) {
-        this.line = line;
-        if (!this.is_match_lambda) return super.set_line(line);
-        let l = line;
-        for (const bar of this.args) {
-            if (bar == null) continue;
-            l += bar.newlineCount ?? 0;
-            l = bar.set_line(l);
-        }
-        return l;
-    }
-
     latexFormat() {
         if (this.is_match_lambda) {
             const cases = Array(this.args.length).fill('%s').join(' \\\\ ');

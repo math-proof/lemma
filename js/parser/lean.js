@@ -42,7 +42,6 @@ const L = Lean.classes;
 export {
     token2classname,
     leanInfixContinue,
-    LeanMultipleLine,
     LeanProp,
     LeanGetElemBase,
     LeanGetElemBaseBinary,

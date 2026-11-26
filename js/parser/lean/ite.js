@@ -245,23 +245,6 @@ export class LeanIte extends LeanArgs {
         if (els instanceof L.LeanStatements || els instanceof LeanIte) els.relocate_last_comment();
     }
 
-    set_line(line) {
-        this.line = line;
-        const $if = this.args[0];
-        const then = this.args[1];
-        const $else = this.args[2];
-        line = $if.set_line(line);
-        if (this.inline) {
-            line = then.set_line(line);
-            return $else.set_line(line);
-        }
-        line++;
-        line = then.set_line(line);
-        line++;
-        if (!($else instanceof LeanIte)) line++;
-        return $else.set_line(line);
-    }
-
     split(syntax) {
         const then = this.then;
         const $else = this.else;
@@ -308,7 +291,11 @@ export class LeanIte extends LeanArgs {
     static echo_part(part, token) {
         const echo = new L.LeanTactic('echo', token.clone(), part.indent, part.level);
         if (part instanceof L.LeanStatements) part.unshift(echo);
-        else if (part.parent)
+        else if (part.parent) {
+            const at = part.line ?? 1;
+            Lean.shiftLines(part.root, at, 1);
+            echo.line = at;
             part.parent.replace(part, new L.LeanStatements([echo, part], part.indent, part.level));
+        }
     }
 }

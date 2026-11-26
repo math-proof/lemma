@@ -127,14 +127,14 @@ function stackText(rawChildren) {
     ? (Array.isArray(domain.And) ? domain.And : [domain.And])
     : [domain];
   const items = bounds.map((part) => infix(part).text).filter(Boolean).join(', ');
-  const body = rawChildren.slice(1).map(infix).filter((part) => part.text)
+  const body = rawChildren.slice(1).map((part) => infix(part)).filter((part) => part.text)
     .map((part) => part.text)
     .join(', ');
   return { text: body ? `[${items}] ${body}` : `[${items}]`, prec: 10 };
 }
 
 function postfix(arg, op, prec = POST) {
-  // Parenthesise an application argument: `(RotaryOn f g)ᵀ`, not `RotaryOn f gᵀ`.
+  // An application argument gets parentheses (`(RotaryOn f g)ᵀ`).
   const text = arg.prec <= CALL ? `(${arg.text})` : arg.text;
   return { text: text + op, prec };
 }
@@ -152,7 +152,10 @@ function indexed(op, children) {
   return { text: body ? `${op}[${head.text}] ${body}` : `${op}[${head.text}]`, prec: 10 };
 }
 
-/** One tree, or one line per tree when a step stored several. */
+/** One tree, or one line per tree when a step stored several. Renders free
+ * leaves `$n` as `fₙ` and bound leaves `?n` as `bₙ`, with Lean-like
+ * application juxtaposition.
+ */
 export function infixFingerprint(json) {
   if (Array.isArray(json)) return json.map((tree) => infix(tree).text).filter(Boolean).join('\n');
   return infix(json).text;
@@ -162,10 +165,10 @@ function infix(json) {
   if (json == null || json === '') return { text: '', prec: ATOM };
   if (typeof json === 'string') return { text: leafText(json), prec: ATOM };
   if (Array.isArray(json)) {
-    // Plain array = juxtaposition of one expression applied to args
+    // A plain array is one expression applied to arguments
     // (e.g. `(Matrix.rotaryOn u v θ).transpose i j`). First element is the
     // head expression, rest are arguments — all space-separated.
-    const parts = json.map(infix).filter((part) => part.text);
+    const parts = json.map((part) => infix(part)).filter((part) => part.text);
     if (parts.length > 1) {
       return {
         text: parts.map((part) => (part.prec < CALL ? `(${part.text})` : part.text)).join(' '),
@@ -178,7 +181,7 @@ function infix(json) {
   const head = Object.keys(json)[0];
   const rawChildren = Array.isArray(json[head]) ? json[head] : [json[head]];
   if (head === 'Stack') return stackText(rawChildren);
-  const children = rawChildren.map(infix).filter((part) => part.text);
+  const children = rawChildren.map((part) => infix(part)).filter((part) => part.text);
   const delim = DELIM[head];
   if (delim) return delimited(delim[0], delim[1], children);
   const span = INTERVAL[head];
@@ -222,8 +225,8 @@ function infix(json) {
     return { text: `${binder} ${dom.text}, ${rest.map((part) => part.text).join(', ')}`, prec: binderPrec };
   }
   if (binder && children.length === 1) return { text: `${binder} ${children[0].text}`, prec: binderPrec };
-  // Everything else is plain application: Lean juxtaposition, with parentheses
-  // around any argument looser than an application (`Fin f₁`, `Icc a b`).
+  // Plain application is Lean juxtaposition, with parentheses around any
+  // argument looser than an application (`Fin f₁`, `Icc a b`).
   const args = children
     .map((part) => (part.prec < CALL ? `(${part.text})` : part.text))
     .join(' ');

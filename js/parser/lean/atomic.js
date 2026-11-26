@@ -178,7 +178,7 @@ export class LeanToken extends Lean {
         super(indent, level, parent);
         this.text = text;
         // Leaf tokens are created while the parser is at their token, so this is
-        // the exact 1-based source line. `set_line` may overwrite it for echo.
+        // the exact 1-based source line.
         if (Lean.currentLine != null) this.line = Lean.currentLine;
     }
 
@@ -470,11 +470,6 @@ export class LeanBlockComment extends Lean {
         return '';
     }
 
-    set_line(line) {
-        this.line = line;
-        return line + (this.text.match(/\n/g)?.length ?? 0);
-    }
-
     strFormat() {
         return `/-${this.text}-/`;
     }
@@ -499,13 +494,6 @@ export class LeanDocString extends LeanBlockComment {
 
     is_indented() {
         return false;
-    }
-
-    set_line(line) {
-        this.line = line;
-        let lineNo = line + 1;
-        lineNo += this.text.match(/\n/g)?.length ?? 0;
-        return lineNo + 1;
     }
 
     strFormat() {

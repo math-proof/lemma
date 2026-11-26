@@ -74,14 +74,6 @@ export class LeanBigOperator extends LeanArgs {
         return ' ';
     }
 
-    set_line(line) {
-        this.line = line;
-        line = this.bound.set_line(line);
-        const s = this.sep();
-        if (s && s[0] === '\n') line++;
-        return this.scope.set_line(line);
-    }
-
     strFormat() {
         const op = this.operator;
         if (this.args.length === 1) return `${op} %s,`;
@@ -937,15 +929,6 @@ export class Lean_partial extends LeanBigOperator {
         throw new Error('Lean_partial.insert_comma: unexpected');
     }
 
-    set_line(line) {
-        this.line = line;
-        line = this.bound.set_line(line);
-        if (!this.scope) return line;
-        const s = this.sep();
-        if (s && s[0] === '\n') line++;
-        return this.scope.set_line(line);
-    }
-
     strFormat() {
         if (!this.scope) return `${this.operator}%s`;
         return `${this.operator}[%s]${this.sep()}%s`;
@@ -1034,15 +1017,6 @@ export class Lean_nabla extends LeanBigOperator {
     insert_comma(caret) {
         if (this.parent) return this.parent.insert_comma(this);
         throw new Error('Lean_nabla.insert_comma: unexpected');
-    }
-
-    set_line(line) {
-        this.line = line;
-        line = this.bound.set_line(line);
-        if (!this.scope) return line;
-        const s = this.sep();
-        if (s && s[0] === '\n') line++;
-        return this.scope.set_line(line);
     }
 
     strFormat() {
@@ -1179,13 +1153,6 @@ export class LeanRandomBigOp extends LeanBigOperator {
             }
         }
         return super.append($new, func);
-    }
-
-    set_line(line) {
-        this.line = line;
-        line = this.bound.set_line(line);
-        if (!this.scope) return line;
-        return this.scope.set_line(line);
     }
 
     strFormat() {
@@ -1342,15 +1309,6 @@ export class LeanLimitsBigOp extends LeanBigOperator {
     get stack_priority() {
         if (this.scope) return L.LeanAdd.input_priority;
         return 67;
-    }
-
-    set_line(line) {
-        this.line = line;
-        line = this.bound.set_line(line);
-        if (!this.scope) return line;
-        const s = this.sep();
-        if (s && s[0] === '\n') line++;
-        return this.scope.set_line(line);
     }
 
     strFormat() {

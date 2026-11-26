@@ -76,5 +76,5 @@
       }
     ]
   },
-  "fingerprint": "∀ ?0 : $1, Measurable($2[Slice(?0)])"
+  "fingerprint": "∀ b₀ : f₁, Measurable f₂[Slice b₀]"
 }
