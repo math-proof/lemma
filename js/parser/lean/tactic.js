@@ -65,7 +65,7 @@ export class LeanSyntax extends LeanArgs {
         // on-line `LeanArgsSpaceSeparated` in `LeanArgsIndented` so serialize
         // keeps newlines. Pushing into the space-list used to flatten them.
         if (caret === this.arg && this.indent < indent && caret instanceof L.LeanArgsSpaceSeparated) {
-            const nlCaret = new L.LeanCaret(indent, caret.level);
+            const nlCaret = new L.LeanCaret(indent, caret.level).stampFollowingLine();
             const nl = new L.LeanArgsNewLineSeparated([nlCaret], indent, caret.level);
             const c = nl.push_newlines(newline_count - 1);
             this.replace(caret, new L.LeanArgsIndented(caret, nl, this.indent, c.level));
@@ -74,7 +74,7 @@ export class LeanSyntax extends LeanArgs {
         // Bare keyword whose operand starts on the following, deeper-indented line
         // (a `show` followed by a deeper-indented operand line): the operand belongs to this node, not to a new statement.
         if (caret === this.arg && caret instanceof L.LeanCaret && this.indent < indent && !leanIsInfixContinue(next)) {
-            const $new = new L.LeanCaret(indent, caret.level);
+            const $new = new L.LeanCaret(indent, caret.level).stampFollowingLine(newline_count - 1);
             this.replace(caret, $new);
             return $new;
         }
@@ -446,14 +446,14 @@ export class LeanTactic extends LeanSyntax {
             // LeanArgsIndented. Old code pushed into the space-list at `this.indent`,
             // which flattened the hang on serialize.
             if (this.indent < indent && caret instanceof L.LeanArgsSpaceSeparated) {
-                const $new = new L.LeanCaret(indent, caret.level);
+                const $new = new L.LeanCaret(indent, caret.level).stampFollowingLine();
                 const nl = new L.LeanArgsNewLineSeparated([$new], indent, $new.level);
                 const c = nl.push_newlines(newline_count - 1);
                 this.replace(caret, new L.LeanArgsIndented(caret, nl, this.indent, c.level));
                 return c;
             }
             if (this.indent < indent && (caret instanceof L.LeanToken || caret instanceof L.LeanProperty || caret instanceof L.LeanParenthesis)) {
-                const $new = new L.LeanCaret(indent, caret.level);
+                const $new = new L.LeanCaret(indent, caret.level).stampFollowingLine();
                 const nl = new L.LeanArgsNewLineSeparated([$new], indent, $new.level);
                 const c = nl.push_newlines(newline_count - 1);
                 this.replace(caret, new L.LeanArgsIndented(caret, nl, caret.indent, c.level));
@@ -461,12 +461,13 @@ export class LeanTactic extends LeanSyntax {
             }
             if (caret instanceof L.LeanCaret && this.indent < indent) {
                 caret.indent = indent;
+                caret.stampFollowingLine();
                 const nl = new L.LeanArgsNewLineSeparated([caret], indent, caret.level);
                 this.replace(caret, nl);
                 return nl.push_newlines(newline_count - 1);
             }
             if (next === '<') {
-                const c = new L.LeanCaret(indent, caret.level);
+                const c = new L.LeanCaret(indent, caret.level).stampFollowingLine(newline_count - 1);
                 this.push(c);
                 return c;
             }
@@ -739,11 +740,12 @@ export class LeanBy extends LeanUnary {
             // proof block instead of bubbling to `LeanModule` (AST → string → AST).
             indent = indent >= this.indent ? indent : this.indent + 2;
             caret.indent = indent;
+            caret.stampFollowingLine();
             this.arg = new L.LeanStatements([caret], indent, caret.level);
             if (pendingComment !== undefined)
                 this.arg.unshift(new L.LeanLineComment(pendingComment, indent, caret.level));
             for (let i = 1; i < newline_count; ++i) {
-                caret = new L.LeanCaret(indent, caret.level);
+                caret = new L.LeanCaret(indent, caret.level).stampFollowingLine(i);
                 this.arg.push(caret);
             }
             return caret;
@@ -814,9 +816,10 @@ export class LeanFrom extends LeanUnary {
         if (this.indent <= indent && caret instanceof L.LeanCaret && caret === this.arg) {
             indent = indent >= this.indent ? indent : this.indent + 2;
             caret.indent = indent;
+            caret.stampFollowingLine();
             this.arg = new L.LeanStatements([caret], indent, caret.level);
             for (let i = 1; i < newline_count; i++) {
-                caret = new L.LeanCaret(indent, caret.level);
+                caret = new L.LeanCaret(indent, caret.level).stampFollowingLine(i);
                 this.arg.push(caret);
             }
             return caret;
@@ -1029,7 +1032,7 @@ export class LeanUsing extends LeanUnary {
     insert_newline(caret, newline_count, indent, next) {
         if (this.indent < indent && caret === this.arg) {
             if (caret instanceof L.LeanArgsSpaceSeparated) {
-                const $new = new L.LeanCaret(indent, caret.level);
+                const $new = new L.LeanCaret(indent, caret.level).stampFollowingLine(newline_count - 1);
                 caret.push($new);
                 return $new;
             }
@@ -1038,7 +1041,7 @@ export class LeanUsing extends LeanUnary {
                 caret instanceof L.LeanProperty ||
                 caret instanceof L.LeanParenthesis
             ) {
-                const $new = new L.LeanCaret(indent, caret.level);
+                const $new = new L.LeanCaret(indent, caret.level).stampFollowingLine();
                 const nl = new L.LeanArgsNewLineSeparated([$new], indent, $new.level);
                 const c = nl.push_newlines(newline_count - 1);
                 this.arg = new L.LeanArgsIndented(caret, nl, caret.indent, c.level);
@@ -1051,9 +1054,10 @@ export class LeanUsing extends LeanUnary {
         if (this.indent <= indent && caret instanceof L.LeanCaret && caret === this.arg) {
             if (indent === this.indent) indent = this.indent + 2;
             caret.indent = indent;
+            caret.stampFollowingLine();
             this.arg = new L.LeanStatements([caret], indent, caret.level);
             for (let i = 1; i < newline_count; i++) {
-                caret = new L.LeanCaret(indent, caret.level);
+                caret = new L.LeanCaret(indent, caret.level).stampFollowingLine(i);
                 this.arg.push(caret);
             }
             return caret;
@@ -1088,9 +1092,10 @@ export class LeanAt extends LeanUnary {
         if (this.indent <= indent && caret instanceof L.LeanCaret && caret === this.arg) {
             if (indent === this.indent) indent = this.indent + 2;
             caret.indent = indent;
+            caret.stampFollowingLine();
             this.arg = new L.LeanStatements([caret], indent, caret.level);
             for (let i = 1; i < newline_count; i++) {
-                caret = new L.LeanCaret(indent, caret.level);
+                caret = new L.LeanCaret(indent, caret.level).stampFollowingLine(i);
                 this.arg.push(caret);
             }
             return caret;
@@ -1145,9 +1150,10 @@ export class LeanIn extends LeanUnary {
         if (this.indent <= indent && caret instanceof L.LeanCaret && caret === this.arg) {
             if (indent === this.indent) indent = this.indent + 2;
             caret.indent = indent;
+            caret.stampFollowingLine();
             this.arg = new L.LeanStatements([caret], indent, caret.level);
             for (let i = 1; i < newline_count; i++) {
-                caret = new L.LeanCaret(indent, caret.level);
+                caret = new L.LeanCaret(indent, caret.level).stampFollowingLine(i);
                 this.arg.push(caret);
             }
             return caret;
@@ -1189,9 +1195,10 @@ export class LeanGeneralizing extends LeanUnary {
         if (this.indent <= indent && caret instanceof L.LeanCaret && caret === this.arg) {
             if (indent === this.indent) indent = this.indent + 2;
             caret.indent = indent;
+            caret.stampFollowingLine();
             this.arg = new L.LeanStatements([caret], indent, caret.level);
             for (let i = 1; i < newline_count; i++) {
-                caret = new L.LeanCaret(indent, caret.level);
+                caret = new L.LeanCaret(indent, caret.level).stampFollowingLine(i);
                 this.arg.push(caret);
             }
             return caret;
@@ -1344,11 +1351,12 @@ export class LeanTacticBlock extends LeanUnary {
                 if (this.indent <= indent) {
                     if (indent === this.indent) indent = this.indent + 2;
                     caret.indent = indent;
+                    caret.stampFollowingLine();
                     const stmts = new L.LeanStatements([caret], indent, caret.level);
                     this.arg = stmts;
                     let last = caret;
                     for (let i = 1; i < newline_count; i++) {
-                        last = new L.LeanCaret(indent, caret.level);
+                        last = new L.LeanCaret(indent, caret.level).stampFollowingLine(i);
                         stmts.push(last);
                     }
                     return last;
@@ -1358,7 +1366,7 @@ export class LeanTacticBlock extends LeanUnary {
                 if (indent >= block.indent) {
                     let last = null;
                     for (let i = 0; i < newline_count; i++) {
-                        last = new L.LeanCaret(block.indent, block.level);
+                        last = new L.LeanCaret(block.indent, block.level).stampFollowingLine(i);
                         block.push(last);
                     }
                     return last;
@@ -1366,7 +1374,7 @@ export class LeanTacticBlock extends LeanUnary {
             } else if (this.indent < indent) {
                 const oldArg = this.arg;
                 oldArg.indent = indent;
-                const c = new L.LeanCaret(indent, oldArg.level);
+                const c = new L.LeanCaret(indent, oldArg.level).stampFollowingLine(newline_count - 1);
                 this.arg = new L.LeanStatements([oldArg, c], indent, c.level);
                 this.inlineFirst = true;
                 return c;

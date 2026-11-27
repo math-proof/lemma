@@ -19,8 +19,12 @@ export class LeanArithmetic extends LeanBinary {
     static input_priority = 67;
 
     insert_newline(caret, newline_count, indent, next) {
-        if (caret instanceof L.LeanCaret)
+        if (caret instanceof L.LeanCaret) {
+            // `*\n      rhs`: the hole was opened on the operator line. The
+            // next term starts at the column of this continuation.
+            caret.indent = indent;
             return caret;
+        }
         return this.parent.insert_newline(this, newline_count, indent, next);
     }
 
@@ -904,6 +908,19 @@ export class LeanPlus extends LeanUnaryArithmeticPre {
     }
     get command() {
         return '+';
+    }
+}
+
+/** Mathlib `postfix:1024 "ˣ"` (`αˣ` = `Units α`). A space is not the notation. */
+export class LeanUnits extends LeanUnaryArithmeticPost {
+    static { this.register(); }
+
+    static input_priority = 1024;
+    get operator() {
+        return 'ˣ';
+    }
+    get command() {
+        return '^\\times';
     }
 }
 

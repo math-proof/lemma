@@ -87,7 +87,7 @@ const self = new Vue({
 				return 'search a sentence, e.g. 悬链线';
 			if (this.mode == 'path')
 				return 'search a path token, e.g. Cosh';
-			return 'type latex command: \\sqrt,\\sum,\\int,\\prod,\\McB,\\bbP,\\pi,\\in,\\ge,\\le,\\ne,\\subset,\\^2,\\^m';
+			return '\\sqrt\\sum\\int\\prod\\McB\\MfD\\bbP\\pi\\in\\ge\\le\\ne\\subset\\supset\\^2\\^m\\cup\\cap\\union\\inter...';
 		},
 
 		action() {

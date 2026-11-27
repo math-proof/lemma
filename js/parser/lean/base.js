@@ -192,7 +192,17 @@ export class Lean extends IndentedNode {
             args.length === 0
                 ? format
                 : String(format).format(...args.map((a) => (a instanceof Lean ? String(a) : a)));
-        return (this.is_indented() ? ' '.repeat(this.indent) : '') + inner;
+        // `is_indented` is overridden to false for operands of `≤` / `•`. A rhs
+        // whose separator is a newline is still the first token of that line.
+        const p = this.parent;
+        const hanging =
+            p instanceof L.LeanBinary &&
+            p.rhs === this &&
+            !(this instanceof L.LeanStatements) &&
+            !(this instanceof L.LeanArgsNewLineSeparated) &&
+            !(this instanceof L.LeanArgsIndented) &&
+            p.sep() === '\n';
+        return ((this.is_indented() || hanging) ? ' '.repeat(this.indent) : '') + inner;
     }
 
     /**
@@ -383,10 +393,23 @@ export class Lean extends IndentedNode {
 
     is_indented() {
         const p = this.parent;
-        return p instanceof L.LeanArgsCommaNewLineSeparated ||
+        if (
+            p instanceof L.LeanArgsCommaNewLineSeparated ||
             p instanceof L.LeanArgsNewLineSeparated ||
             p instanceof L.LeanStatements ||
-            (p instanceof L.LeanIte && !p.inline && (this === p.then || this === p.else));
+            (p instanceof L.LeanIte && !p.inline && (this === p.then || this === p.else))
+        ) return true;
+        // `a ≤\n    b` / `x •\n    y`: the rhs is the first token of its line.
+        // Newline-separated containers already indent their own children.
+        if (
+            p instanceof L.LeanBinary &&
+            p.rhs === this &&
+            !(this instanceof L.LeanStatements) &&
+            !(this instanceof L.LeanArgsNewLineSeparated) &&
+            !(this instanceof L.LeanArgsIndented) &&
+            p.sep() === '\n'
+        ) return true;
+        return false;
     }
 
     isMatMulContext() {
@@ -1245,8 +1268,9 @@ export class Lean extends IndentedNode {
                         }
                         comment += tokens[self.start_idx];
                     }
-                    if (tokens[self.start_idx + 1] === '\n') self.start_idx++;
-                    return this.push_block_comment(comment, docstring, commentLine);
+                    const ateNewline = tokens[self.start_idx + 1] === '\n';
+                    if (ateNewline) self.start_idx++;
+                    return this.push_block_comment(comment, docstring, commentLine, ateNewline);
                 }
                 if (tokens[self.start_idx + 1] === '/') {
                     self.start_idx++;
@@ -1520,6 +1544,11 @@ export class Lean extends IndentedNode {
                 return this.push_post_unary('LeanAdjoint');
             case '⁺':
                 return this.push_post_unary('LeanPosPart');
+            case 'ˣ':
+                // Mathlib `postfix:1024 "ˣ"` (`αˣ`). A space makes `ˣ` its own identifier.
+                if (this instanceof L.LeanCaret || (self.start_idx && tokens[self.start_idx - 1] === ' '))
+                    return this.parent.insert_word(this, token);
+                return this.push_post_unary('LeanUnits');
             case '⁻':
                 if (tokens[self.start_idx + 1] === '¹') {
                     self.start_idx++;
@@ -1904,6 +1933,18 @@ export class Lean extends IndentedNode {
             const caret = new L.LeanCaret(this.indent, level);
             parent.replace(this, new Ctor(this, caret, this.indent, level));
             return caret;
+        }
+        // A trailing caret in a binder list is only the cursor for a following
+        // `:`. Leaving it there prints indent spaces on the colon's line, which
+        // have no span, so the line check compares the caret to the first binder.
+        if (
+            Ctor === L.LeanColon &&
+            this instanceof L.LeanCaret &&
+            parent instanceof L.LeanArgsNewLineSeparated &&
+            parent.args[parent.args.length - 1] === this
+        ) {
+            parent.args.pop();
+            this.parent = null;
         }
         return parent.push_binary(Ctor, skipBraceShortcut);
     }

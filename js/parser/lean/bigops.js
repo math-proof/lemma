@@ -71,6 +71,10 @@ export class LeanBigOperator extends LeanArgs {
 
     sep() {
         if (this.scope instanceof L.LeanArgsNewLineSeparated) return "\n";
+        // `∀ y : Fin k,\n    y ∈ …` — the body starts on the next line, so a space
+        // after the comma glues that line onto the binder.
+        const scopeLine = this.scope?.line;
+        if (typeof scopeLine === 'number' && scopeLine > this.line) return "\n";
         return ' ';
     }
 

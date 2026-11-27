@@ -197,6 +197,14 @@ export class LeanColon extends LeanBinary {
 
     strFormat() {
         const sep = this.sep();
+        const lhsEnd = Lean.lastSourceLine(this.lhs);
+        // `:\n` was parsed on its own line after the binders. The cursor caret
+        // that used to hold that break is dropped in `push_binary`.
+        if (typeof this._birthLine === 'number' && lhsEnd >= 0 && this._birthLine > lhsEnd) {
+            const binders = this.lhs instanceof L.LeanArgsIndented ? this.lhs.rhs : this.lhs;
+            const ind = binders instanceof L.LeanArgsNewLineSeparated ? (binders.indent ?? 0) : (this.lhs?.indent ?? 0);
+            return `%s\n${' '.repeat(ind)}${this.operator}${sep}%s`;
+        }
         let first = '%s';
         if (!this.isGetElemIndexColon()) {
             if (sep === ' ') {

@@ -56,7 +56,14 @@ export class LeanBinaryBoolean extends LeanProp(LeanBinary) {
     }
 
     sep() {
-        return this.rhs instanceof L.LeanStatements ? '\n' : ' ';
+        // `a ∈\n    s` keeps the break. A space glues the set onto the operator
+        // line while the set's nodes stay stamped on the following line.
+        if (this.rhs instanceof L.LeanArgsNewLineSeparated || this.rhs instanceof L.LeanStatements)
+            return '\n';
+        const lhsEnd = Lean.lastSourceLine(this.lhs);
+        const rhsLine = this.rhs?.line;
+        if (lhsEnd >= 0 && typeof rhsLine === 'number' && rhsLine > lhsEnd) return '\n';
+        return ' ';
     }
 
     strFormat() {

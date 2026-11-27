@@ -1409,13 +1409,13 @@ export class LeanArgsNewLineSeparated extends LeanArgs {
             // Multiline app already has ≥2 lines: next indented line is another arg,
             // not nested under a bare Property/Parenthesis (e.g. `(x).isLt` then more args).
             if (this.args.length >= 2) {
-                const c = new L.LeanCaret(indent, caret.level);
+                const c = new L.LeanCaret(indent, caret.level).stampFollowingLine(newline_count - 1);
                 this.push(c);
                 return c;
             }
             const $new = this.push_args_indented(indent, newline_count);
             if ($new) return $new;
-            const c = new L.LeanCaret(indent, caret.level);
+            const c = new L.LeanCaret(indent, caret.level).stampFollowingLine(newline_count - 1);
             this.push(c);
             return c;
         }
@@ -1424,7 +1424,7 @@ export class LeanArgsNewLineSeparated extends LeanArgs {
             // return super.insert_newline(caret, newline_count, indent, next);
         if (last === caret) {
             for (let i = 0; i < newline_count; ++i) {
-                caret = new L.LeanCaret(indent, caret.level);
+                caret = new L.LeanCaret(indent, caret.level).stampFollowingLine(i);
                 this.push(caret);
             }
             return caret;
@@ -1460,7 +1460,9 @@ export class LeanArgsNewLineSeparated extends LeanArgs {
 
     push_newlines(newline_count) {
         for (let i = 0; i < newline_count; ++i) {
-            this.push(new L.LeanCaret(this.indent, this.level));
+            // Args already placed occupy the earlier lines of this break.
+            const caret = new L.LeanCaret(this.indent, this.level).stampFollowingLine(this.args.length);
+            this.push(caret);
         }
         return this.args[this.args.length - 1];
     }
@@ -1532,7 +1534,7 @@ export class LeanArgsIndented extends LeanBinary {
         const last = this.args[this.args.length - 1];
         if (last === caret) {
             for (let i = 0; i < newline_count; ++i) {
-                caret = new L.LeanCaret(indent, caret.level);
+                caret = new L.LeanCaret(indent, caret.level).stampFollowingLine(i);
                 this.push(caret);
             }
             return caret;
@@ -1684,6 +1686,13 @@ export class LeanArgsIndented extends LeanBinary {
 
 export class LeanArgsCommaSeparated extends LeanArgs {
     static { this.register(); }
+
+    /**
+     * A continuation row (`a,\n  b`) is built while `currentLine` is still the
+     * comma's line, so `_birthLine` is one early. The text starts at the first
+     * item, same as `LeanArgsNewLineSeparated`.
+     */
+    static lineStartsAtChild = true;
 
     /**
      * Under LeanBar: LeanColon input priority; else one less so `:` binds in the right place.

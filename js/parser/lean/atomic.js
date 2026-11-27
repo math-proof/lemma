@@ -40,6 +40,17 @@ export class LeanCaret extends Lean {
         return '';
     }
 
+    /**
+     * The `\n` token is the line it ends. This caret receives the following
+     * line (`k` counts extra breaks).
+     * @param {number} [k]
+     * @returns {this}
+     */
+    stampFollowingLine(k = 0) {
+        if (Lean.currentLine != null) this.line = Lean.currentLine + 1 + k;
+        return this;
+    }
+
     push_accessibility($new, $accessibility) {
         const Ctor = L[$new];
         if (!Ctor) {
@@ -49,7 +60,7 @@ export class LeanCaret extends Lean {
         return this;
     }
 
-    push_block_comment(comment, docstring, commentLine = null) {
+    push_block_comment(comment, docstring, commentLine = null, ateNewline = false) {
         const parent = this.parent;
         const Cls = docstring ? LeanDocString : LeanBlockComment;
         const trailing = comment.match(/\n+ *$/)?.[0] ?? '';
@@ -63,6 +74,13 @@ export class LeanCaret extends Lean {
         if (commentLine != null) node.line = commentLine;
         parent.replace(this, node);
         parent.push(this);
+        // This caret was the comment's opening line. It is now the next
+        // statement, which renders after the comment's full span. A one-line
+        // comment only moves when the newline after `-/` was consumed; that
+        // caret is the following line (often the blank line before the lemma).
+        const span = node.height;
+        if (typeof this.line === 'number' && (span > 1 || (ateNewline && span >= 1)))
+            this.line += span > 1 ? span : 1;
         return this;
     }
 

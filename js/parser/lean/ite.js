@@ -134,7 +134,11 @@ export class LeanIte extends LeanArgs {
             if (caret instanceof L.LeanTactic || caret instanceof L.Lean_let) {
                 const stmt = new L.LeanStatements([caret], caret.indent, caret.level);
                 this.then = stmt;
-                for (let i = 0; i < newline_count; i++) {
+                // The break before `else` is emitted by `strFormat`. A caret in
+                // that slot has no span; prepending `echo` then shifts it off
+                // the branch's first line.
+                const holes = next === 'else' ? newline_count - 1 : newline_count;
+                for (let i = 0; i < holes; i++) {
                     caret = new L.LeanCaret(caret.indent, caret.level);
                     stmt.push(caret);
                 }
@@ -284,7 +288,12 @@ export class LeanIte extends LeanArgs {
         const indent_else = ' '.repeat(this.indent);
         const inlineElse = this.newlineBehindElse === false
             && !($else instanceof L.LeanStatements || $else instanceof L.LeanArgsNewLineSeparated);
-        const sep = inlineElse || $else instanceof LeanIte ? ' ' : '\n';
+        // `else⏎  if …` is two lines. `else if …` stays one line when the nested
+        // `if` was parsed on the `else` line (`newlineBehindElse` stays false).
+        const elseIfNextLine = $else instanceof LeanIte && this.newlineBehindElse === true;
+        const sep = elseIfNextLine
+            ? '\n' + ' '.repeat($else.indent ?? this.indent + 2)
+            : (inlineElse || $else instanceof LeanIte ? ' ' : '\n');
         const thenFmt = then == null ? '' : '%s';
         const elseFmt = $else == null ? '' : '%s';
         // A single-statement `then` block reprints with a trailing newline (its trailing

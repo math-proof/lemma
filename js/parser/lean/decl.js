@@ -146,6 +146,13 @@ export class Lean_def extends LeanArgs {
             if (caret === this.assignment) {
                 const $new = this.push_args_indented(indent, newline_count);
                 if ($new) return $new;
+                // `theorem f {σ : T}\n    (h : P) : Q` — another binder group. The
+                // generic hang only fires for a trailing token or parenthesis on
+                // the declaration itself, not on its parameter list.
+                if (caret instanceof L.LeanArgsSpaceSeparated) {
+                    const hung = caret.push_args_indented(indent, newline_count, false);
+                    if (hung) return hung;
+                }
                 if (caret instanceof L.LeanColon) {
                     if (caret.rhs instanceof L.LeanCaret) {
                         caret = caret.rhs;

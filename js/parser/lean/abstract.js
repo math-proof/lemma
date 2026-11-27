@@ -106,7 +106,7 @@ export class LeanArgs extends Lean {
             end instanceof L.LeanProperty ||
             end instanceof L.LeanParenthesis
         ) {
-            const caret = new L.LeanCaret(indent, end.level);
+            const caret = new L.LeanCaret(indent, end.level).stampFollowingLine();
             const nl = new L.LeanArgsNewLineSeparated([caret], indent, caret.level);
             const c = nl.push_newlines(newline_count - 1);
             this.replace(end, new L.LeanArgsIndented(end, nl, this.indent, c.level));

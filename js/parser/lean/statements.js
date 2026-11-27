@@ -282,6 +282,14 @@ export class LeanStatements extends LeanArgs {
         }
     }
 
+    replace(oldNode, newNode) {
+        const blanks = oldNode?.leadingBlanks || 0;
+        super.replace(oldNode, newNode);
+        if (!blanks) return;
+        const host = (Array.isArray(newNode) ? newNode : [newNode]).find((n) => n && typeof n === 'object');
+        if (host) host.leadingBlanks = (host.leadingBlanks || 0) + blanks;
+    }
+
     insert_if(caret) {
         if (!(caret instanceof L.LeanCaret)) return undefined;
         const last = this.args[this.args.length - 1];
@@ -299,10 +307,19 @@ export class LeanStatements extends LeanArgs {
             }
             // See `LeanModule.insert_newline` — fall through when last arg cannot be wrapped.
         }
+        // A module blank line is its own caret (the line oracle marks those).
+        // Inside a statement list the extra breaks are only a gap before the
+        // next statement: an empty caret there has no rendered span.
+        if (this.constructor === LeanStatements && newline_count > 1) {
+            const blanks = newline_count - 1;
+            caret = new L.LeanCaret(indent, caret.level).stampFollowingLine(blanks);
+            caret.leadingBlanks = blanks;
+            this.push(caret);
+            return caret;
+        }
         for (let k = 0; k < newline_count; ++k) {
-            caret = new L.LeanCaret(indent, caret.level);
             // The `\n` token is the line it ends. The caret is the following line.
-            if (Lean.currentLine != null) caret.line = Lean.currentLine + 1 + k;
+            caret = new L.LeanCaret(indent, caret.level).stampFollowingLine(k);
             this.push(caret);
         }
         return caret;
@@ -398,7 +415,10 @@ export class LeanStatements extends LeanArgs {
     strFormat() {
         const n = this.args.length;
         if (n === 0) return '';
-        let format = Array(n).fill('%s').join('\n');
+        let format = this.args.map((arg, i) => {
+            const gap = arg?.leadingBlanks || 0;
+            return (i === 0 ? '\n'.repeat(gap) : '\n' + '\n'.repeat(gap)) + '%s';
+        }).join('');
         if (this.parent instanceof L.LeanBrace && !this.parent.inline) {
             format = `\n${format}\n${' '.repeat(this.parent.indent)}`;
         }
