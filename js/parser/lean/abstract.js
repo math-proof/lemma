@@ -40,9 +40,7 @@ export class LeanArgs extends Lean {
      * @returns {this}
      */
     clone() {
-        const copy = Object.create(Object.getPrototypeOf(this));
-        Object.assign(copy, this);
-        copy.parent = null;
+        const copy = super.clone();
         copy.args = this.args.map((a) => {
             if (a == null) return a;
             if (typeof a.clone === 'function') return a.clone();

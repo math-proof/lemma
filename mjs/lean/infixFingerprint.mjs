@@ -120,17 +120,30 @@ function chain(spec, children) {
   return acc;
 }
 
-/** `[i < n, j < m] body`. A multi-index bound is stored as `And`, printed with commas. */
 function stackText(rawChildren) {
   const domain = rawChildren[0];
-  const bounds = domain && typeof domain === 'object' && !Array.isArray(domain) && Object.keys(domain)[0] === 'And'
-    ? (Array.isArray(domain.And) ? domain.And : [domain.And])
-    : [domain];
-  const items = bounds.map((part) => infix(part).text).filter(Boolean).join(', ');
   const body = rawChildren.slice(1).map((part) => infix(part)).filter((part) => part.text)
     .map((part) => part.text)
     .join(', ');
-  return { text: body ? `[${items}] ${body}` : `[${items}]`, prec: 10 };
+  const andBounds =
+    domain && typeof domain === 'object' && !Array.isArray(domain) && Object.keys(domain)[0] === 'And'
+      ? (Array.isArray(domain.And) ? domain.And : [domain.And])
+      : null;
+  let head;
+  if (andBounds && andBounds.length > 1) {
+    // And is innermost-first; Lean source order is outer-to-inner.
+    head = [...andBounds].reverse()
+      .map((part) => infix(part).text)
+      .filter(Boolean)
+      .map((text) => `[${text}]`)
+      .join('');
+  } else {
+    const bounds = andBounds
+      ?? (Array.isArray(domain) ? domain : [domain]);
+    const items = bounds.map((part) => infix(part).text).filter(Boolean).join(', ');
+    head = `[${items}]`;
+  }
+  return { text: body ? `${head} ${body}` : head, prec: 10 };
 }
 
 function postfix(arg, op, prec = POST) {
@@ -207,9 +220,15 @@ function infix(json) {
     const b = base.prec < CALL ? `(${base.text})` : base.text;
     return { text: `${b}[${idx.map((part) => part.text).join(', ')}]`, prec: CALL };
   }
-  if (head === 'Fun' && children.length >= 2) {
-    const [dom, ...rest] = children;
-    return { text: `${dom.text} ↦ ${rest.map((part) => part.text).join(', ')}`, prec: 10 };
+  if (head === 'Fun' && rawChildren.length >= 2) {
+    const binders = rawChildren.slice(0, -1);
+    // A binder slot is recorded at its point of introduction. Display its
+    // index at the lambda body, where the final binder has index zero.
+    const names = binders.map((binder, i) => binder === '?0'
+      ? leafText(`?${binders.slice(i + 1).filter(next => next === '?0').length}`)
+      : infix(binder).text);
+    const body = infix(rawChildren.at(-1));
+    return { text: `fun ${names.join(' ')} ↦ ${body.text}`, prec: 10 };
   }
   if (head === 'Ite' && children.length >= 2) {
     const [cond, thenPart, elsePart] = children;

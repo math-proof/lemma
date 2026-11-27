@@ -279,12 +279,22 @@ export class LeanBigOperator extends LeanArgs {
             : bound;
     }
 
-    /** Names bound by this operator (`k ∈ s`, `k : ℕ`, `x = x₀`, or a bare `k`). */
+    /** Names bound by this operator (`k ∈ s`, `k : ℕ`, `i < n`, `x = x₀`, or a bare `k`). */
     binderNames() {
         let b = this.bound;
         if (b instanceof L.LeanArgsSpaceSeparated) b = b.args[0];
         if (b instanceof L.LeanParenthesis) b = b.arg;
-        if (b instanceof L.Lean_in || b instanceof L.LeanColon || b instanceof L.LeanEq) b = b.lhs;
+        if (
+            b instanceof L.Lean_in ||
+            b instanceof L.LeanColon ||
+            b instanceof L.LeanEq ||
+            b instanceof L.Lean_lt ||
+            b instanceof L.Lean_le ||
+            b instanceof L.Lean_gt ||
+            b instanceof L.Lean_ge
+        ) {
+            b = b.lhs;
+        }
         if (b && typeof b.text === 'string' && b.text !== '') return [b.text];
         return [];
     }
@@ -327,7 +337,46 @@ export class LeanBigOperator extends LeanArgs {
             }
             return { Eq: [bound.lhs.toJSON(ctx), bound.rhs.toJSON(ctx)] };
         }
+        if (
+            bound instanceof L.Lean_lt ||
+            bound instanceof L.Lean_le ||
+            bound instanceof L.Lean_gt ||
+            bound instanceof L.Lean_ge
+        ) {
+            if (useDB && this.bindsVariable()) {
+                const rhs = bound.rhs.toJSON(ctx);
+                this.pushBinderNames(ctx);
+                return { [bound.pathToken]: [bound.lhs.toJSON(ctx), rhs] };
+            }
+            return { [bound.pathToken]: [bound.lhs.toJSON(ctx), bound.rhs.toJSON(ctx)] };
+        }
         if (useDB) this.pushBinderNames(ctx);
+        const domain = this.jsonDomain;
+        return domain ? domain.toJSON(ctx) : null;
+    }
+
+    /**
+     * Domain JSON under the current `ctx.binders` (no push). Used after a stacked
+     * chain has pushed every binder so each layer gets absolute De Bruijn
+     * (`?0` innermost) in both the binder leaf and any outer refs in the domain.
+     */
+    jsonDomainSnapshot(ctx) {
+        const bound = this.bound;
+        if (bound instanceof L.Lean_in)
+            return { In: [bound.lhs.toJSON(ctx), bound.rhs.toJSON(ctx)] };
+        if (bound instanceof L.LeanColon)
+            return { Colon: [bound.lhs.toJSON(ctx), bound.rhs.toJSON(ctx)] };
+        if (bound instanceof L.LeanEq)
+            return { Eq: [bound.lhs.toJSON(ctx), bound.rhs.toJSON(ctx)] };
+        // Fin-range sugar `∑ i < n` (and ≤/≥/>): keep the comparison, same as Stack.
+        if (
+            bound instanceof L.Lean_lt ||
+            bound instanceof L.Lean_le ||
+            bound instanceof L.Lean_gt ||
+            bound instanceof L.Lean_ge
+        ) {
+            return { [bound.pathToken]: [bound.lhs.toJSON(ctx), bound.rhs.toJSON(ctx)] };
+        }
         const domain = this.jsonDomain;
         return domain ? domain.toJSON(ctx) : null;
     }
@@ -337,26 +386,42 @@ export class LeanBigOperator extends LeanArgs {
         // Stacked big operators `∑ i ∈ s, ∑ j ∈ t, body` are a single operator
         // whose domains are the conjunction of the binders, innermost first:
         // `∑ k ∈ Icc 1 n, ∑ d ∈ k.divisors, f` →
-        // `{"Sum":[{"And":[{"In":[_]},{"In":[...]}]}, body]}`.
+        // `{"Sum":[{"And":[{"In":["?0",{"Divisors":["?1"]}]},{"In":["?1",{"Icc":[…]}]}]}, body]}`.
         // Only direct nesting merges — `∑ i, (∑ j, f)²` keeps both heads.
-        const domains = [];
-        let node = this;
         const useDB = Array.isArray(ctx?.binders);
         const depth = useDB ? ctx.binders.length : 0;
         try {
-            for (;;) {
-                const domain = node.jsonBinderDomain(ctx);
-                if (domain) domains.push(domain);
-                const scope = node.scope;
-                if (!(scope instanceof this.constructor)) {
-                    const args = [];
-                    if (domains.length > 1) args.push({ And: domains.reverse() });
-                    else if (domains.length === 1) args.push(domains[0]);
-                    if (scope) args.push(scope.toJSON(ctx));
-                    return { [this.pathToken]: args };
-                }
-                node = scope;
+            const chain = [];
+            for (let node = this; ; node = node.scope) {
+                chain.push(node);
+                if (!(node.scope instanceof this.constructor)) break;
             }
+            if (useDB) {
+                for (const node of chain) {
+                    if (node.bindsVariable()) node.pushBinderNames(ctx);
+                }
+            }
+            // Innermost first — same order as body De Bruijn (`?0` nearest).
+            const domains = [];
+            for (let i = chain.length - 1; i >= 0; i--) {
+                const domain = useDB
+                    ? chain[i].jsonDomainSnapshot(ctx)
+                    : chain[i].jsonBinderDomain(ctx);
+                if (domain) domains.push(domain);
+            }
+            const scope = chain[chain.length - 1].scope;
+            const args = [];
+            if (domains.length > 1) args.push({ And: domains });
+            else if (domains.length === 1) args.push(domains[0]);
+            if (scope) {
+                // A single indented body is `NewLineSeparated` → array of one
+                // tree. Unwrap so one-line fingerprint paste keeps the same
+                // `Stack>Div` / `Sum>Exp` edges as the stored conclusion.
+                let body = scope.toJSON(ctx);
+                if (Array.isArray(body) && body.length === 1) body = body[0];
+                args.push(body);
+            }
+            return { [this.pathToken]: args };
         } finally {
             if (useDB) ctx.binders.length = depth;
         }

@@ -99,7 +99,7 @@ export class LeanAssign extends LeanBinary {
             }
         }
         if (rhs instanceof L.LeanArgsIndented) {
-            return '\n';
+            return rhs.line != null && rhs.line === this._birthLine ? ' ' : '\n';
         }
         if (
             rhs instanceof L.Lean_blacktriangleright &&
@@ -136,5 +136,13 @@ export class LeanAssign extends LeanBinary {
     strFormat() {
         const sep = this.sep();
         return `%s ${this.operator}${sep}%s`;
+    }
+
+    strArgs() {
+        const args = super.strArgs();
+        if (this.rhs instanceof L.LeanArgsIndented && this.sep() === ' ') {
+            return [args[0], String(args[1]).replace(/^ +/, '')];
+        }
+        return args;
     }
 }

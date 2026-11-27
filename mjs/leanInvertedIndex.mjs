@@ -41,6 +41,7 @@ import { REPO_ROOT, leanFilePathToModule, moduleToRepoLeanPath } from "./lean/mo
 import { assembleLeanSourceFromPostBody } from "./lean/assembleLemmaPost.mjs";
 import { matchesSubtree } from "./leanSubtreeMatch.mjs";
 import { binderQueryVariants, powerQueryVariants } from "./lean/queryExpansion.mjs";
+import { infixFingerprint } from "./lean/infixFingerprint.mjs";
 
 const LEMMA_ROOT = path.join(REPO_ROOT, "Lemma");
 export const INDEXED_SECTIONS = ["Random", "Complex", "Vector", "Tensor", "Matrix"];
@@ -107,8 +108,14 @@ export function countEdges(json, edges = new Map()) {
   }
   for (const [head, args] of Object.entries(json)) {
     for (const child of Array.isArray(args) ? args : [args]) {
-      if (child == null || typeof child !== "object" || Array.isArray(child)) continue;
-      for (const childHead of Object.keys(child)) {
+      // Singleton arrays are layout-only (`NewLineSeparated` bodies). Pierce so
+      // indented `Stack`/`Sum` bodies still contribute `parent>child` edges.
+      const node =
+        Array.isArray(child) && child.length === 1 && child[0] && typeof child[0] === "object" && !Array.isArray(child[0])
+          ? child[0]
+          : child;
+      if (node == null || typeof node !== "object" || Array.isArray(node)) continue;
+      for (const childHead of Object.keys(node)) {
         const name = `${head}>${childHead}`;
         edges.set(name, (edges.get(name) ?? 0) + 1);
       }
@@ -119,7 +126,8 @@ export function countEdges(json, edges = new Map()) {
 }
 
 export function headsOfQuery(expr) {
-  const source = `private lemma main : ${expr} := by\n  sorry\n`;
+  const sourceText = String(expr ?? "").trim();
+  const source = `private lemma main : ${sourceText} := by\n  sorry\n`;
   const ast = compile(source);
   const lemma = (ast?.args || []).find((a) => {
     const name = a?.constructor?.name;
@@ -134,7 +142,11 @@ export function headsOfQuery(expr) {
   }
   while (node?.constructor?.name === "LeanParenthesis") node = node.arg ?? node.args?.[0];
   if (!node?.toJSON) throw new Error("Could not parse the query conclusion");
-  return queryFromJson(node.toJSON({ leaves: new Map(), binders: [] }));
+  const query = queryFromJson(node.toJSON({ leaves: new Map(), binders: [] }));
+  // Keep the pasted text: nested binder names do not always round-trip through
+  // Lean, so exact search also compares `infixFingerprint(doc)` to this source.
+  query.source = sourceText;
+  return query;
 }
 
 /** Wrap a search-JSON tree as a query (heads + `parent>child` edges + fingerprint). */
@@ -698,10 +710,16 @@ async function searchParsedQuery(query, { limit = 100, offset = 0, db, sections 
   const docs = await loadFingerprintsByIds(db, ids, sections);
   const hits = [];
   const seen = new Set();
+  const source = typeof query.source === "string" ? query.source.trim() : "";
   for (const row of docs) {
     const json = parseFingerprint(row.fingerprint);
     if (json == null) continue;
-    if (matchesSubtree(query.json, json) && !seen.has(row.id)) {
+    // Infix paste (`b₀` / `f₁`) can fail De Bruijn round-trip under nested
+    // binders; accept an exact display-string match of the stored tree as well.
+    const matched =
+      matchesSubtree(query.json, json) ||
+      (source !== "" && infixFingerprint(json) === source);
+    if (matched && !seen.has(row.id)) {
       seen.add(row.id);
       // Extract the lemma name (e.g. "sum_if_and_comm", "rotaryOn_neg", "main")
       // so search results show which sub-lemma matched, not just section.

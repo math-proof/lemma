@@ -994,6 +994,33 @@ export function signatureRules(ctx) {
             }
         }
 
+        // ---- binder-grouping: on a shared `{…}` + `[…]` line, every instance must constrain that line ----
+        // Related = the instance's text mentions (a) a variable bound on that line — by the implicit `{p q : …}`
+        // (mentioning just one of several names counts) or by an explicit `(p : ℕ)` next to it, so `[Fact p.Prime]`
+        // belongs to the explicit `p`, not to `{R}` — or (b) an identifier occurring in the implicit's own type:
+        // `{σ : ι → …} [Fintype ι]` groups fine because `ι` is part of `σ`'s type. Only an instance unrelated to
+        // all of these is flagged: it belongs on its own line above the implicit binders (rank 0 for
+        // `binder-order`, so hoisting never trips the order rule).
+        for (const [line, gs] of byLine) {
+            const imp = gs.filter((g) => g.kind === 'implicit' || g.kind === 'strictImplicit');
+            if (!imp.length) continue;
+            const insts = gs.filter((g) => g.kind === 'instImplicit');
+            if (!insts.length) continue;
+            const names = gs.filter((g) => g.kind !== 'instImplicit').flatMap((g) => g.names);
+            const related = new Set(names);
+            for (const g of imp) {
+                for (const m of String(g.type || '').matchAll(/[\p{L}_][\p{L}\p{N}_'!?₀-₉ₐ-ₜ]*/gu)) {
+                    if (m[0] !== 'Type' && m[0] !== 'Sort' && m[0] !== 'Prop') related.add(m[0]);
+                }
+            }
+            if (!related.size) continue;
+            for (const g of insts) {
+                if ([...related].some((n) => hasWord(g.flat, n))) continue;
+                ctx.warn('binder-grouping', line + 1, g.col + 1,
+                    `instance \`[${g.flat}]\` does not constrain any binder on this line (${names.map((n) => `\`${n}\``).join(', ')}); hoist it to its own line before the implicit binders`);
+            }
+        }
+
         // ---- auto-bound implicits: `{α : Type*}` / `{α : Sort*}` / `{α : Type _}` (conservative) ------------------
         for (const [line, gs] of byLine) {
             for (const g of gs) {

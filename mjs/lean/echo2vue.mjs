@@ -10,6 +10,7 @@ import { promisify } from 'util';
 import { REPO_ROOT } from './modulePath.mjs';
 import { leanEchoPath } from './fetchLemmaMysql.mjs';
 import { Lean, LeanModule, LeanTactic, LeanToken } from '../../js/parser/lean.js';
+import { assertEchoSourceLines, traceEchoSource, withEchoAxiomsAttr } from './assert.mjs';
 import { completeAxiomMessage, extractBareAxiomReports, splitAxiomReports } from './lint/axiomRules.mjs';
 
 const execAsync = promisify(exec);
@@ -265,19 +266,8 @@ export function spawnLakeLean(command, args, { cwd, env, windowsHide = true }) {
   });
 }
 
-/** Echo reprint: `@[path]` on the lemma becomes `@[path, axioms]` so Lean logs axiom use. Source `.lean` is unchanged. */
-function withEchoAxiomsAttr(code) {
-  return String(code).replace(/^([ \t]*)@\[([^\]]*)\][ \t]*$/gm, (line, indent, inner) => {
-    const parts = inner.split(',').map((s) => s.trim()).filter(Boolean);
-    if (!parts.includes('path') || parts.includes('axioms')) return line;
-    return `${indent}@[${[...parts, 'axioms'].join(', ')}]`;
-  });
-}
-
-export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
-  if (!(tree instanceof LeanModule)) throw new Error('runEcho2Vue expects LeanModule');
-  const repoRoot = REPO_ROOT;
-  const leanEchoFile = leanEchoPath(path.resolve(leanFileAbs));
+export function prepareEchoSource(tree) {
+  if (!(tree instanceof LeanModule)) throw new Error('prepareEchoSource expects LeanModule');
 
   tree.relocate_last_comment();
   tree.echo();
@@ -295,11 +285,71 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
     }
   }
 
+  // Keep parser coordinates separate from positions in the rewritten Echo file.
+  const trace = traceEchoSource(tree);
+  const { source } = trace;
+  let prefix = '\uE000echo';
+  while (source.includes(prefix)) prefix += '_';
+  const nodes = [...new Set([...tree.traverse()].filter(
+    node => node instanceof LeanTactic && node.tacticName === 'echo',
+  ))];
+  const restore = [];
+  let marked;
+  try {
+    nodes.forEach((node, index) => {
+      const original = node.strFormat;
+      const descriptor = Object.getOwnPropertyDescriptor(node, 'strFormat');
+      Object.defineProperty(node, 'strFormat', {
+        configurable: true,
+        value() { return prefix + index + '\uE001' + original.call(this); },
+      });
+      restore.push(() => {
+        if (descriptor) Object.defineProperty(node, 'strFormat', descriptor);
+        else delete node.strFormat;
+      });
+    });
+    marked = String(tree);
+  } finally {
+    for (const reset of restore) reset();
+  }
+
+  const echoPositions = new Map();
+  const lines = marked.split('\n');
+  const marker = new RegExp(prefix + '(\\d+)\uE001(?=echo\\b)', 'g');
+  const unmarked = lines.map((line, index) => line.replace(marker, (_, id) => {
+    const node = nodes[Number(id)];
+    if (!node || echoPositions.has(node)) {
+      throw new Error('Invalid Echo source marker on line ' + (index + 1));
+    }
+    echoPositions.set(node, index + 1);
+    return '';
+  })).join('\n');
+  if (unmarked !== source || echoPositions.size !== nodes.length) {
+    throw new Error('Echo line map does not match rendered source');
+  }
+
+  const codeStr = withEchoAxiomsAttr(source);
+  if (codeStr.split('\n').length !== lines.length) {
+    throw new Error('Echo attribute rewrite changed the line count');
+  }
+  assertEchoSourceLines(tree, codeStr, trace);
+  for (const [node, line] of echoPositions) {
+    if (node.line !== line) {
+      throw new Error('Echo tactic position disagrees with AST layout on line ' + line);
+    }
+  }
+  return { codeStr, echoPositions };
+}
+
+export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
+  const repoRoot = REPO_ROOT;
+  const leanEchoFile = leanEchoPath(path.resolve(leanFileAbs));
+  const { codeStr, echoPositions } = prepareEchoSource(tree);
+
   if (!fs.existsSync(leanEchoFile)) {
     fs.mkdirSync(path.dirname(leanEchoFile), { recursive: true });
     fs.writeFileSync(leanEchoFile, '', 'utf8');
   }
-  let codeStr = withEchoAxiomsAttr(String(tree));
   fs.writeFileSync(leanEchoFile, codeStr, 'utf8');
 
   const lakePath = get_lake_path();
@@ -384,18 +434,6 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
   const structs = {};
   const error = [];
 
-  const modArgs = tree.args;
-  const end = modArgs[modArgs.length - 1];
-  const expectedLines = (codeStr.match(/\n/g) || []).length + 1;
-  if (end && end.line !== expectedLines) {
-    error.push({
-      code: '',
-      line: end.line,
-      type: 'error',
-      info: 'the line count of *.echo.lean file is not correct',
-    });
-  }
-
   let echo_codes = null;
   const ensureEchoCodes = () => {
     if (!echo_codes) {
@@ -455,19 +493,11 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
     }
   }
 
-  for (const node of tree.traverse()) {
-    if (node instanceof LeanTactic && node.tacticName === 'echo') {
-      const {line} = node;
-      if (Number.isInteger(line)) {
-        const key = String(line);
-        if (!Object.prototype.hasOwnProperty.call(latex, key)) {
-          latex[key] = null;
-        }
-        node.line = latex[key];
-        if (Object.prototype.hasOwnProperty.call(structs, key))
-          node.searchStruct = structs[key];
-      }
-    }
+  for (const [node, line] of echoPositions) {
+    const key = String(line);
+    if (!Object.prototype.hasOwnProperty.call(latex, key)) latex[key] = null;
+    node.echoLatex = latex[key];
+    if (Object.prototype.hasOwnProperty.call(structs, key)) node.searchStruct = structs[key];
   }
 
   const latexKeys = Object.keys(latex)

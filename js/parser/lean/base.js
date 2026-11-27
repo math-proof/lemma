@@ -50,10 +50,6 @@ export class Lean extends IndentedNode {
      */
     static currentLine = null;
 
-    /**
-     * `count` lines were inserted at `at` (or removed, when `count` is negative).
-     * Nodes already built on that line or later move with the text.
-     */
     /** Greatest 1-based line stored on `node` or any node under it. */
     static lastSourceLine(node) {
         let max = -1;
@@ -68,14 +64,16 @@ export class Lean extends IndentedNode {
         return max;
     }
 
-    static shiftLines(root, at, count) {
+    /** Move stored coordinates on or after an insertion or removal. */
+    static shiftLines(root, at, count, through = Infinity) {
         if (!root || !count || typeof at !== 'number') return;
+        const visited = new Set();
         const walk = (node) => {
-            if (!node || typeof node !== 'object') return;
-            if (typeof node.line === 'number' && node.line >= at) node.line += count;
-            const args = node.args;
-            if (!args) return;
-            for (let i = 0; i < args.length; i++) walk(args[i]);
+            if (!(node instanceof Lean) || visited.has(node)) return;
+            visited.add(node);
+            if (node.kwargs.line >= at && node.kwargs.line <= through) node.kwargs.line += count;
+            if (node._birthLine >= at && node._birthLine <= through) node._birthLine += count;
+            for (const child of node.args || []) walk(child);
         };
         walk(root);
     }
@@ -97,14 +95,14 @@ export class Lean extends IndentedNode {
     constructor(indent, level, parent = null) {
         super(indent, parent);
         this.level = level;
-        // Fallback for nodes with no leaf token (`LeanCaret`, empty containers): the
-        // source line that was being parsed when the node was built.
+        // Keywords and delimiters often have no LeanToken of their own.
         if (Lean.currentLine != null) this._birthLine = Lean.currentLine;
     }
 
     clone() {
         const copy = Object.create(Object.getPrototypeOf(this));
         Object.assign(copy, this);
+        copy.kwargs = { ...this.kwargs };
         copy.parent = null;
         return copy;
     }
@@ -125,18 +123,30 @@ export class Lean extends IndentedNode {
     }
 
     /**
-     * 1-based line, set when the node is built: an explicit `line`, otherwise the
-     * first leaf token's line, otherwise the line current at construction.
-     * Undefined only for synthetic nodes created outside `build`.
+     * 1-based start line. A wrapper can start at its own keyword or delimiter,
+     * or at an earlier child it wraps (for example the receiver of a projection).
+     * Empty caret placeholders do not anchor their enclosing syntax.
      */
     get line() {
         if (this.kwargs.line != null) return this.kwargs.line;
-        const token = this.firstToken();
-        return token?.kwargs.line ?? this._birthLine;
+        for (const arg of this.args || []) {
+            if (arg instanceof Lean.classes.LeanCaret) continue;
+            const line = arg?.line;
+            if (line != null) {
+                return this.constructor.lineStartsAtChild ? line : Math.min(this._birthLine ?? line, line);
+            }
+        }
+        return this._birthLine;
     }
 
     set line(v) {
         this.kwargs.line = v;
+    }
+
+    /** Number of rendered lines spanned by non-whitespace content. */
+    get height() {
+        const text = String(this).trim();
+        return text ? text.split(/\r\n|[\r\n]/).length : 0;
     }
 
     /**
@@ -266,6 +276,11 @@ export class Lean extends IndentedNode {
     }
 
     insert_colon(caret) {
+        // The anonymous `have : T` reuses the tactic's empty argument as
+        // the colon's left operand. Anchor it where the colon is parsed.
+        if (this instanceof L.Lean_have && caret instanceof L.LeanCaret && Lean.currentLine != null) {
+            caret.line = Lean.currentLine;
+        }
         // `true`: never take `LeanStatements`' structure-instance brace shortcut. The pre-registry
         // code passed a late-bound proxy here, which never compared equal to the real class
         // in `LeanStatements.push_binary`; the flag keeps that behavior.
@@ -719,7 +734,6 @@ export class Lean extends IndentedNode {
                         while (tokens[self.start_idx + ++k] === ' ') ++indent;
                     }
                 }
-                if (indent === 0 && tokens[self.start_idx + k] === 'end') newline_count -= 1;
                 let caret = null;
                 if (
                     tokens[self.start_idx + k] === '|' &&
@@ -1231,8 +1245,6 @@ export class Lean extends IndentedNode {
                         }
                         comment += tokens[self.start_idx];
                     }
-                    comment = comment.replace(/(?<=\n) +$/g, '');
-                    comment = comment.replace(/^\n+|\n+$/g, '');
                     if (tokens[self.start_idx + 1] === '\n') self.start_idx++;
                     return this.push_block_comment(comment, docstring, commentLine);
                 }

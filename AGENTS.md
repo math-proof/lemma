@@ -21,9 +21,9 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 
 ### Instruction (A → B)
 A hands a one-shot task to B. Triggered when the user says "send this issue / problem / bug / job / task to **@AgentName**" (or "send to AgentName"), or when A's work must change B's folder.
-- Write a **self-contained prompt** (assignee, goal, paths, errors, constraints; follow `AGENTS.md` in @AgentName's folder, or the nearest parent `AGENTS.md` if that folder has none). Put Lean and shell examples in the prompt as indented plain text.
+- Write a **self-contained prompt** as one clickable to copy (assignee, goal, paths, errors, constraints; follow `AGENTS.md` in @AgentName's folder, or the nearest parent `AGENTS.md` if that folder has none). Put Lean and shell examples in the prompt as indented plain text.
 - Prompt shape: open with
-  `Assignee: AgentName (scope). Follow AGENTS.md; …`
+  `Assignee: AgentName (scope). Follow the nearest AGENTS.md; …`
   then `## Goal`, repro/paths/errors, constraints.
 - Then tell the user, in one short line, who has the task. Link the worker `[<scope> / AgentName](<subagent-id>)` with the id the channel returned.
 - If delivery fails, report the error. Do not fall back to a paste block.
@@ -34,7 +34,7 @@ Follow-ups use the same channel. `Assignee:` starts a task. `To:` names the reci
 Returning a report (A ← B): when B finishes A's task, B sends the report back to A on that channel.
 - Open with
   `To: AgentA (scope). From: AgentB. Report on task: <one-line summary>`
-  then `## Result` (what changed — files, build/lint status), `## Decision` (choices made / open questions), `## Next for A` (what A should do now).
+  then `## Result` (what changed — files, build/lint status), `## Suggested Decision` (choices made / open questions).
 - A continues from that report. The programmer does not paste it.
 
 ## Edit Privilege

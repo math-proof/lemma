@@ -63,6 +63,7 @@ export const RULES = {
     'binder-auto-bound': Q.autoBound,
     'binder-order': Q.order,
     'binder-dep-inst': Q.order,
+    'binder-grouping': Q.order,
     // not an AGENTS.md rule yet: prefer [NeZero (n : ℕ)] over {n : ℕ} [NeZero n] for ℕ/ℤ/ℚ/ℝ/ℂ (Body via Real)
     'binder-nezero-fuse': null,
     'default-arg-given': Q.deflt,
@@ -185,6 +186,7 @@ export const RULES = {
     'decl-keyword-dir': Q.declDir,
     'path-private': Q.pathPrivate,
     'lemma-main-name': 'Lemma convention: the primary/top-level declaration must be named `main` (helpers keep their descriptive names)',
+    'fin-getelem-app': 'Notation convention: prefer `f[t]` getElem indexing over `f t` for a Fin-indexed function',
 };
 
 /** rules switched off by default (too noisy on the corpus; see the calibration notes in the README) */

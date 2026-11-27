@@ -211,7 +211,8 @@ export class LeanParser extends AbstractParser {
      */
     build(text) {
         this.init();
-        if (!text.endsWith('\n')) text += '\n';
+        const appendedNewline = !text.endsWith('\n');
+        if (appendedNewline) text += '\n';
         this.tokens = Array.from(text.matchAll(/\w+|\W/gu), (m) => m[0]);
         const { tokens } = this;
         const length = tokens.length;
@@ -222,20 +223,28 @@ export class LeanParser extends AbstractParser {
             this.tokenLine[i] = line;
             if (tokens[i] === '\n') line++;
         }
-        this.start_idx = 0;
-        for (; this.start_idx < length; ++this.start_idx) {
-            this.parse(tokens[this.start_idx], this);
-            if (!this.caret) break;
+        try {
+            this.start_idx = 0;
+            for (; this.start_idx < length; ++this.start_idx) {
+                this.parse(tokens[this.start_idx], this);
+                if (!this.caret) break;
+            }
+            if (this.start_idx >= length && this.caret instanceof L.LeanCaret) {
+                // The parser may add a newline to flush the last statement.
+                this.caret.line = appendedNewline ? line - 1 : line;
+            }
+            return this.root;
+        } finally {
+            Lean.currentLine = null;
         }
-        Lean.currentLine = null;
-        return this.root;
     }
 
     init() {
-        Lean.currentLine = null;
         const caret = new L.LeanCaret(0, 0);
+        caret.line = 1;
         this.caret = caret;
         this.root = new L.LeanModule([caret], 0, 0);
+        this.root.line = 1;
     }
 
     parseKeywordAsPropertyField(caret, token) {

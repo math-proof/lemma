@@ -219,6 +219,17 @@ export class LeanTactic extends LeanSyntax {
         if (this.tacticName === 'try' && this.arg instanceof LeanTactic && this.arg.tacticName === 'echo') return this.arg;
     }
 
+    /** Place a generated single-line Echo command and its arguments together. */
+    setEchoLine(line) {
+        const stamp = (node) => {
+            node.line = line;
+            for (const child of node.args) {
+                if (child instanceof Lean) stamp(child);
+            }
+        };
+        stamp(this);
+    }
+
     get_echo_token() {
         const at = this.at;
         if (at) {
@@ -232,9 +243,10 @@ export class LeanTactic extends LeanSyntax {
                         this.indent,
                         token.level,
                     );
+                    return token;
                 }
             }
-            return token;
+            return token?.clone();
         }
         let token = [];
         let turnstile = '⊢';
@@ -295,8 +307,8 @@ export class LeanTactic extends LeanSyntax {
                 const w = this.with;
                 if (w && w.sep() === ' ') {
                     let v = w.args[0];
-                    if (v instanceof L.LeanArgsSpaceSeparated) token = v.args;
-                    else token = [v];
+                    if (v instanceof L.LeanArgsSpaceSeparated) token = v.args.map((arg) => arg.clone());
+                    else token = [v.clone()];
                     turnstile = null;
                 }
                 break;
@@ -308,8 +320,8 @@ export class LeanTactic extends LeanSyntax {
                     if (this.has_tactic_block_followed()) return;
                     for (const br of bars) {
                         if (Array.isArray(br))
-                            token.push(...br.filter((t) => t.text !== 'rfl'));
-                        else if (br.text !== 'rfl') token.push(br);
+                            token.push(...br.filter((t) => t.text !== 'rfl').map((t) => t.clone()));
+                        else if (br.text !== 'rfl') token.push(br.clone());
                         break;
                     }
                 }
@@ -322,14 +334,14 @@ export class LeanTactic extends LeanSyntax {
                     if (lhs instanceof L.LeanColon) lhs = lhs.lhs;
                     if (lhs instanceof L.LeanAngleBracket) {
                         for (const t of lhs.tokens_comma_separated()) {
-                            if (t.text !== 'rfl') token.push(t);
+                            if (t.text !== 'rfl') token.push(t.clone());
                         }
                     } else if (lhs instanceof L.LeanCond) {
                         if (this.has_tactic_block_followed()) return;
                         for (const br of lhs.tokens_bar_separated()) {
                             if (Array.isArray(br))
-                                token.push(...br.filter((t) => t.text !== 'rfl'));
-                            else if (br.text !== 'rfl') token.push(br);
+                                token.push(...br.filter((t) => t.text !== 'rfl').map((t) => t.clone()));
+                            else if (br.text !== 'rfl') token.push(br.clone());
                             break;
                         }
                     }
@@ -1356,6 +1368,7 @@ export class LeanTacticBlock extends LeanUnary {
                 oldArg.indent = indent;
                 const c = new L.LeanCaret(indent, oldArg.level);
                 this.arg = new L.LeanStatements([oldArg, c], indent, c.level);
+                this.inlineFirst = true;
                 return c;
             }
         }
@@ -1373,7 +1386,7 @@ export class LeanTacticBlock extends LeanUnary {
 
     sep() {
         const a = this.arg;
-        return a instanceof L.LeanStatements ? '\n' : a instanceof L.LeanCaret ? '' : ' ';
+        return a instanceof L.LeanStatements && !this.inlineFirst ? '\n' : a instanceof L.LeanCaret ? '' : ' ';
     }
 
     strFormat() {
@@ -1383,6 +1396,15 @@ export class LeanTacticBlock extends LeanUnary {
     echo() {
         const statements = this.arg;
         if (!(statements instanceof L.LeanStatements)) return;
+        if (this.inlineFirst) {
+            // Echo renders the body below the bullet. Move the inline content
+            // and subsequent lines while preserving the bullet and its ancestors.
+            const first = statements.args[0];
+            const line = first?.line;
+            Lean.shiftLines(this.root, line + 1, 1);
+            Lean.shiftLines(first, line, 1, line);
+            this.inlineFirst = false;
+        }
         statements.echo();
         const parent = this.parent;
         if (parent instanceof LeanSequentialTacticCombinator) {

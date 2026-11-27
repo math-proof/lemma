@@ -282,10 +282,17 @@ export class LeanIte extends LeanArgs {
         }
         if (this.inline) return 'if %s then %s else %s';
         const indent_else = ' '.repeat(this.indent);
-        const sep = $else instanceof LeanIte ? ' ' : '\n';
+        const inlineElse = this.newlineBehindElse === false
+            && !($else instanceof L.LeanStatements || $else instanceof L.LeanArgsNewLineSeparated);
+        const sep = inlineElse || $else instanceof LeanIte ? ' ' : '\n';
         const thenFmt = then == null ? '' : '%s';
         const elseFmt = $else == null ? '' : '%s';
-        return `if %s then\n${thenFmt}\n${indent_else}else${sep}${elseFmt}`;
+        // A single-statement `then` block reprints with a trailing newline (its trailing
+        // `LeanCaret`). Adding the format's own `\n` there would emit a blank line before
+        // `else`, desyncing the reprint's line count from the nodes' line stamps (and the
+        // echo line-count check). Only add the separator when the branch does not supply it.
+        const beforeElse = then != null && String(then).endsWith('\n') ? '' : '\n';
+        return `if %s then\n${thenFmt}${beforeElse}${indent_else}else${sep}${elseFmt}`;
     }
 
     static echo_part(part, token) {
@@ -294,7 +301,7 @@ export class LeanIte extends LeanArgs {
         else if (part.parent) {
             const at = part.line ?? 1;
             Lean.shiftLines(part.root, at, 1);
-            echo.line = at;
+            echo.setEchoLine(at);
             part.parent.replace(part, new L.LeanStatements([echo, part], part.indent, part.level));
         }
     }

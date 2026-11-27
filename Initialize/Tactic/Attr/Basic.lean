@@ -54,6 +54,46 @@ initialize registerBuiltinAttribute {
 }
 
 /--
+`@[Fun]` generates a `.fun` theorem that writes reads from `Fin n → α` as function applications.
+For a Nat index `i`, the application uses the `Fin` index built from `i` and its bounds proof.
+-/
+initialize registerBuiltinAttribute {
+  name := `Fun
+  descr := "Generate the function-application form of a theorem with indexed function reads"
+  applicationTime := .afterCompilation
+  add := fun declName _ _ => do
+    let decl ← withoutExporting do getConstInfo declName
+    let type ← MetaM.run' <| Meta.transform decl.type (post := fun e => do
+      unless e.isAppOfArity `GetElem.getElem 8 do
+        return .done e
+      let args := e.getAppArgs
+      let inst := args[4]!
+      -- Lean can lift a Nat-indexed GetElem instance to accept a Fin index.
+      if inst.isAppOfArity `Fin.instGetElemFinVal 5 &&
+          inst.getAppArgs[4]!.isAppOfArity `instGetElemFinNat 2 then
+        return .done (mkApp args[5]! args[6]!)
+      unless inst.isAppOfArity `instGetElemFinNat 2 do
+        return .done e
+      let n := inst.getAppArgs[0]!
+      let index ← whnf args[6]!
+      let candidate :=
+        match index with
+        | .proj `Fin 0 i => some i
+        | .app (.app (.const `Fin.val _) _) i => some i
+        | _ => none
+      if let some i := candidate then
+        if ← isDefEq (← inferType i) (mkApp (.const `Fin []) n) then
+          return .done (mkApp args[5]! i)
+      return .done (mkApp args[5]! (mkApp3 (.const `Fin.mk []) n args[6]! args[7]!)))
+    addAndCompile <| .thmDecl {
+      name := ((← getEnv).module.lemmaName declName).str "fun"
+      levelParams := decl.levelParams
+      type := type
+      value := .const declName (decl.levelParams.map .param)
+    }
+}
+
+/--
 `@[comm]` (abbreviated from `law of commutativity` : 交换律) attribute automatically generates the symmetric version of a theorem if it proves an equality.
 
 Usage:

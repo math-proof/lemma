@@ -180,11 +180,16 @@ function quantified(kind, struct, ctx) {
     const depth = ctx.binders.length;
     try {
       const args = [];
-      for (const binder of struct.binders ?? []) {
+      // Lean appends separate binders innermost first. A grouped binder
+      // contains its names in source order, joined by Name.append.
+      for (const binder of [...(struct.binders ?? [])].reverse()) {
         const name = String(binder.name ?? '');
         if (!name) continue;
-        if (isBinderName(name)) ctx.binders.push(name);
-        args.push(leaf(name, ctx));
+        const components = name.split('.');
+        for (const part of components.every(isBinderName) ? components : [name]) {
+          if (isBinderName(part)) ctx.binders.push(part);
+          args.push(leaf(part, ctx));
+        }
       }
       args.push(convert(struct.body, ctx));
       return { Fun: args };
@@ -244,8 +249,29 @@ function integralApplication(args, ctx) {
   }
 }
 
+/**
+ * `FunLike.coe f a` / `DFunLike.coe Matrix.of a` is the elaboration of `f a` /
+ * `Matrix.of a`. A constant head drops its namespace, matching
+ * `LeanArgsSpaceSeparated` (`Matrix.of x` → `{Of: [x]}`, `Foo.bar x` → `{Bar: [x]}`).
+ * A non-constant head is the application itself: a variable stays `_`.
+ */
+function funLikeCoe(args, ctx) {
+  const fn = args?.[0];
+  const rest = (args ?? []).slice(1).map((arg) => convert(arg, ctx));
+  if (fn?.kind === 'const') {
+    const seg = lastSegment(fn.value);
+    if (!seg || isVariableHead(seg)) return '_';
+    return node(cap(seg), rest);
+  }
+  const head = fn == null ? '' : convert(fn, ctx);
+  if (head === '' || typeof head === 'string') return '_';
+  if (!rest.length) return head;
+  return [head, ...rest];
+}
+
 /** Application forms: mimic `LeanArgsSpaceSeparated.toJSON`. */
 function application(name, args, ctx) {
+  if (/(^|\.)D?FunLike\.coe$/.test(name)) return funLikeCoe(args, ctx);
   // `x[:k]` and `y[t]` are notations in the source; elaboration exposes the
   // implementation constants, which fold back to `Get`.
   if (name === 'Function.getSlice' || (name === 'JointRandomSymbol' && (args ?? []).length >= 3)) {

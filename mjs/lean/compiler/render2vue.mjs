@@ -46,6 +46,7 @@ export async function echo2vueFromSource(source, options) {
     const tree = compile(source);
     if (!(tree instanceof LeanModule)) throw new Error('compile() root must be LeanModule');
     const code = await runEcho2Vue(tree, leanAbsPath, { module: moduleName });
+    if (code.error?.some(diagnostic => /^error(?:\(|$)/.test(diagnostic.type))) return code;
     try {
         const prior = Array.isArray(code.warning) ? code.warning : [];
         const warning = [...prior, ...lintLeanFile(source, leanAbsPath)];

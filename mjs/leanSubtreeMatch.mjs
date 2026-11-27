@@ -42,7 +42,15 @@ export function treesEqual(a, b) {
  * Match `query` at the root of `doc`. `env` maps query hole names (`$1`) to the
  * document subtree they bound on first occurrence.
  */
+/** Layout-only wrapper from an indented big-op body; treat as the inner tree. */
+function unwrapSingleton(node) {
+  if (Array.isArray(node) && node.length === 1) return unwrapSingleton(node[0]);
+  return node;
+}
+
 export function matchAt(query, doc, env = new Map()) {
+  query = unwrapSingleton(query);
+  doc = unwrapSingleton(doc);
   if (isSearchHole(query)) {
     if (env.has(query)) return treesEqual(env.get(query), doc);
     env.set(query, doc);

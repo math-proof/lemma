@@ -39,9 +39,8 @@ function placeInsertedLines(stmt, index, removedCount, inserted) {
         }
         if (at == null) at = typeof old[0]?.line === 'number' ? old[0].line : 1;
         Lean.shiftLines(root, at, 1);
-        node.line = at;
-        const inner = node.args?.[0];
-        if (inner && inner.tacticName === 'echo') inner.line = at;
+        if (node instanceof L.LeanTactic && node.getEcho()) node.setEchoLine(at);
+        else node.line = at;
         at += 1;
     }
 }
@@ -78,6 +77,7 @@ function leanStatementsPreferWordOverTactic(stmts) {
 
 export class LeanStatements extends LeanArgs {
     static { this.register(); }
+    static lineStartsAtChild = true;
 
     /**
      * Body of a multi-line structure-instance literal (see `LeanBrace.openStructInstBody`): one field per line.
@@ -85,10 +85,11 @@ export class LeanStatements extends LeanArgs {
      */
     structInst = undefined;
 
-    /** The first field sits on the `{` / `with` line (no line prefix of its own). */
+    /** The first statement shares the line of its enclosing delimiter. */
     isInlineFirst() {
         const p = this.parent;
-        return this.structInst === true && p != null && p.inline === true;
+        return (p instanceof L.LeanTacticBlock && p.inlineFirst === true) ||
+            (this.structInst === true && p?.inline === true);
     }
 
     get stack_priority() {
@@ -172,7 +173,7 @@ export class LeanStatements extends LeanArgs {
                 ? this.args[0].line
                 : (typeof this.line === 'number' ? this.line : 1);
             Lean.shiftLines(this.root, at, 1);
-            arg.line = at;
+            arg.setEchoLine(at);
         }
         return super.unshift(arg);
     }
@@ -230,9 +231,7 @@ export class LeanStatements extends LeanArgs {
                     Lean.shiftLines(this.root, at, trailingEchoes.length);
                     let line = at;
                     for (const echo of trailingEchoes) {
-                        echo.line = line;
-                        const inner = echo.args?.[0];
-                        if (inner && inner.tacticName === 'echo') inner.line = line;
+                        echo.setEchoLine(line);
                         line += 1;
                     }
                     args.splice(atIndex, 0, ...trailingEchoes);

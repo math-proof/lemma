@@ -1376,6 +1376,7 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
 
 export class LeanArgsNewLineSeparated extends LeanArgs {
     static { this.register(); }
+    static lineStartsAtChild = true;
 
     get stack_priority() {
         const parent = this.parent;

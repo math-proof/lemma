@@ -1,19 +1,28 @@
 #!/usr/bin/env python3
-"""Delete unnecessary Lemma imports from a .lean file.
+"""Delete unnecessary imports from a .lean file.
 
 Stores indirect dependency relationships inside the existing ``meta`` JSON
 column of the ``lemma`` table as ``meta.callee`` — a sorted JSON array of
 modules reachable from, but not directly imported by, the module.
 
 A pairwise compare function checks each pair of Lemma imports — n*(n-1)/2
-comparisons — to find redundant imports.
+comparisons — to find redundant imports.  With ``--unused``, each remaining
+non-Lemma import is also tested by removing it and running ``lake env lean``.
+Removals are accepted sequentially only when compilation succeeds, so notation,
+instances, scoped opens, and attribute modules need no name heuristics.
 
 Usage:
   python py/delete_import.py Lemma/Real/SomeLemma.lean
   python py/delete_import.py --dry-run Lemma/Real/SomeLemma.lean
+  python py/delete_import.py --unused Lemma/Real/SomeLemma.lean
+  python py/delete_import.py --dry-run --unused Lemma/Real/SomeLemma.lean
 
   python py/delete_import.py --update Lemma.Real.SomeLemma
   python py/delete_import.py --rebuild
+
+Compile checks use temporary copies, including in dry-run mode; source files
+are written only for accepted removals.  After an ``--unused`` run removes an
+import, re-run ``node mjs/run.mjs`` on that source file.
 """
 
 from __future__ import annotations
@@ -41,6 +50,8 @@ from py import MySQL
 import argparse
 import json
 import re
+import subprocess
+import tempfile
 from collections.abc import Iterable
 
 IMPORT_LINE_RE = re.compile(r"^import ([\w.']+)\s*$")
@@ -477,7 +488,7 @@ def update_module_after_prune(
     module: str,
     kept_imports: list[str],
     removed: list[str],
-) -> None:
+) -> bool:
     """Sync the lemma row after pruning ``module``'s file.
 
     Reachability is unchanged (only redundant imports were removed), so callers
@@ -491,7 +502,7 @@ def update_module_after_prune(
     if not rows:
         print(f"note: {module} not in lemma table; DB update skipped "
               f"(run.ps1 will insert it)")
-        return
+        return False
 
     # compact separators + raw unicode match what run.ps1's change detection
     # expects, so it will not see a spurious imports modification
@@ -516,9 +527,113 @@ def update_module_after_prune(
         f"UPDATE lemma SET {', '.join(sets)} WHERE module = {sql_str(module)}"
     )
     print(f"updated lemma row for {module} (imports, meta.callee)")
+    return True
 
 
-def process_file(lean_file: Path, *, dry_run: bool = False) -> None:
+def prune_import_list(
+    imports: list[tuple[str, str]],
+    redundant: list[str],
+) -> list[tuple[str, str]]:
+    """Apply redundant and duplicate removal without writing the file."""
+    redundant_set = set(redundant)
+    kept: list[tuple[str, str]] = []
+    seen_mods: set[str] = set()
+    for mod, line in imports:
+        if mod in redundant_set or mod in seen_mods:
+            continue
+        seen_mods.add(mod)
+        kept.append((mod, line))
+    return kept
+
+
+def prune_unused_imports(
+    lean_file: Path,
+    imports: list[tuple[str, str]],
+    rest: str,
+    *,
+    dry_run: bool = False,
+) -> None:
+    """Drop non-Lemma imports accepted by sequential drop-one compile checks."""
+    candidates = list(dict.fromkeys(
+        mod for mod, _ in imports if not mod.startswith("Lemma")
+    ))
+    rel = rel_path_for(lean_file)
+    if not candidates:
+        print("unused imports: no non-Lemma import candidates")
+        return
+
+    print(f"checking {len(candidates)} non-Lemma import(s) for {rel} "
+          f"with lake env lean ...")
+    current = list(imports)
+    removed: list[str] = []
+    compiler_error = False
+    tmp_root = ROOT / "tmp"
+    tmp_root.mkdir(exist_ok=True)
+
+    with tempfile.TemporaryDirectory(prefix="delete_import_", dir=tmp_root) as tmp_dir:
+        probe = Path(tmp_dir) / lean_file.name
+        for mod in candidates:
+            trial = [(m, line) for m, line in current if m != mod]
+            if len(trial) == len(current):
+                continue
+            trial_content = "".join(line for _, line in trial) + rest
+            write_text(probe, trial_content)
+            print(f"  import {mod}: testing removal ...", flush=True)
+            try:
+                result = subprocess.run(
+                    ["lake", "env", "lean", str(probe)],
+                    cwd=ROOT,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.STDOUT,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    check=False,
+                )
+            except OSError as err:
+                print(f"error: could not run lake env lean: {err}", file=sys.stderr)
+                compiler_error = True
+                break
+
+            if result.returncode == 0:
+                current = trial
+                removed.append(mod)
+                print("    unused: compile succeeded")
+            else:
+                print("    needed: compile failed; keeping import")
+                output = result.stdout.strip()
+                if output:
+                    for line in output.splitlines()[-8:]:
+                        print(f"      {line}")
+
+    if compiler_error:
+        print("warning: unused-import compile checks stopped; "
+              "all unverified imports were kept", file=sys.stderr)
+    if removed:
+        print("unused imports (compile-verified):")
+        for mod in removed:
+            print(f"  import {mod}")
+    else:
+        print("unused imports: no imports can be removed")
+
+    if dry_run:
+        print(f"dry-run: would remove {len(removed)} unused import(s) from {rel}")
+        return
+    if not removed:
+        return
+
+    write_text(lean_file, "".join(line for _, line in current) + rest)
+    print(f"removed {len(removed)} unused import(s) from {rel}")
+    db_module = normalize_module(rel[:-len(".lean")].replace("/", "."))
+    # Unlike reachable redundant imports, unused imports need not remain in the
+    # dependency closure.  Update direct imports first, then recompute callee
+    # for this module and its callers instead of adding the removals to callee.
+    if update_module_after_prune(db_module, [mod for mod, _ in current], []):
+        update_lemma_dep(db_module)
+    print(f"note: re-run `node mjs/run.mjs {rel}` after this import removal")
+
+
+def process_file(lean_file: Path, *, dry_run: bool = False, unused: bool = False) -> None:
     content = read_text(lean_file)
     rel = rel_path_for(lean_file)
     imports, rest = parse_import_block(content)
@@ -549,32 +664,33 @@ def process_file(lean_file: Path, *, dry_run: bool = False) -> None:
 
     if not redundant and not duplicates:
         print("imports ok: no redundant imports")
-        return
+        if not unused:
+            return
+    else:
+        print("redundant imports:")
+        for mod in redundant:
+            print(f"  import {mod}")
+        for mod in duplicates:
+            print(f"  import {mod}  (duplicate)")
 
-    print("redundant imports:")
-    for mod in redundant:
-        print(f"  import {mod}")
-    for mod in duplicates:
-        print(f"  import {mod}  (duplicate)")
+        if dry_run:
+            print(f"dry-run: would remove {len(redundant) + len(duplicates)} import(s) from {rel}")
+            if not unused:
+                return
+        else:
+            kept = prune_import_list(imports, redundant)
+            new_content = "".join(line for _, line in kept) + rest
+            write_text(lean_file, new_content)
+            print(f"removed {len(imports) - len(kept)} import(s) from {rel}")
 
-    if dry_run:
-        print(f"dry-run: would remove {len(redundant) + len(duplicates)} import(s) from {rel}")
-        return
+            db_module = normalize_module(rel[:-len(".lean")].replace("/", "."))
+            update_module_after_prune(db_module, [mod for mod, _ in kept], redundant)
+            imports = kept
 
-    redundant_set = set(redundant)
-    kept = []
-    seen_mods: set[str] = set()
-    for mod, line in imports:
-        if mod in redundant_set or mod in seen_mods:
-            continue
-        seen_mods.add(mod)
-        kept.append((mod, line))
-    new_content = "".join(line for _, line in kept) + rest
-    write_text(lean_file, new_content)
-    print(f"removed {len(imports) - len(kept)} import(s) from {rel}")
-
-    db_module = normalize_module(rel[:-len(".lean")].replace("/", "."))
-    update_module_after_prune(db_module, [mod for mod, _ in kept], redundant)
+    if unused:
+        if dry_run:
+            imports = prune_import_list(imports, redundant)
+        prune_unused_imports(lean_file, imports, rest, dry_run=dry_run)
 
 
 def _run_with_mysql(action, *, dry_run: bool = False) -> None:
@@ -608,6 +724,11 @@ def main() -> None:
         "--dry-run",
         action="store_true",
         help="analyze but do not write the file",
+    )
+    parser.add_argument(
+        "--unused",
+        action="store_true",
+        help="also drop non-Lemma imports when lake env lean verifies removal",
     )
     parser.add_argument(
         "--update",
@@ -648,7 +769,7 @@ def main() -> None:
         parser.error(f"file not found: {lean_file}")
 
     _run_with_mysql(
-        lambda: process_file(lean_file, dry_run=args.dry_run),
+        lambda: process_file(lean_file, dry_run=args.dry_run, unused=args.unused),
         dry_run=args.dry_run,
     )
 

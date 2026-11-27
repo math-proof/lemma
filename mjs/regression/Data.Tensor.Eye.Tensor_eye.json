@@ -1,10 +1,10 @@
 {
-  "lean": "[i < n] [j < n] (KroneckerDelta i j)",
+  "lean": "[i < m] [j < n] (m * KroneckerDelta i j)",
   "regex": [
-    "Stack_(KroneckerDelta__)"
+    "Stack_(Mul_(KroneckerDelta__))"
   ],
   "suggestion": [
-    "Stack_KroneckerDelta"
+    "Stack_Mul_KroneckerDelta"
   ],
   "dag": [
     [
@@ -15,20 +15,30 @@
         "token": "_"
       },
       {
+        "token": "Mul"
+      },
+      {
         "token": "KroneckerDelta"
+      },
+      {
+        "group": [
+          3,
+          1,
+          1
+        ]
       },
       {
         "group": [
           2,
           1,
-          1
+          4
         ]
       },
       {
         "sequence": [
           0,
           1,
-          3
+          5
         ]
       }
     ]
@@ -45,19 +55,24 @@
           },
           {
             "Lt": [
-              "?0",
-              "$1"
+              "?1",
+              "$2"
             ]
           }
         ]
       },
       {
-        "KroneckerDelta": [
-          "?1",
-          "?0"
+        "Mul": [
+          "$2",
+          {
+            "KroneckerDelta": [
+              "?1",
+              "?0"
+            ]
+          }
         ]
       }
     ]
   },
-  "fingerprint": "[b₀ < f₁, b₀ < f₁] KroneckerDelta b₁ b₀"
+  "fingerprint": "[b₁ < f₂][b₀ < f₁] f₂ * KroneckerDelta b₁ b₀"
 }

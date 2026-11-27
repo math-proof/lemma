@@ -10,7 +10,7 @@ import '../../../js/py.js';
 import { compile, Lean, LeanModule } from '../../../js/parser/lean.js';
 
 /** rule ids implemented here; their text-scan versions only run when the AST is unavailable */
-export const AST_RULES = new Set(['have-inline-once', 'have-underscore', 'given-prop-first', 'given-prop-consecutive', 'given-implicit-dep', 'tactic-haveI', 'tactic-letI', 'calc-after-assign', 'decl-keyword-dir', 'public-section', 'paren-getelem', 'fin-index-val', 'paren-apparg', 'paren-redundant-type', 'paren-redundant-sum-sub', 'paren-redundant-pow', 'paren-redundant-binder', 'paren-redundant-arith', 'paren-redundant-ascription', 'prefer-unicode-type', 'prefer-unicode-pow', 'range-binder', 'literal-left-comparison', 'dot-notation']);
+export const AST_RULES = new Set(['have-inline-once', 'have-underscore', 'given-prop-first', 'given-prop-consecutive', 'given-implicit-dep', 'tactic-haveI', 'tactic-letI', 'calc-after-assign', 'decl-keyword-dir', 'public-section', 'paren-getelem', 'fin-index-val', 'fin-getelem-app', 'paren-apparg', 'paren-redundant-type', 'paren-redundant-sum-sub', 'paren-redundant-pow', 'paren-redundant-binder', 'paren-redundant-arith', 'paren-redundant-ascription', 'prefer-unicode-type', 'prefer-unicode-pow', 'range-binder', 'literal-left-comparison', 'dot-notation']);
 
 /**
  * Term forms whose parentheses are load-bearing inside an ascription: `(fun y => F y : T)`
@@ -516,6 +516,53 @@ function finIndexVal(ctx, node) {
     ctx.warnAst('fin-index-val', node,
         `prefer ${bits.join('; ')} as a Fin GetElem/slice index (avoid \`.val\` and \`↑\`)`,
         1);
+}
+
+
+/**
+ * `fin-getelem-app`: a Fin-indexed function (`f : Fin d → α`; predicates `p : Fin d → Prop`
+ * included) supports `f[t]` getElem indexing — the `GetElem (Fin n → α) ℕ α` instance from
+ * `Instance.Data.Fin.Fun` coerces the Fin index to ℕ and `get_elem_tactic` discharges `t < d`.
+ * The bracket form is preferred over `f t` for readability (it also renders as a subscript in
+ * LaTeX). When the file does not import `Instance.Data.Fin.Fun` yet, the warning additionally
+ * asks for that import so the simplification becomes available.
+ */
+function finGetElemApp(ctx, sink, decl) {
+    const hasImport = !!ctx.scan?.imports?.some((i) => i.module === 'Instance.Data.Fin.Fun');
+    const {
+        LeanBrace, LeanParenthesis, LeanBracket, LeanColon, Lean_rightarrow,
+        LeanArgsSpaceSeparated, LeanToken, LeanRightarrow, LeanLambda,
+    } = Lean.classes;
+    // Fin-indexed binders of the signature: `(f : Fin d → α)`, `{p q : Fin d → Prop}`, …
+    const finNames = new Set();
+    for (const n of walk(decl)) {
+        if (!(n instanceof LeanColon)) continue;
+        const parent = n.parent;
+        if (!(parent instanceof LeanParenthesis || parent instanceof LeanBrace || parent instanceof LeanBracket)) continue;
+        const type = n.rhs;
+        if (!(type instanceof Lean_rightarrow)) continue;
+        const domain = type.lhs;
+        if (!(domain instanceof LeanArgsSpaceSeparated)) continue;
+        const head = domain.args[0];
+        if (!(head instanceof LeanToken) || head.text !== 'Fin') continue;
+        const names = n.lhs instanceof LeanArgsSpaceSeparated ? n.lhs.args : [n.lhs];
+        for (const nm of names) if (nm instanceof LeanToken) finNames.add(nm.text);
+    }
+    if (!finNames.size) return;
+    const suffix = hasImport ? '' : '; add `import Instance.Data.Fin.Fun` to enable the simplification';
+    for (const n of walk(decl)) {
+        if (!(n instanceof LeanArgsSpaceSeparated) || n.args.length !== 2) continue;
+        const head = n.args[0];
+        if (!(head instanceof LeanToken) || !finNames.has(head.text)) continue;
+        // `{p q : Fin d → Prop}`: a binder's name list is not an application
+        if (n.parent instanceof LeanColon && n.parent.lhs === n) continue;
+        // `fun f t => …` / `λ f t => …`: a lambda's binder list is not an application
+        if (n.parent instanceof LeanRightarrow && n.parent.args[0] === n) continue;
+        if (LeanLambda && n.parent instanceof LeanLambda && n.parent.args[0] === n) continue;
+        sink.warnAst('fin-getelem-app', n,
+            `prefer \`${head.text}[…]\` getElem indexing over \`${head.text} …\` for the Fin-indexed function \`${head.text}\`${suffix}`,
+            1);
+    }
 }
 
 
@@ -1489,6 +1536,7 @@ export function astRules(ctx, tree) {
             // bodies (`have`, `show`, `rw`, `simp`, `exact`, …) may legitimately compare against a literal
             for (const signatureNode of walk(node.assignment?.lhs)) literalLeftComparison(sink, signatureNode);
             dotNotation(sink, node);
+            finGetElemApp(ctx, sink, node);
         }
         else if (node instanceof LeanStatements || node instanceof LeanArgsNewLineSeparated) haveInlineOnce(sink, node);
         else if (node instanceof Lean_let) {

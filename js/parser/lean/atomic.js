@@ -52,7 +52,14 @@ export class LeanCaret extends Lean {
     push_block_comment(comment, docstring, commentLine = null) {
         const parent = this.parent;
         const Cls = docstring ? LeanDocString : LeanBlockComment;
-        const node = new Cls(comment, this.indent, this.level);
+        const trailing = comment.match(/\n+ *$/)?.[0] ?? '';
+        const body = comment.slice(0, comment.length - trailing.length);
+        const leading = body.match(/^\n*/)[0];
+        const node = new Cls(body.slice(leading.length), this.indent, this.level);
+        if (docstring) {
+            node.kwargs.leading = leading;
+            node.kwargs.trailing = trailing;
+        }
         if (commentLine != null) node.line = commentLine;
         parent.replace(this, node);
         parent.push(this);
@@ -497,6 +504,8 @@ export class LeanDocString extends LeanBlockComment {
     }
 
     strFormat() {
+        const { leading, trailing } = this.kwargs;
+        if (leading !== undefined) return `/--${leading}${this.text}${trailing}-/`;
         // A one-line `/-- … -/` stays one line. A break in the body keeps the
         // opening and closing delimiters on their own lines.
         if (!this.text.includes('\n')) return `/--${this.text}-/`;

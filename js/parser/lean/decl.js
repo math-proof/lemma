@@ -44,6 +44,8 @@ export class Lean_def extends LeanArgs {
             level = name instanceof L.Lean ? name.level : 0;
         }
         super([name], indent, level, parent);
+        // Declaration diagnostics start at the keyword even when an attribute is attached.
+        if (Lean.currentLine != null) this.line = Lean.currentLine;
         this.args.unshift(null);
         this.kwargs.accessibility = accessibility;
     }
@@ -193,8 +195,7 @@ export class Lean_lemma extends Lean_def {
                             const echo = new L.LeanTactic('echo', token, indent, level);
                             const attempt = new L.LeanTactic('try', echo, indent, level);
                             Lean.shiftLines(this.root, at, 1);
-                            attempt.line = at;
-                            echo.line = at;
+                            attempt.setEchoLine(at);
                             statement.push(attempt);
                         }
                         break;
@@ -357,13 +358,13 @@ export class Lean_let extends LeanSyntax {
         if (assign instanceof L.LeanAssign) {
             const lhs = assign.lhs;
             if (lhs instanceof L.LeanAngleBracket) {
-                const token = lhs.tokens_comma_separated();
+                const token = lhs.tokens_comma_separated().map((arg) => arg.clone());
                 if (token.length === 1) return token[0];
                 return new L.LeanArgsCommaSeparated(token, this.indent, lhs.level);
             }
-            if (lhs instanceof L.LeanToken) return lhs;
-            if (lhs instanceof L.LeanColon && lhs.lhs instanceof L.LeanToken) return lhs.lhs;
-            if (lhs instanceof L.LeanArgsSpaceSeparated && lhs.args[0] instanceof L.LeanToken) return lhs.args[0];
+            if (lhs instanceof L.LeanToken) return lhs.clone();
+            if (lhs instanceof L.LeanColon && lhs.lhs instanceof L.LeanToken) return lhs.lhs.clone();
+            if (lhs instanceof L.LeanArgsSpaceSeparated && lhs.args[0] instanceof L.LeanToken) return lhs.args[0].clone();
         }
     }
 
@@ -558,7 +559,7 @@ export class Lean_have extends Lean_let {
         ) {
             token = token.arg;
         }
-        if (token instanceof L.LeanToken || token instanceof L.LeanArgsCommaSeparated) return token;
+        if (token instanceof L.LeanToken || token instanceof L.LeanArgsCommaSeparated) return token.clone();
     }
 
     sep() {

@@ -606,10 +606,7 @@ function leanModuleMergeProof(proof, echo, syntax = {}) {
     // Goal LaTeX captured by an inline `<;> echo ⊢` marker for the open step.
     let inlineLatex;
 
-    const echoLatex = (echoNode) => {
-        const {line} = echoNode;
-        return Number.isInteger(line) ? null : line == null ? null : line;
-    };
+    const echoLatex = (echoNode) => echoNode.echoLatex ?? null;
     const echoStruct = (echoNode) => echoNode?.searchStruct ?? null;
     // A same-line `<;> echo ⊢` combinator (newlineBehind === false) is a goal
     // snapshot INSIDE one source line, e.g. `split_ifs <;> echo ⊢ <;> first | …`:
@@ -1380,11 +1377,15 @@ export class LeanModule extends LeanStatements {
         arrayPushVars(vars, lhs, rhs);
     }
 
-    create_property(module) {
+    create_property(module, line) {
         const parts = String(module).split('.');
         return parts.reduce((carry, token) => {
             const t = new L.LeanToken(token, 0, 0);
-            return carry ? new L.LeanProperty(carry, t, 0, 0) : t;
+            t.line = line;
+            if (!carry) return t;
+            const property = new L.LeanProperty(carry, t, 0, 0);
+            property.line = line;
+            return property;
         }, null);
     }
 
@@ -1408,7 +1409,14 @@ export class LeanModule extends LeanStatements {
     echo() {
         this.import('Syntax.Tactic.Echo');
         const {args} = this;
-        for (let i = 0; i < args.length; i++) args[i].echo();
+        for (const arg of args) {
+            // Source diagnostics use the keyword line. The Echo declaration renders
+            // the attribute as part of the declaration, starting one or more lines earlier.
+            if (arg instanceof L.Lean_def && arg.attribute?.line != null) {
+                arg.line = arg.attribute.line;
+            }
+            arg.echo();
+        }
     }
 
     echo2vue(_leanFile) {
@@ -1444,22 +1452,20 @@ export class LeanModule extends LeanStatements {
     }
 
     import(module) {
-        const node = new L.Lean_import(this.create_property(module), 0, 0);
         const first = this.args[0];
-        if (!(first instanceof L.LeanToken && first.text === 'module')) {
-            Lean.shiftLines(this, 1, 1);
-            node.line = 1;
-            this.args.unshift(node);
-            return;
+        const publicImport = first instanceof L.LeanToken && first.text === 'module';
+        let index = 0;
+        if (publicImport) {
+            // Keep the module header and its optional blank line before the public import.
+            index = this.args[1] instanceof L.LeanCaret ? 2 : 1;
         }
-        // Lean 4.9 module file: `module` must stay the first line, and every import after it
-        // is `public import`. Insert the echo import right after the header (and its blank line).
-        node.kwargs.accessibility = 'public';
-        let index = 1;
-        if (this.args[index] instanceof L.LeanCaret) index++;
-        const at = this.args[index]?.line ?? (index + 1);
+        const at = publicImport ? (this.args[index]?.line ?? index + 1) : 1;
         Lean.shiftLines(this, at, 1);
+        this.line = 1;
+        const node = new L.Lean_import(this.create_property(module, at), 0, 0);
         node.line = at;
+        node.parent = this;
+        if (publicImport) node.kwargs.accessibility = 'public';
         this.args.splice(index, 0, node);
     }
 
@@ -1519,7 +1525,7 @@ export class LeanModule extends LeanStatements {
             const a = args[i];
             if (a == null) continue;
             if (a instanceof L.LeanCaret) {
-                parts.push('');
+                parts.push(String(a));
                 continue;
             }
             if (a instanceof L.Lean_def) {

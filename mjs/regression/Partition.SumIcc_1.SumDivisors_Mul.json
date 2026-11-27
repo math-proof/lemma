@@ -61,14 +61,14 @@
               "?0",
               {
                 "Divisors": [
-                  "?0"
+                  "?1"
                 ]
               }
             ]
           },
           {
             "In": [
-              "?0",
+              "?1",
               {
                 "Icc": [
                   "1",
@@ -96,5 +96,5 @@
       }
     ]
   },
-  "fingerprint": "∑ b₀ ∈ Divisors b₀ ∧ b₀ ∈ [1, f₁], b₀ * PartitionCount (f₁ - b₁)"
+  "fingerprint": "∑ b₀ ∈ Divisors b₁ ∧ b₁ ∈ [1, f₁], b₀ * PartitionCount (f₁ - b₁)"
 }
