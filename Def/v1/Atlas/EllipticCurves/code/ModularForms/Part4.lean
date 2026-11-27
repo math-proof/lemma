@@ -31,6 +31,7 @@ public import Mathlib.Analysis.Analytic.Order
 public import Mathlib.GroupTheory.Torsion
 public import Mathlib.LinearAlgebra.Dimension.Finrank
 public import Abbrev.v1.Atlas.EllipticCurves.code.ModularForms.Part3
+public import Notation.Data.PNat
 
 @[expose] public section
 
@@ -44,7 +45,7 @@ namespace HeckeOperatorProperties
 open Complex
 
 /-- Coercion of a positive natural number `n` to a nonzero complex unit. -/
-noncomputable def pnatToComplexUnits (n : ℕ+) : ℂˣ :=
+noncomputable def pnatToComplexUnits (n : ℕ⁺) : ℂˣ :=
   Units.mk0 (n : ℂ) (by exact_mod_cast n.ne_zero)
 
 /-- The action of a nonzero complex scalar `l` on a complex lattice, scaling

@@ -3,7 +3,7 @@ module
 public import Mathlib
 public import Structure.AutomorphicForm_FormalBaseChange
 public import Def.AutomorphicForm_LocalLFactor
-public import Theorems.Thm_AutomorphicForm_isBaseChangeOf_formalBaseChange
+public import Theorem.Thm_AutomorphicForm_isBaseChangeOf_formalBaseChange
 
 set_option autoImplicit false
 

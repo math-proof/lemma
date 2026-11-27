@@ -2,9 +2,9 @@ import Mathlib
 import Lemma.WeierstrassCurve.XMultDistinctRouteB
 import Lemma.WeierstrassCurve.TateFiltrationPrep
 import Def.TateCurve_KeystoneVocab
-import Theorems.Thm_TateCurve_symAddHyps_unconditional
-import Theorems.Thm_TateCurve_diffHyp_unconditional
-import Theorems.Thm_TateCurve_eq_zero_or_eq_tateParam_unconditional
+import Theorem.Thm_TateCurve_symAddHyps_unconditional
+import Theorem.Thm_TateCurve_diffHyp_unconditional
+import Theorem.Thm_TateCurve_eq_zero_or_eq_tateParam_unconditional
 import Abbrev.TateCurve_TorsionParametrization
 
 set_option linter.unusedSectionVars false

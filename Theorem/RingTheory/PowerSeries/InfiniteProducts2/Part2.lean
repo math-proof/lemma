@@ -10,6 +10,7 @@ module
 
 public import Mathlib
 public import Def.RingTheory.PowerSeries.InfiniteProducts2.Part2
+public import Notation.Data.PNat
 open scoped Polynomial
 open Finset PowerSeries
 
@@ -75,9 +76,9 @@ variable {I M : Type*} [Zero M]
 
 
 /-- Example: The sequence (2, 4, 1, 0, 0, 0, ...) is essentially finite. -/
-example : EssentiallyFiniteSeq (fun n : ℕ+ =>
+example : EssentiallyFiniteSeq (fun n : ℕ⁺ =>
     if n = 1 then 2 else if n = 2 then 4 else if n = 3 then 1 else 0) := by
-  apply Set.Finite.subset (s := ({1, 2, 3} : Set ℕ+))
+  apply Set.Finite.subset (s := ({1, 2, 3} : Set ℕ⁺))
   · exact Set.toFinite _
   · intro n hn
     simp only [ne_eq, Set.mem_insert_iff, Set.mem_singleton_iff, Function.mem_support] at *

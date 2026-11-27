@@ -24,8 +24,8 @@ private theorem main
 -- given
   (hφ : Measurable φ) :
 -- imply
-  (((n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i)).map φ) {a} =
-    (countVec (fun i => φ (ω i)) a : ℝ≥0∞) / n :=
+  (((n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i)).map φ) {a} =
+    (countVec (fun i => φ (ω i)) a : ENNReal) / n :=
 -- proof
 by
   have hsing : MeasurableSet ({a} : Set β) := measurableSet_singleton a
@@ -41,7 +41,7 @@ by
       simp [h]
   simp only [hdirac, countVec, Finset.sum_apply, ENNReal.div_eq_inv_mul]
   rw [Nat.cast_sum]
-  refine congrArg (fun t => (n : ℝ≥0∞)⁻¹ * t) (Finset.sum_congr rfl fun i _ => ?_)
+  refine congrArg (fun t => (n : ENNReal)⁻¹ * t) (Finset.sum_congr rfl fun i _ => ?_)
   if h : φ (ω i) = a then
     simp [h]
   else

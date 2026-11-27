@@ -1,7 +1,7 @@
 module
 public import Mathlib
 public import Theorem.LinearMap.InternalHom
-public import Theorems.Thm_PresheafOfModules_isMonoidal_inverseImage_W_toPresheaf
+public import Theorem.Thm_PresheafOfModules_isMonoidal_inverseImage_W_toPresheaf
 public import Abbrev.SheafOfModules_Monoidal
 set_option autoImplicit false
 

@@ -14,7 +14,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { listLemmaTopLevelDirs } from '../lemmaSections.mjs';
 import { prepare, findDecls } from './scan.mjs';
-import { scanImportsAndOpens, headerSpacing, maxHeartbeats, openSection, openDuplicate, openMerge, openPrefix, openHiding, attrDocstring, dates, declKeywordDirText, blankSublemmas, lemmaNamespace, pathPrivate, lemmaMainName } from './headerRules.mjs';
+import { scanImportsAndOpens, headerSpacing, maxHeartbeats, openSection, openDuplicate, openMerge, openPrefix, openHiding, attrDocstring, dates, declKeywordDirText, blankSublemmas, lemmaNamespace, pathPrivate, lemmaMainName, unicodeTypeNotation } from './headerRules.mjs';
 import { signatureRules } from './signatureRules.mjs';
 import { indentRules, proofRules, underscoreNameRule } from './proofRules.mjs';
 import { attrRules } from './attrRules.mjs';
@@ -187,6 +187,7 @@ export const RULES = {
     'path-private': Q.pathPrivate,
     'lemma-main-name': 'Lemma convention: the primary/top-level declaration must be named `main` (helpers keep their descriptive names)',
     'fin-getelem-app': 'Notation convention: prefer `f[t]` getElem indexing over `f t` for a Fin-indexed function',
+    'unicode-type-notation': 'ℝ≥0 / ℝ≥0∞ / ℚ≥0 / ℕ+ are not allowed; write NNReal / ENNReal / NNRat / ℕ⁺',
 };
 
 /** rules switched off by default (too noisy on the corpus; see the calibration notes in the README) */
@@ -265,7 +266,7 @@ export function lintLean(source, opts = {}) {
     // `decl-keyword-dir`: trust the tree only when it sees the same lemma/theorem declarations as the text scan
     if (tree && countLemmaTheoremNodes(tree) !== ctx.decls.filter((d) => d.kind === 'lemma' || d.kind === 'theorem').length)
         ctx.astCovered.delete('decl-keyword-dir');
-    const steps = [headerSpacing, maxHeartbeats, openSection, openDuplicate, openMerge, openPrefix, openHiding, declKeywordDirText, pathPrivate, attrDocstring, dates, blankSublemmas, lemmaNamespace, lemmaMainName, signatureRules, indentRules, proofRules, underscoreNameRule, attrRules];
+    const steps = [headerSpacing, maxHeartbeats, openSection, openDuplicate, openMerge, openPrefix, openHiding, declKeywordDirText, pathPrivate, attrDocstring, dates, blankSublemmas, lemmaNamespace, lemmaMainName, unicodeTypeNotation, signatureRules, indentRules, proofRules, underscoreNameRule, attrRules];
     for (const step of steps) {
         try {
             step(ctx);

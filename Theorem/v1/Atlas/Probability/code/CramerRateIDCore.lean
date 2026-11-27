@@ -1117,7 +1117,7 @@ theorem isBounded_cramerRateFunction_le_ofReal_of_HasFiniteMGF_of_forall_bddAbov
       {y : EuclideanSpace ℝ (Fin d) |
         cramerRateFunction (fun x : EuclideanSpace ℝ (Fin d) => x) μ₀ y ≤ ENNReal.ofReal a} := by
   wlog ha : 0 ≤ a generalizing a
-  · have h0a : (0 : ℝ≥0∞) ≤ ENNReal.ofReal a := bot_le
+  · have h0a : (0 : ENNReal) ≤ ENNReal.ofReal a := bot_le
     have hmax : ENNReal.ofReal (max a 0) = ENNReal.ofReal a := by
       rw [ENNReal.ofReal_max, ENNReal.ofReal_zero, max_eq_left h0a]
     simpa [hmax] using this (max a 0) (le_max_right _ _)

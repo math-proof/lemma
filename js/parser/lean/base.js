@@ -8,12 +8,13 @@
 import {
     findInnermostOpenLeanAbsAncestor,
     isIdentContinueToken,
+    leanInfixContinue,
     leanInsertComma,
     strStmt,
     token2classname,
 } from './utility.js';
 import { IndentedNode } from '../node.js';
-import { tactics } from '../../codemirror-lean-tactics.js';
+import { tactics } from '../../lean-tactics.js';
 
 /** `toJSON` head names are Title-cased (`le`→`Le`, `sum`→`Sum`, `fun`→`Fun`). */
 export function jsonHead(name) {
@@ -262,6 +263,16 @@ export class Lean extends IndentedNode {
         // `true`: never take `LeanStatements`' structure-instance brace shortcut. The pre-registry
         // code passed a late-bound proxy here, which never compared equal to the real class
         // in `LeanStatements.push_binary`; the flag keeps that behavior.
+        // `theorem t :\n    let := e` reuses the colon's caret as the anonymous
+        // binder. That caret was opened on the colon line; the `:=` is on the
+        // `let` line, which is the line the empty binder occupies.
+        if (
+            caret instanceof L.LeanCaret &&
+            Lean.currentLine != null &&
+            typeof caret.line === 'number' &&
+            caret.line < Lean.currentLine
+        )
+            caret.line = Lean.currentLine;
         return caret.push_binary(L.LeanAssign, true);
     }
 
@@ -618,28 +629,54 @@ export class Lean extends IndentedNode {
         return suffix;
     }
 
+    /**
+     * A single non-ASCII, non-whitespace token — a "unicode symbol" in source.
+     * ASCII word chars (`\w`) and whitespace (incl. NBSP) are never symbols.
+     * @param {string | undefined} tok
+     */
+    static isNonAsciiSymbol(tok) {
+        if (typeof tok !== 'string' || tok.length !== 1) return false;
+        return tok.charCodeAt(0) > 0x7f && !/\s/u.test(tok);
+    }
+
+    /** Lazily built set of unicode chars that must stay their own token (see `isUnicodeSpecial`). */
+    static unicodeSpecial = null;
+
+    /**
+     * A unicode char `parse` handles as its own construct — an operator, delimiter,
+     * big operator, quantifier, or postfix (`⁻`, `ˣ`, `²`, …). Such a char must not
+     * be glued to a neighbour, or the switch would lose it (`x⁻¹` → `Inv x`, `αˣ` →
+     * `Units α`). Covers the infix maps plus the remaining non-ASCII `case` labels.
+     * @param {string | undefined} tok
+     */
+    static isUnicodeSpecial(tok) {
+        if (!Lean.isNonAsciiSymbol(tok)) return false;
+        if (Lean.unicodeSpecial == null) {
+            const set = new Set();
+            for (const k of Object.keys(token2classname)) if (k.length === 1 && k.charCodeAt(0) > 0x7f) set.add(k);
+            for (const k of Object.keys(leanInfixContinue)) if (k.length === 1 && k.charCodeAt(0) > 0x7f) set.add(k);
+            // non-ASCII `case` labels of `parse` that are not infix operators:
+            for (const ch of '⟨⟩⌈⌉⌊⌋⟦⟧«»⟪⟫‹›←∀∃∑∏⋃⋂⨅⨆∫¬∂∇√∛∜↑⇑²³⁴ᵀᴴ⁺ˣ⁻ᵥ·‖') set.add(ch);
+            Lean.unicodeSpecial = set;
+        }
+        return Lean.unicodeSpecial.has(tok);
+    }
+
     parse(token, self) {
         const tokens = self.tokens;
         const count = tokens.length;
 
-        // `ℝ≥0` / `ℝ≥0∞` / `ℚ≥0` — Mathlib type notations glued into one identifier
-        if ((token === 'ℝ' || token === 'ℚ') && tokens[self.start_idx + 1] === '≥' && tokens[self.start_idx + 2] === '0') {
-            token += '≥0';
-            self.start_idx += 2;
-            if (tokens[self.start_idx + 1] === '∞') {
-                token += '∞';
+        // `ℕ∞` (ENat) and any run of adjacent non-ASCII symbols with no space in
+        // between glue into one token — unless a symbol is an operator/delimiter/
+        // bigop/postfix that `parse` keeps separate (`a ≤ b` needs `≤`, `→ₗ` needs
+        // `→`, `x⁻¹` needs `⁻¹`).
+        if (Lean.isNonAsciiSymbol(token) && !Lean.isUnicodeSpecial(token)) {
+            while (Lean.isNonAsciiSymbol(tokens[self.start_idx + 1]) &&
+                   !Lean.isUnicodeSpecial(tokens[self.start_idx + 1])) {
+                token += tokens[self.start_idx + 1];
                 self.start_idx++;
             }
         }
-
-        // `rv%[μ] x` — `liftRV` syntax (`syntax "rv%[" term "] " term:max`, stats/joint_rv.lean): the Lean token
-        // is `rv%[`, so this `%` is never `HMod.hMod`. The tokenizer splits it into `rv` `%` `[`; glue `rv%` into one word so
-        // `[μ]` attaches as its index (`LeanGet`) and the source / echo keep `rv%[μ]` instead of `rv % [μ]` (Lean rejects that).
-        if (token === 'rv' && tokens[self.start_idx + 1] === '%' && tokens[self.start_idx + 2] === '[' && tokens[self.start_idx - 1] !== '.') {
-            self.start_idx++;
-            return this.parent.insert_word(this, 'rv%');
-        }
-
         // `𝓝[>] x` / `𝓝[≠] x` — a lone relation symbol as the whole bracket content is a word.
         if (this instanceof L.LeanCaret && tokens[self.start_idx - 1] === '[' && tokens[self.start_idx + 1] === ']' &&
             (token === '>' || token === '<' || token === '≠' || token === '≥' || token === '≤'))
@@ -778,6 +815,14 @@ export class Lean extends IndentedNode {
                     tokens[self.start_idx + k + 2] === '>'
                 )
                     caret = L.LeanTactic.continueSequentialTacticCombinator(this, indent);
+                // `rw […]\n  at h` — `at` continues the tactic. A fresh statement
+                // caret would let `at` climb to an outer `have`.
+                if (!caret && indent > 0 && tokens[self.start_idx + k] === 'at')
+                    caret = L.LeanTactic.continueAt(this, indent, newline_count);
+                // `show T\n    from p` — `from` closes the show. A continuation
+                // caret under the shown term stays empty and reprints before `from`.
+                if (!caret && indent > 0 && tokens[self.start_idx + k] === 'from')
+                    caret = L.Lean_show.continueFrom(this, indent, newline_count);
                 if (!caret)
                     caret = this.parent.insert_newline(this, newline_count, indent, tokens[self.start_idx + k]);
                 self.start_idx += j - 1;
@@ -847,7 +892,8 @@ export class Lean extends IndentedNode {
                 return this.push_binary(L[func]);
             }
             case '(':
-                return this.parent.insert_left(this, 'LeanParenthesis');
+                // `C(α, β)` is one notation. A space before `(` stays an application.
+                return this.parent.insert_left(this, 'LeanParenthesis', self.start_idx ? tokens[self.start_idx - 1] : '');
             case ')':
                 return this.parent.push_right('LeanParenthesis');
             case '[':
@@ -1287,6 +1333,10 @@ export class Lean extends IndentedNode {
                     subscript = sub;
                     self.start_idx++; // consume subscript
                     modifier = Lean.consumeBracketModifier(self);
+                } else if (sub && L.LeanToken.subscript[sub] !== undefined) {
+                    // `→₀` is `Finsupp` / `AddMonoidAlgebra`. A space stays `→ ₀`.
+                    subscript = sub;
+                    self.start_idx++;
                 } else {
                     subscript = Lean.consumePlusStarSuffix(self);
                 }
@@ -1370,14 +1420,15 @@ export class Lean extends IndentedNode {
                 return caret;
             }
             case '∘': {
-                // `∘ₘ` — composition with a subscript letter.
-                const hasSub = tokens[self.start_idx + 1] === 'ₘ';
+                // `∘ₘ` / `∘ₗ` — the subscript is part of the operator (`LinearMap.comp` is `∘ₗ`).
+                const sub = tokens[self.start_idx + 1];
+                const hasSub = !!(sub && L.LeanToken.subscript[sub] !== undefined);
                 if (hasSub) self.start_idx++;
                 const caret = this.push_arithmetic(token);
                 if (hasSub) {
                     let p = caret;
                     while (p && !(p instanceof L.Lean_circ)) p = p.parent;
-                    if (p) p.subscript = 'ₘ';
+                    if (p) p.subscript = sub;
                 }
                 return caret;
             }
@@ -1484,6 +1535,9 @@ export class Lean extends IndentedNode {
                 return caret;
             }
             case '∑': {
+                // `∑ᶠ` is finsum. A space stays an ordinary sum followed by the letter.
+                const finsum = tokens[self.start_idx + 1] === 'ᶠ';
+                if (finsum) self.start_idx++;
                 const caret = this.append('Lean_sum', 'operator');
                 if (tokens[self.start_idx + 1] === "'") {
                     self.start_idx++;
@@ -1491,10 +1545,24 @@ export class Lean extends IndentedNode {
                     while (p && !(p instanceof L.Lean_sum)) p = p.parent;
                     if (p) p.superscript = "'";
                 }
+                if (finsum) {
+                    let p = caret;
+                    while (p && !(p instanceof L.Lean_sum)) p = p.parent;
+                    if (p) p.superscript = 'ᶠ';
+                }
                 return caret;
             }
-            case '∏':
-                return this.append('Lean_prod', 'operator');
+            case '∏': {
+                const finprod = tokens[self.start_idx + 1] === 'ᶠ';
+                if (finprod) self.start_idx++;
+                const caret = this.append('Lean_prod', 'operator');
+                if (finprod) {
+                    let p = caret;
+                    while (p && !(p instanceof L.Lean_prod)) p = p.parent;
+                    if (p) p.superscript = 'ᶠ';
+                }
+                return caret;
+            }
             case '⋃':
                 return this.append('Lean_bigcup', 'operator');
             case '⋂':
@@ -1589,13 +1657,15 @@ export class Lean extends IndentedNode {
                 // The space-separated insert drops a modifier here, so the echo used to delete `in`.
                 if (token === 'in' && this.parent instanceof L.LeanArgsSpaceSeparated) {
                     const head = this.parent.args[0];
-                    if (head instanceof L.LeanToken && (head.text === 'variable' || head.text === 'open'))
+                    // `variable (R) in` / `open NS in` / `omit [inst] in`: the keyword
+                    // closes the command. A modifier `in` is dropped on reprint.
+                    if (head instanceof L.LeanToken && (head.text === 'variable' || head.text === 'open' || head.text === 'omit'))
                         return this.parent.insert_word(this, 'in');
                 }
                 return this.parent.insert(this, `Lean${token[0].toUpperCase() + token.slice(1)}`, 'modifier');
             }
             case 'where': {
-                // `class … where <body>` / `instance … where <body>`: split header from body.
+                // `class/instance/def … where <body>`: split header from body.
                 return this.push_binary(L.Lean_where);
             }
             case 'calc': {
@@ -1651,7 +1721,17 @@ export class Lean extends IndentedNode {
             case '‖':
                 if (this instanceof L.LeanCaret || (self.start_idx && tokens[self.start_idx - 1] === ' '))
                     return this.parent.insert_left(this, 'LeanNorm');
-                return this.parent.push_right('LeanNorm');
+                {
+                    // `‖x‖ₑ` is one notation. A following subscript belongs to the
+                    // closing bar; a space-separated `ₑ` stays its own token.
+                    const node = this.parent.push_right('LeanNorm');
+                    const sub = tokens[self.start_idx + 1];
+                    if (node instanceof L.LeanNorm && sub && L.LeanToken.subscript[sub] !== undefined) {
+                        node.subscript = sub;
+                        self.start_idx++;
+                    }
+                    return node;
+                }
             default: {
                 const tokenOrig = token;
                 const index = tactics.binary_search(tokenOrig, (a, b) =>
@@ -1988,6 +2068,18 @@ export class Lean extends IndentedNode {
             case 'LeanDoubleAngleQuotation':
             case 'LeanInner':
             case 'LeanSingleAngleQuotation': {
+                // `f^[n] (x)` is iterate-then-apply. The `(` belongs outside the
+                // pow; folding it into the exponent prints `^ [n] (x)`, which
+                // Lean reads as a power, not `Function.iterate`.
+                if (
+                    func === 'LeanParenthesis' &&
+                    this instanceof L.LeanBracket &&
+                    this.is_closed &&
+                    this.parent instanceof L.LeanPow &&
+                    this.parent.rhs === this &&
+                    !(this.arg instanceof L.LeanArgsCommaSeparated)
+                )
+                    return this.parent.push_left(func, prevToken);
                 const {indent, level} = this;
                 const caret = new L.LeanCaret(indent, level);
                 if (func === 'LeanBracket') {
@@ -2036,6 +2128,10 @@ export class Lean extends IndentedNode {
                     return caret;
                 }
                 const paired = new (L[func])(caret, indent, level);
+                // `C(α, β)` — no token between the name and `(`. Reprinting a space
+                // makes Lean apply the identifier `C` to a tuple.
+                if (func === 'LeanParenthesis' && prevToken !== ' ' && prevToken !== '\n' && prevToken !== '')
+                    paired.tightLeft = true;
                 if (this.parent instanceof L.LeanArgsSpaceSeparated) this.parent.push(paired);
                 else this.parent.replace(this, new L.LeanArgsSpaceSeparated([this, paired], indent, level));
                 return caret;

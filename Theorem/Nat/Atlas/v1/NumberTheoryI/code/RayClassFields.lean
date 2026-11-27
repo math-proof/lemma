@@ -3,6 +3,7 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.v1.Atlas.NumberTheoryI.code.RayClassFields.Part28
+public import Notation.Data.PNat
 
 public section
 
@@ -1342,7 +1343,7 @@ lemma eulerProduct_log_asymptotic
   [Field K]
   [NumberField K]
   {S : Set (Prime' K)}
-  {n : ℕ+}
+  {n : ℕ⁺}
   {m : ℤ}
 -- given
   (hm : HasMeromorphicContinuationWithPoleOrder (partialDedekindZeta K S ^ (n : ℕ)) m) :
@@ -1387,7 +1388,7 @@ lemma poleOrder_implies_dirichletDensity_limit
   [Field K]
   [NumberField K]
   {S : Set (Prime' K)}
-  {n : ℕ+}
+  {n : ℕ⁺}
   {m : ℤ}
 -- given
   (hm : HasMeromorphicContinuationWithPoleOrder (partialDedekindZeta K S ^ (n : ℕ)) m) :
@@ -1444,7 +1445,7 @@ lemma partialDedekindZeta_poleOrder_nonneg
   [Field K]
   [NumberField K]
   {S : Set (Prime' K)}
-  {n : ℕ+}
+  {n : ℕ⁺}
   {m : ℤ}
 -- given
   (h : HasMeromorphicContinuationWithPoleOrder (partialDedekindZeta K S ^ (n : ℕ)) m) :

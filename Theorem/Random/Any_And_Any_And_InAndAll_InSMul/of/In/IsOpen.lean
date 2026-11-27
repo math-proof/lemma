@@ -32,8 +32,8 @@ public theorem Random.Any_And_Any_And_InAndAll_InSMul.of.In.IsOpen
     ∃ V : Set (β → ℝ), IsOpen V ∧
       (fun a => ((ν : Measure α).map φ {a}).toReal) ∈ V ∧
       ∀ {n : ℕ} (hn : 0 < n) (ω : Fin n → α),
-        (fun a => ((((n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i)).map φ) {a}).toReal) ∈ V →
-        (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
+        (fun a => ((((n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i)).map φ) {a}).toReal) ∈ V →
+        (⟨(n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
           IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α) ∈ U :=
 -- proof
 by
@@ -43,7 +43,7 @@ by
   refine ⟨↥s → Fin (N + 1), inferInstance, inferInstance, inferInstance, φ, hφ, V, hVopen, hνV, ?_⟩
   intro n hn ω hmass
   let ρ : ProbabilityMeasure α :=
-    ⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i), IsProbabilityMeasure.of.Gt_0 hn⟩
+    ⟨(n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i), IsProbabilityMeasure.of.Gt_0 hn⟩
   apply hball ρ
   apply hfiber ρ
   simpa [ρ] using hmass

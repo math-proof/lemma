@@ -4,6 +4,7 @@ public import Mathlib.Data.Rat.Cast.Order
 public import Mathlib.Order.Monotone.Basic
 public import Mathlib.Tactic
 public import Theorem.NumberTheory.Recurrences.GolombLikeSequence.Part6
+public import Notation.Data.PNat
 
 
 public section
@@ -22,7 +23,7 @@ namespace MetaMathlibExt
 
 noncomputable def glk_f
     (y z : ℤ) (hy : 2 ≤ y) (hz : 2 - y ≤ z) (hpar : y % 2 ≠ z % 2) :
-    ℕ+ → ℕ+ := fun n =>
+    ℕ⁺ → ℕ⁺ := fun n =>
   glk_toPNat (glk_v y z hy hz n.val)
     (glk_v_pos y z hy hz hpar n.val (by exact_mod_cast n.pos))
 

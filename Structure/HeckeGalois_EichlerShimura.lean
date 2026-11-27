@@ -10,7 +10,7 @@ public import Mathlib.LinearAlgebra.Dimension.Finrank
 
 set_option autoImplicit false
 
-public noncomputable section
+@[expose] public noncomputable section
 
 namespace ModularCurve
 

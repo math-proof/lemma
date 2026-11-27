@@ -98,7 +98,22 @@ export class LeanStatements extends LeanArgs {
 
     push_binary(Ctor, skipBraceShortcut = false) {
         const parent = this.parent;
-        if (!parent) return undefined;
+        if (!parent) {
+            // Module-level `surj y := by` (a `where` field that dedented out of the
+            // structure body). There is no parent to wrap, so bind `:=` to the last statement.
+            if (Ctor === L.LeanAssign && Array.isArray(this.args)) {
+                let idx = this.args.length - 1;
+                while (idx >= 0 && (this.args[idx] instanceof L.LeanCaret || this.args[idx] instanceof L.LeanLineComment || this.args[idx] instanceof L.LeanBlockComment))
+                    idx--;
+                if (idx >= 0) {
+                    const origin = this.args[idx];
+                    const caret = new L.LeanCaret(origin.indent, origin.level);
+                    this.replace(origin, new Ctor(origin, caret, origin.indent, origin.level));
+                    return caret;
+                }
+            }
+            return undefined;
+        }
         let idx = this.args.length - 1;
         while (idx >= 0) {
             const c = this.args[idx];
@@ -148,6 +163,27 @@ export class LeanStatements extends LeanArgs {
 
     insert_semicolon(caret) {
         if (caret instanceof L.LeanTactic) return caret.insert_semicolon(caret.arg);
+        // `by\n  have := e; rw …` — `;` starts the next tactic of this block.
+        // Bubbling to `by` lifts the whole block onto the `by` line (`by       have`).
+        const p = this.parent;
+        if (p instanceof L.LeanBy || p instanceof L.LeanTacticBlock) {
+            let host = null;
+            for (let i = this.args.length - 1; i >= 0; i--) {
+                const a = this.args[i];
+                if (a instanceof L.LeanCaret || a instanceof L.LeanLineComment || a instanceof L.LeanBlockComment) continue;
+                host = a;
+                break;
+            }
+            if (host) {
+                const neu = new L.LeanCaret(host.indent, host.level);
+                if (host instanceof L.LeanArgsSemicolonSeparated) {
+                    host.push(neu);
+                    return neu;
+                }
+                this.replace(host, new L.LeanArgsSemicolonSeparated([host, neu], host.indent, host.level));
+                return neu;
+            }
+        }
         return super.insert_semicolon(caret);
     }
 
@@ -265,8 +301,12 @@ export class LeanStatements extends LeanArgs {
                         for (const c of w.args) c.echo();
                     } else if (tactic.sequential_tactic_combinator) {
                         const block = tactic.sequential_tactic_combinator.arg;
+                        // `tactic.echo` already walked a same-line `<;>` chain.
+                        // Echoing it again wraps the inserted `echo` tactic and
+                        // grows one `<;> echo ⊢` per visit.
                         if (block instanceof L.LeanTacticBlock) block.echo();
-                        else tactic.sequential_tactic_combinator.echo();
+                        else if (!(block instanceof L.LeanTactic && block.tacticName === 'echo'))
+                            tactic.sequential_tactic_combinator.echo();
                     }
                 } else if (tactic.sequential_tactic_combinator) {
                     tactic.sequential_tactic_combinator.echo();
@@ -301,7 +341,18 @@ export class LeanStatements extends LeanArgs {
     insert_newline(caret, newline_count, indent, next) {
         if (this.indent > indent) return super.insert_newline(caret, newline_count, indent, next);
         if (this.indent < indent) {
-            if (!leanIsInfixContinue(next)) {
+            if (leanIsInfixContinue(next)) {
+                // `p\n    ∧ q` — the operator continues the last statement.
+                // A fresh caret would be its lhs and the `∧` would share `p`'s line.
+                let idx = this.args.length - 1;
+                while (idx >= 0 && (this.args[idx] instanceof L.LeanCaret || this.args[idx] instanceof L.LeanLineComment || this.args[idx] instanceof L.LeanBlockComment))
+                    idx--;
+                const host = idx >= 0 ? this.args[idx] : null;
+                if (host) {
+                    host.pendingOpLead = indent;
+                    return host;
+                }
+            } else {
                 const c = this.push_args_indented(indent, newline_count);
                 if (c) return c;
             }

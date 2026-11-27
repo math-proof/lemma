@@ -3,6 +3,7 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.Real_Atlas_v1_IntroductionToFunctionalAnalysis_code_SpectralTheory
+public import Notation.Data.PNat
 
 public section
 
@@ -531,7 +532,7 @@ public theorem isOpen_invertible_operators
 -/
 @[path]
 public theorem greens_kernel_integral_sine_eq
-  {k : ℕ+}
+  {k : ℕ⁺}
   {x : ℝ}
 -- given
   (hx0 : 0 ≤ x)
@@ -630,15 +631,15 @@ public theorem greens_kernel_integral_sine_eq
 @[path]
 public theorem greens_operator_eigendecomposition
   {A : Module.End ℝ L2UnitInterval}
-  {b : HilbertBasis ℕ+ ℝ L2UnitInterval}
+  {b : HilbertBasis ℕ⁺ ℝ L2UnitInterval}
 -- given
   (hA_sa : ∀ f g : L2UnitInterval, inner (𝕜 := ℝ) (A f) g = inner (𝕜 := ℝ) f (A g))
-  (hb : ∀ k : ℕ+, (b k : L2UnitInterval) =ᵐ[volume.restrict (Set.Icc (0 : ℝ) 1)] (sineBasisFun k : ℝ → ℝ))
+  (hb : ∀ k : ℕ⁺, (b k : L2UnitInterval) =ᵐ[volume.restrict (Set.Icc (0 : ℝ) 1)] (sineBasisFun k : ℝ → ℝ))
   (hA_greens : ∀ f : L2UnitInterval, (A f : L2UnitInterval) =ᵐ[volume.restrict (Set.Icc (0 : ℝ) 1)] (fun x => ∫ t in Set.Icc (0 : ℝ) 1, greensKernel x t * (f : ℝ → ℝ) t)) :
 -- imply
-  LinearMap.ker A = ⊥ ∧ (∀ k : ℕ+, A.HasEigenvector (greensEigenvalue k) (b k)) ∧ ∀ f : L2UnitInterval, A f = ∑' k : ℕ+, (greensEigenvalue k * @inner ℝ _ _ (b k) f) • (b k) := by
+  LinearMap.ker A = ⊥ ∧ (∀ k : ℕ⁺, A.HasEigenvector (greensEigenvalue k) (b k)) ∧ ∀ f : L2UnitInterval, A f = ∑' k : ℕ⁺, (greensEigenvalue k * @inner ℝ _ _ (b k) f) • (b k) := by
 -- proof
-  have heig : ∀ k : ℕ+, A (b k) = greensEigenvalue k • (b k) := by
+  have heig : ∀ k : ℕ⁺, A (b k) = greensEigenvalue k • (b k) := by
     intro k
     apply Lp.ext
     set μ := volume.restrict (Set.Icc (0 : ℝ) 1)
@@ -686,7 +687,7 @@ public theorem greens_operator_eigendecomposition
   ·
     rw [LinearMap.ker_eq_bot']
     intro f hf
-    have hcoeff : ∀ k : ℕ+, @inner ℝ _ _ (b k) f = (0 : ℝ) := by
+    have hcoeff : ∀ k : ℕ⁺, @inner ℝ _ _ (b k) f = (0 : ℝ) := by
       intro k
       have hne : greensEigenvalue k ≠ 0 := by
         unfold greensEigenvalue; apply div_ne_zero one_ne_zero
@@ -708,7 +709,7 @@ public theorem greens_operator_eigendecomposition
     exact ⟨Module.End.mem_eigenspace_iff.mpr (heig k), b.orthonormal.ne_zero k⟩
   ·
     intro f
-    have hcoeff : ∀ j : ℕ+,
+    have hcoeff : ∀ j : ℕ⁺,
       @inner ℝ _ _ (b j) (A f) = greensEigenvalue j * @inner ℝ _ _ (b j) f := by
       intro j
       have h1 : @inner ℝ _ _ (b j) (A f) = @inner ℝ _ _ (A f) (b j) := real_inner_comm _ _

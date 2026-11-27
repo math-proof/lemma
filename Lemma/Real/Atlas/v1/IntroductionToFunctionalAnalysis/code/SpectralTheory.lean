@@ -1,5 +1,6 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
+import Notation.Data.PNat
 open Function Set Filter Bornology Metric Pointwise Topology
 open Module End
 open MeasureTheory
@@ -26,24 +27,24 @@ noncomputable abbrev L2UnitInterval :=
 $u_k(x) = \sqrt{2} \sin(k\pi x)$.
 These form an orthonormal eigenbasis of the Green's operator with Dirichlet
 boundary conditions on the unit interval. -/
-noncomputable def sineBasisFun (k : ℕ+) : ℝ → ℝ :=
+noncomputable def sineBasisFun (k : ℕ⁺) : ℝ → ℝ :=
   fun x => Real.sqrt 2 * Real.sin (↑k * Real.pi * x)
 
 /-- The $k$-th eigenvalue of the Green's operator on $[0,1]$ with Dirichlet
 boundary conditions: $\lambda_k = \dfrac{1}{k^2 \pi^2}$. -/
-noncomputable def greensEigenvalue (k : ℕ+) : ℝ := 1 / ((k : ℝ) ^ 2 * Real.pi ^ 2)
+noncomputable def greensEigenvalue (k : ℕ⁺) : ℝ := 1 / ((k : ℝ) ^ 2 * Real.pi ^ 2)
 
 /-- The square root of the $k$-th eigenvalue of the Green's operator,
 $\sqrt{\lambda_k} = \dfrac{1}{k\pi}$. This is the $k$-th eigenvalue of $A^{1/2}$. -/
-noncomputable def greensEigenvalueSqrt (k : ℕ+) : ℝ := 1 / ((k : ℝ) * Real.pi)
+noncomputable def greensEigenvalueSqrt (k : ℕ⁺) : ℝ := 1 / ((k : ℝ) * Real.pi)
 
 /-- The square root $A^{1/2}$ of the Green's operator, defined via its action on the
 orthonormal eigenbasis $\{b_k\}$: if $f = \sum_k c_k\, b_k$ where
 $c_k = \langle b_k, f\rangle$, then
 $A^{1/2} f = \sum_k \frac{1}{k\pi}\, c_k\, b_k$. -/
-noncomputable def greensOperatorSqrt (b : HilbertBasis ℕ+ ℝ L2UnitInterval) :
+noncomputable def greensOperatorSqrt (b : HilbertBasis ℕ⁺ ℝ L2UnitInterval) :
     L2UnitInterval → L2UnitInterval :=
-  fun f => ∑' (k : ℕ+), (greensEigenvalueSqrt k * inner (𝕜 := ℝ) (b k) f) • b k
+  fun f => ∑' (k : ℕ⁺), (greensEigenvalueSqrt k * inner (𝕜 := ℝ) (b k) f) • b k
 
 /-- The Green's kernel for the Dirichlet Laplacian on $[0,1]$:
 $G(x,t) = \min(x,t)\,(1 - \max(x,t))$.
@@ -570,7 +571,7 @@ lemma isOpen_invertible_operators
 -/
 @[path]
 lemma greens_kernel_integral_sine_eq
-  {k : ℕ+}
+  {k : ℕ⁺}
   {x : ℝ}
 -- given
   (hx0 : 0 ≤ x)
@@ -669,15 +670,15 @@ lemma greens_kernel_integral_sine_eq
 @[path]
 lemma greens_operator_eigendecomposition
   {A : Module.End ℝ L2UnitInterval}
-  {b : HilbertBasis ℕ+ ℝ L2UnitInterval}
+  {b : HilbertBasis ℕ⁺ ℝ L2UnitInterval}
 -- given
   (hA_sa : ∀ f g : L2UnitInterval, inner (𝕜 := ℝ) (A f) g = inner (𝕜 := ℝ) f (A g))
-  (hb : ∀ k : ℕ+, (b k : L2UnitInterval) =ᵐ[volume.restrict (Set.Icc (0 : ℝ) 1)] (sineBasisFun k : ℝ → ℝ))
+  (hb : ∀ k : ℕ⁺, (b k : L2UnitInterval) =ᵐ[volume.restrict (Set.Icc (0 : ℝ) 1)] (sineBasisFun k : ℝ → ℝ))
   (hA_greens : ∀ f : L2UnitInterval, (A f : L2UnitInterval) =ᵐ[volume.restrict (Set.Icc (0 : ℝ) 1)] (fun x => ∫ t in Set.Icc (0 : ℝ) 1, greensKernel x t * (f : ℝ → ℝ) t)) :
 -- imply
-  LinearMap.ker A = ⊥ ∧ (∀ k : ℕ+, A.HasEigenvector (greensEigenvalue k) (b k)) ∧ ∀ f : L2UnitInterval, A f = ∑' k : ℕ+, (greensEigenvalue k * @inner ℝ _ _ (b k) f) • (b k) := by
+  LinearMap.ker A = ⊥ ∧ (∀ k : ℕ⁺, A.HasEigenvector (greensEigenvalue k) (b k)) ∧ ∀ f : L2UnitInterval, A f = ∑' k : ℕ⁺, (greensEigenvalue k * @inner ℝ _ _ (b k) f) • (b k) := by
 -- proof
-  have heig : ∀ k : ℕ+, A (b k) = greensEigenvalue k • (b k) := by
+  have heig : ∀ k : ℕ⁺, A (b k) = greensEigenvalue k • (b k) := by
     intro k
     apply Lp.ext
     set μ := volume.restrict (Set.Icc (0 : ℝ) 1)
@@ -725,7 +726,7 @@ lemma greens_operator_eigendecomposition
   ·
     rw [LinearMap.ker_eq_bot']
     intro f hf
-    have hcoeff : ∀ k : ℕ+, @inner ℝ _ _ (b k) f = (0 : ℝ) := by
+    have hcoeff : ∀ k : ℕ⁺, @inner ℝ _ _ (b k) f = (0 : ℝ) := by
       intro k
       have hne : greensEigenvalue k ≠ 0 := by
         unfold greensEigenvalue; apply div_ne_zero one_ne_zero
@@ -747,7 +748,7 @@ lemma greens_operator_eigendecomposition
     exact ⟨Module.End.mem_eigenspace_iff.mpr (heig k), b.orthonormal.ne_zero k⟩
   ·
     intro f
-    have hcoeff : ∀ j : ℕ+,
+    have hcoeff : ∀ j : ℕ⁺,
       @inner ℝ _ _ (b j) (A f) = greensEigenvalue j * @inner ℝ _ _ (b j) f := by
       intro j
       have h1 : @inner ℝ _ _ (b j) (A f) = @inner ℝ _ _ (A f) (b j) := real_inner_comm _ _

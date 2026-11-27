@@ -1,5 +1,5 @@
 import Theorem.Finset.ComponentGroup
-import Theorems.Thm_ModularCurve_gramMap_injective
+import Theorem.Thm_ModularCurve_gramMap_injective
 import Mathlib.LinearAlgebra.FreeModule.PID
 import Mathlib.LinearAlgebra.Dual.Lemmas
 import Mathlib.LinearAlgebra.Matrix.ToLin

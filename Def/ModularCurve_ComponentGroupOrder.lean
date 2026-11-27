@@ -1,6 +1,6 @@
 module
 public import Def.ModularCurve_ComponentGroup
-public import Theorems.Thm_ModularCurve_gramMap_injective
+public import Theorem.Thm_ModularCurve_gramMap_injective
 public import Mathlib.LinearAlgebra.FreeModule.PID
 public import Mathlib.LinearAlgebra.Dual.Lemmas
 public import Mathlib.LinearAlgebra.Matrix.ToLin

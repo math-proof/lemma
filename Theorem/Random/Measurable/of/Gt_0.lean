@@ -25,7 +25,7 @@ public theorem Random.Measurable.of.Gt_0
   (hn : 0 < n) :
 -- imply
   Measurable (fun ω : Fin n → α =>
-    (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
+    (⟨(n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
       IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α)) :=
 -- proof
 by

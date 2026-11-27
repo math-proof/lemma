@@ -2,6 +2,7 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Theorem.NumberTheory.Recurrences.GolombLikeSequence.Part8
+public import Notation.Data.PNat
 open MetaMathlibExt
 
 
@@ -34,7 +35,7 @@ namespace MetaMathlibExt
 @[path]
 private theorem glk_f_val
   (y z : ℤ) (hy : 2 ≤ y) (hz : 2 - y ≤ z) (hpar : y % 2 ≠ z % 2)
-  (n : ℕ+) :
+  (n : ℕ⁺) :
   (↑((glk_f y z hy hz hpar n).val) : ℤ) = glk_v y z hy hz n.val := by
   simp [glk_f]
 
@@ -46,7 +47,7 @@ namespace MetaMathlibExt
 [glk_seq_strict_of_strict](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/GolombLikeSequence.lean)
 -/
 @[path]
-private theorem glk_seq_strict_of_strict (f : ℕ+ → ℕ+) (hf : StrictMono f) :
+private theorem glk_seq_strict_of_strict (f : ℕ⁺ → ℕ⁺) (hf : StrictMono f) :
   StrictMono (glk_seq f) := by
   intro a b hab
   have hp : a.succPNat < b.succPNat := by simpa using hab
@@ -60,7 +61,7 @@ namespace MetaMathlibExt
 [glk_strict_of_seq_strict](https://github.com/facebookresearch/atlas-lean/blob/main/MathlibExt/NumberTheory/Recurrences/GolombLikeSequence.lean)
 -/
 @[path]
-private theorem glk_strict_of_seq_strict (f : ℕ+ → ℕ+)
+private theorem glk_strict_of_seq_strict (f : ℕ⁺ → ℕ⁺)
   (hf : StrictMono (glk_seq f)) : StrictMono f := by
   intro a b hab
   have hp : a.natPred < b.natPred := by
@@ -209,7 +210,7 @@ namespace MetaMathlibExt
 -/
 @[path]
 private theorem glk_seq_zero_of_initial_int
-  (y z : ℤ) (f : ℕ+ → ℕ+)
+  (y z : ℤ) (f : ℕ⁺ → ℕ⁺)
   (h : (↑((f 1).val) : ℤ) = glk_c y z + 1) :
   glk_seq f 0 = (glk_c y z).toNat + 1 := by
   have hcpos : 0 ≤ glk_c y z := by
@@ -217,7 +218,7 @@ private theorem glk_seq_zero_of_initial_int
     have hfposInt : (1 : ℤ) ≤ (↑((f 1).val) : ℤ) := by exact_mod_cast hfpos
     omega
   unfold glk_seq
-  rw [show (0 : ℕ).succPNat = (1 : ℕ+) by rfl]
+  rw [show (0 : ℕ).succPNat = (1 : ℕ⁺) by rfl]
   apply Int.ofNat_inj.mp
   push_cast
   simpa [glk_seq, Int.ofNat_toNat, max_eq_left hcpos] using h
@@ -273,20 +274,20 @@ private theorem golomb_like_closed_form_eq
   (hz : 2 - y ≤ z)
   (hpar : y % 2 ≠ z % 2) :
 -- imply
-  (∃! f : ℕ+ → ℕ+,
+  (∃! f : ℕ⁺ → ℕ⁺,
     StrictMono f ∧
     (↑((f 1).val) : ℚ) = ((y : ℚ) + (z : ℚ) + 1) / 2 ∧
-    ∀ n : ℕ+,
+    ∀ n : ℕ⁺,
     (↑((f (f n)).val) : ℤ) = y * (↑n.val : ℤ) + z) ∧
-    ∀ f : ℕ+ → ℕ+,
+    ∀ f : ℕ⁺ → ℕ⁺,
     StrictMono f →
     (↑((f 1).val) : ℚ) = ((y : ℚ) + (z : ℚ) + 1) / 2 →
-    (∀ n : ℕ+,
+    (∀ n : ℕ⁺,
     (↑((f (f n)).val) : ℤ) = y * (↑n.val : ℤ) + z) →
     ∀ k : ℕ, ∀ j : ℤ,
     -(((y : ℚ) + (z : ℚ) - 1) / 2) * (y : ℚ) ^ k ≤ (j : ℚ) →
     (j : ℚ) < (((y : ℚ) + (z : ℚ) - 1) / 2) * (y : ℚ) ^ k →
-    ∃ m : ℕ+,
+    ∃ m : ℕ⁺,
     (↑m.val : ℚ) =
     (((y : ℚ) + 1) * ((y : ℚ) + (z : ℚ) - 1) /
     (2 * ((y : ℚ) - 1))) *

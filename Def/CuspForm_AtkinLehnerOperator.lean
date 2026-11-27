@@ -1,10 +1,10 @@
 module
 public import Mathlib
 public import Theorem.ModularForm.AtkinLehnerDatum
-public import Theorems.Thm_ModularForm_alSlash_slash_eq_self_of_mem_Gamma0
-public import Theorems.Thm_ModularForm_mdifferentiable_alSlash
-public import Theorems.Thm_ModularForm_isBoundedAt_alSlash
-public import Theorems.Thm_ModularForm_isZeroAt_alSlash
+public import Theorem.Thm_ModularForm_alSlash_slash_eq_self_of_mem_Gamma0
+public import Theorem.Thm_ModularForm_mdifferentiable_alSlash
+public import Theorem.Thm_ModularForm_isBoundedAt_alSlash
+public import Theorem.Thm_ModularForm_isZeroAt_alSlash
 set_option autoImplicit false
 
 

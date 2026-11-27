@@ -50,7 +50,7 @@ private theorem main
     liminf (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log
       ((@Measure.map (Fin n → α) (ProbabilityMeasure α) _ _
         (fun ω => if hn : 0 < n then
-          (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
+          (⟨(n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
             IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α)
         else μ.toProbabilityMeasure)
         (Measure.pi fun _ : Fin n => μ)) U)) atTop :=
@@ -58,7 +58,7 @@ private theorem main
 by
   let emp (n : ℕ) (ω : Fin n → α) : ProbabilityMeasure α :=
     if hn : 0 < n then
-      (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
+      (⟨(n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
         IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α)
     else
       μ.toProbabilityMeasure
@@ -104,7 +104,7 @@ by
     have hlow := hfinite.lower_bound V hV
     have hcell : ∀ n (ω : Fin n → α),
         (fun a => (countVec (fun i => φ (ω i)) a : ℝ) / n) =
-          fun a => ((((n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i)).map φ) {a}).toReal := by
+          fun a => ((((n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i)).map φ) {a}).toReal := by
       intro n ω
       funext a
       rw [GetMapSMul.eq.DivCountVec.of.Measurable (n := n) (ω := ω) (φ := φ) (a := a) hφ,
@@ -114,7 +114,7 @@ by
           (emp n : (Fin n → α) → ProbabilityMeasure α) ⁻¹' U := by
       intro n hn ω hω
       have hmass :
-        (fun a => ((((n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i)).map φ) {a}).toReal) ∈ V := by
+        (fun a => ((((n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i)).map φ) {a}).toReal) ∈ V := by
         simpa [hcell n ω] using hω
       have hemp : emp n ω ∈ U := by
         unfold emp
@@ -145,7 +145,7 @@ by
       intro n
       if hn : 0 < n then
         let rhs : (Fin n → α) → ProbabilityMeasure α :=
-          fun ω => (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
+          fun ω => (⟨(n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
             IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α)
         have heq : emp n = rhs := by
           funext ω

@@ -118,9 +118,14 @@ export class LeanRightarrow extends LeanBinary {
                 if (!(caret instanceof L.LeanCaret)) nl++;
                 let last = caret;
                 for (let i = 1; i < nl; i++) {
-                    last = new L.LeanCaret(indent, caret.level);
+                    last = new L.LeanCaret(indent, caret.level).stampFollowingLine(i);
                     stmts.push(last);
                 }
+                // `case zero =>\n    simp` — the rhs caret was opened on the
+                // `=>` line. A nullary tactic keeps that caret, so it has to
+                // be the tactic's line, not the `=>` line.
+                if (last === caret && caret instanceof L.LeanCaret)
+                    caret.stampFollowingLine();
                 return last;
             }
         }

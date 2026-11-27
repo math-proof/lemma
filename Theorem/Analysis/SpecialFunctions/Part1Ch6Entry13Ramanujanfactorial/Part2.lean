@@ -14,6 +14,7 @@ public import Mathlib.NumberTheory.TsumDivisorsAntidiagonal
 public import Mathlib.Topology.GDelta.MetrizableSpace
 public import Mathlib.Topology.Separation.CompletelyRegular
 public import Def.Analysis.SpecialFunctions.Part1Ch6Entry13Ramanujanfactorial.Part2
+public import Notation.Data.PNat
 
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 6, Entry 13
@@ -37,7 +38,7 @@ noncomputable section
 theorem dblR_summable {t : ℝ} (ht : ‖t‖ < 1) : Summable (dblR t) := by
   have hL := dblL_summable ht
   have hLn := hL.norm
-  have hmaj : Summable (fun c : ℕ+ × ℕ+ => 2 * ‖dblL t c‖) := hLn.mul_left 2
+  have hmaj : Summable (fun c : ℕ⁺ × ℕ⁺ => 2 * ‖dblL t c‖) := hLn.mul_left 2
   apply Summable.of_norm_bounded hmaj
   intro c
   simp only [dblR]
@@ -69,9 +70,9 @@ theorem dblR_summable {t : ℝ} (ht : ‖t‖ < 1) : Summable (dblR t) := by
     have hnn := norm_nonneg (dblL t c)
     linarith
 
-theorem dblR_zero (t : ℝ) (k : ℕ+) :
+theorem dblR_zero (t : ℝ) (k : ℕ⁺) :
     dblR t (k, ((arithEquiv k) 0).val) = signW k * t ^ ((k:ℕ)^2) := by
-  have h0 : (((arithEquiv k) 0).val : ℕ+) = k := by
+  have h0 : (((arithEquiv k) 0).val : ℕ⁺) = k := by
     simp only [arithEquiv]
     apply PNat.eq
     simp
@@ -83,19 +84,19 @@ theorem dblR_zero (t : ℝ) (k : ℕ+) :
   congr 1
   rw [pow_two]
 
-theorem dblR_succ (t : ℝ) (k : ℕ+) (m : ℕ) :
+theorem dblR_succ (t : ℝ) (k : ℕ⁺) (m : ℕ) :
     dblR t (k, ((arithEquiv k) (m+1)).val)
       = 2 * signW k * t ^ ((k:ℕ) * ((k:ℕ) + 2 * (m+1))) := by
-  have hC1 : ((((arithEquiv k) (m+1)).val : ℕ+) : ℕ) % 2 = (k:ℕ) % 2 := by
+  have hC1 : ((((arithEquiv k) (m+1)).val : ℕ⁺) : ℕ) % 2 = (k:ℕ) % 2 := by
     show ((k:ℕ) + 2 * (m+1)) % 2 = (k:ℕ) % 2
     omega
-  have hC2 : (k:ℕ) ≤ ((((arithEquiv k) (m+1)).val : ℕ+) : ℕ) := by
+  have hC2 : (k:ℕ) ≤ ((((arithEquiv k) (m+1)).val : ℕ⁺) : ℕ) := by
     show (k:ℕ) ≤ (k:ℕ) + 2 * (m+1)
     omega
-  have hne : (k:ℕ) ≠ ((((arithEquiv k) (m+1)).val : ℕ+) : ℕ) := by
+  have hne : (k:ℕ) ≠ ((((arithEquiv k) (m+1)).val : ℕ⁺) : ℕ) := by
     show (k:ℕ) ≠ (k:ℕ) + 2 * (m+1)
     omega
-  have hexp : (k:ℕ) * ((((arithEquiv k) (m+1)).val : ℕ+) : ℕ)
+  have hexp : (k:ℕ) * ((((arithEquiv k) (m+1)).val : ℕ⁺) : ℕ)
       = (k:ℕ) * ((k:ℕ) + 2 * (m+1)) := by
     show (k:ℕ) * ((k:ℕ) + 2 * (m+1)) = _
     rfl
@@ -104,9 +105,9 @@ theorem dblR_succ (t : ℝ) (k : ℕ+) (m : ℕ) :
   rw [ite_eq_right hne]
   rw [hexp]
 
-theorem dblR_fiber_support (t : ℝ) (k : ℕ+) :
-    Function.support (fun j : ℕ+ => dblR t (k, j))
-      ⊆ { j : ℕ+ | (j:ℕ) % 2 = (k:ℕ) % 2 ∧ (k:ℕ) ≤ (j:ℕ) } := by
+theorem dblR_fiber_support (t : ℝ) (k : ℕ⁺) :
+    Function.support (fun j : ℕ⁺ => dblR t (k, j))
+      ⊆ { j : ℕ⁺ | (j:ℕ) % 2 = (k:ℕ) % 2 ∧ (k:ℕ) ≤ (j:ℕ) } := by
   intro j hj
   simp only [Function.support, ne_eq] at hj
   show (j:ℕ) % 2 = (k:ℕ) % 2 ∧ (k:ℕ) ≤ (j:ℕ)
@@ -117,26 +118,26 @@ theorem dblR_fiber_support (t : ℝ) (k : ℕ+) :
     exact hcon
   exact hj h0
 
-theorem per_k_R {t : ℝ} (ht : ‖t‖ < 1) (k : ℕ+) :
-    ∑' j : ℕ+, dblR t (k, j) = singleR t k := by
+theorem per_k_R {t : ℝ} (ht : ‖t‖ < 1) (k : ℕ⁺) :
+    ∑' j : ℕ⁺, dblR t (k, j) = singleR t k := by
   have hRsumm := dblR_summable ht
-  have e1 : (∑' j : ℕ+, dblR t (k, j))
-      = ∑' jm : { j : ℕ+ // (j:ℕ) % 2 = (k:ℕ) % 2 ∧ (k:ℕ) ≤ (j:ℕ) },
+  have e1 : (∑' j : ℕ⁺, dblR t (k, j))
+      = ∑' jm : { j : ℕ⁺ // (j:ℕ) % 2 = (k:ℕ) % 2 ∧ (k:ℕ) ≤ (j:ℕ) },
           dblR t (k, jm.val) := by
     have hsup := dblR_fiber_support t k
-    have h := tsum_subtype_eq_of_support_subset (f := fun j : ℕ+ => dblR t (k, j))
-      (s := { j : ℕ+ | (j:ℕ) % 2 = (k:ℕ) % 2 ∧ (k:ℕ) ≤ (j:ℕ) }) hsup
+    have h := tsum_subtype_eq_of_support_subset (f := fun j : ℕ⁺ => dblR t (k, j))
+      (s := { j : ℕ⁺ | (j:ℕ) % 2 = (k:ℕ) % 2 ∧ (k:ℕ) ≤ (j:ℕ) }) hsup
     exact h.symm
-  have e2 : (∑' jm : { j : ℕ+ // (j:ℕ) % 2 = (k:ℕ) % 2 ∧ (k:ℕ) ≤ (j:ℕ) },
+  have e2 : (∑' jm : { j : ℕ⁺ // (j:ℕ) % 2 = (k:ℕ) % 2 ∧ (k:ℕ) ≤ (j:ℕ) },
           dblR t (k, jm.val))
       = ∑' m : ℕ, dblR t (k, ((arithEquiv k) m).val) := by
-    have h := (arithEquiv k).tsum_eq (f := fun jm : { j : ℕ+ // _ } => dblR t (k, jm.val))
+    have h := (arithEquiv k).tsum_eq (f := fun jm : { j : ℕ⁺ // _ } => dblR t (k, jm.val))
     exact h.symm
   rw [e1, e2]
   have hfibM : Summable (fun m : ℕ => dblR t (k, ((arithEquiv k) m).val)) := by
     apply hRsumm.comp_injective
     intro a b hab
-    have hval : (((arithEquiv k) a).val : ℕ+) = (((arithEquiv k) b).val : ℕ+) :=
+    have hval : (((arithEquiv k) a).val : ℕ⁺) = (((arithEquiv k) b).val : ℕ⁺) :=
       congrArg Prod.snd hab
     have := (arithEquiv k).injective (Subtype.ext hval)
     exact this

@@ -27,7 +27,7 @@ private lemma main
 -- given
   (h₀ : ∀ t, Measurable (r t, s t, a t))
   (h₁ : Measurable g)
-  (h₂ : Integrable (rv%[π] (g r[t:])) π)
+  (h₂ : Integrable (g ∘ Expectation.asRV r[t:]) π)
   (h₃ : r[t:] ⟂ᵢ[π] (r, s, a)[:t] | (s t, a t)) :
 -- imply
   𝔼[r: π](g r[t:] | (r, s, a)[:t], s t, a t) =ᵐ[π] 𝔼[r: π](g r[t:] | s t, a t) := by

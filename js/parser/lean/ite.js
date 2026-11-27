@@ -150,7 +150,13 @@ export class LeanIte extends LeanArgs {
                 this.not_inline();
                 this.newlineBehindElse = true;
             }
-            if (caret instanceof L.LeanCaret) return caret;
+            if (caret instanceof L.LeanCaret) {
+                // `else\n  exfalso` — the branch caret is born on the `else` line
+                // and then becomes the nullary tactic's argument. The body is the
+                // following line; the break itself is printed by `strFormat`.
+                caret.stampFollowingLine(newline_count - 1);
+                return caret;
+            }
             if (indent > this.indent && (caret instanceof L.LeanTactic || caret instanceof L.Lean_let)) {
                 const stmt = new L.LeanStatements([caret], caret.indent, caret.level);
                 this.else = stmt;

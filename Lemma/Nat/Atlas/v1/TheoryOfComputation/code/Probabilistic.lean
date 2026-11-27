@@ -118,23 +118,23 @@ lemma schwartz_zippel_book
   (hp : p ≠ 0)
   (hd : ∀ i : Fin m, p.degreeOf i ≤ d) :
 -- imply
-  (#{r ∈ (univ : Finset (Fin m → F)) | MvPolynomial.eval r p = 0} : ℚ≥0) / ((Fintype.card F : ℚ≥0) ^ m) ≤ (d * m : ℚ≥0) / (Fintype.card F : ℚ≥0) := by
+  (#{r ∈ (univ : Finset (Fin m → F)) | MvPolynomial.eval r p = 0} : NNRat) / ((Fintype.card F : NNRat) ^ m) ≤ (d * m : NNRat) / (Fintype.card F : NNRat) := by
 -- proof
   rw [show (univ : Finset (Fin m → F)) = piFinset fun _ => (univ : Finset F) from
     piFinset_univ.symm]
   have h := MvPolynomial.schwartz_zippel_sum_degreeOf hp (fun _ => (Finset.univ : Finset F))
   simp only [Finset.card_univ] at h
-  calc (#{f ∈ piFinset fun _ => Finset.univ | (MvPolynomial.eval f) p = 0} : ℚ≥0) /
-    ((Fintype.card F : ℚ≥0) ^ m)
-    = (#{f ∈ piFinset fun _ => Finset.univ | (MvPolynomial.eval f) p = 0} : ℚ≥0) /
-      (∏ _ : Fin m, (Fintype.card F : ℚ≥0)) := by simp
-    _ ≤ ∑ i : Fin m, ((p.degreeOf i : ℚ≥0) / (Fintype.card F : ℚ≥0)) := h
-    _ ≤ ∑ _ : Fin m, ((d : ℚ≥0) / (Fintype.card F : ℚ≥0)) := by
+  calc (#{f ∈ piFinset fun _ => Finset.univ | (MvPolynomial.eval f) p = 0} : NNRat) /
+    ((Fintype.card F : NNRat) ^ m)
+    = (#{f ∈ piFinset fun _ => Finset.univ | (MvPolynomial.eval f) p = 0} : NNRat) /
+      (∏ _ : Fin m, (Fintype.card F : NNRat)) := by simp
+    _ ≤ ∑ i : Fin m, ((p.degreeOf i : NNRat) / (Fintype.card F : NNRat)) := h
+    _ ≤ ∑ _ : Fin m, ((d : NNRat) / (Fintype.card F : NNRat)) := by
       apply Finset.sum_le_sum
       intro i _
       gcongr
       exact Nat.cast_le.mpr (hd i)
-    _ = (d * m : ℚ≥0) / (Fintype.card F : ℚ≥0) := by
+    _ = (d * m : NNRat) / (Fintype.card F : NNRat) := by
       simp [Finset.sum_const, Finset.card_univ, Fintype.card_fin]
       ring
 end Probabilistic

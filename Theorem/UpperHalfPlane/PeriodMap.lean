@@ -22,6 +22,9 @@ def IsParabolicHom {A : Type*} [AddCommGroup A] (φ : Additive Γ →+ A) : Prop
 
 variable {Γ F}
 
+namespace IsEquivariantPrimitive
+
+@[expose]
 noncomputable def period (_hF : IsEquivariantPrimitive Γ F) (γ : Γ) : ℂ :=
   F ((γ : SL(2, ℤ)) • UpperHalfPlane.I) - F UpperHalfPlane.I
 
@@ -48,6 +51,11 @@ public theorem period_mul (hF : IsEquivariantPrimitive Γ F) (γ δ : Γ) :
   rw [hsmul] at h1
   linear_combination h2 + h3 - h1
 
+@[expose]
+noncomputable def periodHom (hF : IsEquivariantPrimitive Γ F) : Additive Γ →+ ℂ where
+  toFun γ := hF.period (Additive.toMul γ)
+  map_zero' := hF.period_one
+  map_add' γ δ := hF.period_mul (Additive.toMul γ) (Additive.toMul δ)
 
 @[simp]
 public theorem periodHom_apply (hF : IsEquivariantPrimitive Γ F) (γ : Γ) :
@@ -59,12 +67,6 @@ end IsEquivariantPrimitive
 section ParabolicHoms
 
 variable (R : Type*) [Semiring R] (Γ : Subgroup SL(2, ℤ)) (A : Type*) [AddCommGroup A] [Module R A]
-
-
-noncomputable def periodHom (hF : IsEquivariantPrimitive Γ F) : Additive Γ →+ ℂ where
-  toFun γ := hF.period (Additive.toMul γ)
-  map_zero' := hF.period_one
-  map_add' γ δ := hF.period_mul (Additive.toMul γ) (Additive.toMul δ)
 
 @[simp]
 

@@ -67,10 +67,8 @@ export class LeanCaret extends Lean {
         const body = comment.slice(0, comment.length - trailing.length);
         const leading = body.match(/^\n*/)[0];
         const node = new Cls(body.slice(leading.length), this.indent, this.level);
-        if (docstring) {
-            node.kwargs.leading = leading;
-            node.kwargs.trailing = trailing;
-        }
+        if (trailing) node.kwargs.trailing = trailing;
+        if (docstring) node.kwargs.leading = leading;
         if (commentLine != null) node.line = commentLine;
         parent.replace(this, node);
         parent.push(this);
@@ -311,7 +309,6 @@ export class LeanToken extends Lean {
             }
             if (text.startsWith('_')) text = `\\${text}`;
         }
-        if (text.includes('%')) text = text.replace(/%/g, '\\%'); // `rv%` (rv-lifting sugar): `%` starts a LaTeX comment
         if (this.kwargs.isRandomArgument) return `{\\color{magenta} {${text}}}`;
         if (this.kwargs.isRandomVariable && !this.kwargs.neverRed) return `{\\color{red} {${text}}}`;
         return text;
@@ -408,8 +405,18 @@ export class LeanLineComment extends Lean {
                 let parent = this.parent;
                 if (parent instanceof L.LeanStatements) {
                     if (parent.parent instanceof L.LeanBy) parent = parent.parent;
-                    if ((parent = parent.parent) instanceof L.LeanAssign && parent.parent instanceof L.Lean_lemma)
-                        return false;
+                    if ((parent = parent.parent) instanceof L.LeanAssign) {
+                        const gp = parent.parent;
+                        // `lemma t := by\n-- proof` and `lemma t : T where\n  f := by\n-- proof`.
+                        if (gp instanceof L.Lean_lemma) return false;
+                        if (
+                            gp instanceof L.LeanStatements &&
+                            gp.structInst === true &&
+                            gp.parent instanceof L.Lean_where &&
+                            gp.parent.parent instanceof L.Lean_def
+                        )
+                            return false;
+                    }
                 } else if (parent instanceof L.LeanArgsNewLineSeparated) {
                     if ((parent = parent.parent) instanceof L.LeanAssign && parent.parent instanceof L.Lean_lemma)
                         return false;
@@ -496,7 +503,10 @@ export class LeanBlockComment extends Lean {
     }
 
     strFormat() {
-        return `/-${this.text}-/`;
+        // `/-!\n…\n-/` keeps the closer on its own line. Dropping that break
+        // shifts every later node up by one.
+        const trailing = this.kwargs.trailing ?? '';
+        return `/-${this.text}${trailing}-/`;
     }
 
     toJSON() {
@@ -522,7 +532,8 @@ export class LeanDocString extends LeanBlockComment {
     }
 
     strFormat() {
-        const { leading, trailing } = this.kwargs;
+        const leading = this.kwargs.leading;
+        const trailing = this.kwargs.trailing ?? '';
         if (leading !== undefined) return `/--${leading}${this.text}${trailing}-/`;
         // A one-line `/-- … -/` stays one line. A break in the body keeps the
         // opening and closing delimiters on their own lines.

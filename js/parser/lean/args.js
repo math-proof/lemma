@@ -1278,18 +1278,28 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
                 // `have` / `let` / `show` extend `LeanSyntax` but not `LeanTactic`; keep them on new lines like `by_contra`.
                 // Hanging args (deeper indent than the tactic app) keep source newlines + column.
                 let sep;
+                const prev = args[j - 1];
+                // `refine f _, 0,\n    fun …` — the comma list is indented for its
+                // continuation, but its first item shares the tactic's line.
+                const sameLine =
+                    typeof a.line === 'number' &&
+                    typeof prev?.line === 'number' &&
+                    a.line === prev.line;
                 if (a instanceof L.LeanSyntax || a.is_comment())
                     sep = '\n';
-                else if ((a.indent ?? 0) > baseInd)
+                else if ((a.indent ?? 0) > baseInd && !sameLine)
                     sep = '\n' + ' '.repeat(a.indent);
                 else
-                    sep = ' ';
+                    sep = a.tightLeft ? '' : ' ';
                 out += sep;
                 out += '%s';
             }
             return out;
         }
-        return Array(n - start).fill('%s').join(' ');
+        let out = '%s';
+        for (let j = start + 1; j < n; j++)
+            out += (args[j]?.tightLeft ? '' : ' ') + '%s';
+        return out;
     }
 
     tactic_block_info() {
@@ -1839,7 +1849,10 @@ export class LeanArgsSemicolonSeparated extends LeanArgs {
     }
 
     strFormat() {
-        return Array(this.args.length).fill('%s').join('; ');
+        // `K[T;T⁻¹]` is one notation atom (parsed as `LeanGet`). A space after `;`
+        // is not that notation. Tactic sequences (`simp; exact`) keep the space.
+        const tight = this.parent instanceof L.LeanBracket || this.parent instanceof L.LeanGet;
+        return Array(this.args.length).fill('%s').join(tight ? ';' : '; ');
     }
 }
 

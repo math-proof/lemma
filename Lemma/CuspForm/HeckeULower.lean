@@ -1,6 +1,6 @@
 import Mathlib
 import Theorem.ModularForm.HeckeOperatorForms
-import Theorems.Thm_ModularForm_heckeU_slash_eq_self_of_mem_Gamma0_div
+import Theorem.Thm_ModularForm_heckeU_slash_eq_self_of_mem_Gamma0_div
 import Def.CuspForm_HeckeULower
 
 set_option autoImplicit false

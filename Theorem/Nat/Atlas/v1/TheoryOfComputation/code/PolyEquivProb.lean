@@ -72,30 +72,30 @@ public theorem nonequiv_agreement_prob_le_third
   have sz := MvPolynomial.schwartz_zippel_sum_degreeOf hsub_ne
     (fun _ => (Finset.univ : Finset F))
   simp only [Finset.card_univ] at sz
-  have hcF : (0 : ℚ≥0) < (Fintype.card F : ℚ≥0) := by
+  have hcF : (0 : NNRat) < (Fintype.card F : NNRat) := by
     exact_mod_cast Fintype.card_pos (α := F)
   calc ((Fintype.piFinset fun _ => Finset.univ).filter
     (fun r : Fin m → F => MvPolynomial.eval r (p₁ - p₂) = 0)).card /
-    ((Fintype.card F : ℚ≥0) ^ m)
+    ((Fintype.card F : NNRat) ^ m)
     = ((Fintype.piFinset fun _ => Finset.univ).filter
       (fun r : Fin m → F => MvPolynomial.eval r (p₁ - p₂) = 0)).card /
-      (∏ _ : Fin m, (Fintype.card F : ℚ≥0)) := by simp
-    _ ≤ ∑ i : Fin m, ((p₁ - p₂).degreeOf i : ℚ≥0) /
-      (Fintype.card F : ℚ≥0) := sz
-    _ ≤ ∑ _ : Fin m, ((1 : ℚ≥0) / (Fintype.card F : ℚ≥0)) := by
+      (∏ _ : Fin m, (Fintype.card F : NNRat)) := by simp
+    _ ≤ ∑ i : Fin m, ((p₁ - p₂).degreeOf i : NNRat) /
+      (Fintype.card F : NNRat) := sz
+    _ ≤ ∑ _ : Fin m, ((1 : NNRat) / (Fintype.card F : NNRat)) := by
       apply Finset.sum_le_sum
       intro i _
       gcongr
       exact Nat.cast_le.mpr (hdeg i)
-    _ = (m : ℚ≥0) * 1 / (Fintype.card F : ℚ≥0) := by
+    _ = (m : NNRat) * 1 / (Fintype.card F : NNRat) := by
       simp [Finset.sum_const, Finset.card_univ, Fintype.card_fin]
       ring
-    _ = (m : ℚ≥0) / (Fintype.card F : ℚ≥0) := by ring
+    _ = (m : NNRat) / (Fintype.card F : NNRat) := by ring
     _ ≤ 1 / 3 := by
-      rw [div_le_div_iff₀ hcF (by norm_num : (0 : ℚ≥0) < 3)]
+      rw [div_le_div_iff₀ hcF (by norm_num : (0 : NNRat) < 3)]
       simp only [one_mul]
-      calc (m : ℚ≥0) * 3 = ((3 * m : ℕ) : ℚ≥0) := by push_cast; ring
-        _ ≤ (Fintype.card F : ℚ≥0) := Nat.cast_le.mpr hF
+      calc (m : NNRat) * 3 = ((3 * m : ℕ) : NNRat) := by push_cast; ring
+        _ ≤ (Fintype.card F : NNRat) := Nat.cast_le.mpr hF
 
 end PolyEquivProb
 

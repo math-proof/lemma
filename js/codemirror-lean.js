@@ -1,7 +1,7 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: https://codemirror.net/5/LICENSE
 // Adapted for CodeMirror 6 StreamLanguage compatibility.
-import { tactics } from "./codemirror-lean-tactics.js"
+import { tactics } from "./lean-tactics.js"
 
 function wordRegexp(words) {
   return new RegExp("^((" + words.join(")|(") + "))\\b");

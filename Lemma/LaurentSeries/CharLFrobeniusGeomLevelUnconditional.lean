@@ -2,7 +2,7 @@ import Mathlib
 import Theorem.HahnSeries.JqCoeff
 import Theorem.Ideal.RatFuncPlaces
 import Class.AlgebraicCurve_DivisorPushPull
-import Theorems.Thm_ModularCurve_qExpand_jqModC_eq_pow_unconditional
+import Theorem.Thm_ModularCurve_qExpand_jqModC_eq_pow_unconditional
 import Lemma.LaurentSeries.CharLFrobeniusGeomLevel
 
 set_option autoImplicit false

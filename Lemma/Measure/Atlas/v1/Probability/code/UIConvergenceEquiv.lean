@@ -56,7 +56,7 @@ lemma scheffe_hn_tendsto_ae
     have hsub : Tendsto (fun n => f n x - g x) atTop (𝓝 0) := by
       have := hx.sub (@tendsto_const_nhds _ _ _ (g x) _)
       rwa [sub_self] at this
-    have h0 : (0 : ℝ≥0∞) = ‖(0 : ℝ)‖ₑ := by simp [enorm_zero]
+    have h0 : (0 : ENNReal) = ‖(0 : ℝ)‖ₑ := by simp [enorm_zero]
     rw [h0]
     exact (continuous_enorm.tendsto (0 : ℝ)).comp hsub
   rw [show ‖g x‖ₑ + ‖g x‖ₑ = (‖g x‖ₑ + ‖g x‖ₑ) - 0 from (tsub_zero _).symm]

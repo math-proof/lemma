@@ -2,6 +2,7 @@ module
 
 public import Theorem.QuaternionAlgebra.ClassSetHecke
 public import Def.CerednikDrinfeld_Ribbon
+public import Notation.Data.PNat
 
 @[expose] public section
 
@@ -27,11 +28,11 @@ def classSetShift (U : Subgroup (ℍ[ℚ, a, b] ⊗[ℚ] FiniteAdeleRing (𝓞 �
     (n : (ℍ[ℚ, a, b] ⊗[ℚ] FiniteAdeleRing (𝓞 ℚ) ℚ)ˣ) (x : ClassSet U) : ClassSet U :=
   ClassSet.mk U (x.out * n)
 
-def unitWeight (Λ : Submodule ℤ ℍ[ℚ, a, b]) : ℕ+ :=
+def unitWeight (Λ : Submodule ℤ ℍ[ℚ, a, b]) : ℕ⁺ :=
   Nat.toPNat' (Nat.card {u : ℍ[ℚ, a, b] // IsUnitOf Λ u} / 2)
 
 def classWeight (U : Subgroup (ℍ[ℚ, a, b] ⊗[ℚ] FiniteAdeleRing (𝓞 ℚ) ℚ)ˣ) (Λ : Submodule ℤ ℍ[ℚ, a, b])
-    (x : ClassSet U) : ℕ+ :=
+    (x : ClassSet U) : ℕ⁺ :=
   unitWeight (Submodule.conjByFiniteIdele Λ x.out)
 
 def classSetHeckeMatrix (U : Subgroup (ℍ[ℚ, a, b] ⊗[ℚ] FiniteAdeleRing (𝓞 ℚ) ℚ)ˣ)

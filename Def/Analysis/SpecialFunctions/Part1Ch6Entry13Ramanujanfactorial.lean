@@ -14,6 +14,7 @@ public import Mathlib.Data.Int.Star
 public import Mathlib.NumberTheory.TsumDivisorsAntidiagonal
 public import Mathlib.Topology.GDelta.MetrizableSpace
 public import Mathlib.Topology.Separation.CompletelyRegular
+public import Notation.Data.PNat
 
 @[expose] public section
 
@@ -34,9 +35,9 @@ open Asymptotics Filter Finset Complex Topology
 
 noncomputable section
 
-noncomputable def signW (k : ℕ+) : ℝ := (-1 : ℝ) ^ ((k : ℕ) + 1)
+noncomputable def signW (k : ℕ⁺) : ℝ := (-1 : ℝ) ^ ((k : ℕ) + 1)
 
-noncomputable def dblL (t : ℝ) (c : ℕ+ × ℕ+) : ℝ :=
+noncomputable def dblL (t : ℝ) (c : ℕ⁺ × ℕ⁺) : ℝ :=
   signW c.1 * t ^ ((c.1 : ℕ) * (c.2 : ℕ))
 
 end

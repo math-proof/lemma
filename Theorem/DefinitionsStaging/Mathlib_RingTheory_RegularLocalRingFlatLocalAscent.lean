@@ -1,7 +1,7 @@
 module
 public import Mathlib
 public import Theorem.Ideal.RegularLocalRingQuotientRegular
-public import Theorems.Thm_IsRegularLocalRing_isDomain
+public import Theorem.Thm_IsRegularLocalRing_isDomain
 public import Theorem.Ideal.RegularLocalRingRegularSequenceAscent
 public import Def.Mathlib_RingTheory_RegularLocalRingFlatLocalAscent
 set_option autoImplicit false

@@ -45,8 +45,13 @@ export class LeanSyntax extends LeanArgs {
         const last = this.args[this.args.length - 1];
         if (caret === last) {
             const Ctor = typeof func === 'string' ? L[func] : func;
-            const newCaret = new L.LeanCaret(this.indent, caret.level);
-            this.push(new Ctor(newCaret, this.indent, caret.level));
+            // A hanging `at` is born on the continuation line, at that column.
+            const hanging = caret instanceof L.LeanCaret && caret.hangingModifier;
+            const indent = hanging ? caret.indent : this.indent;
+            const newCaret = new L.LeanCaret(indent, caret.level);
+            const node = new Ctor(newCaret, indent, caret.level);
+            if (hanging) this.replace(caret, node);
+            else this.push(node);
             return newCaret;
         }
         throw new Error(`insert is unexpected for ${this.constructor.name}`);
@@ -98,6 +103,28 @@ export class LeanTactic extends LeanSyntax {
             if (p.indent > indent) continue;
             if (c !== p.args[p.args.length - 1]) return null;
             const caret = new L.LeanCaret(indent, c.level);
+            p.push(caret);
+            return caret;
+        }
+        return null;
+    }
+
+    /**
+     * `rw [e]\n    at h` — the modifier stays on the tactic. The caret is
+     * replaced when `at` is inserted (`hangingModifier`).
+     * @param {Lean} node
+     * @param {number} indent
+     * @param {number} newline_count
+     */
+    static continueAt(node, indent, newline_count) {
+        for (let p = node.parent, c = node; p; c = p, p = p.parent) {
+            if (p instanceof L.Lean_def || p instanceof L.LeanModule) return null;
+            if (!(p instanceof LeanTactic)) continue;
+            if (p.indent >= indent) continue;
+            if (c !== p.args[p.args.length - 1]) return null;
+            if (p.args.some((a) => a instanceof L.LeanAt)) return null;
+            const caret = new L.LeanCaret(indent, c.level).stampFollowingLine(newline_count - 1);
+            caret.hangingModifier = true;
             p.push(caret);
             return caret;
         }
@@ -368,7 +395,13 @@ export class LeanTactic extends LeanSyntax {
                 break;
         }
         if (this.has_tactic_block_followed() || this.parent instanceof LeanSequentialTacticCombinator);
-        else if (turnstile) token.push(new L.LeanToken(turnstile, this.indent, this.level));
+        else if (turnstile) {
+            // Built during echo(), when `currentLine` is null. The goal token
+            // shares the host tactic's line so the assertion can see it.
+            const goal = new L.LeanToken(turnstile, this.indent, this.level);
+            if (typeof this.line === 'number') goal.line = this.line;
+            token.push(goal);
+        }
         if (token.length === 0) return;
         if (token.length === 1) return token[0];
         return new L.LeanArgsCommaSeparated(token, this.indent, this.level);
@@ -452,7 +485,10 @@ export class LeanTactic extends LeanSyntax {
                 this.replace(caret, new L.LeanArgsIndented(caret, nl, this.indent, c.level));
                 return c;
             }
-            if (this.indent < indent && (caret instanceof L.LeanToken || caret instanceof L.LeanProperty || caret instanceof L.LeanParenthesis)) {
+            // `change MeasurableSet[…]` then the preimage on the next line. `LeanGet`
+            // is the finished head; without this wrap the preimage is the next statement
+            // and `echo ⊢` lands between them.
+            if (this.indent < indent && (caret instanceof L.LeanToken || caret instanceof L.LeanProperty || caret instanceof L.LeanParenthesis || caret instanceof L.LeanGet)) {
                 const $new = new L.LeanCaret(indent, caret.level).stampFollowingLine();
                 const nl = new L.LeanArgsNewLineSeparated([$new], indent, $new.level);
                 const c = nl.push_newlines(newline_count - 1);
@@ -484,8 +520,11 @@ export class LeanTactic extends LeanSyntax {
     }
 
     insert_semicolon(caret) {
-        if (caret === this.arg) {
-            if (this.is_inline_tactic_block()) {
+        // `simp [h] at x;` — `;` arrives on the `at` modifier, not on `this.arg`.
+        // Bubbling would lift the whole `·` block into the surrounding `by`.
+        const afterTactic = caret === this.arg || (caret.parent === this && this.args.indexOf(caret) > 0);
+        if (afterTactic) {
+            if (caret === this.arg && this.is_inline_tactic_block()) {
                 const $new = new L.LeanCaret(this.indent, caret.level);
                 if (caret instanceof L.LeanArgsSemicolonSeparated) caret.push($new);
                 else this.replace(caret, new L.LeanArgsSemicolonSeparated([caret, $new], this.indent, caret.level));
@@ -695,6 +734,8 @@ export class LeanTactic extends LeanSyntax {
             if (arg instanceof L.LeanCaret);
             else if (arg instanceof LeanSequentialTacticCombinator && arg.newlineBefore) parts.push('\n');
             else if (arg instanceof L.LeanArgsNewLineSeparated) parts.push('\n');
+            else if (arg instanceof L.LeanAt && arg.indent > this.indent)
+                parts.push('\n' + ' '.repeat(arg.indent));
             else parts.push(' ');
             parts.push('%s');
         }
@@ -734,17 +775,27 @@ export class LeanBy extends LeanUnary {
     insert_newline(caret, newline_count, indent, next) {
         const {pendingComment} = this;
         delete this.pendingComment;
-        if (this.indent <= indent && caret instanceof L.LeanCaret && caret === this.arg) {
-            // When the next line is already deeper than `by`, use that indent; when it matches the assign
-            // line (common after a column-0 `-- proof`), keep that indent so tactics stay inside the
-            // proof block instead of bubbling to `LeanModule` (AST → string → AST).
-            indent = indent >= this.indent ? indent : this.indent + 2;
+        const structProof =
+            indent > 0 &&
+            this.parent instanceof L.LeanAssign &&
+            this.parent.rhs === this &&
+            this.parent.parent instanceof L.LeanStatements &&
+            this.parent.parent.structInst === true;
+        if ((this.indent <= indent || structProof) && caret instanceof L.LeanCaret && caret === this.arg) {
+            // A structure field `refl := by` whose proof is indented less than the field
+            // still owns that proof. Using `by.indent + 2` would push it out of the `where`.
+            indent = indent >= this.indent ? indent : (structProof ? indent : this.indent + 2);
             caret.indent = indent;
-            caret.stampFollowingLine();
+            // `by\n\n  have` — the blank line is a gap before the first tactic.
+            // An empty caret on the blank line has no span; its line would
+            // disagree with the statement list, which starts at the tactic.
+            const blanks = pendingComment === undefined ? newline_count - 1 : 0;
+            caret.stampFollowingLine(blanks);
+            if (blanks) caret.leadingBlanks = blanks;
             this.arg = new L.LeanStatements([caret], indent, caret.level);
             if (pendingComment !== undefined)
                 this.arg.unshift(new L.LeanLineComment(pendingComment, indent, caret.level));
-            for (let i = 1; i < newline_count; ++i) {
+            for (let i = 1; i < newline_count - blanks; ++i) {
                 caret = new L.LeanCaret(indent, caret.level).stampFollowingLine(i);
                 this.arg.push(caret);
             }
@@ -891,8 +942,12 @@ export class LeanCalc extends LeanUnary {
                 }
                 return c;
             }
-            if (leanIsInfixContinue(next))
+            if (leanIsInfixContinue(next)) {
+                // Remember the continuation column so `≤` is reprinted on this
+                // line (`calc lhs\n    ≤ rhs`), not glued to the end of `lhs`.
+                caret.pendingOpLead = indent;
                 return caret;
+            }
         }
         return super.insert_newline(caret, newline_count, indent, next);
     }
@@ -1236,7 +1291,10 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
             arg.echo();
         else if (arg.indent > 0) {
             const {indent, level} = arg;
-            const echo = new LeanTactic('echo', new L.LeanToken('⊢', indent, level), indent, level);
+            const anchor = typeof this.line === 'number' ? this.line : arg.line;
+            const goal = new L.LeanToken('⊢', indent, level);
+            if (typeof anchor === 'number') goal.line = anchor;
+            const echo = new LeanTactic('echo', goal, indent, level);
             const by_cases = this.parent;
             if (by_cases instanceof LeanTactic && by_cases.tacticName === 'by_cases' && by_cases.has_tactic_block_followed()) {
                 let sequential_tactic_combinator;
@@ -1340,6 +1398,9 @@ export class LeanTacticBlock extends LeanUnary {
             const indent = this.indent + 2;
             const line = new L.LeanLineComment(comment, indent, caret.level);
             this.arg = new L.LeanStatements([line], indent, caret.level);
+            // `· -- note` shares the bullet line. Echo moves that line below `·`,
+            // the same way an inline first tactic does.
+            this.inlineFirst = true;
             return line;
         }
         throw new Error('LeanTacticBlock.insert_line_comment: unexpected');
@@ -1527,6 +1588,9 @@ export class LeanTacticBlock extends LeanUnary {
                                     const span_i = span[si];
                                     let token = tokens[si].clone();
                                     token.indent = this.indent;
+                                    // Head and tail are different `echo` tactics. A shared token
+                                    // can only keep one line, so the earlier echo renders off-stamp.
+                                    const tail = token.clone();
                                     const stop = this.tactic_block(args, span_i);
                                     let new_list = args.slice(0, stop);
                                     const first = new_list[0];
@@ -1547,13 +1611,13 @@ export class LeanTacticBlock extends LeanUnary {
                                     if (last instanceof LeanTactic && last.tacticName === 'echo') {
                                         if (last.arg instanceof L.LeanToken)
                                             last.arg = new L.LeanArgsCommaSeparated(
-                                                [last.arg, token],
+                                                [last.arg, tail],
                                                 this.indent,
-                                                token.level,
+                                                tail.level,
                                             );
-                                        else last.arg.push(token);
+                                        else last.arg.push(tail);
                                     } else {
-                                        new_list.push(new LeanTactic('echo', token, this.indent, token.level));
+                                        new_list.push(new LeanTactic('echo', tail, this.indent, tail.level));
                                     }
                                     args.splice(0, stop, ...new_list);
                                 }

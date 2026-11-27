@@ -48,7 +48,7 @@ lemma card_div_indepNum_le_chromaticNumber
   {G : SimpleGraph V}
   {n : ℕ} :
 -- imply
-  ⌈(Nat.card V / α(G) : ℚ≥0)⌉₊ ≤ G.chromaticNumber := by
+  ⌈(Nat.card V / α(G) : NNRat)⌉₊ ≤ G.chromaticNumber := by
 -- proof
   cases finite_or_infinite V
   swap; · simp

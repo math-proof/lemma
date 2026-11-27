@@ -1,18 +1,19 @@
 module
 public import Mathlib.NumberTheory.ModularForms.CongruenceSubgroups
 public import Def.ModularForm_HeckeOperator
-public import Theorems.Thm_ModularForm_heckeT_slash_eq_self_of_mem_Gamma0
-public import Theorems.Thm_ModularForm_heckeU_slash_eq_self_of_mem_Gamma0
-public import Theorems.Thm_ModularForm_mdifferentiable_heckeT
-public import Theorems.Thm_ModularForm_mdifferentiable_heckeU
-public import Theorems.Thm_ModularFormClass_isBoundedAt_heckeT
-public import Theorems.Thm_ModularFormClass_isBoundedAt_heckeU
-public import Theorems.Thm_CuspFormClass_isZeroAt_heckeT
-public import Theorems.Thm_CuspFormClass_isZeroAt_heckeU
+public import Theorem.ModularForm.HeckeOperator
+public import Theorem.Thm_ModularForm_heckeT_slash_eq_self_of_mem_Gamma0
+public import Theorem.Thm_ModularForm_heckeU_slash_eq_self_of_mem_Gamma0
+public import Theorem.Thm_ModularForm_mdifferentiable_heckeT
+public import Theorem.Thm_ModularForm_mdifferentiable_heckeU
+public import Theorem.Thm_ModularFormClass_isBoundedAt_heckeT
+public import Theorem.Thm_ModularFormClass_isBoundedAt_heckeU
+public import Theorem.Thm_CuspFormClass_isZeroAt_heckeT
+public import Theorem.Thm_CuspFormClass_isZeroAt_heckeU
 set_option autoImplicit false
 
 
-public section
+@[expose] public section
 
 noncomputable section
 

@@ -83,7 +83,7 @@ noncomputable def cramerRateFromSanov {d : ℕ}
 /-- Sanov-shaped empirical probability measure for a positive sample size. -/
 noncomputable def empiricalProbabilityMeasure {α : Type*} [MeasurableSpace α]
     {n : ℕ} (hn : 0 < n) (ω : Fin n → α) : ProbabilityMeasure α :=
-  ⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i), IsProbabilityMeasure.of.Gt_0 hn⟩
+  ⟨(n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i), IsProbabilityMeasure.of.Gt_0 hn⟩
 
 /-- Product-space empirical-mean law (Sanov sample space). -/
 noncomputable def empiricalMeanLawPi {d : ℕ}
@@ -114,9 +114,9 @@ theorem barycenter_empiricalProbabilityMeasure {d n : ℕ} (hn : 0 < n)
     (ω : Fin n → EuclideanSpace ℝ (Fin d)) :
     barycenter (empiricalProbabilityMeasure hn ω) = (n : ℝ)⁻¹ • ∑ i : Fin n, ω i := by
   unfold barycenter empiricalProbabilityMeasure
-  change (∫ x, x ∂((n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i))) =
+  change (∫ x, x ∂((n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i))) =
     (n : ℝ)⁻¹ • ∑ i : Fin n, ω i
-  have hinv : ((n : ℝ≥0∞)⁻¹).toReal = (n : ℝ)⁻¹ := by
+  have hinv : ((n : ENNReal)⁻¹).toReal = (n : ℝ)⁻¹ := by
     rw [ENNReal.toReal_inv, ENNReal.toReal_natCast]
   rw [integral_smul_measure, integral_id_sum_dirac, hinv]
 

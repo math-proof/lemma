@@ -315,7 +315,7 @@ function looksLikeDataArrow(type, vars, typeVars) {
     const t = cod.text;
     if (vars[t] === 'Prop') return false;
     return typeVars.has(t) ||
-        /^(ℕ|ℤ|ℚ|ℝ|ℂ|Bool|Prop|Type|Nat|Int|Rat|Real|Complex|ENNReal|NNReal|EReal|ℝ≥0|ℝ≥0∞)$/u.test(t);
+        /^(ℕ|ℤ|ℚ|ℝ|ℂ|Bool|Prop|Type|Nat|Int|Rat|Real|Complex|ENNReal|NNReal|EReal)$/u.test(t);
 }
 
 /**

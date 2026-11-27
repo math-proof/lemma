@@ -199,10 +199,10 @@ theorem measurable_integral_radialClamp {d : ℕ} {R : ℝ} (hR : 0 < R) :
       (fun i : Fin d => (∫ x, radialClamp R x ∂ν.toMeasure) i) :=
     Measurable.of_eval fun i => measurable_eval_integral_radialClamp hR i
   have h :=
-    (MeasurableEquiv.toLp (2 : ℝ≥0∞) (Fin d → ℝ)).measurable.comp hpi
+    (MeasurableEquiv.toLp (2 : ENNReal) (Fin d → ℝ)).measurable.comp hpi
   convert h using 1
   funext ν
-  exact (WithLp.toLp_ofLp (p := (2 : ℝ≥0∞)) (∫ x, radialClamp R x ∂ν.toMeasure)).symm
+  exact (WithLp.toLp_ofLp (p := (2 : ENNReal)) (∫ x, radialClamp R x ∂ν.toMeasure)).symm
 
 /-- Sanov LDP pushed through the continuous+Giry-measurable truncated mean.
 Takes an already-established Sanov LDP hyp so the empirical encoding stays flexible. -/
@@ -934,9 +934,9 @@ theorem integral_radialClamp_empiricalProbabilityMeasure {d n : ℕ}
       sampleClampMeanPi (d := d) (n := n) R ω := by
   unfold sampleClampMeanPi empiricalProbabilityMeasure
   change
-      (∫ x, radialClamp R x ∂((n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i))) =
+      (∫ x, radialClamp R x ∂((n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i))) =
         (n : ℝ)⁻¹ • ∑ i : Fin n, radialClamp R (ω i)
-  have hinv : ((n : ℝ≥0∞)⁻¹).toReal = (n : ℝ)⁻¹ := by
+  have hinv : ((n : ENNReal)⁻¹).toReal = (n : ℝ)⁻¹ := by
     rw [ENNReal.toReal_inv, ENNReal.toReal_natCast]
   have hdir : ∀ i ∈ (Finset.univ : Finset (Fin n)),
       Integrable (fun x : EuclideanSpace ℝ (Fin d) => radialClamp R x)

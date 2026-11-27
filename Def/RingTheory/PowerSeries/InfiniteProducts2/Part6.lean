@@ -1,6 +1,7 @@
 module
 public import Mathlib
 public import Theorem.RingTheory.PowerSeries.InfiniteProducts2.Part3
+public import Notation.Data.PNat
 open scoped Polynomial
 open Finset PowerSeries
 
@@ -91,8 +92,8 @@ end ExtensionRestriction
 
 /-- The set `S̄` from Proposition prop.fps.prodrule-inf-infN: pairs `(i, k)` where
 `i ∈ {1, 2, 3, ...}`, `k ∈ S_i`, and `k ≠ 0`. -/
-def SBar (S : ℕ+ → Type*) [∀ i, Zero (S i)] : Type _ :=
-  Σ i : ℕ+, { k : S i // k ≠ 0 }
+def SBar (S : ℕ⁺ → Type*) [∀ i, Zero (S i)] : Type _ :=
+  Σ i : ℕ⁺, { k : S i // k ≠ 0 }
 
 end InfiniteProductRules
 
@@ -126,7 +127,7 @@ variable [TopologicalSpace K] [IsTopologicalRing K] [T2Space K] [NoZeroDivisors 
 
 /-- Equivalence between positive odd natural numbers and positive natural numbers.
     Maps n ↦ (n+1)/2 with inverse i ↦ 2i-1. -/
-def oddPNatEquivPNat : { n : ℕ+ // Odd (n : ℕ) } ≃ ℕ+ where
+def oddPNatEquivPNat : { n : ℕ⁺ // Odd (n : ℕ) } ≃ ℕ⁺ where
   toFun n := ⟨((n : ℕ) + 1) / 2, by
     rcases n.prop with ⟨k, hk⟩
     have : ((n : ℕ) + 1) / 2 = k + 1 := by omega
@@ -151,9 +152,9 @@ def oddPNatEquivPNat : { n : ℕ+ // Odd (n : ℕ) } ≃ ℕ+ where
     have h1 : (2 * (i : ℕ) - 1 + 1) / 2 = i := by omega
     exact h1
 
-/-- Bijection between `ℕ+` and `{i : ℕ | Odd (i+1)}`.
+/-- Bijection between `ℕ⁺` and `{i : ℕ | Odd (i+1)}`.
 Maps `j ↦ 2j - 2` so that `(2j-2) + 1 = 2j - 1` is odd. -/
-def pnatEquivEvenNat : ℕ+ ≃ {i : ℕ | Odd (i + 1)} where
+def pnatEquivEvenNat : ℕ⁺ ≃ {i : ℕ | Odd (i + 1)} where
   toFun j := ⟨2 * j - 2, by
     have hj := j.pos
     simp only [Set.mem_ofPred_eq]

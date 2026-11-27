@@ -2,7 +2,7 @@ import Mathlib
 import Def.ModularCurve_RouteBCoordRing
 import Theorem.Ideal.RatFuncPlaces
 import Lemma.Valuation.RatFuncPlaceInfty
-import Theorems.Thm_ModularCurve_transcendental_jq
+import Theorem.Thm_ModularCurve_transcendental_jq
 import Instance.ModularCurve_JLinePlaces
 
 set_option autoImplicit false

@@ -1,8 +1,8 @@
 import Mathlib
 import Lemma.Finset.QShift
-import Theorems.Thm_TateCurve_pointX_inv
-import Theorems.Thm_TateCurve_pointX_q_mul
-import Theorems.Thm_TateCurve_pointX_zpow_mul
+import Theorem.Thm_TateCurve_pointX_inv
+import Theorem.Thm_TateCurve_pointX_q_mul
+import Theorem.Thm_TateCurve_pointX_zpow_mul
 import Def.TateCurve_XMultStructure
 import Structure.TateCurve_XMultStructure
 

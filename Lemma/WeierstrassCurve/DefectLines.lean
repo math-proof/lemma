@@ -1,7 +1,7 @@
 import Mathlib
 import Lemma.WeierstrassCurve.Defect
 import Lemma.Finset.DivisorConvolution
-import Theorems.Thm_TateCurve_defectCoeff_one
+import Theorem.Thm_TateCurve_defectCoeff_one
 import Def.TateCurve_DefectLines
 
 set_option autoImplicit false

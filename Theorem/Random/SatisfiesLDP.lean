@@ -45,14 +45,14 @@ private theorem tight
     limsup (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log
       ((@Measure.map (Fin n → α) (ProbabilityMeasure α) _ _
         (fun ω => if hn : 0 < n then
-          (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
+          (⟨(n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
             IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α)
         else μ.toProbabilityMeasure)
         (Measure.pi fun _ : Fin n => μ)) Γᶜ)) atTop ≤ -↑M := by
 -- proof
   let emp (n : ℕ) (ω : Fin n → α) : ProbabilityMeasure α :=
     if hn : 0 < n then
-      (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
+      (⟨(n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
         IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α)
     else
       μ.toProbabilityMeasure
@@ -75,8 +75,8 @@ private theorem tight
       rw [mul_assoc]
       exact (mul_le_mul_iff_of_pos_left ht).symm
     rw [hset]
-    let η : ℝ≥0∞ := ENNReal.ofReal (exp (c * n))
-    let φ : (Fin n → α) → ℝ≥0∞ := fun ω => ENNReal.ofReal (exp (∑ i, g (ω i)))
+    let η : ENNReal := ENNReal.ofReal (exp (c * n))
+    let φ : (Fin n → α) → ENNReal := fun ω => ENNReal.ofReal (exp (∑ i, g (ω i)))
     have hge : {ω | c * (n : ℝ) ≤ ∑ i, g (ω i)} = {ω | η ≤ φ ω} := by
       ext ω
       simp only [mem_ofPred_eq, η, φ]
@@ -165,7 +165,7 @@ private theorem tight
     ring
   have integral_indicator_emp {n : ℕ} (ω : Fin n → α) (A : Set α)
     (hA : MeasurableSet A) :
-    ∫ x, A.indicator (1 : α → ℝ) x ∂((n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i)) =
+    ∫ x, A.indicator (1 : α → ℝ) x ∂((n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i)) =
       (∑ i, A.indicator (1 : α → ℝ) (ω i)) / n := by
     have hf : StronglyMeasurable (A.indicator (1 : α → ℝ)) :=
       (measurable_const.indicator hA).stronglyMeasurable
@@ -198,7 +198,7 @@ private theorem tight
         ((Measure.measurable_coe hA).comp measurable_subtype_coe)) measurableSet_Ici
     have hemp : Measurable (emp n) := by
       let rhs : (Fin n → α) → ProbabilityMeasure α :=
-        fun ω => (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
+        fun ω => (⟨(n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
           IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α)
       suffices heq : emp n = rhs from heq ▸ Measurable.of.Gt_0 (α := α) hn
       funext ω
@@ -216,9 +216,9 @@ private theorem tight
       have hmem : (ε : ℝ) ≤ ((emp n ω : ProbabilityMeasure α) : Measure α).real A := by
         simpa [G] using hω
       have hcoe : ((emp n ω : ProbabilityMeasure α) : Measure α) =
-        (n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i) := by
+        (n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i) := by
         have hempω : emp n ω =
-          (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
+          (⟨(n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
             IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α) := by
           unfold emp
           exact dite_eq_left hn
@@ -275,7 +275,7 @@ private theorem tight
     have hemp : Measurable (emp n) := by
       if hn : 0 < n then
         let rhs : (Fin n → α) → ProbabilityMeasure α :=
-          fun ω => (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
+          fun ω => (⟨(n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
             IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α)
         suffices heq : emp n = rhs from heq ▸ Measurable.of.Gt_0 (α := α) hn
         funext ω
@@ -364,7 +364,7 @@ private theorem tight
         exact Real.exp_lt_exp.mpr (by norm_num)
       rw [heq]
       exact (summable_geometric_of_lt_one (Real.exp_nonneg _) hlt).mul_left _
-    let S : ℝ≥0∞ := ∑' j, ENNReal.ofReal (f j)
+    let S : ENNReal := ∑' j, ENNReal.ofReal (f j)
     have hSne : S ≠ ⊤ := hfsum.tsum_ofReal_ne_top
     have hSpos : 0 < S := by
       refine lt_of_lt_of_le ?_ (ENNReal.le_tsum (f := fun j => ENNReal.ofReal (f j)) 0)
@@ -445,7 +445,7 @@ private theorem closedBound
   limsup (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log
     ((@Measure.map (Fin n → α) (ProbabilityMeasure α) _ _
       (fun ω => if hn : 0 < n then
-        (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
+        (⟨(n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
           IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α)
       else μ.toProbabilityMeasure)
       (Measure.pi fun _ : Fin n => μ)) F)) atTop ≤
@@ -453,7 +453,7 @@ private theorem closedBound
 -- proof
   let emp (n : ℕ) (ω : Fin n → α) : ProbabilityMeasure α :=
     if hn : 0 < n then
-      (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
+      (⟨(n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
         IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α)
     else
       μ.toProbabilityMeasure
@@ -516,8 +516,8 @@ private theorem closedBound
       iInf₂_le (f := fun (ρ : ProbabilityMeasure α) (_ : ρ ∈ F) =>
         (klDiv (ρ : Measure α) μ : EReal)) ν hν.2)
   have htβ : -β ≤ -↑t := EReal.neg_le_neg_iff.mpr ht.le
-  have hlog2 : Tendsto (fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (2 : ℝ≥0∞)) atTop (𝓝 0) := by
-    have hlogc : ENNReal.log (2 : ℝ≥0∞) = (Real.log 2 : EReal) := by
+  have hlog2 : Tendsto (fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (2 : ENNReal)) atTop (𝓝 0) := by
+    have hlogc : ENNReal.log (2 : ENNReal) = (Real.log 2 : EReal) := by
       rw [ENNReal.log_pos_real (by norm_num) (by simp), ENNReal.toReal_ofNat]
     rw [hlogc]
     have hreal : Tendsto (fun n : ℕ => (n : ℝ)⁻¹ * Real.log 2) atTop (𝓝 0) := by
@@ -528,7 +528,7 @@ private theorem closedBound
     rw [← EReal.coe_coe_eq_natCast n, ← EReal.coe_inv (n : ℝ), ← EReal.coe_mul]
   have hev : ∀ᶠ n in atTop,
     ((n : ℕ) : EReal)⁻¹ * ENNReal.log (law n F) ≤
-      ((n : ℕ) : EReal)⁻¹ * ENNReal.log (2 : ℝ≥0∞) +
+      ((n : ℕ) : EReal)⁻¹ * ENNReal.log (2 : ENNReal) +
         max (((n : ℕ) : EReal)⁻¹ * ENNReal.log (law n K))
           (((n : ℕ) : EReal)⁻¹ * ENNReal.log (law n Γᶜ)) := by
     filter_upwards [eventually_ge_atTop 1] with n hn
@@ -555,7 +555,7 @@ private theorem main
     (fun n =>
       @Measure.map (Fin n → α) (ProbabilityMeasure α) _ _
         (fun ω => if hn : 0 < n then
-          (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
+          (⟨(n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
             IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α)
         else μ.toProbabilityMeasure)
         (Measure.pi fun _ : Fin n => μ))

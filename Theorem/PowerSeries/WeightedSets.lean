@@ -2,6 +2,7 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.Combinatorics.Enumerative.WeightedSets.Part26
+public import Notation.Data.PNat
 open scoped BigOperators
 open PowerSeries Finset
 open WeightedSet WeightedSetExamples DominoTilingsZ
@@ -349,7 +350,7 @@ theorem weightGenFun_binaryStrings :
 /-- Positive integers form a finite-type weighted set -/
 theorem positiveIntegers_isFiniteType : PositiveIntegers.IsFiniteType := by
   intro n
-  -- The set {a : ℕ+ | a.val = n} has at most one element
+  -- The set {a : ℕ⁺ | a.val = n} has at most one element
   apply Set.Subsingleton.finite
   intro x hx y hy
   simp only [Set.mem_ofPred_eq, PositiveIntegers] at hx hy
@@ -366,12 +367,12 @@ theorem countOfWeight_zero : PositiveIntegers.countOfWeight positiveIntegers_isF
 theorem countOfWeight_pos (n : ℕ) (hn : 0 < n) :
     PositiveIntegers.countOfWeight positiveIntegers_isFiniteType n = 1 := by
   unfold WeightedSet.countOfWeight
-  let a : ℕ+ := ⟨n, hn⟩
-  have hset : {x : ℕ+ | PositiveIntegers.weight x = n} = {a} := by
+  let a : ℕ⁺ := ⟨n, hn⟩
+  have hset : {x : ℕ⁺ | PositiveIntegers.weight x = n} = {a} := by
     ext x
     simp only [PositiveIntegers, Set.mem_ofPred_eq, a]
     exact ⟨fun hx => Subtype.ext hx, fun hx => hx ▸ rfl⟩
-  have hfin : ({a} : Set ℕ+).Finite := Set.finite_singleton a
+  have hfin : ({a} : Set ℕ⁺).Finite := Set.finite_singleton a
   have heq : (positiveIntegers_isFiniteType n).toFinset = hfin.toFinset :=
     Set.Finite.toFinset_inj.mpr hset
   rw [heq, Set.Finite.toFinset_singleton, Finset.card_singleton]

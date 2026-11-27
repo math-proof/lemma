@@ -1,6 +1,7 @@
 module
 
 public import Structure.AlgebraicCurve_TotallyDegenerateCovering
+public import Notation.Data.PNat
 
 set_option autoImplicit false
 
@@ -23,11 +24,11 @@ structure DegeneracyData.FiniteHom (D₁ : DegeneracyData E₁ V₁) (D₂ : Deg
 
   b_mapE : ∀ e, D₂.b (mapE e) = mapV (D₁.b e)
 
-  deg : E₁ → ℕ+
+  deg : E₁ → ℕ⁺
 
-  degV : V₁ → ℕ+
+  degV : V₁ → ℕ⁺
 
-  degTotal : ℕ+
+  degTotal : ℕ⁺
 
   w_mapE : ∀ e, D₂.w (mapE e) = deg e * D₁.w e
 

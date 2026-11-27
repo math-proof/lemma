@@ -1,7 +1,7 @@
 import Mathlib
 import Def.AutomorphicForm_FormalBaseChange
 import Lemma.Polynomial.LocalLFactor
-import Theorems.Thm_AutomorphicForm_isBaseChangeOf_formalBaseChange
+import Theorem.Thm_AutomorphicForm_isBaseChangeOf_formalBaseChange
 import Structure.JPSS_CubicLiftFactor
 
 set_option autoImplicit false

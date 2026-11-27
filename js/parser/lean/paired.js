@@ -1261,7 +1261,18 @@ export class LeanBrace extends LeanPairedGroup {
         );
     }
 
+    /** `{x : α // p}` / `{x // p}` — see `LeanFDiv.isSubtypeSep`. */
+    isSubtypeLit() {
+        const a = this.arg;
+        if (a instanceof L.LeanFDiv) return a.isSubtypeSep();
+        if (!(a instanceof L.LeanColon)) return false;
+        let n = a.rhs;
+        while (n instanceof L.LeanBinary && !(n instanceof L.LeanFDiv)) n = n.rhs;
+        return n instanceof L.LeanFDiv && n.isSubtypeSep();
+    }
+
     strFormat(format) {
+        if (format == null && this.isSubtypeLit()) return '(Subtype (fun %s))';
         if (!this.isSpacedStructInst()) return super.strFormat(format);
         format = format || this.argFormat();
         const c = this.is_closed;
@@ -1319,11 +1330,16 @@ export class LeanNorm extends LeanPairedGroup {
     get stack_priority() {
         return 17;
     }
+    /** `‖x‖ₑ` — subscript glued to the closing bar (`enorm`). */
+    subscript = '';
+
     get operator() {
-        return ['‖', '‖'];
+        return ['‖', '‖' + (this.subscript || '')];
     }
     latexFormat() {
-        return '\\left\\lVert {%s} \\right\\rVert';
+        const name = this.subscript ? L.LeanToken.subscript[this.subscript] : '';
+        const sub = name ? `_{${name}}` : '';
+        return `\\left\\lVert {%s} \\right\\rVert${sub}`;
     }
 }
 

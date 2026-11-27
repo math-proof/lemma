@@ -19,7 +19,7 @@ public theorem Random.IsProbabilityMeasure.of.Gt_0
 -- given
   (hn : 0 < n) :
 -- imply
-  IsProbabilityMeasure ((n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i)) :=
+  IsProbabilityMeasure ((n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i)) :=
 -- proof
 by
   constructor

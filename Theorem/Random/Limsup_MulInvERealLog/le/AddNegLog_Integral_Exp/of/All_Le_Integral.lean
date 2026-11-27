@@ -21,7 +21,7 @@ open ENNReal Filter MeasureTheory Random Real
 open scoped ENNReal
 
 
-public theorem integral_emp [MeasurableSpace α] [TopologicalSpace α] [BorelSpace α] {n : ℕ} (ω : Fin n → α) (f : BoundedContinuousFunction α ℝ) : ∫ x, f x ∂((n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i)) = (∑ i, f (ω i)) / n := by
+public theorem integral_emp [MeasurableSpace α] [TopologicalSpace α] [BorelSpace α] {n : ℕ} (ω : Fin n → α) (f : BoundedContinuousFunction α ℝ) : ∫ x, f x ∂((n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i)) = (∑ i, f (ω i)) / n := by
   have hf : StronglyMeasurable (⇑f) := f.continuous.stronglyMeasurable
   rw [integral_smul_measure]
   have hint : ∀ i ∈ Finset.univ, Integrable (⇑f) (Measure.dirac (ω i)) :=
@@ -62,7 +62,7 @@ public theorem Random.Limsup_MulInvERealLog.le.AddNegLog_Integral_Exp.of.All_Le_
   limsup (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log
     ((@Measure.map (Fin n → α) (ProbabilityMeasure α) _ _
       (fun ω => if hn : 0 < n then
-        (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
+        (⟨(n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
           IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α)
       else μ.toProbabilityMeasure)
       (Measure.pi fun _ : Fin n => μ)) F)) atTop ≤
@@ -71,7 +71,7 @@ public theorem Random.Limsup_MulInvERealLog.le.AddNegLog_Integral_Exp.of.All_Le_
 by
   let emp (n : ℕ) (ω : Fin n → α) : ProbabilityMeasure α :=
     if hn : 0 < n then
-      (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
+      (⟨(n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
         IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α)
     else
       μ.toProbabilityMeasure
@@ -92,7 +92,7 @@ by
     intro n
     if hn : 0 < n then
       let rhs : (Fin n → α) → ProbabilityMeasure α :=
-        fun ω => (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
+        fun ω => (⟨(n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
           IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α)
       have heq : emp n = rhs := by
         funext ω
@@ -120,9 +120,9 @@ by
       have hint : c ≤ ∫ x, f x ∂((emp n ω : ProbabilityMeasure α) : Measure α) := by
         simpa [G] using hω
       have hcoe : ((emp n ω : ProbabilityMeasure α) : Measure α) =
-          (n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i) := by
+          (n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i) := by
         have hemp : emp n ω =
-            (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
+            (⟨(n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
               IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α) := by
           unfold emp
           exact dite_eq_left hn

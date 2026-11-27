@@ -96,6 +96,10 @@ export const leanInfixContinue = Object.freeze({
     '≥': 'Lean_ge',
     '∼': 'LeanDistributed',
     '⟂': 'Lean_perp',
+    // `p\n    ∧ q` and `(x : T)\n    ^ n` continue the term. Wrapping the
+    // base into a newline list leaves an empty caret and an extra `^` line.
+    '∧': 'Lean_land',
+    '^': 'LeanPow',
     ...leanRelationalTokens,
 });
 

@@ -4,6 +4,7 @@ public import Mathlib.Data.Rat.Cast.Order
 public import Mathlib.Order.Monotone.Basic
 public import Mathlib.Tactic
 public import Theorem.NumberTheory.Recurrences.GolombLikeSequence.Part7
+public import Notation.Data.PNat
 
 
 public section
@@ -20,7 +21,7 @@ positive-integer solutions of `f (f n) = y * n + z`.
 -/
 namespace MetaMathlibExt
 
-def glk_seq (f : ℕ+ → ℕ+) (n : ℕ) : ℕ :=
+def glk_seq (f : ℕ⁺ → ℕ⁺) (n : ℕ) : ℕ :=
   (f n.succPNat).val
 
 end MetaMathlibExt

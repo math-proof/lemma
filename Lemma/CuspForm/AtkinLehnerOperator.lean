@@ -1,9 +1,9 @@
 import Mathlib
 import Theorem.ModularForm.AtkinLehnerDatum
-import Theorems.Thm_ModularForm_alSlash_slash_eq_self_of_mem_Gamma0
-import Theorems.Thm_ModularForm_mdifferentiable_alSlash
-import Theorems.Thm_ModularForm_isBoundedAt_alSlash
-import Theorems.Thm_ModularForm_isZeroAt_alSlash
+import Theorem.Thm_ModularForm_alSlash_slash_eq_self_of_mem_Gamma0
+import Theorem.Thm_ModularForm_mdifferentiable_alSlash
+import Theorem.Thm_ModularForm_isBoundedAt_alSlash
+import Theorem.Thm_ModularForm_isZeroAt_alSlash
 import Def.CuspForm_AtkinLehnerOperator
 
 set_option autoImplicit false

@@ -68,6 +68,8 @@ export class LeanColon extends LeanBinary {
         delete this.pendingComment;
         if (this.rhs === caret) {
             if (!(caret instanceof L.LeanCaret) && indent > this.indent && leanIsInfixContinue(next)) {
+                // The operator is the first token of this line (`∧` / `^` / `=`).
+                caret.pendingOpLead = indent;
                 return caret;
             }
             // `sup[θ, t]\n  ‖∇[θ] x‖ < ∞` — limits ops need their body on the next line, same as

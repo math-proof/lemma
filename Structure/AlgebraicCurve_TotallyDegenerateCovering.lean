@@ -3,6 +3,7 @@ module
 public import Structure.AlgebraicCurve_SemistableCharts
 public import Structure.CerednikDrinfeld_Ribbon
 public import Mathlib.FieldTheory.RatFunc.AsPolynomial
+public import Notation.Data.PNat
 
 set_option autoImplicit false
 
@@ -50,7 +51,7 @@ structure TotallyDegenerateCovering (ϖ : A) : Type 1 where
   modulus_eq : ∀ e, (annIn e).modulus = (annOut e).modulus
   param_mul_param : ∀ e, (annOut e).param * (annIn e).param = algebraMap L F ((annOut e).modulus : L)
 
-  width : E → ℕ+
+  width : E → ℕ⁺
 
   valuation_modulus : ∀ e, A.valuation ((annOut e).modulus : L) = A.valuation (ϖ : L) ^ (width e : ℕ)
 

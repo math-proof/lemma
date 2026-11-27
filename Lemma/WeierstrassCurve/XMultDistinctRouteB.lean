@@ -1,8 +1,8 @@
 import Mathlib
 import Structure.TateCurve_XMultAlignment
-import Theorems.Thm_TateCurve_pointY_inv
-import Theorems.Thm_TateCurve_pointY_zpow_mul
-import Theorems.Thm_TateCurve_pointX_qExpansion
+import Theorem.Thm_TateCurve_pointY_inv
+import Theorem.Thm_TateCurve_pointY_zpow_mul
+import Theorem.Thm_TateCurve_pointX_qExpansion
 import Def.TateCurve_XMultDistinctRouteB
 import Structure.TateCurve_XMultDistinctRouteB
 

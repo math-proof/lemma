@@ -25,10 +25,10 @@ agree on a uniformly random point in `F^m`, defined as the number of points wher
 `eval r p₁ = eval r p₂` divided by `|F|^m`. -/
 noncomputable def agreementProb
     {F : Type*} [CommRing F] [IsDomain F] [Fintype F] [DecidableEq F]
-    {m : ℕ} (p₁ p₂ : MvPolynomial (Fin m) F) : ℚ≥0 :=
+    {m : ℕ} (p₁ p₂ : MvPolynomial (Fin m) F) : NNRat :=
   ((Finset.univ.filter (fun r : Fin m → F =>
-    MvPolynomial.eval r p₁ = MvPolynomial.eval r p₂)).card : ℚ≥0) /
-    ((Fintype.card F : ℚ≥0) ^ m)
+    MvPolynomial.eval r p₁ = MvPolynomial.eval r p₂)).card : NNRat) /
+    ((Fintype.card F : NNRat) ^ m)
 
 /-- Embeds a Boolean assignment `v : Fin m → Bool` into a field point
 `Fin m → F` by sending `true ↦ 1` and `false ↦ 0`. -/

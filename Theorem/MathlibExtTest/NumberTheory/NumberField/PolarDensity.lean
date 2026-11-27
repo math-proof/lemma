@@ -3,6 +3,7 @@ module
 
 public import Def.NumberTheory.NumberField.PolarDensity
 public import Theorem.Set.NumberField.PolarDensity
+public import Notation.Data.PNat
 open Filter Topology NumberField IsDedekindDomain
 
 public section
@@ -14,7 +15,7 @@ variable {K : Type*} [Field K] [NumberField K]
 -- Destructure `HasPolarDensity` to expose `n`, `m`, `F` and all four conditions.
 example (S : Set (HeightOneSpectrum (𝓞 K))) (ρ : ℚ)
     (h : S.HasPolarDensity ρ) :
-    ∃ (n : ℕ+) (m : ℤ) (F : ℂ → ℂ), MeromorphicAt F (1 : ℂ) ∧
+    ∃ (n : ℕ⁺) (m : ℤ) (F : ℂ → ℂ), MeromorphicAt F (1 : ℂ) ∧
       F =ᶠ[nhdsWithin (1 : ℂ) {z : ℂ | (1 : ℝ) < z.re}]
         (fun s => NumberField.partialDedekindZeta K S s ^ (n : ℕ)) ∧
       meromorphicOrderAt F (1 : ℂ) = (↑(-m) : WithTop ℤ) ∧

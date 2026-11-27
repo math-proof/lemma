@@ -22,6 +22,7 @@ export class LeanLogic extends LeanBinaryBoolean {
     }
 
     sep() {
+        if (typeof this.opLeadIndent === 'number') return ' ';
         if (this.hanging_indentation) {
             const indent = this.rhs.indent ?? 0;
             return '\n' + ' '.repeat(indent);
@@ -30,6 +31,7 @@ export class LeanLogic extends LeanBinaryBoolean {
     }
 
     strFormat() {
+        if (typeof this.opLeadIndent === 'number') return this.opJoin(this.operator);
         const sep = this.sep();
         return `%s ${this.operator}${sep}%s`;
     }

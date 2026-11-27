@@ -9,6 +9,7 @@ Authors: AlgebraicCombinatorics Contributors
 module
 
 public import Mathlib
+public import Notation.Data.PNat
 @[expose] public section
 
 open Finset Nat BigOperators
@@ -23,7 +24,7 @@ Section sec.fps.intcomps of the source text.
 
 ## Main definitions
 
-* `Composition` - A composition as a `List ℕ+` (tuple of positive integers)
+* `Composition` - A composition as a `List ℕ⁺` (tuple of positive integers)
 * `Composition.append` - Concatenation of two compositions
 * `Composition.ofSize n` - The subtype of compositions with size `n`
 * `Composition.ofSizeIntoParts n k` - The subtype of compositions with size `n` and length `k`
@@ -50,10 +51,10 @@ Section sec.fps.intcomps of the source text.
 
 ## Implementation notes
 
-This file defines `Composition` as `List ℕ+`, which is an alternative representation to
+This file defines `Composition` as `List ℕ⁺`, which is an alternative representation to
 Mathlib's `Mathlib.Combinatorics.Enumerative.Composition` which uses `Composition n` as a
 structure with `blocks : List ℕ` and proofs of positivity and sum. Both representations
-are equivalent; we use `List ℕ+` here to follow the source text's presentation more directly.
+are equivalent; we use `List ℕ⁺` here to follow the source text's presentation more directly.
 
 ## References
 
@@ -72,6 +73,6 @@ We represent it as a list of positive integers.
 
 (Definition def.fps.comps, part (a))
 -/
-abbrev Composition := List ℕ+
+abbrev Composition := List ℕ⁺
 
 end AlgebraicCombinatorics

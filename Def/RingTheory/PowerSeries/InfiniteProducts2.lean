@@ -10,6 +10,7 @@ Authors:
 module
 
 public import Mathlib
+public import Notation.Data.PNat
 
 @[expose] public section
 
@@ -92,7 +93,7 @@ def EssentiallyFinite {I M : Type*} [Zero M] (f : I → M) : Prop :=
 
 /-- A sequence `(k₁, k₂, k₃, ...)` of natural numbers is essentially finite if all but
 finitely many terms are zero. -/
-def EssentiallyFiniteSeq (k : ℕ+ → ℕ) : Prop :=
+def EssentiallyFiniteSeq (k : ℕ⁺ → ℕ) : Prop :=
   EssentiallyFinite k
 
 /-- The set of essentially finite functions from `I` to `M`. -/

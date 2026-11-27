@@ -89,7 +89,7 @@ private lemma zero_mem_interior_integrableExpSet_gammaMeasure
 private lemma mgf_id_map_sq_gaussianReal {t : ℝ} (ht : t < 1 / 2) :
   mgf id ((gaussianReal 0 1).map fun x ↦ x ^ 2) t =
     (1 - 2 * t) ^ (-(1 / 2 : ℝ)) := by
-  have hv : (1 : ℝ≥0) ≠ 0 := one_ne_zero
+  have hv : (1 : NNReal) ≠ 0 := one_ne_zero
   have hb : 0 < (1 / 2 - (t : ℝ)) := by linarith
   have hme : AEMeasurable (fun x : ℝ ↦ x ^ 2) (gaussianReal 0 1) := by fun_prop
   rw [mgf_id_map hme]
@@ -132,7 +132,7 @@ private lemma not_integrable_exp_mul_map_sq {t : ℝ} (ht : (1 / 2 : ℝ) ≤ t)
   have h' : Integrable (fun x : ℝ ↦ rexp (t * x ^ 2)) (gaussianReal 0 1) :=
     (integrable_map_measure (f := fun x : ℝ ↦ x ^ 2) (g := fun x : ℝ ↦ rexp (t * x))
       hASM hAM).1 h
-  have hv : (1 : ℝ≥0) ≠ 0 := one_ne_zero
+  have hv : (1 : NNReal) ≠ 0 := one_ne_zero
   rw [gaussianReal_of_var_ne_zero _ hv] at h'
   have hmeas := measurable_gaussianPDF (0 : ℝ) 1
   have hlt : ∀ᵐ x ∂volume, gaussianPDF 0 1 x < ∞ := ae_of_all _ fun _ ↦ by simp [gaussianPDF]

@@ -89,14 +89,6 @@ macro_rules
       let y ← Probability.Macro.mkJointRV ys
       `(Measure.condProbRA $π (JointRandomSymbol $x $y) $x0)
 
-/-- Event probability: `ℙ[π]{|avg - μ| < ε}` → `π.real {ω | |avg ω - μ| < ε}`.
-
-Braces mark an event (a `Prop` after reading random variables at `ω`), as opposed to the
-parenthesized RA / observation forms `ℙ[π](…)` (pmf / pdf / conditional densities).
-
-The body is elaborated as `Ω → Prop` when possible; otherwise it is lifted like `rv%[π] …`
-(so `avg : Ω → ℝ` in `|avg - μ| < ε` becomes `|avg ω - μ| < ε`). A closed `Prop` with no
-random variables becomes the constant predicate. Result type is `ℝ` (`Measure.real`). -/
 syntax:max (name := probEvent) "ℙ[" term "]" "{" term "}" : term
 
 open Lean Elab Term Meta in

@@ -3,6 +3,7 @@ module
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
 public import Def.RingTheory.PowerSeries.InfiniteProducts2.Part6
+public import Notation.Data.PNat
 
 public section
 
@@ -2092,16 +2093,16 @@ The key insight is that only essentially finite sequences contribute to the sum 
 ensuring that each product `∏_{i=1}^∞ p_{i,k_i}` is well-defined (since all but finitely
 many factors are `p_{i,0} = 1`).
 
-This is a special case of `tprod_tsum_eq_tsum_prod_essentiallyFinite` with `I = ℕ+`. -/
+This is a special case of `tprod_tsum_eq_tsum_prod_essentiallyFinite` with `I = ℕ⁺`. -/
 lemma tprod_tsum_eq_tsum_prod_essentiallyFinite_nat [DiscreteTopology K]
-    {S : ℕ+ → Type*} [∀ i, Zero (S i)] [∀ i, DecidableEq (S i)]
-    (p : (i : ℕ+) → S i → K⟦X⟧)
+    {S : ℕ⁺ → Type*} [∀ i, Zero (S i)] [∀ i, DecidableEq (S i)]
+    (p : (i : ℕ⁺) → S i → K⟦X⟧)
     (hp_zero : ∀ i, p i 0 = 1)
     (hp_summable : Summable fun ik : SBar S => p ik.1 ik.2.1) :
-    ∏' i : ℕ+, ∑' k : S i, p i k =
-    ∑' f : { f : (i : ℕ+) → S i // ∀ᶠ i in Filter.cofinite, f i = 0 },
-      ∏' i : ℕ+, p i (f.val i) :=
-  -- SBar S is definitionally equal to Σ i : ℕ+, { k : S i // k ≠ 0 }
+    ∏' i : ℕ⁺, ∑' k : S i, p i k =
+    ∑' f : { f : (i : ℕ⁺) → S i // ∀ᶠ i in Filter.cofinite, f i = 0 },
+      ∏' i : ℕ⁺, p i (f.val i) :=
+  -- SBar S is definitionally equal to Σ i : ℕ⁺, { k : S i // k ≠ 0 }
   tprod_tsum_eq_tsum_prod_essentiallyFinite p hp_zero hp_summable
 
 end InfiniteProductRules
@@ -2203,7 +2204,7 @@ open scoped PowerSeries.WithPiTopology
 variable [TopologicalSpace K] [IsTopologicalRing K] [T2Space K] [NoZeroDivisors K]
 
 /-- The coercion of oddPNatEquivPNat.symm i is 2 * i - 1. -/
-lemma oddPNatEquivPNat_symm_coe (i : ℕ+) :
+lemma oddPNatEquivPNat_symm_coe (i : ℕ⁺) :
     (oddPNatEquivPNat.symm i : ℕ) = 2 * i - 1 := rfl
 
 omit [NoZeroDivisors K] in
@@ -2229,9 +2230,9 @@ lemma Ring_inverse_one_sub_X_pow (k : ℕ) (hk : k ≠ 0) :
 omit [IsTopologicalRing K] [NoZeroDivisors K] in
 /-- The RHS of Euler's identity equals the generating function for partitions into distinct parts. -/
 lemma rhs_eq_genFun :
-    (∏' k : ℕ+, (1 + (X : K⟦X⟧) ^ (k : ℕ))) =
+    (∏' k : ℕ⁺, (1 + (X : K⟦X⟧) ^ (k : ℕ))) =
     PowerSeries.mk fun n ↦ ((Nat.Partition.countRestricted n 2).card : K) := by
-  have h1 : (∏' k : ℕ+, (1 + (X : K⟦X⟧) ^ (k : ℕ))) = ∏' i : ℕ, (1 + X ^ (i + 1)) := by
+  have h1 : (∏' k : ℕ⁺, (1 + (X : K⟦X⟧) ^ (k : ℕ))) = ∏' i : ℕ, (1 + X ^ (i + 1)) := by
     rw [← Equiv.tprod_eq (Equiv.pnatEquivNat)]
     congr 1; ext k; simp [Equiv.pnatEquivNat]
   rw [h1]
@@ -2259,7 +2260,7 @@ lemma restricted_Odd_eq (n : ℕ) :
     exact this
 
 /-- The bijection `pnatEquivEvenNat` satisfies `2j - 1 = (pnatEquivEvenNat j).val + 1`. -/
-lemma pnatEquivEvenNat_value (j : ℕ+) :
+lemma pnatEquivEvenNat_value (j : ℕ⁺) :
     2 * (j : ℕ) - 1 = (pnatEquivEvenNat j).val + 1 := by
   have hj := j.pos
   show 2 * (j : ℕ) - 1 = 2 * (j : ℕ) - 2 + 1
@@ -2282,8 +2283,8 @@ The algebraic proof (from the TeX source) shows:
 2. `∏_{k>0}(1 + x^k) = ∏_{k>0}(1 - x^{2k}) / ∏_{k>0}(1 - x^k)`
 3. The even factors cancel, leaving `1 / ∏_{k odd}(1 - x^k)` -/
 lemma euler_odd_parts_identity :
-    ∏' i : ℕ+, Ring.inverse (1 - (X : K⟦X⟧) ^ (2 * (i : ℕ) - 1)) =
-    ∏' k : ℕ+, (1 + (X : K⟦X⟧) ^ (k : ℕ)) := by
+    ∏' i : ℕ⁺, Ring.inverse (1 - (X : K⟦X⟧) ^ (2 * (i : ℕ) - 1)) =
+    ∏' k : ℕ⁺, (1 + (X : K⟦X⟧) ^ (k : ℕ)) := by
   -- Step 1: Show RHS = mk (fun n => (countRestricted n 2).card)
   rw [rhs_eq_genFun]
 
@@ -2302,8 +2303,8 @@ lemma euler_odd_parts_identity :
   rw [Nat.Partition.powerSeriesMk_card_restricted_eq_tprod K Odd]
 
   -- Step 5: Rewrite LHS using Ring_inverse_one_sub_X_pow
-  have hLHS : ∏' i : ℕ+, Ring.inverse (1 - (X : K⟦X⟧) ^ (2 * (i : ℕ) - 1)) =
-      ∏' i : ℕ+, ∑' j : ℕ, (X : K⟦X⟧) ^ ((2 * (i : ℕ) - 1) * j) := by
+  have hLHS : ∏' i : ℕ⁺, Ring.inverse (1 - (X : K⟦X⟧) ^ (2 * (i : ℕ) - 1)) =
+      ∏' i : ℕ⁺, ∑' j : ℕ, (X : K⟦X⟧) ^ ((2 * (i : ℕ) - 1) * j) := by
     apply tprod_congr
     intro i
     apply Ring_inverse_one_sub_X_pow
@@ -2333,10 +2334,10 @@ lemma euler_odd_parts_identity :
 /-- Alternative form of Euler's identity using the set of odd positive integers.
 
 This follows from `euler_odd_parts_identity` by reindexing the product using the
-equivalence `oddPNatEquivPNat` between `{ n : ℕ+ // Odd n }` and `ℕ+`. -/
+equivalence `oddPNatEquivPNat` between `{ n : ℕ⁺ // Odd n }` and `ℕ⁺`. -/
 lemma euler_odd_parts_identity' :
-    ∏' i : { n : ℕ+ // Odd (n : ℕ) }, Ring.inverse (1 - (X : K⟦X⟧) ^ (i : ℕ)) =
-    ∏' k : ℕ+, (1 + (X : K⟦X⟧) ^ (k : ℕ)) := by
+    ∏' i : { n : ℕ⁺ // Odd (n : ℕ) }, Ring.inverse (1 - (X : K⟦X⟧) ^ (i : ℕ)) =
+    ∏' k : ℕ⁺, (1 + (X : K⟦X⟧) ^ (k : ℕ)) := by
   rw [← euler_odd_parts_identity]
   rw [← oddPNatEquivPNat.symm.tprod_eq]
   congr 1

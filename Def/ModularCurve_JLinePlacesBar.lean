@@ -3,7 +3,7 @@ public import Mathlib
 public import Theorem.LaurentSeries.ArithmeticGalois
 public import Theorem.Ideal.RatFuncPlaces
 public import Theorem.Valuation.RatFuncPlaceInfty
-public import Theorems.Thm_ModularCurve_transcendental_coeffEmb_jq
+public import Theorem.Thm_ModularCurve_transcendental_coeffEmb_jq
 public import Instance.ModularCurve_JLinePlacesBar
 public import Abbrev.ModularCurve_JLinePlacesBar
 set_option autoImplicit false

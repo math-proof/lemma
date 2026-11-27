@@ -56,6 +56,7 @@ export class LeanRelational extends LeanBinaryBoolean {
     }
 
     sep() {
+        if (typeof this.opLeadIndent === 'number') return ' ';
         if (this.rhs instanceof L.LeanArgsNewLineSeparated || this.rhs instanceof L.LeanStatements)
             return '\n';
         const lhsEnd = Lean.lastSourceLine(this.lhs);
@@ -110,7 +111,7 @@ function LeanFilterRelational(Base) {
 
         strFormat() {
             if (!this.superscript) return super.strFormat();
-            return `%s ${this.opStr()}${this.sep()}%s`;
+            return this.opJoin(this.opStr());
         }
 
         latexFormat() {
@@ -190,8 +191,7 @@ export class LeanEq extends LeanRelational {
     }
 
     strFormat() {
-        const sep = this.sep();
-        return `%s ${this.opStr()}${sep}%s`;
+        return this.opJoin(this.opStr());
     }
 
     latexFormat() {
@@ -296,8 +296,7 @@ export class Lean_perp extends LeanRelational {
     }
 
     strFormat() {
-        const sep = this.sep();
-        return `%s ${this.opStr()}${sep}%s`;
+        return this.opJoin(this.opStr());
     }
 
     latexFormat() {
@@ -346,8 +345,7 @@ export class LeanDistributed extends LeanRelational {
     }
 
     strFormat() {
-        const sep = this.sep();
-        return `%s ${this.opStr()}${sep}%s`;
+        return this.opJoin(this.opStr());
     }
 
     latexFormat() {
@@ -456,8 +454,7 @@ export class Lean_simeq extends LeanRelational {
     }
 
     strFormat() {
-        const sep = this.sep();
-        return `%s ${this.opStr()}${sep}%s`;
+        return this.opJoin(this.opStr());
     }
 
     latexFormat() {

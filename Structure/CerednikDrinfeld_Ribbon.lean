@@ -6,6 +6,7 @@ public import Mathlib.Data.Nat.Prime.Defs
 public import Mathlib.Data.PNat.Defs
 public import Mathlib.Algebra.Module.Submodule.LinearMap
 public import Mathlib.LinearAlgebra.Quotient.Defs
+public import Notation.Data.PNat
 
 public section
 
@@ -20,7 +21,7 @@ variable {E V : Type*}
 structure DegeneracyData (E V : Type*) where
   a : E → V
   b : E → V
-  w : E → ℕ+
+  w : E → ℕ⁺
 
 def degeneracyMatrix [DecidableEq V] (f : E → V) : Matrix V E ℤ :=
   Matrix.of fun v e => if f e = v then 1 else 0

@@ -31,6 +31,7 @@ public import Mathlib.Analysis.Analytic.Order
 public import Mathlib.GroupTheory.Torsion
 public import Mathlib.LinearAlgebra.Dimension.Finrank
 public import Def.v1.Atlas.EllipticCurves.code.ModularForms.Part5
+public import Notation.Data.PNat
 public section
 
 open scoped CongruenceSubgroup MatrixGroups ModularForm Topology Manifold
@@ -44,7 +45,7 @@ open Complex
 `a_0 = 0`. -/
 structure CuspFormData where
   weight : ℕ
-  level : ℕ+
+  level : ℕ⁺
   coeffs : ℕ → ℂ
   coeffs_zero : coeffs 0 = 0
 

@@ -107,7 +107,14 @@ export class Lean_def extends LeanArgs {
     strFormat() {
         const acc = this.accessibility === 'public' ? '' : `${this.accessibility} `;
         let def = `${acc}${this.func} %s`;
-        if (this.attribute) def = `%s\n${def}`;
+        if (this.attribute) {
+            const body = this.assignment;
+            const attrLine = this.attribute.line;
+            const bodyLine = body?.line;
+            // `@[simp] theorem t` stays one line. `@[simp]\ntheorem t` keeps the break.
+            const sameLine = typeof attrLine === 'number' && typeof bodyLine === 'number' && attrLine === bodyLine;
+            def = sameLine ? `%s ${def}` : `%s\n${def}`;
+        }
         return def;
     }
 
@@ -134,7 +141,8 @@ export class Lean_def extends LeanArgs {
 
     relocate_last_comment() {
         const assignment = this.assignment;
-        if (assignment instanceof L.LeanAssign) assignment.relocate_last_comment();
+        if (assignment instanceof L.LeanAssign || assignment instanceof L.Lean_where)
+            assignment.relocate_last_comment();
     }
 
     /**
@@ -240,17 +248,33 @@ export class Lean_where extends LeanBinary {
     }
 
     /**
-     * Capture the indented field block after `where` (mirrors `Lean_def::insert_newline`
-     * wrapping the `:=` rhs into a `LeanStatements`).
+     * `def f : T where` is the structure instance `def f : T := { … }`.
+     * The indented block is that instance's field list: one `LeanAssign` per field.
      */
     insert_newline(caret, newline_count, indent, next) {
         if (this.indent < indent && caret === this.rhs && this.rhs instanceof L.LeanCaret) {
             const rhs = this.rhs;
             rhs.indent = indent;
-            this.rhs = new L.LeanStatements([rhs], indent, rhs.level);
+            const stmts = new L.LeanStatements([rhs], indent, rhs.level);
+            stmts.structInst = true;
+            this.rhs = stmts;
             return rhs;
         }
         return super.insert_newline(caret, newline_count, indent, next);
+    }
+
+    /** Field proofs (`algebraMap_mem' a := by …`) live in the structure-instance body. */
+    echo() {
+        const rhs = this.rhs;
+        if (rhs instanceof L.LeanStatements && rhs.structInst === true) {
+            for (const field of rhs.args) field?.echo?.();
+            return;
+        }
+        rhs?.echo?.();
+    }
+
+    relocate_last_comment() {
+        this.rhs?.relocate_last_comment?.();
     }
 }
 
@@ -453,6 +477,9 @@ export class Lean_let extends LeanSyntax {
         // term-mode `(h : let r := f; P r)`: inline, no leading indentation
         if (parent instanceof L.LeanColon || parent instanceof L.LeanParenthesis || parent instanceof Lean_let)
             if (this.is_term()) return false;
+        // `ideal U := let _ := e` — the let is the value, on the `:=` line.
+        if (parent instanceof L.LeanAssign && this.is_term() && this.line != null && this.line === parent.line)
+            return false;
         if (parent instanceof L.LeanSequentialTacticCombinator) return this.indent > 0;
         if (parent instanceof L.LeanTacticBlock) return this.indent > parent.indent;
         return !(parent instanceof L.LeanArgsSemicolonSeparated);
@@ -531,6 +558,17 @@ export class Lean_let extends LeanSyntax {
                 (arg.newlineBehind || arg.newlineBefore)
             ) {
                 parts.push('\n');
+            } else if (arg instanceof L.LeanWith && typeof arg.line === 'number') {
+                // Break only when `with` starts after the value. A `with` that
+                // shares the value's last line stays on that line.
+                let prevEnd = -1;
+                for (const earlier of this.args) {
+                    if (earlier === arg) break;
+                    if (earlier instanceof L.LeanCaret) continue;
+                    prevEnd = Math.max(prevEnd, Lean.lastSourceLine(earlier));
+                }
+                if (arg.line > prevEnd) parts.push('\n' + ' '.repeat(arg.indent));
+                else parts.push(' ');
             } else parts.push(' ');
             parts.push('%s');
         }
@@ -626,6 +664,27 @@ export class Lean_replace extends Lean_have {
 export class Lean_show extends LeanSyntax {
     static { this.register(); }
 
+    /**
+     * `show T\n    from p` — keep `from` on the show. The caret is replaced
+     * when `from` is inserted (`hangingModifier`).
+     * @param {Lean} node
+     * @param {number} indent
+     * @param {number} newline_count
+     */
+    static continueFrom(node, indent, newline_count) {
+        for (let p = node.parent; p; p = p.parent) {
+            if (p instanceof L.Lean_def || p instanceof L.LeanModule) return null;
+            if (!(p instanceof Lean_show)) continue;
+            if (p.indent >= indent) continue;
+            if (p.args.some((a) => a instanceof L.LeanFrom)) return null;
+            const caret = new L.LeanCaret(indent, node.level).stampFollowingLine(Math.max(0, newline_count - 1));
+            caret.hangingModifier = true;
+            p.push(caret);
+            return caret;
+        }
+        return null;
+    }
+
     constructor(arg, indent, level, parent = null) {
         super([arg], indent, level, parent);
     }
@@ -676,6 +735,27 @@ export class Lean_show extends LeanSyntax {
     }
 
     strFormat() {
-        return `${this.func} ${Array(this.args.length).fill('%s').join(' ')}`;
+        const parts = [this.func];
+        for (const arg of this.args) {
+            if (arg instanceof L.LeanCaret) {
+                parts.push('%s');
+                continue;
+            }
+            if (arg instanceof L.LeanFrom && typeof arg.line === 'number') {
+                let prevEnd = -1;
+                for (const earlier of this.args) {
+                    if (earlier === arg) break;
+                    if (earlier instanceof L.LeanCaret) continue;
+                    prevEnd = Math.max(prevEnd, Lean.lastSourceLine(earlier));
+                }
+                // `show T\n    from p` breaks. `show T from p` stays one line.
+                if (arg.line > prevEnd) {
+                    parts.push('\n' + ' '.repeat(arg.indent) + '%s');
+                    continue;
+                }
+            }
+            parts.push(' %s');
+        }
+        return parts.join('');
     }
 }

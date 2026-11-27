@@ -11,6 +11,7 @@ public import Instance.CerednikDrinfeld_MumfordPeriod
 public import Class.CerednikDrinfeld_MumfordPeriod
 public import Structure.CerednikDrinfeld_MumfordPeriod
 public import Abbrev.CerednikDrinfeld_MumfordPeriod
+public import Notation.Data.PNat
 
 @[expose] public section
 
@@ -35,7 +36,7 @@ theorem card_stabilizer_smul (g : G) (d : 𝒯.Dart) :
 
 variable (G) in
 
-def stabWidth (e : QuotEdge G 𝒯) : ℕ+ :=
+def stabWidth (e : QuotEdge G 𝒯) : ℕ⁺ :=
   Nat.toPNat' (Nat.card (stabilizer G e.out))
 
 theorem stabWidth_mk (d : 𝒯.Dart) :

@@ -2,8 +2,8 @@ module
 public import Mathlib
 public import Theorem.HahnSeries.X0ModL
 public import Def.AlgebraicCurve_Correspondence
-public import Theorems.Thm_ModularCurve_pow_char_eq_qExpand_of_coeff_fixed
-public import Theorems.Thm_ModularCurve_qExpand_jqModC_eq_pow_unconditional
+public import Theorem.Thm_ModularCurve_pow_char_eq_qExpand_of_coeff_fixed
+public import Theorem.Thm_ModularCurve_qExpand_jqModC_eq_pow_unconditional
 set_option autoImplicit false
 
 

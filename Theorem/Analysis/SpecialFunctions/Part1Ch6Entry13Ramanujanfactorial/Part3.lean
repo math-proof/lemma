@@ -14,6 +14,7 @@ public import Mathlib.NumberTheory.TsumDivisorsAntidiagonal
 public import Mathlib.Topology.GDelta.MetrizableSpace
 public import Mathlib.Topology.Separation.CompletelyRegular
 public import Def.Analysis.SpecialFunctions.Part1Ch6Entry13Ramanujanfactorial.Part3
+public import Notation.Data.PNat
 
 /-!
 # Ramanujan's Notebooks, Part I, Chapter 6, Entry 13
@@ -44,7 +45,7 @@ theorem finite_right (N : ℕ) (t : ℝ) :
   have hmem := Nat.mem_divisorsAntidiagonal.mp hx
   rw [hmem.1]
 
-theorem hgx (t : ℝ) (N : ℕ+) (x : ↥((N:ℕ).divisorsAntidiagonal)) :
+theorem hgx (t : ℝ) (N : ℕ⁺) (x : ↥((N:ℕ).divisorsAntidiagonal)) :
     dblR t (sigmaAntidiagonalEquivProd ⟨N, x⟩) = wR x.1 * t^(x.1.1*x.1.2) := by
   simp only [sigmaAntidiagonalEquivProd, divisorsAntidiagonalFactors, dblR, wR, signW,
     Equiv.coe_fn_mk, PNat.mk_coe]
@@ -56,14 +57,14 @@ theorem hgx (t : ℝ) (N : ℕ+) (x : ↥((N:ℕ).divisorsAntidiagonal)) :
   · simp [hC]
 
 theorem right_tsum_eq {t : ℝ} (ht : ‖t‖ < 1) :
-    ∑' c : ℕ+ × ℕ+, dblR t c
-      = ∑' N : ℕ+, Rcoeff (N:ℕ) * t^((N:ℕ)) := by
+    ∑' c : ℕ⁺ × ℕ⁺, dblR t c
+      = ∑' N : ℕ⁺, Rcoeff (N:ℕ) * t^((N:ℕ)) := by
   have hsum : Summable (dblR t) := dblR_summable ht
   have hsig : Summable ((dblR t) ∘ sigmaAntidiagonalEquivProd) :=
     (sigmaAntidiagonalEquivProd.summable_iff (f := dblR t)).mpr hsum
   have heq := sigmaAntidiagonalEquivProd.tsum_eq (f := dblR t)
   rw [← heq]
-  have hsig2 : Summable (fun c : (N : ℕ+) × ↥((N:ℕ).divisorsAntidiagonal) ↦
+  have hsig2 : Summable (fun c : (N : ℕ⁺) × ↥((N:ℕ).divisorsAntidiagonal) ↦
       dblR t (sigmaAntidiagonalEquivProd c)) := hsig
   rw [Summable.tsum_sigma hsig2]
   refine tsum_congr fun N => ?_

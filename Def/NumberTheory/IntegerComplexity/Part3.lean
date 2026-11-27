@@ -5,6 +5,7 @@ module
 public import Mathlib.Data.PNat.Basic
 public import Mathlib.Data.Nat.Find
 public import Theorem.NumberTheory.IntegerComplexity.Part2
+public import Notation.Data.PNat
 
 @[expose] public section
 
@@ -13,7 +14,7 @@ namespace IntegerComplexity
 /-- Integer complexity: least number of ones needed to express `n`
     using `1`, `+`, `*` and parentheses. Source C4.
     Implemented via Nat.find on proved existential predicate. -/
-noncomputable def complexity (n : ℕ+) : ℕ := by
+noncomputable def complexity (n : ℕ⁺) : ℕ := by
   classical
   exact Nat.find (Pred_nonempty n)
 

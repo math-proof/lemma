@@ -1,7 +1,7 @@
 module
 public import Mathlib
 public import Instance.PresheafOfModules_InternalHom
-public import Theorems.Thm_PresheafOfModules_isMonoidal_inverseImage_W_toPresheaf
+public import Theorem.Thm_PresheafOfModules_isMonoidal_inverseImage_W_toPresheaf
 public import Instance.SheafOfModules_Monoidal
 public import Instance.PresheafOfModules_PullbackMonoidal
 set_option autoImplicit false

@@ -172,9 +172,9 @@ def EventuallyExpGoodApprox {X : Type*} [PseudoMetricSpace X] [MeasurableSpace X
       (μ n).real {θ | ε ≤ dist (f n θ) (g R n θ)} ≤ Real.exp (-δ * n)
 
 /-- `(1/n) log(a+b) ≤ (1/n) log 2 + max((1/n) log a, (1/n) log b)`. -/
-theorem inv_mul_log_add_le_log_two_add_max {a b : ℝ≥0∞} {n : ℕ} (_hn : 1 ≤ n) :
+theorem inv_mul_log_add_le_log_two_add_max {a b : ENNReal} {n : ℕ} (_hn : 1 ≤ n) :
     ((n : ℕ) : EReal)⁻¹ * ENNReal.log (a + b) ≤
-      ((n : ℕ) : EReal)⁻¹ * ENNReal.log (2 : ℝ≥0∞) +
+      ((n : ℕ) : EReal)⁻¹ * ENNReal.log (2 : ENNReal) +
         max (((n : ℕ) : EReal)⁻¹ * ENNReal.log a)
           (((n : ℕ) : EReal)⁻¹ * ENNReal.log b) := by
   have hnn : 0 ≤ ((n : ℕ) : EReal) := by exact_mod_cast Nat.zero_le n
@@ -184,7 +184,7 @@ theorem inv_mul_log_add_le_log_two_add_max {a b : ℝ≥0∞} {n : ℕ} (_hn : 1
       _ = 2 * max a b := by rw [two_mul]
   have hlog := ENNReal.log_le_log hsum
   have htwo : ENNReal.log (2 * max a b) =
-      ENNReal.log (2 : ℝ≥0∞) + ENNReal.log (max a b) := by
+      ENNReal.log (2 : ENNReal) + ENNReal.log (max a b) := by
     rw [ENNReal.log_mul_add]
   have hmaxlog : ENNReal.log (max a b) = max (ENNReal.log a) (ENNReal.log b) := by
     by_cases h : a ≤ b
@@ -315,11 +315,11 @@ theorem preimage_subset_cthickening_union_dist
 
 /-- `(1/n) log 2 → 0` in `EReal`. -/
 theorem tendsto_inv_mul_log_two_nhds_zero :
-    Tendsto (fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (2 : ℝ≥0∞)) atTop (𝓝 0) := by
+    Tendsto (fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (2 : ENNReal)) atTop (𝓝 0) := by
   have hinv : Tendsto (fun n : ℕ => (n : ℝ)⁻¹) atTop (𝓝 0) := by
     simpa using tendsto_const_div_atTop_nhds_zero_nat (1 : ℝ)
-  have hlog : ENNReal.log (2 : ℝ≥0∞) = ((Real.log 2 : ℝ) : EReal) := by
-    have h2 : (2 : ℝ≥0∞) = ENNReal.ofReal 2 := (ENNReal.ofReal_natCast 2).symm
+  have hlog : ENNReal.log (2 : ENNReal) = ((Real.log 2 : ℝ) : EReal) := by
+    have h2 : (2 : ENNReal) = ENNReal.ofReal 2 := (ENNReal.ofReal_natCast 2).symm
     rw [h2, ENNReal.log_ofReal_of_pos (by norm_num : (0 : ℝ) < 2)]
   simp only [hlog]
   have hmul : Tendsto (fun n : ℕ => (n : ℝ)⁻¹ * Real.log 2) atTop (𝓝 0) := by
@@ -331,13 +331,13 @@ theorem tendsto_inv_mul_log_two_nhds_zero :
   · simp
 
 /-- Filter form: limsup of `(1/n) log(a_n+b_n)` ≤ max of the two limsups. -/
-theorem limsup_inv_mul_log_add_le_max {a b : ℕ → ℝ≥0∞} :
+theorem limsup_inv_mul_log_add_le_max {a b : ℕ → ENNReal} :
     limsup (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (a n + b n)) atTop ≤
       max (limsup (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (a n)) atTop)
         (limsup (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (b n)) atTop) := by
   set ua := fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (a n)
   set ub := fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (b n)
-  set u2 := fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (2 : ℝ≥0∞)
+  set u2 := fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (2 : ENNReal)
   have hle : ∀ᶠ n : ℕ in atTop,
       ((n : ℕ) : EReal)⁻¹ * ENNReal.log (a n + b n) ≤ u2 n + max (ua n) (ub n) := by
     filter_upwards [eventually_ge_atTop 1] with n hn
@@ -646,13 +646,13 @@ theorem liminf_max_le_of_limsup_eq_bot {u v : ℕ → EReal}
 
 /-- If limsup of `(1/n)log b` is `-∞`, then liminf `(1/n)log(a+b) ≤` liminf `(1/n)log a`. -/
 theorem liminf_inv_mul_log_add_le_of_limsup_eq_bot
-    {a b : ℕ → ℝ≥0∞}
+    {a b : ℕ → ENNReal}
     (hb : limsup (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (b n)) atTop = ⊥) :
     liminf (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (a n + b n)) atTop ≤
       liminf (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (a n)) atTop := by
   set ua := fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (a n)
   set ub := fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (b n)
-  set u2 := fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (2 : ℝ≥0∞)
+  set u2 := fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (2 : ENNReal)
   have hmaxbound : ∀ᶠ n in atTop,
       ((n : ℕ) : EReal)⁻¹ * ENNReal.log (a n + b n) ≤ u2 n + max (ua n) (ub n) := by
     filter_upwards [eventually_ge_atTop 1] with n hn
@@ -1137,13 +1137,13 @@ theorem liminf_max_le_max_of_limsup_le {u v : ℕ → EReal} {c : EReal}
 /-- If limsup of `(1/n)log b ≤ c`, then
 `liminf (1/n)log(a+b) ≤ max(liminf (1/n)log a, c)`. -/
 theorem liminf_inv_mul_log_add_le_max_of_limsup_le
-    {a b : ℕ → ℝ≥0∞} {c : EReal}
+    {a b : ℕ → ENNReal} {c : EReal}
     (hb : limsup (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (b n)) atTop ≤ c) :
     liminf (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (a n + b n)) atTop ≤
       max (liminf (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (a n)) atTop) c := by
   set ua := fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (a n)
   set ub := fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (b n)
-  set u2 := fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (2 : ℝ≥0∞)
+  set u2 := fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (2 : ENNReal)
   have hmaxbound : ∀ᶠ n in atTop,
       ((n : ℕ) : EReal)⁻¹ * ENNReal.log (a n + b n) ≤ u2 n + max (ua n) (ub n) := by
     filter_upwards [eventually_ge_atTop 1] with n hn

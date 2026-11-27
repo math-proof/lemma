@@ -5,9 +5,9 @@ public import Structure.TateCurve_XMultStructure
 public import Def.TateCurve_TateParameter
 public import Theorem.WeierstrassCurve.AddFormula
 public import Def.NetPairing_Basic
-public import Theorems.Thm_TateCurve_equation_pointX_pointY
-public import Theorems.Thm_TateCurve_pointX_inv
-public import Theorems.Thm_TateCurve_pointX_zpow_mul
+public import Theorem.Thm_TateCurve_equation_pointX_pointY
+public import Theorem.Thm_TateCurve_pointX_inv
+public import Theorem.Thm_TateCurve_pointX_zpow_mul
 
 public section
 

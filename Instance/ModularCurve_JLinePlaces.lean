@@ -3,7 +3,7 @@ public import Mathlib
 public import Def.ModularCurve_RouteBCoordRing
 public import Instance.AlgebraicCurve_RatFuncPlaces
 public import Theorem.Valuation.RatFuncPlaceInfty
-public import Theorems.Thm_ModularCurve_transcendental_jq
+public import Theorem.Thm_ModularCurve_transcendental_jq
 set_option autoImplicit false
 
 

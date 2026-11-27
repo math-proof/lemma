@@ -1,6 +1,6 @@
 import Mathlib
 import Def.AutomorphicForm_HeckeEigensystem
-import Theorems.Thm_AutomorphicForm_satakePow_add_pow
+import Theorem.Thm_AutomorphicForm_satakePow_add_pow
 import Def.AutomorphicForm_LocalLFactor
 
 set_option autoImplicit false

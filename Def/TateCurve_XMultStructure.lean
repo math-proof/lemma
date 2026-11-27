@@ -1,9 +1,9 @@
 module
 public import Mathlib
 public import Def.TateCurve_QShift
-public import Theorems.Thm_TateCurve_pointX_inv
-public import Theorems.Thm_TateCurve_pointX_q_mul
-public import Theorems.Thm_TateCurve_pointX_zpow_mul
+public import Theorem.Thm_TateCurve_pointX_inv
+public import Theorem.Thm_TateCurve_pointX_q_mul
+public import Theorem.Thm_TateCurve_pointX_zpow_mul
 set_option autoImplicit false
 open scoped NNReal
 open IsUltrametricDist Filter

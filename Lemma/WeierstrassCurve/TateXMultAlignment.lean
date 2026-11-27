@@ -3,9 +3,9 @@ import Lemma.WeierstrassCurve.XMultStructure
 import Lemma.WeierstrassCurve.TateParameter
 import Lemma.WeierstrassCurve.AddFormula
 import Def.NetPairing_Basic
-import Theorems.Thm_TateCurve_equation_pointX_pointY
-import Theorems.Thm_TateCurve_pointX_inv
-import Theorems.Thm_TateCurve_pointX_zpow_mul
+import Theorem.Thm_TateCurve_equation_pointX_pointY
+import Theorem.Thm_TateCurve_pointX_inv
+import Theorem.Thm_TateCurve_pointX_zpow_mul
 import Structure.TateCurve_XMultAlignment
 
 set_option autoImplicit false

@@ -40,11 +40,11 @@ noncomputable instance instDistribMulActionAlgEquiv :
   smul_add σ P Q := (Point.map σ.toAlgHom).map_add P Q
 
 -- Local helpers for instSMulTorsionBy (public copies stay in Definitions after import Instance).
-private lemma algEquiv_smul_zsmul (σ : K ≃ₐ[S] K) (m : ℤ) (P : (W'⁄K).Point) :
+lemma algEquiv_smul_zsmul (σ : K ≃ₐ[S] K) (m : ℤ) (P : (W'⁄K).Point) :
     σ • (m • P) = m • (σ • P) :=
   (Point.map σ.toAlgHom).map_zsmul m P
 
-private lemma smul_mem_torsionBy {n : ℕ} (σ : K ≃ₐ[S] K) {P : (W'⁄K).Point}
+lemma smul_mem_torsionBy {n : ℕ} (σ : K ≃ₐ[S] K) {P : (W'⁄K).Point}
     (hP : P ∈ Submodule.torsionBy ℤ (W'⁄K).Point n) :
     σ • P ∈ Submodule.torsionBy ℤ (W'⁄K).Point n := by
   rw [Submodule.mem_torsionBy_iff] at hP ⊢

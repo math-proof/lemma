@@ -26,7 +26,7 @@ Section sec.fps.intcomps of the source text.
 
 ## Main definitions
 
-* `Composition` - A composition as a `List ℕ+` (tuple of positive integers)
+* `Composition` - A composition as a `List ℕ⁺` (tuple of positive integers)
 * `Composition.append` - Concatenation of two compositions
 * `Composition.ofSize n` - The subtype of compositions with size `n`
 * `Composition.ofSizeIntoParts n k` - The subtype of compositions with size `n` and length `k`
@@ -53,10 +53,10 @@ Section sec.fps.intcomps of the source text.
 
 ## Implementation notes
 
-This file defines `Composition` as `List ℕ+`, which is an alternative representation to
+This file defines `Composition` as `List ℕ⁺`, which is an alternative representation to
 Mathlib's `Mathlib.Combinatorics.Enumerative.Composition` which uses `Composition n` as a
 structure with `blocks : List ℕ` and proofs of positivity and sum. Both representations
-are equivalent; we use `List ℕ+` here to follow the source text's presentation more directly.
+are equivalent; we use `List ℕ⁺` here to follow the source text's presentation more directly.
 
 ## References
 
@@ -71,10 +71,10 @@ namespace Composition
 /-! #### Equivalence with Mathlib's Composition type -/
 
 
-/-- Convert a composition (List ℕ+) to a blocks list (List ℕ) -/
+/-- Convert a composition (List ℕ⁺) to a blocks list (List ℕ) -/
 def toBlocks (α : Composition) : List ℕ := α.map (·.val)
 
-/-- Convert a blocks list with positivity proof to a composition (List ℕ+) -/
+/-- Convert a blocks list with positivity proof to a composition (List ℕ⁺) -/
 def ofBlocks (blocks : List ℕ) (hpos : ∀ {i}, i ∈ blocks → 0 < i) : Composition :=
   blocks.pmap (fun i (hi : 0 < i) => ⟨i, hi⟩) (fun _ ha => hpos ha)
 

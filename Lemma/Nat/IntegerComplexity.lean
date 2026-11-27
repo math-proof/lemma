@@ -1,6 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.NumberTheory.IntegerComplexity.Part3
+import Notation.Data.PNat
 open Expr
 open IntegerComplexity
 
@@ -12,7 +13,7 @@ namespace IntegerComplexity.Expr
 -/
 @[path]
 lemma complexity_spec
-  {n : ℕ+} :
+  {n : ℕ⁺} :
 -- imply
   Pred n (complexity n) := by
 -- proof
@@ -28,7 +29,7 @@ namespace IntegerComplexity.Expr
 -/
 @[path]
 lemma complexity_min_le
-  {n : ℕ+}
+  {n : ℕ⁺}
   {m : ℕ}
 -- given
   (hm : Pred n m) :
@@ -47,7 +48,7 @@ namespace IntegerComplexity.Expr
 -/
 @[path]
 lemma exists_optimal
-  {n : ℕ+} :
+  {n : ℕ⁺} :
 -- imply
   ∃ e : Expr, e.eval = (n : ℕ) ∧ e.count = complexity n :=
 -- proof
@@ -62,7 +63,7 @@ namespace IntegerComplexity.Expr
 -/
 @[path]
 lemma complexity_le
-  {n : ℕ+}
+  {n : ℕ⁺}
   {e : Expr}
 -- given
   (he : e.eval = (n : ℕ)) :
@@ -82,11 +83,11 @@ namespace IntegerComplexity.Expr
 lemma complexity_one
   :
 -- imply
-  complexity (1 : ℕ+) = 1 := by
+  complexity (1 : ℕ⁺) = 1 := by
 -- proof
   apply Nat.le_antisymm
   · exact complexity_min_le _ ⟨.one, rfl, rfl⟩
-  · obtain ⟨e, _, hcount⟩ := exists_optimal (1 : ℕ+)
+  · obtain ⟨e, _, hcount⟩ := exists_optimal (1 : ℕ⁺)
     have hpos := e.count_pos
     omega
 
@@ -99,13 +100,13 @@ namespace IntegerComplexity.Expr
 -/
 @[path]
 lemma complexity_add_le
-  {a b : ℕ+} :
+  {a b : ℕ⁺} :
 -- imply
   complexity (a + b) ≤ complexity a + complexity b := by
 -- proof
   obtain ⟨ea, hea, hca⟩ := exists_optimal a
   obtain ⟨eb, heb, hcb⟩ := exists_optimal b
-  have h : (Expr.add ea eb).eval = ((a + b : ℕ+) : ℕ) := by simp [hea, heb, PNat.add_coe]
+  have h : (Expr.add ea eb).eval = ((a + b : ℕ⁺) : ℕ) := by simp [hea, heb, PNat.add_coe]
   have hle := complexity_le h
   simp only [count_add, hca, hcb, ge_iff_le] at hle ⊢
   exact hle
@@ -119,13 +120,13 @@ namespace IntegerComplexity.Expr
 -/
 @[path]
 lemma complexity_mul_le
-  {a b : ℕ+} :
+  {a b : ℕ⁺} :
 -- imply
   complexity (a * b) ≤ complexity a + complexity b := by
 -- proof
   obtain ⟨ea, hea, hca⟩ := exists_optimal a
   obtain ⟨eb, heb, hcb⟩ := exists_optimal b
-  have h : (Expr.mul ea eb).eval = ((a * b : ℕ+) : ℕ) := by simp [hea, heb, PNat.mul_coe]
+  have h : (Expr.mul ea eb).eval = ((a * b : ℕ⁺) : ℕ) := by simp [hea, heb, PNat.mul_coe]
   have hle := complexity_le h
   simp only [count_mul, hca, hcb, ge_iff_le] at hle ⊢
   exact hle
@@ -173,7 +174,7 @@ namespace IntegerComplexity
 -/
 @[path]
 lemma complexity_le_count
-  {n : ℕ+}
+  {n : ℕ⁺}
   {e : Expr}
 -- given
   (he : e.eval = (n : ℕ)) :
@@ -191,7 +192,7 @@ namespace IntegerComplexity
 -/
 @[path]
 lemma one_le_complexity
-  {n : ℕ+} :
+  {n : ℕ⁺} :
 -- imply
   1 ≤ complexity n := by
 -- proof
@@ -285,7 +286,7 @@ private lemma exists_expr_of_pos_eq
 -/
 @[path]
 private lemma exists_expr_eq
-  {n : ℕ+} :
+  {n : ℕ⁺} :
 -- imply
   ∃ e : Expr, e.eval = n.val := by
 -- proof
@@ -296,7 +297,7 @@ private lemma exists_expr_eq
 -/
 @[path]
 private lemma Pred_nonempty_eq
-  {n : ℕ+} :
+  {n : ℕ⁺} :
 -- imply
   ∃ c, Pred n c := by
 -- proof

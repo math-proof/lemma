@@ -15,6 +15,7 @@ public import Mathlib.NumberTheory.TsumDivisorsAntidiagonal
 public import Mathlib.Topology.GDelta.MetrizableSpace
 public import Mathlib.Topology.Separation.CompletelyRegular
 public import Def.Analysis.SpecialFunctions.Part1Ch6Entry13Ramanujanfactorial.Part4
+public import Notation.Data.PNat
 
 @[expose] public section
 
@@ -102,19 +103,19 @@ theorem R_eq_coeff2 (N : ℕ) (_hN : N ≠ 0) :
   linarith
 
 theorem right_single_eq2 {t : ℝ} (ht : ‖t‖ < 1) :
-    ∑' k : ℕ+, singleR t k
-      = ∑' N : ℕ+, Rcoeff (N:ℕ) * t^((N:ℕ)) := by
+    ∑' k : ℕ⁺, singleR t k
+      = ∑' N : ℕ⁺, Rcoeff (N:ℕ) * t^((N:ℕ)) := by
   have hsum := dblR_summable ht
-  have e1 : (∑' k : ℕ+, singleR t k)
-      = ∑' k : ℕ+, ∑' j : ℕ+, dblR t (k, j) := by
+  have e1 : (∑' k : ℕ⁺, singleR t k)
+      = ∑' k : ℕ⁺, ∑' j : ℕ⁺, dblR t (k, j) := by
     refine tsum_congr fun k => ?_
     rw [per_k_R ht k]
   rw [e1, ← hsum.tsum_prod]
   exact right_tsum_eq ht
 
 theorem t_main_eq2 {t : ℝ} (ht : ‖t‖ < 1) :
-    (∑' k : ℕ+, signW k * (t ^ (k:ℕ) / (1 - t ^ (k:ℕ))))
-      = ∑' k : ℕ+, singleR t k := by
+    (∑' k : ℕ⁺, signW k * (t ^ (k:ℕ) / (1 - t ^ (k:ℕ))))
+      = ∑' k : ℕ⁺, singleR t k := by
   rw [left_single_eq ht, right_single_eq2 ht]
   refine tsum_congr fun N => ?_
   have hN : (N:ℕ) ≠ 0 := ne_of_gt N.2
@@ -316,23 +317,23 @@ theorem ramanujan_part1_ch6_entry13_ramanujanfactorial (x : ℝ) (hx : 1 < |x|) 
       exact hne (by linarith)
     field_simp
   have hLre : (∑' j : ℕ, leftTerm j)
-      = ∑' k : ℕ+, signW k * (t ^ (k:ℕ) / (1 - t ^ (k:ℕ))) := by
+      = ∑' k : ℕ⁺, signW k * (t ^ (k:ℕ) / (1 - t ^ (k:ℕ))) := by
     have e1 : (∑' j : ℕ, leftTerm j)
         = ∑' j : ℕ, ((-1:ℝ)^(j+1+1) * (t^(j+1) / (1 - t^(j+1)))) :=
       tsum_congr hleft_eq
     have e2 : (∑' j : ℕ, ((-1:ℝ)^(j+1+1) * (t^(j+1) / (1 - t^(j+1)))))
-        = ∑' k : ℕ+, ((-1:ℝ)^((k:ℕ)+1) * (t^((k:ℕ)) / (1 - t^((k:ℕ))))) := by
+        = ∑' k : ℕ⁺, ((-1:ℝ)^((k:ℕ)+1) * (t^((k:ℕ)) / (1 - t^((k:ℕ))))) := by
       have hlem := tsum_pnat_eq_tsum_succ (M := ℝ)
         (f := fun n : ℕ => (-1:ℝ)^(n+1) * (t^n / (1 - t^n)))
       rw [← hlem]
     rw [e1, e2]
     rfl
-  have hRre : (∑' j : ℕ, rightTerm j) = ∑' k : ℕ+, singleR t k := by
+  have hRre : (∑' j : ℕ, rightTerm j) = ∑' k : ℕ⁺, singleR t k := by
     have e1 : (∑' j : ℕ, rightTerm j)
         = ∑' j : ℕ, ((-1:ℝ)^(j+1+1) * (t^((j+1)^2) * (1 + t^(2*(j+1))) / (1 - t^(2*(j+1))))) :=
       tsum_congr hright_eq
     have e2 : (∑' j : ℕ, ((-1:ℝ)^(j+1+1) * (t^((j+1)^2) * (1 + t^(2*(j+1))) / (1 - t^(2*(j+1))))))
-        = ∑' k : ℕ+, ((-1:ℝ)^((k:ℕ)+1) * (t^((k:ℕ)^2) * (1 + t^(2*(k:ℕ))) / (1 - t^(2*(k:ℕ))))) := by
+        = ∑' k : ℕ⁺, ((-1:ℝ)^((k:ℕ)+1) * (t^((k:ℕ)^2) * (1 + t^(2*(k:ℕ))) / (1 - t^(2*(k:ℕ))))) := by
       have hlem := tsum_pnat_eq_tsum_succ (M := ℝ)
         (f := fun n : ℕ => (-1:ℝ)^(n+1) * (t^(n^2) * (1 + t^(2*n)) / (1 - t^(2*n))))
       rw [← hlem]

@@ -23,7 +23,7 @@ noncomputable def fisherPDFReal (d₁ d₂ : ℕ) (x : ℝ) : ℝ :=
 
 
 /-- ENNReal-valued Fisher–Snedecor pdf. -/
-noncomputable def fisherPDF (d₁ d₂ : ℕ) (x : ℝ) : ℝ≥0∞ :=
+noncomputable def fisherPDF (d₁ d₂ : ℕ) (x : ℝ) : ENNReal :=
   ENNReal.ofReal (fisherPDFReal d₁ d₂ x)
 
 

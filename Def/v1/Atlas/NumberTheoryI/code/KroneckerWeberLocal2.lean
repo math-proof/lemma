@@ -11,6 +11,7 @@ public import Mathlib.Algebra.Group.TypeTags.Basic
 public import Theorem.v1.Atlas.NumberTheoryI.code.GroupCounts.Part8
 public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.GroupCounts
 public import Class.v1.Atlas.NumberTheoryI.code.KroneckerWeberLocal2
+public import Notation.Data.PNat
 
 
 public section
@@ -29,7 +30,7 @@ namespace KroneckerWeberLocal2
 
 def LiesInCyclotomicExtension (F : Type*) (K : Type*) [Field F] [Field K]
     [Algebra F K] : Prop :=
-  ∃ (m : ℕ+), Nonempty (K →ₐ[F] CyclotomicField (m : ℕ) F)
+  ∃ (m : ℕ⁺), Nonempty (K →ₐ[F] CyclotomicField (m : ℕ) F)
 
 end KroneckerWeberLocal2
 end

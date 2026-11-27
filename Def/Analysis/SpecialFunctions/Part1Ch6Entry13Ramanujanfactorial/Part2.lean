@@ -15,6 +15,7 @@ public import Mathlib.NumberTheory.TsumDivisorsAntidiagonal
 public import Mathlib.Topology.GDelta.MetrizableSpace
 public import Mathlib.Topology.Separation.CompletelyRegular
 public import Theorem.Analysis.SpecialFunctions.Part1Ch6Entry13Ramanujanfactorial
+public import Notation.Data.PNat
 
 @[expose] public section
 
@@ -35,17 +36,17 @@ open Asymptotics Filter Finset Complex Topology
 
 noncomputable section
 
-noncomputable def dblR (t : ℝ) (c : ℕ+ × ℕ+) : ℝ :=
+noncomputable def dblR (t : ℝ) (c : ℕ⁺ × ℕ⁺) : ℝ :=
   if (c.2:ℕ) % 2 = (c.1:ℕ) % 2 ∧ (c.1:ℕ) ≤ (c.2:ℕ) then
     if (c.1:ℕ) = (c.2:ℕ) then signW c.1 * t ^ ((c.1:ℕ) * (c.2:ℕ))
     else 2 * signW c.1 * t ^ ((c.1:ℕ) * (c.2:ℕ))
   else 0
 
-noncomputable def singleR (t : ℝ) (k : ℕ+) : ℝ :=
+noncomputable def singleR (t : ℝ) (k : ℕ⁺) : ℝ :=
   signW k * (t ^ ((k:ℕ)^2) * (1 + t ^ (2*(k:ℕ))) / (1 - t ^ (2*(k:ℕ))))
 
-noncomputable def arithEquiv (k : ℕ+) :
-    ℕ ≃ { j : ℕ+ // (j:ℕ) % 2 = (k:ℕ) % 2 ∧ (k:ℕ) ≤ (j:ℕ) } where
+noncomputable def arithEquiv (k : ℕ⁺) :
+    ℕ ≃ { j : ℕ⁺ // (j:ℕ) % 2 = (k:ℕ) % 2 ∧ (k:ℕ) ≤ (j:ℕ) } where
   toFun m :=
     let v : ℕ := (k:ℕ) + 2 * m
     have hkpos : 0 < (k:ℕ) := k.2
@@ -53,7 +54,7 @@ noncomputable def arithEquiv (k : ℕ+) :
     have hmod : v % 2 = (k:ℕ) % 2 := by omega
     have hle : (k:ℕ) ≤ v := by omega
     ⟨⟨v, hv⟩, hmod, hle⟩
-  invFun j := (((j:ℕ+) : ℕ) - (k:ℕ)) / 2
+  invFun j := (((j:ℕ⁺) : ℕ) - (k:ℕ)) / 2
   left_inv m := by
     have hkpos : 0 < (k:ℕ) := k.2
     simp only

@@ -7,6 +7,7 @@ module
 
 public import Mathlib
 public import Notation.Combinatorics.Enumerative.WeightedSets.Part3
+public import Notation.Data.PNat
 
 @[expose] public section
 
@@ -117,14 +118,14 @@ def BinaryStrings : WeightedSet (List (Fin 2)) where
 
 
 /-- The positive integers with weight = value -/
-def PositiveIntegers : WeightedSet ℕ+ where
+def PositiveIntegers : WeightedSet ℕ⁺ where
   weight := fun n => n.val
 
 /-! #### Compositions -/
 
 
 /-- Compositions of length k are k-tuples of positive integers -/
-def Compositions (k : ℕ) : WeightedSet (Fin k → ℕ+) :=
+def Compositions (k : ℕ) : WeightedSet (Fin k → ℕ⁺) :=
   PositiveIntegers.pow k
 
 end WeightedSetExamples

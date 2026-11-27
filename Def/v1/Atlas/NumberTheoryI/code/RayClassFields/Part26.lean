@@ -7,6 +7,7 @@ public import Theorem.Nat.Atlas.v1.NumberTheoryI.code.FinitePlaceAbsValue
 public import Theorem.v1.Atlas.NumberTheoryI.code.IdealFactorization.Part3
 public import Theorem.v1.Atlas.NumberTheoryI.code.FinitePlaceAbsValue
 public import Abbrev.v1.Atlas.NumberTheoryI.code.RayClassFields.Part3
+public import Notation.Data.PNat
 
 
 public section
@@ -43,7 +44,7 @@ def HasMeromorphicContinuationWithPoleOrder (f : ℂ → ℂ) (m : ℤ) : Prop :
 
 def HasPolarDensity (K : Type*) [Field K] [NumberField K]
     (S : Set (Prime' K)) (ρ : ℚ) : Prop :=
-  ∃ (n : ℕ+) (m : ℤ),
+  ∃ (n : ℕ⁺) (m : ℤ),
     HasMeromorphicContinuationWithPoleOrder (partialDedekindZeta K S ^ (n : ℕ)) m ∧
     (ρ : ℚ) = (m : ℚ) / (n : ℚ)
 

@@ -2,7 +2,7 @@ module
 public import Mathlib
 public import Def.TateCurve_Defect
 public import Def.NumberTheory_DivisorConvolution
-public import Theorems.Thm_TateCurve_defectCoeff_one
+public import Theorem.Thm_TateCurve_defectCoeff_one
 set_option autoImplicit false
 open scoped NNReal
 open scoped NNReal

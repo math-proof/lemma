@@ -4,6 +4,7 @@ module
 public import Mathlib.Data.PNat.Basic
 public import Mathlib.Data.Nat.Find
 public import Def.NumberTheory.IntegerComplexity
+public import Notation.Data.PNat
 
 public section
 
@@ -21,7 +22,7 @@ theorem exists_expr_of_pos {n : ℕ} (h : 0 < n) : ∃ e : Expr, e.eval = n := b
       obtain ⟨e, he⟩ := ih hpos
       exact ⟨.add e .one, by simp [he]⟩
 
-theorem exists_expr (n : ℕ+) : ∃ e : Expr, e.eval = n.val :=
+theorem exists_expr (n : ℕ⁺) : ∃ e : Expr, e.eval = n.val :=
   exists_expr_of_pos n.pos
 
 end IntegerComplexity

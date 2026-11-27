@@ -29,6 +29,7 @@ export class LeanArithmetic extends LeanBinary {
     }
 
     sep() {
+        if (typeof this.opLeadIndent === 'number') return ' ';
         const lhsEnd = Lean.lastSourceLine(this.lhs);
         const rhsLine = this.rhs?.line;
         if (lhsEnd >= 0 && typeof rhsLine === 'number' && rhsLine > lhsEnd) return '\n';
@@ -36,8 +37,7 @@ export class LeanArithmetic extends LeanBinary {
     }
 
     strFormat() {
-        const sep = this.sep();
-        return `%s ${this.operator}${sep}%s`;
+        return this.opJoin(this.operator);
     }
 
     /**
@@ -365,8 +365,36 @@ export class LeanFDiv extends LeanArithmetic {
         return '/\\!\\!/';
     }
 
+    /**
+     * `{x : α // p}` and `{x // p}` are subtype notation. `//` binds tighter
+     * than `→`, so the separator is parsed as this node on the right spine of
+     * the binder's type. Echo imports `infixl "//" => Int.fdiv`, which makes
+     * Lean read a reprinted `//` as division; the separator is printed `=>`
+     * and the brace becomes `Subtype (fun …)`.
+     */
+    isSubtypeSep() {
+        if (this.parent instanceof L.LeanBrace && this.parent.arg === this) return true;
+        let node = this;
+        let parent = this.parent;
+        // `:` is binary, but it is the binder, not part of the type spine.
+        while (
+            parent instanceof L.LeanBinary &&
+            !(parent instanceof L.LeanColon) &&
+            parent.rhs === node
+        ) {
+            if (parent instanceof LeanFDiv) return false;
+            node = parent;
+            parent = parent.parent;
+        }
+        return (
+            parent instanceof L.LeanColon &&
+            parent.rhs === node &&
+            parent.parent instanceof L.LeanBrace
+        );
+    }
+
     get operator() {
-        return '//';
+        return this.isSubtypeSep() ? '=>' : '//';
     }
 }
 

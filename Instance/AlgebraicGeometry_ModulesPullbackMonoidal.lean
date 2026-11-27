@@ -1,6 +1,6 @@
 module
 public import Mathlib
-public import Theorems.Thm_PresheafOfModules_isMonoidal_inverseImage_W_toPresheaf
+public import Theorem.Thm_PresheafOfModules_isMonoidal_inverseImage_W_toPresheaf
 public import Instance.SheafOfModules_Monoidal
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false

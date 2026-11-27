@@ -14,6 +14,7 @@ import Notation.CerednikDrinfeld_GradedCartierNModule
 import Notation.CerednikDrinfeld_LubinTateModule
 import Notation.CerednikDrinfeld_StandardFormalODModule
 import Notation.CuspForm_Gamma1HeckeOperators
+import Notation.Data.PNat
 import Notation.DedekindDomain_AdicValuation_InlineSpecific
 import Notation.DedekindDomain_Completion_BaseChange
 import Notation.DedekindDomain_FiniteAdeleRing_BaseChange

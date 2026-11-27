@@ -1,9 +1,9 @@
 module
 
 public import Theorem.ModularForm.HeckeOperatorForms
-public import Theorems.Thm_CuspForm_heckeTLin_comm
-public import Theorems.Thm_CuspForm_heckeTLin_heckeULin_comm
-public import Theorems.Thm_CuspForm_heckeULin_comm
+public import Theorem.Thm_CuspForm_heckeTLin_comm
+public import Theorem.Thm_CuspForm_heckeTLin_heckeULin_comm
+public import Theorem.Thm_CuspForm_heckeULin_comm
 
 public noncomputable section
 

@@ -16,7 +16,7 @@ public theorem kl_eq [Fintype α] [DecidableEq α] [MeasurableSpace α] [Measura
   klDiv ν.toMeasure μ.toMeasure = if ∀ a, μ a = 0 → ν a = 0 then ENNReal.ofReal (∑ a, (ν a).toReal * log ((ν a).toReal / (μ a).toReal)) else ⊤ := by
   if h : ∀ a, μ a = 0 → ν a = 0 then
     rw [ite_eq_left h]
-    let f : α → ℝ≥0∞ := fun a => if μ a = 0 then 0 else ν a / μ a
+    let f : α → ENNReal := fun a => if μ a = 0 then 0 else ν a / μ a
     have hf : Measurable f := measurable_of_finite f
     have hsing : ∀ a, (μ.toMeasure.withDensity f) {a} = ν a := by
       intro a

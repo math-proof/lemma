@@ -16,7 +16,7 @@ private lemma main :
   PositiveIntegers.IsFiniteType := by
 -- proof
   intro n
-  -- The set {a : ℕ+ | a.val = n} has at most one element
+  -- The set {a : ℕ⁺ | a.val = n} has at most one element
   apply Set.Subsingleton.finite
   intro x hx y hy
   simp only [Set.mem_ofPred_eq, PositiveIntegers] at hx hy

@@ -2,6 +2,7 @@ module
 
 public import Mathlib
 public import Initialize.Tactic.Attr.Basic
+public import Notation.Data.PNat
 
 @[expose] public section
 
@@ -31,24 +32,24 @@ noncomputable abbrev L2UnitInterval :=
 $u_k(x) = \sqrt{2} \sin(k\pi x)$.
 These form an orthonormal eigenbasis of the Green's operator with Dirichlet
 boundary conditions on the unit interval. -/
-noncomputable def sineBasisFun (k : ℕ+) : ℝ → ℝ :=
+noncomputable def sineBasisFun (k : ℕ⁺) : ℝ → ℝ :=
   fun x => Real.sqrt 2 * Real.sin (↑k * Real.pi * x)
 
 /-- The $k$-th eigenvalue of the Green's operator on $[0,1]$ with Dirichlet
 boundary conditions: $\lambda_k = \dfrac{1}{k^2 \pi^2}$. -/
-noncomputable def greensEigenvalue (k : ℕ+) : ℝ := 1 / ((k : ℝ) ^ 2 * Real.pi ^ 2)
+noncomputable def greensEigenvalue (k : ℕ⁺) : ℝ := 1 / ((k : ℝ) ^ 2 * Real.pi ^ 2)
 
 /-- The square root of the $k$-th eigenvalue of the Green's operator,
 $\sqrt{\lambda_k} = \dfrac{1}{k\pi}$. This is the $k$-th eigenvalue of $A^{1/2}$. -/
-noncomputable def greensEigenvalueSqrt (k : ℕ+) : ℝ := 1 / ((k : ℝ) * Real.pi)
+noncomputable def greensEigenvalueSqrt (k : ℕ⁺) : ℝ := 1 / ((k : ℝ) * Real.pi)
 
 /-- The square root $A^{1/2}$ of the Green's operator, defined via its action on the
 orthonormal eigenbasis $\{b_k\}$: if $f = \sum_k c_k\, b_k$ where
 $c_k = \langle b_k, f\rangle$, then
 $A^{1/2} f = \sum_k \frac{1}{k\pi}\, c_k\, b_k$. -/
-noncomputable def greensOperatorSqrt (b : HilbertBasis ℕ+ ℝ L2UnitInterval) :
+noncomputable def greensOperatorSqrt (b : HilbertBasis ℕ⁺ ℝ L2UnitInterval) :
     L2UnitInterval → L2UnitInterval :=
-  fun f => ∑' (k : ℕ+), (greensEigenvalueSqrt k * inner (𝕜 := ℝ) (b k) f) • b k
+  fun f => ∑' (k : ℕ⁺), (greensEigenvalueSqrt k * inner (𝕜 := ℝ) (b k) f) • b k
 
 /-- The Green's kernel for the Dirichlet Laplacian on $[0,1]$:
 $G(x,t) = \min(x,t)\,(1 - \max(x,t))$.

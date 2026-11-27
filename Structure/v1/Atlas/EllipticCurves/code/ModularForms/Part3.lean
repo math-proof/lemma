@@ -31,6 +31,7 @@ public import Mathlib.Analysis.Analytic.Order
 public import Mathlib.GroupTheory.Torsion
 public import Mathlib.LinearAlgebra.Dimension.Finrank
 public import Inductive.v1.Atlas.EllipticCurves.code.ModularForms
+public import Notation.Data.PNat
 open scoped CongruenceSubgroup MatrixGroups ModularForm Topology Manifold
 
 
@@ -44,7 +45,7 @@ open EllipticCurveReduction in
 /-- An integral, normalized weight-2 newform: a level `N` together with integer
 Fourier coefficients `a_n` with `a_0 = 0` and `a_1 = 1`. -/
 structure IntegralWeight2Newform where
-  level : ℕ+
+  level : ℕ⁺
   coeffs : ℕ → ℤ
   coeffs_zero : coeffs 0 = 0
   coeffs_one : coeffs 1 = 1

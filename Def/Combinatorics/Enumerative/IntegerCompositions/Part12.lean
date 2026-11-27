@@ -1,6 +1,7 @@
 module
 public import Mathlib
 public import Theorem.Combinatorics.Enumerative.IntegerCompositions.Part7
+public import Notation.Data.PNat
 open Finset Nat BigOperators
 set_option allowUnsafeReducibility true
 
@@ -26,7 +27,7 @@ Section sec.fps.intcomps of the source text.
 
 ## Main definitions
 
-* `Composition` - A composition as a `List ℕ+` (tuple of positive integers)
+* `Composition` - A composition as a `List ℕ⁺` (tuple of positive integers)
 * `Composition.append` - Concatenation of two compositions
 * `Composition.ofSize n` - The subtype of compositions with size `n`
 * `Composition.ofSizeIntoParts n k` - The subtype of compositions with size `n` and length `k`
@@ -53,10 +54,10 @@ Section sec.fps.intcomps of the source text.
 
 ## Implementation notes
 
-This file defines `Composition` as `List ℕ+`, which is an alternative representation to
+This file defines `Composition` as `List ℕ⁺`, which is an alternative representation to
 Mathlib's `Mathlib.Combinatorics.Enumerative.Composition` which uses `Composition n` as a
 structure with `blocks : List ℕ` and proofs of positivity and sum. Both representations
-are equivalent; we use `List ℕ+` here to follow the source text's presentation more directly.
+are equivalent; we use `List ℕ⁺` here to follow the source text's presentation more directly.
 
 ## References
 
@@ -110,7 +111,7 @@ def toComposition (n k : ℕ) :
   right_inv := fun ⟨lst, hsum, hlen⟩ => by
     apply Subtype.ext
     simp only [List.map_map, Function.comp_def]
-    have h : ∀ a : ℕ+, (⟨a.val - 1 + 1, Nat.succ_pos _⟩ : ℕ+) = a := by
+    have h : ∀ a : ℕ⁺, (⟨a.val - 1 + 1, Nat.succ_pos _⟩ : ℕ⁺) = a := by
       intro a
       simp only [Nat.sub_add_cancel (a.pos)]
       rfl

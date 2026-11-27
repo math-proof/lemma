@@ -328,7 +328,7 @@ private lemma map_div_add_gammaMeasure_eq_betaMeasure
   have hratio : Measurable (fun p : ℝ × ℝ ↦ p.1 / (p.1 + p.2)) := by fun_prop
   rw [Measure.map_apply hratio ht, withDensity_apply _ (hratio ht), betaMeasure,
     withDensity_apply _ ht]
-  set g : ℝ × ℝ → ℝ≥0∞ := fun z ↦ gammaPDF a r z.1 * gammaPDF b r z.2
+  set g : ℝ × ℝ → ENNReal := fun z ↦ gammaPDF a r z.1 * gammaPDF b r z.2
   set pre : Set (ℝ × ℝ) := (fun p : ℝ × ℝ ↦ p.1 / (p.1 + p.2)) ⁻¹' t
   have hpre : MeasurableSet pre := hratio ht
   -- Restrict integrand to the positive quadrant (full mass of the joint gamma density).

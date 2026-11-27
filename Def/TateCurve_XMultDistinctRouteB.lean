@@ -1,9 +1,9 @@
 module
 public import Mathlib
 public import Structure.TateCurve_XMultAlignment
-public import Theorems.Thm_TateCurve_pointY_inv
-public import Theorems.Thm_TateCurve_pointY_zpow_mul
-public import Theorems.Thm_TateCurve_pointX_qExpansion
+public import Theorem.Thm_TateCurve_pointY_inv
+public import Theorem.Thm_TateCurve_pointY_zpow_mul
+public import Theorem.Thm_TateCurve_pointX_qExpansion
 set_option autoImplicit false
 set_option linter.unusedSectionVars false
 

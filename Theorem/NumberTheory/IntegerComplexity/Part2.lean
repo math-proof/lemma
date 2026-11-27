@@ -4,12 +4,13 @@ module
 public import Mathlib.Data.PNat.Basic
 public import Mathlib.Data.Nat.Find
 public import Def.NumberTheory.IntegerComplexity.Part2
+public import Notation.Data.PNat
 
 public section
 
 namespace IntegerComplexity
 
-theorem Pred_nonempty (n : ℕ+) : ∃ c, Pred n c := by
+theorem Pred_nonempty (n : ℕ⁺) : ∃ c, Pred n c := by
   obtain ⟨e, he⟩ := exists_expr n
   exact ⟨e.count, e, he, rfl⟩
 

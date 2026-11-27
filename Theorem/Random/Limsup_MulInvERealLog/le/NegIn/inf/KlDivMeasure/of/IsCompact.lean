@@ -75,7 +75,7 @@ public theorem openRate
     limsup (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log
       ((@Measure.map (Fin n → α) (ProbabilityMeasure α) _ _
         (fun ω => if hn : 0 < n then
-          (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
+          (⟨(n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
             IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α)
         else μ.toProbabilityMeasure)
         (Measure.pi fun _ : Fin n => μ)) (U ∩ K))) atTop ≤ -↑t :=
@@ -84,7 +84,7 @@ by
   let law (n : ℕ) : Measure (ProbabilityMeasure α) :=
     @Measure.map (Fin n → α) (ProbabilityMeasure α) _ _
       (fun ω => if hn : 0 < n then
-        (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
+        (⟨(n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
           IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α)
       else μ.toProbabilityMeasure)
       (Measure.pi fun _ : Fin n => μ)
@@ -151,7 +151,7 @@ public theorem Random.Limsup_MulInvERealLog.le.NegIn.inf.KlDivMeasure.of.IsCompa
   limsup (fun n => ((n : ℕ) : EReal)⁻¹ * ENNReal.log
     ((@Measure.map (Fin n → α) (ProbabilityMeasure α) _ _
         (fun ω => if hn : 0 < n then
-          (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
+          (⟨(n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
             IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α)
         else μ.toProbabilityMeasure)
         (Measure.pi fun _ : Fin n => μ)) K)) atTop ≤
@@ -161,7 +161,7 @@ by
   let law (n : ℕ) : Measure (ProbabilityMeasure α) :=
     @Measure.map (Fin n → α) (ProbabilityMeasure α) _ _
       (fun ω => if hn : 0 < n then
-        (⟨(n : ℝ≥0∞)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
+        (⟨(n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i),
           IsProbabilityMeasure.of.Gt_0 hn⟩ : ProbabilityMeasure α)
       else μ.toProbabilityMeasure)
       (Measure.pi fun _ : Fin n => μ)
@@ -218,15 +218,15 @@ by
     have hnn : ∀ n : ℕ, 0 ≤ ((n : ℕ) : EReal) := fun n => by exact_mod_cast Nat.zero_le n
     have hterm : ∀ n, 0 < n →
         ((n : ℕ) : EReal)⁻¹ * ENNReal.log (law n K) ≤
-          ((n : ℕ) : EReal)⁻¹ * ENNReal.log (s.card : ℝ≥0∞) +
+          ((n : ℕ) : EReal)⁻¹ * ENNReal.log (s.card : ENNReal) +
             s.sup' hsne (fun i => ((n : ℕ) : EReal)⁻¹ *
               ENNReal.log (law n (U i ∩ K))) := by
       intro n hn
-      have hleμ : law n K ≤ (s.card : ℝ≥0∞) * ⨆ i ∈ s, law n (U i ∩ K) := by
+      have hleμ : law n K ≤ (s.card : ENNReal) * ⨆ i ∈ s, law n (U i ∩ K) := by
         calc
           law n K ≤ ∑ i ∈ s, law n (U i ∩ K) := hsum n
           _ ≤ s.card • ⨆ i ∈ s, law n (U i ∩ K) := hcard n
-          _ = (s.card : ℝ≥0∞) * ⨆ i ∈ s, law n (U i ∩ K) := nsmul_eq_mul _ _
+          _ = (s.card : ENNReal) * ⨆ i ∈ s, law n (U i ∩ K) := nsmul_eq_mul _ _
       have hlogsup : ENNReal.log (⨆ i ∈ s, law n (U i ∩ K)) =
           s.sup' hsne (fun i => ENNReal.log (law n (U i ∩ K))) := by
         rw [← Finset.sup_eq_iSup, Finset.sup'_eq_sup hsne]
@@ -244,14 +244,14 @@ by
         (EReal.inv_nonneg_of_nonneg (hnn n)) (EReal.inv_lt_top _).ne, hlogsup, hscale]
     have hle_fun : ∀ᶠ n in atTop,
         ((n : ℕ) : EReal)⁻¹ * ENNReal.log (law n K) ≤
-          ((n : ℕ) : EReal)⁻¹ * ENNReal.log (s.card : ℝ≥0∞) +
+          ((n : ℕ) : EReal)⁻¹ * ENNReal.log (s.card : ENNReal) +
             s.sup' hsne (fun i => ((n : ℕ) : EReal)⁻¹ *
               ENNReal.log (law n (U i ∩ K))) := by
       filter_upwards [eventually_gt_atTop 0] with n hn
       exact hterm n hn
-    have hcard0 : Tendsto (fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (s.card : ℝ≥0∞))
+    have hcard0 : Tendsto (fun n : ℕ => ((n : ℕ) : EReal)⁻¹ * ENNReal.log (s.card : ENNReal))
         atTop (𝓝 0) := by
-      have hlogc : ENNReal.log (s.card : ℝ≥0∞) = (Real.log (s.card : ℝ) : EReal) := by
+      have hlogc : ENNReal.log (s.card : ENNReal) = (Real.log (s.card : ℝ) : EReal) := by
         rw [ENNReal.log_pos_real (Nat.cast_ne_zero.mpr hpos.ne') (ENNReal.natCast_ne_top _),
           ENNReal.toReal_natCast]
       rw [hlogc]

@@ -31,6 +31,7 @@ public import Mathlib.Analysis.Analytic.Order
 public import Mathlib.GroupTheory.Torsion
 public import Mathlib.LinearAlgebra.Dimension.Finrank
 public import Structure.v1.Atlas.EllipticCurves.code.ModularForms.Part6
+public import Notation.Data.PNat
 
 @[expose] public section
 
@@ -43,7 +44,7 @@ open Complex HeckeAnalyticContinuation
 
 /-- The principal Dirichlet character of conductor `N` at the prime `p`: equals
 `0` if `p | N` and `1` otherwise. -/
-noncomputable def principalDirichletChar (N : ℕ+) (p : ℕ) : ℂ :=
+noncomputable def principalDirichletChar (N : ℕ⁺) (p : ℕ) : ℂ :=
   if p ∣ (N : ℕ) then 0 else 1
 
 end EulerProductNewform

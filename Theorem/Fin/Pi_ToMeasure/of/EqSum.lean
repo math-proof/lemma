@@ -196,17 +196,17 @@ public theorem card_empiricalSet {α : Type*} [Fintype α] [DecidableEq α] {n :
     simpa [support] using sum_multinomial_predCount c hsum
 
 
-public theorem pi_singleton_count {α : Type*} [Fintype α] [DecidableEq α] [MeasurableSpace α] [MeasurableSingletonClass α] (μ : PMF α) {n : ℕ} (ω : Fin n → α) : (Measure.pi fun _ : Fin n => μ.toMeasure) {ω} = ∏ a, (μ a : ℝ≥0∞) ^ countVec ω a := by
+public theorem pi_singleton_count {α : Type*} [Fintype α] [DecidableEq α] [MeasurableSpace α] [MeasurableSingletonClass α] (μ : PMF α) {n : ℕ} (ω : Fin n → α) : (Measure.pi fun _ : Fin n => μ.toMeasure) {ω} = ∏ a, (μ a : ENNReal) ^ countVec ω a := by
   rw [Measure.pi_singleton]
-  have hsing : ∀ i, μ.toMeasure {ω i} = (μ (ω i) : ℝ≥0∞) := fun i =>
+  have hsing : ∀ i, μ.toMeasure {ω i} = (μ (ω i) : ENNReal) := fun i =>
     PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton _)
   simp_rw [hsing]
-  rw [← Finset.prod_fiberwise' (univ : Finset (Fin n)) ω (fun a => (μ a : ℝ≥0∞))]
+  rw [← Finset.prod_fiberwise' (univ : Finset (Fin n)) ω (fun a => (μ a : ENNReal))]
   refine Finset.prod_congr rfl fun a _ => ?_
   rw [Finset.prod_const, countVec_eq_card]
 
 
-public theorem measure_empiricalSet {α : Type*} [Fintype α] [DecidableEq α] [MeasurableSpace α] [MeasurableSingletonClass α] (μ : PMF α) {n : ℕ} (c : α → ℕ) : (Measure.pi fun _ : Fin n => μ.toMeasure) (empiricalSet n c : Set (Fin n → α)) = #(empiricalSet n c) * ∏ a, (μ a : ℝ≥0∞) ^ c a := by
+public theorem measure_empiricalSet {α : Type*} [Fintype α] [DecidableEq α] [MeasurableSpace α] [MeasurableSingletonClass α] (μ : PMF α) {n : ℕ} (c : α → ℕ) : (Measure.pi fun _ : Fin n => μ.toMeasure) (empiricalSet n c : Set (Fin n → α)) = #(empiricalSet n c) * ∏ a, (μ a : ENNReal) ^ c a := by
   let s := empiricalSet n c
   have hs : (s : Set (Fin n → α)) = ⋃ ω ∈ s, {ω} := by
     ext ω
@@ -217,7 +217,7 @@ public theorem measure_empiricalSet {α : Type*} [Fintype α] [DecidableEq α] [
     exact Set.disjoint_singleton.2 hne
   rw [measure_biUnion_finset hdisj (fun ω _ => measurableSet_singleton ω)]
   have hmass : ∀ ω ∈ s, (Measure.pi fun _ : Fin n => μ.toMeasure) {ω} =
-    ∏ a, (μ a : ℝ≥0∞) ^ c a := by
+    ∏ a, (μ a : ENNReal) ^ c a := by
     intro ω hω
     rw [pi_singleton_count]
     have hω' : ∀ a, countVec ω a = c a := by simpa [s, empiricalSet] using hω
@@ -390,16 +390,16 @@ public theorem card_empiricalSet {α : Type*} [Fintype α] [DecidableEq α] {n :
     rw [← hbij, hcard_source]
     simpa [support] using sum_multinomial_predCount c hsum
 
-public theorem pi_singleton_count {α : Type*} [Fintype α] [DecidableEq α] [MeasurableSpace α] [MeasurableSingletonClass α] (μ : PMF α) {n : ℕ} (ω : Fin n → α) : (Measure.pi fun _ : Fin n => μ.toMeasure) {ω} = ∏ a, (μ a : ℝ≥0∞) ^ countVec ω a := by
+public theorem pi_singleton_count {α : Type*} [Fintype α] [DecidableEq α] [MeasurableSpace α] [MeasurableSingletonClass α] (μ : PMF α) {n : ℕ} (ω : Fin n → α) : (Measure.pi fun _ : Fin n => μ.toMeasure) {ω} = ∏ a, (μ a : ENNReal) ^ countVec ω a := by
   rw [Measure.pi_singleton]
-  have hsing : ∀ i, μ.toMeasure {ω i} = (μ (ω i) : ℝ≥0∞) := fun i =>
+  have hsing : ∀ i, μ.toMeasure {ω i} = (μ (ω i) : ENNReal) := fun i =>
     PMF.toMeasure_apply_singleton _ _ (measurableSet_singleton _)
   simp_rw [hsing]
-  rw [← Finset.prod_fiberwise' (univ : Finset (Fin n)) ω (fun a => (μ a : ℝ≥0∞))]
+  rw [← Finset.prod_fiberwise' (univ : Finset (Fin n)) ω (fun a => (μ a : ENNReal))]
   refine Finset.prod_congr rfl fun a _ => ?_
   rw [Finset.prod_const, countVec_eq_card]
 
-public theorem measure_empiricalSet {α : Type*} [Fintype α] [DecidableEq α] [MeasurableSpace α] [MeasurableSingletonClass α] (μ : PMF α) {n : ℕ} (c : α → ℕ) : (Measure.pi fun _ : Fin n => μ.toMeasure) (empiricalSet n c : Set (Fin n → α)) = #(empiricalSet n c) * ∏ a, (μ a : ℝ≥0∞) ^ c a := by
+public theorem measure_empiricalSet {α : Type*} [Fintype α] [DecidableEq α] [MeasurableSpace α] [MeasurableSingletonClass α] (μ : PMF α) {n : ℕ} (c : α → ℕ) : (Measure.pi fun _ : Fin n => μ.toMeasure) (empiricalSet n c : Set (Fin n → α)) = #(empiricalSet n c) * ∏ a, (μ a : ENNReal) ^ c a := by
   let s := empiricalSet n c
   have hs : (s : Set (Fin n → α)) = ⋃ ω ∈ s, {ω} := by
     ext ω
@@ -410,7 +410,7 @@ public theorem measure_empiricalSet {α : Type*} [Fintype α] [DecidableEq α] [
     exact Set.disjoint_singleton.2 hne
   rw [measure_biUnion_finset hdisj (fun ω _ => measurableSet_singleton ω)]
   have hmass : ∀ ω ∈ s, (Measure.pi fun _ : Fin n => μ.toMeasure) {ω} =
-    ∏ a, (μ a : ℝ≥0∞) ^ c a := by
+    ∏ a, (μ a : ENNReal) ^ c a := by
     intro ω hω
     rw [pi_singleton_count]
     have hω' : ∀ a, countVec ω a = c a := by simpa [s, empiricalSet] using hω
@@ -433,7 +433,7 @@ private theorem main
 -- imply
   (Measure.pi fun _ : Fin n => μ.toMeasure)
     {ω : Fin n → α | ∀ a, countVec ω a = c a} =
-    (Nat.multinomial univ c : ℝ≥0∞) * ∏ a, (μ a : ℝ≥0∞) ^ c a := by
+    (Nat.multinomial univ c : ENNReal) * ∏ a, (μ a : ENNReal) ^ c a := by
 -- proof
   have hset : {ω : Fin n → α | ∀ a, countVec ω a = c a} = empiricalSet n c := by
     ext ω

@@ -171,6 +171,16 @@ export function maxHeartbeats(ctx) {
     }
 }
 
+/** `unicode-type-notation`: disallowed Unicode type notations; write the preferred form. */
+export function unicodeTypeNotation(ctx) {
+    const REPL = { 'ℝ≥0∞': 'ENNReal', 'ℝ≥0': 'NNReal', 'ℚ≥0': 'NNRat', 'ℕ+': 'ℕ⁺' };
+    for (let i = 0; i < ctx.P.code.length; i++) {
+        for (const m of ctx.P.code[i].matchAll(/ℝ≥0∞|ℝ≥0|ℚ≥0|ℕ\+/g)) {
+            ctx.warn('unicode-type-notation', i + 1, m.index + 1, `\`${m[0]}\` is not allowed; write \`${REPL[m[0]]}\``);
+        }
+    }
+}
+
 /** `open-section`: imported `Lemma.X.…` but `X` is not opened */
 export function openSection(ctx) {
     const { imports, opened } = ctx.scan;

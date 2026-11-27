@@ -4,6 +4,7 @@ public import Mathlib.Data.Rat.Cast.Order
 public import Mathlib.Order.Monotone.Basic
 public import Mathlib.Tactic
 public import Def.NumberTheory.Recurrences.GolombLikeSequence.Part8
+public import Notation.Data.PNat
 
 
 public section
@@ -76,12 +77,12 @@ theorem glk_f_one
     (↑((glk_f y z hy hz hpar 1).val) : ℤ) = glk_c y z + 1 := by
   calc
     (↑((glk_f y z hy hz hpar 1).val) : ℤ) = glk_v y z hy hz 1 := by
-      simpa using glk_f_val y z hy hz hpar (1 : ℕ+)
+      simpa using glk_f_val y z hy hz hpar (1 : ℕ⁺)
     _ = glk_c y z + 1 := glk_v_one y z hy hz hpar
 
 theorem glk_f_comp
     (y z : ℤ) (hy : 2 ≤ y) (hz : 2 - y ≤ z) (hpar : y % 2 ≠ z % 2)
-    (n : ℕ+) :
+    (n : ℕ⁺) :
     (↑((glk_f y z hy hz hpar (glk_f y z hy hz hpar n)).val) : ℤ) =
       y * (↑n.val : ℤ) + z := by
   calc
@@ -95,7 +96,7 @@ theorem glk_f_comp
 
 theorem glk_initial_int
     (y z : ℤ) (hz : 2 - y ≤ z) (hpar : y % 2 ≠ z % 2)
-    (f : ℕ+ → ℕ+)
+    (f : ℕ⁺ → ℕ⁺)
     (hone : (↑((f 1).val) : ℚ) = ((y : ℚ) + (z : ℚ) + 1) / 2) :
     (↑((f 1).val) : ℤ) = glk_c y z + 1 := by
   have hc := (glk_c_spec y z hz hpar).2
@@ -107,8 +108,8 @@ theorem glk_initial_int
 
 theorem glk_seq_comp
     (y z : ℤ) (hy : 2 ≤ y) (hz : 2 - y ≤ z) (hpar : y % 2 ≠ z % 2)
-    (f : ℕ+ → ℕ+)
-    (hcomp : ∀ n : ℕ+, (↑((f (f n)).val) : ℤ) = y * (↑n.val : ℤ) + z)
+    (f : ℕ⁺ → ℕ⁺)
+    (hcomp : ∀ n : ℕ⁺, (↑((f (f n)).val) : ℤ) = y * (↑n.val : ℤ) + z)
     (n : ℕ) :
     glk_seq f (glk_seq f n - 1) =
       y.toNat * n + 2 * (glk_c y z).toNat + 1 := by
@@ -134,9 +135,9 @@ theorem glk_seq_comp
 
 theorem glk_f_unique
     (y z : ℤ) (hy : 2 ≤ y) (hz : 2 - y ≤ z) (hpar : y % 2 ≠ z % 2)
-    (f : ℕ+ → ℕ+) (hf : StrictMono f)
+    (f : ℕ⁺ → ℕ⁺) (hf : StrictMono f)
     (hone : (↑((f 1).val) : ℚ) = ((y : ℚ) + (z : ℚ) + 1) / 2)
-    (hcomp : ∀ n : ℕ+, (↑((f (f n)).val) : ℤ) = y * (↑n.val : ℤ) + z) :
+    (hcomp : ∀ n : ℕ⁺, (↑((f (f n)).val) : ℤ) = y * (↑n.val : ℤ) + z) :
     f = glk_f y z hy hz hpar := by
   let C := (glk_c y z).toNat
   let Y := y.toNat
@@ -170,7 +171,7 @@ theorem glk_block_formula
     (y z : ℤ) (hy : 2 ≤ y) (hz : 2 - y ≤ z) (hpar : y % 2 ≠ z % 2)
     (k : ℕ) (j : ℤ)
     (hlow : -(glk_c y z * y ^ k) ≤ j) (hupp : j < glk_c y z * y ^ k) :
-    ∃ m : ℕ+,
+    ∃ m : ℕ⁺,
       (↑m.val : ℤ) = glk_a y z k + j ∧
       (↑((glk_f y z hy hz hpar m).val) : ℤ) =
         glk_l y z (k + 1) + if j < 0 then j else y * j := by
@@ -219,7 +220,7 @@ theorem glk_closed_form
     (k : ℕ) (j : ℤ)
     (hlow : -(((y : ℚ) + (z : ℚ) - 1) / 2) * (y : ℚ) ^ k ≤ (j : ℚ))
     (hupp : (j : ℚ) < (((y : ℚ) + (z : ℚ) - 1) / 2) * (y : ℚ) ^ k) :
-    ∃ m : ℕ+,
+    ∃ m : ℕ⁺,
       (↑m.val : ℚ) =
           (((y : ℚ) + 1) * ((y : ℚ) + (z : ℚ) - 1) /
             (2 * ((y : ℚ) - 1))) *
@@ -295,20 +296,20 @@ theorem golomb_like_closed_form
     (hy : 2 ≤ y)
     (hz : 2 - y ≤ z)
     (hpar : y % 2 ≠ z % 2) :
-    (∃! f : ℕ+ → ℕ+,
+    (∃! f : ℕ⁺ → ℕ⁺,
       StrictMono f ∧
       (↑((f 1).val) : ℚ) = ((y : ℚ) + (z : ℚ) + 1) / 2 ∧
-      ∀ n : ℕ+,
+      ∀ n : ℕ⁺,
         (↑((f (f n)).val) : ℤ) = y * (↑n.val : ℤ) + z) ∧
-    ∀ f : ℕ+ → ℕ+,
+    ∀ f : ℕ⁺ → ℕ⁺,
       StrictMono f →
       (↑((f 1).val) : ℚ) = ((y : ℚ) + (z : ℚ) + 1) / 2 →
-      (∀ n : ℕ+,
+      (∀ n : ℕ⁺,
         (↑((f (f n)).val) : ℤ) = y * (↑n.val : ℤ) + z) →
       ∀ k : ℕ, ∀ j : ℤ,
         -(((y : ℚ) + (z : ℚ) - 1) / 2) * (y : ℚ) ^ k ≤ (j : ℚ) →
         (j : ℚ) < (((y : ℚ) + (z : ℚ) - 1) / 2) * (y : ℚ) ^ k →
-        ∃ m : ℕ+,
+        ∃ m : ℕ⁺,
           (↑m.val : ℚ) =
               (((y : ℚ) + 1) * ((y : ℚ) + (z : ℚ) - 1) /
                 (2 * ((y : ℚ) - 1))) *

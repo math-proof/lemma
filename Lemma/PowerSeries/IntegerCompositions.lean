@@ -1,6 +1,7 @@
 import Mathlib
 import Initialize.Tactic.Attr.Basic
 import Def.Combinatorics.Enumerative.IntegerCompositions.Part17
+import Notation.Data.PNat
 open AlgebraicCombinatorics
 open AlgebraicCombinatorics.BoundedWeakComposition
 open Finset
@@ -30,11 +31,11 @@ lemma len_nil : len ([] : Composition) = 0 := rfl
 
 /-- The size of a cons composition is the head value plus the tail size. -/
 @[simp]
-lemma size_cons (a : ℕ+) (α : Composition) : size (a :: α) = a.val + size α := rfl
+lemma size_cons (a : ℕ⁺) (α : Composition) : size (a :: α) = a.val + size α := rfl
 
 /-- The length of a cons composition is the tail length plus 1. -/
 @[simp]
-lemma len_cons (a : ℕ+) (α : Composition) : len (a :: α) = len α + 1 := by
+lemma len_cons (a : ℕ⁺) (α : Composition) : len (a :: α) = len α + 1 := by
   simp only [len, List.length_cons]
 
 /-- The size of a composition is at least its length, since each part is positive. -/
@@ -48,19 +49,19 @@ lemma size_ge_len (α : Composition) : α.len ≤ α.size := by
 
 /-- The size of a singleton composition is the value of its single part. -/
 @[simp]
-lemma size_singleton (n : ℕ+) : (singleton n).size = n.val := by
+lemma size_singleton (n : ℕ⁺) : (singleton n).size = n.val := by
   simp [singleton, size]
 
 /-- The length of a singleton composition is 1. -/
 @[simp]
-lemma len_singleton (n : ℕ+) : (singleton n).len = 1 := rfl
+lemma len_singleton (n : ℕ⁺) : (singleton n).len = 1 := rfl
 
 /-- The size of the concatenation of two compositions equals the sum of their sizes. -/
 @[simp]
 lemma size_append (α β : Composition) : (α ++ β).size = α.size + β.size :=
-  (congrArg List.sum (List.map_append (f := fun x : ℕ+ => x.val) (l₁ := α) (l₂ := β))).trans
-    (List.sum_append (l₁ := List.map (fun x : ℕ+ => x.val) α)
-      (l₂ := List.map (fun x : ℕ+ => x.val) β))
+  (congrArg List.sum (List.map_append (f := fun x : ℕ⁺ => x.val) (l₁ := α) (l₂ := β))).trans
+    (List.sum_append (l₁ := List.map (fun x : ℕ⁺ => x.val) α)
+      (l₂ := List.map (fun x : ℕ⁺ => x.val) β))
 
 /-- The length of the concatenation of two compositions equals the sum of their lengths. -/
 @[simp]

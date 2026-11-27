@@ -7,7 +7,7 @@
  * define them; every other class is read from `Lean.classes` (`L.X`) at
  * call time, so the import graph follows the inheritance tree.
  */
-import { LeanProp } from './utility.js';
+import { LeanProp, leanIsInfixContinue } from './utility.js';
 import { LeanBinary } from './abstract.js';
 import { Lean } from './base.js';
 
@@ -44,6 +44,10 @@ export class LeanBinaryBoolean extends LeanProp(LeanBinary) {
             caret.indent = indent;
             return caret;
         }
+        if (this.rhs === caret && indent > this.indent && leanIsInfixContinue(next)) {
+            caret.pendingOpLead = indent;
+            return caret;
+        }
         if (this.rhs === caret && indent > this.indent) {
             return this.parent.push_args_indented(indent, newline_count, false);
         }
@@ -56,6 +60,8 @@ export class LeanBinaryBoolean extends LeanProp(LeanBinary) {
     }
 
     sep() {
+        // The operator itself opens the next line (`lhs\n    ≤ rhs`).
+        if (typeof this.opLeadIndent === 'number') return ' ';
         // `a ∈\n    s` keeps the break. A space glues the set onto the operator
         // line while the set's nodes stay stamped on the following line.
         if (this.rhs instanceof L.LeanArgsNewLineSeparated || this.rhs instanceof L.LeanStatements)
@@ -67,7 +73,6 @@ export class LeanBinaryBoolean extends LeanProp(LeanBinary) {
     }
 
     strFormat() {
-        const sep = this.sep();
-        return `%s ${this.operator}${sep}%s`;
+        return this.opJoin(this.operator);
     }
 }

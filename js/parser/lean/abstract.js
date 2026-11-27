@@ -207,7 +207,16 @@ export class LeanBinary extends LeanArgs {
      * @param {number} level
      */
     constructor(lhs, rhs, indent, level) {
+        const lead = lhs?.pendingOpLead;
         super([lhs, rhs], indent, level);
+        // `lhs\n    ≤ rhs` — the operator was parsed on the continuation line.
+        // `pendingOpLead` is that line's column. Later binaries that wrap this
+        // node must not take the column; it belongs to the operator that opened
+        // the line. Printing `≤` after `lhs` would end the `calc` first.
+        if (typeof lead === 'number') {
+            this.opLeadIndent = lead;
+            delete lhs.pendingOpLead;
+        }
     }
 
     get lhs() {
@@ -274,11 +283,21 @@ export class LeanBinary extends LeanArgs {
         return pair ? pair[0] : null;
     }
 
+    /**
+     * Join `op` to its operands. A leading operator (`lhs\n    op rhs`) is the
+     * first token of the continuation line, at `opLeadIndent`.
+     * @param {string} op
+     */
+    opJoin(op) {
+        if (typeof this.opLeadIndent === 'number')
+            return `%s\n${' '.repeat(this.opLeadIndent)}${op} %s`;
+        return `%s ${op}${this.sep()}%s`;
+    }
+
     /** String format using operator token. */
     strFormat() {
         const op = this.operator;
         if (op == null) return super.strFormat();
-        const sep = this.sep();
-        return `%s ${op}${sep}%s`;
+        return this.opJoin(op);
     }
 }

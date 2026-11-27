@@ -1,7 +1,7 @@
 import Theorem.ModularForm.HeckeOperatorForms
-import Theorems.Thm_CuspForm_heckeTLin_comm
-import Theorems.Thm_CuspForm_heckeTLin_heckeULin_comm
-import Theorems.Thm_CuspForm_heckeULin_comm
+import Theorem.Thm_CuspForm_heckeTLin_comm
+import Theorem.Thm_CuspForm_heckeTLin_heckeULin_comm
+import Theorem.Thm_CuspForm_heckeULin_comm
 
 set_option autoImplicit false
 
@@ -55,6 +55,13 @@ theorem commute_of_mem_heckeGenerators {T T' : Module.End ℂ (CuspForm (Congrue
   · exact heckeULin_comm k hqN hq'N
 
 variable (N k S)
+
+instance heckeAlgebra.instIsMulCommutative : IsMulCommutative (heckeAlgebra N k S) :=
+  Algebra.isMulCommutative_adjoin ℤ fun _ hT _ hT' _ => commute_of_mem_heckeGenerators hT hT'
+
+open scoped IsMulCommutative in
+
+instance heckeAlgebra.instCommRing : CommRing (heckeAlgebra N k S) := inferInstance
 
 variable {N k S}
 

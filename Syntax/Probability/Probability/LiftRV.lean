@@ -42,10 +42,6 @@ def LiftRV.kind (Ω ty : Expr) : MetaM (Option Bool) := withNewMCtxDepth do
   | _ => return none
 
 open Lean Elab Term Meta in
-/-- Fallback of `rv%[μ] x`: elaborate `fun ω ↦ let s := fun k ↦ s k ω; …; x` (`let x := x ω` for a plain
-random variable `x`) for the local random variables / processes on `Ω` (from `μ : Measure Ω`) named in
-`x`, then inline exactly these `let`s (beta-reducing `(fun k ↦ s k ω) t` to `s t ω`), so the result is
-syntactically the hand-written `fun ω ↦ …`. -/
 def LiftRV.lift (μ x : Term) (expectedType? : Option Expr) : TermElabM Expr := withFreshMacroScope do
   let μe ← Lean.Elab.Term.elabTerm μ none
   let μty ← whnf (← instantiateMVars (← inferType μe))
@@ -78,23 +74,6 @@ def LiftRV.lift (μ x : Term) (expectedType? : Option Expr) : TermElabM Expr := 
   | e => return e
 
 
-/--
-`rv%[μ] x` reads `x` as a random variable on `Ω` (`μ : Measure Ω`), lifting a function applied to
-random variables pointwise:
-
-* `rv%[π] (V t (s t))` ↦ `fun ω ↦ V t (s t ω)` (`V t : S → ℝ`, `s : ℕ → Ω → S`);
-* `rv%[π] (V t s[t])` ↦ `fun ω ↦ V t (s[t] ω)` (`s : ℕ → Ω → S`);
-* `rv%[π] (Q t (s t) (a t))` ↦ `fun ω ↦ Q t (s t ω) (a t ω)`;
-* `rv%[π] (u X)` ↦ `fun ω ↦ u (X ω)` (`X : Ω → α`).
-
-`x` is first elaborated as is (normal elaboration order, postponement passed through); only if that
-throws an error are the local names of type `Ω → α`, `ℕ → Ω → α`, or `Fin n → Ω → α` occurring in
-`x` rebound to their values at `ω`. If that fails too, the original
-error is rethrown. So every `x` that already elaborates (e.g. `fun ω ↦ V t (s t ω)`,
-`𝔼[r: π](… | s t)`, `0`) is unchanged.
-It is applied to both sides of `=ᵐ[μ]` (see the `macro_rules` below), e.g.
-`∀ t, V t (s[t]) =ᵐ[π] 𝔼[r: π]((γ ^ (id : ℕ → ℕ)) ⬝ᵥ r[t:] | s[t])`.
--/
 syntax (name := liftRV) "rv%[" term "] " term:max : term
 
 
@@ -118,7 +97,5 @@ open Lean Elab Term Meta in
   | _ => throwUnsupportedSyntax
 
 
--- `f =ᵐ[μ] g` (Mathlib's `Filter.EventuallyEq (ae μ) f g`) with both sides read through `rv%[μ]`,
--- e.g. `V t (s t) =ᵐ[π] …` is `(fun ω ↦ V t (s t ω)) =ᵐ[π] …`.
 macro_rules
   | `($f =ᵐ[$μ] $g) => `(Filter.EventuallyEq (MeasureTheory.ae $μ) (rv%[$μ] $f) (rv%[$μ] $g))

@@ -29,8 +29,8 @@ private lemma main
     ENNReal.ofReal (exp (-c * n) * (∫ x, exp (f x) ∂μ) ^ n) :=
 -- proof
 by
-  let ε : ℝ≥0∞ := ENNReal.ofReal (exp (c * n))
-  let g : (Fin n → α) → ℝ≥0∞ := fun ω => ENNReal.ofReal (exp (∑ i, f (ω i)))
+  let ε : ENNReal := ENNReal.ofReal (exp (c * n))
+  let g : (Fin n → α) → ENNReal := fun ω => ENNReal.ofReal (exp (∑ i, f (ω i)))
   have hset : {ω | c * (n : ℝ) ≤ ∑ i, f (ω i)} = {ω | ε ≤ g ω} := by
     ext ω
     simp only [Set.mem_ofPred_eq, ε, g]
