@@ -287,6 +287,8 @@ export class LeanParenthesis extends LeanPairedGroup {
         let caretOut;
         let newNode;
         if (caret instanceof L.LeanCaret) {
+            if (Lean.currentLine != null && typeof caret.line === 'number' && caret.line < Lean.currentLine)
+                caret.line = Lean.currentLine;
             newNode = new Ctor(caret, indent, caret.level);
             caretOut = caret;
         } else {

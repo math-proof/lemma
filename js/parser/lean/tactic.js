@@ -573,6 +573,8 @@ export class LeanTactic extends LeanSyntax {
             throw new Error(`LeanTactic.insert_tactic: unexpected for ${this.constructor.name}`);
         }
         if (this.is_inline_tactic_block()) {
+            if (Lean.currentLine != null && typeof caret.line === 'number' && caret.line < Lean.currentLine)
+                caret.line = Lean.currentLine;
             this.replace(caret, new LeanTactic(type, caret, this.indent, caret.level));
             return caret;
         }
@@ -1321,12 +1323,16 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
             if (next === '·' || next === '.') {
                 if (indent === this.indent) {
                     caret.indent = indent;
+                    // `<;>\n·` — the bullet caret is the next line, not the `<;>` line.
+                    caret.stampFollowingLine(newline_count - 1);
                     return caret;
                 }
             } else {
                 if (indent > this.indent) indent = this.indent + 2;
                 else indent = this.indent;
                 caret.indent = indent;
+                // `constructor <;>\n  intro` — the continuation hole is the next line.
+                caret.stampFollowingLine(newline_count - 1);
                 return caret;
             }
         }
@@ -1335,6 +1341,8 @@ export class LeanSequentialTacticCombinator extends LeanUnary {
 
     insert_tactic(caret, type) {
         if (caret instanceof L.LeanCaret) {
+            if (Lean.currentLine != null && typeof caret.line === 'number' && caret.line < Lean.currentLine)
+                caret.line = Lean.currentLine;
             this.arg = new LeanTactic(type, caret, caret.indent, caret.level);
             return caret;
         }

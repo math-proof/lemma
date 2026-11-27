@@ -38,7 +38,28 @@ export class LeanAssign extends LeanBinary {
         throw new Error(`insert is unexpected for ${this.constructor.name}`);
     }
 
+    insert_line_comment(caret, comment) {
+        // `:=\n-- proof\nby` — the comment sits between `:=` and the proof.
+        // Replacing the rhs caret detaches `by` onto the module and prints a blank line.
+        if (caret === this.rhs && caret instanceof L.LeanCaret && comment === 'proof') {
+            const cmt = new L.LeanLineComment(comment, caret.indent, caret.level);
+            this.rhs = new L.LeanArgsNewLineSeparated([cmt, caret], caret.indent, caret.level);
+            return caret;
+        }
+        return super.insert_line_comment(caret, comment);
+    }
+
     insert_newline(caret, newline_count, indent, next) {
+        // `lemma … :=\nby` with `by` back at the declaration column.
+        if (
+            caret === this.rhs &&
+            caret instanceof L.LeanCaret &&
+            indent <= this.indent &&
+            (next === 'by' || next === 'calc')
+        ) {
+            caret.stampFollowingLine(newline_count - 1);
+            return caret;
+        }
         if (this.indent < indent) {
             if (caret === this.rhs) {
                 let out = caret;

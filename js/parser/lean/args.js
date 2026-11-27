@@ -150,6 +150,9 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         const {indent} = this;
         const Ctor = typeof func === 'string' ? L[func] : func;
         if (caret instanceof L.LeanCaret) {
+            // `⟨-, hq⟩` reuses the bracket caret. The hole is the `-` line.
+            if (Lean.currentLine != null && typeof caret.line === 'number' && caret.line < Lean.currentLine)
+                caret.line = Lean.currentLine;
             this.replace(caret, new Ctor(caret, indent, caret.level));
             return caret;
         }
@@ -1410,6 +1413,16 @@ export class LeanArgsNewLineSeparated extends LeanArgs {
         return caret;
     }
 
+    insert(caret, func, type) {
+        const last = this.args[this.args.length - 1];
+        if (last === caret && caret instanceof L.LeanCaret) {
+            const Ctor = typeof func === 'string' ? L[func] : func;
+            this.replace(caret, new Ctor(caret, caret.indent, caret.level));
+            return caret;
+        }
+        if (this.parent) return this.parent.insert(this, func, type);
+    }
+
     insert_newline(caret, newline_count, indent, next) {
         if (this.indent > indent) {
             if (caret instanceof L.LeanParenthesis && next === ':') return caret;
@@ -1430,8 +1443,12 @@ export class LeanArgsNewLineSeparated extends LeanArgs {
             return c;
         }
         const last = this.args[this.args.length - 1];
-        // if (this.parent instanceof LeanAssign && !(caret instanceof LeanLineComment) && last !== caret)
-            // return super.insert_newline(caret, newline_count, indent, next);
+        // `:=\n-- proof\nby` — the caret after the comment is the `by`, not a blank line.
+        if (last === caret && caret instanceof L.LeanCaret && (next === 'by' || next === 'calc')) {
+            caret.indent = indent;
+            caret.stampFollowingLine(newline_count - 1);
+            return caret;
+        }
         if (last === caret) {
             for (let i = 0; i < newline_count; ++i) {
                 caret = new L.LeanCaret(indent, caret.level).stampFollowingLine(i);

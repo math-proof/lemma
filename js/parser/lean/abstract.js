@@ -83,6 +83,10 @@ export class LeanArgs extends Lean {
 
     insert_tactic(caret, func) {
         if (caret instanceof L.LeanCaret) {
+            // A nullary tactic (`simp`) reuses the statement caret opened on the
+            // previous line. The empty argument is the tactic line.
+            if (Lean.currentLine != null && typeof caret.line === 'number' && caret.line < Lean.currentLine)
+                caret.line = Lean.currentLine;
             this.replace(caret, new L.LeanTactic(func, caret, caret.indent, caret.level));
             return caret;
         }

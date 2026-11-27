@@ -36,6 +36,36 @@ function fingerprintFormat(json) {
     }).join('');
 }
 
+/** Track content lines and boundary characters without retaining the text. */
+function textLineSpan(text) {
+    let breaks = 0;
+    let first = null;
+    let last = null;
+    for (const [token] of text.matchAll(/\r\n|[\r\n]|\S+/g)) {
+        if (token[0] === '\r' || token[0] === '\n') {
+            breaks++;
+        } else {
+            first ??= breaks;
+            last = breaks;
+        }
+    }
+    return { breaks, first, last, leadingLF: text.startsWith('\n'), trailingCR: text.endsWith('\r'), empty: text.length === 0 };
+}
+
+function appendLineSpan(span, suffix) {
+    if (suffix.empty) return;
+    // CR and LF can come from separate format literals or arguments.
+    const offset = span.breaks - Number(span.trailingCR && suffix.leadingLF);
+    if (suffix.first !== null) {
+        span.first ??= offset + suffix.first;
+        span.last = offset + suffix.last;
+    }
+    if (span.empty) span.leadingLF = suffix.leadingLF;
+    span.breaks = offset + suffix.breaks;
+    span.trailingCR = suffix.trailingCR;
+    span.empty = false;
+}
+
 export class Lean extends IndentedNode {
     /**
      * Every registered Lean AST class, keyed by `cls.name`. Classes that are not base classes
@@ -146,8 +176,29 @@ export class Lean extends IndentedNode {
 
     /** Number of rendered lines spanned by non-whitespace content. */
     get height() {
-        const text = String(this).trim();
-        return text ? text.split(/\r\n|[\r\n]/).length : 0;
+        const { first, last } = this.lineSpan();
+        return first === null ? 0 : last - first + 1;
+    }
+
+    lineSpan() {
+        const format = String(this.strFormat());
+        const args = this.strArgs();
+        // A nonempty indentation prefix separates a leading LF from a preceding CR.
+        const span = textLineSpan(this.stringIndent() >= 1 ? ' ' : '');
+        if (args.length === 0) {
+            appendLineSpan(span, textLineSpan(format));
+            return span;
+        }
+        let start = 0;
+        let index = 0;
+        for (const placeholder of format.matchAll(/%[sd]/g)) {
+            appendLineSpan(span, textLineSpan(format.slice(start, placeholder.index)));
+            const arg = args[index++];
+            appendLineSpan(span, arg instanceof Lean ? arg.lineSpan() : textLineSpan(String(arg)));
+            start = placeholder.index + placeholder[0].length;
+        }
+        appendLineSpan(span, textLineSpan(format.slice(start)));
+        return span;
     }
 
     /**
@@ -193,6 +244,10 @@ export class Lean extends IndentedNode {
             args.length === 0
                 ? format
                 : String(format).format(...args.map((a) => (a instanceof Lean ? String(a) : a)));
+        return ' '.repeat(this.stringIndent()) + inner;
+    }
+
+    stringIndent() {
         // `is_indented` is overridden to false for operands of `≤` / `•`. A rhs
         // whose separator is a newline is still the first token of that line.
         const p = this.parent;
@@ -203,7 +258,7 @@ export class Lean extends IndentedNode {
             !(this instanceof L.LeanArgsNewLineSeparated) &&
             !(this instanceof L.LeanArgsIndented) &&
             p.sep() === '\n';
-        return ((this.is_indented() || hanging) ? ' '.repeat(this.indent) : '') + inner;
+        return this.is_indented() || hanging ? this.indent : 0;
     }
 
     /**
@@ -379,6 +434,9 @@ export class Lean extends IndentedNode {
         let replacement;
         if (self instanceof L.LeanCaret) {
             caret = self;
+            // A hole opened on an earlier line and reused as the operand (`⟨-, hq⟩`).
+            if (Lean.currentLine != null && typeof caret.line === 'number' && caret.line < Lean.currentLine)
+                caret.line = Lean.currentLine;
             replacement = new Ctor(caret, self.indent, self.level);
         } else if (self instanceof L.LeanArgsSpaceSeparated) {
             caret = new L.LeanCaret(self.indent, self.level);

@@ -230,8 +230,10 @@ export class LeanParser extends AbstractParser {
                 if (!this.caret) break;
             }
             if (this.start_idx >= length && this.caret instanceof L.LeanCaret) {
-                // The parser may add a newline to flush the last statement.
-                this.caret.line = appendedNewline ? line - 1 : line;
+                // A source that does not end in a newline still gets one so the
+                // last statement flushes. That caret is printed on its own line,
+                // the line after the last source line.
+                this.caret.line = line;
             }
             return this.root;
         } finally {
