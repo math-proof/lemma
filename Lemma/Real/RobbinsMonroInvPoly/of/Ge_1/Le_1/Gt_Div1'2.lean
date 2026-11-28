@@ -16,7 +16,9 @@ private lemma main
   RobbinsMonro fun n : ℕ => inv_poly ν n₀ n := by
 -- proof
   have hn₀ : (1 : ℝ) ≤ n₀ := by exact_mod_cast h₂
-  exact ⟨fun n => Real.rpow_pos_of_pos (by positivity) _, TendstoSumPow.of.Ge_1.Le_1 h₁ h₂, SummableSquarePow.of.Gt_Div1'2 h₀⟩
+  have htend : Filter.Tendsto (fun n : ℕ => ∑ k ∈ Finset.range n, inv_poly ν n₀ ↑k) Filter.atTop Filter.atTop := by
+    simpa [inv_poly, Nat.Iio_eq_range] using TendstoSumPow.of.Ge_1.Le_1 h₁ h₂
+  exact ⟨fun n => Real.rpow_pos_of_pos (by positivity) _, htend, SummableSquarePow.of.Gt_Div1'2 h₀⟩
 
 
 -- created on 2026-09-26

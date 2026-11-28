@@ -117,6 +117,8 @@ def Expr.hstackBlocks : Expr → Option (List Expr)
     e.hstackBlocks
   | Basic (.ExprWithAttr (.LeanMethod `Tensor.hstack _)) [a, b] _ =>
     some [a, b]
+  | Basic (.ExprWithAttr (.LeanMethod `Matrix.hstack _)) [a, b] _ =>
+    some [a, b]
   | _ =>
     none
 
@@ -132,13 +134,52 @@ def Expr.blockMatrixRows (e : Expr) : Option (List (List Expr)) :=
   | _ =>
     none
 
+/-- `hstack` / `vstack` builder: `(kind, operands)` for `Matrix.hstack A B`, `A.hstack B`, etc. -/
+def Expr.stackOperands : Expr → Option (String × List Expr)
+  | Basic (.ExprWithAttr (.LeanMethod name idx)) args _ =>
+    let suffix := name.getLast.toString
+    if suffix == "hstack" || suffix == "vstack" then
+      some (suffix, args.swap 0 idx)
+    else
+      none
+  | _ => none
+
+/-- Block rows of a `hstack`/`vstack` builder (mirrors lean.js `stackBlockSpec`).
+`hstack X₁ … Xₙ` is one row; `vstack Y₁ … Yₘ` stacks the block rows of each `Yᵢ`. -/
+partial def Expr.stackBlockRows (e : Expr) : Option (List (List Expr)) :=
+  match e with
+  | Basic (.ExprWithAttr (.Lean_operatorname `id)) [inner] _ => inner.stackBlockRows
+  | _ =>
+    match e.stackOperands with
+    | some ("hstack", operands) =>
+      let row : List Expr := operands.flatMap fun op =>
+        match op.stackBlockRows with
+        | some [r] => r
+        | _ => [op]
+      some [row]
+    | some ("vstack", operands) =>
+      some (operands.flatMap fun op => op.stackBlockRows.getD [[op]])
+    | _ => none
+
+/-- Block cells of any block matrix (`hstack`/`vstack` builder or `++` row stack). -/
+def Expr.blockCells (e : Expr) : Option (List (List Expr)) :=
+  match (e.stackBlockRows <|> e.blockMatrixRows) with
+  | some rows@(row0 :: _) =>
+    let cols := row0.length
+    if cols ≥ 1 && rows.all (fun r => r.length == cols) then some rows else none
+  | _ => none
+
 def Expr.is_BlockMatrix : Expr → Bool
   | Basic (.ExprWithAttr (.Lean_operatorname `id)) [e] _ =>
     e.is_BlockMatrix
   | e@(Basic (.BinaryInfix ⟨`HAppend.hAppend⟩) ..) =>
-    e.blockMatrixRows != none
+    e.blockCells != none
   | e@(Basic (.ExprWithAttr (.LeanMethod `Tensor.hstack _)) ..) =>
-    e.blockMatrixRows != none
+    e.blockCells != none
+  | e@(Basic (.ExprWithAttr (.LeanMethod `Matrix.hstack _)) ..) =>
+    e.blockCells != none
+  | e@(Basic (.ExprWithAttr (.LeanMethod `Matrix.vstack _)) ..) =>
+    e.blockCells != none
   | _ =>
     false
 

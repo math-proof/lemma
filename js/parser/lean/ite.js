@@ -291,6 +291,15 @@ export class LeanIte extends LeanArgs {
             return 'if %s then';
         }
         if (this.inline) return 'if %s then %s else %s';
+        // `then\n  p / q else 0` — `else` stays on the branch line. A break here
+        // prints `else` one line later than the stamps on `else` and its body.
+        const elseLine = typeof $else?.line === 'number' ? $else.line : -1;
+        const thenEnd = then != null ? Lean.lastSourceLine(then) : -1;
+        if ($else != null && elseLine >= 0 && thenEnd >= 0 && elseLine <= thenEnd) {
+            const thenFmt = then == null ? '' : '%s';
+            const elseFmt = '%s';
+            return `if %s then\n${thenFmt} else ${elseFmt}`;
+        }
         const indent_else = ' '.repeat(this.indent);
         const inlineElse = this.newlineBehindElse === false
             && !($else instanceof L.LeanStatements || $else instanceof L.LeanArgsNewLineSeparated);

@@ -186,9 +186,16 @@ async function main() {
       `(note: ${crlf.length}× "Carriage return is not allowed in Lean" — convert the .lean file to LF)`,
     );
   }
-  if (real.length) {
-    console.error(`\n${real.length} Lean error(s):`);
-    for (const err of real) {
+  const isParser = (e) => String(e?.info ?? '').startsWith('internal parser error:');
+  const parser = real.filter(isParser);
+  const leanErr = real.filter((e) => !isParser(e));
+  if (parser.length) {
+    console.error(`\n${parser.length} internal parser error(s):`);
+    for (const err of parser) console.error(err.info);
+  }
+  if (leanErr.length) {
+    console.error(`\n${leanErr.length} Lean error(s):`);
+    for (const err of leanErr) {
       const loc = err.line != null ? `:${err.line}` : '';
       const col = err.col != null ? `:${err.col}` : '';
       const typ = err.type || 'error';

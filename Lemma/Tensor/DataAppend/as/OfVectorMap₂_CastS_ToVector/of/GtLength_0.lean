@@ -10,6 +10,7 @@ import Lemma.Tensor.DataGet.as.GetSplitAtData.of.GtLength_0
 import Lemma.Tensor.GetCast.as.Get.of.Eq.Eq
 import Lemma.Tensor.GetToVector.eq.Get.of.GtLength_0
 import Lemma.Tensor.SEq.is.SEqDataS.of.Eq
+import Lemma.Tensor.DataCast.as.Data.of.Eq
 import Lemma.Vector.GetAppend.eq.Get.of.Lt
 import Lemma.Vector.GetAppend.eq.Get_Sub.of.Lt_Add.Ge
 import Lemma.Vector.GetCast.as.Get.of.Eq.Eq
@@ -60,7 +61,7 @@ private lemma main
         let ⟨h_q_div, h_r_mod⟩ := Eq_Div.Eq_Mod.of.Eq_AddMul h_qr
         simp [GetFlatten.eq.Get.of.Eq_AddMul.fin h_qr]
         have h_i : i < b_z[0] * (b_z.tail ++ (m + n) :: s).prod := by
-          rw [Mul_Prod.eq.ProdCons]
+          rw [← ProdCons.eq.Mul_Prod]
           rw [Cons_Append.eq.AppendCons]
           rw [EqCons_Tail.of.GtLength_0]
           grind
@@ -98,7 +99,7 @@ private lemma main
         simp [h_rₐ_mod]
         have h_eq_q : ↑q = ↑q' * b_z.tail.prod + ↑qₐ := by
           simp [h_q'_div, h_qₐ_div, h_q_div, h_r'_mod]
-          rw [AddMulS.eq.MulAdd]
+          rw [← MulAdd.eq.AddMulS]
           rw [DivMod_Mul.eq.ModDiv.comm]
           rw [Div_Mul.eq.DivDiv.comm (c := b_z.tail.prod)]
           rw [EqAddMulDiv]
@@ -123,7 +124,7 @@ private lemma main
           rw [ProdAppend.eq.MulProdS]
           conv_rhs => rw [Mul_Mul.eq.MulMul]
           rw [ProdCons.eq.Mul_Prod]
-          simp [AddMulS.eq.MulAdd, h_eq_q]
+          simp [← MulAdd.eq.AddMulS, h_eq_q]
       ·
         grind
     ·

@@ -1,25 +1,5 @@
+import Theorem.Nat.Le.is.Lt.ou.Eq
 import Initialize.Tactic.Attr.Basic
-import Theorem.Lean.Meta.Expr
-
-
-/--
-| attributes | lemma |
-| :---: | :---: |
-| path | Nat.Le.is.Lt.ou.Eq |
-| comm | Nat.Lt.ou.Eq.is.Le |
-| mp   | Nat.Lt.ou.Eq.of.Le |
-| mpr  | Nat.Le.of.Lt.ou.Eq |
-| mp.comm | Nat.Eq.ou.Lt.of.Ge |
--/
-@[path, comm, mp, mpr, mp.comm]
-private lemma main
-  [PartialOrder α]
--- given
-  (a b : α) :
--- imply
-  a ≤ b ↔ a < b ∨ a = b :=
--- proof
-  le_iff_lt_or_eq
 
 
 -- created on 2025-03-29

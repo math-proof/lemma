@@ -1,4 +1,4 @@
-import Instance.Data.Tensor.Tensor.Part2
+import Instance.Data.Tensor.Tensor
 import Lemma.Bool.Cast.of.SEq.Eq
 open List Bool Int Nat
 

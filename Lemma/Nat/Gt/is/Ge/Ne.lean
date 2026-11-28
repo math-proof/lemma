@@ -1,4 +1,4 @@
-import Theorem.Nat.Lt.is.Le.Ne
+import Lemma.Nat.Lt.is.Le.Ne
 open Nat
 
 

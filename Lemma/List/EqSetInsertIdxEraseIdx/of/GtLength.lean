@@ -1,5 +1,5 @@
 import Lemma.List.GtLengthInsertIdxEraseIdx.of.GtLength
-import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
+import Theorem.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
 import Lemma.List.TakeInsertIdx.eq.Take.of.Ge
 import Lemma.List.TakeEraseIdx.eq.Take.of.Ge
 import Lemma.List.DropInsertIdx.eq.Drop.of.Lt

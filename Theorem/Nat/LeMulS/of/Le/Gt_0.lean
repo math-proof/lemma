@@ -16,8 +16,8 @@ open Nat
 | path | Nat.LeMulS.of.Le.Gt_0 |
 | comm 2 | Nat.GeMulS.of.Ge.Gt_0 |
 -/
-@[comm 2]
-public theorem Nat.LeMulS.of.Le.Gt_0
+@[path, comm 2]
+private lemma main
   [Mul α] [Zero α] [Preorder α] [MulPosMono α]
   {x a b : α}
 -- given

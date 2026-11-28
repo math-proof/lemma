@@ -23,7 +23,7 @@ Guidelines and prompts for using LLMs to write and refactor Lean 4 proofs in thi
 A hands a one-shot task to B. Triggered when the user says "send this issue / problem / bug / job / task to **@AgentName**" (or "send to AgentName"), or when A's work must change B's folder.
 - Write a **self-contained prompt** as one clickable to copy (assignee, goal, paths, errors, constraints; follow `AGENTS.md` in @AgentName's folder, or the nearest parent `AGENTS.md` if that folder has none). Put Lean and shell examples in the prompt as indented plain text.
 - Prompt shape: open with
-  `Assignee: AgentName (scope). Follow the nearest AGENTS.md; …`
+  `Assignee: AgentName ($scope). Follow the nearest AGENTS.md; If you want to modify a file beyond $scope, send a prompt to the corresponding folder agent to whom I will paste…`
   then `## Goal`, repro/paths/errors, constraints.
 - Then tell the user, in one short line, who has the task. Link the worker `[<scope> / AgentName](<subagent-id>)` with the id the channel returned.
 - If delivery fails, report the error. Do not fall back to a paste block.

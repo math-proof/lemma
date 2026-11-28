@@ -100,6 +100,45 @@ export class LeanCaret extends Lean {
     }
 }
 
+function bareLog(tok) {
+    if (tok.parent instanceof L.LeanProperty) return false;
+    let p = tok.parent;
+    while (p && !(p instanceof L.LeanModule)) {
+        if (p instanceof L.Lean_open) return false;
+        p = p.parent;
+    }
+    return true;
+}
+
+function moduleOpens(node, namespace) {
+    let root = node;
+    while (root?.parent) root = root.parent;
+    if (!root) return false;
+    if (!root._opens) root._opens = new Map();
+    if (root._opens.has(namespace)) return root._opens.get(namespace);
+    let yes = false;
+    const see = (n) => {
+        if (!n || yes) return;
+        if (n instanceof L.LeanToken && n.text === namespace) {
+            let p = n.parent;
+            while (p && !(p instanceof L.LeanModule)) {
+                if (p instanceof L.Lean_open) {
+                    yes = true;
+                    break;
+                }
+                if (p instanceof L.Lean_def || p instanceof L.Lean_lemma || p instanceof L.Lean_theorem) break;
+                p = p.parent;
+            }
+        }
+        const arg = n.arg;
+        if (arg && arg !== n) see(arg);
+        if (Array.isArray(n.args)) for (const a of n.args) see(a);
+    };
+    see(root);
+    root._opens.set(namespace, yes);
+    return yes;
+}
+
 export class LeanToken extends Lean {
     static { this.register(); }
 
@@ -345,6 +384,14 @@ export class LeanToken extends Lean {
     }
 
     strFormat() {
+        // Importing the echo tactic also imports `ENNReal.log` and `ENNReal.log_one`.
+        // A file that `open`s `Real` elaborates the bare names as the real ones.
+        if (
+            (this.text === 'log' || this.text === 'log_one' || this.text === 'log_zero') &&
+            bareLog(this) &&
+            moduleOpens(this, 'Real')
+        )
+            return 'Real.' + this.text;
         return this.text;
     }
 
@@ -388,6 +435,13 @@ export class LeanLineComment extends Lean {
     }
 
     is_indented() {
+        // A trailing `-- note` shares the previous argument's last line.
+        const p = this.parent;
+        if (p instanceof L.LeanArgsNewLineSeparated || p instanceof L.LeanStatements) {
+            const i = p.args?.indexOf(this) ?? -1;
+            const prev = i > 0 ? p.args[i - 1] : null;
+            if (prev && Lean.lastSourceLine(prev) === this.line) return false;
+        }
         switch (this.text) {
             case 'given': {
                 let parent = this.parent;

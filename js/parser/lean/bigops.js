@@ -735,6 +735,17 @@ export class Lean_int extends LeanBigOperator {
         return 'Integral';
     }
 
+    /**
+     * Once `∂μ` is attached, the integral is a closed term. A following
+     * `+` / `-` must stay outside: `2 * ∫ f ∂μ - ∫ g ∂μ` is
+     * `(2 * ∫ f ∂μ) - ∫ g ∂μ`. Before the measure, `+` / `-` still belong
+     * to the integrand.
+     */
+    get stack_priority() {
+        if (this.scope && this.measurePartial()) return 1024;
+        return super.stack_priority;
+    }
+
     binderVar() {
         let b = this.bound;
         if (b instanceof L.LeanArgsSpaceSeparated) b = b.args[0];
@@ -820,6 +831,9 @@ export class Lean_int extends LeanBigOperator {
     static trailingPartial(node) {
         if (node == null || node instanceof L.LeanCaret) return null;
         if (node instanceof L.Lean_partial) return node;
+        // `∫ a, g • ∫ y, f ∂μ` — `∂μ` belongs to the inner integral.
+        // The next `∂ν` is the outer measure; do not treat `∂μ` as already closing it.
+        if (node instanceof Lean_int) return null;
         if (node instanceof L.LeanArgsSpaceSeparated ||
             node instanceof L.LeanArgsNewLineSeparated ||
             node instanceof L.LeanArgsCommaNewLineSeparated) {
@@ -976,6 +990,30 @@ export class Lean_partial extends LeanBigOperator {
 
     get baseOperator() {
         return '∂';
+    }
+
+    /**
+     * A second `∂` after this measure belongs to the enclosing integral:
+     * `∫ ω, G * ∫ z, g ∂(K) ∂μ`.
+     */
+    insert_unary(caret, funcName) {
+        if (funcName === 'Lean_partial') {
+            let inner = this.parent;
+            while (inner && !(inner instanceof L.Lean_int && inner.measurePartial() === this)) inner = inner.parent;
+            if (inner) {
+                let outer = inner.parent;
+                while (outer && !(outer instanceof L.Lean_int)) outer = outer.parent;
+                if (outer?.scope) {
+                    const host = outer.scope;
+                    const c = new L.LeanCaret(host.indent, host.level);
+                    const partial = new L.Lean_partial(c, host.indent, host.level);
+                    if (host instanceof L.LeanArgsSpaceSeparated) host.push(partial);
+                    else outer.scope = new L.LeanArgsSpaceSeparated([host, partial], host.indent, host.level);
+                    return c;
+                }
+            }
+        }
+        return super.insert_unary(caret, funcName);
     }
 
     get command() {
@@ -1382,10 +1420,18 @@ export class LeanLimitsBigOp extends LeanBigOperator {
 
     strFormat() {
         if (!this.scope) return `${this.operator}[%s]`;
-        return `${this.operator}[%s] %s`;
+        const sep = this.sep();
+        if (sep !== '\n') return `${this.operator}[%s]${sep}%s`;
+        // `sup[x]\n    body` — the body is the first token of the next line.
+        const pad = Math.max(0, this.scope.indent || 0);
+        return `${this.operator}[%s]\n${' '.repeat(pad)}%s`;
     }
 
     sep() {
+        if (this.scope instanceof L.LeanArgsNewLineSeparated || this.scope instanceof L.LeanArgsIndented)
+            return '\n';
+        const scopeLine = this.scope?.line;
+        if (typeof scopeLine === 'number' && scopeLine > this.line) return '\n';
         return ' ';
     }
 

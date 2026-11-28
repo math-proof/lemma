@@ -1,5 +1,6 @@
 import Initialize.Tactic.Attr.Basic
 import Instance.Probability.Process.StochasticProcessTypes.Part3
+import Class.Probability.Process.StochasticProcessTypes.Part4
 open scoped Matrix
 
 

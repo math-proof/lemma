@@ -7,7 +7,7 @@ public import Instance.Data.Tensor.Tan
 public import Instance.Data.Tensor.Pow
 public import Instance.Data.Tensor.Log
 public import Def.Data.Tensor.Utils
-public import Instance.Data.Tensor.Tensor.Part2
+public import Instance.Data.Tensor.Tensor
 public import Def.Data.Tensor.Shape
 public import Def.Data.Tensor.Sum
 public import Def.Data.Tensor.Mean

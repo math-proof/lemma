@@ -1,18 +1,5 @@
-import Lemma.Nat.Le.of.Lt
-import Lemma.Nat.EqMin.of.Le
-open Nat
-
-
-@[path]
-private lemma main
-  [LinearOrder α]
-  {a b : α}
--- given
-  (h : a < b) :
--- imply
-  a ⊓ b = a :=
--- proof
-  EqMin.of.Le (Le.of.Lt h)
+import Theorem.Nat.EqMin.of.Lt
+import Initialize.Tactic.Attr.Basic
 
 
 -- created on 2018-08-31

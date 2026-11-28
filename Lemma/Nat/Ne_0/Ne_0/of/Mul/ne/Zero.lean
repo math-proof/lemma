@@ -1,5 +1,5 @@
 import Theorem.Nat.Ne_0.of.Mul.ne.Zero
-import Instance.Data.Tensor.Tensor.Part2
+import Instance.Data.Tensor.Tensor
 open Nat
 
 

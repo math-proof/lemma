@@ -9,8 +9,8 @@ public section
 open List
 
 
-@[comm]
-public theorem List.ProdEraseIdx.eq.MulProdS
+@[path, comm]
+private lemma main
   [Monoid α]
 -- given
   (s : List α)

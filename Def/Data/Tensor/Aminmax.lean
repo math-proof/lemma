@@ -1,5 +1,5 @@
 module
-public import Instance.Data.Tensor.Tensor.Part2
+public import Instance.Data.Tensor.Tensor
 public import Instance.Data.Vector.Functions
 public import Theorem.Nat.Lt_Sub.of.LtAdd
 public import Theorem.List.ProdTake_1.eq.Get_0.of.GtLength_0

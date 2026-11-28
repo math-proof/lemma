@@ -1,5 +1,5 @@
 import Lemma.Tensor.Mul
-import Instance.Data.Tensor.Tensor.Part2
+import Instance.Data.Tensor.Tensor
 open Tensor
 
 

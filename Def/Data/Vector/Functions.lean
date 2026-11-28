@@ -91,6 +91,14 @@ def argAminmax [NeZero m] (x : Vector (Vector α n) m) (cmp : α → α → Prop
 
 end List.Vector
 
+/-- Elementwise sine on a finitely indexed function. -/
+def Function.sin [Sin α] (x : Fin n → α) : Fin n → α :=
+  fun j => Sin.sin (x j)
+
+/-- Elementwise cosine on a finitely indexed function. -/
+def Function.cos [Cos α] (x : Fin n → α) : Fin n → α :=
+  fun j => Cos.cos (x j)
+
 /-- Normalize the exponentials of a finitely indexed function by their sum. -/
 def Function.softmax [Exp α] (x : Fin n → α) : Fin n → α :=
   fun j => Exp.exp (x j) / ∑ i, Exp.exp (x i)

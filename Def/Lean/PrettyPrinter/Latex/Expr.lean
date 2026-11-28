@@ -435,7 +435,7 @@ def Expr.latexFormat : Expr → String
           else
             binop.latexFormat left right level
         | `HAppend.hAppend =>
-          if let some rows@(row0 :: _) := e.blockMatrixRows then
+          if let some rows@(row0 :: _) := e.blockCells then
             Expr.bmatrixFormat rows.length row0.length
           else
             binop.latexFormat left right level
@@ -738,7 +738,7 @@ def Expr.latexFormat : Expr → String
               level.toColor ((arg.priority > func.priority || arg.is_Div || arg.is_BlockMatrix) && !arg.is_JointRandomSymbol)
             opStr ++ "\\ " ++ "\\ ".intercalate args
         | `id =>
-          if let some rows@(row0 :: _) := e.blockMatrixRows then
+          if let some rows@(row0 :: _) := e.blockCells then
             Expr.bmatrixFormat rows.length row0.length
           else if args.isEmpty then opStr else "%s"
         | `Exp.exp
@@ -879,8 +879,9 @@ def Expr.latexFormat : Expr → String
           let left := level.toColor (left.priority > func.priority)
           let right := level.toColor (right.priority > func.priority)
           "%s {\\color{red}\\%%%%} %s".format left, right
-        | "hstack", _ =>
-          if let some rows@(row0 :: _) := e.blockMatrixRows then
+        | "hstack", _
+        | "vstack", _ =>
+          if let some rows@(row0 :: _) := e.blockCells then
             Expr.bmatrixFormat rows.length row0.length
           else
             opStr
@@ -1360,7 +1361,7 @@ where
       else
         map args
     | .BinaryInfix ⟨`HAppend.hAppend⟩ =>
-      if let some rows := e.blockMatrixRows then
+      if let some rows := e.blockCells then
         map rows.flatten
       else
         map args
@@ -1447,8 +1448,9 @@ where
             match args.swap 0 idx with
             | [s, f] => preimageBase f :: map [s]
             | swapped => map swapped
-          | .str _ "hstack" =>
-            if let some rows := e.blockMatrixRows then
+          | .str _ "hstack"
+          | .str _ "vstack" =>
+            if let some rows := e.blockCells then
               map rows.flatten
             else
               map (args.swap 0 idx)
@@ -1572,7 +1574,7 @@ where
           | args =>
             map args
         | .Lean_operatorname `id =>
-          if let some rows := e.blockMatrixRows then
+          if let some rows := e.blockCells then
             map rows.flatten
           else
             map args

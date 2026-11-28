@@ -3,7 +3,7 @@ module
 public import Mathlib
 public import Def.NumberTheory.RothAuxiliary.Part5
 public import Theorem.Fin.MulMulMul4SquareCardRothLowIndices.le.CardRothBox.of.Gt_0.Gt_0.All_Gt_0
-public import Initialize.Tactic.Attr
+public import Initialize.Tactic.Attr.Basic
 
 public section
 

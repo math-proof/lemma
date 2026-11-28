@@ -65,8 +65,11 @@ private lemma main
               exact_mod_cast this
             push_cast
             exact rpow_le_rpow_of_nonpos (by positivity) this (by linarith)
-    have hup := SumRangeInvPoly.le.DivSubPow.of.Lt_1.Ge_0 (a := anc.t n) (by linarith) h₁
-    have hsum := Real.Anchors.SumRangeT.le.SumRangeTime (anc := anc) (m := n)
+    have hup := by
+      simpa [Nat.Iio_eq_range] using
+        SumRangeInvPoly.le.DivSubPow.of.Lt_1.Ge_0 (a := anc.t n) (by linarith) h₁
+    have hsum := by
+      simpa [Nat.Iio_eq_range] using Real.Anchors.SumRangeT.le.SumRangeTime (anc := anc) (m := n)
     have hkey : (1 - ν) * (n : ℝ) ^ (1 - z) ≤ ((anc.t n : ℝ) + 1) ^ (1 - ν) := by
       have := hlow.trans (hsum.trans hup)
       rw [le_div_iff₀ h1ν] at this

@@ -9,6 +9,19 @@
  * - Operator heads and children are compared syntactically, not by value.
  */
 const HOLE_RE = /^\$\d+$/;
+/** A query leaf `/expr/` matches a string leaf against `expr`, anchored to the whole leaf. */
+const LEAF_RE = /^\/(.+)\/$/;
+
+function queryLeafRegex(query) {
+  if (typeof query !== "string") return null;
+  const body = LEAF_RE.exec(query);
+  if (!body) return null;
+  try {
+    return new RegExp("^(?:" + body[1] + ")$");
+  } catch (e) {
+    throw new Error("invalid fingerprint leaf regex " + query + ": " + (e.message || e));
+  }
+}
 
 export function isSearchHole(node) {
   return typeof node === "string" && HOLE_RE.test(node);
@@ -56,6 +69,8 @@ export function matchAt(query, doc, env = new Map()) {
     env.set(query, doc);
     return true;
   }
+  const leafRegex = queryLeafRegex(query);
+  if (leafRegex) return typeof doc === "string" && leafRegex.test(doc);
   if (typeof query !== "object" || query == null) return query === doc;
   if (typeof doc !== "object" || doc == null) return false;
   if (Array.isArray(query)) {

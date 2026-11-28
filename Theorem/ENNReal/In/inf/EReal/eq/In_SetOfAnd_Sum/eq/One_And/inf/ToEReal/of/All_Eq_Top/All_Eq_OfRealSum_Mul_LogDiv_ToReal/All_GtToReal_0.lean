@@ -17,7 +17,7 @@ public theorem sum_toReal [Fintype α] (μ : PMF α) : ∑ a, (μ a).toReal = 1 
   simp
 
 public theorem inf_eq [Fintype α] {μ : PMF α} {I : (α → ℝ) → ENNReal} {A : Set (α → ℝ)} (hμ : ∀ a, 0 < (μ a).toReal) (hOn : ∀ ν, (∀ a, 0 ≤ ν a) → ∑ a, ν a = 1 → I ν = ENNReal.ofReal (∑ a, ν a * log (ν a / (μ a).toReal))) (hOut : ∀ ν, ¬((∀ a, 0 ≤ ν a) ∧ ∑ a, ν a = 1) → I ν = ⊤) :
-  (⨅ ν ∈ A, (I ν : EReal)) = ⨅ ν ∈ {ν : α → ℝ | (∀ a, 0 ≤ ν a) ∧ ∑ a, ν a = 1 ∧ ν ∈ A}, toEReal (∑ a, ν a * log (ν a / (μ a).toReal)) := by
+  (⨅ ν ∈ A, (I ν : EReal)) = ⨅ ν ∈ {ν : α → ℝ | (∀ a, 0 ≤ ν a) ∧ ∑ a, ν a = 1 ∧ ν ∈ A}, ((∑ a, ν a * log (ν a / (μ a).toReal) : ℝ) : EReal) := by
   classical
   let kl (ν : α → ℝ) : ℝ := ∑ a, ν a * log (ν a / (μ a).toReal)
   let simplex := {ν : α → ℝ | (∀ a, 0 ≤ ν a) ∧ ∑ a, ν a = 1 ∧ ν ∈ A}
@@ -27,7 +27,7 @@ public theorem inf_eq [Fintype α] {μ : PMF α} {I : (α → ℝ) → ENNReal} 
     refine le_iInf₂ ?_
     intro ν hν
     obtain ⟨hge, hsum, hmem⟩ := hν
-    have hcoe : (I ν : EReal) = toEReal (kl ν) := by
+    have hcoe : (I ν : EReal) = (kl ν : EReal) := by
       rw [hOn ν hge hsum, EReal.coe_ennreal_ofReal, max_eq_left (Sum_Mul_LogDiv.ge.Zero.of.EqSum_1.All_Gt_0.EqSum_1.All_Ge_0 hge hsum hμ hsumμ)]
     rw [← hcoe]
     exact iInf₂_le (f := fun x (_ : x ∈ A) => (I x : EReal)) ν hmem
@@ -37,10 +37,10 @@ public theorem inf_eq [Fintype α] {μ : PMF α} {I : (α → ℝ) → ENNReal} 
     obtain hS | hS := em ((∀ a, 0 ≤ ν a) ∧ ∑ a, ν a = 1)
     ·
       obtain ⟨hge, hsum⟩ := hS
-      have hcoe : (I ν : EReal) = toEReal (kl ν) := by
+      have hcoe : (I ν : EReal) = (kl ν : EReal) := by
         rw [hOn ν hge hsum, EReal.coe_ennreal_ofReal, max_eq_left (Sum_Mul_LogDiv.ge.Zero.of.EqSum_1.All_Gt_0.EqSum_1.All_Ge_0 hge hsum hμ hsumμ)]
       rw [hcoe]
-      exact iInf₂_le (f := fun x (_ : x ∈ simplex) => toEReal (kl x)) ν ⟨hge, hsum, hνA⟩
+      exact iInf₂_le (f := fun x (_ : x ∈ simplex) => (kl x : EReal)) ν ⟨hge, hsum, hνA⟩
     ·
       rw [hOut ν hS, EReal.coe_ennreal_top]
       apply le_top
@@ -61,9 +61,11 @@ public theorem ENNReal.In.inf.EReal.eq.In_SetOfAnd_Sum.eq.One_And.inf.ToEReal.of
 -- imply
   (⨅ ν ∈ A, (I ν : EReal)) =
     ⨅ ν ∈ {ν : α → ℝ | (∀ a, 0 ≤ ν a) ∧ ∑ a, ν a = 1 ∧ ν ∈ A},
-      toEReal (∑ a, ν a * log (ν a / (μ a).toReal)) :=
+      ((∑ a, ν a * log (ν a / (μ a).toReal) : ℝ) : EReal) :=
 -- proof
   inf_eq hμ hOn hOut
 
 
 -- created on 2026-11-02
+
+-- updated on 2026-11-28

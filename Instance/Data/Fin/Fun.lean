@@ -26,3 +26,14 @@ instance instGetElemFinNat {n : ℕ} {α : Type*} : GetElem (Fin n → α) ℕ �
 @[simp] theorem getElem_fin_apply {n : ℕ} {α : Type*} (f : Fin n → α) (i : ℕ) (h : i < n) :
     f[i] = f ⟨i, h⟩ :=
   rfl
+
+/-- `f i` with `i : Fin n` equals the `GetElem` read `f[i]`; the `Fin n` index is coerced to
+`ℕ` and discharged by `get_elem_tactic`.
+
+Deliberately *not* a `@[simp]` lemma. With `getElem_fin_apply` in the default simp set it forms
+the cycle `f i → f[i] → f ⟨(i:ℕ), _⟩ → …` which overflows `maxRecDepth`, and even alone an
+unanchored `simp only [getElem_fin]` (LHS `?f ?i` is all metavariables) can diverge. Invoke it
+with the function anchored, e.g. `simp only [getElem_fin f]`, or `rw [getElem_fin f i]`. -/
+theorem getElem_fin {n : ℕ} {α : Type*} (f : Fin n → α) (i : Fin n) :
+    f i = f[i] :=
+  rfl

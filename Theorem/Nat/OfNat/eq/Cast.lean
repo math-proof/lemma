@@ -5,8 +5,8 @@ public import Initialize.Tactic.Attr.Basic
 public section
 
 
-@[comm]
-public theorem Nat.OfNat.eq.Cast
+@[path, comm]
+private lemma main
   [Semiring α]
   -- given
   (d : ℕ) :

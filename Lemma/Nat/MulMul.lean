@@ -1,48 +1,5 @@
+import Theorem.Nat.MulMul
 import Initialize.Tactic.Attr.Basic
-
-
-@[path]
-private lemma Comm
-  [CommSemigroup α]
--- given
-  (a b c : α) :
--- imply
-  a * b * c = a * c * b := by
--- proof
-  grind
-
-
-@[path]
-private lemma swap
-  [CommSemigroup α]
--- given
-  (a b c : α) :
--- imply
-  a * b * c = b * a * c := by
--- proof
-  grind
-
-
-@[path]
-private lemma reverse
-  [CommSemigroup α]
--- given
-  (a b c : α) :
--- imply
-  a * b * c = c * b * a := by
--- proof
-  grind
-
-
-@[path, comm]
-private lemma rotate
-  [CommSemigroup α]
--- given
-  (a b c : α) :
--- imply
-  a * b * c = b * c * a := by
--- proof
-  grind
 
 
 -- created on 2024-11-29

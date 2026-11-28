@@ -21,7 +21,7 @@ private lemma main
   rw [TailAppend.eq.AppendTail.of.GtLength_0 (by simp; omega)]
   rw [TailTake.eq.TakeTail.of.Gt_0 (by omega)]
   rw [TailTake.eq.TakeTail]
-  simp [SubSub.comm]
+  simp [Nat.sub_right_comm]
   simp [← TailTake.eq.TakeTail]
   omega
 

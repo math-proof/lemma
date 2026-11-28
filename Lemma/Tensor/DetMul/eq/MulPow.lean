@@ -6,7 +6,7 @@ import Lemma.Tensor.Pow.eq.TensorListPow
 import Lemma.Vector.GetMul.eq.MulGet
 import Lemma.Vector.GetMul.eq.Mul_Get
 import Def.Data.Tensor.Stack.Part2
-import Instance.Data.Tensor.Tensor.Part2
+import Instance.Data.Tensor.Tensor
 open Tensor
 
 

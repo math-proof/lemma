@@ -4,8 +4,8 @@
  * `?lean=<expression>` (or the search box's Lean checkbox) is an exact
  * subtree-match over lemma conclusions: shortlist via axiom.inverted, then
  * match stored axiom.fingerprint trees (mjs/leanInvertedIndex.mjs).
- * When the exact query has no hit, expanded queries (`∑`/`∏` binder forms,
- * `x²` <-> `x ^ 2`, …) are tried and returned separately as `similar`.
+ * When the exact query has no hit, expanded queries (`∑`/`∏` binder forms) are
+ * tried and returned separately as `similar`.
  */
 import { getMysqlPool } from './fetchLemmaMysql.mjs';
 import { moduleToLeanPath, moduleToRepoLeanPath, fileExists } from './modulePath.mjs';

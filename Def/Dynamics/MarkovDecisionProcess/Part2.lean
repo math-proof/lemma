@@ -30,7 +30,7 @@ variable {S : Type u} {A : Type v} [MeasurableSpace S] [MeasurableSpace A]
   [Countable S] [MeasurableSingletonClass S]
 
 -- the policy reading the last state of ((s, a), s') (rl: `MDPSpec.pi_kernel₁`)
-noncomputable def pi_kernel₁ (pi : S → ProbabilityMeasure A) : Kernel ((S × A) × S) A :=
+@[expose] noncomputable def pi_kernel₁ (pi : S → ProbabilityMeasure A) : Kernel ((S × A) × S) A :=
   (pi_kernel pi).comap Prod.snd measurable_snd
 
 end MDPSpec

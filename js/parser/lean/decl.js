@@ -736,25 +736,21 @@ export class Lean_show extends LeanSyntax {
 
     strFormat() {
         const parts = [this.func];
+        // `show T from p` stays one line. `show\n  T` and `show T\n    from p` break.
+        let prevEnd = typeof this.line === 'number' ? this.line : -1;
         for (const arg of this.args) {
             if (arg instanceof L.LeanCaret) {
                 parts.push('%s');
                 continue;
             }
-            if (arg instanceof L.LeanFrom && typeof arg.line === 'number') {
-                let prevEnd = -1;
-                for (const earlier of this.args) {
-                    if (earlier === arg) break;
-                    if (earlier instanceof L.LeanCaret) continue;
-                    prevEnd = Math.max(prevEnd, Lean.lastSourceLine(earlier));
-                }
-                // `show T\n    from p` breaks. `show T from p` stays one line.
-                if (arg.line > prevEnd) {
-                    parts.push('\n' + ' '.repeat(arg.indent) + '%s');
-                    continue;
-                }
+            const argLine = typeof arg.line === 'number' ? arg.line : -1;
+            if (argLine >= 0 && prevEnd >= 0 && argLine > prevEnd) {
+                const own = typeof arg.stringIndent === 'function' ? arg.stringIndent() : 0;
+                parts.push('\n' + (own > 0 ? '' : ' '.repeat(Math.max(0, arg.indent ?? 0))) + '%s');
+            } else {
+                parts.push(' %s');
             }
-            parts.push(' %s');
+            if (argLine >= 0) prevEnd = Math.max(prevEnd, Lean.lastSourceLine(arg));
         }
         return parts.join('');
     }

@@ -1,5 +1,5 @@
 import Lemma.Nat.Delta.eq.Ite
-import Instance.Data.Tensor.Tensor.Part2
+import Instance.Data.Tensor.Tensor
 open Nat
 
 

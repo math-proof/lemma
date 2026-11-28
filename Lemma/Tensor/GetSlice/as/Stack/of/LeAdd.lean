@@ -3,7 +3,7 @@ import Lemma.Tensor.EqGetStack
 import Lemma.Tensor.GetGetSlice.eq.Get_Add.of.GtSubMin
 import Lemma.Bool.SEq.is.Eq
 import Def.Data.Tensor.Stack.Part2
-import Instance.Data.Tensor.Tensor.Part2
+import Instance.Data.Tensor.Tensor
 open Tensor List Bool Nat
 
 

@@ -1,3 +1,4 @@
+import Theorem.Tensor.Length.eq.Get_0.of.GtLength_0
 import Theorem.Tensor.Length.eq.Get_0.of.Ne_Nil
 open Tensor
 
@@ -8,7 +9,7 @@ open Tensor
 | path | Tensor.Length.eq.Get_0.of.GtLength_0 |
 | comm | Tensor.Get_0.eq.Length.of.GtLength_0 |
 -/
-@[path, comm]
+@[comm]
 private lemma main
 -- given
   (h : s.length > 0)

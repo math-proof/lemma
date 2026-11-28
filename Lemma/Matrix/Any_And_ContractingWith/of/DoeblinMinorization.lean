@@ -1,4 +1,5 @@
 import Lemma.Matrix.VecMul_SMul.eq.SMul_VecMul
+import Class.Probability.Process.StochasticProcessTypes.Part4
 import Lemma.Matrix.VecMul_Broadcast.eq.FunMulSum
 import Lemma.Matrix.LeNormOfL1SubVecMulS.of.RowStochastic
 import Lemma.Matrix.OfL1.eq.SMul

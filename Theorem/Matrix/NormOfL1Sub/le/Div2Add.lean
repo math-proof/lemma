@@ -5,7 +5,7 @@ public import Theorem.Matrix.VecMulSMul.eq.SMul_VecMul
 public import Theorem.Matrix.L1Norm.eq.One.of.StochasticVec
 public import Theorem.Matrix.OfL1.eq.Sub
 public import Theorem.Matrix.OfL1.eq.SMul
-public import Initialize.Tactic.Attr
+public import Initialize.Tactic.Attr.Basic
 
 public section
 

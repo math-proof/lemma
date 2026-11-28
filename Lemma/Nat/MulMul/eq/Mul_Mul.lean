@@ -1,8 +1,9 @@
 import Lemma.Nat.Mul
+import Theorem.Nat.MulMul.eq.Mul_Mul
 open Nat
 
 
-@[path, comm]
+@[comm]
 private lemma main
   [Semigroup α]
   {a b : α} :
@@ -12,7 +13,7 @@ private lemma main
   mul_assoc a b c
 
 
-@[path, comm]
+@[comm]
 private lemma Comm
   [CommSemigroup α]
   {a b : α} :
@@ -52,7 +53,7 @@ private lemma permute
   grind
 
 
-@[path, comm]
+@[comm]
 private lemma reverse
   [CommSemigroup α]
   {a b : α} :

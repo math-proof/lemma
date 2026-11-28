@@ -1,6 +1,6 @@
 module
 
-public import Mathlib.Data.EReal.Basic
+public import Mathlib.Data.EReal.Operations
 
 public section
 
@@ -55,3 +55,5 @@ public theorem EReal.Le_Neg.of.All_Le_Neg
 
 
 -- created on 2026-11-05
+
+-- updated on 2026-11-28

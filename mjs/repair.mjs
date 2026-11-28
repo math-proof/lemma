@@ -3,16 +3,49 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { getMysqlPool } from './lean/fetchLemmaMysql.mjs';
 import { REPO_ROOT, isValidModuleName, moduleToLeanPath } from './lean/modulePath.mjs';
+import { fingerprintMatches, parseFingerprintPattern, patternHeads } from './lean/fingerprintPattern.mjs';
 
+const USAGE = 'Usage: node mjs/repair.mjs --json <json-fingerprint>';
+
+function likeLiteral(text) {
+  return '%' + String(text).replace(/[\\%_]/g, (ch) => '\\' + ch) + '%';
+}
+
+function fingerprintTree(value) {
+  if (value == null || typeof value === 'object') return value;
+  if (typeof value !== 'string') return null;
+  const text = value.trim();
+  if (!text.startsWith('{') && !text.startsWith('[')) return null;
+  try {
+    return JSON.parse(text);
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Subtree search. `"_"` matches one subtree, so `{"Pow":["_","2"]}` is Pow(_2).
+ * `"/[2-4]/"` matches a string leaf in that range. `$n` is a repeated hole.
+ * The pattern matches anywhere inside a stored fingerprint.
+ */
 async function findModules(pool, pattern) {
+  const heads = patternHeads(pattern);
+  const where = heads.map(() => 'CAST(f.fingerprint AS CHAR) LIKE ? ESCAPE \'\\\\\'').join(' AND ');
   const [rows] = await pool.execute(
-    `SELECT l.module, COUNT(*) AS matches
+    `SELECT l.module, f.fingerprint
        FROM fingerprint f JOIN lemma l ON l.id = f.id
-      WHERE CAST(f.fingerprint AS CHAR CHARACTER SET utf8mb4) COLLATE utf8mb4_bin REGEXP ?
-      GROUP BY l.module ORDER BY l.module`,
-    [pattern],
+      ${where ? 'WHERE ' + where : ''}`,
+    heads.map(likeLiteral),
   );
-  return rows;
+  const counts = new Map();
+  for (const row of rows) {
+    const tree = fingerprintTree(row.fingerprint);
+    if (!fingerprintMatches(pattern, tree)) continue;
+    counts.set(row.module, (counts.get(row.module) ?? 0) + 1);
+  }
+  return [...counts.entries()]
+    .sort((a, b) => (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0))
+    .map(([module, matches]) => ({ module, matches }));
 }
 
 function printMatches(label, rows) {
@@ -21,14 +54,15 @@ function printMatches(label, rows) {
 }
 
 async function main() {
-  const [flag, pattern, ...extra] = process.argv.slice(2);
+  const [flag, raw, ...extra] = process.argv.slice(2);
   if (flag === '--help') {
-    console.log('Usage: node mjs/repair.mjs --input <fingerprint-regex>');
+    console.log(USAGE);
     return;
   }
-  if (flag !== '--input' || !pattern || extra.length) {
-    throw new Error('Usage: node mjs/repair.mjs --input <fingerprint-regex>');
+  if (flag !== '--json' || !raw || extra.length) {
+    throw new Error(USAGE);
   }
+  const pattern = parseFingerprintPattern(raw);
   const pool = getMysqlPool();
   if (!pool) throw new Error('MySQL is not configured');
   try {

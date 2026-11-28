@@ -53,7 +53,7 @@ export class Lean_fun extends LeanArgs {
         return 'fun';
     }
     get command() {
-        return '\\lambda';
+        return '{\\color{blue}\\lambda}';
     }
 
     /** Match lambda (`fun | p => e | q => e`): every arg is a `LeanBar`. */

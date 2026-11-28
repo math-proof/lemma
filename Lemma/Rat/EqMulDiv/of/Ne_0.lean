@@ -1,17 +1,5 @@
+import Theorem.Rat.EqMulDiv.of.Ne_0
 import Initialize.Tactic.Attr.Basic
-
-
-@[path]
-private lemma main
-  [GroupWithZero α]
-  {b : α}
--- given
-  (h : b ≠ 0)
-  (a : α) :
--- imply
-  a / b * b = a := by
--- proof
-  simp [h]
 
 
 -- created on 2025-03-30

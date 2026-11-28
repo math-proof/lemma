@@ -1,6 +1,7 @@
 import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 import Lemma.Random.Prob_JointGetS_SliceAdd_1.eq.MulMulProbS__Prod_MulProbS_Cond_Get.of.IsDiscreteHMM
 import Initialize.Tactic.Attr.Basic
+import Instance.Data.Nat.Fun
 open MeasureTheory Random
 open scoped ENNReal.ToRealCoe
 
@@ -55,13 +56,13 @@ private lemma policy_gradient_theorem
     have h := Prob_JointGetS_SliceAdd_1.eq.MulMulProbS__Prod_MulProbS_Cond_Get.of.IsDiscreteHMM.mdp (π := π θ)
       («\sf{s}» := sv) («\sf{a}» := av) hs ha (hpol θ) (htrans θ) T
     rw [h, ENNReal.toReal_mul, ENNReal.toReal_prod]
-    simp only [ENNReal.toReal_mul]
+    simp only [ENNReal.toReal_mul, getElem_nat_apply]
     rw [Finset.prod_mul_distrib, hC, hinit θ θ₀, mul_assoc]
     congr 1
     rw [mul_comm]
     congr 1
-    · exact Finset.prod_congr rfl fun i _ => htr θ θ₀ i
-    · exact Finset.prod_congr rfl fun i _ => (hp θ i).symm
+    · exact Finset.prod_congr (Nat.Iio_eq_range T) fun i _ => htr θ θ₀ i
+    · exact Finset.prod_congr (Nat.Iio_eq_range T) fun i _ => (hp θ i).symm
   have hCnn : 0 ≤ C := by
     rw [hC]
     exact mul_nonneg ENNReal.toReal_nonneg (Finset.prod_nonneg fun _ _ => ENNReal.toReal_nonneg)
@@ -91,4 +92,4 @@ private lemma policy_gradient_theorem
 
 
 -- created on 2023-03-22
--- updated on 2026-11-17
+-- updated on 2026-11-28

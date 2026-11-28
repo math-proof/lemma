@@ -5,7 +5,8 @@ public import Initialize.Tactic.Attr.Basic
 public section
 
 
-public theorem Nat.MulMul.comm
+@[path]
+private lemma Comm
   [CommSemigroup α]
 -- given
   (a b c : α) :
@@ -15,7 +16,8 @@ public theorem Nat.MulMul.comm
   grind
 
 
-public theorem Nat.MulMul.swap
+@[path]
+private lemma swap
   [CommSemigroup α]
 -- given
   (a b c : α) :
@@ -25,7 +27,8 @@ public theorem Nat.MulMul.swap
   grind
 
 
-public theorem Nat.MulMul.reverse
+@[path]
+private lemma reverse
   [CommSemigroup α]
 -- given
   (a b c : α) :
@@ -35,8 +38,8 @@ public theorem Nat.MulMul.reverse
   grind
 
 
-@[comm]
-public theorem Nat.MulMul.rotate
+@[path, comm]
+private lemma rotate
   [CommSemigroup α]
 -- given
   (a b c : α) :

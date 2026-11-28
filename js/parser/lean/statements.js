@@ -96,7 +96,7 @@ export class LeanStatements extends LeanArgs {
         return L.LeanColon.input_priority;
     }
 
-    push_binary(Ctor, skipBraceShortcut = false) {
+    push_binary(Ctor, skipBraceShortcut = false, script) {
         const parent = this.parent;
         if (!parent) {
             // Module-level `surj y := by` (a `where` field that dedented out of the
@@ -124,7 +124,7 @@ export class LeanStatements extends LeanArgs {
             break;
         }
 
-        if (Ctor.input_priority > this.stack_priority) {
+        if ((Ctor.input_priorities?.[script] ?? Ctor.input_priority) > this.stack_priority) {
             if (idx >= 0) {
                 const origin = this.args[idx];
                 while (
@@ -137,7 +137,7 @@ export class LeanStatements extends LeanArgs {
                 this.replace(origin, new Ctor(origin, caret, origin.indent, origin.level));
                 return caret;
             }
-            return super.push_binary(Ctor, skipBraceShortcut);
+            return super.push_binary(Ctor, skipBraceShortcut, script);
         }
 
         // `skipBraceShortcut` (from `insert_assign` / `insert_colon`) keeps the old parse for every `:` and for `:=`
@@ -145,8 +145,8 @@ export class LeanStatements extends LeanArgs {
         // / `{ s with⏎ … }`) `x := v` starts the next structure-instance field.
         const structField = Ctor === L.LeanAssign && (this.structInst === true || parent instanceof L.LeanBrace);
         if ((skipBraceShortcut && !structField) || (Ctor !== L.LeanAssign && Ctor !== L.LeanColon) || !(parent instanceof L.LeanBrace || structField))
-            return super.push_binary(Ctor, skipBraceShortcut);
-        if (idx < 0) return super.push_binary(Ctor, skipBraceShortcut);
+            return super.push_binary(Ctor, skipBraceShortcut, script);
+        if (idx < 0) return super.push_binary(Ctor, skipBraceShortcut, script);
         if (structField) this.structInst = true;
         const origin = this.args[idx];
         const caret = new L.LeanCaret(origin.indent, origin.level);
@@ -468,10 +468,22 @@ export class LeanStatements extends LeanArgs {
         if (n === 0) return '';
         let format = this.args.map((arg, i) => {
             const gap = arg?.leadingBlanks || 0;
+            const prev = i > 0 ? this.args[i - 1] : null;
+            if (
+                gap === 0 &&
+                arg instanceof L.LeanLineComment &&
+                prev &&
+                Lean.lastSourceLine(prev) === arg.line
+            )
+                return ' %s';
             return (i === 0 ? '\n'.repeat(gap) : '\n' + '\n'.repeat(gap)) + '%s';
         }).join('');
         if (this.parent instanceof L.LeanBrace && !this.parent.inline) {
-            format = `\n${format}\n${' '.repeat(this.parent.indent)}`;
+            const pad = this.parent.closeIndent;
+            // `closeIndent` is set only when `}` begins the following line.
+            format = pad !== undefined
+                ? `\n${format}\n${' '.repeat(pad)}`
+                : `\n${format} `;
         }
         return format;
     }

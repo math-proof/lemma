@@ -40,7 +40,7 @@ import { getMysqlPool } from "./lean/fetchLemmaMysql.mjs";
 import { REPO_ROOT, leanFilePathToModule, moduleToRepoLeanPath } from "./lean/modulePath.mjs";
 import { assembleLeanSourceFromPostBody } from "./lean/assembleLemmaPost.mjs";
 import { matchesSubtree } from "./leanSubtreeMatch.mjs";
-import { binderQueryVariants, powerQueryVariants } from "./lean/queryExpansion.mjs";
+import { binderQueryVariants } from "./lean/queryExpansion.mjs";
 import { infixFingerprint } from "./lean/infixFingerprint.mjs";
 
 const LEMMA_ROOT = path.join(REPO_ROOT, "Lemma");
@@ -175,9 +175,7 @@ export function expandedQueries(expr) {
   const base = headsOfQuery(expr);
   add(base);
   for (const source of binderQueryVariants(expr)) {
-    const query = source === expr ? base : headsOfQuery(source);
-    add(query);
-    for (const json of powerQueryVariants(query.json)) add(queryFromJson(json));
+    if (source !== expr) add(headsOfQuery(source));
   }
   return out;
 }

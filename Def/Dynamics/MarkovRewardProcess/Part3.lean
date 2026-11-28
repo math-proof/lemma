@@ -41,7 +41,7 @@ section stationary
 variable [Nonempty S]
 
 -- a stationary distribution of P (rl: `FiniteMRP.μ`)
-noncomputable def μ : S → ℝ :=
+@[expose] noncomputable def μ : S → ℝ :=
   (Matrix.Any_And_Stationary.of.RowStochastic (P := MRP.P)).choose
 
 end stationary

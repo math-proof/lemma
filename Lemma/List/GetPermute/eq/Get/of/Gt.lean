@@ -1,6 +1,7 @@
-import Lemma.List.Permute.of.Add.ge.SubLength_1
 import Lemma.List.GetPermute.eq.Ite.of.GtLength.GtLength
-open List
+import Theorem.List.Permute.eq.Append_AppendRotateTakeDrop
+import Lemma.List.Drop.eq.Nil.of.LeLength
+open List Nat
 
 
 @[path]
@@ -21,7 +22,13 @@ private lemma main
   else
     simp at h_d
     have h_d : i + d ≥ s.length - 1 := by omega
-    simp [Permute.of.Add.ge.SubLength_1 h_d]
+    have h_eq : s.permute i d = s.permute i (s.length - 1 - i : ℕ) := by
+      repeat rw [Permute.eq.Append_AppendRotateTakeDrop]
+      simp_all [show (s.length - 1 - i + 1) = s.length - i by omega]
+      rw [Drop.eq.Nil.of.LeLength (i := i + (d + 1)) (by have := Nat.succ_le_succ h_d; omega)]
+      simp
+      omega
+    simp [h_eq]
     rw [GetPermute.eq.Ite.of.GtLength.GtLength (by omega) (by omega)]
     split_ifs
     repeat rfl

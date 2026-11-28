@@ -1,6 +1,6 @@
 module
 
-public import Instance.Data.Tensor.Tensor.Part2
+public import Instance.Data.Tensor.Tensor
 @[expose] public section
 
 open Tensor

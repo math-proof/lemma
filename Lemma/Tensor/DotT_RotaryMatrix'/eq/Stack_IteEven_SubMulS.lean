@@ -4,7 +4,7 @@ import Lemma.Tensor.AddMulS.eq.SubMulS
 import Lemma.Tensor.Dot.eq.Stack_Sum_MulGetS
 import Lemma.Tensor.GetRotaryMatrix'.eq.Ite_IteS
 import Notation.Data.Tensor.Permute
-import Instance.Data.Tensor.Tensor.Part2
+import Instance.Data.Tensor.Tensor
 import Theorem.Data.Tensor.Functions
 import Def.Data.Tensor.Stack.Part2
 import Instance.Data.Vector.Basic.Dot

@@ -2,13 +2,15 @@ module
 
 public import Theorem.Nat.Le.of.Lt
 public import Theorem.Nat.EqMin.of.Le
+public import Initialize.Tactic.Attr.Basic
 
 public section
 
 open Nat
 
 
-public theorem Nat.EqMin.of.Lt
+@[path]
+private lemma main
   [LinearOrder α]
   {a b : α}
 -- given

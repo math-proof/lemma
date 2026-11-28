@@ -2,6 +2,7 @@ module
 
 public import Mathlib.Probability.ProbabilityMassFunction.Constructions
 public import Structure.Dynamics.MarkovRewardProcess
+public import Theorem.Matrix.Sum_Mul.eq.One.of.StochasticVec.RowStochastic
 
 @[expose] public section
 
@@ -27,21 +28,6 @@ Ported from rl-theory-in-lean `RLTheory/MarkovDecisionProcess/MarkovRewardProces
   transitions i.i.d. from `μ(s) P(s, s')`, resp. along the chain started from `p₀`;
   `MRP.iid_samples` / `MRP.markov_samples` are their path laws.
 -/
-
-
-namespace Matrix.Sum_Mul.eq.One.of.StochasticVec
-
-theorem RowStochastic {S : Type*} [Fintype S] {μ : S → ℝ} {P : Matrix S S ℝ}
-    (h₀ : RowStochastic P) (h₁ : StochasticVec μ) :
-    ∑ i, ∑ j, μ i * P i j = 1 := by
-  calc
-    _ = ∑ i, μ i * ∑ j, P i j := by
-      simp [Finset.mul_sum]
-    _ = ∑ i, μ i := by
-      simp [fun i => (h₀.stochastic i).rowsum]
-    _ = 1 := h₁.rowsum
-
-end Matrix.Sum_Mul.eq.One.of.StochasticVec
 
 
 -- the law of a transition pair (s, s') with s ~ x and s' ~ P s

@@ -1,5 +1,5 @@
 import Lemma.Nat.DivAddMul.eq.Add_Div.of.Gt_0
-import Lemma.Nat.Gt_0.of.Ne_0
+import Theorem.Nat.Gt_0.of.Ne_0
 open Nat
 
 

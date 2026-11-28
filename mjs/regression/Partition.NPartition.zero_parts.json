@@ -65,5 +65,5 @@
       }
     ]
   },
-  "fingerprint": "Parts 0 = (b₀ ↦ 0)"
+  "fingerprint": "Parts 0 = (fun b₀ ↦ 0)"
 }

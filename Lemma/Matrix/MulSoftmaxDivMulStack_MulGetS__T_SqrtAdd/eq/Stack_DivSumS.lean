@@ -15,51 +15,11 @@ import Lemma.Matrix.MulDotMul__Rotary'.eq.Dot_MulRotary'Sub
 import Lemma.Matrix.MulDotMul__Rotary.eq.Dot_MulRotarySub
 import Lemma.Matrix.MulSoftmaxDivMulStack_MulGetS__T_SqrtAdd.eq.StackAnd__DivSumSFin.of.Eq_1.All_Eq_Inv.All_EqDotS_Mul
 import Lemma.Matrix.Rotary'Neg.eq.TRotary'
-import Lemma.Fin.Sum_IteAnd
+import Lemma.Matrix.RotaryNeg.eq.TRotary
 open Fin Matrix Real
 open scoped Matrix
 set_option maxHeartbeats 800000
 
-
-private lemma rotaryOn_neg
-  {d : ℕ}
-  {u v : Fin d → Fin (d + d)}
--- given
-  (θ : Fin d → ℝ) :
--- imply
-  Matrix.rotaryOn u v (-θ) = (Matrix.rotaryOn u v θ)ᵀ := by
--- proof
-  ext i j
-  have hL :
-    Matrix.rotaryOn u v (-θ) i j =
-      (∑ t : Fin d, if i = u t ∧ j = u t then Real.cos (θ t) else 0) +
-      (∑ t : Fin d, if i = u t ∧ j = v t then Real.sin (θ t) else 0) +
-      (∑ t : Fin d, if i = v t ∧ j = u t then -Real.sin (θ t) else 0) +
-      (∑ t : Fin d, if i = v t ∧ j = v t then Real.cos (θ t) else 0) := by
-    simp only [Matrix.rotaryOn, Matrix.of_apply, Pi.neg_apply, Finset.sum_add_distrib, Real.cos_neg,
-      Real.sin_neg, neg_neg]
-  have hR :
-    (Matrix.rotaryOn u v θ)ᵀ i j =
-      (∑ t : Fin d, if j = u t ∧ i = u t then Real.cos (θ t) else 0) +
-      (∑ t : Fin d, if j = u t ∧ i = v t then -Real.sin (θ t) else 0) +
-      (∑ t : Fin d, if j = v t ∧ i = u t then Real.sin (θ t) else 0) +
-      (∑ t : Fin d, if j = v t ∧ i = v t then Real.cos (θ t) else 0) := by
-    simp only [Matrix.transpose_apply, Matrix.rotaryOn, Matrix.of_apply, Finset.sum_add_distrib]
-  rw [hL, hR]
-  rw [Sum_IteAnd.fun (p := fun t => i = u t) (q := fun t => j = u t) (f := fun t => Real.cos (θ t))]
-  rw [Sum_IteAnd.fun (p := fun t => i = u t) (q := fun t => j = v t) (f := fun t => Real.sin (θ t))]
-  rw [Sum_IteAnd.fun (p := fun t => i = v t) (q := fun t => j = u t) (f := fun t => -Real.sin (θ t))]
-  rw [Sum_IteAnd.fun (p := fun t => i = v t) (q := fun t => j = v t) (f := fun t => Real.cos (θ t))]
-  ring
-
-private lemma rotary_neg
-  {d : ℕ}
--- given
-  (φ : Fin d → ℝ) :
--- imply
-  Matrix.rotary (-φ) = (Matrix.rotary φ)ᵀ := by
--- proof
-  simpa [Matrix.rotary] using rotaryOn_neg (u := Fin.castAdd d) (v := Fin.natAdd d) φ
 
 /--
 Rotary attention collapses to relative angles when each frequency row is linear in the token index.
@@ -86,7 +46,7 @@ private lemma main
           (R[i] *ᵥ Q[i] ⬝ᵥ R[k] *ᵥ K[k] / √(d + d : ℝ)).exp := by
 -- proof
   apply MulSoftmaxDivMulStack_MulGetS__T_SqrtAdd.eq.StackAnd__DivSumSFin.of.Eq_1.All_Eq_Inv.All_EqDotS_Mul
-    MulDotMul__Rotary.eq.Dot_MulRotarySub (fun φ => (rotary_neg φ).trans (InvRotary.eq.TRotary φ).symm) EqRotary01 Q K V
+    MulDotMul__Rotary.eq.Dot_MulRotarySub (fun φ => (RotaryNeg.eq.TRotary φ).trans (InvRotary.eq.TRotary φ).symm) EqRotary01 Q K V
 
 /-- Adjacent-pair form of the same identity. `Matrix.rotary'` rotates planes `(2j, 2j + 1)`. -/
 @[path]
@@ -112,4 +72,4 @@ private lemma interleave
 
 
 -- created on 2023-06-09
--- updated on 2026-11-27
+-- updated on 2026-11-28

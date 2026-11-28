@@ -1,7 +1,7 @@
 import Lemma.List.DropAppend.eq.Drop.of.LeLength
 import Lemma.List.DropCons.eq.Drop_Sub_1.of.Gt_0
 import Lemma.List.LengthSet.eq.Length
-import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
+import Theorem.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
 import Lemma.Nat.EqAdd_Sub.of.Ge
 import Lemma.Nat.EqMin.of.Le
 import Lemma.Nat.Sub_Add.eq.SubSub

@@ -29,36 +29,6 @@ public theorem Nat.MulMul.eq.Mul_Mul.comm
 
 
 @[comm]
-public theorem swap
-  [CommSemigroup α]
-  {a b : α} :
--- imply
-  a * b * c = b * (a * c) := by
--- proof
-  grind
-
-
-@[comm]
-public theorem rotate
-  [CommSemigroup α]
-  {a b : α} :
--- imply
-  a * b * c = b * (c * a) := by
--- proof
-  grind
-
-
-@[comm]
-public theorem permute
-  [CommSemigroup α]
-  {a b : α} :
--- imply
-  a * b * c = c * (a * b) := by
--- proof
-  grind
-
-
-@[comm]
 public theorem Nat.MulMul.eq.Mul_Mul.reverse
   [CommSemigroup α]
   {a b : α} :

@@ -1,13 +1,15 @@
 module
 
 public import Theorem.Nat.AddMul.lt.Mul.of.Lt
+public import Initialize.Tactic.Attr.Basic
 
 public section
 
 open Nat
 
 
-public theorem Nat.AddMul.lt.Mul.of.Lt.Lt
+@[path]
+private lemma main
   {m n : ℕ}
 -- given
   (h₀ : i < m)

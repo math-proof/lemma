@@ -1,6 +1,6 @@
 项目工件：<https://github.com/math-proof/lemma>
 
-相对：[softmax](?lemma=Matrix.MulSoftmaxDivMulStack_MulGetS__T_SqrtAdd.eq.Stack_DivSumS)，配对：[内积](?lemma=Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub)，布局：[共轭](?lemma=Tensor.RotaryMatrix%27.eq.DotDot_RotaryMatrix)，实现：[kernel](?lemma=Tensor.DotRotaryMatrix.eq.AddMulS)，加法：[群律](?lemma=Tensor.DotRotaryMatrixS.eq.RotaryMatrixAdd)，正交：[单位阵](?lemma=Tensor.DotT_RotaryMatrix.eq.Eye)
+相对：[softmax](?lemma=Matrix.MulSoftmaxDivMulStack_MulGetS__T_SqrtAdd.eq.Stack_DivSumS)，配对：[内积](?lemma=Matrix.MulDotMul__Rotary.eq.Dot_MulRotarySub)，布局：[共轭](?lemma=Tensor.RotaryMatrix%27.eq.DotDot_RotaryMatrix)，实现：[kernel](?lemma=Tensor.DotRotaryMatrix.eq.AddMulS)，加法：[群律](?lemma=Tensor.DotRotaryMatrixS.eq.RotaryMatrixAdd)，正交：[单位阵](?lemma=Tensor.DotT_RotaryMatrix.eq.Eye)
 
 # 摘要
 
@@ -19,7 +19,7 @@ Transformer 需要次序的表示[[5]](https://arxiv.org/abs/1706.03762)。旋�
 = q^{\top} \mathrm{R}_{\Theta,n-m}\,k,
 \]
 
-并把相对矩阵写成转置积 \(\mathrm{R}_{\Theta,n-m}=(\mathrm{R}_{\Theta,m})^{\top}\mathrm{R}_{\Theta,n}\)。该式在 Lean 4 中机器检验为 [Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub](?lemma=Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub)；证明见 §8.1。后来的综述把 \(2\times 2\) 规则单独写出：\(\rho(\theta)^{\top}=\rho(-\theta)\)、\(\rho(\theta)\rho(\theta')=\rho(\theta+\theta')\)[[9]](https://arxiv.org/abs/2410.06205)。
+并把相对矩阵写成转置积 \(\mathrm{R}_{\Theta,n-m}=(\mathrm{R}_{\Theta,m})^{\top}\mathrm{R}_{\Theta,n}\)。该式在 Lean 4 中由矩阵版 [Matrix.MulDotMul__Rotary.eq.Dot_MulRotarySub](?lemma=Matrix.MulDotMul__Rotary.eq.Dot_MulRotarySub) 机器检验；证明见 §8.1。后来的综述把 \(2\times 2\) 规则单独写出：\(\rho(\theta)^{\top}=\rho(-\theta)\)、\(\rho(\theta)\rho(\theta')=\rho(\theta+\theta')\)[[9]](https://arxiv.org/abs/2410.06205)。
 
 这些恒等式在单个平面上用手算很容易，再经块对角直和抬上去。实现真正去乘的布局则不那么顺手：嵌入拆成前半与后半，平面 \(p\) 混合的是坐标 \(p\) 与 \(p+d\)，而非 \(2p\) 与 \(2p+1\)。高效求值
 
@@ -45,7 +45,7 @@ Transformer 需要次序的表示[[5]](https://arxiv.org/abs/1706.03762)。旋�
 2. **实现。** [DotRotaryMatrix.eq.AddMulS](?lemma=Tensor.DotRotaryMatrix.eq.AddMulS)：Hugging Face 矩阵上的 kernel 公式。
 3. **正交。** [DotT_RotaryMatrix.eq.Eye](?lemma=Tensor.DotT_RotaryMatrix.eq.Eye)：\(\mathrm{R}(\alpha)^{\top}\mathrm{R}(\alpha)=I_{d+d}\)，以及 \(\mathrm{R}(-\alpha)=\mathrm{R}(\alpha)^{\top}\) 与 \(\mathrm{R}(-\alpha)\mathrm{R}(\alpha)=I_{d+d}\)。
 4. **可加。** [DotRotaryMatrixS.eq.RotaryMatrixAdd](?lemma=Tensor.DotRotaryMatrixS.eq.RotaryMatrixAdd)：\(\mathrm{R}(\alpha)\mathrm{R}(\beta)=\mathrm{R}(\alpha+\beta)\)，对任意角向量，不限于整数 token 下标。
-5. **配对。** [DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub](?lemma=Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub)：自由角上的 RoFormer 配对。RoFormer 布局上同样的转置积是 [DotT.eq.RotaryMatrix%27Sub](?lemma=Tensor.DotT.eq.RotaryMatrix%27Sub)：\(\mathrm{R}'(\alpha)^{\top}\mathrm{R}'(\beta)=\mathrm{R}'(\beta-\alpha)\)。
+5. **配对。** [MulDotMul__Rotary.eq.Dot_MulRotarySub](?lemma=Matrix.MulDotMul__Rotary.eq.Dot_MulRotarySub)：自由角上的 RoFormer 配对（矩阵版）。RoFormer 布局上同样的转置积是 [DotT.eq.RotaryMatrix%27Sub](?lemma=Tensor.DotT.eq.RotaryMatrix%27Sub)：\(\mathrm{R}'(\alpha)^{\top}\mathrm{R}'(\beta)=\mathrm{R}'(\beta-\alpha)\)。
 6. **相对注意力。** [DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul](?lemma=Matrix.MulSoftmaxDivMulStack_MulGetS__T_SqrtAdd.eq.Stack_DivSumS)：对每个 query、key 作用 \(\mathrm{R}(\theta_{i})\) 后，未归一化权重依赖 \(\mathrm{R}(\theta_{k}-\theta_{i})\)；在 \(\theta_{i}=i\,\tau\) 下该矩阵为 \(\mathrm{R}(\theta_{k-i})\) 或 \(\mathrm{R}(\theta_{i-k})^{\top}\)。
 
 数学并不新。这里打包的是一对形式对象——RoFormer 矩阵与 Hugging Face 矩阵——二者之间已检验的共轭、不强于下标线性的频率假设，以及从 Hugging Face 定义到 softmax 恒等式的完整链条。
@@ -86,7 +86,7 @@ I_{d} \odot \sin\alpha & \phantom{-}I_{d} \odot \cos\alpha
 \in \mathbb{R}^{(d+d)\times(d+d)},
 \]
 
-其中 \(\odot\) 把向量 \(\cos\alpha\)（或 \(\sin\alpha\)）广播到各块的对角。库中这是两行水平拼接再竖直拼接。
+其中 \(\odot\) 把向量 \(\cos\alpha\)（或 \(\sin\alpha\)）广播到各块的对角。库中这是两行水平拼接再竖直拼接。技术上，本定义的 Lean 陈述即 [Matrix.Rotary.eq.VstackHstackSSMulS_1](?lemma=Matrix.Rotary.eq.VstackHstackSSMulS_1)。
 
 这是 Hugging Face Transformers 的奇偶布局[[4]](https://github.com/huggingface/transformers/blob/main/docs/source/en/internal/rope_utils.md)：平面 \(p\) 为对 \((p,\,p+d)\)，与 `rotate_half` 一致。引理 docstring 把同一矩阵写成公开的展开式
 
@@ -324,11 +324,11 @@ RoFormer 的相对位置律是内积恒等式
 q\,@\,\bigl(\mathrm{R}(\beta-\alpha)\,@\,k\bigr).
 \]
 
-对应为 \(\alpha\leftrightarrow\Theta_{m}\)、\(\beta\leftrightarrow\Theta_{n}\)，从而角空间中 \(\beta-\alpha\leftrightarrow n-m\)。Lean 4 陈述为 [Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub](?lemma=Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub)。
+对应为 \(\alpha\leftrightarrow\Theta_{m}\)、\(\beta\leftrightarrow\Theta_{n}\)，从而角空间中 \(\beta-\alpha\leftrightarrow n-m\)。Lean 4 陈述为矩阵版 [Matrix.MulDotMul__Rotary.eq.Dot_MulRotarySub](?lemma=Matrix.MulDotMul__Rotary.eq.Dot_MulRotarySub)。
 
 **定理 8.1**（RoFormer 配对）。对 \(\alpha,\beta\in\mathbb{R}^{d}\) 与 \(q,k\in\mathbb{R}^{d+d}\)，上式成立。
 
-Lean 证明是如下链条。先把向量–矩阵积挪过内积（[Dot_T.eq.Dot](?lemma=Tensor.Dot_T.eq.Dot)）：
+矩阵版在 Lean 中由一般化的 [Matrix.MulDotMul__RotaryOn.eq.Dot_MulRotaryOn__Sub...](?lemma=Matrix.MulDotMul__RotaryOn.eq.Dot_MulRotaryOn__Sub.of.All_EqSum__Add.All_Any_In_Brace.All_Ne.Injective.Injective) 直接实例化；数学内容是如下链条。先把向量–矩阵积挪过内积（[Dot_T.eq.Dot](?lemma=Tensor.Dot_T.eq.Dot)）：
 
 \[
 (\mathrm{R}(\alpha)\,@\,q)\,@\,(\mathrm{R}(\beta)\,@\,k)
@@ -356,7 +356,7 @@ q\,@\,\bigl(\mathrm{R}(\alpha)^{\top} @ (\mathrm{R}(\beta)\,@\,k)\bigr).
 
 定理 8.1 中没有 token 下标，也没有 \(\Theta\) 上的频率表。古典记号 \(\mathrm{R}_{\Theta,n-m}\) 在下一小节、用 \(\theta_{i}=i\,\tau\) 把 \(\beta-\alpha\) 认成 \(\theta\) 的一行之后恢复。
 
-同一配对在交错布局上由共轭直接得到：\((\mathrm{R}'(\alpha)\,q)^{\top}(\mathrm{R}'(\beta)\,k)=q^{\top}\mathrm{R}'(\beta-\alpha)\,k\)（[Tensor.DotDotSRotaryMatrix%27.eq.Dot_DotRotaryMatrix%27Sub](?lemma=Tensor.DotDotSRotaryMatrix%27.eq.Dot_DotRotaryMatrix%27Sub)）。
+同一配对在交错布局上同样成立：\((\mathrm{R}'(\alpha)\,q)^{\top}(\mathrm{R}'(\beta)\,k)=q^{\top}\mathrm{R}'(\beta-\alpha)\,k\)，矩阵版为 [Matrix.MulDotMul__Rotary%27.eq.Dot_MulRotary%27Sub](?lemma=Matrix.MulDotMul__Rotary%27.eq.Dot_MulRotary%27Sub)。
 
 ## 8.2 线性频率
 
@@ -446,7 +446,7 @@ R(i-k)^{\top} & \text{若 }k<i,
 已完成陈述的交互可视化：
 
 - 相对 softmax：[DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul](?lemma=Matrix.MulSoftmaxDivMulStack_MulGetS__T_SqrtAdd.eq.Stack_DivSumS)
-- RoFormer 配对：[DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub](?lemma=Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub)
+- RoFormer 配对：[MulDotMul__Rotary.eq.Dot_MulRotarySub](?lemma=Matrix.MulDotMul__Rotary.eq.Dot_MulRotarySub)
 - 共轭 \(R'=P^{\top}RP\)：[RotaryMatrix%27.eq.DotDot_RotaryMatrix](?lemma=Tensor.RotaryMatrix%27.eq.DotDot_RotaryMatrix)
 - Hugging Face 矩阵：[RotaryMatrix.eq.AppendHstackSMulSEye](?lemma=Tensor.RotaryMatrix.eq.AppendHstackSMulSEye)
 - RoFormer 矩阵：[RotaryMatrix%27.eq.Stack_Ite_IteS](?lemma=Tensor.RotaryMatrix%27.eq.Stack_Ite_IteS)
@@ -460,12 +460,12 @@ R(i-k)^{\top} & \text{若 }k<i,
 
 ## 9.1 引理依赖
 
-下列为标题引理所 import 的主要模块。链接指向 Lean 4 页。前缀 `Tensor.` 省略。
+下列为标题引理所 import 的主要模块。链接指向 Lean 4 页。前缀 `Tensor.` 省略，`Matrix.` 前缀保留。
 
 - [DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul](?lemma=Matrix.MulSoftmaxDivMulStack_MulGetS__T_SqrtAdd.eq.Stack_DivSumS) — 相对 softmax
   - [DotSoftmaxDivDot_T.eq.Stack_Div_SumExp](?lemma=Tensor.DotSoftmaxDivDot_T.eq.Stack_Div_SumExp)
-  - [DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub](?lemma=Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub) — 配对
-    - [DotT.eq.RotaryMatrixSub](?lemma=Tensor.DotT.eq.RotaryMatrixSub)
+  - [Matrix.MulDotMul__Rotary.eq.Dot_MulRotarySub](?lemma=Matrix.MulDotMul__Rotary.eq.Dot_MulRotarySub) — 配对
+    - [Matrix.MulDotMul__RotaryOn.eq.Dot_MulRotaryOn__Sub...](?lemma=Matrix.MulDotMul__RotaryOn.eq.Dot_MulRotaryOn__Sub.of.All_EqSum__Add.All_Any_In_Brace.All_Ne.Injective.Injective)
   - [RotaryMatrixSubGetS.eq.Ite_RotaryMatrix_T.of.Eq_Stack_Mul](?lemma=Tensor.RotaryMatrixSubGetS.eq.Ite_RotaryMatrix_T.of.Eq_Stack_Mul)
     - [SubGetS.eq.Get_Sub.of.Eq_Stack_Mul.Ge](?lemma=Tensor.SubGetS.eq.Get_Sub.of.Eq_Stack_Mul.Ge)
     - [RotaryMatrixNeg.eq.TRotaryMatrix](?lemma=Tensor.RotaryMatrixNeg.eq.TRotaryMatrix)
@@ -492,7 +492,7 @@ R(i-k)^{\top} & \text{若 }k<i,
 
 **检验了什么，没检验什么。** 我们认证的是张量相等，不是近似质量、长度外推，也不是 RoPE 与训练权重的相互作用。定理 8.4 对每一 \(Q,K,V\) 与每一线性 \(\theta\) 都是恒等式；它不说训练模型在推理时以某种特定方式使用相对矩阵，也不说注意力随距离衰减[[9]](https://arxiv.org/abs/2410.06205)。
 
-**布局。** 两种配对都形式化了（[RotaryMatrix.eq.AppendHstackSMulSEye](?lemma=Tensor.RotaryMatrix.eq.AppendHstackSMulSEye)，[RotaryMatrix'.eq.Stack_Ite_IteS](?lemma=Tensor.RotaryMatrix%27.eq.Stack_Ite_IteS)）；置换引理为 [RotaryMatrix'.eq.DotDot_RotaryMatrix](?lemma=Tensor.RotaryMatrix%27.eq.DotDot_RotaryMatrix)。Kernel 实现（[DotRotaryMatrix.eq.AddMulS](?lemma=Tensor.DotRotaryMatrix.eq.AddMulS)）与配对（[DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub](?lemma=Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub)）写在 Hugging Face 布局上；交错版本（[DotRotaryMatrix'.eq.Stack_IteEven_SubMulS](?lemma=Tensor.DotRotaryMatrix%27.eq.Stack_IteEven_SubMulS)，[DotDotSRotaryMatrix'.eq.Dot_DotRotaryMatrix'Sub](?lemma=Tensor.DotDotSRotaryMatrix%27.eq.Dot_DotRotaryMatrix%27Sub)，[DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul](?lemma=Matrix.MulSoftmaxDivMulStack_MulGetS__T_SqrtAdd.eq.Stack_DivSumS)）由共轭直接得到。RoFormer 布局上匹配的矩阵恒等式为 [DotT.eq.RotaryMatrix'Sub](?lemma=Tensor.DotT.eq.RotaryMatrix%27Sub)。
+**布局。** 两种配对都形式化了（[RotaryMatrix.eq.AppendHstackSMulSEye](?lemma=Tensor.RotaryMatrix.eq.AppendHstackSMulSEye)，[RotaryMatrix'.eq.Stack_Ite_IteS](?lemma=Tensor.RotaryMatrix%27.eq.Stack_Ite_IteS)）；置换引理为 [RotaryMatrix'.eq.DotDot_RotaryMatrix](?lemma=Tensor.RotaryMatrix%27.eq.DotDot_RotaryMatrix)。Kernel 实现（[DotRotaryMatrix.eq.AddMulS](?lemma=Tensor.DotRotaryMatrix.eq.AddMulS)）与矩阵版配对（[Matrix.MulDotMul__Rotary.eq.Dot_MulRotarySub](?lemma=Matrix.MulDotMul__Rotary.eq.Dot_MulRotarySub)）写在 Hugging Face 布局上；交错版本（[DotRotaryMatrix'.eq.Stack_IteEven_SubMulS](?lemma=Tensor.DotRotaryMatrix%27.eq.Stack_IteEven_SubMulS)，[Matrix.MulDotMul__Rotary'.eq.Dot_MulRotary'Sub](?lemma=Matrix.MulDotMul__Rotary%27.eq.Dot_MulRotary%27Sub)，[DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul](?lemma=Matrix.MulSoftmaxDivMulStack_MulGetS__T_SqrtAdd.eq.Stack_DivSumS)）由共轭直接得到。RoFormer 布局上匹配的矩阵恒等式为 [DotT.eq.RotaryMatrix'Sub](?lemma=Tensor.DotT.eq.RotaryMatrix%27Sub)。
 
 **频率。** 定义 8.2 对引理 8.3 充分，且严格弱于古典几何表。它并非必要：任何满足 \(\theta_{k}-\theta_{t}\equiv\theta_{k-t}\pmod{2\pi}\) 的 \(\theta\) 给出同一 \(\mathrm{R}\)。
 

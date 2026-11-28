@@ -1,10 +1,8 @@
-import Initialize.Tactic.Attr.Basic
 import Lemma.Fin.Any_In_BraceCastAdd__NatAdd
 import Lemma.Fin.CastAdd.ne.NatAdd
 import Lemma.Fin.InjectiveNatAdd
 import Lemma.Matrix.MulDotMul__RotaryOn.eq.Dot_MulRotaryOn__Sub.of.All_EqSum__Add.All_Any_In_Brace.All_Ne.Injective.Injective
 import Lemma.Real.Sum.eq.Add_Sum
-import Mathlib
 open Fin Matrix Real
 open scoped Matrix
 
@@ -30,3 +28,4 @@ private lemma main
 
 
 -- created on 2026-11-27
+-- updated on 2026-11-28

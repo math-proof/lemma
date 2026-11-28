@@ -1957,7 +1957,8 @@ export class LeanAttribute extends LeanUnary {
             case 'Lean_theorem':
             case 'Lean_lemma':
             case 'Lean_def':
-            case 'Lean_abbrev': {
+            case 'Lean_abbrev':
+            case 'Lean_instance': {
                 $new = L[$new];
                 const {level, indent} = this;
                 const caret = new L.LeanCaret(indent, level);

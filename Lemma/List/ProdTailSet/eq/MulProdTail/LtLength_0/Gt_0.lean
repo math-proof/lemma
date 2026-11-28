@@ -1,4 +1,4 @@
-import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
+import Theorem.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
 import Lemma.List.TailAppend.eq.AppendTail.of.GtLength_0
 import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.List.ProdDrop.eq.Mul_ProdDrop_Add_1.of.GtLength

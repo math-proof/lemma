@@ -5,8 +5,8 @@ public import Initialize.Tactic.Attr.Basic
 public section
 
 
-@[comm, mp, mpr]
-public theorem List.Cons.is.Eq.Eq
+@[path, comm, mp, mpr]
+private lemma main
 -- given
   (a b : List α) :
 -- imply

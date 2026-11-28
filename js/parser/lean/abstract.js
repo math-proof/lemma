@@ -110,6 +110,9 @@ export class LeanArgs extends Lean {
             end instanceof L.LeanProperty ||
             end instanceof L.LeanParenthesis
         ) {
+            // `(\n  body)`: the unfilled hole was opened on the parenthesis line.
+            // The body is a new caret; this hole stays empty and sits on the body line.
+            if (end instanceof L.LeanCaret) end.stampFollowingLine();
             const caret = new L.LeanCaret(indent, end.level).stampFollowingLine();
             const nl = new L.LeanArgsNewLineSeparated([caret], indent, caret.level);
             const c = nl.push_newlines(newline_count - 1);
@@ -293,8 +296,11 @@ export class LeanBinary extends LeanArgs {
      * @param {string} op
      */
     opJoin(op) {
-        if (typeof this.opLeadIndent === 'number')
-            return `%s\n${' '.repeat(this.opLeadIndent)}${op} %s`;
+        if (typeof this.opLeadIndent === 'number') {
+            const lead = `%s\n${' '.repeat(this.opLeadIndent)}${op}`;
+            // `lhs\n    =ᶠ[…] \n    rhs` — the right operand starts after the operator line.
+            return this.sep() === '\n' ? `${lead}\n%s` : `${lead} %s`;
+        }
         return `%s ${op}${this.sep()}%s`;
     }
 

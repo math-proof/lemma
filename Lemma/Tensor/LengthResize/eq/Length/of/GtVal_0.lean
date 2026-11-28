@@ -1,5 +1,5 @@
 import Lemma.List.GetSet.eq.Get.of.Ne.GtLength
-import Instance.Data.Tensor.Tensor.Part2
+import Instance.Data.Tensor.Tensor
 open List Tensor
 
 

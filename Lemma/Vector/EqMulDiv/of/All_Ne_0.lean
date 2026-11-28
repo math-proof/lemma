@@ -1,4 +1,4 @@
-import Theorem.Rat.EqMulDiv.of.Ne_0
+import Lemma.Rat.EqMulDiv.of.Ne_0
 import Theorem.Vector.GetDiv.eq.DivGetS
 import Lemma.Vector.Eq.is.All_EqGetS
 import Theorem.Vector.GetMul.eq.MulGetS

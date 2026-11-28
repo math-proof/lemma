@@ -15,6 +15,15 @@ import { completeAxiomMessage, extractBareAxiomReports, splitAxiomReports } from
 
 const execAsync = promisify(exec);
 
+/** A parser fault is an error diagnostic, not a style warning and not a crash. */
+function internalParserError(err) {
+  const message = err instanceof Error ? err.message : String(err);
+  const info = message.startsWith('internal parser error:')
+    ? message
+    : `internal parser error: ${message}`;
+  return { code: '', line: 0, col: 0, type: 'error', info };
+}
+
 /** @param {unknown} stmt */
 function isLeanImport(stmt) {
   return (
@@ -286,77 +295,99 @@ export function prepareEchoSource(tree) {
   }
 
   // Keep parser coordinates separate from positions in the rewritten Echo file.
-  const trace = traceEchoSource(tree);
-  const { source } = trace;
-  let prefix = '\uE000echo';
-  while (source.includes(prefix)) prefix += '_';
-  const nodes = [...new Set([...tree.traverse()].filter(
-    node => node instanceof LeanTactic && node.tacticName === 'echo',
-  ))];
-  const restore = [];
-  let marked;
-  try {
-    nodes.forEach((node, index) => {
-      const original = node.strFormat;
-      const descriptor = Object.getOwnPropertyDescriptor(node, 'strFormat');
-      Object.defineProperty(node, 'strFormat', {
-        configurable: true,
-        value() { return prefix + index + '\uE001' + original.call(this); },
-      });
-      restore.push(() => {
-        if (descriptor) Object.defineProperty(node, 'strFormat', descriptor);
-        else delete node.strFormat;
-      });
-    });
-    marked = String(tree);
-  } finally {
-    for (const reset of restore) reset();
-  }
-
+  const parserErrors = [];
+  const recordParserError = (err) => {
+    parserErrors.push(internalParserError(err));
+  };
+  let codeStr = '';
   const echoPositions = new Map();
-  const lines = marked.split('\n');
-  const marker = new RegExp(prefix + '(\\d+)\uE001(?=echo\\b)', 'g');
-  const unmarked = lines.map((line, index) => line.replace(marker, (_, id) => {
-    const node = nodes[Number(id)];
-    if (!node || echoPositions.has(node)) {
-      throw new Error('Invalid Echo source marker on line ' + (index + 1));
+  try {
+    const trace = traceEchoSource(tree);
+    const { source } = trace;
+    let prefix = '\uE000echo';
+    while (source.includes(prefix)) prefix += '_';
+    const nodes = [...new Set([...tree.traverse()].filter(
+      node => node instanceof LeanTactic && node.tacticName === 'echo',
+    ))];
+    const restore = [];
+    let marked;
+    try {
+      nodes.forEach((node, index) => {
+        const original = node.strFormat;
+        const descriptor = Object.getOwnPropertyDescriptor(node, 'strFormat');
+        Object.defineProperty(node, 'strFormat', {
+          configurable: true,
+          value() { return prefix + index + '\uE001' + original.call(this); },
+        });
+        restore.push(() => {
+          if (descriptor) Object.defineProperty(node, 'strFormat', descriptor);
+          else delete node.strFormat;
+        });
+      });
+      marked = String(tree);
+    } finally {
+      for (const reset of restore) reset();
     }
-    echoPositions.set(node, index + 1);
-    return '';
-  })).join('\n');
-  if (unmarked !== source || echoPositions.size !== nodes.length) {
-    throw new Error('Echo line map does not match rendered source');
-  }
 
-  const codeStr = withEchoAxiomsAttr(source);
-  if (codeStr.split('\n').length !== lines.length) {
-    throw new Error('Echo attribute rewrite changed the line count');
-  }
-  assertEchoSourceLines(tree, codeStr, trace);
-  for (const [node, line] of echoPositions) {
-    if (node.line !== line) {
-      throw new Error('Echo tactic position disagrees with AST layout on line ' + line);
+    const lines = marked.split('\n');
+    const marker = new RegExp(prefix + '(\\d+)\uE001(?=echo\\b)', 'g');
+    const unmarked = lines.map((line, index) => line.replace(marker, (_, id) => {
+      const node = nodes[Number(id)];
+      if (!node || echoPositions.has(node)) {
+        throw new Error('Invalid Echo source marker on line ' + (index + 1));
+      }
+      echoPositions.set(node, index + 1);
+      return '';
+    })).join('\n');
+    if (unmarked !== source || echoPositions.size !== nodes.length) {
+      throw new Error('Echo line map does not match rendered source');
+    }
+
+    codeStr = withEchoAxiomsAttr(source);
+    if (codeStr.split('\n').length !== lines.length) {
+      recordParserError(new Error('Echo attribute rewrite changed the line count'));
+    }
+    try {
+      assertEchoSourceLines(tree, codeStr, trace);
+    } catch (e) {
+      recordParserError(e);
+    }
+    for (const [node, line] of echoPositions) {
+      if (node.line !== line) {
+        recordParserError(new Error('Echo tactic position disagrees with AST layout on line ' + line));
+      }
+    }
+  } catch (e) {
+    recordParserError(e);
+    if (!codeStr) {
+      try {
+        codeStr = withEchoAxiomsAttr(String(tree));
+      } catch (e2) {
+        recordParserError(e2);
+      }
     }
   }
-  return { codeStr, echoPositions };
+  return { codeStr, echoPositions, parserErrors };
 }
 
 export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
   const repoRoot = REPO_ROOT;
   const leanEchoFile = leanEchoPath(path.resolve(leanFileAbs));
-  const { codeStr, echoPositions } = prepareEchoSource(tree);
+  const { codeStr, echoPositions, parserErrors = [] } = prepareEchoSource(tree);
 
-  if (!fs.existsSync(leanEchoFile)) {
-    fs.mkdirSync(path.dirname(leanEchoFile), { recursive: true });
-    fs.writeFileSync(leanEchoFile, '', 'utf8');
+  if (codeStr) {
+    if (!fs.existsSync(leanEchoFile)) {
+      fs.mkdirSync(path.dirname(leanEchoFile), { recursive: true });
+      fs.writeFileSync(leanEchoFile, '', 'utf8');
+    }
+    fs.writeFileSync(leanEchoFile, codeStr, 'utf8');
   }
-  fs.writeFileSync(leanEchoFile, codeStr, 'utf8');
 
   const lakePath = get_lake_path();
   const env = get_lean_env(repoRoot);
   /** @type {{ code: string, line: number, col: number, type: string, info: string }[]} */
   const lakeBuildErrors = [];
-  const staleImports = collectStaleLocalImports(tree, repoRoot);
+  const staleImports = codeStr ? collectStaleLocalImports(tree, repoRoot) : [];
   if (staleImports.length) {
     const quoted = staleImports.map((n) => `"${n.replace(/"/g, '\\"')}"`).join(' ');
     const cmd = `"${lakePath}" build ${quoted}`;
@@ -415,11 +446,13 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
     '-DmaxHeartbeats=4000000',
     echoArg,
   ];
-  const r = await spawnLakeLean(lakePath, leanArgs, {
-    cwd: repoRoot,
-    env,
-    windowsHide: true,
-  });
+  const r = codeStr
+    ? await spawnLakeLean(lakePath, leanArgs, {
+      cwd: repoRoot,
+      env,
+      windowsHide: true,
+    })
+    : { stdout: '', stderr: '', error: null, status: 0 };
   if (r.error) {
     console.warn('[echo2vue] spawn lean:', r.error.message);
   }
@@ -554,7 +587,7 @@ export async function runEcho2Vue(tree, leanFileAbs, opts = {}) {
   });
   // `@[axioms]` info is not a Lean error. Allowed names stay silent; anything else is a style warning.
   const axiomSplit = splitAxiomReports(leanErrors);
-  codes.error.push(...lakeBuildErrors, ...axiomSplit.errors);
+  codes.error.push(...parserErrors, ...lakeBuildErrors, ...axiomSplit.errors);
   if (axiomSplit.warnings.length) codes.warning = axiomSplit.warnings;
   if (opts.module != null) codes.module = opts.module;
   return codes;

@@ -13,6 +13,14 @@ import { Lean, jsonHead } from './base.js';
 
 const L = Lean.classes;
 
+/**
+ * `x ^ n` with a literal exponent n ∈ {2, 3, 4} shares a search fingerprint
+ * head with the postfix notation `xⁿ` (Square / Cube / Tesseract). Exponents
+ * outside this set keep the `Pow` head. Mirrors `power()` in
+ * mjs/lean/structToFingerprint.mjs — keep the two in sync.
+ */
+const POW_LITERAL_NOTATION = { '2': 'Square', '3': 'Cube', '4': 'Tesseract' };
+
 export class LeanArithmetic extends LeanBinary {
     static { this.register(); }
 
@@ -85,10 +93,10 @@ export class LeanMul extends LeanArithmetic {
     static { this.register(); }
 
     static input_priority = 70;
+    static input_priorities = {'ᵥ' : 73}; // Mathlib's `*ᵥ` and `ᵥ*`.
 
-    /** Mathlib `Matrix.mulVec` is BinaryInfix 73; bare `*` stays 70. */
-    get input_priority() {
-        return this.subscript === 'ᵥ' ? 73 : this.constructor.input_priority;
+    get stack_priority() {
+        return LeanMul.input_priorities[this.subscript] ?? super.stack_priority;
     }
 
     get command() {
@@ -254,15 +262,9 @@ export class Lean_odot extends LeanArithmetic {
 
 export class Lean_otimes extends LeanArithmetic {
     static { this.register(); }
+    static input_priority = 100;
+    /** Mathlib `⊗ₘ` / `⊗ₖ` (`infixl:100`).*/
 
-    static input_priority = 32;
-
-    /**
-     * `regexp()` is `ucfirst(func)` plus hole marks. The class suffix `otimes`
-     * would spell `Otimes`; lemma paths use `OTimes`. `Lean_otimesSub` inherits
-     * this, so a tighter `⊗ₘ` / `⊗[R]` does not spell `OtimesSub`.
-     * `command` stays `\otimes` (it does not read `func`).
-     */
     get func() {
         return 'oTimes';
     }
@@ -288,12 +290,6 @@ export class Lean_otimes extends LeanArithmetic {
     }
 }
 
-/** Mathlib `⊗ₘ` / `⊗ₖ` (`infixl:100`): binds tighter than `*` and relations, unlike the repo's bare `⊗`. */
-export class Lean_otimesSub extends Lean_otimes {
-    static { this.register(); }
-
-    static input_priority = 72;
-}
 
 export class Lean_oplus extends LeanArithmetic {
     static { this.register(); }
@@ -567,6 +563,25 @@ export class LeanPow extends LeanArithmetic {
         return 79;
     }
 
+    /**
+     * Search-fingerprint normalization: `x ^ 2` / `x ^ 3` / `x ^ 4` collapse to
+     * the `x²` / `x³` / `x⁴` notation heads, so a pasted `x ^ 2` query shares a
+     * fingerprint with a stored `x²` document (and vice versa). Every search
+     * caller passes a context carrying `binders` (`headsOfQuery`,
+     * `lemmaSearchDocuments`, search-result highlighting); the page display JSON
+     * calls `.toJSON()` with no context and keeps `Pow`. Literal exponents
+     * outside {2, 3, 4} keep `Pow`.
+     */
+    toJSON(ctx = { leaves: new Map() }) {
+        const lhs = this.lhs.toJSON(ctx);
+        const rhs = this.rhs.toJSON(ctx);
+        if (Array.isArray(ctx.binders)) {
+            const head = POW_LITERAL_NOTATION[rhs];
+            if (head) return { [head]: [lhs] };
+        }
+        return { [this.pathToken]: [lhs, rhs] };
+    }
+
     strFormat() {
         // Compact `α^[…]` is Lean `Function.iterate`. A comma list is matrix
         // shape sugar `α ^ [m, n]` (`Syntax.LinearAlgebra.Matrix.Pow`) and must
@@ -716,12 +731,7 @@ export class Lean_sqcap extends LeanArithmetic {
 export class Lean_cdotp extends LeanArithmetic {
     static { this.register(); }
 
-    static input_priority = 71;
-
-    /** Mathlib `dotProduct` / `⬝ᵥ` is BinaryInfix 72; bare `⬝` stays 71. */
-    get input_priority() {
-        return this.subscript === 'ᵥ' ? 72 : this.constructor.input_priority;
-    }
+    static input_priority = 72;
 
     get operator() {
         return this.subscript ? `⬝${this.subscript}` : '⬝';

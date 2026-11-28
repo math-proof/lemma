@@ -1,5 +1,5 @@
 module
-public import Instance.Data.Tensor.Tensor.Part2
+public import Instance.Data.Tensor.Tensor
 public import Def.Data.Tensor.Aminmax
 open Tensor
 

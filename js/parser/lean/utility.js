@@ -100,6 +100,9 @@ export const leanInfixContinue = Object.freeze({
     // base into a newline list leaves an empty caret and an extra `^` line.
     '∧': 'Lean_land',
     '^': 'LeanPow',
+    // `term\n    | cond` is one conditional. A caret for that line has no
+    // non-whitespace span, so the line check anchors it to the term.
+    '|': 'LeanCond',
     ...leanRelationalTokens,
 });
 

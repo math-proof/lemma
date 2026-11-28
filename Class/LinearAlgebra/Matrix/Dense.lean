@@ -4,7 +4,7 @@ public import Mathlib.LinearAlgebra.Matrix.Defs
 public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
 public import Mathlib.LinearAlgebra.Matrix.ToLin
 public import Mathlib.LinearAlgebra.FiniteDimensional.Basic
-public import Instance.Data.Tensor.Tensor.Part2
+public import Instance.Data.Tensor.Tensor
 public import Def.LinearAlgebra.Matrix.Dense
 public section
 open scoped Matrix

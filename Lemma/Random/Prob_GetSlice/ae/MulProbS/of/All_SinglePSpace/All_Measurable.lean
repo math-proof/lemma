@@ -39,8 +39,11 @@ private lemma main
   have hpref :=
     Prob_GetSlice.ae.Prod_Prob_Cond.of.All_SinglePSpace.All_Measurable hs hP n
   filter_upwards [hsucc, hpref] with ω h₁ h₂
-  simp only [Finset.prod_range_succ, Pi.mul_apply] at h₁ h₂ ⊢
-  rw [h₁, h₂, mul_comm]
+  rw [h₁]
+  simp only [Pi.mul_apply]
+  rw [h₂, Finset.prod_apply, Finset.prod_apply, Nat.Iio_eq_range, Nat.Iio_eq_range,
+    Finset.prod_range_succ, mul_comm]
 
 
 -- created on 2026-11-19
+-- updated on 2026-11-28

@@ -1,7 +1,8 @@
 import Initialize.Tactic.Attr.Basic
+import Theorem.Nat.EqMod.of.Lt
 
 
-@[path, comm]
+@[comm]
 private lemma main
   {k n : ℕ}
 -- given

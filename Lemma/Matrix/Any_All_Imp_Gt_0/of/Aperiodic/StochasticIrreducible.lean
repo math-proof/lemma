@@ -1,4 +1,6 @@
 import Instance.Probability.Process.StochasticProcessTypes.Part3
+import Instance.Probability.Process.StochasticProcessTypes
+import Class.Probability.Process.StochasticProcessTypes.Part3
 import Lemma.Set.Any_All_In.of.ClosedUnderAdd.FiniteGCDOne
 
 

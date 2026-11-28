@@ -823,7 +823,7 @@ private lemma main
         exact withDensity_absolutelyContinuous _ _
       filter_upwards [habs.ae_le hpdf] with u hu
       rw [hu]
-    simp only [ψπc]
+    simp only [ψπc, getElem_nat_apply]
     rw [OfRV.eq.Integral.of.AEStronglyMeasurable_Map hfP]
     simp only [id]
     rw [integral_kernel (M := M) θ' sₜ]
@@ -1088,11 +1088,11 @@ private lemma main
     have hSP : SinglePSpace (M[y] θ') (id : 𝒜 → 𝒜) := hSPker y
     have hpdf := kernel_pdf (M := M) θ' y (hμker y) (hpdf y) hSP
     have hnum_eq : ∀ u,
-        ∇[θ] ((M θ).condProb (a t, s[t]) (u, y)).toReal =
+        ∇[θ] ((M θ).condProb (JointRandomSymbol (a t) (s t)) (u, y)).toReal =
           ∇[θ] (M.π θ y u) := fun u => by
       refine congrArg (gradient · θ) ?_
       funext κ
-      exact hpieq κ t y u
+      simpa [JointRandomSymbol, getElem_nat_apply] using hpieq κ t y u
     have hψw :
       ψ t y =
         Expectation.ofRV (M[y] θ') (id : 𝒜 → 𝒜)
@@ -1101,7 +1101,8 @@ private lemma main
       simp only [ψ]
       refine congrArg (Expectation.ofRV (M[y] θ') id) ?_
       funext u
-      simp only [hnum_eq]
+      simp only [getElem_nat_apply]
+      rw [hnum_eq]
     -- Show OfRV unclipped = ∫ π • (Qclip • ∇log) using a.e. agreement and is_weight
     have hx : Measurable (fun aₜ : 𝒜 => (y, aₜ)) :=
       Measurable.prodMk measurable_const measurable_id
@@ -1605,4 +1606,4 @@ end
 
 
 -- created on 2026-11-11
--- updated on 2026-11-23
+-- updated on 2026-11-28

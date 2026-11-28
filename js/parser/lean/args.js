@@ -121,6 +121,64 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
         return null;
     }
 
+    /**
+     * Function head name and operands of a stack builder (`hstack` / `vstack`), in
+     * the bare (`hstack A B`), namespace (`Matrix.hstack A B`), or method (`A.hstack B`)
+     * form. Null when this application is not a stack builder.
+     * @returns {{ name: string, operands: Lean[] } | null}
+     */
+    stackOperands() {
+        const func = this.args[0];
+        let name = null;
+        let operands;
+        if (func instanceof L.LeanToken) {
+            name = func.text;
+            operands = this.args.slice(1);
+        } else if (func instanceof L.LeanProperty && func.rhs instanceof L.LeanToken) {
+            name = func.rhs.text;
+            if (this.args.length === 2) operands = [func.lhs, this.args[1]];
+            else if (this.args.length === 3) operands = this.args.slice(1);
+            else return null;
+        } else {
+            return null;
+        }
+        if (name !== 'hstack' && name !== 'vstack') return null;
+        return { name, operands };
+    }
+
+    /**
+     * Block-matrix cells of a stack builder, matching the Def printer's `blockCells`:
+     * `hstack X₁ … Xₙ` → one row `[X₁, …, Xₙ]`; `vstack Y₁ … Yₘ` → the rows of each
+     * `Yᵢ` stacked, so `vstack (hstack A B) (hstack C D)` → `[[A, B], [C, D]]`.
+     * @returns {Lean[][] | null}
+     */
+    stackBlockSpec() {
+        const stack = this.stackOperands();
+        if (!stack) return null;
+        const rowsOf = (node) => {
+            const inner = node instanceof L.LeanParenthesis ? node.arg : node;
+            const spec = inner instanceof L.LeanArgsSpaceSeparated ? inner.stackBlockSpec() : null;
+            return spec ?? [[node]];
+        };
+        if (stack.name === 'hstack') {
+            const row = [];
+            for (const op of stack.operands) {
+                const rows = rowsOf(op);
+                if (rows.length === 1) row.push(...rows[0]);
+                else row.push(op);
+            }
+            return [row];
+        }
+        const rows = [];
+        for (const op of stack.operands) rows.push(...rowsOf(op));
+        return rows;
+    }
+
+    /** A stack builder is a block matrix, alongside `++` chains. */
+    matrixLatexSpec() {
+        return this.stackBlockSpec() ?? super.matrixLatexSpec();
+    }
+
     insert(caret, func, type) {
         const last = this.args[this.args.length - 1];
         if (last === caret && !(caret instanceof L.LeanCaret) && type !== 'modifier') {
@@ -145,6 +203,26 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
     }
 
     insert_unary(caret, func) {
+        const funcName = typeof func === 'string' ? func : func?.name;
+        // `∫ ω, G * ∫ z, g z ∂(K) ∂μ` — the inner integral already has its
+        // measure. The next `∂` is the outer integral's measure, not another
+        // factor of the inner one.
+        if (funcName === 'Lean_partial' && caret instanceof L.Lean_partial) {
+            let inner = caret.parent;
+            while (inner && !(inner instanceof L.Lean_int && inner.measurePartial() === caret)) inner = inner.parent;
+            if (inner) {
+                let outer = inner.parent;
+                while (outer && !(outer instanceof L.Lean_int)) outer = outer.parent;
+                if (outer?.scope) {
+                    const host = outer.scope;
+                    const c = new L.LeanCaret(host.indent, host.level);
+                    const partial = new L.Lean_partial(c, host.indent, host.level);
+                    if (host instanceof LeanArgsSpaceSeparated) host.push(partial);
+                    else outer.scope = new LeanArgsSpaceSeparated([host, partial], host.indent, host.level);
+                    return c;
+                }
+            }
+        }
         const last = this.args[this.args.length - 1];
         if (last !== caret) throw new Error(`insert_unary is unexpected for ${this.constructor.name}`);
         const {indent} = this;
@@ -1300,8 +1378,24 @@ export class LeanArgsSpaceSeparated extends LeanArgs {
             return out;
         }
         let out = '%s';
-        for (let j = start + 1; j < n; j++)
-            out += (args[j]?.tightLeft ? '' : ' ') + '%s';
+        for (let j = start + 1; j < n; j++) {
+            const a = args[j];
+            const prevEnd = Lean.lastSourceLine(args[j - 1]);
+            // `f a\n  (b)` — the next argument starts after the previous one ends.
+            if (
+                a &&
+                !(a instanceof L.LeanCaret) &&
+                typeof a.line === 'number' &&
+                prevEnd >= 0 &&
+                a.line > prevEnd
+            ) {
+                const own = typeof a.stringIndent === 'function' ? a.stringIndent() : 0;
+                out += '\n' + (own > 0 ? '' : ' '.repeat(Math.max(0, a.indent ?? 0)));
+            } else if (!a?.tightLeft) {
+                out += ' ';
+            }
+            out += '%s';
+        }
         return out;
     }
 
@@ -1399,7 +1493,17 @@ export class LeanArgsNewLineSeparated extends LeanArgs {
             if (gp instanceof L.LeanQuantifier) return 51;
             // `∫ ω, f\n    ∂μ = g` — relational after a measure continuation must close the
             // integral (`(∫ … ∂μ) = g`), not bind inside the newline list (stack 47 < Eq 50).
-            if (gp instanceof L.Lean_int) return L.LeanRelational.input_priority + 1;
+            if (gp instanceof L.Lean_int) {
+                // `∫ y, f\n    ∂μ - ∫ g` — once the continuation is the measure, `+` / `-`
+                // close the integral. A still-open integrand keeps the lower stack so
+                // `∫ y, f\n    + g ∂μ` stays inside the body.
+                let last = null;
+                for (let i = this.args.length - 1; i >= 0; i--) {
+                    if (!(this.args[i] instanceof L.LeanCaret)) { last = this.args[i]; break; }
+                }
+                if (last instanceof L.Lean_partial && !last.scope) return 1024;
+                return L.LeanRelational.input_priority + 1;
+            }
             if (gp instanceof L.LeanCalc) return L.LeanAssign.input_priority - 1;
         }
         return 47;
@@ -1444,19 +1548,52 @@ export class LeanArgsNewLineSeparated extends LeanArgs {
         }
         const last = this.args[this.args.length - 1];
         // `:=\n-- proof\nby` — the caret after the comment is the `by`, not a blank line.
+        // `:=\n-- proof\nvariational` — a term proof fills that same caret.
         if (last === caret && caret instanceof L.LeanCaret && (next === 'by' || next === 'calc')) {
             caret.indent = indent;
             caret.stampFollowingLine(newline_count - 1);
             return caret;
         }
-        if (last === caret) {
-            for (let i = 0; i < newline_count; ++i) {
-                caret = new L.LeanCaret(indent, caret.level).stampFollowingLine(i);
-                this.push(caret);
+        if (last === caret && caret instanceof L.LeanCaret) {
+            const prev = this.args[this.args.length - 2];
+            if (prev instanceof L.LeanLineComment && prev.text === 'proof') {
+                caret.indent = indent;
+                caret.stampFollowingLine(newline_count - 1);
+                return caret;
             }
+        }
+        if (leanIsInfixContinue(next)) {
+            // `term\n    | cond` / `p\n    ∧ q` — the operator opens the next line.
+            // A caret here is only indent spaces, which the line check treats as empty.
+            let host = last;
+            if (host === caret && host instanceof L.LeanCaret) {
+                host = this.args[this.args.length - 2];
+                this.args.pop();
+                caret.parent = null;
+            }
+            if (host && !(host instanceof L.LeanCaret)) {
+                host.pendingOpLead = indent;
+                return host;
+            }
+        }
+        if (last === caret) {
+            // A blank line before the next binder is a gap, not its own caret.
+            // An empty caret inside this list has no rendered span.
+            const blanks = Math.max(0, newline_count - 1);
+            caret = new L.LeanCaret(indent, caret.level).stampFollowingLine(blanks);
+            if (blanks) caret.leadingBlanks = blanks;
+            this.push(caret);
             return caret;
         }
         throw new Error(`LeanArgsNewLineSeparated.insert_newline: unexpected for ${this.constructor.name}`);
+    }
+
+    replace(oldNode, newNode) {
+        const blanks = oldNode?.leadingBlanks || 0;
+        super.replace(oldNode, newNode);
+        if (!blanks) return;
+        const host = (Array.isArray(newNode) ? newNode : [newNode]).find((n) => n && typeof n === 'object');
+        if (host) host.leadingBlanks = (host.leadingBlanks || 0) + blanks;
     }
 
     is_indented() {
@@ -1519,18 +1656,57 @@ export class LeanArgsNewLineSeparated extends LeanArgs {
     }
 
     strFormat() {
-        return Array(this.args.length).fill('%s').join('\n');
+        const n = this.args.length;
+        if (n === 0) return '';
+        return this.args.map((arg, i) => {
+            const gap = arg?.leadingBlanks || 0;
+            // `(h₁ : …) -- note` is one source line. The comment is the next
+            // argument, born on that same line; a separator newline would
+            // print it one line later than its stamp.
+            const prev = i > 0 ? this.args[i - 1] : null;
+            if (
+                gap === 0 &&
+                arg instanceof L.LeanLineComment &&
+                prev &&
+                Lean.lastSourceLine(prev) === arg.line
+            )
+                return ' %s';
+            return (i === 0 ? '\n'.repeat(gap) : '\n' + '\n'.repeat(gap)) + '%s';
+        }).join('');
     }
 }
 
 export class LeanArgsIndented extends LeanBinary {
     static { this.register(); }
 
+    /**
+     * Built while `currentLine` is still the line before the break
+     * (`(\n  body`, `f\n  arg`). An empty left hole does not render, so the
+     * text starts at the first real child, same as `LeanArgsNewLineSeparated`.
+     */
+    static lineStartsAtChild = true;
+
     get stack_priority() {
         if (this.parent instanceof L.LeanCalc) return 17;
         if (this.parent instanceof L.LeanQuantifier) return L.LeanRelational.input_priority + 1;
-        // Same as quantifier: measure continuation under `∫` must not trap `=` / relations.
-        if (this.parent instanceof L.Lean_int) return L.LeanRelational.input_priority + 1;
+        // Measure continuation under `∫` must not trap `=` / `+` / `-`.
+        // `∫ y, f\n    ∂μ - ∫ g` is `(∫ y, f ∂μ) - ∫ g`. An open integrand
+        // (`∫ y, f\n    + g ∂μ`) keeps the lower stack.
+        if (this.parent instanceof L.Lean_int) {
+            const rhs = this.rhs;
+            const closedMeasure = (node) => {
+                if (node instanceof LeanArgsNewLineSeparated) {
+                    for (let i = node.args.length - 1; i >= 0; i--) {
+                        if (node.args[i] instanceof L.LeanCaret) continue;
+                        return node.args[i] instanceof L.Lean_partial && !node.args[i].scope;
+                    }
+                    return false;
+                }
+                return node instanceof L.Lean_partial && !node.scope;
+            };
+            if (closedMeasure(rhs)) return 1024;
+            return L.LeanRelational.input_priority + 1;
+        }
         return 47;
     }
 

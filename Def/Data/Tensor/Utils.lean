@@ -1,6 +1,6 @@
 module
 
-public import Instance.Data.Tensor.Tensor.Part2
+public import Instance.Data.Tensor.Tensor
 public import Theorem.Nat.NotLt.is.Ge
 public import Theorem.List.EqSetInsertIdxEraseIdx.of.GtLength
 public import Theorem.List.GtLengthInsertIdxEraseIdx.of.GtLength

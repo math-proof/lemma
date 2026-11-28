@@ -1,4 +1,4 @@
-import Lemma.Nat.Lt_Sub.of.LtAdd
+import Theorem.Nat.Lt_Sub.of.LtAdd
 open Nat
 
 

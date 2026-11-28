@@ -30,7 +30,7 @@ variable {S : Type u} {A : Type v} [MeasurableSpace S] [MeasurableSpace A]
   [Countable S] [MeasurableSingletonClass S]
 
 -- a stationary policy as a Markov kernel S → A (rl: `MDPSpec.pi_kernel`)
-noncomputable def pi_kernel (pi : S → ProbabilityMeasure A) : Kernel S A :=
+@[expose] noncomputable def pi_kernel (pi : S → ProbabilityMeasure A) : Kernel S A :=
   Kernel.ofFunOfCountable fun s => (pi s : Measure A)
 
 end MDPSpec

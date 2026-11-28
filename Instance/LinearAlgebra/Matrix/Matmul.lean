@@ -9,7 +9,7 @@ public import Theorem.List.EraseIdx.eq.Append_Drop_Add_1
 public import Theorem.List.EraseIdxAppend.eq.Append_EraseIdx.of.LeLength
 public import Theorem.List.ZipWith_Append.eq.AppendZipWithS
 public import Theorem.List.ZipWith__Append.eq.AppendZipWithS
-public import Instance.Data.Tensor.Tensor.Part2
+public import Instance.Data.Tensor.Tensor
 public import Def.LinearAlgebra.Matrix.Matmul
 @[expose] public section
 

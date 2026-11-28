@@ -44,7 +44,7 @@ Relative:
 \href{http://www.lemma.cn/lean/?module=Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul}{softmax},
 \quad
 pairing:
-\href{http://www.lemma.cn/lean/?module=Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub}{$q^\top R_{n-m}k$},
+\href{http://www.lemma.cn/lean/?module=Matrix.MulDotMul__Rotary.eq.Dot_MulRotarySub}{$q^\top R_{n-m}k$},
 \quad
 layouts:
 \href{http://www.lemma.cn/lean/?module=Tensor.RotaryMatrix'.eq.DotDot_RotaryMatrix}{$R'=P^\top RP$}\\[0.25em]
@@ -100,7 +100,7 @@ RoFormer records the consequence that matters for attention,
 and introduces the relative matrix as a transpose product
 \(\rot_{\Theta,n-m}=(\rot_{\Theta,m})^\top\rot_{\Theta,n}\).
 Equation~\eqref{eq:roformer-rel} is machine-checked in Lean~4 as
-\lmod{Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub};
+\lmod{Matrix.MulDotMul__Rotary.eq.Dot_MulRotarySub};
 the proof is recorded in Section~\ref{sec:pair}.
 Later expositions isolate the two-by-two rules \(\rho(\theta)^\top=\rho(-\theta)\) and \(\rho(\theta)\rho(\theta')=\rho(\theta+\theta')\)~\cite{barbero2025round}.
 
@@ -156,7 +156,7 @@ Each public name below is a module path in the library; the path \emph{is} the s
     \(\rot(\alpha)\rot(\beta)=\rot(\alpha+\beta)\)
     for arbitrary angle vectors, not only for integer token indices.
   \item \textbf{Pairing.}
-    \lmod{Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub}:
+    \lmod{Matrix.MulDotMul__Rotary.eq.Dot_MulRotarySub}:
     equation~\eqref{eq:roformer-rel} for free angle vectors,
     \((\rot(\alpha)\,q)^\top(\rot(\beta)\,k)=q^\top\rot(\beta-\alpha)\,k\).
     The same transpose product on the RoFormer layout is
@@ -257,6 +257,8 @@ Define
 where \(\odot\) broadcasts the vector \(\cos\alpha\) (resp.\ \(\sin\alpha\)) onto the diagonal of each block.
 In the library this is a vertical concatenation of two horizontal stacks
 (\lmod{Tensor.RotaryMatrix.eq.AppendHstackSMulSEye}).
+Technically, the Lean statement of this definition is
+\href{http://localhost/lean/?lemma=Matrix.Rotary.eq.VstackHstackSSMulS_1}{\nolinkurl{Matrix.Rotary.eq.VstackHstackSSMulS_1}}.
 \end{definition}
 
 This is the even/odd layout of Hugging Face Transformers~\cite{huggingface_rope_utils}: plane \(p\) is the pair \((p,\,p+d)\), matching \texttt{rotate\_half}.
@@ -622,18 +624,21 @@ On two \(1\)-tensors the library writes the inner product as \(@\), so~\eqref{eq
 The correspondence is \(\alpha\leftrightarrow\Theta_m\), \(\beta\leftrightarrow\Theta_n\), hence \(\beta-\alpha\leftrightarrow n-m\) in angle space.
 The Lean~4 statement is
 \begin{center}
-\lmod{Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub}.
+\lmod{Matrix.MulDotMul__Rotary.eq.Dot_MulRotarySub}.
 \end{center}
 
 \begin{theorem}[RoFormer pairing]
 \label{thm:pair}
-\lmod{Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub}.
+\lmod{Matrix.MulDotMul__Rotary.eq.Dot_MulRotarySub}.
 For \(\alpha,\beta\in\R^d\) and \(q,k\in\R^{d+d}\),
 equation~\eqref{eq:pair-lean} holds.
 \end{theorem}
 
 \begin{proof}
-The Lean proof is the following chain.
+The statement is proved in Lean as a matrix identity: it instantiates the general
+\lmod{Matrix.MulDotMul__RotaryOn.eq.Dot_MulRotaryOn__Sub.of.All_EqSum__Add.All_Any_In_Brace.All_Ne.Injective.Injective}
+lemma.
+Mathematically the identity is the following chain.
 First, a vector--matrix product may be moved across the inner product
 (\lmod{Tensor.Dot_T.eq.Dot}):
 \begin{equation}
@@ -669,9 +674,10 @@ Substituting~\eqref{eq:pair-step4} into~\eqref{eq:pair-step3} and then into~\eqr
 No token index and no schedule on \(\Theta\) appear in Theorem~\ref{thm:pair}.
 The classical notation \(\rot_{\Theta,n-m}\) is recovered in the next subsection, once \(\theta_i=i\,\tau\) identifies \(\beta-\alpha\) with a row of \(\theta\).
 
-The same pairing holds on the interleaved layout by conjugation (Theorem~\ref{thm:conj}):
-\((\rot'(\alpha)\,q)^\top(\rot'(\beta)\,k)=q^\top\rot'(\beta-\alpha)\,k\)
-(\lmod{Tensor.DotDotSRotaryMatrix'.eq.Dot_DotRotaryMatrix'Sub}).
+The same pairing holds on the interleaved layout,
+\((\rot'(\alpha)\,q)^\top(\rot'(\beta)\,k)=q^\top\rot'(\beta-\alpha)\,k\);
+its matrix version is
+(\lmod{Matrix.MulDotMul__Rotary'.eq.Dot_MulRotary'Sub}).
 
 \subsection{Linear frequencies}
 
@@ -794,7 +800,7 @@ Interactive visualizations of the public statements:
   \item Relative softmax:
     \lmod{Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul}
   \item RoFormer pairing~\eqref{eq:roformer-rel}:
-    \lmod{Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub}
+    \lmod{Matrix.MulDotMul__Rotary.eq.Dot_MulRotarySub}
   \item Conjugation \(R'=P^\top RP\):
     \lmod{Tensor.RotaryMatrix'.eq.DotDot_RotaryMatrix}
   \item Hugging Face matrix:
@@ -839,7 +845,7 @@ Module & Content \\
 \texttt{DotT.eq.RotaryMatrixSub.of.Eq\_Stack\_Mul.Ge} & Proposition~\ref{prop:eqdott} \\
 {\footnotesize\lmod{Tensor.DotT.eq.RotaryMatrix'Get_Sub.of.Eq_Stack_Mul.Ge}} & \(\rot'\) form of Proposition~\ref{prop:eqdott} \\
 {\footnotesize\lmod{Tensor.RotaryMatrixSubGetS.eq.Ite_RotaryMatrix_T.of.Eq_Stack_Mul}} & Lemma~\ref{lem:ite} \\
-\texttt{DotDotSRotaryMatrix.eq.Dot\_DotRotaryMatrixSub} & Theorem~\ref{thm:pair} \\
+\texttt{Matrix.MulDotMul\_\_Rotary.eq.Dot\_MulRotarySub} & Theorem~\ref{thm:pair} \\
 {\footnotesize\lmod{Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul}} & Theorem~\ref{thm:soft} \\
 \hline
 \end{tabular}
@@ -855,8 +861,8 @@ Figure~\ref{fig:deps} lists the import graph of the headline modules.
 \begin{verbatim}
 DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul
 |-- DotSoftmaxDivDot_T.eq.Stack_Div_SumExp
-|-- DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub
-|   `-- DotT.eq.RotaryMatrixSub
+|-- Matrix.MulDotMul__Rotary.eq.Dot_MulRotarySub
+|   `-- Matrix.MulDotMul__RotaryOn.eq.Dot_MulRotaryOn__Sub...
 `-- RotaryMatrixSubGetS.eq.Ite_RotaryMatrix_T.of.Eq_Stack_Mul
     |-- SubGetS.eq.Get_Sub.of.Eq_Stack_Mul.Ge
     `-- RotaryMatrixNeg.eq.TRotaryMatrix
@@ -883,7 +889,7 @@ DotT.eq.RotaryMatrix'Sub
 `-- Dot_TInterleave.eq.Eye
 \end{verbatim}
 \caption{Import graph for the headline RoPE lemmas.
-Prefixes \texttt{Tensor.} are omitted.}
+Prefixes \texttt{Tensor.} are omitted; a trailing \texttt{...} abbreviates the \texttt{of/...} suffix.}
 \label{fig:deps}
 \end{figure}
 
@@ -896,7 +902,7 @@ Theorem~\ref{thm:soft} is an identity for every \(Q,K,V\) and every linear \(\th
 
 \paragraph{Layout.}
 Both pairings are formalized (\lmod{Tensor.RotaryMatrix.eq.AppendHstackSMulSEye}, \lmod{Tensor.RotaryMatrix'.eq.Stack_Ite_IteS}); the permutation lemma is \lmod{Tensor.RotaryMatrix'.eq.DotDot_RotaryMatrix}.
-Kernel realization (\lmod{Tensor.DotRotaryMatrix.eq.AddMulS}) and pairing (\lmod{Tensor.DotDotSRotaryMatrix.eq.Dot_DotRotaryMatrixSub}) are stated for the Hugging Face layout; the interleaved counterparts (\lmod{Tensor.DotRotaryMatrix'.eq.Stack_IteEven_SubMulS}, \lmod{Tensor.DotDotSRotaryMatrix'.eq.Dot_DotRotaryMatrix'Sub}, \lmod{Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul}) follow by conjugation.
+Kernel realization (\lmod{Tensor.DotRotaryMatrix.eq.AddMulS}) and pairing (\lmod{Matrix.MulDotMul__Rotary.eq.Dot_MulRotarySub}) are stated for the Hugging Face layout; the interleaved counterparts (\lmod{Tensor.DotRotaryMatrix'.eq.Stack_IteEven_SubMulS}, \lmod{Matrix.MulDotMul__Rotary'.eq.Dot_MulRotary'Sub}, \lmod{Tensor.DotSoftmaxDivDot_Stack_TDot.eq.Stack_Div_SumExp.of.Eq_Stack_Mul}) follow by conjugation.
 The matching matrix identity on the RoFormer layout is \lmod{Tensor.DotT.eq.RotaryMatrix'Sub}.
 
 \paragraph{Frequencies.}

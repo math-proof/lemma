@@ -8,7 +8,7 @@ public import Mathlib.Topology.UniformSpace.UniformEmbedding
 public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
 public import Theorem.Vector.Zero.eq.Replicate
 public import Theorem.Tensor.Eq.is.EqDataS
-public import Instance.Data.Tensor.Tensor.Part2
+public import Instance.Data.Tensor.Tensor
 public import Def.MeasureTheory.Integral.IntervalIntegral.Integrals
 @[expose] public section
 

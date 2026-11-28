@@ -2,7 +2,7 @@ module
 
 public import Mathlib
 public import Theorem.Int.IsDirectSummand
-public import Initialize.Tactic.Attr
+public import Initialize.Tactic.Attr.Basic
 
 public section
 

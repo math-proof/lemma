@@ -1,4 +1,4 @@
-import Instance.Data.Tensor.Tensor.Part2
+import Instance.Data.Tensor.Tensor
 import Lemma.Finset.UFnSum.eq.Sum_UFn.All_EqUFnAdd.EqUFn_0
 open Tensor Finset
 

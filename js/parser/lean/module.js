@@ -1520,12 +1520,19 @@ export class LeanModule extends LeanStatements {
                 .map((line) => (line === '' ? line : pad + line))
                 .join('\n');
         };
+        // Blank lines travel as `leadingBlanks` on the next statement. The
+        // module joins segments with a single newline, so the gap has to be
+        // prefixed here or a relocated `-- created` loses those lines.
+        const withGap = (node, text) => {
+            const gap = node?.leadingBlanks || 0;
+            return gap ? '\n'.repeat(gap) + text : text;
+        };
         for (let i = 0; i < args.length; i++) {
             if (skip.has(i)) continue;
             const a = args[i];
             if (a == null) continue;
             if (a instanceof L.LeanCaret) {
-                parts.push(String(a));
+                parts.push(withGap(a, String(a)));
                 continue;
             }
             if (a instanceof L.Lean_def) {
@@ -1541,7 +1548,7 @@ export class LeanModule extends LeanStatements {
                         let block = `${head}${asnPad}${String(asn.lhs)} :=`;
                         for (const c of tail.cmts) block += `\n${String(c)}`;
                         block += `\n${tail.proofStr}`;
-                        parts.push(block);
+                        parts.push(withGap(a, block));
                         continue;
                     }
                 }
@@ -1554,7 +1561,7 @@ export class LeanModule extends LeanStatements {
                     let block = `${asnPad}${String(a.lhs)} :=`;
                     for (const c of tail.cmts) block += `\n${String(c)}`;
                     block += `\n${tail.proofStr}`;
-                    parts.push(block);
+                    parts.push(withGap(a, block));
                     continue;
                 }
             }
@@ -1574,7 +1581,7 @@ export class LeanModule extends LeanStatements {
                     const as = String(a);
                     const ns = String(next);
                     const join = as.endsWith('\n') ? '' : '\n';
-                    parts.push(indentText(`${as}${join}${ns}`, indent));
+                    parts.push(withGap(a, indentText(`${as}${join}${ns}`, indent)));
                     continue;
                 }
             }
@@ -1637,7 +1644,7 @@ export class LeanModule extends LeanStatements {
                     if (echoTail || lemmaColonMatchBy) {
                         const lines = String(a).split('\n');
                         if (lines[0] !== '') lines[0] = ' '.repeat(indent) + lines[0];
-                        parts.push(lines.join('\n'));
+                        parts.push(withGap(a, lines.join('\n')));
                         continue;
                     }
                 }
@@ -1650,7 +1657,7 @@ export class LeanModule extends LeanStatements {
                 const indent = prev instanceof L.Lean_let ? prev.indent ?? 0 : 0;
                 if (indent > 0) out = ' '.repeat(indent) + out;
             }
-            parts.push(out);
+            parts.push(withGap(a, out));
         }
         return parts;
     }

@@ -5,8 +5,8 @@ public import Initialize.Tactic.Attr.Basic
 public section
 
 
-@[comm]
-public theorem Nat.MulAdd.eq.AddMulS
+@[path, comm]
+private lemma main
   [Mul α] [Add α] [RightDistribClass α]
 -- given
   (a b c : α) :

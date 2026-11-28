@@ -1,6 +1,6 @@
 import Lemma.List.EqTake.of.LeLength
 import Lemma.List.LengthSet.eq.Length
-import Lemma.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
+import Theorem.List.Set.eq.AppendTake__Cons_Drop.of.GtLength
 import Lemma.List.TakeAppend.eq.Append_Take.of.LeLength
 import Lemma.List.TakeCons.eq.Cons_Take.of.Gt_0
 import Lemma.List.TakeDrop.eq.DropTake

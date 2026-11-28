@@ -1,4 +1,6 @@
 import Instance.Probability.Process.MarkovChain.Part3
+import Instance.Probability.Process.MarkovChain
+import Initialize.Tactic.Attr.Basic
 open MeasureTheory ProbabilityTheory
 
 

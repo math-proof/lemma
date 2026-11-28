@@ -38,4 +38,21 @@ public theorem List.GtLength_0.of.Ne_Nil
   (List.Ne_Nil.is.GtLength_0 s).mp h
 
 
+public theorem List.Ne_Nil.of.GtLength_0
+-- given
+  {s : List α}
+  (h : s.length > 0) :
+-- imply
+  s ≠ [] :=
+  (List.Ne_Nil.is.GtLength_0 s).mpr h
+
+
+public theorem List.GtLength_0.is.Ne_Nil
+-- given
+  (s : List α) :
+-- imply
+  s.length > 0 ↔ s ≠ [] :=
+  (List.Ne_Nil.is.GtLength_0 s).symm
+
+
 -- created on 2025-05-08

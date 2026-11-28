@@ -39,6 +39,7 @@ subtype. On a sequential (e.g. metrizable) subtype, `SeqContinuous` upgrades to 
   Giry-measurability proof; do not rely on `Continuous.measurable` on `ProbabilityMeasure`.
 -/
 /-- Probability measures with a uniform `exp((2c)‖·‖)` moment bound and integrable identity. -/
+@[expose]
 def UniformExpMoment (d : ℕ) (c M : ℝ) : Type _ :=
   { ν : ProbabilityMeasure (EuclideanSpace ℝ (Fin d)) //
     Integrable (fun x : EuclideanSpace ℝ (Fin d) => x) ν.toMeasure ∧

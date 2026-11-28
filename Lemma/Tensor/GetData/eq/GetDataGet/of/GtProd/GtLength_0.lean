@@ -2,7 +2,6 @@ import Instance.Data.Tensor.Tensor
 import Lemma.List.ProdTake_1.eq.Get_0.of.GtLength_0
 import Lemma.List.GtProdTail_0.of.GtProd_0
 import Lemma.Vector.GetSplitAt_1.eq.GetUnflattenCast
-import Instance.Data.Tensor.Tensor.Part2
 open Vector List Tensor Nat
 
 

@@ -10,6 +10,18 @@ import { Lean } from './base.js';
 
 const L = Lean.classes;
 
+/** A token that starts the next declaration, not the proof of this `:=`. */
+const assignClosesAt = new Set([
+    'private', 'public', 'protected', 'lemma', 'theorem', 'def', 'abbrev', 'axiom',
+    'instance', 'class', 'structure', 'inductive', 'end', 'namespace', 'section',
+    'variable', 'open', 'import', 'export', 'noncomputable', 'example', 'mutual',
+    'syntax', 'macro', 'initialize',
+]);
+
+function leanAssignClosesAt(next) {
+    return assignClosesAt.has(next);
+}
+
 export class LeanAssign extends LeanBinary {
     static { this.register(); }
 
@@ -21,6 +33,14 @@ export class LeanAssign extends LeanBinary {
 
     get command() {
         return ':=';
+    }
+
+    /**
+     * A named/implicit argument `(m := d)` contributes nothing to the fingerprint:
+     * `finSumFinEquiv (m := d) (n := d)` is the bare head `FinSumFinEquiv`.
+     */
+    toJSON() {
+        return '';
     }
 
     echo() {
@@ -51,11 +71,14 @@ export class LeanAssign extends LeanBinary {
 
     insert_newline(caret, newline_count, indent, next) {
         // `lemma … :=\nby` with `by` back at the declaration column.
+        // `lemma … :=\n-- proof\nvariational` — the lookahead skips the comment,
+        // so `next` is the proof term. Keep the hole; a new declaration does not.
         if (
             caret === this.rhs &&
             caret instanceof L.LeanCaret &&
             indent <= this.indent &&
-            (next === 'by' || next === 'calc')
+            next &&
+            !leanAssignClosesAt(next)
         ) {
             caret.stampFollowingLine(newline_count - 1);
             return caret;
@@ -187,6 +210,9 @@ export class LeanAssign extends LeanBinary {
         ) {
             return '\n';
         }
+        // `have h :=\n  term <| by` — the value starts on the next line.
+        const lhsEnd = Lean.lastSourceLine(this.lhs);
+        if (lhsEnd >= 0 && typeof rhs?.line === 'number' && rhs.line > lhsEnd) return '\n';
         return ' ';
     }
 

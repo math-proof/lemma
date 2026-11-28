@@ -1144,7 +1144,17 @@ async function handleLeanGet(req, res) {
   /** `?lemma=<namespace>` — where `?module=Lemma.…` redirects to. */
   if (req.query.lemma != null && String(req.query.lemma).trim() !== '') {
     try {
-      const raw = String(req.query.lemma).trim();
+      let raw = String(req.query.lemma).trim();
+      // Remote file links sometimes prefix an absolute repo path with the host name
+      // (`ubuntu-22.04:/home/…/Foo.lean`). Drop the `<host>:` prefix and redirect to the
+      // plain absolute path, preserving any other query parameters.
+      const hostPrefix = raw.match(/^[^/\s]+:(\/.*)$/);
+      if (hostPrefix) {
+        const params = new URLSearchParams(req.query);
+        params.set('lemma', hostPrefix[1]);
+        res.redirect(302, `${req.path}?${params.toString()}`);
+        return;
+      }
       if (raw.endsWith('.lean')) {
         const abs = await resolveTheoremPath(raw);
         const module = abs && leanFilePathToModule(abs);

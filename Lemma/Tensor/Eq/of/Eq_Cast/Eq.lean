@@ -1,4 +1,4 @@
-import Instance.Data.Tensor.Tensor.Part2
+import Instance.Data.Tensor.Tensor
 import Lemma.Bool.SEq.is.Eq
 import Lemma.Bool.SEqCast.of.Eq
 import Lemma.Bool.SEq.of.SEq.SEq

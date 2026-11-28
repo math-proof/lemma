@@ -1196,6 +1196,24 @@ export class LeanBrace extends LeanPairedGroup {
         return this.inline === true || this.structUpdateWith() != null;
     }
 
+    push_right(funcName) {
+        // `}` on a later line than the last field keeps a line of its own.
+        // `field }` on the field's last line does not.
+        if (this.constructor.name === funcName && this.closeIndent === undefined && this.arg instanceof L.LeanStatements) {
+            let last = null;
+            for (let i = this.arg.args.length - 1; i >= 0; i--) {
+                const a = this.arg.args[i];
+                if (a instanceof L.LeanCaret || a.is_comment()) continue;
+                last = a;
+                break;
+            }
+            const end = last ? Lean.lastSourceLine(last) : -1;
+            if (typeof Lean.currentLine === 'number' && end >= 0 && Lean.currentLine > end)
+                this.closeIndent = this.indent;
+        }
+        return super.push_right(funcName);
+    }
+
     insert_newline(caret, newline_count, indent, next) {
         if (this.indent <= indent && indent > this.indent && caret === this.arg && !(caret instanceof L.LeanCaret) &&
             !(caret instanceof L.LeanStatements) && LeanBrace.isStructInstField(caret)) {

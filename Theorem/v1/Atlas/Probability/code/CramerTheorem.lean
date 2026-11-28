@@ -68,11 +68,13 @@ The full `cramer_theorem` is **not** stated until the gaps below close without `
   `TiltCover` (finite-Λ* points are tilt barycenters) by convex analysis.
 -/
 /-- Barycenter of a probability measure on Euclidean space (Bochner integral). -/
+@[expose]
 noncomputable def barycenter {d : ℕ} (ν : ProbabilityMeasure (EuclideanSpace ℝ (Fin d))) :
     EuclideanSpace ℝ (Fin d) :=
   ∫ x, x ∂(ν : Measure (EuclideanSpace ℝ (Fin d)))
 
 /-- Contracted Sanov rate: infimal KL over measures with a given barycenter. -/
+@[expose]
 noncomputable def cramerRateFromSanov {d : ℕ}
     (μ₀ : Measure (EuclideanSpace ℝ (Fin d)))
     (x : EuclideanSpace ℝ (Fin d)) : ENNReal :=
@@ -81,11 +83,13 @@ noncomputable def cramerRateFromSanov {d : ℕ}
     barycenter x
 
 /-- Sanov-shaped empirical probability measure for a positive sample size. -/
+@[expose]
 noncomputable def empiricalProbabilityMeasure {α : Type*} [MeasurableSpace α]
     {n : ℕ} (hn : 0 < n) (ω : Fin n → α) : ProbabilityMeasure α :=
   ⟨(n : ENNReal)⁻¹ • ∑ i : Fin n, Measure.dirac (ω i), IsProbabilityMeasure.of.Gt_0 hn⟩
 
 /-- Product-space empirical-mean law (Sanov sample space). -/
+@[expose]
 noncomputable def empiricalMeanLawPi {d : ℕ}
     (μ : Measure (EuclideanSpace ℝ (Fin d))) (n : ℕ) :
     Measure (EuclideanSpace ℝ (Fin d)) :=
@@ -284,6 +288,7 @@ theorem ofReal_inner_sub_log_le_cramerRateFromSanov
 /-! ### Radial clamp, finite-moment subclass, truncated means, tilting KL -/
 
 /-- Radial clamp onto the closed ball of radius `R` (for `R ≥ 0`). -/
+@[expose]
 noncomputable def radialClamp {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     (R : ℝ) (x : E) : E :=
   (R * (R ⊔ ‖x‖)⁻¹) • x
@@ -341,6 +346,7 @@ theorem tendsto_radialClamp {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ 
   exact radialClamp_of_norm_le (by positivity) hle
 
 /-- Probability measures on `ℝᵈ` with integrable identity (finite first moment). -/
+@[expose]
 def FiniteFirstMoment (d : ℕ) : Type _ :=
   { ν : ProbabilityMeasure (EuclideanSpace ℝ (Fin d)) //
     Integrable (fun x : EuclideanSpace ℝ (Fin d) => x) ν.toMeasure }
@@ -360,6 +366,7 @@ instance : MeasurableSpace (FiniteFirstMoment d) :=
 theorem integrable (ν : FiniteFirstMoment d) :
     Integrable (fun x : EuclideanSpace ℝ (Fin d) => x) (ν : ProbabilityMeasure _).toMeasure :=
   ν.property
+@[expose]
 noncomputable def barycenterMap (ν : FiniteFirstMoment d) : EuclideanSpace ℝ (Fin d) :=
   barycenter (ν : ProbabilityMeasure _)
 end FiniteFirstMoment
@@ -424,6 +431,7 @@ the truncated means; `Continuous.measurable` does not apply as stated because
 `OpensMeasurableSpace (ProbabilityMeasure _)` is not available for the Giry instance. -/
 
 /-- Exponentially tilted probability measure (when the MGF is finite). -/
+@[expose]
 noncomputable def tiltedProba {α : Type*} [MeasurableSpace α]
     (μ : Measure α) [IsProbabilityMeasure μ] (f : α → ℝ)
     (hf : Integrable (fun x => Real.exp (f x)) μ) :
@@ -497,6 +505,7 @@ theorem cramerRateFromSanov_le_of_tilted {d : ℕ}
 /-! ### Exponential moments, unbounded DV via truncation, sequential barycenter continuity -/
 
 /-- Finite moment generating function in every dual direction (vector hMGF). -/
+@[expose]
 def HasFiniteMGF {d : ℕ} (μ₀ : Measure (EuclideanSpace ℝ (Fin d))) : Prop :=
   ∀ t : EuclideanSpace ℝ (Fin d), Integrable (fun x => Real.exp (⟪t, x⟫_ℝ)) μ₀
 
@@ -1169,7 +1178,7 @@ theorem cramerRateFunction_le_cramerRateFromSanov {d : ℕ}
       cramerRateFromSanov μ₀ y := by
   refine cramerRateFunction_le_of_forall_ofReal_inner_sub_logMGF_le
     (fun x : EuclideanSpace ℝ (Fin d) => x) μ₀ y _ hbdd fun t => ?_
-  exact ofReal_inner_sub_logMGF_le_cramerRateFromSanov μ₀ y t (hMGF t)
+  exact ofReal_inner_sub_logMGF_le_cramerRateFromSanov μ₀ y t (hMGF.integrable_exp t)
     (hMGF.integrable_exp_mul_norm ‖t‖) hfib
 
 /-- Rate equality at a tilt barycenter: Sanov contraction = Cramér rate. -/
@@ -1181,17 +1190,17 @@ theorem cramerRateFromSanov_eq_cramerRateFunction_of_tilted {d : ℕ}
       (μ₀.tilted fun x => ⟪t, x⟫_ℝ))
     (hf_inner : Integrable (fun x => ⟪t, x⟫_ℝ) (μ₀.tilted fun x => ⟪t, x⟫_ℝ))
     (hbdd : BddAbove (Set.range fun s : EuclideanSpace ℝ (Fin d) =>
-      ⟪s, barycenter (tiltedProba μ₀ (fun x => ⟪t, x⟫_ℝ) (hMGF t))⟫_ℝ -
+      ⟪s, barycenter (tiltedProba μ₀ (fun x => ⟪t, x⟫_ℝ) (hMGF.integrable_exp t))⟫_ℝ -
         logMGFVec (fun x : EuclideanSpace ℝ (Fin d) => x) μ₀ s))
     (hfib : ∀ ν : ProbabilityMeasure (EuclideanSpace ℝ (Fin d)),
-      barycenter ν = barycenter (tiltedProba μ₀ (fun x => ⟪t, x⟫_ℝ) (hMGF t)) →
+      barycenter ν = barycenter (tiltedProba μ₀ (fun x => ⟪t, x⟫_ℝ) (hMGF.integrable_exp t)) →
         ν.toMeasure ≪ μ₀ ∧
           Integrable (llr ν.toMeasure μ₀) ν.toMeasure ∧
           Integrable (fun x : EuclideanSpace ℝ (Fin d) => x) ν.toMeasure) :
-    cramerRateFromSanov μ₀ (barycenter (tiltedProba μ₀ (fun x => ⟪t, x⟫_ℝ) (hMGF t))) =
+    cramerRateFromSanov μ₀ (barycenter (tiltedProba μ₀ (fun x => ⟪t, x⟫_ℝ) (hMGF.integrable_exp t))) =
       cramerRateFunction (fun x : EuclideanSpace ℝ (Fin d) => x) μ₀
-        (barycenter (tiltedProba μ₀ (fun x => ⟪t, x⟫_ℝ) (hMGF t))) := by
+        (barycenter (tiltedProba μ₀ (fun x => ⟪t, x⟫_ℝ) (hMGF.integrable_exp t))) := by
   refine le_antisymm ?_ ?_
-  · exact cramerRateFromSanov_le_cramerRateFunction_of_tilted μ₀ t (hMGF t)
+  · exact cramerRateFromSanov_le_cramerRateFunction_of_tilted μ₀ t (hMGF.integrable_exp t)
       hint_id hf_inner hbdd
   · exact cramerRateFunction_le_cramerRateFromSanov μ₀ _ hMGF hbdd hfib

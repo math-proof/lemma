@@ -28,6 +28,8 @@ const INFIX = {
   Subset: { op: '⊆', prec: 50, assoc: 'none' },
   Supset: { op: '⊇', prec: 50, assoc: 'none' },
   Colon: { op: ':', prec: 40, assoc: 'none' },
+  // Named argument `(m := d)`. Looser than application, so it is parenthesized as an argument.
+  Assign: { op: ':=', prec: 15, assoc: 'none' },
   And: { op: '∧', prec: 35, assoc: 'right' },
   Cond: { op: '|', prec: 32, assoc: 'left' },
   Or: { op: '∨', prec: 30, assoc: 'right' },
@@ -156,18 +158,29 @@ function delimited(open, close, children) {
   return { text: `${open}${children.map((part) => part.text).join(', ')}${close}`, prec: ATOM };
 }
 
+/**
+ * Lean application is left-associative juxtaposition: `f a b` means `(f a) b`,
+ * but an application argument needs parentheses: `f a (g b)`.
+ * A head keeps its parentheses only when it is looser than application
+ * (`(a + b) c`). A bare constant is an atom, so `f g` stays unparenthesized.
+ */
+function parenthesize(part, asHead) {
+  if (!part?.text) return '';
+  const wrap = asHead ? part.prec < CALL : part.prec <= CALL;
+  return wrap ? `(${part.text})` : part.text;
+}
+
 function indexed(op, children) {
   if (!children.length) return { text: op, prec: 10 };
   const [head, ...rest] = children;
-  const body = rest
-    .map((part) => (part.prec < CALL ? `(${part.text})` : part.text))
-    .join(', ');
+  const body = rest.map((part) => parenthesize(part, false)).join(', ');
   return { text: body ? `${op}[${head.text}] ${body}` : `${op}[${head.text}]`, prec: 10 };
 }
 
 /** One tree, or one line per tree when a step stored several. Renders free
  * leaves `$n` as `fₙ` and bound leaves `?n` as `bₙ`, with Lean-like
- * application juxtaposition.
+ * application juxtaposition. A nested application argument is parenthesized
+ * (`f a (g b)`); a bare constant argument is not (`f g`).
  */
 export function infixFingerprint(json) {
   if (Array.isArray(json)) return json.map((tree) => infix(tree).text).filter(Boolean).join('\n');
@@ -184,7 +197,7 @@ function infix(json) {
     const parts = json.map((part) => infix(part)).filter((part) => part.text);
     if (parts.length > 1) {
       return {
-        text: parts.map((part) => (part.prec < CALL ? `(${part.text})` : part.text)).join(' '),
+        text: parts.map((part, i) => parenthesize(part, i === 0)).join(' '),
         prec: CALL,
       };
     }
@@ -217,8 +230,8 @@ function infix(json) {
   if (head === 'Inv' && children.length === 1) return postfix(children[0], '⁻¹', CALL);
   if (head === 'Get' && children.length >= 2) {
     const [base, ...idx] = children;
-    const b = base.prec < CALL ? `(${base.text})` : base.text;
-    return { text: `${b}[${idx.map((part) => part.text).join(', ')}]`, prec: CALL };
+    // Indexing binds tighter than application, so `f a[i]` needs no parentheses.
+    return { text: `${parenthesize(base, false)}[${idx.map((part) => part.text).join(', ')}]`, prec: POST };
   }
   if (head === 'Fun' && rawChildren.length >= 2) {
     const binders = rawChildren.slice(0, -1);
@@ -244,10 +257,9 @@ function infix(json) {
     return { text: `${binder} ${dom.text}, ${rest.map((part) => part.text).join(', ')}`, prec: binderPrec };
   }
   if (binder && children.length === 1) return { text: `${binder} ${children[0].text}`, prec: binderPrec };
-  // Plain application is Lean juxtaposition, with parentheses around any
-  // argument looser than an application (`Fin f₁`, `Icc a b`).
-  const args = children
-    .map((part) => (part.prec < CALL ? `(${part.text})` : part.text))
-    .join(' ');
-  return { text: args ? `${head} ${args}` : head, prec: CALL };
+  // Plain application is Lean juxtaposition. A nested application is an
+  // argument, so it is parenthesized (`Reindex (FinSumFinEquiv …) …`).
+  // A bare constant stays an atom (`f g`, not `f (g)`).
+  const args = children.map((part) => parenthesize(part, false)).join(' ');
+  return { text: args ? `${head} ${args}` : head, prec: args ? CALL : ATOM };
 }

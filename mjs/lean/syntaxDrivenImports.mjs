@@ -77,7 +77,7 @@ export async function mergeSyntaxDrivenImports(imports, leanSource) {
         await maybeUnshift('Def.Data.Tensor.Stack.Part2');
         break;
       case 'Tensor':
-        if (!has('Instance.Data.Tensor.Tensor.Part2') && !has('Def.Data.Tensor.Stack.Part2')) {
+        if (!has('Instance.Data.Tensor.Tensor') && !has('Def.Data.Tensor.Stack.Part2')) {
           await maybeUnshift('Def.Data.Tensor.Defs.Part4');
         }
         break;

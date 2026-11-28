@@ -1,6 +1,6 @@
 import Initialize.Tactic.Attr.Basic
-import Theorem.List.Permute.eq.Ite
-import Theorem.List.Slice.eq.Nil
+import Lemma.List.Permute.eq.Ite
+import Lemma.List.Slice.eq.Nil
 open List
 
 

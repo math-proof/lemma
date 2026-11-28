@@ -1,7 +1,7 @@
 module
 
-public import Instance.Data.Tensor.Tensor.Part2
-public import Syntax.Data.Tensor.Stack.Part3
+public import Instance.Data.Tensor.Tensor
+public import Syntax.Data.Tensor.Stack
 
 @[expose] public meta section
 

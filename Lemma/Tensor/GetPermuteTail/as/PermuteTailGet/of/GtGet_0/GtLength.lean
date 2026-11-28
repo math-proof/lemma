@@ -1,6 +1,7 @@
 import Lemma.Bool.SEqCastS.of.SEq.Eq.Eq
 import Def.Data.Tensor.Prod
 import Notation.Data.Tensor.Permute
+import Lemma.Nat.MulMul.eq.Mul_Mul
 import Lemma.Fin.Any_Eq_AddMul.of.Lt_Mul
 import Lemma.List.DropTail.eq.Drop
 import Lemma.List.ProdDrop.dvd.ProdTail.of.Gt_0

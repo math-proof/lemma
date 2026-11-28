@@ -1,21 +1,3 @@
 module
 
-public import Initialize.Tactic.Attr.Basic
-public import Instance.Probability.Process.StochasticProcessTypes.Part3
-
-public section
-
-
-@[path]
-private theorem main
-  {S : Type*} [Fintype S]
--- given
-  (a b : S → ℝ) :
--- imply
-  ofL1 (a - b) = ofL1 a - ofL1 b := by
--- proof
-  ext
-  simp [ofL1, sub_eq_add_neg]
-
-
--- created on 2026-09-22
+public import Lemma.Matrix.OfL1.eq.Sub

@@ -132,13 +132,14 @@ function infixHead(op) {
   return cap(seg);
 }
 
-/** `x ^ 2` / `x ^ 3` mirror the `x²` / `x³` notation heads. */
+/** `x ^ 2` / `x ^ 3` / `x ^ 4` mirror the `x²` / `x³` / `x⁴` notation heads. */
 function power(struct, ctx) {
   const [base, exp] = struct.args ?? [];
   const b = base == null ? '' : convert(base, ctx);
   const e = exp == null ? '' : convert(exp, ctx);
   if (e === '2') return node('Square', [b]);
   if (e === '3') return node('Cube', [b]);
+  if (e === '4') return node('Tesseract', [b]);
   return node('Pow', [b, e]);
 }
 

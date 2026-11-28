@@ -1,11 +1,9 @@
-import Initialize.Tactic.Attr.Basic
 import Lemma.Fin.Any_In_BraceRopeEven__RopeOdd
 import Lemma.Fin.InjectiveRopeEven
 import Lemma.Fin.InjectiveRopeOdd
 import Lemma.Fin.RopeEven.ne.RopeOdd
 import Lemma.Fin.Sum.eq.AddSumS
 import Lemma.Matrix.MulDotMul__RotaryOn.eq.Dot_MulRotaryOn__Sub.of.All_EqSum__Add.All_Any_In_Brace.All_Ne.Injective.Injective
-import Mathlib
 open Fin Matrix Real
 open scoped Matrix
 
@@ -31,3 +29,4 @@ private lemma main
 
 
 -- created on 2026-11-27
+-- updated on 2026-11-28

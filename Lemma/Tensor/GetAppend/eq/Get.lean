@@ -1,5 +1,4 @@
 import Instance.Data.Tensor.Tensor
-import Instance.Data.Tensor.Tensor.Part2
 import Lemma.Nat.Lt_Add
 import Lemma.Vector.GetCast_Map.eq.UFnGet.of.Eq.Lt
 import Lemma.Vector.GetUnflatten.of.Eq.Lt.Eq.Eq

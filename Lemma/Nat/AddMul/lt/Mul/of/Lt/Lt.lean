@@ -1,20 +1,5 @@
-import Theorem.Nat.AddMul.lt.Mul.of.Lt
-open Nat
-
-
-@[path]
-private lemma main
-  {m n : ℕ}
--- given
-  (h₀ : i < m)
-  (h₁ : j < n) :
--- imply
-  i * n + j < m * n := by
--- proof
-  let j : Fin n := ⟨j, h₁⟩
-  have := AddMul.lt.Mul.of.Lt h₀ j
-  simp_all
-  assumption
+import Theorem.Nat.AddMul.lt.Mul.of.Lt.Lt
+import Initialize.Tactic.Attr.Basic
 
 
 -- created on 2025-06-14

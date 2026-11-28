@@ -36,20 +36,48 @@ function fingerprintFormat(json) {
     }).join('');
 }
 
-/** Track content lines and boundary characters without retaining the text. */
+/** JavaScript `\s` code points that are not CR or LF. CR and LF are line breaks. */
+function isInlineSpace(code) {
+    return code === 9 || code === 11 || code === 12 || code === 32
+        || code === 0xa0 || code === 0xfeff || code === 0x1680
+        || code === 0x2028 || code === 0x2029 || code === 0x202f || code === 0x205f || code === 0x3000
+        || (code >= 0x2000 && code <= 0x200a);
+}
+
+/**
+ * Content-line span of a literal, as break indexes.
+ * `first`/`last` are the break counts of the first and last non-whitespace
+ * character. A CR+LF pair is one break.
+ */
 function textLineSpan(text) {
+    const n = text.length;
     let breaks = 0;
     let first = null;
     let last = null;
-    for (const [token] of text.matchAll(/\r\n|[\r\n]|\S+/g)) {
-        if (token[0] === '\r' || token[0] === '\n') {
+    for (let i = 0; i < n; i++) {
+        const code = text.charCodeAt(i);
+        if (code === 13) {
             breaks++;
-        } else {
-            first ??= breaks;
+            if (i + 1 < n && text.charCodeAt(i + 1) === 10) i++;
+            continue;
+        }
+        if (code === 10) {
+            breaks++;
+            continue;
+        }
+        if (!isInlineSpace(code)) {
+            if (first === null) first = breaks;
             last = breaks;
         }
     }
-    return { breaks, first, last, leadingLF: text.startsWith('\n'), trailingCR: text.endsWith('\r'), empty: text.length === 0 };
+    return {
+        breaks,
+        first,
+        last,
+        leadingLF: n !== 0 && text.charCodeAt(0) === 10,
+        trailingCR: n !== 0 && text.charCodeAt(n - 1) === 13,
+        empty: n === 0,
+    };
 }
 
 function appendLineSpan(span, suffix) {
@@ -174,7 +202,10 @@ export class Lean extends IndentedNode {
         this.kwargs.line = v;
     }
 
-    /** Number of rendered lines spanned by non-whitespace content. */
+    /**
+     * Rendered lines from the first non-whitespace line through the last.
+     * `last - first + 1` on the break indexes from `lineSpan`.
+     */
     get height() {
         const { first, last } = this.lineSpan();
         return first === null ? 0 : last - first + 1;
@@ -189,15 +220,19 @@ export class Lean extends IndentedNode {
             appendLineSpan(span, textLineSpan(format));
             return span;
         }
-        let start = 0;
+        let literalAt = 0;
         let index = 0;
-        for (const placeholder of format.matchAll(/%[sd]/g)) {
-            appendLineSpan(span, textLineSpan(format.slice(start, placeholder.index)));
+        for (let i = 0; i < format.length; i++) {
+            if (format.charCodeAt(i) !== 37) continue;
+            const kind = format.charCodeAt(i + 1);
+            if (kind !== 115 && kind !== 100) continue;
+            appendLineSpan(span, textLineSpan(format.slice(literalAt, i)));
             const arg = args[index++];
-            appendLineSpan(span, arg instanceof Lean ? arg.lineSpan() : textLineSpan(String(arg)));
-            start = placeholder.index + placeholder[0].length;
+            appendLineSpan(span, arg instanceof Lean ? arg.lineSpan() : textLineSpan(arg == null ? '' : String(arg)));
+            literalAt = i + 2;
+            i++;
         }
-        appendLineSpan(span, textLineSpan(format.slice(start)));
+        appendLineSpan(span, textLineSpan(format.slice(literalAt)));
         return span;
     }
 
@@ -466,7 +501,11 @@ export class Lean extends IndentedNode {
             p instanceof L.LeanArgsCommaNewLineSeparated ||
             p instanceof L.LeanArgsNewLineSeparated ||
             p instanceof L.LeanStatements ||
-            (p instanceof L.LeanIte && !p.inline && (this === p.then || this === p.else))
+            (p instanceof L.LeanIte && !p.inline && this === p.then) ||
+            (p instanceof L.LeanIte && !p.inline && this === p.else &&
+                !(typeof this.line === 'number' &&
+                    p.then != null &&
+                    Lean.lastSourceLine(p.then) >= this.line))
         ) return true;
         // `a ≤\n    b` / `x •\n    y`: the rhs is the first token of its line.
         // Newline-separated containers already indent their own children.
@@ -801,6 +840,23 @@ export class Lean extends IndentedNode {
                 const asPropertyField = self.parseKeywordAsPropertyField(this, token);
                 if (asPropertyField) return asPropertyField;
                 return this.append(`Lean_${token}`, 'operator');
+            }
+            case 'local': {
+                // `local notation` stays a word. `local instance` after a closed
+                // `@[…]` is the declaration the attribute modifies.
+                if (this instanceof L.LeanBracket && this.is_closed && this.parent instanceof L.LeanAttribute) {
+                    let i = self.start_idx + 1;
+                    while (tokens[i] === ' ') i++;
+                    const decl = tokens[i];
+                    if (
+                        decl === 'instance' || decl === 'lemma' || decl === 'theorem' ||
+                        decl === 'def' || decl === 'abbrev'
+                    ) {
+                        self.start_idx = i;
+                        return this.push_accessibility(`Lean_${decl}`, 'local');
+                    }
+                }
+                return this.parent.insert_word(this, token);
             }
             case 'public':
             case 'private':
@@ -1267,13 +1323,9 @@ export class Lean extends IndentedNode {
                     return this;
                 }
                 {
-                    const caret = this.push_arithmetic(token);
-                    if (tokens[self.start_idx + 1] === 'ᵥ') {
-                        self.start_idx++;
-                        const node = caret && caret.parent;
-                        if (node instanceof L.LeanMul) node.subscript = 'ᵥ';
-                    }
-                    return caret;
+                    const subscript = tokens[self.start_idx + 1] === 'ᵥ' ? 'ᵥ' : undefined;
+                    if (subscript) self.start_idx++;
+                    return this.push_arithmetic(token, subscript);
                 }
             case '|': {
                 const next = tokens[self.start_idx + 1];
@@ -1421,12 +1473,9 @@ export class Lean extends IndentedNode {
             case 'ᵥ':
                 if (tokens[self.start_idx + 1] === '*') {
                     self.start_idx++; // consume `*`
-                    const caret = this.push_arithmetic('*');
+                    const caret = this.push_arithmetic('*', 'ᵥ');
                     const node = caret && caret.parent;
-                    if (node instanceof L.LeanMul) {
-                        node.subscript = 'ᵥ';
-                        node.isLeftSubscript = true;
-                    }
+                    if (node instanceof L.LeanMul) node.isLeftSubscript = true;
                     return caret;
                 }
                 return this.parent.insert_word(this, token);
@@ -1465,8 +1514,8 @@ export class Lean extends IndentedNode {
                 const hasSub = sub === 'ₘ' || sub === 'ₖ' || sub === 'ₜ';
                 if (hasSub) self.start_idx++; // consume subscript
                 const modifier = Lean.consumeBracketModifier(self);
-                // tighter binding when subscripted or parameterized (`⊗[R]` / `⊗ₜ`), else bare `⊗`
-                const caret = (hasSub || modifier) ? this.push_binary(L.Lean_otimesSub) : this.push_arithmetic(token);
+                // tighter binding when subscripted or parameterized (`⊗[R]` / `⊗ₜ`)
+                const caret = (hasSub || modifier) ? this.push_binary(L.Lean_otimes) : this.push_arithmetic(token);
                 if (hasSub || modifier) {
                     let p = caret;
                     while (p && !(p instanceof L.Lean_otimes)) p = p.parent;
@@ -2029,10 +2078,15 @@ export class Lean extends IndentedNode {
         if (this.parent) return this.parent.push_accessibility($new, accessibility);
     }
 
-    push_arithmetic(token) {
+    push_arithmetic(token, script) {
         const cls = token2classname[token];
         if (!cls) throw new Error(`push_arithmetic: unknown token ${JSON.stringify(token)}`);
-        return this.push_binary(L[cls]);
+        const caret = this.push_binary(L[cls], false, script);
+        // `script` already selects precedence (`Ctor.input_priorities`); store it on the
+        // created operator so `*ᵥ` / `ᵥ*` render and bind with the subscript, without each
+        // caller re-deriving the node from `caret.parent`.
+        if (script && caret?.parent) caret.parent.subscript = script;
+        return caret;
     }
 
     push_attr(_caret) {
@@ -2042,11 +2096,12 @@ export class Lean extends IndentedNode {
     /**
      * @param {Function} Ctor
      * @param {boolean} [skipBraceShortcut] see `insert_assign` / `insert_colon`
+     * @param {string} [script] operator suffix or prefix used to select precedence
      */
-    push_binary(Ctor, skipBraceShortcut = false) {
+    push_binary(Ctor, skipBraceShortcut = false, script) {
         const parent = this.parent;
         if (!parent) return undefined;
-        if (parent instanceof L.LeanStatements) return parent.push_binary(Ctor, skipBraceShortcut);
+        if (parent instanceof L.LeanStatements) return parent.push_binary(Ctor, skipBraceShortcut, script);
         // `fun x : T ↦ e` — the arrow wraps the whole typed binder, exactly like the
         // parenthesized form `fun (x : T) ↦ e`, instead of becoming the colon's rhs
         // (`fun (x : (T ↦ e))`), which broke `Lean.headTokens`.
@@ -2066,7 +2121,7 @@ export class Lean extends IndentedNode {
                 return caret;
             }
         }
-        if (Ctor.input_priority > parent.stack_priority) {
+        if ((Ctor.input_priorities?.[script] ?? Ctor.input_priority) > parent.stack_priority) {
             const level = this.level;
             const caret = new L.LeanCaret(this.indent, level);
             parent.replace(this, new Ctor(this, caret, this.indent, level));
@@ -2084,7 +2139,7 @@ export class Lean extends IndentedNode {
             parent.args.pop();
             this.parent = null;
         }
-        return parent.push_binary(Ctor, skipBraceShortcut);
+        return parent.push_binary(Ctor, skipBraceShortcut, script);
     }
 
     push_block_comment(comment, docstring, _commentLine = null) {

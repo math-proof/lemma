@@ -35,7 +35,7 @@ export class LeanRelational extends LeanBinaryBoolean {
             caret.indent = indent;
             return caret;
         }
-        if (caret === this.rhs && caret instanceof L.LeanCaret && this.rhsContinues(indent)) {
+        if (caret === this.rhs && caret instanceof L.LeanCaret && this.rhsContinues(indent, next)) {
             caret.indent = indent;
             const nl = new L.LeanArgsNewLineSeparated([caret], indent, caret.level);
             this.rhs = nl;
@@ -44,11 +44,23 @@ export class LeanRelational extends LeanBinaryBoolean {
         return super.insert_newline(caret, newline_count, indent, next);
     }
 
-    /** @param {number} indent */
-    rhsContinues(indent) {
+    /**
+     * The next line is still the right-hand side when it stays deeper than the
+     * enclosing `have` / `let` / tactic, or deeper than the declaration whose
+     * type contains this equation (`lemma … :\n  ∑ … =\n    rhs := by`).
+     * `:=` / `where` close the type instead.
+     * @param {number} indent
+     * @param {string} [next]
+     */
+    rhsContinues(indent, next) {
+        if (next === ':=' || next === 'where' || next === '|') return false;
         let p = this.parent;
         while (p) {
-            if (p instanceof L.Lean_have || p instanceof L.Lean_let || p instanceof L.LeanTactic)
+            if (
+                p instanceof L.Lean_have || p instanceof L.Lean_let || p instanceof L.LeanTactic ||
+                p instanceof L.LeanColon || p instanceof L.Lean_lemma ||
+                p instanceof L.Lean_theorem || p instanceof L.Lean_def
+            )
                 return indent > p.indent;
             p = p.parent;
         }
@@ -56,11 +68,15 @@ export class LeanRelational extends LeanBinaryBoolean {
     }
 
     sep() {
-        if (typeof this.opLeadIndent === 'number') return ' ';
         if (this.rhs instanceof L.LeanArgsNewLineSeparated || this.rhs instanceof L.LeanStatements)
             return '\n';
-        const lhsEnd = Lean.lastSourceLine(this.lhs);
         const rhsLine = this.rhs?.line;
+        if (typeof this.opLeadIndent === 'number') {
+            if (typeof rhsLine === 'number' && typeof this._birthLine === 'number' && rhsLine > this._birthLine)
+                return '\n';
+            return ' ';
+        }
+        const lhsEnd = Lean.lastSourceLine(this.lhs);
         if (lhsEnd >= 0 && typeof rhsLine === 'number' && rhsLine > lhsEnd) return '\n';
         return ' ';
     }

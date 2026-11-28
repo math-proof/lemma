@@ -32,7 +32,7 @@ variable {S : Type u} {A : Type v} [MeasurableSpace S] [MeasurableSpace A]
 variable [Countable A] [MeasurableSingletonClass A] (M : MDPSpec S A)
 
 -- the transition law as a Markov kernel S × A → S (rl: `MDPSpec.transition_kernel`)
-noncomputable def transition_kernel : Kernel (S × A) S :=
+@[expose] noncomputable def transition_kernel : Kernel (S × A) S :=
   Kernel.ofFunOfCountable fun sa => (M.P sa : Measure S)
 
 end MDPSpec

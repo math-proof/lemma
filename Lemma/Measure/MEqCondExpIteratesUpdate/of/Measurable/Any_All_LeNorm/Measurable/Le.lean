@@ -1,4 +1,6 @@
 import Lemma.Kernel.TrajProb.eq.Bind_Traj
+import Instance.Probability.Process.MarkovChain
+import Instance.Probability.Process.MarkovChain.Part2
 import Lemma.Kernel.MEqCondExp.of.AeMEqCondExp.Le.Integrable_Bind.Integrable_Bind.StronglyMeasurable
 import Lemma.Measure.Measurable_FrestrictLe_PiLE
 import Lemma.Measure.Integrable_IteratesUpdate.of.Measurable.Any_All_LeNorm.Measurable.Le
